@@ -1,0 +1,5 @@
+<% if current_user %>
+  Welcome <%= current_user.name %> <%= current_user.email %>
+<% else -%>
+  <%= link_to 'Connect to Canvas', user_omniauth_authorize_path(:canvas, :canvas_url => Rails.application.secrets.canvas_url) %>
+<% end -%>

@@ -1,0 +1,28 @@
+oauth_lti_template
+=========
+
+To start a new project using this template find all instances of 'oauth_lti_template' and 'OauthLtiTemplate' and replace them with your project name
+
+Deployment
+-----------
+
+
+Ruby on Rails
+-------------
+
+This application requires:
+
+-   Ruby
+-   Rails
+
+Learn more about [Installing Rails](http://railsapps.github.io/installing-rails.html).
+
+Database
+--------
+
+This application uses PostgreSQL with ActiveRecord.
+
+ngrok
+-------------------------
+Create a local tunnel
+ngrok --subdomain oauth_lti_template 3005

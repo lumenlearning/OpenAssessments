@@ -1,0 +1,427 @@
+GIT
+  remote: git://github.com/tatemae/oauth-ruby.git
+  revision: ce029e28b6076c505fb1ddabe363a89c0ee1eb68
+  specs:
+    oauth (0.4.6)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    actionmailer (4.1.5)
+      actionpack (= 4.1.5)
+      actionview (= 4.1.5)
+      mail (~> 2.5.4)
+    actionpack (4.1.5)
+      actionview (= 4.1.5)
+      activesupport (= 4.1.5)
+      rack (~> 1.5.2)
+      rack-test (~> 0.6.2)
+    actionview (4.1.5)
+      activesupport (= 4.1.5)
+      builder (~> 3.1)
+      erubis (~> 2.7.0)
+    activemodel (4.1.5)
+      activesupport (= 4.1.5)
+      builder (~> 3.1)
+    activerecord (4.1.5)
+      activemodel (= 4.1.5)
+      activesupport (= 4.1.5)
+      arel (~> 5.0.0)
+    activesupport (4.1.5)
+      i18n (~> 0.6, >= 0.6.9)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.1)
+      tzinfo (~> 1.1)
+    addressable (2.3.6)
+    arel (5.0.1.20140414130214)
+    autoprefixer-rails (3.0.1.20140826)
+      execjs
+    bcrypt (3.1.7)
+    better_errors (2.0.0)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+      rack (>= 0.9.0)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
+    bootstrap-sass (3.2.0.2)
+      sass (~> 3.2)
+    bower-rails (0.8.3)
+    builder (3.2.2)
+    byebug (3.5.1)
+      columnize (~> 0.8)
+      debugger-linecache (~> 1.2)
+      slop (~> 3.6)
+    capybara (2.4.1)
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      xpath (~> 2.0)
+    celluloid (0.16.0)
+      timers (~> 4.0.0)
+    childprocess (0.5.3)
+      ffi (~> 1.0, >= 1.0.11)
+    coderay (1.1.0)
+    columnize (0.8.9)
+    daemons (1.1.9)
+    database_cleaner (1.3.0)
+    debug_inspector (0.0.2)
+    debugger-linecache (1.2.0)
+    devise (3.3.0)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 3.2.6, < 5)
+      thread_safe (~> 0.1)
+      warden (~> 1.2.3)
+    diff-lcs (1.2.5)
+    erubis (2.7.0)
+    eventmachine (1.0.3)
+    execjs (2.2.1)
+    factory_girl (4.4.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.4.1)
+      factory_girl (~> 4.4.0)
+      railties (>= 3.0.0)
+    faker (1.4.3)
+      i18n (~> 0.5)
+    faraday (0.9.0)
+      multipart-post (>= 1.2, < 3)
+    ffi (1.9.3)
+    font_assets (0.1.11)
+      rack
+    formatador (0.2.5)
+    guard (2.6.1)
+      formatador (>= 0.2.4)
+      listen (~> 2.7)
+      lumberjack (~> 1.0)
+      pry (>= 0.9.12)
+      thor (>= 0.18.1)
+    guard-bundler (2.0.0)
+      bundler (~> 1.0)
+      guard (~> 2.2)
+    guard-rails (0.5.3)
+      guard (~> 2.0)
+    guard-rspec (4.3.1)
+      guard (~> 2.1)
+      rspec (>= 2.14, < 4.0)
+    haml (4.0.5)
+      tilt
+    hashie (2.1.2)
+    hike (1.2.3)
+    hitimes (1.2.2)
+    httparty (0.13.1)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
+    httpauth (0.2.1)
+    hub (1.12.2)
+    i18n (0.6.11)
+    ims-lti (1.0.2)
+      builder
+      oauth (~> 0.4.5)
+      uuid
+    jquery-rails (3.1.2)
+      railties (>= 3.0, < 5.0)
+      thor (>= 0.14, < 2.0)
+    json (1.8.1)
+    jwt (0.1.13)
+      multi_json (>= 1.5)
+    kgio (2.9.2)
+    launchy (2.4.2)
+      addressable (~> 2.3)
+    listen (2.7.9)
+      celluloid (>= 0.15.2)
+      rb-fsevent (>= 0.9.3)
+      rb-inotify (>= 0.9)
+    lumberjack (1.0.9)
+    macaddr (1.7.1)
+      systemu (~> 2.6.2)
+    mail (2.5.4)
+      mime-types (~> 1.16)
+      treetop (~> 1.4.8)
+    mail_view (2.0.4)
+      tilt
+    mailcatcher (0.2.4)
+      eventmachine
+      haml
+      i18n
+      json
+      mail
+      sinatra
+      skinny (>= 0.1.2)
+      sqlite3-ruby
+      thin
+    method_source (0.8.2)
+    mime-types (1.25.1)
+    mini_portile (0.6.0)
+    minitest (5.4.1)
+    multi_json (1.10.1)
+    multi_xml (0.5.5)
+    multipart-post (2.0.0)
+    nokogiri (1.6.3.1)
+      mini_portile (= 0.6.0)
+    non-stupid-digest-assets (1.0.4)
+    oauth2 (0.8.1)
+      faraday (~> 0.8)
+      httpauth (~> 0.1)
+      jwt (~> 0.1.4)
+      multi_json (~> 1.0)
+      rack (~> 1.2)
+    omniauth (1.1.4)
+      hashie (>= 1.2, < 3)
+      rack
+    omniauth-canvas (0.0.4)
+      omniauth (~> 1.0)
+      omniauth-oauth2 (~> 1.0)
+    omniauth-oauth2 (1.1.1)
+      oauth2 (~> 0.8.0)
+      omniauth (~> 1.0)
+    orm_adapter (0.5.0)
+    pg (0.17.1)
+    polyglot (0.3.5)
+    pry (0.10.1)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    pundit (0.3.0)
+      activesupport (>= 3.0.0)
+    quiet_assets (1.0.3)
+      railties (>= 3.1, < 5.0)
+    rack (1.5.2)
+    rack-protection (1.5.3)
+      rack
+    rack-test (0.6.2)
+      rack (>= 1.0)
+    rails (4.1.5)
+      actionmailer (= 4.1.5)
+      actionpack (= 4.1.5)
+      actionview (= 4.1.5)
+      activemodel (= 4.1.5)
+      activerecord (= 4.1.5)
+      activesupport (= 4.1.5)
+      bundler (>= 1.3.0, < 2.0)
+      railties (= 4.1.5)
+      sprockets-rails (~> 2.0)
+    rails_apps_pages (0.5.13)
+    rails_apps_testing (0.3.10)
+    rails_layout (1.0.21)
+    railties (4.1.5)
+      actionpack (= 4.1.5)
+      activesupport (= 4.1.5)
+      rake (>= 0.8.7)
+      thor (>= 0.18.1, < 2.0)
+    raindrops (0.13.0)
+    rake (10.3.2)
+    rb-fchange (0.0.6)
+      ffi
+    rb-fsevent (0.9.4)
+    rb-inotify (0.9.5)
+      ffi (>= 0.5.0)
+    rspec (3.1.0)
+      rspec-core (~> 3.1.0)
+      rspec-expectations (~> 3.1.0)
+      rspec-mocks (~> 3.1.0)
+    rspec-core (3.1.2)
+      rspec-support (~> 3.1.0)
+    rspec-expectations (3.1.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.1.0)
+    rspec-mocks (3.1.0)
+      rspec-support (~> 3.1.0)
+    rspec-rails (3.1.0)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (~> 3.1.0)
+      rspec-expectations (~> 3.1.0)
+      rspec-mocks (~> 3.1.0)
+      rspec-support (~> 3.1.0)
+    rspec-support (3.1.0)
+    rubyzip (1.1.6)
+    sass (3.2.19)
+    sass-rails (4.0.3)
+      railties (>= 4.0.0, < 5.0)
+      sass (~> 3.2.0)
+      sprockets (~> 2.8, <= 2.11.0)
+      sprockets-rails (~> 2.0)
+    selenium-webdriver (2.42.0)
+      childprocess (>= 0.5.0)
+      multi_json (~> 1.0)
+      rubyzip (~> 1.0)
+      websocket (~> 1.0.4)
+    sendgrid (1.2.0)
+      json
+    sinatra (1.4.5)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
+    skinny (0.2.3)
+      eventmachine (~> 1.0.0)
+      thin (~> 1.5.0)
+    slop (3.6.0)
+    spring (1.1.3)
+    sprockets (2.11.0)
+      hike (~> 1.2)
+      multi_json (~> 1.0)
+      rack (~> 1.0)
+      tilt (~> 1.1, != 1.3.0)
+    sprockets-rails (2.1.4)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      sprockets (~> 2.8)
+    sqlite3 (1.3.9)
+    sqlite3-ruby (1.3.3)
+      sqlite3 (>= 1.3.3)
+    systemu (2.6.4)
+    thin (1.5.1)
+      daemons (>= 1.0.9)
+      eventmachine (>= 0.12.6)
+      rack (>= 1.0.0)
+    thor (0.19.1)
+    thread_safe (0.3.4)
+    tilt (1.4.1)
+    timers (4.0.0)
+      hitimes
+    treetop (1.4.15)
+      polyglot
+      polyglot
+      polyglot
+      polyglot
+      polyglot
+      polyglot
+      polyglot
+      polyglot
+      polyglot
+      polyglot
+      polyglot
+      polyglot
+      polyglot
+      polyglot
+      polyglot
+      polyglot
+      polyglot
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+      polyglot (>= 0.3.1)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
+    uglifier (2.5.3)
+      execjs (>= 0.3.0)
+      json (>= 1.8.0)
+    unicorn (4.8.3)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
+    unicorn-rails (2.2.0)
+      rack
+      unicorn
+    uuid (2.3.7)
+      macaddr (~> 1.0)
+    warden (1.2.3)
+      rack (>= 1.0)
+    websocket (1.0.7)
+    xpath (2.0.0)
+      nokogiri (~> 1.3)
+    yajl-ruby (1.2.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  autoprefixer-rails
+  better_errors
+  binding_of_caller
+  bootstrap-sass
+  bower-rails
+  byebug
+  capybara
+  database_cleaner
+  devise
+  factory_girl_rails
+  faker
+  font_assets
+  guard-bundler
+  guard-rails
+  guard-rspec
+  httparty
+  hub
+  ims-lti (~> 1.0.2)
+  jquery-rails
+  launchy
+  mail_view
+  mailcatcher
+  non-stupid-digest-assets
+  oauth (~> 0.4.6)!
+  omniauth (~> 1.1.3)
+  omniauth-canvas (~> 0.0.4)
+  pg
+  pundit
+  quiet_assets
+  rails (= 4.1.5)
+  rails_apps_pages
+  rails_apps_testing
+  rails_layout
+  rb-fchange
+  rb-fsevent
+  rb-inotify
+  rspec-rails
+  sass-rails (~> 4.0.3)
+  selenium-webdriver
+  sendgrid
+  spring
+  uglifier (>= 1.3.0)
+  unicorn
+  unicorn-rails
+  yajl-ruby
