@@ -8,6 +8,9 @@ To test your Canvas application with Canvas you will need to provide a public SS
 use ngrok which can be downloaded from https://ngrok.com/.
 
 ### Secrets file
+Rename config/secrets.example.yml to config.secrets.yml. Open the file and change each entry to values that are 
+relevant for your application. 
+
 config/secrets.yml will be used to hold values that should be kept safe and which should not be commited to your repository.
 
 `cd config`
