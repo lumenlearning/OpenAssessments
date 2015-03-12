@@ -15,9 +15,6 @@ Live Application: [http://demoarigato.herokuapp.com/](http://demoarigato.herokua
 Source Code: [https://github.com/atomicjolt/demo_arigato](https://github.com/atomicjolt/demo_arigato)
 
 
-##Deployment
-
-
 ##Usage
 
 To test your Canvas application with Canvas you will need to provide a public SSL url. The simpliest way to do this is to
@@ -27,6 +24,7 @@ use ngrok which can be downloaded from https://ngrok.com/.
 config/secrets.yml will be used to hold values that should be kept safe and which should not be commited to your repository
 
 `cd config`
+
 `mv secrets.example.yml secrets.yml`
 
 ###ngrok
@@ -35,13 +33,14 @@ Install (ngrok)[https://ngrok.com/]
 
 __Create a local tunnel__
 
-ngrok --subdomain canvasstarterapp 3000
+`ngrok --subdomain canvasstarterapp 3000`
 
 Change `canvasstarterapp` to be the name of your application. Only use letters or numbers in the name. 
 Special characters like '_' will result in errors.
 
 Once you have created the tunnel you will access your application using the ngrok url:
-https://canvasstarterapp.ngrok.com
+
+`https://canvasstarterapp.ngrok.com`
 
 ###Request a Canvas Developer Key
 
@@ -61,8 +60,9 @@ and then add the ID and Secret into the file using these fields:
 canvas_id: 
 canvas_secret: 
 
+##Deployment
 
-###Requirements
+##Requirements
 
 This application requires:
 
