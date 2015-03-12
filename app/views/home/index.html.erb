@@ -1,5 +1,17 @@
-<% if current_user %>
-  Welcome <%= current_user.name %> <%= current_user.email %>
-<% else -%>
-  <%= link_to 'Connect to Canvas', user_omniauth_authorize_path(:canvas, :canvas_url => Rails.application.secrets.canvas_url) %>
-<% end -%>
+
+<div class="well">
+  <% if current_user %>
+    Welcome <%= current_user.name %> <%= current_user.email %>
+  <% else -%>
+    <%= link_to 'Connect to Canvas', user_omniauth_authorize_path(:canvas, :canvas_url => Rails.application.secrets.canvas_url) %>
+
+    <%= form_for :canvas_authentication, url: canvas_authentications_path, html: { role: 'form' } do |f| -%>
+      <div class="form-group">
+        <label>Canvas Url:</label>
+        <%= text_field_tag(:canvas_url, canvas_url, { class: 'form-control' }) %>
+      </div>
+      <%= submit_tag 'Login using Canvas', { class: 'btn btn-primary' } %>
+      <span class="waiting">Connecting to Canvas. Please Wait...</span>
+    <% end -%>
+  <% end -%>
+</div>
