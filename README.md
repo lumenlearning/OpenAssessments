@@ -40,7 +40,8 @@ Open db/seeds.rb and configuration a default account for development and product
 of the values and their purpose:
 -  code         Uniquely identifies the account. This is used for the subdomain when running applications on 
                 a single domain. Create a default account in the seeds.rb file and then open up `config/secrets`.yml
-                and be sure to provide the code from the default account for the `application_code`
+                and be sure to provide the code from the default account for the `application_code`. Only use letters
+                and numbers in the code. Special characters will result in errors.
 -  domain       Custom domain name
 -  name         Name the account anything you'd like
 -  lti_key      A unique key for the LTI application you are building. This will be provided to Canvas
