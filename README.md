@@ -21,7 +21,7 @@ To test your Canvas application with Canvas you will need to provide a public SS
 use ngrok which can be downloaded from https://ngrok.com/.
 
 ### Secrets file
-config/secrets.yml will be used to hold values that should be kept safe and which should not be commited to your repository
+config/secrets.yml will be used to hold values that should be kept safe and which should not be commited to your repository.
 
 `cd config`
 
@@ -29,7 +29,7 @@ config/secrets.yml will be used to hold values that should be kept safe and whic
 
 ###ngrok
 
-Install (ngrok)[https://ngrok.com/]
+Install [https://ngrok.com/](ngrok)
 
 __Create a local tunnel__
 
@@ -44,7 +44,7 @@ Once you have created the tunnel you will access your application using the ngro
 
 ###Request a Canvas Developer Key
 
-Go to the (Canvas Developer Key Request Form)[https://docs.google.com/forms/d/1C5vOpWHAAl-cltj2944-NM0w16AiCvKQFJae3euwwM8/viewform]
+Go to the [https://docs.google.com/forms/d/1C5vOpWHAAl-cltj2944-NM0w16AiCvKQFJae3euwwM8/viewform](Canvas Developer Key Request Form)
 Most of the fields will be specific to your organization. The Oauth2 Redirect URI and Icon URL will be as follows below. Be
 sure to replace `canvasstarterapp.ngrok.com` with your domain. You will need an ID and secret for development and for production. The
 development URI will use ngrok while the production URI will use your domain.
