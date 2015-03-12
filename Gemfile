@@ -25,6 +25,7 @@ gem 'omniauth-canvas', '~> 0.0.4' #, :path => '~/projects/omniauth-canvas'
 gem 'oauth', '~> 0.4.6', :git => 'git://github.com/tatemae/oauth-ruby.git' #:path => '~/projects/other_apps/oauth-ruby'
 gem 'ims-lti', '~> 1.0.2' # IMS LTI tool consumers and providers
 gem 'pundit'
+gem 'attr_encrypted'
 
 gem 'sendgrid'
 
