@@ -20,18 +20,6 @@ class ApplicationController < ActionController::Base
     #
     # OAuth related functionality:
     #
-    def get_google_client(user)
-      if auth = user.authentications.find_by_provider('google_oauth2')
-        client = Google::APIClient.new(
-          :application_name => Rails.application.secrets.application_name,
-          :application_version => '1.0')
-        client.authorization.client_id = Settings.google_id
-        client.authorization.client_secret = Settings.google_secret
-        client.authorization.scope = Settings.google_scope
-        client.authorization.refresh_token = auth.refresh_token
-        client
-      end
-    end
 
     def find_consumer
       key = params[:oauth_consumer_key].strip
