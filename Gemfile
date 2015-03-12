@@ -62,7 +62,6 @@ group :development, :test do
   gem 'faker'
   gem 'fakeweb'
   gem 'rspec-rails'
-  gem 'webmock'
   gem 'database_cleaner'
 end
 
@@ -72,5 +71,6 @@ group :test do
   gem 'launchy'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', require: false
+  gem 'webmock'
 end
 
