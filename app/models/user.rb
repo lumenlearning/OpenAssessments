@@ -13,11 +13,13 @@ class User < ActiveRecord::Base
   has_many :authentications, :dependent => :destroy, :inverse_of => :user
 
   has_many :user_accounts
-  has_many :accounts, :through => :user_accounts
+  has_many :accounts, through: :user_accounts
   belongs_to :account
 
   has_one :profile, :dependent => :destroy
 
+  after_create {|user| user.create_profile unless user.profile }
+  
   def display_name
     self.name || self.email
   end
@@ -114,4 +116,54 @@ class User < ActiveRecord::Base
     self.bio.gsub(/\n/, '<br />') unless self.bio.blank?
   end
 
+  ####################################################
+  #
+  # Role related methods
+  #
+  def is_in_role?(object, roles)
+    raise 'not implemented'
+  end
+
+  def role?(name)
+    self.any_role?(name)
+  end
+
+  def any_role?(*test_names)
+    test_names = [test_names] unless test_names.is_a?(Array)
+    test_names.flatten!
+    @role_names = self.roles.map(&:name) if @role_names.blank?
+    return false if @role_names.blank?
+    (@role_names & test_names).length > 0
+  end
+
+  # Add the user to a new role
+  def add_to_role(name)
+    @role_names = nil
+    role = Role.find_or_create_by_name(name)
+    self.roles << role if !self.roles.include?(role) # Make sure that the user can only be put into a role once
+  end
+
+  def make_account_admin(options)
+    if user_account = self.user_accounts.find_by_account_id(options[:account_id])
+      user_account.update_attribute(:role, 'account_administrator')
+    else
+      self.user_accounts.create!(:account_id => options[:account_id], :role => 'account_administrator')
+    end
+  end
+
+  def admin?
+    self.role?('administrator')
+  end
+
+  def account_admin?(account)
+    return true if self.role?('administrator')
+    account = Account.find_by_code(account) unless account.instance_of?(Account)
+    return true if account && self.user_accounts.where('role' => 'account_administrator', 'account_id' => account.id).size > 0
+  end
+
+  def can_edit?(user)
+    return false if user.nil?
+    self.id == user.id || user.admin?
+  end
+  
 end

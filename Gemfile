@@ -59,8 +59,10 @@ group :development, :test do
   gem 'byebug'
   gem 'factory_girl_rails'
   gem 'faker'
+  gem 'fakeweb'
   gem 'rspec-rails'
   gem 'webmock'
+  gem 'database_cleaner'
 end
 
 group :test do
@@ -68,5 +70,6 @@ group :test do
   gem 'database_cleaner'
   gem 'launchy'
   gem 'selenium-webdriver'
+  gem 'shoulda-matchers', require: false
 end
 
