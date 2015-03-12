@@ -2,19 +2,6 @@
 
 This project provides a starting point for building a Canvas LTI or OAuth application. 
 
-##Examples
-
-Atomic Jolt has built a number of applications based on this source.
-
-###Demo Arigato
-
-This project was created for the Sales team at Instructure. It makes it simple to populate a sample Canvas course using values from Google Drive Spreadsheets.
-
-Live Application: [http://demoarigato.herokuapp.com/](http://demoarigato.herokuapp.com/)
-
-Source Code: [https://github.com/atomicjolt/demo_arigato](https://github.com/atomicjolt/demo_arigato)
-
-
 ##Usage
 
 To test your Canvas application with Canvas you will need to provide a public SSL url. The simpliest way to do this is to
@@ -62,6 +49,19 @@ canvas_secret:
 
 ##Deployment
 
+##Examples
+
+Atomic Jolt has built a number of applications based on this source.
+
+###Demo Arigato
+
+This project was created for the Sales team at Instructure. It makes it simple to populate a sample Canvas course using values from Google Drive Spreadsheets.
+
+Live Application: [http://demoarigato.herokuapp.com/](http://demoarigato.herokuapp.com/)
+
+Source Code: [https://github.com/atomicjolt/demo_arigato](https://github.com/atomicjolt/demo_arigato)
+
+
 ##Requirements
 
 This application requires:
@@ -72,7 +72,7 @@ This application requires:
 
 Learn more about [Installing Rails](http://railsapps.github.io/installing-rails.html).
 
-##Database
+###Database
 
 This application uses PostgreSQL with ActiveRecord.
 
