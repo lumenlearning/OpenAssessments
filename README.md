@@ -46,7 +46,8 @@ of the values and their purpose:
 -  name         Name the account anything you'd like
 -  lti_key      A unique key for the LTI application you are building. This will be provided to Canvas
 -  lti_secret   The shared secret for your LTI application. This will be provided to Canvas and will be
-                used to sign the LTI request. Generate this value using `rake secret`
+                used to sign the LTI request. Generate this value using `rake secret`. Alternatively if you 
+                leave this field empty an LTI secret will be automatically generated for the account.
 -  canvas_uri   The URI of the Canvas institution to be associated with a specific account.
 
 ###Request a Canvas Developer Key

@@ -1,4 +1,3 @@
-
 class Canvas
   def initialize(canvas_uri, canvas_api_key)
     @per_page = 100
