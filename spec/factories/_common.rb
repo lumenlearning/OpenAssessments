@@ -8,6 +8,10 @@ FactoryGirl.define do
     "www.example#{n}.com"
   end
 
+  sequence :code do |n|
+    "code#{n}"
+  end
+
   sequence :name do |n|
     "user_#{n}"
   end
