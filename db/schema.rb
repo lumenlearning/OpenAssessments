@@ -67,6 +67,15 @@ ActiveRecord::Schema.define(version: 20150312162723) do
   add_index "external_identifiers", ["identifier", "provider"], name: "index_external_identifiers_on_identifier_and_provider", using: :btree
   add_index "external_identifiers", ["user_id"], name: "index_external_identifiers_on_user_id", using: :btree
 
+  create_table "permissions", force: true do |t|
+    t.integer  "role_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "permissions", ["role_id", "user_id"], name: "index_permissions_on_role_id_and_user_id", using: :btree
+
   create_table "profiles", force: true do |t|
     t.integer  "user_id"
     t.string   "location"
@@ -86,6 +95,12 @@ ActiveRecord::Schema.define(version: 20150312162723) do
     t.string   "twitter"
     t.string   "facebook"
     t.string   "linkedin"
+  end
+
+  create_table "roles", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "user_accounts", force: true do |t|

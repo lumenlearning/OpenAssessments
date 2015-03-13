@@ -12,6 +12,9 @@ class User < ActiveRecord::Base
   has_many :external_identifiers, :dependent => :destroy, :inverse_of => :user
   has_many :authentications, :dependent => :destroy, :inverse_of => :user
 
+  has_many :permissions
+  has_many :roles, :through => :permissions
+  
   has_many :user_accounts
   has_many :accounts, through: :user_accounts
   belongs_to :account
