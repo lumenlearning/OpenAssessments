@@ -27,12 +27,16 @@ gem 'ims-lti', '~> 1.0.2' # IMS LTI tool consumers and providers
 gem 'pundit'
 gem 'attr_encrypted'
 
+# Email
 gem 'sendgrid'
 
+# JSON parser
 gem 'yajl-ruby', require: 'yajl'
 
+# deployment
 gem 'unicorn'
 gem 'unicorn-rails'
+gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 
 # API Related
 gem 'httparty'
@@ -62,7 +66,6 @@ group :development, :test do
   gem 'faker'
   gem 'fakeweb'
   gem 'rspec-rails'
-  gem 'database_cleaner'
 end
 
 group :test do

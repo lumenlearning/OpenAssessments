@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/alexpeattie/heroku_secrets.git
+  revision: 717af8e0acf399bc88d2c8c1a7e230023942af0f
+  specs:
+    heroku_secrets (0.0.2)
+
+GIT
   remote: git://github.com/tatemae/oauth-ruby.git
   revision: ce029e28b6076c505fb1ddabe363a89c0ee1eb68
   specs:
@@ -409,6 +415,7 @@ DEPENDENCIES
   guard-bundler
   guard-rails
   guard-rspec
+  heroku_secrets!
   httparty
   hub
   ims-lti (~> 1.0.2)
