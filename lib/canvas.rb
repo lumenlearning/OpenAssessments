@@ -51,6 +51,18 @@ class Canvas
     results
   end
 
+  def accounts
+    result = api_get_request("accounts/self")
+    [result]
+  rescue Canvas::UnauthorizedException => ex
+    accounts = api_get_request("course_accounts")
+    if accounts.length > 0
+      accounts
+    else
+      raise Canvas::NoAccountsException, "Your user account doesn't have access to any accounts for course creation"
+    end
+  end
+
   def assignments(course_id)
     api_get_request("courses/#{course_id}/assignments")
   end
