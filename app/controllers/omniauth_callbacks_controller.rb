@@ -32,7 +32,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
           error = "There was a problem communicating with the remote service. "
         end
         if request.env["omniauth.strategy"].name == 'canvas'
-          flash[:error] = "#{error} You can still setup the #{Rails.application.secrets.application_name} tool. Click on 'View the Manual Canvas LTI Setup.' below.".html_safe
+          flash[:error] = "#{error}"
         else
           flash[:error] = "#{error} If this problem persists try signing up with a different service or create an #{Rails.application.secrets.application_name} account with just an email and password.".html_safe
         end
