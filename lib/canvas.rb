@@ -27,12 +27,11 @@ class Canvas
 
   def check_result(result)
     if result.response.code == '401'
-      raise Canvas::CanvasTokenExpiredException, [result['error']]
+      raise Canvas::UnauthorizedException, result['errors']
     elsif result.response.code == '404'
-      raise Canvas::CanvasNotFoundException, [result['error']]
+      raise Canvas::NotFoundException, result['errors']
     elsif !['200', '201'].include?(result.response.code)
-      message = result['message'] rescue result.response.body
-      raise Canvas::CanvasInvalidRequestException, [message]
+      raise Canvas::InvalidRequestException, result['errors']
     end
     result
   end
@@ -122,13 +121,16 @@ class Canvas
   end
 
   # Exceptions
-  class CanvasTokenExpiredException < Exception
+  class NoAccountsException < Exception
   end
 
-  class CanvasInvalidRequestException < Exception
+  class UnauthorizedException < Exception
   end
 
-  class CanvasNotFoundException < Exception
+  class InvalidRequestException < Exception
+  end
+
+  class NotFoundException < Exception
   end
 
 end
