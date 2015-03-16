@@ -50,6 +50,10 @@ of the values and their purpose:
                 leave this field empty an LTI secret will be automatically generated for the account.
 -  canvas_uri   The URI of the Canvas institution to be associated with a specific account.
 
+Once you've setup your seeds file run it to setup database defaults:
+
+`rake db:seed`
+
 ###Request a Canvas Developer Key
 
 Go to the [https://docs.google.com/forms/d/1C5vOpWHAAl-cltj2944-NM0w16AiCvKQFJae3euwwM8/viewform](Canvas Developer Key Request Form)
