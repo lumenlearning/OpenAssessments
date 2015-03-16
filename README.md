@@ -70,6 +70,18 @@ canvas_secret:
 
 ##Deployment
 
+###Heroku
+
+Make sure you have signed up for a heroku account [Heroku](http://www.heroku.com). Then follow the instructions provided by 
+Heroku to create your application.
+
+Push secrets to production:
+`rake heroku:secrets RAILS_ENV=production`
+
+Deploy to Heroku:
+`git push heroku master`
+
+
 ##Examples
 
 Atomic Jolt has built a number of applications based on this source.
