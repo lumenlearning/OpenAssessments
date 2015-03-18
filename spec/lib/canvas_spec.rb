@@ -80,6 +80,13 @@ describe Canvas do
     end
   end
 
+  describe "courses" do
+    it "should retrieve courses from the Canvas API" do
+      courses = @api.courses
+      expect(courses.length).to be > 0
+    end
+  end
+
   describe "get_course_lti_tools" do
     it "should find installed LTI tools for the given course" do
       tools = @api.get_course_lti_tools(@course_id)

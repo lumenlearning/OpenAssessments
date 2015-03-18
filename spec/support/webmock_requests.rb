@@ -35,6 +35,8 @@ def lti_tool_json2
   "{\"consumer_key\":\"fake\",\"created_at\":\"2015-03-11T02:12:39Z\",\"description\":\"Search publicly available YouTube videos. A new icon will show up in your course rich editor letting you search YouTube and click to embed videos in your course material.\",\"domain\":\"edu-apps.org\",\"id\":43460000000000550,\"name\":\"YouTube\",\"updated_at\":\"2015-03-11T02:12:39Z\",\"url\":\"https://www.edu-apps.org/lti_public_resources/?tool_id=youtube\",\"privacy_level\":\"anonymous\",\"custom_fields\":{},\"workflow_state\":\"anonymous\",\"vendor_help_link\":null,\"user_navigation\":null,\"course_navigation\":null,\"account_navigation\":null,\"resource_selection\":{\"selection_width\":560,\"selection_height\":600,\"label\":\"YouTube\",\"icon_url\":\"https://www.edu-apps.org/assets/lti_public_resources/youtube_icon.png\"},\"editor_button\":{\"selection_width\":560,\"selection_height\":600,\"icon_url\":\"https://www.edu-apps.org/assets/lti_public_resources/youtube_icon.png\",\"label\":\"YouTube\"},\"homework_submission\":null,\"migration_selection\":null,\"course_home_sub_navigation\":null,\"course_settings_sub_navigation\":null,\"global_navigation\":null,\"assignment_menu\":null,\"file_menu\":null,\"discussion_topic_menu\":null,\"module_menu\":null,\"quiz_menu\":null,\"wiki_page_menu\":null,\"tool_configuration\":null,\"icon_url\":\"https://www.edu-apps.org/assets/lti_public_resources/youtube_icon.png\",\"not_selectable\":false}"
 end
 
+canvas_courses = "[{\"account_id\":43460000000000017,\"course_code\":\"Biology\",\"default_view\":\"wiki\",\"enrollment_term_id\":43460000000000001,\"id\":43460000000000228,\"is_public\":true,\"name\":\"Biology - ball\",\"start_at\":\"2015-03-11T02:11:57Z\",\"end_at\":\"2014-11-12T00:00:00Z\",\"public_syllabus\":false,\"storage_quota_mb\":500,\"is_public_to_auth_users\":false,\"apply_assignment_group_weights\":true,\"calendar\":{\"ics\":\"https://canvas.instructure.com/feeds/calendars/course_tXpIlgwxaowPljOdOY3i4336gZTzYdeqWJDDVyC5.ics\"},\"sis_course_id\":\"sdemo-biology-000_2015-03-10T20:12:09-06:00\",\"integration_id\":null,\"enrollments\":[{\"type\":\"teacher\",\"role\":\"TeacherEnrollment\",\"role_id\":822,\"enrollment_state\":\"active\"}],\"hide_final_grades\":false,\"workflow_state\":\"available\"},{\"account_id\":43460000000000017,\"course_code\":\"Grade 2\",\"default_view\":\"wiki\",\"enrollment_term_id\":43460000000000001,\"id\":43460000000000230,\"is_public\":true,\"name\":\"Grade 2 - \",\"start_at\":\"2015-03-11T18:44:33Z\",\"end_at\":\"2014-10-25T00:00:00Z\",\"public_syllabus\":false,\"storage_quota_mb\":500,\"is_public_to_auth_users\":false,\"apply_assignment_group_weights\":false,\"calendar\":{\"ics\":\"https://canvas.instructure.com/feeds/calendars/course_lu9o9wH9YQWDDCV18rLvvlSaQAST2tHiL9gIckzN.ics\"},\"sis_course_id\":\"sdemo-grade2-000\",\"integration_id\":null,\"enrollments\":[{\"type\":\"teacher\",\"role\":\"TeacherEnrollment\",\"role_id\":822,\"enrollment_state\":\"active\"}],\"hide_final_grades\":false,\"workflow_state\":\"available\"},{\"account_id\":43460000000000017,\"course_code\":\"welcome-to-canvas\",\"default_view\":\"syllabus\",\"enrollment_term_id\":43460000000000001,\"id\":43460000000000215,\"is_public\":true,\"name\":\"Welcome to Canvas\",\"start_at\":\"2015-03-03T00:31:29Z\",\"end_at\":null,\"public_syllabus\":false,\"storage_quota_mb\":1500,\"is_public_to_auth_users\":false,\"apply_assignment_group_weights\":false,\"calendar\":{\"ics\":\"https://canvas.instructure.com/feeds/calendars/course_vEnAbIlnKf5jukDCn42JhJXZVS9DvTpJsDMJNsvG.ics\"},\"sis_course_id\":\"_2015-03-02T17:31:28-07:00\",\"integration_id\":null,\"enrollments\":[{\"type\":\"teacher\",\"role\":\"TeacherEnrollment\",\"role_id\":822,\"enrollment_state\":\"active\"}],\"hide_final_grades\":false,\"workflow_state\":\"available\"},{\"account_id\":43460000000000017,\"course_code\":\"Biology\",\"default_view\":\"wiki\",\"enrollment_term_id\":43460000000000001,\"id\":43460000000000233,\"is_public\":true,\"name\":\"Biology - ball\",\"start_at\":\"2015-03-11T19:51:24Z\",\"end_at\":\"2014-11-12T00:00:00Z\",\"public_syllabus\":false,\"storage_quota_mb\":500,\"is_public_to_auth_users\":false,\"apply_assignment_group_weights\":true,\"calendar\":{\"ics\":\"https://canvas.instructure.com/feeds/calendars/course_pO8Qx1ySnzmedPScsVKsiY28mQkTtYEaNKfXV40p.ics\"},\"sis_course_id\":\"sdemo-biology-000_2015-03-11T13:51:39-06:00\",\"integration_id\":null,\"enrollments\":[{\"type\":\"teacher\",\"role\":\"TeacherEnrollment\",\"role_id\":822,\"enrollment_state\":\"active\"}],\"hide_final_grades\":false,\"workflow_state\":\"available\"},{\"account_id\":43460000000000017,\"course_code\":\"US History\",\"default_view\":\"wiki\",\"enrollment_term_id\":43460000000000001,\"id\":43460000000000231,\"is_public\":true,\"name\":\"American History - \",\"start_at\":\"2015-03-11T18:44:35Z\",\"end_at\":\"2014-10-31T00:00:00Z\",\"public_syllabus\":false,\"storage_quota_mb\":500,\"is_public_to_auth_users\":false,\"apply_assignment_group_weights\":true,\"calendar\":{\"ics\":\"https://canvas.instructure.com/feeds/calendars/course_bCtSECMTxnjOZehMsDlDCaG7FNNwMK3t3QF93SYj.ics\"},\"sis_course_id\":\"sdemo-amhist-000_2015-03-11T18:44:34+00:00\",\"integration_id\":null,\"enrollments\":[{\"type\":\"teacher\",\"role\":\"TeacherEnrollment\",\"role_id\":822,\"enrollment_state\":\"active\"}],\"hide_final_grades\":false,\"workflow_state\":\"available\"},{\"account_id\":43460000000000017,\"course_code\":\"Grade 8 Math\",\"default_view\":\"syllabus\",\"enrollment_term_id\":43460000000000001,\"id\":43460000000000232,\"is_public\":true,\"name\":\"8th Grade Math - \",\"start_at\":\"2015-03-11T18:44:36Z\",\"end_at\":\"2015-04-21T00:00:00Z\",\"public_syllabus\":false,\"storage_quota_mb\":9000,\"is_public_to_auth_users\":false,\"apply_assignment_group_weights\":true,\"calendar\":{\"ics\":\"https://canvas.instructure.com/feeds/calendars/course_6LuTullo7Dc47WDnANVqLTVp43BTHBoVdHnSWySy.ics\"},\"sis_course_id\":\"sdemo-math8-000_2015-03-11T18:44:35+00:00\",\"integration_id\":null,\"enrollments\":[{\"type\":\"teacher\",\"role\":\"TeacherEnrollment\",\"role_id\":822,\"enrollment_state\":\"active\"}],\"hide_final_grades\":false,\"workflow_state\":\"available\"},{\"account_id\":43460000000000017,\"course_code\":\"Biology\",\"default_view\":\"wiki\",\"enrollment_term_id\":43460000000000001,\"id\":43460000000000227,\"is_public\":true,\"name\":\"Biology - ball\",\"start_at\":\"2015-03-11T02:00:06Z\",\"end_at\":\"2014-11-12T00:00:00Z\",\"public_syllabus\":false,\"storage_quota_mb\":500,\"is_public_to_auth_users\":false,\"apply_assignment_group_weights\":true,\"calendar\":{\"ics\":\"https://canvas.instructure.com/feeds/calendars/course_3uFFDiQRvMj91ZqSWcP3PqAkFZzdyY4zm43ZJr8Q.ics\"},\"sis_course_id\":\"sdemo-biology-000_2015-03-10T20:00:18-06:00\",\"integration_id\":null,\"enrollments\":[{\"type\":\"teacher\",\"role\":\"TeacherEnrollment\",\"role_id\":822,\"enrollment_state\":\"active\"}],\"hide_final_grades\":false,\"workflow_state\":\"available\"},{\"account_id\":43460000000000017,\"course_code\":\"Biology\",\"default_view\":\"wiki\",\"enrollment_term_id\":43460000000000001,\"id\":43460000000000229,\"is_public\":true,\"name\":\"Biology - ball\",\"start_at\":\"2015-03-11T02:29:03Z\",\"end_at\":\"2014-11-12T00:00:00Z\",\"public_syllabus\":false,\"storage_quota_mb\":500,\"is_public_to_auth_users\":false,\"apply_assignment_group_weights\":true,\"calendar\":{\"ics\":\"https://canvas.instructure.com/feeds/calendars/course_2i2nhyQEo889uSN47IstosmQijQtKPbiDrvtKhgQ.ics\"},\"sis_course_id\":\"sdemo-biology-000_2015-03-10T20:29:14-06:00\",\"integration_id\":null,\"enrollments\":[{\"type\":\"teacher\",\"role\":\"TeacherEnrollment\",\"role_id\":822,\"enrollment_state\":\"active\"}],\"hide_final_grades\":false,\"workflow_state\":\"available\"}]"
+
 RSpec.configure do |config|
   config.before(:each) do
 
@@ -43,21 +45,33 @@ RSpec.configure do |config|
     #
 
     #
+    # Courses
+    #
+    #
+    stub_request(:get, %r|http[s]*://www.example.com/api/v1/courses|).
+      to_return(
+        status: 200,
+        body: canvas_courses,
+        headers: canvas_headers
+      )
+
     # LTI tools
     #
-    stub_request(:get, %r|http[s]*://www.example.com/api/v1/courses/.+/external_tools|).
+    canvas_external_tool_url = %r|http[s]*://www.example.com/api/v1/courses/.+/external_tools|
+
+    stub_request(:get, canvas_external_tool_url).
       to_return(
         :status => 200, 
         :body => "[#{lti_tool_json}, #{lti_tool_json2}]", 
         :headers => canvas_headers)
   
-    stub_request(:post, %r|http[s]*://www.example.com/api/v1/courses/.+/external_tools|).
+    stub_request(:post, canvas_external_tool_url).
       to_return(
         :status => 200, 
         :body => lti_tool_json, 
         :headers => canvas_headers)
 
-    stub_request(:put, %r|http[s]*://www.example.com/api/v1/courses/.+/external_tools|).
+    stub_request(:put, canvas_external_tool_url).
       to_return(
         :status => 200, 
         :body => lti_tool_json,
