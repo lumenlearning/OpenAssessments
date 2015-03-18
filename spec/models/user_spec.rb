@@ -29,14 +29,14 @@ describe User do
 
   describe "user profile" do
     it "adds a profile after the user is created" do
-      @user.profile.should_not be_nil
+      expect(@user.profile).to be_present
     end
   end
 
   it "should require an email address" do
     no_email_user = User.new(@attr.merge(:email => ""))
     no_email_user.account = @account
-    no_email_user.should_not be_valid
+    expect(no_email_user).to be_invalid
   end
 
   it "should accept valid email addresses" do
@@ -44,7 +44,7 @@ describe User do
     addresses.each do |address|
       valid_email_user = User.new(@attr.merge(:email => address))
       valid_email_user.account = @account
-      valid_email_user.should be_valid
+      expect(valid_email_user).to be_valid
     end
   end
 
@@ -53,7 +53,7 @@ describe User do
     addresses.each do |address|
       invalid_email_user = User.new(@attr.merge(:email => address))
       invalid_email_user.account = @account
-      invalid_email_user.should_not be_valid
+      expect(invalid_email_user).to be_invalid
     end
   end
 
@@ -61,7 +61,7 @@ describe User do
     user = FactoryGirl.create(:user)
     user_with_duplicate_email = User.new(@attr.merge(:email => user.email))
     user_with_duplicate_email.account = @account
-    user_with_duplicate_email.should_not be_valid
+    expect(user_with_duplicate_email).to be_invalid
   end
 
   it "should reject email addresses identical up to case" do
@@ -69,25 +69,25 @@ describe User do
     user = FactoryGirl.create(:user, :email => email)
     user_with_duplicate_email = User.new(@attr.merge(:email => email.upcase))
     user_with_duplicate_email.account = @account
-    user_with_duplicate_email.should_not be_valid
+    expect(user_with_duplicate_email).to be_invalid
   end
 
   it "should raise an exception if an attempt is made to write a duplicate email to the database" do
     user = FactoryGirl.create(:user)
     user_with_duplicate_email = User.new(@attr.merge(:email => user.email))
     user_with_duplicate_email.account = @account
-    lambda do
+    expect {
       user_with_duplicate_email.save(:validate => false)
-    end.should raise_error(ActiveRecord::RecordNotUnique)
+    }.to raise_error(ActiveRecord::RecordNotUnique)
   end
 
   describe "passwords" do
     it "should have a password attribute" do
-      @user.should respond_to(:password)
+      expect(@user).to respond_to(:password)
     end
 
     it "should have a password confirmation attribute" do
-      @user.should respond_to(:password_confirmation)
+      expect(@user).to respond_to(:password_confirmation)
     end
   end
 
@@ -95,13 +95,13 @@ describe User do
 
     it "should require a password" do
       user = FactoryGirl.build(:user, @attr.merge(:password => "", :password_confirmation => ""))
-      user.should_not be_valid
+      expect(user).to be_invalid
     end
 
     it "should require a matching password confirmation" do
       user = User.new(@attr.merge(:password_confirmation => "invalid"))
       user.account = @account
-      user.should_not be_valid
+      expect(user).to be_invalid
     end
 
     it "should reject short passwords" do
@@ -109,25 +109,25 @@ describe User do
       hash = @attr.merge(:password => short, :password_confirmation => short)
       user = User.new(hash)
       user.account = @account
-      user.should_not be_valid
+      expect(user).to be_invalid
     end
 
   end
 
   describe "password encryption" do
     it "should have an encrypted password attribute" do
-      @user.should respond_to(:encrypted_password)
+      expect(@user).to respond_to(:encrypted_password)
     end
 
     it "should set the encrypted password attribute" do
-      @user.encrypted_password.should_not be_blank
+      expect(@user.encrypted_password).to be_present
     end
   end
 
   describe "display_name" do
     it "should provide the name" do
       user = FactoryGirl.create(:user, :name => 'test guy')
-      user.display_name.should == 'test guy'
+      expect(user.display_name).to eq('test guy')
     end
   end
 
@@ -147,15 +147,15 @@ describe User do
         it "should find the existing user" do
           auth = get_omniauth('uuid' => @uid, 'provider' => @provider, 'facebook' => {'email' => @existing_email})
           user = User.find_for_oauth(auth)
-          user.id.should == @user.id
-          user.email.should == @existing_email
+          expect(user.id).to eq(@user.id)
+          expect(user.email).to eq(@existing_email)
         end
       end
       describe "user doesn't exist" do
         it "should not find a user" do
           auth = get_omniauth('uuid' => 'non_existing_uid', 'provider' => @provider, 'facebook' => {'email' => 'other@example.com'})
           user = User.find_for_oauth(auth)
-          user.should be_nil
+          expect(user).to be_nil
         end
       end
     end
@@ -164,8 +164,8 @@ describe User do
         auth = get_omniauth('uuid' => @uid, 'provider' => @provider, 'facebook' => {'email' => @new_email})
         user = User.new
         user.apply_oauth(auth)
-        user.email.should == @new_email
-        user.name.should == 'foo bar' # from default omniauth test data
+        expect(user.email).to eq(@new_email)
+        expect(user.name).to eq('foo bar') # from default omniauth test data
       end
     end
     # describe "update_oauth" do
@@ -201,8 +201,8 @@ describe User do
     #     user = FactoryGirl.create(:user, :email => 'test@example.com')
     #     auth = get_omniauth('uuid' => @uid, 'provider' => @provider, 'facebook' => {'email' => @new_email})
     #     user.associate_account(auth)
-    #     user.authentications.length.should == 1
-    #     user.authentications.first.uid.should == @uid
+    #     expect(user.authentications.length).to eq(1)
+    #     expect(user.authentications.first.uid).to eq(@uid)
     #   end
     # end
     describe "setup_authentication" do
@@ -214,19 +214,19 @@ describe User do
         provider_url = 'http://www.example.com'
         auth = get_omniauth('uuid' => @uid, 'provider' => @provider, 'facebook' => {'email' => @email, 'url' => provider_url})
         auth = @user.setup_authentication(auth)
-        auth.provider_url.should == provider_url
+        expect(auth.provider_url).to eq(provider_url)
       end
       it "should set the provider url without the path" do
         provider_url = 'http://www.example.com/some/path'
         auth = get_omniauth('uuid' => @uid, 'provider' => @provider, 'facebook' => {'email' => @email, 'url' => provider_url})
         auth = @user.setup_authentication(auth)
-        auth.provider_url.should == 'http://www.example.com'
+        expect(auth.provider_url).to eq('http://www.example.com')
       end
       it "should handle sub domains" do
         provider_url = 'http://foo.example.com/some/path'
         auth = get_omniauth('uuid' => @uid, 'provider' => @provider, 'facebook' => {'email' => @email, 'url' => provider_url})
         auth = @user.setup_authentication(auth)
-        auth.provider_url.should == 'http://foo.example.com'
+        expect(auth.provider_url).to eq('http://foo.example.com')
       end
     end
   end
@@ -236,7 +236,7 @@ describe User do
       @user = FactoryGirl.create(:user)
       @account_new = FactoryGirl.create(:account)
       @user.make_account_admin(:account_id => @account_new.id)
-      @user.accounts.last.should == @account_new
+      expect(@user.accounts.last).to eq(@account_new)
     end
   end
 end
