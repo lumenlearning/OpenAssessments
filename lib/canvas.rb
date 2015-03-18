@@ -1,20 +1,24 @@
 class Canvas
   def initialize(canvas_uri, canvas_api_key)
     @per_page = 100
-    @canvas_uri = canvas_uri
+    @canvas_uri = UrlHelper.scheme_host(canvas_uri)
     @canvas_api_key = canvas_api_key
   end
 
   def headers
     {
       "Authorization" => "Bearer #{@canvas_api_key}",
-      "content_type" => "json"
+      "content_type" => "json",
+      'User-Agent' => "CanvasAPI Ruby"
     }
   end
 
   def full_url(api_url)
-    base_uri = UrlHelper.scheme_host(@canvas_uri)
-    "#{base_uri}/api/v1/#{api_url}"
+    "#{@canvas_uri}/api/v1/#{api_url}"
+  end
+
+  def api_put_request(api_url, payload)
+    check_result(HTTParty.put(full_url(api_url), :headers => headers, :body => payload))
   end
 
   def api_post_request(api_url, payload)
@@ -71,8 +75,12 @@ class Canvas
     api_get_request("courses/#{course_id}/discussion_topics")
   end
 
-  def get_courses(user_id)
-    api_get_request("courses?as_user_id=#{user_id}")
+  def courses(user_id = nil)
+    if user_id
+      api_get_request("courses?as_user_id=#{user_id}")
+    else
+      api_get_request("courses")
+    end
   end
 
   def recent_logins(course_id)
@@ -130,6 +138,18 @@ class Canvas
       body: body,
       scope: 'unread'
     })
+  end
+
+  def get_course_lti_tools(course_id)
+    api_get_request("courses/#{course_id}/external_tools")
+  end
+
+  def update_course_lti_tool(course_id, tool_config)
+    api_put_request("courses/#{course_id}/external_tools", tool_config)
+  end
+
+  def create_course_lti_tool(course_id, tool_config)
+    api_post_request("courses/#{course_id}/external_tools", tool_config)
   end
 
   # Exceptions
