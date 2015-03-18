@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150312162723) do
+ActiveRecord::Schema.define(version: 20150318170605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,8 +23,7 @@ ActiveRecord::Schema.define(version: 20150312162723) do
     t.string   "lti_secret"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "canvas_api_key"
-    t.string   "canvas_uri",     limit: 2048
+    t.string   "canvas_uri", limit: 2048
     t.string   "code"
   end
 
