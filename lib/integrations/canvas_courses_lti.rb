@@ -22,18 +22,12 @@ module Integrations
       [allowed_courses, already_courses]
     end
 
-    def self.setup_lti(course, consumer_key, shared_secret, canvas_authentication, lti_launch_url, lti_rich_editor_button_image_url, env)
-      config_xml = Lti::Canvas.config_xml(lti_launch_url, lti_rich_editor_button_image_url, env)
-      self.setup(config_xml, course, consumer_key, shared_secret, canvas_authentication, lti_launch_url, env)
-    end
-
-    def self.setup_course_navigation_lti(course, consumer_key, shared_secret, canvas_authentications, lti_launch_url, name, env)
-      config_xml = Lti::Canvas.course_navigation_config_xml(lti_launch_url, name, env)
-      self.setup(config_xml, course, consumer_key, shared_secret, canvas_authentications, lti_launch_url, env)
-    end
-
     # canvas_authentications can either be a single value or an array
-    def self.setup(config_xml, course, consumer_key, shared_secret, canvas_authentications, lti_launch_url, env)
+    def self.setup(course, consumer_key, shared_secret, canvas_authentications, lti_options = {})
+
+      raise "Please provide an LTI launch url" if lti_options[:launch_url].blank?
+
+      config_xml = Lti::Canvas.config_xml(lti_options)
 
       if course['authentication_id']
         canvas_authentication = canvas_authentications.find{|auth| auth.id == course['authentication_id'].to_i}
@@ -50,8 +44,8 @@ module Integrations
         "config_type" => "by_xml",
         "config_xml" => config_xml
       }
-      if(id = self.find_tool_id(existing_tools, lti_launch_url))
-        tool = self.find_tool(existing_tools, lti_launch_url)
+      if(id = self.find_tool_id(existing_tools, lti_options[:launch_url]))
+        tool = self.find_tool(existing_tools, lti_options[:launch_url])
         # Make sure the the LTI key associated with the tool exists in our system.
         lti_connected_resource = Account.find_by_lti_key(tool['consumer_key']) || User.find_by_lti_key(tool['consumer_key'])
         if lti_connected_resource.blank?
