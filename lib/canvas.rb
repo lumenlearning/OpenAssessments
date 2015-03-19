@@ -1,4 +1,5 @@
 class Canvas
+
   def initialize(canvas_uri, canvas_api_key)
     @per_page = 100
     @canvas_uri = UrlHelper.scheme_host(canvas_uri)
@@ -55,9 +56,16 @@ class Canvas
     results
   end
 
+  def is_account_admin
+    api_get_request("accounts/self") # If user can access this endpoint they are an account admin
+    true
+  rescue Canvas::UnauthorizedException => ex
+    false  
+  end
+
   def accounts
-    result = api_get_request("accounts/self")
-    [result]
+    account = api_get_request("accounts/self")
+    [account]
   rescue Canvas::UnauthorizedException => ex
     accounts = api_get_request("course_accounts")
     if accounts.length > 0

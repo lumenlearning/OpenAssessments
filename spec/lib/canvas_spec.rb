@@ -87,6 +87,32 @@ describe Canvas do
     end
   end
 
+  describe "is_account_admin" do
+    it "Returns true when the user is an account admin" do
+      stub_request(:get, %r|http[s]*://www.example.com/api/v1/accounts/self|).
+        to_return(
+          :status => 200, 
+          :body => "", 
+          :headers => canvas_headers)
+      @api.is_account_admin
+    end
+    it "Returns false when the user is not an account admin" do
+      stub_request(:get, %r|http[s]*://www.example.com/api/v1/accounts/self|).
+        to_return(
+          :status => 401, 
+          :body => "", 
+          :headers => canvas_headers)
+      @api.is_account_admin
+    end
+  end
+
+  describe "accounts" do
+    it "should retrieve accounts from the Canvas API" do
+      accounts = @api.accounts
+      expect(accounts.length).to be > 0
+    end
+  end
+
   describe "get_course_lti_tools" do
     it "should find installed LTI tools for the given course" do
       tools = @api.get_course_lti_tools(@course_id)
