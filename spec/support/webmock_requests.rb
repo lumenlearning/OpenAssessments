@@ -57,24 +57,28 @@ RSpec.configure do |config|
 
     # LTI tools
     #
-    canvas_external_tool_url = %r|http[s]*://www.example.com/api/v1/courses/.+/external_tools|
+    ['accounts', 'courses'].each do |kind|
+     
+      canvas_external_tool_url = %r|http[s]*://www.example.com/api/v1/#{kind}/.+/external_tools|
 
-    stub_request(:get, canvas_external_tool_url).
-      to_return(
-        :status => 200, 
-        :body => "[#{lti_tool_json}, #{lti_tool_json2}]", 
-        :headers => canvas_headers)
-  
-    stub_request(:post, canvas_external_tool_url).
-      to_return(
-        :status => 200, 
-        :body => lti_tool_json, 
-        :headers => canvas_headers)
+      stub_request(:get, canvas_external_tool_url).
+        to_return(
+          :status => 200, 
+          :body => "[#{lti_tool_json}, #{lti_tool_json2}]", 
+          :headers => canvas_headers)
+    
+      stub_request(:post, canvas_external_tool_url).
+        to_return(
+          :status => 200, 
+          :body => lti_tool_json, 
+          :headers => canvas_headers)
 
-    stub_request(:put, canvas_external_tool_url).
-      to_return(
-        :status => 200, 
-        :body => lti_tool_json,
-        :headers => canvas_headers)
+      stub_request(:put, canvas_external_tool_url).
+        to_return(
+          :status => 200, 
+          :body => lti_tool_json,
+          :headers => canvas_headers)
+    end
+
   end
 end
