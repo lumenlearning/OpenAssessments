@@ -36,15 +36,13 @@ gem 'yajl-ruby', require: 'yajl'
 # deployment
 gem 'unicorn'
 gem 'unicorn-rails'
+
+# Used for deploying to Heroku. Can be removed if not deploying to Heroku.
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
+gem 'rails_12factor'
 
 # API Related
 gem 'httparty'
-
-group :production do
-  # Used for deploying to Heroku. Can be removed if not deploying to Heroku.
-  gem 'rails_12factor'
-end
 
 group :development do
   gem 'spring'
