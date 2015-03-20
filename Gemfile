@@ -41,6 +41,11 @@ gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 # API Related
 gem 'httparty'
 
+group :production do
+  # Used for deploying to Heroku. Can be removed if not deploying to Heroku.
+  gem 'rails_12factor'
+end
+
 group :development do
   gem 'spring'
   gem 'better_errors'
