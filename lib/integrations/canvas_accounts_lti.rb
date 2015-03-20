@@ -3,13 +3,13 @@ module Integrations
   class CanvasAccountsLti < CanvasBaseLti
 
     # canvas_authentications can either be a single value or an array
-    def self.setup(account, consumer_key, shared_secret, canvas_authentication, lti_options = {})
+    def self.setup(account, consumer_key, shared_secret, provider_url, token, lti_options = {})
 
       raise "Please provide an LTI launch url" if lti_options[:launch_url].blank?
 
       config_xml = Lti::Canvas.config_xml(lti_options)
 
-      api = Canvas.new(canvas_authentication.provider_url, canvas_authentication.token)
+      api = Canvas.new(provider_url, token)
       existing_tools = api.get_account_lti_tools(account['id'])
 
       # Reset config for each iteration since we might not want the key and secret

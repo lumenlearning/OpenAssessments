@@ -11,7 +11,6 @@ describe Integrations::CanvasAccountsLti do
     @lti_launch_url = "http://www.example.com/launch"
     @provider_url = "http://www.example.com"
     @env = "test"
-    @canvas_authentication = FactoryGirl.create(:authentication, :provider => "canvas", :token => @token, :provider_url => @provider_url)
   end
 
   describe "setup" do
@@ -23,7 +22,7 @@ describe Integrations::CanvasAccountsLti do
         launch_url: @lti_launch_url,
         env: @env
       }
-      result = Integrations::CanvasAccountsLti.setup(@account, @consumer_key, @shared_secret, @canvas_authentication, lti_options)
+      result = Integrations::CanvasAccountsLti.setup(@account, @consumer_key, @shared_secret, @provider_url, @token, lti_options)
       expect(result.parsed_response).to eq(@result)
     end
     it "should update an existing LTI tool in the specified account" do
@@ -32,7 +31,7 @@ describe Integrations::CanvasAccountsLti do
         launch_url: lti_launch_url,
         env: @env
       }
-      result = Integrations::CanvasAccountsLti.setup(@account, @consumer_key, @shared_secret, @canvas_authentication, lti_options)
+      result = Integrations::CanvasAccountsLti.setup(@account, @consumer_key, @shared_secret, @provider_url, @token, lti_options)
       expect(result.parsed_response).to eq(@result)
     end    
   end
