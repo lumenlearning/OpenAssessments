@@ -27,7 +27,7 @@ module Integrations
           tool_config["shared_secret"] = shared_secret
         end
         # Important! If lti_connected_resource is valid then don't update the 'oauth_consumer_key' or else external identifiers will break.
-        api.update_account_lti_tool(account["id"], tool_config)
+        api.update_account_lti_tool(account["id"], id, tool_config)
       else
         tool_config["consumer_key"] = consumer_key
         tool_config["shared_secret"] = shared_secret

@@ -7,6 +7,14 @@ describe Canvas do
     @base_uri = 'http://www.example.com'    
     @canvas_authentication = FactoryGirl.create(:authentication, :provider => 'canvas', :token => @token, :provider_url => @base_uri)
     @api = Canvas.new(@canvas_authentication.provider_url, @canvas_authentication.token)
+    @external_tool_id = 1
+    lti_options = {
+      launch_url: 'http://www.example.com/launch'
+    }
+    @tool_config = {
+      "config_type" => "by_xml",
+      "config_xml" => Lti::Canvas.config_xml(lti_options)
+    }
   end
 
   describe "api_put_request" do
@@ -117,6 +125,20 @@ describe Canvas do
     it "should find installed LTI tools for the given course" do
       tools = @api.get_course_lti_tools(@course_id)
       expect(tools.first['consumer_key']).to eq('fake')
+    end
+  end
+
+  describe "update_course_lti_tool" do
+    it "should find installed LTI tools for the given course" do
+      tool = @api.update_course_lti_tool(@course_id, @external_tool_id, @tool_config)
+      expect(tool['consumer_key']).to eq('fake')
+    end
+  end
+
+  describe "create_course_lti_tool" do
+    it "should find installed LTI tools for the given course" do
+      tool = @api.create_course_lti_tool(@course_id, @tool_config)
+      expect(tool['consumer_key']).to eq('fake')
     end
   end
 

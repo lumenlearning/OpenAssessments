@@ -152,8 +152,8 @@ class Canvas
     api_get_request("courses/#{course_id}/external_tools")
   end
 
-  def update_course_lti_tool(course_id, tool_config)
-    api_put_request("courses/#{course_id}/external_tools", tool_config)
+  def update_course_lti_tool(course_id, external_tool_id, tool_config)
+    api_put_request("courses/#{course_id}/external_tools/#{external_tool_id}", tool_config)
   end
 
   def create_course_lti_tool(course_id, tool_config)
@@ -164,10 +164,10 @@ class Canvas
     api_get_request("accounts/#{account_id}/external_tools")
   end
 
-  def update_account_lti_tool(account_id, tool_config)
-    api_put_request("accounts/#{account_id}/external_tools", tool_config)
+  def update_account_lti_tool(account_id, external_tool_id, tool_config)
+    api_put_request("accounts/#{account_id}/external_tools/#{external_tool_id}", tool_config)
   end
-
+  
   def create_account_lti_tool(account_id, tool_config)
     api_post_request("accounts/#{account_id}/external_tools", tool_config)
   end
