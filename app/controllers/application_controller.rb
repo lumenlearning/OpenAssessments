@@ -25,8 +25,8 @@ class ApplicationController < ActionController::Base
 
     def find_consumer
       key = params[:oauth_consumer_key].strip
-      Account.find_by_lti_key(key) ||
-      User.find_by_lti_key(key)
+      Account.find_by(lti_key: key) ||
+      User.find_by(lti_key: key)
     end
 
     def check_external_identifier(user, only_build=false)
@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
       return nil unless url.present?
       @provider = UrlHelper.host(url)
       @identifier = params[:custom_canvas_user_id] || params[:user_id]
-      ExternalIdentifier.find_by_provider_and_identifier(@provider, @identifier)
+      ExternalIdentifier.find_by(provider: @provider, identifier: @identifier)
     end
 
     def create_external_identifier_with_url(auth, user)

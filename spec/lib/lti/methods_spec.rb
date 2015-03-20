@@ -9,7 +9,7 @@ end
 
 describe Lti::Methods do
   before do
-    allow(LtiMethodsTester).to receive(:find_by_lti_key).and_return(nil)
+    allow(LtiMethodsTester).to receive(:find_by).and_return(nil)
     @test = LtiMethodsTester.new
   end
   describe "#set_lti" do

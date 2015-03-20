@@ -10,7 +10,7 @@ module Lti
       unless self.lti_key && self.lti_secret
         key = begin
           random_key
-        end until !self.class.find_by_lti_key(key)
+        end until !self.class.find_by(lti_key: key)
         self.lti_key = random_key
         self.lti_secret = ::SecureRandom::hex(20)
       end

@@ -9,8 +9,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def canvas
-    auth = current_user.authentications.find_by_provider_url_and_provider(session[:canvas_url], 'canvas')
-    auth = @user.authentications.find_by_provider('canvas')
+    auth = current_user.authentications.find_by(provider_url: session[:canvas_url], provider: 'canvas')
+    auth = @user.authentications.find_by(provider: 'canvas')
     create_external_identifier_with_url(auth, @user)
     flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => 'Canvas'
     redirect_to '/'
@@ -60,7 +60,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       if authentication
         if authentication.errors[:provider].length > 0
           user_link = 'user'
-          if previous_authentication = Authentication.find_by_provider_and_uid(auth['provider'], auth['uid'])
+          if previous_authentication = Authentication.find_by(provider: auth['provider'], uid: auth['uid'])
             user_link = %Q{<a href="#{user_profile_path(previous_authentication.user)}">#{previous_authentication.user.display_name}</a>}
           end
           message = "Another #{Rails.application.secrets.application_name} account: #{user_link} has already been associated with the specified #{auth['provider']} account."
