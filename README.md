@@ -85,6 +85,10 @@ Push secrets to production:
 Deploy to Heroku:
 `git push heroku master`
 
+###Other Services
+
+By default `config/unicorn.rb` is setup to deploy to Heroku. Open that file, comment out the Heroku section
+and uncomment the other configuration to setup unicorn for deployment to another service like AWS.
 
 ##Examples
 
