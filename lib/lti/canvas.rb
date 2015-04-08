@@ -22,11 +22,13 @@ module Lti
       tc = IMS::LTI::ToolConfig.new(
         title: title, 
         launch_url: args[:launch_url],
-        description: args[:description] || "#{Rails.application.secrets.application_name}"
+        description: args[:description] || "#{Rails.application.secrets.application_name}",
+        icon: args[:icon]
       )
 
       config = {
         'privacy_level' => 'public',
+        'domain' => args[:domain]
       }
 
       if args[:course_navigation].blank? && args[:account_navigation].blank?
@@ -41,10 +43,10 @@ module Lti
       if args[:course_navigation].present?
         config['course_navigation'] = {
           'url' => args[:launch_url],
-          'default' => 'enabled',
-          'visibility' => 'public',
-          'text' => args[:course_navigation],
-          'enabled' => true
+          'default' => args[:course_navigation][:default] || 'enabled',
+          'visibility' => args[:course_navigation][:visibility] || 'public',
+          'text' => args[:course_navigation][:text],
+          'enabled' => args[:course_navigation][:enabled]
         }
       end
 
