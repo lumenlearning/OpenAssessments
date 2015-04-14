@@ -1,0 +1,28 @@
+{
+  "name": "canvas_starter_app",
+  "version": "0.0.1",
+  "description": "Javascript for the Canvas Starter App.",
+  "main": "server.js",
+  "engines": {
+    "node": "0.10.32"
+  },
+  "scripts": {
+    "postinstall": "cd ./client && npm install",
+    "gulp": "cd ./client && npm run gulp",
+    "test": "rspec && client/bin/lint && (cd client && npm run jscs .)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/atomicjolt/canvas_starter_app"
+  },
+  "keywords": [
+    "react",
+    "Instructure Canvas",
+    "Rails",
+    "LTI",
+    "OAuth"
+  ],
+  "author": "atomicjolt",
+  "license": "MIT",
+  "homepage": "https://github.com/atomicjolt/canvas_starter_app"
+}

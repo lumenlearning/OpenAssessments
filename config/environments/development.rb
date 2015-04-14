@@ -62,4 +62,12 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # In development send *wp-bundle.js to the webpack-dev-server running on 8080
+  config.action_controller.asset_host = Proc.new { |source|
+    if source =~ /wp_bundle\.js$/i
+    "http://localhost:8080"
+    end
+  }
+  
 end
