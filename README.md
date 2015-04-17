@@ -98,9 +98,7 @@ Atomic Jolt has built a number of applications based on this source.
 
 This project was created for the Sales team at Instructure. It makes it simple to populate a sample Canvas course using values from Google Drive Spreadsheets.
 
-Live Application: [http://demoarigato.herokuapp.com/](http://demoarigato.herokuapp.com/)
-
-Source Code: [https://github.com/atomicjolt/demo_arigato](https://github.com/atomicjolt/demo_arigato)
+Source Code: [https://github.com/atomicjolt/canvas_starter_app](https://github.com/atomicjolt/canvas_starter_app)
 
 
 ##Requirements
