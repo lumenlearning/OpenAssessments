@@ -2,4 +2,4 @@
 # foreman start -f Procfile.dev
 
 web: rails s
-webpack: cd client && $(npm bin)/webpack -w --config webpack-hot-dev-server.config.js
+webpack: cd client && node webpack.hot.js
