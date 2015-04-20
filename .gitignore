@@ -34,3 +34,4 @@ bower.json
 
 client/node_modules
 npm-debug.log
+/app/assets/javascripts/styles.css
