@@ -19,6 +19,12 @@ config/secrets.yml will be used to hold values that should be kept safe and whic
 
 `mv secrets.example.yml secrets.yml`
 
+##Webpack Integration
+
+'npm install -g webpack'
+
+'cd client && webpack'
+
 ###ngrok
 
 Install [https://ngrok.com/](ngrok)
