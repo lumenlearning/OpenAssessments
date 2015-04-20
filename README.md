@@ -121,4 +121,14 @@ Learn more about [Installing Rails](http://railsapps.github.io/installing-rails.
 
 This application uses PostgreSQL with ActiveRecord.
 
+###Tests
+
+You may need to install chromedriver if you haven't already.
+
+'brew install chromedriver'
+
+To run tests:
+
+'rake spec'
+
 
