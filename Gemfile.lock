@@ -299,7 +299,6 @@ GEM
       websocket (~> 1.0)
     sendgrid (1.2.0)
       json
-      json
     shellany (0.0.1)
     shoulda-matchers (2.8.0)
       activesupport (>= 3.0.0)
