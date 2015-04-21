@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    redirect_to user_assessments_path(current_user)
   end
 
   def update
@@ -21,6 +22,11 @@ class UsersController < ApplicationController
   def destroy
     user.destroy
     redirect_to users_path, :notice => "User deleted."
+  end
+
+  def reset_authentication_token
+    current_user.reset_authentication_token!
+    redirect_to new_assessment_path
   end
 
   private

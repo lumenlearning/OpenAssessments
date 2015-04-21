@@ -48,6 +48,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    acts-as-taggable-on (3.5.0)
+      activerecord (>= 3.2, < 5)
     addressable (2.3.8)
     arel (6.0.0)
     attr_encrypted (1.3.3)
@@ -65,7 +67,6 @@ GEM
     bootstrap-sass (3.3.4.1)
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.2.19)
-    bower-rails (0.9.2)
     builder (3.2.2)
     byebug (4.0.5)
       columnize (= 0.9.0)
@@ -78,6 +79,7 @@ GEM
       xpath (~> 2.0)
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    chartkick (1.3.2)
     childprocess (0.5.6)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.0)
@@ -95,8 +97,13 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
+    email_spec (1.6.0)
+      launchy (~> 2.1)
+      mail (~> 2.2)
     encryptor (1.3.0)
     erubis (2.7.0)
+    ethon (0.7.3)
+      ffi (>= 1.3.0)
     eventmachine (1.0.5)
     execjs (2.5.2)
     factory_girl (4.5.0)
@@ -115,6 +122,8 @@ GEM
     formatador (0.2.5)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
+    groupdate (2.4.0)
+      activesupport (>= 3)
     guard (2.12.5)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -159,6 +168,7 @@ GEM
     kgio (2.9.3)
     launchy (2.4.3)
       addressable (~> 2.3)
+    libxml-ruby (2.8.0)
     listen (2.10.0)
       celluloid (~> 0.16.0)
       rb-fsevent (>= 0.9.3)
@@ -188,8 +198,11 @@ GEM
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     nenv (0.2.0)
+    newrelic_rpm (3.11.2.286)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
+    nokogiri-happymapper (0.5.9)
+      nokogiri (~> 1.5)
     non-stupid-digest-assets (1.0.4)
     notiffany (0.0.6)
       nenv (~> 0.1)
@@ -284,6 +297,9 @@ GEM
       rspec-mocks (~> 3.2.0)
       rspec-support (~> 3.2.0)
     rspec-support (3.2.2)
+    ruby-saml-mod (0.2.4)
+      ffi
+      libxml-ruby (>= 2.3.0)
     rubyzip (1.1.7)
     safe_yaml (1.0.4)
     sass (3.2.19)
@@ -331,6 +347,8 @@ GEM
     tilt (1.4.1)
     timers (4.0.1)
       hitimes
+    typhoeus (0.7.1)
+      ethon (>= 0.7.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.7.1)
@@ -359,21 +377,25 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts-as-taggable-on
+  addressable (~> 2.3.5)
   attr_encrypted
   autoprefixer-rails
   better_errors
   binding_of_caller
   bootstrap-sass
-  bower-rails
   byebug
   cancancan
   capybara
+  chartkick
   database_cleaner
   devise
+  email_spec
   factory_girl_rails
   faker
   fakeweb
   font_assets
+  groupdate
   guard-bundler
   guard-rails
   guard-rspec
@@ -385,6 +407,9 @@ DEPENDENCIES
   launchy
   mail_view
   mailcatcher
+  newrelic_rpm
+  nokogiri
+  nokogiri-happymapper
   non-stupid-digest-assets
   oauth (~> 0.4.6)!
   omniauth (~> 1.1.3)
@@ -400,11 +425,13 @@ DEPENDENCIES
   rb-fsevent
   rb-inotify
   rspec-rails
+  ruby-saml-mod
   sass-rails (~> 4.0.3)
   selenium-webdriver
   sendgrid
   shoulda-matchers
   spring
+  typhoeus
   uglifier (>= 1.3.0)
   unicorn
   unicorn-rails

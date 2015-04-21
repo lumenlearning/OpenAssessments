@@ -1,3 +1,42 @@
-<div class="well">
-  <%= render 'shared/canvas_login' %>
+<% content_for :logo_overlay do -%>
+  sign_in
+<% end -%>
+
+
+<div class="devise_form">
+  <div class="login-screen">
+    <div class="login-icon">
+      <h4>Welcome to <small>Open Assessments</small></h4>
+    </div>
+    <div class="login-form">
+      <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => 'form-horizontal', :role => 'form' }) do |f| %>
+        <h2 class="form-heading">Sign In</h2>
+        <div class="form-group">
+          <%= f.label :email, :class => "col-sm-4 control-label" %>
+          <div class="col-sm-8">
+            <%= f.email_field :email, :autofocus => true, :placeholder => 'Email address', :class => 'form-control', :type => "email" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label :password, :class => "col-sm-4 control-label" %>
+          <div class="col-sm-8">
+            <%= f.password_field :password, :placeholder => 'Password', :class => 'form-control' %>
+          </div>
+        </div>
+        <% if devise_mapping.rememberable? -%>
+        <div class="form-group">
+          <div class="col-sm-offset-4 col-sm-8">
+            <div class="checkbox">
+              <%= f.label :remember_me do %>
+                <%= f.check_box :remember_me %> Remember Me
+              <% end -%>
+            </div>
+          </div>
+        </div>
+        <% end -%>
+        <%= f.submit "Sign in",:class=>'btn btn-primary btn-lg btn-block' %>
+      <% end %>
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
 </div>

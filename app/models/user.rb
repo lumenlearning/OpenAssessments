@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
   has_many :permissions
   has_many :roles, :through => :permissions
   
+  has_many :assessment_results
+  has_many :item_results
+  has_many :assessments
+
   has_many :user_accounts
   has_many :accounts, through: :user_accounts
   belongs_to :account
@@ -22,9 +26,29 @@ class User < ActiveRecord::Base
   has_one :profile, :dependent => :destroy
 
   after_create {|user| user.create_profile unless user.profile }
-  
+  before_save :ensure_authentication_token
+
   def display_name
-    self.name || self.email
+    return self.name if self.name.present?
+    if self.email.present?
+      return self.email.split('@')[0]
+    end
+    'Me'
+  end
+
+  def self.create_anonymous
+    user = User.new
+    user.email                 = "#{::SecureRandom::hex(8)}@example.com"
+    user.password              = ::SecureRandom::hex(8)
+    user.password_confirmation = user.password
+    user.save!
+    user
+  end
+
+  def ensure_authentication_token
+    if authentication_token.blank?
+      self.authentication_token = generate_authentication_token
+    end
   end
 
   def set_default_role
@@ -169,4 +193,13 @@ class User < ActiveRecord::Base
     self.id == user.id || user.admin?
   end
   
+  private
+
+    def generate_authentication_token
+      loop do
+        token = Devise.friendly_token
+        break token unless User.where(authentication_token: token).first
+      end
+    end
+    
 end

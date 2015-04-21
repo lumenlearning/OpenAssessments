@@ -6,16 +6,99 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   helper_method :current_account
+  helper_method :signif
 
   protected
 
     rescue_from CanCan::AccessDenied do |exception|
       redirect_to root_url, :alert => exception.message
     end
-    
+
+    # **********************************************
+    #
+    # Utility methods:
+    #    
     def configure_permitted_parameters
       devise_parameter_sanitizer.for(:sign_up) << :name
       devise_parameter_sanitizer.for(:account_update) << :name
+    end
+
+    def signif(value, signs)
+      Float("%.#{signs}g" % value)
+    end
+
+    # **********************************************
+    #
+    # Domain related functionality:
+    #
+    def get_domain(url)
+      url = "http://#{url}" if URI.parse(url).scheme.nil? rescue nil
+      host = URI.parse(url).host.downcase rescue nil
+      host
+    end
+
+    def ensure_scheme(url)
+      return nil unless url.present?
+      url = "http://#{url}" unless url.starts_with?("http") || url.starts_with?('//:')
+      url
+    end
+
+    # **********************************************
+    #
+    # Embed related functionality:
+    #
+    def embed_url(assessment)
+      api_assessment_url(assessment, format: 'xml')
+    end
+
+    def embed_code(assessment, confidence_levels=true, eid=nil, enable_start=false, offline=false, src_url=nil)
+      if assessment
+        url = "#{request.host_with_port}#{assessment_path('load')}?src_url=#{embed_url(assessment)}"
+      elsif src_url
+        url = "#{request.host_with_port}#{assessment_path('load')}?src_url=#{src_url}"
+      else
+        raise "You must provide an assessment or src_url"
+      end
+      url << "&results_end_point=#{request.scheme}://#{request.host_with_port}/api"
+      url << "&assessment_id=#{assessment.id}" if assessment.present?
+      url << "&confidence_levels=true" if confidence_levels.present?
+      url << "&eid=#{eid}" if eid.present?
+      url << "&enable_start=#{enable_start}" if enable_start.present?
+      url << "&offline=true" if offline
+      if assessment
+        height = assessment.recommended_height || 400
+      else
+        height = 400
+      end
+      CGI.unescapeHTML(%Q{<iframe id="openassessments_container" src="//#{url}" frameborder="0" style="border:none;width:100%;height:100%;min-height:#{height}px;"></iframe>})
+    end    
+
+    # **********************************************
+    #
+    # Devise related functionality:
+    #
+    def after_sign_in_path_for(user)
+      user_path(user)
+    end
+
+    # **********************************************
+    #
+    # Tracking related functionality:
+    #
+    def skip_trackable
+      request.env['devise.skip_trackable'] = true
+    end
+
+    def tracking_info
+      rendered_time = Time.now
+      referer = request.env['HTTP_REFERER']
+      if !@user = User.find_by(name: request.session.id)
+        @user = User.create_anonymous
+        @user.name = request.session.id
+        @user.external_id = params[:user_id]
+        @user.save!
+      end
+      [rendered_time, referer, @user]
     end
 
     # **********************************************
@@ -119,6 +202,19 @@ class ApplicationController < ActionController::Base
     def user_not_authorized
       flash[:alert] = "Access denied."
       redirect_to (request.referrer || root_path)
+    end
+
+    def authenticate_user_from_token!
+      auth_token = params[:auth_token].presence
+      user = auth_token && User.find_by(authentication_token: auth_token.to_s)
+
+      if user
+        # Notice we are passing store false, so the user is not
+        # actually stored in the session and a token is needed
+        # for every request. If you want the token to work as a
+        # sign in token, you can simply remove store: false.
+        sign_in user, store: false
+      end
     end
 
 end

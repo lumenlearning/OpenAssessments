@@ -1,0 +1,50 @@
+<div id="assessments" class="container">
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+      <h1 class="row"><%= link_to 'Assessments', user_assessments_path(current_user.id) %> &gt; Create an Assessment</h1>
+      <%= render :partial => 'layouts/global/errors', locals: { obj: @assessment } %>
+      <div class="well row">
+        <%= form_for :assessment, :url => assessments_path, :html => { role: 'form' } do |f| -%>
+          <h2>Steps to create an assessment:</h2>
+          <ol>
+            <li>Author the assessment using a Learning Management System like <a target="_blank" href="https://canvas.instructure.com">Canvas</a>.</li>
+            <li>Create an assessment file by exporting the assessment to disk in <a target="_blank" href="http://en.wikipedia.org/wiki/QTI">QTI format</a>.</li>
+            <li>Import the assessment file here.</li>
+          </ol>
+
+          <div class="form-group">
+            <%= f.label :title, "Assessment Title", :class => "control-label" %>
+            <%= f.text_field :title, :class => "form-control" %>
+            <p class="help-block">This value is optional. If left blank OEA will attempt to use the title of the assessment from the QTI file.</p>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :keywords, "Assessment Keywords", :class => "control-label" %>
+            <%= f.text_field :keywords, :class => "form-control" %>
+            <p class="help-block">This value is optional.</p>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :description, "Description", :class => "control-label" %>
+            <%= f.text_area :description, :class => "form-control" %>
+            <p class="help-block">This value is optional.</p>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :license, "License", :class => "control-label" %>
+            <%= f.text_area :license, :class => "form-control" %>
+            <p class="help-block">This value is optional.</p>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :xml_file, "Select QTI file to upload", :class => "control-label" %>
+            <%= f.file_field :xml_file %>
+          </div>
+
+          <%= f.submit 'Upload', :class => 'btn' %>
+        <% end -%>
+
+      </div>
+    </div>
+  </div>
+</div>
