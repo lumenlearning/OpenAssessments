@@ -1,20 +1,55 @@
-@import "bootstrap-sprockets";
+@import "defines";
 @import "bootstrap";
-@import "../javascripts/styles";
+@import "nav";
+@import "home";
+@import "assessments";
+@import "assessment_results";
+@import "sections";
+@import "items";
+@import "item_results";
+@import "draggables";
+@import "devise";
 
-html {
-  position: relative;
-  min-height: 100%;
+html{
+  height:100%;
 }
-
 body{
-  padding-top: 60px;
+  font-family: 'News Cycle', 'Arial Narrow', sans-serif;
+  background: url(image-path('background.jpg')) no-repeat center center fixed;
+  background-size:cover;
+  height:100%;
+  padding-top: 75px;
 }
 
-.waiting{
-  display: none;
+#page_messages{
+  margin-top:10px;
 }
 
-.field_with_errors {
-  @extend .has-error;
+footer, .push{
+  margin-top:15px;
+  text-align:center;
+  background-color:transparent;
+  font-family: 'Merriweather', serif;
+  color: $light-blue !important;
+}
+
+footer p{
+  color: rgb(166,242,255);
+}
+
+footer p img{
+  width: auto;
+  height: 55px;
+}
+
+
+.about_content{
+  min-height:95%;
+  height:auto !important;
+  height:95%;
+  margin:0 auto -50px;
+}
+
+.alerts{
+  margin:5px 0;
 }
