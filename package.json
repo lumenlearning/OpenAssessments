@@ -2,7 +2,6 @@
   "name": "canvas_starter_app",
   "version": "0.0.1",
   "description": "Javascript for the Canvas Starter App.",
-  "main": "server.js",
   "engines": {
     "node": "0.10.32"
   },

@@ -2,8 +2,7 @@ var webpack           = require('webpack');
 var webpackDevServer  = require('webpack-dev-server');
 var release           = false;
 var settings          = require('./config/settings.js');
-var webpackConfig     = require('./config/webpack.config.js');
-
+var webpackConfig     = require('./config/webpack.config.js')(release);
 
 new webpackDevServer(webpack(webpackConfig), {
   publicPath: webpackConfig.output.publicPath,
