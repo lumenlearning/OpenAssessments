@@ -41,22 +41,22 @@ end
 
 # timeout 1800 # nuke workers after 30 seconds instead of 60 seconds (the default)
 
-# pid "/tmp/unicorn.canvasstarterapp.pid"
+# pid "/tmp/unicorn.openassessments.pid"
 
 # if env == "production" || env == 'staging'
-#   listen "/tmp/unicorn.canvasstarterapp.socket", :backlog => 64
+#   listen "/tmp/unicorn.openassessments.socket", :backlog => 64
 
-#   working_directory "/u/apps/canvasstarterapp/current"
+#   working_directory "/u/apps/openassessments/current"
 
 #   user 'ubuntu', 'ubuntu'
 
-#   shared_path = "/u/apps/canvasstarterapp/shared"# feel free to point this anywhere accessible on the filesystem
+#   shared_path = "/u/apps/openassessments/shared"# feel free to point this anywhere accessible on the filesystem
 
-#   stderr_path "/u/apps/canvasstarterapp/shared/log/unicorn.stderr.log"
-#   stdout_path "/u/apps/canvasstarterapp/shared/log/unicorn.stdout.log"
+#   stderr_path "/u/apps/openassessments/shared/log/unicorn.stderr.log"
+#   stdout_path "/u/apps/openassessments/shared/log/unicorn.stdout.log"
 
 #   before_exec do |server|
-#     ENV["BUNDLE_GEMFILE"] = "/u/apps/canvasstarterapp/current/Gemfile"
+#     ENV["BUNDLE_GEMFILE"] = "/u/apps/openassessments/current/Gemfile"
 #   end
 # end
 
@@ -69,7 +69,7 @@ end
 
 #   # Before forking, kill the master process that belongs to the .oldbin PID.
 #   # This enables 0 downtime deploys.
-#   old_pid = "/tmp/unicorn.canvasstarterapp.pid.oldbin"
+#   old_pid = "/tmp/unicorn.openassessments.pid.oldbin"
 #   if File.exists?(old_pid) && server.pid != old_pid
 #     begin
 #       Process.kill("QUIT", File.read(old_pid).to_i)
