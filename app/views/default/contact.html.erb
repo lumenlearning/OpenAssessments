@@ -1,0 +1,33 @@
+<% content_for :logo_overlay do -%>
+  contact
+<% end -%>
+
+<div class="devise_form">
+  <div class="login-screen">
+    <div class="login-icon">
+      <h2>CONTACT US</h2>
+    </div>
+    <div class="login-form">
+      <%= form_tag('/contact', :id => "contact_form") do -%>
+        <div class="form-group">
+          <%= label_tag "name", "Name", :class => "control-label" %>
+          <%= text_field_tag 'name', params[:name], :class => "form-control", :placeholder => "Enter your name" %>
+        </div>
+        <div class="form-group">
+          <%= label_tag "email", "Email", :class => "control-label" %>
+          <%= text_field_tag 'email', params[:email], :class => "form-control", :placeholder => "Enter your email" %>
+        </div>
+        <div class="form-group">
+          <%= label_tag "subject", "Subject", :class => "control-label" %>
+          <%= text_field_tag 'subject', params[:subject], :class => "form-control", :placeholder => "Enter a subject" %>
+        </div>
+        <div class="form-group">
+          <%= label_tag "message", "Message", :class => "control-label" %>
+          <%= text_area_tag 'message', params[:message], :class => "form-control", :placeholder => "Enter your message" %>
+        </div>
+        <input class="btn btn-large btn-primary" name="commit" type="submit" value="SEND">
+      <% end %>
+    </div>
+  </div>
+  <div class='push'></div>
+</div>

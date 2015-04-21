@@ -7,7 +7,7 @@ end
 
 Rails.application.routes.draw do
 
-  root :to => "home#index"
+  root :to => "default#index"
 
   devise_for :users, controllers: {
     sessions: "sessions",
