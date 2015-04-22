@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+  <assessment ident="i8d269f41877bcd4d587979c73c59a0c9" title="Unnamed Quiz">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="i608a7af9bb32b0406b12b32ce177a8be" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>question_type</fieldlabel>
+              <fieldentry>multiple_choice_question</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>points_possible</fieldlabel>
+              <fieldentry>1</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>assessment_question_identifierref</fieldlabel>
+              <fieldentry>ia1f18a14915010e2d1231a634906b8b4</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;text&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="8655">
+                <material>
+                  <mattext texttype="text/plain">The right answer</mattext>
+                </material>
+              </response_label>
+              <response_label ident="5934">
+                <material>
+                  <mattext texttype="text/plain">a wrong answer</mattext>
+                </material>
+              </response_label>
+              <response_label ident="5482">
+                <material>
+                  <mattext texttype="text/plain">another wrong answer</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="Yes">
+            <conditionvar>
+              <varequal respident="response1">8655</varequal>
+            </conditionvar>
+            <displayfeedback feedbacktype="Response" linkrefid="8655_fb"/>
+          </respcondition>
+          <respcondition continue="Yes">
+            <conditionvar>
+              <varequal respident="response1">5934</varequal>
+            </conditionvar>
+            <displayfeedback feedbacktype="Response" linkrefid="5934_fb"/>
+          </respcondition>
+          <respcondition continue="Yes">
+            <conditionvar>
+              <varequal respident="response1">5482</varequal>
+            </conditionvar>
+            <displayfeedback feedbacktype="Response" linkrefid="5482_fb"/>
+          </respcondition>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">8655</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+        <itemfeedback ident="8655_fb">
+          <flow_mat>
+            <material>
+              <mattext texttype="text/plain">some feedback on the right answer</mattext>
+            </material>
+          </flow_mat>
+        </itemfeedback>
+        <itemfeedback ident="5934_fb">
+          <flow_mat>
+            <material>
+              <mattext texttype="text/plain">wrong answer feedback</mattext>
+            </material>
+          </flow_mat>
+        </itemfeedback>
+        <itemfeedback ident="5482_fb">
+          <flow_mat>
+            <material>
+              <mattext texttype="text/plain">another wrong answer feedback</mattext>
+            </material>
+          </flow_mat>
+        </itemfeedback>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

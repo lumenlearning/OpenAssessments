@@ -1,0 +1,4649 @@
+<?xml version="1.0" standalone="no"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+
+  <item title="IN Percolation and Holding Cap 1" ident="2482726644497260">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/html"><![CDATA[<html>
+
+<body>
+
+<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber1">
+  <tr>
+    <td width="50%" align="center">
+    <p style="margin: 12">
+
+<img src="%SERVER.GRAPHICS%image0041.jpg" width="202" height="216"><br>
+    <font size="2">Example of an Entisolic Soil</font></td>
+    <td width="50%" align="center">
+    <p style="margin: 12">       <img src="%SERVER.GRAPHICS%image0061.jpg" width="182" height="216"><br>
+    <font size="2">Example of a Vertisolic Soil</font></td>
+  </tr>
+  <tr>
+    <td width="50%">
+    <p style="margin: 12">Entisolic soils have little or no evidence of development of pedogenic horizons. Many are sandy or very shallow.
+    </td>
+    <td width="50%">
+    <p style="margin: 12">Vertisolic soils have a high content of clay. They shrink when drying and have deep wide cracks at some time of the year.</td>
+  </tr>
+</table>
+<p>Based on the pictures and the information provided above, the percolation rate would be highest for soil that was made up of<BR>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+]]></mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="No">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">an upper layer containing entisolic soil and a lower layer of vertisolic soil.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">an upper layer of vertisolic soil and a lower layer of entisolic soil.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">only entisolic soil.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">only vertisolic soil.</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">C</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 an upper layer containing entisols and a lo">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 an upper layer containing entisols and a lo"/>
+      </respcondition>
+      <respcondition title="1 an upper layer of vertisols and a lower lay">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 an upper layer of vertisols and a lower lay"/>
+      </respcondition>
+      <respcondition title="2 only entisols">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="2 only entisols"/>
+      </respcondition>
+      <respcondition title="3 only vertisols">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 only vertisols"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 3b & 5b.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 3b & 5b.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 an upper layer containing entisols and a lo" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 an upper layer of vertisols and a lower lay" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 only entisols" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 only vertisols" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="IN Percolation and Holding Cap 2" ident="0583528636116451">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/html"><![CDATA[<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+</head>
+
+<body>
+
+<div align="left">
+  <table x:str border="0" cellpadding="0" cellspacing="0" width="385" style="border-collapse:
+ collapse;width:288pt">
+    <colgroup>
+      <col width="64" style="width:48pt"><col width="20" style="width: 15pt">
+      <col width="64" style="width:48pt"><col width="15" style="width: 11pt">
+      <col width="64" style="width:48pt"><col width="15" style="width: 11pt">
+      <col width="64" style="width:48pt"><col width="15" style="width: 11pt">
+      <col width="64" style="width:48pt">
+    </colgroup>
+    <tr height="17" style="height:12.75pt">
+      <td height="17" width="64" style="height: 12.75pt; width: 48pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border: .5pt solid windowtext; padding: 0px">
+      Surface</td>
+      <td rowspan="5" width="20" style="width: 15pt; font-weight: 700; font-family: 'Times New Roman', serif; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px">
+      &nbsp;</td>
+      <td width="64" style="width: 48pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; padding: 0px">
+      Field A</td>
+      <td rowspan="5" width="15" style="width: 11pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px">
+      &nbsp;</td>
+      <td width="64" style="width: 48pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; padding: 0px">
+      Field B</td>
+      <td rowspan="5" width="15" style="width: 11pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px">
+      &nbsp;</td>
+      <td width="64" style="width: 48pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; padding: 0px">
+      Field C</td>
+      <td rowspan="5" width="15" style="width: 11pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px">
+      &nbsp;</td>
+      <td width="64" style="width: 48pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; padding: 0px">
+      Field D</td>
+    </tr>
+    <tr height="32" style="height: 24.0pt">
+      <td rowspan="4" height="128" width="64" style="height: 96.0pt; width: 48pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: left; vertical-align: top; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid black; padding: 0px">
+      <p style="text-align: center; line-height: 200%; margin-top: 5; margin-bottom: 5">
+      Soil Depth<br>
+      <img src="%SERVER.GRAPHICS%down arrow.gif" width="8" height="89"></td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; height: 24pt; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: silver">
+      Gravel</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: silver">
+      Gravel</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: silver">
+      Gravel</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: silver">
+      Gravel</td>
+    </tr>
+    <tr height="32" style="height: 24.0pt">
+      <td height="32" style="height: 24.0pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: #FFCC99">
+      Sand</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: #FF6600; ">
+      Clay</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: #C0C0C0; ">
+      Gravel</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: silver">
+      Gravel</td>
+    </tr>
+    <tr height="32" style="height: 24.0pt">
+      <td height="32" style="height: 24.0pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: #FFCC99">
+      Sand</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: #FF6600">
+      Clay</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: #FF6600">
+      Clay</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: #FF6600">
+      Clay</td>
+    </tr>
+    <tr height="32" style="height: 24.0pt">
+      <td height="32" style="height: 24.0pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: #FF6600">
+      Clay</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: #FF6600; ">
+      Clay</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: #FFCC99; ">
+      Sand</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: #FF6600">
+      Clay</td>
+    </tr>
+  </table>
+</div>
+<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-width: 0" bordercolor="#111111" width="100%" id="AutoNumber1">
+  <tr>
+    <td style="border-style: none; border-width: medium">
+    <p style="margin-left: 12"><br>
+    Each column in the chart above represents a field and its soil layers. All
+    other conditions equal, which field will have the lowest percolation rate?
+    </td>
+  </tr>
+</table>
+
+&nbsp;</body></html>
+
+]]></mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="No">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">Field A</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">Field B</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">Field C</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">Field D</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">B</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 Field A">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 Field A"/>
+      </respcondition>
+      <respcondition title="1 Field B">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="1 Field B"/>
+      </respcondition>
+      <respcondition title="2 Field C">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 Field C"/>
+      </respcondition>
+      <respcondition title="3 Field D">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 Field D"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review 3b, 5b, & 5c.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review 3b, 5b, & 5c.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 Field A" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 Field B" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 Field C" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 Field D" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="IN Percolation and Holding Cap 3" ident="7621823212147977">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/html"><![CDATA[<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>New Page 1</title>
+</head>
+
+<body>
+
+&nbsp;<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-width: 0" bordercolor="#111111" width="100%" id="AutoNumber1">
+  <tr>
+    <td width="25%" style="border-style: none; border-width: medium">
+    <p align="center">
+    <img border="0" src="%SERVER.GRAPHICS%granular.gif" width="126" height="200"><br>
+    Granular Soil</td>
+    <td width="25%" style="border-left-style: none; border-left-width: medium; border-right-style: none; border-right-width: medium; border-top: medium none #111111; border-bottom: medium none #111111">
+    <p align="center">
+    <img border="0" src="%SERVER.GRAPHICS%Prismatic.gif" width="125" height="199"><br>
+    Prismatic Soil</td>
+    <td width="25%" style="border-left-style: none; border-left-width: medium; border-right-style: none; border-right-width: medium; border-top: medium none #111111; border-bottom: medium none #111111">
+    <div style="padding-top: 1">
+      <p align="center">
+      <img border="0" src="%SERVER.GRAPHICS%subangular.gif" width="124" height="199"><br>
+      Subangular Blocky Soil</div>
+    </td>
+    <td width="25%" style="border-left-style: none; border-left-width: medium; border-right-style: none; border-right-width: medium; border-top: medium none #111111; border-bottom: medium none #111111">
+    <p align="center">
+    <img border="0" src="%SERVER.GRAPHICS%platy.gif" width="124" height="198"><br>
+    Platy Soil</td>
+  </tr>
+</table>
+<p><p>In the figure above, which soil type has the lowest percolation rate?<BR>
+
+</body>
+
+</html>
+
+]]></mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="No">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">Granular Soil</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain"> Prismatic Soil</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">Subangular Blocky Soil</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">Platy Soil</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">D</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 granular">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 granular"/>
+      </respcondition>
+      <respcondition title="1  prismatic">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1  prismatic"/>
+      </respcondition>
+      <respcondition title="2 subangular">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 subangular"/>
+      </respcondition>
+      <respcondition title="3 platy">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="3 platy"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 5b.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 5b.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 granular" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1  prismatic" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 subangular" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 platy" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="IN Percolation and Holding Cap 4" ident="5991602859951872">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/html"><![CDATA[<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>New Page 1</title>
+</head>
+
+<body>
+
+<div align="left">
+  <table x:str border="0" cellpadding="0" cellspacing="0" width="385" style="border-collapse:
+ collapse;width:288pt">
+    <colgroup>
+      <col width="64" style="width:48pt"><col width="20" style="width: 15pt">
+      <col width="64" style="width:48pt"><col width="15" style="width: 11pt">
+      <col width="64" style="width:48pt"><col width="15" style="width: 11pt">
+      <col width="64" style="width:48pt"><col width="15" style="width: 11pt">
+      <col width="64" style="width:48pt">
+    </colgroup>
+    <tr height="17" style="height:12.75pt">
+      <td height="17" width="64" style="height: 12.75pt; width: 48pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border: .5pt solid windowtext; padding: 0px">
+      Surface</td>
+      <td rowspan="5" width="20" style="width: 15pt; font-weight: 700; font-family: 'Times New Roman', serif; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px">
+      &nbsp;</td>
+      <td width="64" style="width: 48pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; padding: 0px">
+      Field A</td>
+      <td rowspan="5" width="15" style="width: 11pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px">
+      &nbsp;</td>
+      <td width="64" style="width: 48pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; padding: 0px">
+      Field B</td>
+      <td rowspan="5" width="15" style="width: 11pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px">
+      &nbsp;</td>
+      <td width="64" style="width: 48pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; padding: 0px">
+      Field C</td>
+      <td rowspan="5" width="15" style="width: 11pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px">
+      &nbsp;</td>
+      <td width="64" style="width: 48pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; padding: 0px">
+      Field D</td>
+    </tr>
+    <tr height="32" style="height: 24.0pt">
+      <td rowspan="4" height="128" width="64" style="height: 96.0pt; width: 48pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: top; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid black; padding: 0px">
+      <p style="margin-top: 9">Soil Depth<br>
+      <img src="%SERVER.GRAPHICS%down arrow.gif" width="8" height="89"></td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; height: 24pt; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: #FFCC99">
+      Sand</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: silver">
+      Gravel</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: silver">
+      Gravel</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: #FFCC99">
+      Sand</td>
+    </tr>
+    <tr height="32" style="height: 24.0pt">
+      <td height="32" style="height: 24.0pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: #FFCC99">
+      Sand</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: silver">
+      Gravel</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: #FF6600">
+      Clay</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: #FFCC99">
+      Sand</td>
+    </tr>
+    <tr height="32" style="height: 24.0pt">
+      <td height="32" style="height: 24.0pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: #FFCC99">
+      Sand</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: silver">
+      Gravel</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: #FF6600">
+      Clay</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: silver">
+      Gravel</td>
+    </tr>
+    <tr height="32" style="height: 24.0pt">
+      <td height="32" style="height: 24.0pt; font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: #FF6600">
+      Clay</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: #FFCC99">
+      Sand</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: silver">
+      Gravel</td>
+      <td style="font-weight: 700; font-family: 'Times New Roman', serif; text-align: center; vertical-align: middle; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding: 0px; background: silver">
+      Gravel</td>
+    </tr>
+  </table>
+</div>
+<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-width: 0" bordercolor="#111111" id="AutoNumber1">
+  <tr>
+    <td style="border-style: none; border-width: medium"><br>
+    Each column in the chart above represents a field and its soil layers.&nbsp;
+If an equal amount of rain falls on each of the fields, which field will have
+the most available water?</td>
+  </tr>
+</table>
+&nbsp;</body></html>
+
+
+]]></mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="No">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">Field A</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">Field B</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">Field C</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">Field D</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">C</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 1">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 1"/>
+      </respcondition>
+      <respcondition title="1 2">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 2"/>
+      </respcondition>
+      <respcondition title="2 3">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="2 3"/>
+      </respcondition>
+      <respcondition title="3 4">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 4"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 3b & 5c.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 3b & 5c.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 1" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 2" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 3" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 4" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="IN Percolation and Holding Cap 5" ident="2007760850477150">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/html"><![CDATA[<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<title>New Page 1</title>
+</head>
+
+<body>
+
+&nbsp;<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-width: 0" bordercolor="#111111" width="46%" id="AutoNumber1">
+  <tr>
+    <td width="17%" style="border-style: none; border-width: medium">
+
+<img src="%SERVER.GRAPHICS%Perc & WHC5.jpg" width="93" height="215"></td>
+    <td width="83%" style="border-style: none; border-width: medium">
+
+<img src="%SERVER.GRAPHICS%Layer A.gif" width="169" height="55"></td>
+  </tr>
+</table>
+<p>A researcher determines that the soil in Layer A above has a low percolation rate.  What type of soil would you most likely find in Layer A?</p>
+
+</body>
+
+</html>
+
+
+
+]]></mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">loam</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">clay</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">silt</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">sand</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">B</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 loam">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 loam"/>
+      </respcondition>
+      <respcondition title="1 clay">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="1 clay"/>
+      </respcondition>
+      <respcondition title="2 silt">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 silt"/>
+      </respcondition>
+      <respcondition title="3 sand">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 sand"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 3b & 5b.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 3b & 5b.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 loam" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 clay" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 silt" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 sand" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="IN Water Availability" ident="3993886462603699">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/html"><![CDATA[<img src="%SERVER.GRAPHICS%watercapacity1.gif" width="579" height="285"><p>Using the figure above, available water capacity is represented as <br>
+]]></mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="No">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/html"><![CDATA[the point at which the line for field capacity and the line for wilting point would meet.]]></mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">the difference between the line for field capacity and the line for wilting point.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">the point at which a vertical line would divide the area in half.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">the point at which a horizontal line would divide the area in half.</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">B</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 the point at which the wilting point and th">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 the point at which the wilting point and th"/>
+      </respcondition>
+      <respcondition title="1 the area between the line for wilting point">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="1 the area between the line for wilting point"/>
+      </respcondition>
+      <respcondition title="2 the point at which a vertical line could di">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 the point at which a vertical line could di"/>
+      </respcondition>
+      <respcondition title="3 the point at which a horizontal line could">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 the point at which a horizontal line could"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6c.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6c.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 the point at which the wilting point and th" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 the area between the line for wilting point" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 the point at which a vertical line could di" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 the point at which a horizontal line could" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="IN Water Availability 2" ident="9558823361483281">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/html"><![CDATA[<html>
+
+<body>
+
+<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber1">
+  <tr>
+    <td width="50%" align="center">
+    <p style="margin: 12">
+
+<img src="%SERVER.GRAPHICS%image0041.jpg" width="202" height="216"><br>
+    <font size="2">Example of an Entisolic Soil</font></td>
+    <td width="50%" align="center">
+    <p style="margin: 12">       <img src="%SERVER.GRAPHICS%image0061.jpg" width="182" height="216"><br>
+    <font size="2">Example of a Vertisolic Soil</font></td>
+  </tr>
+  <tr>
+    <td width="50%">
+    <p style="margin: 12">Entisolic soils have little or no evidence of development of pedogenic horizons. Many are sandy or very shallow.
+    </td>
+    <td width="50%">
+    <p style="margin: 12">Vertisolic soils have a high content of clay. They shrink when drying and have deep wide cracks at some time of the year.</td>
+  </tr>
+</table>
+<p>Base on the information provided, one can assume that</p>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+]]></mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="No">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">vertisolic soils would not easily support plant life.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">water would easily percolate through vertisolic soils.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">entisolic soils would not easily support plant life.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain"> entisolic soils cannot hold water.</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">A</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 vertisolic soil would not easily support pl">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="0 vertisolic soil would not easily support pl"/>
+      </respcondition>
+      <respcondition title="1 water would easily drain through vertisolic">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 water would easily drain through vertisolic"/>
+      </respcondition>
+      <respcondition title="2 entisolic soil cannot support plant life.">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 entisolic soil cannot support plant life."/>
+      </respcondition>
+      <respcondition title="3  entisolic soil cannot hold water.">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3  entisolic soil cannot hold water."/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 3b & 6c.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 3b & 6c.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 vertisolic soil would not easily support pl" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 water would easily drain through vertisolic" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 entisolic soil cannot support plant life." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3  entisolic soil cannot hold water." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="IN Water Availability 3" ident="2270893022436522">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/html"><![CDATA[<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>New Page 1</title>
+</head>
+
+<body>
+<img src="%SERVER.GRAPHICS%Rock v Organic1.gif" width="508" height="273"></p>The texture of the soil is the same for all the fields represented in the graph above. If all of the fields have received the same amount of precipitation, which field has the most available water?</p>
+
+</body>
+
+</html>]]></mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="No">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">Field A</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">Field B</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">Field C</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">Field D</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">C</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 Field A">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 Field A"/>
+      </respcondition>
+      <respcondition title="1 Field B">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 Field B"/>
+      </respcondition>
+      <respcondition title="2 Field C">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="2 Field C"/>
+      </respcondition>
+      <respcondition title="3 Field D">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 Field D"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 4a.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 4a.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 Field A" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 Field B" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 Field C" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 Field D" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="IN Water Availability 4" ident="6728085471971363">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/html"><![CDATA[<img src="%SERVER.GRAPHICS%watercapacity.gif" width="579" height="285"></p>Based on the information provided by graph above, which of the following statements is true?</p>
+
+]]></mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">Strong bonds between particles in fine grain soils lead to more available water capacity.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">Sand has the highest available water capacity because of the large spaces between soil particles.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">Available water capacity is determined by adding the field capacity and the wilting point.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">Porosity and soil type influence the available water capacity.</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">D</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 Strong bonds between particles in fine grai">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 Strong bonds between particles in fine grai"/>
+      </respcondition>
+      <respcondition title="1 Sand has the highest available water becaus">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 Sand has the highest available water becaus"/>
+      </respcondition>
+      <respcondition title="2 Available water is determined by adding the">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 Available water is determined by adding the"/>
+      </respcondition>
+      <respcondition title="3 Porosity and soil type influence the amount">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="3 Porosity and soil type influence the amount"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6c.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6c.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 Strong bonds between particles in fine grai" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 Sand has the highest available water becaus" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 Available water is determined by adding the" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 Porosity and soil type influence the amount" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="IN Water Availability 5" ident="9780558477090423">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/html"><![CDATA[<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+</head>
+
+<body>
+
+<table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" style="border-collapse: collapse" height="147" bordercolor="#000000">
+  <tr style="height:12.75pt">
+    <td nowrap valign="bottom" style="border-style:solid; border-width:1; width:45.75pt;height:41; padding-left:4; padding-right:4; padding-top:1; padding-bottom:1">
+    <p class="MsoNormal"><span style="font-size:10.0pt;">&nbsp;</span></td>
+    <td nowrap colspan="2" valign="bottom" style="border-style:solid; border-width:1; width:225.0pt;height:41; padding-left:4; padding-right:4; padding-top:1; padding-bottom:1">
+    <p class="MsoNormal" align="center" style="text-align:center">
+    <b><font size="4">Moisture Readings</font></b><font size="4"><span style="font-weight:700"><br>
+    </span></font><span style="font-size:10.0pt;font-weight:700">(in cm of water per meter of soil)</span></td>
+  </tr>
+  <tr style="height:12.75pt">
+    <td nowrap valign="bottom" style="border-style:solid; border-width:1; width:45.75pt;height:35; padding-left:4; padding-right:4; padding-top:1; padding-bottom:1">
+    <p class="MsoNormal" align="center"><b><span style="font-size:10.0pt;">
+    Sample<br>
+&nbsp;</span></b></td>
+    <td nowrap valign="bottom" style="border-style:solid; border-width:1; width:1.5in;height:35; padding-left:4; padding-right:4; padding-top:1; padding-bottom:1">
+    <p class="MsoNormal" align="center"><b><span style="font-size:10.0pt;">
+    Moisture held at field capacity</span></b></td>
+    <td nowrap valign="bottom" style="border-style:solid; border-width:1; width:117.0pt;height:34; padding-left:4; padding-right:4; padding-top:1; padding-bottom:1">
+    <p class="MsoNormal" align="center"><b><span style="font-size:10.0pt;">
+    Moisture held at permanent wilting point</span></b></td>
+  </tr>
+  <tr style="height:12.75pt">
+    <td nowrap valign="bottom" style="border-style:solid; border-width:1; width:45.75pt;height:19; padding-left:4; padding-right:4; padding-top:1; padding-bottom:1">
+    <p class="MsoNormal" align="center"><span style="font-size:10.0pt;">Soil A</td>
+    <td nowrap valign="bottom" style="border-style:solid; border-width:1; width:1.5in;height:19; padding-left:4; padding-right:4; padding-top:1; padding-bottom:1">
+    <p class="MsoNormal" align="center" style="text-align:center">
+    <font size="2">10.1</font></td>
+    <td nowrap valign="bottom" style="border-style:solid; border-width:1; width:117.0pt;height:19; padding-left:4; padding-right:4; padding-top:1; padding-bottom:1">
+    <p class="MsoNormal" align="center" style="text-align:center">
+    <font size="2">4.7</font></td>
+  </tr>
+  <tr style="height:12.75pt">
+    <td nowrap valign="bottom" style="border-style:solid; border-width:1; width:45.75pt;height:19; padding-left:4; padding-right:4; padding-top:1; padding-bottom:1">
+    <p class="MsoNormal" align="center" style="text-align:center">
+    <span style="font-size:10.0pt;">Soil B</td>
+    <td nowrap valign="bottom" style="border-style:solid; border-width:1; width:1.5in;height:19; padding-left:4; padding-right:4; padding-top:1; padding-bottom:1">
+    <p class="MsoNormal" align="center" style="text-align:center">
+    <font size="2">15.4</font></td>
+    <td nowrap valign="bottom" style="border-style:solid; border-width:1; width:117.0pt;height:19; padding-left:4; padding-right:4; padding-top:1; padding-bottom:1">
+    <p class="MsoNormal" align="center" style="text-align:center">
+    <font size="2">5.2</font></td>
+  </tr>
+  <tr style="height:12.75pt">
+    <td nowrap valign="bottom" style="border-style:solid; border-width:1; width:45.75pt;height:19; padding-left:4; padding-right:4; padding-top:1; padding-bottom:1">
+    <p class="MsoNormal" align="center" style="text-align:center">
+    <span style="font-size:10.0pt;">Soil C</span></td>
+    <td nowrap valign="bottom" style="border-style:solid; border-width:1; width:1.5in;height:19; padding-left:4; padding-right:4; padding-top:1; padding-bottom:1">
+    <p class="MsoNormal" align="center" style="text-align:center">
+    <font size="2">23.1</font></td>
+    <td nowrap valign="bottom" style="border-style:solid; border-width:1; width:117.0pt;height:19; padding-left:4; padding-right:4; padding-top:1; padding-bottom:1">
+    <p class="MsoNormal" align="center" style="text-align:center">
+    <font size="2">7.6</font></td>
+  </tr>
+  <tr style="height: 12.75pt">
+    <td nowrap valign="bottom" style="border-style:solid; border-width:1; width:45.75pt;height:19; padding-left:4; padding-right:4; padding-top:1; padding-bottom:1">
+    <p class="MsoNormal" align="center" style="text-align:center">
+    <span style="font-size:10.0pt;">Soil D</span></td>
+    <td nowrap valign="bottom" style="border-style:solid; border-width:1; width:1.5in;height:19; padding-left:4; padding-right:4; padding-top:1; padding-bottom:1">
+    <p class="MsoNormal" align="center" style="text-align:center">
+    <font size="2">32.9</font></td>
+    <td nowrap valign="bottom" style="border-style:solid; border-width:1; width:117.0pt;height:19; padding-left:4; padding-right:4; padding-top:1; padding-bottom:1">
+    <p class="MsoNormal" align="center" style="text-align:center">
+    <font size="2">24.3</font></td>
+  </tr>
+</table>
+<p class="MsoNormal">A researcher collected information on four different soil samples,
+which is recorded in the table above.&nbsp; Using the table, determine
+which soil sample has the largest available water capacity?</p>
+
+</body>
+
+</html>
+
+]]></mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="No">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">Soil A</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">Soil B</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">Soil C</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">Soil D</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">C</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 Soil A">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 Soil A"/>
+      </respcondition>
+      <respcondition title="1 Soil B">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 Soil B"/>
+      </respcondition>
+      <respcondition title="2 Soil C">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="2 Soil C"/>
+      </respcondition>
+      <respcondition title="3 Soil D">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 Soil D"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6c.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6c.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 Soil A" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 Soil B" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 Soil C" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 Soil D" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Available Water - Compost" ident="0565458336192029">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">Which of the following is the best way to increase the water retention of soils?
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">Remove nitrates.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">Remove peat moss.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">Add compost.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">Add fertilizer.</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">C</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 remove nitrates">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 remove nitrates"/>
+      </respcondition>
+      <respcondition title="1 remove peat moss">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 remove peat moss"/>
+      </respcondition>
+      <respcondition title="2 add compost">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="2 add compost"/>
+      </respcondition>
+      <respcondition title="3 add fertilizer">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 add fertilizer"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 4 (a thru e).</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 4 (a thru e).</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 remove nitrates" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 remove peat moss" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 add compost" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 add fertilizer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Available Water - Organic" ident="2220109110224884">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/html"><![CDATA[All other things being equal, which of the following actions should <B>increase </B>available water?<BR>]]></mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">Increase the amount of dead plant and animal matter in the soil.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">Decrease the amount of dead plant and animal matter in the soil.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">It depends on the ratio of dead plant matter to animal matter.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">Minimize the occurrence of natural composting.</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">A</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 Increased content of dead plant and dead an">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="0 Increased content of dead plant and dead an"/>
+      </respcondition>
+      <respcondition title="1 Decreased content of dead plant and dead an">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 Decreased content of dead plant and dead an"/>
+      </respcondition>
+      <respcondition title="2 A stable mix of dead plant matter and dead">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 A stable mix of dead plant matter and dead"/>
+      </respcondition>
+      <respcondition title="3 Minimizing the occurrence of natural compos">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 Minimizing the occurrence of natural compos"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 4a & 4e.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 4a & 4e.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 Increased content of dead plant and dead an" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 Decreased content of dead plant and dead an" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 A stable mix of dead plant matter and dead" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 Minimizing the occurrence of natural compos" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Available Water - Texture" ident="4202346445669754">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">Which one of the following soil types typically contains the largest amount of available water?
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="No">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">clay</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">sand  </mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">mixture of sand and clay</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">Available water has nothing to do with the type of soils.</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">C</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 Clay">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 Clay"/>
+      </respcondition>
+      <respcondition title="1 Sand">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 Sand"/>
+      </respcondition>
+      <respcondition title="2 Mixture of sand and clay">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="2 Mixture of sand and clay"/>
+      </respcondition>
+      <respcondition title="3 Available water has nothing to do with the">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 Available water has nothing to do with the"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6c.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6c.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 Clay" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 Sand" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 Mixture of sand and clay" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 Available water has nothing to do with the" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Definition - Available Water" ident="6453561237201024">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">The amount of water in the soil that can be used by plants is the
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">available water.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">field capacity.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">saturation point.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">porosity.</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">A</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 available water." continue="Yes">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="0 available water."/>
+      </respcondition>
+      <respcondition title="1 field capacity.">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 field capacity."/>
+      </respcondition>
+      <respcondition title="2 saturation point.">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 saturation point."/>
+      </respcondition>
+      <respcondition title="3 porosity.">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 porosity."/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 5a & 6a.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 5a & 6a.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 available water." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 field capacity." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 saturation point." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 porosity." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Definition - Field Capacity" ident="8835840202445679">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">Which of the following is involved in controlling field capacity?
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">the amount of yield a field produces in the fall harvest</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">the texture of the soil in the field</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">the amount of water absorbed through transpiration</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">the size of the field relative to the amount of crops planted</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">B</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 The amount of yield a field produces in the">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 The amount of yield a field produces in the"/>
+      </respcondition>
+      <respcondition title="1 The texture of the soil in the field.">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="1 The texture of the soil in the field."/>
+      </respcondition>
+      <respcondition title="2 The amount of water absorbed through transp">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 The amount of water absorbed through transp"/>
+      </respcondition>
+      <respcondition title="3 The size of the field relative to the amoun">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 The size of the field relative to the amoun"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6a.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6a.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 The amount of yield a field produces in the" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 The texture of the soil in the field." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 The amount of water absorbed through transp" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 The size of the field relative to the amoun" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Definition - Oven Dry" ident="6357022457122306">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">You have analyzed the amount of water in six soil samples brought to your school from six different farmers' fields. You found that one has no water at all. How would you describe the level of soil water in this field?
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">oven dry</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">at the field capacity</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">saturated</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">at the permanent wilting point</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">A</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 Oven dry">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="0 Oven dry"/>
+      </respcondition>
+      <respcondition title="1 At field capacity">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 At field capacity"/>
+      </respcondition>
+      <respcondition title="2 Saturated">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 Saturated"/>
+      </respcondition>
+      <respcondition title="3 At permanent wilting">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 At permanent wilting"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6a.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6a.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 Oven dry" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 At field capacity" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 Saturated" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 At permanent wilting" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Definition - Oven Dry 2" ident="4181192823833004">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">An oven dry field has
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">no soil water available to plants.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">soil water available only to plants under stress.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">soil water readily available to plants.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">soil water readily draining from the field</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">A</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 unavailable to plants.">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="0 unavailable to plants."/>
+      </respcondition>
+      <respcondition title="1 available only to plants under stress.">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 available only to plants under stress."/>
+      </respcondition>
+      <respcondition title="2 readily available to plants.">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 readily available to plants."/>
+      </respcondition>
+      <respcondition title="3 readily draining from the field">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 readily draining from the field"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6a.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6a.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 unavailable to plants." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 available only to plants under stress." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 readily available to plants." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 readily draining from the field" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Definition - Percolation" ident="5956394848703756">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">Which of the following describes the rate at which water moves through soil?
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">percolation</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">available water</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">holding capacity</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">precipitation </mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">A</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 Percolation rate">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="0 Percolation rate"/>
+      </respcondition>
+      <respcondition title="1 Available water">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 Available water"/>
+      </respcondition>
+      <respcondition title="2 Holding capacity">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 Holding capacity"/>
+      </respcondition>
+      <respcondition title="3 Precipitation">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 Precipitation"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 5b, 5c, & 6a.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 5b, 5c, & 6a.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 Percolation rate" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 Available water" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 Holding capacity" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 Precipitation" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Definition - Porosity" ident="1426579350690851">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">After analyzing a soil sample, you find that the amount of space around the soil particles is very low, so the soil can only hold a small amount of water. Your analysis leads you to decide that the soil has
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">low compaction.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">high ped volume.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">high percolation.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">low porosity.</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">D</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 low compaction.">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 low compaction."/>
+      </respcondition>
+      <respcondition title="1 high ped volume.">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 high ped volume."/>
+      </respcondition>
+      <respcondition title="2 high percolation.">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 high percolation."/>
+      </respcondition>
+      <respcondition title="3 low porosity">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="3 low porosity"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 5a, 5b, & 5c.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 5a, 5b, & 5c.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 low compaction." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 high ped volume." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 high percolation." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 low porosity" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Definition - Saturation" ident="1168114764799767">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">When the available water in a field is at the field capacity, that field
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">will absorb more water when it rains.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">is at the saturation point.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">is at the permanent wilting point.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">will increase in field capacity when it rains.</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">B</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 be just shy of saturation.">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 be just shy of saturation."/>
+      </respcondition>
+      <respcondition title="1 actively shed water.">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="1 actively shed water."/>
+      </respcondition>
+      <respcondition title="2 be at permanent wilting point.">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 be at permanent wilting point."/>
+      </respcondition>
+      <respcondition title="3 increase in field capacity.">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 increase in field capacity."/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6a.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6a.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 be just shy of saturation." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 actively shed water." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 be at permanent wilting point." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 increase in field capacity." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Definition - Water Capacity" ident="8828700823826913">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">How can a farmer determine the available water capacity of her field?
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">Find the amount of rainfall during that season and subtract the permanent wilting level.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">Calculate the proportion of soil water relative to the amount of ground water.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">Add the field capacity and the permanent wilting level.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">Subtract the permanent wilting level from the field capacity.</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">D</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 Find the amount of rainfall during that sea">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 Find the amount of rainfall during that sea"/>
+      </respcondition>
+      <respcondition title="1 Calculate the proportion of soil water rela">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 Calculate the proportion of soil water rela"/>
+      </respcondition>
+      <respcondition title="2 Add the field capacity and the permanent wi">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 Add the field capacity and the permanent wi"/>
+      </respcondition>
+      <respcondition title="3 Find the field capacity and subtract the pe">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="3 Find the field capacity and subtract the pe"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6c.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6c.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 Find the amount of rainfall during that sea" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 Calculate the proportion of soil water rela" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 Add the field capacity and the permanent wi" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 Find the field capacity and subtract the pe" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Definition - Water Capacity 2" ident="1757957202240658">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">When the available water is equal to the field capacity, the available water
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">is equal to the available water capacity.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">will increase with the next heavy rain.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">is greater than the available water capacity.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">is maximized for plant growth.</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">A</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 is equal to the maximum possible available">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="0 is equal to the maximum possible available"/>
+      </respcondition>
+      <respcondition title="1 will be unaffected by a heavy rain.">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 will be unaffected by a heavy rain."/>
+      </respcondition>
+      <respcondition title="2 is greater than the maximum possible availa">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 is greater than the maximum possible availa"/>
+      </respcondition>
+      <respcondition title="3 is being used by plants.">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 is being used by plants."/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6c.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6c.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 is equal to the maximum possible available" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 will be unaffected by a heavy rain." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 is greater than the maximum possible availa" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 is being used by plants." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Definition - Wilting Point" ident="1069596223316074">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">When water is so tightly bound to soil particles that a plant's roots cannot extract it, this is called the
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">permanent wilting point.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">saturation point.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">hygroscopic point.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">absorption point.</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">A</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 permanent wilting point.">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="0 permanent wilting point."/>
+      </respcondition>
+      <respcondition title="1 saturation point.">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 saturation point."/>
+      </respcondition>
+      <respcondition title="2 hygroscopic point.">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 hygroscopic point."/>
+      </respcondition>
+      <respcondition title="3 absorption point.">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 absorption point."/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 6a & 6d.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 6a & 6d.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 permanent wilting point." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 saturation point." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 hygroscopic point." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 absorption point." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Definition - Wilting Point - retired" ident="5636292446178737">
+    <qticomment>
+AUTHOR The Learning Partnership
+NAME Retirment Explanation
+DATE June 01, 2002 15:47:03
+This item was originally used in testing with Janet Bell-Wehr May 2002. The prompt was based on text that only appeared in the teacher notes. It was changed to reflect text that appeared in the curriculum.
+</qticomment>
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Retired</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">When the extractive force of a plant's roots is equal to the soil capillary force, this is called the
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">permanent wilting point.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">saturation point.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">hygroscopic point.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">absorption point.</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="0 permanent wilting point.">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="0 permanent wilting point."/>
+      </respcondition>
+      <respcondition title="1 saturation point.">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 saturation point."/>
+      </respcondition>
+      <respcondition title="2 hygroscopic point.">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 hygroscopic point."/>
+      </respcondition>
+      <respcondition title="3 absorption point.">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 absorption point."/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="0 permanent wilting point." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 saturation point." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 hygroscopic point." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 absorption point." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Definition - Wilting Point 2" ident="6334403816600238">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">The permanent wilting point refers to the point at which
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">a field cannot hold any more water.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">there is no water in a field.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">plants cannot extract the water in a field.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">water is immediately available for plants to use.  </mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">C</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 the maximum amount of water that a field ca">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 the maximum amount of water that a field ca"/>
+      </respcondition>
+      <respcondition title="1 no water exist on a field.">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 no water exist on a field."/>
+      </respcondition>
+      <respcondition title="2 no more water can be taken out of the soil">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="2 no more water can be taken out of the soil"/>
+      </respcondition>
+      <respcondition title="3 the water is immediately available to natur">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 the water is immediately available to natur"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6a.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6a.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 the maximum amount of water that a field ca" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 no water exist on a field." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 no more water can be taken out of the soil" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 the water is immediately available to natur" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Soil Texture - drain" ident="1348893224026450">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/html"><![CDATA[<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>New Page 1</title>
+</head>
+
+<body>
+
+<p>A farmer recently examined the soil in his fields. The following are some of
+the characteristics he found.</p>
+<ul>
+  <li>The soil contains a high amount of sand. </li>
+  <li>Soil oxygen levels appear high. </li>
+  <li>The water level in the soil is approximately 50% of the field capacity.</li>
+</ul>
+<p>Based on the above information, which of the following would be true about
+the soil?</p>
+
+</body>
+
+</html>
+]]></mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">The soil drains freely and can become very dry.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">There is little space between particles.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">The soil has small particles and a large surface area.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">There is a lot of organic matter present in the soil.</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">A</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 The soil drains freely and is very dry.">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="0 The soil drains freely and is very dry."/>
+      </respcondition>
+      <respcondition title="1 There is little space between particles.">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 There is little space between particles."/>
+      </respcondition>
+      <respcondition title="2 The soil has small particles and a large surface">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 The soil has small particles and a large surface"/>
+      </respcondition>
+      <respcondition title="3 There is a lot of organic matter present.">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 There is a lot of organic matter present."/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 3b, 4a, & 6c.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 3b, 4a, & 6c.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 The soil drains freely and is very dry." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 There is little space between particles." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 The soil has small particles and a large surface" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 There is a lot of organic matter present." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Soil Texture - drain 2" ident="7403857132784534">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">You can expect soils with a gritty texture to
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="No">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">drain slowly.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">drain quickly.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">be smaller in diameter than silt.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">be smaller in diameter than clay.</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">B</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 drain too slowly.">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 drain too slowly."/>
+      </respcondition>
+      <respcondition title="1 drain too quickly.">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="1 drain too quickly."/>
+      </respcondition>
+      <respcondition title="2 be smaller in diameter than silt.">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 be smaller in diameter than silt."/>
+      </respcondition>
+      <respcondition title="3 be smaller in diameter than clay.">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 be smaller in diameter than clay."/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 3b & 6c.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 3b & 6c.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 drain too slowly." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 drain too quickly." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 be smaller in diameter than silt." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 be smaller in diameter than clay." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Soil Texture - Holding Capacity" ident="7716967506027238">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">Your neighbor brings you a sample of soil from her yard.  She wants to plant a garden and is seeking your advice on whether the soil is suitable for growing vegetables.  Upon examining the soil you determine that 70% of it is clay.  What should you tell your neighbor about her soil?
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">The clay in the soil has made it rough and gritty as a result of the weathering of bedrock.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">The organic matter in the soil decreases the temperature stability and causes a poor crop yield.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">The garden could become waterlogged because the surface area of the soil particles holds large amounts of water.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">The garden will drain too quickly because the large pore spaces around the soil particles cannot hold water tightly enough.</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">C</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 The clay in the soil has made it rough and">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 The clay in the soil has made it rough and"/>
+      </respcondition>
+      <respcondition title="1 The organic matter in the soil decreases th">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 The organic matter in the soil decreases th"/>
+      </respcondition>
+      <respcondition title="2 It could become waterlogged because the par" continue="Yes">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="2 It could become waterlogged because the par"/>
+      </respcondition>
+      <respcondition title="3 It will drain too quickly because the large">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 It will drain too quickly because the large"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 3b & 6c.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 3b & 6c.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 The clay in the soil has made it rough and" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 The organic matter in the soil decreases th" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 It could become waterlogged because the par" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 It will drain too quickly because the large" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Soil Texture - Percolation" ident="3020584917740913">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">In an experiment, 5 cm of water is added to soil in a carton. The carton is fitted with drainage holes leading to a beaker.  After an hour, only 1 cm of water is collected in the beaker.  The soil in the carton has
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">a low percolation rate.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">a small holding capacity.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">a high porosity.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">a low wilting point.</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">A</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 percolation">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="0 percolation"/>
+      </respcondition>
+      <respcondition title="1 holding">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 holding"/>
+      </respcondition>
+      <respcondition title="2 porosity">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 porosity"/>
+      </respcondition>
+      <respcondition title="3 wilting">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 wilting"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 5a, 5b, 5c, & 6a.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 5a, 5b, 5c, & 6a.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 percolation" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 holding" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 porosity" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 wilting" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Soil Texture - Porosity" ident="6735813778541451">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">Which of the following does NOT affect the volume of pore space in soil?
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">compaction</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">percolation</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">ped shape</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">ped size</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">B</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 compaction">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 compaction"/>
+      </respcondition>
+      <respcondition title="1 percolation">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="1 percolation"/>
+      </respcondition>
+      <respcondition title="2 ped shape">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 ped shape"/>
+      </respcondition>
+      <respcondition title="3 ped size">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 ped size"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 5a, 5b, & 5c.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"><![CDATA[Review Soil 5a, 5b, & 5c.]]></mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 compaction" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 percolation" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 ped shape" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 ped size" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Soil Texture - Triangle" ident="1565464864674105">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/html"><![CDATA[<img src="%SERVER.GRAPHICS%image0022.jpg" width="482" height="301">
+<BR>According to the  texture triangle above, which of the following soil combinations would produce silt loam? <BR>]]></mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">65% silt, 20% sand, 15%clay</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">40% sand, 40% silt, 20% clay </mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">10% clay, 45% silt, 45% sand</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">90% silt, 5% clay, 5% sand</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">A</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 95% silt, 9% sand, 9%clay">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="0 95% silt, 9% sand, 9%clay"/>
+      </respcondition>
+      <respcondition title="1 95% sand, 9% loam, 9% clay">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 95% sand, 9% loam, 9% clay"/>
+      </respcondition>
+      <respcondition title="2 95% clay, 9% silt, 9% sand">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 95% clay, 9% silt, 9% sand"/>
+      </respcondition>
+      <respcondition title="3 95% loam, 9% clay, 9% silt">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 95% loam, 9% clay, 9% silt"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 3b.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 3b.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 95% silt, 9% sand, 9%clay" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 95% sand, 9% loam, 9% clay" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 95% clay, 9% silt, 9% sand" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 95% loam, 9% clay, 9% silt" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Types Water - Gravity" ident="4609527554055536">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">Water moves through soil in several ways.  Water movement is aided by the
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">force of gravity.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">hygroscopic forces.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">use of hydroponic farming techniques.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">capillary action of the aquifers.</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">A</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 force of gravity.">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="0 force of gravity."/>
+      </respcondition>
+      <respcondition title="1 process of transpiration.">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 process of transpiration."/>
+      </respcondition>
+      <respcondition title="2 use of hydroponic farming techniques.">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 use of hydroponic farming techniques."/>
+      </respcondition>
+      <respcondition title="3 capillary action of the aquifers.">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 capillary action of the aquifers."/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6d.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6d.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 force of gravity." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 process of transpiration." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 use of hydroponic farming techniques." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 capillary action of the aquifers." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Water Types - Capillary" ident="8465067457326379">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">Water that a plant's roots absorb from the soil is referred to as
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">saturated.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">hygroscopic. </mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">suberin.</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">capillary.</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">D</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 saturated.">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 saturated."/>
+      </respcondition>
+      <respcondition title="1 hygroscopic.">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 hygroscopic."/>
+      </respcondition>
+      <respcondition title="2 suberin.">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 suberin."/>
+      </respcondition>
+      <respcondition title="3 capillary.">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="3 capillary."/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6d.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6d.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 saturated." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 hygroscopic." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 suberin." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 capillary." view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Water Types - Capillary 2" ident="2080801944934586">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">Which type of water is bound to other water molecules and, thus, can only be removed by either air drying or by plant absorption?
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">hygroscopic water</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">capillary water</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">gravitational water</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">groundwater</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">B</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 Hygroscopic water">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 Hygroscopic water"/>
+      </respcondition>
+      <respcondition title="1 Capillary water">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="1 Capillary water"/>
+      </respcondition>
+      <respcondition title="2 Gravitational water">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 Gravitational water"/>
+      </respcondition>
+      <respcondition title="3 Ground water">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 Ground water"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6d.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6d.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 Hygroscopic water" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 Capillary water" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 Gravitational water" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 Ground water" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Water Types - Hygroscopic" ident="5259694139010967">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">One type of soil water can be bound to a soil particle by forces as great as 10,000 bars. This force makes it impossible for gravity to remove it. What type of soil water does this describe?
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">gravity water</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">hygroscopic water</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">capillary water</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">groundwater</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">B</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 Gravity water">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 Gravity water"/>
+      </respcondition>
+      <respcondition title="1 Hygroscopic water">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="1 Hygroscopic water"/>
+      </respcondition>
+      <respcondition title="2 Capillary water">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 Capillary water"/>
+      </respcondition>
+      <respcondition title="3 Groundwater">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="3 Groundwater"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6d.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6d.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 Gravity water" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 Hygroscopic water" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 Capillary water" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 Groundwater" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+  <item title="MC Water Types - Hygroscopic 2" ident="0236156885107418">
+    <itemmetadata>
+      <qmd_itemtype>Multiple Choice</qmd_itemtype>
+      <qmd_status>Normal</qmd_status>
+      <qmd_toolvendor>Questionmark Perception</qmd_toolvendor>
+      <qmd_topic>Available Water</qmd_topic>
+    </itemmetadata>
+    <presentation>
+      <material>
+        <mattext texttype="text/plain">What type of soil water is found as a microscopic film of water surrounding soil particles?
+</mattext>
+      </material>
+      <response_lid ident="1">
+        <render_choice shuffle="Yes">
+          <response_label ident="A">
+            <material>
+              <mattext texttype="text/plain">capillary water</mattext>
+            </material>
+          </response_label>
+          <response_label ident="B">
+            <material>
+              <mattext texttype="text/plain">gravitational water</mattext>
+            </material>
+          </response_label>
+          <response_label ident="C">
+            <material>
+              <mattext texttype="text/plain">groundwater</mattext>
+            </material>
+          </response_label>
+          <response_label ident="D">
+            <material>
+              <mattext texttype="text/plain">hygroscopic water</mattext>
+            </material>
+          </response_label>
+        </render_choice>
+      </response_lid>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title="Wrong Answer" continue="Yes">
+        <conditionvar>
+          <not>
+            <varequal respident="1">D</varequal>
+          </not>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="Wrong Answer"/>
+      </respcondition>
+      <respcondition title="No Answer" continue="Yes">
+        <conditionvar>
+          <unanswered respident="1"/>
+        </conditionvar>
+        <setvar action="Add">0</setvar>
+        <displayfeedback linkrefid="No Answer"/>
+      </respcondition>
+      <respcondition title="0 capillary water">
+        <conditionvar>
+          <varequal respident="1">A</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="0 capillary water"/>
+      </respcondition>
+      <respcondition title="1 gravitational water">
+        <conditionvar>
+          <varequal respident="1">B</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="1 gravitational water"/>
+      </respcondition>
+      <respcondition title="2 groundwater">
+        <conditionvar>
+          <varequal respident="1">C</varequal>
+        </conditionvar>
+        <setvar action="Set">0</setvar>
+        <displayfeedback linkrefid="2 groundwater"/>
+      </respcondition>
+      <respcondition title="3 hygroscopic water">
+        <conditionvar>
+          <varequal respident="1">D</varequal>
+        </conditionvar>
+        <setvar action="Set">1</setvar>
+        <displayfeedback linkrefid="3 hygroscopic water"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident="Wrong Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6d.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="No Answer" view="Candidate">
+      <material>
+        <mattext texttype="text/plain">Review Soil 6d.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="0 capillary water" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="1 gravitational water" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="2 groundwater" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident="3 hygroscopic water" view="Candidate">
+      <material>
+        <mattext texttype="text/plain"/>
+      </material>
+    </itemfeedback>
+  </item>
+</questestinterop>

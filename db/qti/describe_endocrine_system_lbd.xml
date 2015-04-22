@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+  <assessment ident="_u1_describe_endocrine_system_lbd" title="tutor">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+      <!-- book name-->
+      <qtimetadatafield>
+        <fieldlabel>qmd_publication</fieldlabel>
+        <fieldentry>Open Learning Initiative Anatomy and Physiology</fieldentry>
+      </qtimetadatafield>
+      <!-- publisher-->
+      <qtimetadatafield>
+        <fieldlabel>qmd_organization</fieldlabel>
+        <fieldentry>Open Learning Initiative</fieldentry>
+      </qtimetadatafield>
+      <!-- author-->
+      <qtimetadatafield>
+        <fieldlabel>qmd_author</fieldlabel>
+        <fieldentry>Open Learning Initiative</fieldentry>
+      </qtimetadatafield>
+      <!-- chapter name-->
+      <qtimetadatafield>
+        <fieldlabel>qmd_chapter</fieldlabel>
+        <fieldentry>_u1_describe_endocrine_system_lbd</fieldentry>
+      </qtimetadatafield>
+      <!-- license identifier-->
+      <qtimetadatafield>
+        <fieldlabel>qmd_license_id</fieldlabel>
+        <fieldentry>http://creativecommons.org/licenses/by/3.0/</fieldentry>
+      </qtimetadatafield>
+      <!-- license -->
+      <qtimetadatafield>
+        <fieldlabel>qmd_license</fieldlabel>
+        <fieldentry>Creative Commons Attribution 3.0 Unported License</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+    <item ident="q1" title="q1">
+		<itemmetadata>
+		  <qtimetadata>
+		    <qtimetadatafield>
+		      <fieldlabel>question_type</fieldlabel>
+		      <fieldentry>multiple_choice_question</fieldentry>
+		    </qtimetadatafield>
+		    <qtimetadatafield>
+		      <fieldlabel>points_possible</fieldlabel>
+		      <fieldentry>1</fieldentry>
+		    </qtimetadatafield>
+		   </qtimetadata>
+		</itemmetadata>
+		<presentation>
+		  <material>
+		    <mattext texttype="text/html">Which endocrine glandis most responsible for the release of estrogen and testosterone?</mattext>
+		  </material>
+		  <response_lid ident="responseq1" rcardinality="Single">
+		   <render_choice>
+		  <response_label ident="q1rA">
+			<material>
+			  <mattext texttype="text/html">thymus</mattext>
+			</material>
+		      </response_label><response_label ident="q1rB">
+			<material>
+			  <mattext texttype="text/html">adrenal</mattext>
+			</material>
+		      </response_label><response_label ident="q1rC">
+			<material>
+			  <mattext texttype="text/html">pituitary</mattext>
+			</material>
+		      </response_label><response_label ident="q1rD">
+			<material>
+			  <mattext texttype="text/html">pancreas</mattext>
+			</material>
+		      </response_label><response_label ident="q1rE">
+			<material>
+			  <mattext texttype="text/html">gonads</mattext>
+			</material>
+		      </response_label>
+		    </render_choice>
+		  </response_lid>
+		</presentation>
+		<resprocessing>
+		  <outcomes>
+		    <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+		  </outcomes>
+		  <respcondition continue="Yes">
+		    <conditionvar>
+		      <varequal respident="responseq1">q1rA</varequal>
+		    </conditionvar>
+		    <setvar action="Set" varname="SCORE">0</setvar>
+		    <displayfeedback feedbacktype="Response" linkrefid="q1rA_fb"/>
+		  </respcondition>
+			  <respcondition continue="Yes">
+		    <conditionvar>
+		      <varequal respident="responseq1">q1rB</varequal>
+		    </conditionvar>
+		    <setvar action="Set" varname="SCORE">0</setvar>
+		    <displayfeedback feedbacktype="Response" linkrefid="q1rB_fb"/>
+		  </respcondition>
+			  <respcondition continue="Yes">
+		    <conditionvar>
+		      <varequal respident="responseq1">q1rC</varequal>
+		    </conditionvar>
+		    <setvar action="Set" varname="SCORE">0</setvar>
+		    <displayfeedback feedbacktype="Response" linkrefid="q1rC_fb"/>
+		  </respcondition>
+			  <respcondition continue="Yes">
+		    <conditionvar>
+		      <varequal respident="responseq1">q1rD</varequal>
+		    </conditionvar>
+		    <setvar action="Set" varname="SCORE">0</setvar>
+		    <displayfeedback feedbacktype="Response" linkrefid="q1rD_fb"/>
+		  </respcondition>
+			  <respcondition continue="Yes">
+		    <conditionvar>
+		      <varequal respident="responseq1">q1rE</varequal>
+		    </conditionvar>
+		    <setvar action="Set" varname="SCORE">100</setvar>
+		    <displayfeedback feedbacktype="Response" linkrefid="q1rE_fb"/>
+		  </respcondition>
+		</resprocessing><itemfeedback ident="q1rA_fb" view="All">
+		  <flow_mat>
+		    <material>
+		      <mattext texttype="text/html">Incorrect. The thymus releases hormones important for immune cell maturation, estrogen and testosterone are more important for physical development and control of sperm and egg production</mattext>
+		    </material>
+		  </flow_mat>
+		</itemfeedback><itemfeedback ident="q1rB_fb" view="All">
+		  <flow_mat>
+		    <material>
+		      <mattext texttype="text/html">Incorrect. It turns out the adrenal gland does secrete small amounts of these hormones, but it is not the best answer. </mattext>
+		    </material>
+		  </flow_mat>
+		</itemfeedback><itemfeedback ident="q1rC_fb" view="All">
+		  <flow_mat>
+		    <material>
+		      <mattext texttype="text/html">Incorrect. The pituitary helps control the glands that secrete estrogen and testosterone, but does not release these hormones directly.</mattext>
+		    </material>
+		  </flow_mat>
+		</itemfeedback><itemfeedback ident="q1rD_fb" view="All">
+		  <flow_mat>
+		    <material>
+		      <mattext texttype="text/html">Incorrect. The pancreas releases hormones that help regulate blood sugar levels, not hormones for gamete production. </mattext>
+		    </material>
+		  </flow_mat>
+		</itemfeedback><itemfeedback ident="q1rE_fb" view="All">
+		  <flow_mat>
+		    <material>
+		      <mattext texttype="text/html">Correct. Estrogen and testosterone are necessary for egg and sperm development and come from the gonads, the ovaries in women and the testes in men</mattext>
+		    </material>
+		  </flow_mat>
+		</itemfeedback></item></section>
+  </assessment>
+</questestinterop>
