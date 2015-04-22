@@ -8,4 +8,4 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.config.assets.precompile += %w( app_wp_bundle.js )
 
-Rails.application.config.assets.precompile += %w( html5shiv.js retina.png bare.css themes/* )
+Rails.application.config.assets.precompile += %w( html5shiv.js open_comm.js retina.png bare.css themes/* )
