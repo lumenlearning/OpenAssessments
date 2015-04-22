@@ -65,7 +65,7 @@ class AssessmentsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { render :layout => @embedded ? 'bare' : 'application' }
+      format.html { render :layout => @embedded ? 'assessment' : 'application' }
     end
   end
 
