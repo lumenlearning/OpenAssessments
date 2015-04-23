@@ -11,7 +11,7 @@ export default React.createClass({
     return (
       <AppCanvas predefinedLayout={1}>
         
-      <LeftNav ref="leftNav" />
+      
         <div className="mui-app-content-canvas page-with-nav">
           <Messages/>
           <div className="page-with-nav-content">
