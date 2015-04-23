@@ -2,8 +2,8 @@
 
 import React from 'react';
 import Router from 'react-router';
-
 import routes from './routes';
+import adminRoutes from './adminRoutes';
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -25,9 +25,13 @@ if (window.matchMedia("(max-width: 639px)").matches){
   deviceType = "desktop";
 }
 
-//Router.run(routes, (Handler) => {
-  //return React.render(<Handler />, document.body);
-//});
+// Router.run(routes, (Handler) => {
+//   return React.render(<Handler />, document.body);
+// });
+
+Router.run(adminRoutes, (Handler) => {
+  return React.render(<Handler />, document.getElementById('admin-screen'));
+});
 
 // Router.run(routes, (Handler) => {
 //   return React.render(<Handler routerState={state} deviceType={deviceType} environment="browser" />, document.body);
