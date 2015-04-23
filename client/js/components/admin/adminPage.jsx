@@ -10,8 +10,6 @@ export default React.createClass({
   render(){
     return (
       <AppCanvas predefinedLayout={1}>
-        
-      
         <div className="mui-app-content-canvas page-with-nav">
           <Messages/>
           <div className="page-with-nav-content">

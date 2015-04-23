@@ -7,6 +7,7 @@ import UserActions  from "../../actions/user";
 import _            from "lodash";
 import assign       from "object-assign";
 import { Paper, TextField, FlatButton, RaisedButton, FontIcon } from "material-ui";
+import AdminToolBar from "./adminToolBar";
 
 export default React.createClass({
 
@@ -47,15 +48,10 @@ export default React.createClass({
     graphTitleBar: {
       width: 'auto',
       height: '60px',
-      borderColor: 'grey',
-      borderStyle: 'solid',
-      borderTop: '0px',
-      borderLeft: '0px',
-      borderRight: '0px',
-      borderBottom: '1px solid grey'
+      
     },
 
-    adminGraphGraphic: {
+    adminInfoDock: {
       width: 'auto',
       height: '440px',
       borderColor: 'grey',
@@ -129,10 +125,10 @@ export default React.createClass({
           <div className="admin-graphs">
             <Paper style={styles.graphPaper} className="graph-paper">
               <div style={styles.graphTitleBar} className="graph-title-bar">
-                <h3>Report</h3>
+                <AdminToolBar />
               </div>
 
-              <div style={styles.adminGraphGraphic} className="admin-graph-graphic">
+              <div style={styles.adminInfoDock} id = "admin-info-mount" className="admin-info-dock">
 
               </div>
               <div className="graph-data-bar">
