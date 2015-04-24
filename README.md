@@ -19,8 +19,11 @@ config/secrets.yml will be used to hold values that should be kept safe and whic
 
 `mv secrets.example.yml secrets.yml`
 
-##Webpack Integration
+###Single Page Application Support
+Most LTI applications need to be single page applications in order to avoid a bug that prevents cookies from being written in some
+browsers. The Canvas Starter App uses React. During development run the (React Hot Loader)[https://github.com/gaearon/react-hot-loader]
 
+####Webpack Integration
 'npm install -g webpack'
 
 'cd client && webpack'
