@@ -4,7 +4,7 @@ import React        from 'react';
 import Messages     from "../../stores/messages";
 import Message      from "./message";
 import StoreKeeper  from "../mixins/store_keeper";
-import { Toolbar } from "material-ui";
+import { Toolbar }  from "material-ui";
 
 export default React.createClass({
 
