@@ -66,7 +66,7 @@ Rails.application.configure do
   # In development send *wp-bundle.js to the webpack-dev-server running on 8080
   config.action_controller.asset_host = Proc.new { |source|
     if source =~ /wp_bundle\.js$/i
-    "http://localhost:8080"
+      "http://localhost:8080"
     end
   }
   
