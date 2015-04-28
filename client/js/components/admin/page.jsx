@@ -1,8 +1,8 @@
 "use strict";
 
 import React                from "react";
-import Messages             from "./common/messages";
-import LeftNav              from "./layout/left_nav";
+import Messages             from "../common/messages";
+import LeftNav              from "./left_nav";
 import {RouteHandler}       from "react-router";
 import { AppCanvas, AppBar, IconButton } from "material-ui";
 
@@ -10,9 +10,9 @@ export default React.createClass({
 
   render(){
 
-    var title = "Canvas Starter App asdfasdf";
+    let title = "Admin";
 
-    var githubButton = (
+    let githubButton = (
       <IconButton
         className="github-icon-button"
         iconClassName="muidocs-icon-custom-github"
