@@ -1,6 +1,6 @@
 import React              from 'react';
 import TestUtils          from 'react/lib/ReactTestUtils';
-import NotFound           from '../../client/js/components/not_found';
+import NotFound           from '../../js/components/not_found';
 
 describe('not_found', function() {
   it('renders a not found message', function() {
