@@ -27,15 +27,15 @@ module.exports = function(config) {
     port: 9876,
 
     files: [
-      './specs/spec_helper.js',
-      //'./specs/**/*.spec.js'        // Use webpack to build each test individually. If changed here, match the change in preprocessors
-      './specs/tests.webpack.js'      // More performant but tests cannot be run individually
+      './specs_support/spec_helper.js',
+      //'./js/**/*.spec.js'         // Use webpack to build each test individually. If changed here, match the change in preprocessors
+      './webpack.tests.js'          // More performant but tests cannot be run individually
     ],
 
     // Transpile tests with the karma-webpack plugin
     preprocessors: {
-      //'./specs/**/*.spec.js': ['webpack', 'sourcemap']      // Use webpack to build each test individually. If changed here, match the change in files
-      './specs/tests.webpack.js': ['webpack', 'sourcemap']    // More performant but tests cannot be run individually
+      //'./js/**/*.spec.js': ['webpack', 'sourcemap']  // Use webpack to build each test individually. If changed here, match the change in files
+      './webpack.tests.js': ['webpack', 'sourcemap']      // More performant but tests cannot be run individually
     },
 
     // Run the tests using any of the following browsers
@@ -46,7 +46,7 @@ module.exports = function(config) {
     // - Safari         npm install --save-dev karma-safari-launcher  (only Mac)
     // - PhantomJS      npm install --save-dev karma-phantomjs-launcher
     // - IE             npm install karma-ie-launcher (only Windows)
-    browsers: ['Chrome'],
+    browsers: ['Firefox', 'Chrome'],
 
     // Exit the test runner as well when the test suite returns.
     singleRun: false,
@@ -71,7 +71,7 @@ module.exports = function(config) {
       },
       resolve: {
         extensions: ['', '.js', '.jsx'],
-        modulesDirectories: ["node_modules", "vendor"]
+        modulesDirectories: ["node_modules", "web_modules", "vendor"]
       }
     },
 
