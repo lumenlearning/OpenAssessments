@@ -8,6 +8,11 @@ export default {
   REGISTER: "register",
   REGISTER_PENDING: "register_pending",
 
+  // Assessments
+  ASSESSMENT_LOAD: "assessment_load",
+  ASSESSMENT_LOAD_PENDING: "assessment_load_pending",
+  ASSESSMENT_LOADED: "assessment_loaded",
+
   // Errors
   TIMEOUT: "timeout",
   ERROR: "error",
