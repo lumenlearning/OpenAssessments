@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :assessments, except: [:update, :edit], :controller => "assessments"
   end
   resources :canvas_authentications
+  resources :admin, only: [:index]
   
   resources :assessments
   resources :assessment_loaders

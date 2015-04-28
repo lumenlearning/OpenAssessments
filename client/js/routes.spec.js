@@ -1,10 +1,10 @@
 import React    from 'react';
 import Router   from 'react-router';
 
-import routes   from '../js/routes';
-import Settings from '../js/utils/settings';
+import Settings from './utils/settings';
+import routes   from './routes';
 
-let Route = Router.Route;
+var Route = Router.Route;
 
 describe('default route', function () {
   it('renders assessment', function (done) {
