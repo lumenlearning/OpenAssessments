@@ -8,6 +8,8 @@ export default {
   REGISTER: "register",
   REGISTER_PENDING: "register_pending",
 
+  ADD_MESSAGE: "add_message",
+
   // Errors
   TIMEOUT: "timeout",
   ERROR: "error",

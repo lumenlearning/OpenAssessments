@@ -8,7 +8,7 @@ import _              from "lodash";
 
 const MessageTimeout = 5000;
 
-var _messages = [];
+var _messages = {};
 var messageCount = 0;
 
 // Extend Message Store with EventEmitter to add eventing capabilities
@@ -45,6 +45,11 @@ Dispatcher.register(function(payload) {
       addServerMessage(payload.data);
       break;
 
+    // Respond to ADD_MESSAGE action
+    case Constants.ADD_MESSAGE:
+      addMessage(payload.data);
+      break;
+
     default:
       return true;
   }
@@ -58,7 +63,7 @@ Dispatcher.register(function(payload) {
 
 
 function addServerMessage(message){
-  let messageId = addMessage(JSON.parse(message.text).message);
+  var messageId = addMessage(JSON.parse(message.text).message);
   setTimeout(function(){
     removeMessage(messageId);
   }, MessageTimeout);
