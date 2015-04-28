@@ -8,7 +8,7 @@ import { LeftNav } from "material-ui";
 
 export default React.createClass({
 
-  mixins: [StoreKeeper, Router.Navigation, Router.State],
+  mixins: [StoreKeeper, Router.Navigation],
 
   statics: {
     stores: [User],    // Subscribe to changes in the messages store
@@ -59,7 +59,7 @@ export default React.createClass({
 
     for (var i = this.state.menuItems.length - 1; i >= 0; i--) {
       currentItem = this.state.menuItems[i];
-      if (currentItem.route && this.isActive(currentItem.route)) return i;
+      if (currentItem.route && this.context.router.isActive(currentItem.route)) return i;
     }
   },
 

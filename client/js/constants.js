@@ -13,6 +13,8 @@ export default {
   ASSESSMENT_LOAD_PENDING: "assessment_load_pending",
   ASSESSMENT_LOADED: "assessment_loaded",
 
+  ADD_MESSAGE: "add_message",
+
   // Errors
   TIMEOUT: "timeout",
   ERROR: "error",
