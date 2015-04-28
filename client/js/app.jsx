@@ -4,6 +4,7 @@ import React from 'react';
 import Router from 'react-router';
 
 import routes from './routes';
+import Settings from './utils/settings';
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -26,7 +27,7 @@ if (window.matchMedia("(max-width: 639px)").matches){
 }
 
 Router.run(routes, (Handler, state) => {
-  return React.render(<Handler params={state.params} />, document.body);
+  return React.render(<Handler params={state.params} settings={Settings.load()} />, document.body);
 });
 
 // Router.run(routes, (Handler) => {
