@@ -46,7 +46,7 @@ module.exports = function(config) {
     // - Safari         npm install --save-dev karma-safari-launcher  (only Mac)
     // - PhantomJS      npm install --save-dev karma-phantomjs-launcher
     // - IE             npm install karma-ie-launcher (only Windows)
-    browsers: ['Firefox', 'Chrome'],
+    browsers: ['Chrome'],
 
     // Exit the test runner as well when the test suite returns.
     singleRun: false,
