@@ -7,7 +7,7 @@ import Dispatcher   from "../dispatcher";
 
 const TIMEOUT = 10000;
 
-let _pendingRequests = {};
+var _pendingRequests = {};
 
 function abortPendingRequests(key) {
   if(_pendingRequests[key]) {
@@ -22,8 +22,12 @@ function token() {
   return User.token();
 }
 
-function makeUrl(part) {
-  return GlobalSettings.apiUrl + part;
+function makeUrl(settings, part) {
+  if(part.indexOf("http") >= 0){
+    return part;
+  } else {
+    return settings.apiUrl + part;
+  }
 }
 
 // GET request with a token param
@@ -49,45 +53,46 @@ function post(url, body) {
     });
 }
 
-function dispatch(key, response) {
+function dispatch(settings, key, response) {
   Dispatcher.dispatch({
     action: key,
-    data: response
+    data: response,
+    settings: settings
   });
 }
 
 // Dispatch a response based on the server response
-function dispatchResponse(key) {
+function dispatchResponse(settings, key) {
   return function(err, response) {
     if(err && err.timeout === TIMEOUT) {
-      dispatch(Constants.TIMEOUT, response);
+      dispatch(settings, Constants.TIMEOUT, response);
     } else if(response.status === 400) {
-      dispatch(Constants.NOT_AUTHORIZED, response);
+      dispatch(settings, Constants.NOT_AUTHORIZED, response);
     } else if(!response.ok) {
-      dispatch(Constants.ERROR, response);
+      dispatch(settings, Constants.ERROR, response);
     } else {
-      dispatch(key, response);
+      dispatch(settings, key, response);
     }
   };
 }
 
-function doRequest(key, url, callback){
+function doRequest(settings, key, url, callback){
   abortPendingRequests(key);
-  let request = _pendingRequests[key] = callback(makeUrl(url));
-  request.end(dispatchResponse(key));
+  var request = _pendingRequests[key] = callback(makeUrl(settings, url));
+  request.end(dispatchResponse(settings, key));
   return request;
 }
 
 export default {
 
-  get(key, url){
-    return doRequest(key, url, function(fullUrl){
+  get(settings, key, url){
+    return doRequest(settings, key, url, function(fullUrl){
       return get(fullUrl);
     });
   },
 
-  post(key, url, body){
-    return doRequest(key, url, function(fullUrl){
+  post(settings, key, url, body){
+    return doRequest(settings, key, url, function(fullUrl){
       return post(fullUrl, body);
     });
   }
