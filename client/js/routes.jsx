@@ -4,7 +4,7 @@ import React        from 'react';
 import Router       from 'react-router';
 
 import Index        from './components/index';
-import Home         from './components/main/home';
+import Assessment   from './components/main/assessment';
 import Login        from './components/sessions/login';
 import Logout       from './components/sessions/logout';
 import Register     from './components/users/register';
@@ -20,7 +20,7 @@ var Redirect      = Router.Redirect;
 
 var routes = (
   <Route handler={Index}>
-    <DefaultRoute name="home" handler={Home}/>
+    <DefaultRoute name="assessment" handler={Assessment}/>
     <Route name="login" handler={Login}/>
     <Route name="register" handler={Register}/>
     <Route name="logout" handler={Logout}/>
