@@ -4,6 +4,8 @@ import React from 'react';
 
 export default React.createClass({
   render(){
-    return <h2>About</h2>;
+    return <div>
+      <h2>Open Assessments</h2>
+    </div>;
   }
 });
