@@ -8,16 +8,16 @@ if Rails.env.production?
     name: 'Open Assessments',
     domain: 'http://www.openassessments.com',
     lti_key: 'openassessments',
-    lti_secret: '81bb01a80454b7b5a587cfbf1e745d501c0f3b2e3e36b0e60240a2fe7ba8daac0b588678ca8dfaf0d4341017e6646d03751df63c4056a85e01a22e3ce72a8e29',
+    lti_secret: '588a0bd03a8fe1c298b667549559334c2aa84a549406457fff37c585039c3d4d717ff2f3fa387da1ba2cb92192630d0003b6a9aace819c40322cd3f4864e0dce',
     canvas_uri: 'https://canvas.instructure.com'
   }]
 else
   accounts = [{
-    code: 'openassessments',
-    name: 'Open Assessments',
+    code: 'openassessmentsdev',
+    name: 'Open Assessments Dev',
     domain: 'http://openassessments.ngrok.com',
     lti_key: 'openassessments',
-    lti_secret: 'd52ca2c9892975bbb9def56e68eefe8e92a338d9b74d73ec5dad64803a376b2f1f5129c0bd9f7e73684526c234e0835bd1635e09d427cd45cb0de4296278682f',
+    lti_secret: '0b92c73ea0a8c3bae738317e1777d20bec01662862f67b48a1f626e5d07b10c35fc8daedc4fc6269d6592185fce05320ecc53a999e97e214f2f306ed04135f13',
     canvas_uri: 'https://canvas.instructure.com'
   }]
 end
