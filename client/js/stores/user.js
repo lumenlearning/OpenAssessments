@@ -5,7 +5,7 @@ import Constants      from "../constants";
 import StoreCommon    from "./store_common";
 import assign         from "object-assign";
 
-let _user = {};
+var _user = {};
 
 // log the user in
 function login(email, password){
@@ -18,7 +18,7 @@ function register(user){
 }
 
 // Extend User Store with EventEmitter to add eventing capabilities
-let UserStore = assign({}, StoreCommon, {
+var UserStore = assign({}, StoreCommon, {
 
   // Return current user
   current(){
@@ -37,7 +37,7 @@ let UserStore = assign({}, StoreCommon, {
 
 // Register callback with Dispatcher
 Dispatcher.register(function(payload) {
-  let action = payload.action;
+  var action = payload.action;
   
   switch(action){
 
