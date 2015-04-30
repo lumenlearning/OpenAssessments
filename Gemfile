@@ -1,3 +1,8 @@
+# If bundler starts to act up run these commands to start over and clean up:
+# rm -rf ~/.bundle/ ~/.gem/; rm -rf $GEM_HOME/bundler/ $GEM_HOME/cache/bundler/; rm -rf .bundle/; rm -rf vendor/cache/; rm -rf Gemfile.lock
+# rvm gemset empty canvasstarterapp
+# bundle install
+
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -20,8 +25,8 @@ gem "bower-rails"
 gem 'devise'
 gem 'omniauth', '~> 1.1.3'
 gem 'omniauth-canvas', '~> 0.0.4' #, :path => '~/projects/omniauth-canvas'
-gem 'oauth', '~> 0.4.6', :git => 'git://github.com/tatemae/oauth-ruby.git' #:path => '~/projects/other_apps/oauth-ruby'
-gem 'ims-lti', '~> 1.0.2' # IMS LTI tool consumers and providers
+gem 'oauth', '~> 0.4.7'
+gem 'ims-lti', '~> 1.1.8' # IMS LTI tool consumers and providers
 gem 'cancancan'
 gem 'attr_encrypted'
 
