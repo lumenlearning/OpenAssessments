@@ -9,7 +9,7 @@ module.exports = function(release){
 
   var autoprefix = '{browsers:["Android 2.3", "Android >= 4", "Chrome >= 20", "Firefox >= 24", "Explorer >= 8", "iOS >= 6", "Opera >= 12", "Safari >= 6"]}';
   var jsLoaders = ['babel-loader?experimental&optional=runtime'];
-  var cssLoaders = ['css-loader', 'autoprefixer-loader?' + autoprefix];
+  var cssLoaders = ['style-loader', 'css-loader', 'autoprefixer-loader?' + autoprefix];
 
   var scssLoaders = cssLoaders.slice(0);
     scssLoaders.push('sass-loader?outputStyle=expanded&includePaths[]=' + (path.resolve(__dirname, './node_modules/bootstrap-sass')));
@@ -43,7 +43,6 @@ module.exports = function(release){
     entry: entries,
     output: {
       path: release ? settings.prodOutput : settings.devOutput,
-      //path: "../../app/assets/javascripts",
       filename: '[name]_wp_bundle.js',
       publicPath: release ? settings.scripts.paths.relativeOutput.prod : 'http://localhost:' + settings.ports.hotPort + settings.devRelativeOutput,
       sourceMapFilename: "debugging/[file].map",
@@ -64,10 +63,10 @@ module.exports = function(release){
       new webpack.optimize.UglifyJsPlugin(),
       new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.optimize.AggressiveMergingPlugin(),
-      new ExtractTextPlugin("[name].css"),
+      //new ExtractTextPlugin("[name]_wp_bundle.css"),
       //new webpack.optimize.CommonsChunkPlugin('init.js') // Use to extract common code from multiple entry points into a single init.js
     ] : [
-      new ExtractTextPlugin("[name].css"),
+      //new ExtractTextPlugin("[name]_wp_bundle.css"),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoErrorsPlugin()
     ],
@@ -75,9 +74,9 @@ module.exports = function(release){
       loaders: [
         { test: /\.js$/,              loaders: jsLoaders, exclude: /node_modules/ },
         { test: /\.jsx?$/,            loaders: jsLoaders, exclude: /node_modules/ },
-        { test: /\.scss$/,            loader: ExtractTextPlugin.extract('style-loader', scssLoaders.join('!')) },
-        { test: /\.css$/ ,            loader: ExtractTextPlugin.extract('style-loader', cssLoaders.join('!')) },
-        { test: /\.less$/ ,           loader: ExtractTextPlugin.extract('style-loader', lessLoaders.join('!')) },
+        { test: /\.scss$/,            loader: scssLoaders.join('!') },
+        { test: /\.css$/ ,            loader: cssLoaders.join('!') },
+        { test: /\.less$/ ,           loader: lessLoaders.join('!') },
         //{ test: /\.html$/,            loader: 'webpack-compile-templates' }, // Add if you need to compile underscore.js - https://www.npmjs.com/package/webpack-compile-templates
         //{ test: /.*\.(gif|png|jpg|jpeg|svg)$/, loaders: ['file?hash=sha512&digest=hex&size=16&name=[hash].[ext]', 'image-webpack-loader?optimizationLevel=7&interlaced=false']},
         //{ test: /.*\.(eot|woff2|woff|ttf)/,    loader: 'file?hash=sha512&digest=hex&size=16&name=cd [hash].[ext]'}

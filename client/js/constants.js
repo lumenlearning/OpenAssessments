@@ -13,6 +13,9 @@ export default {
   // Errors
   TIMEOUT: "timeout",
   ERROR: "error",
-  NOT_AUTHORIZED: "not_authorized"
+  NOT_AUTHORIZED: "not_authorized",
+
+  // Admin
+  CHANGE_MAIN_TAB_PENDING: "change_main_tab_pending"
   
 };
