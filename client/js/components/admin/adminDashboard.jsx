@@ -16,11 +16,31 @@ import ClientDataPanel                                            from "./Client
 
 export default React.createClass({
 
-  getInitialState(){
-    AdminActions.changeMainTab({action: "change_main_tab_pending", text: "Users"});
+  getState(){
     return {
       tab : ApplicationStore.currentMainTab()
     };
+  },
+
+  getInitialState(){
+    if(ApplicationStore.currentMainTab == null)
+      AdminActions.changeMainTab({action: "change_main_tab_pending", text: "Users"});
+    return this.getState();
+  },
+
+  // Method to update state based upon store changes
+  storeChanged(){
+    this.setState(this.getState());
+  },
+
+  // Listen for changes in the stores
+  componentDidMount(){
+    ApplicationStore.addChangeListener(this.storeChanged);
+  },
+
+  // Remove change listers from stores
+  componentWillUnmount(){
+    ApplicationStore.removeChangeListener(this.storeChanged);
   },
   
   render(){
@@ -166,8 +186,6 @@ export default React.createClass({
               </div>  
             </Paper>
           </div>
-
-          
         </div>
       </div>
     );

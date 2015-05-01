@@ -12,16 +12,16 @@ import AdminActions                                                           fr
 
 export default React.createClass({
 
-  onToolbarChange(payload){
+  onToolbarChange(e, index, payload){
     // Generate an action
     AdminActions.changeMainTab(payload);
   },
 
   render() {
     var dropDownItems = [
-      {payload: '0', text: 'Users', mainTab: "Users"},
-      {payload: '1', text: 'Client Info', mainTab: "Client Info"},
-      {payload: '2', text: 'Statistics', mainTab: "Statistics"}
+      {payload: '0', text: 'Users'},
+      {payload: '1', text: 'Client Info'},
+      {payload: '2', text: 'Statistics'}
     ];
 
     var styles = {
