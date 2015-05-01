@@ -4,7 +4,7 @@ import React                from "react";
 import User                 from "../../stores/user";
 import StoreKeeper          from "../mixins/store_keeper";
 import Router               from "react-router";
-import { LeftNav } from "material-ui";
+import { LeftNav }          from "material-ui";
 
 export default React.createClass({
 
@@ -40,13 +40,13 @@ export default React.createClass({
         marginTop: '20px', 
       }
     };
-    var header = <div style={styles.logoStyle} className="logo" onClick={this._onHeaderClick}>Home</div>;
+    var header = <div style={styles.logoStyle} className="logo">Home</div>;
 
     return (
       <LeftNav
         ref="leftNav"
-        docked={true}
-        isInitiallyOpen={true}
+        docked={false}
+        isInitiallyOpen={false}
         header={header}
         menuItems={this.state.menuItems}
         selectedIndex={this._getSelectedIndex()}
@@ -63,13 +63,6 @@ export default React.createClass({
     }
   },
 
-  _onLeftNavChange: function(e, key, payload) {
-    this.transitionTo(payload.route);
-  },
-
-  _onHeaderClick: function() {
-    this.transitionTo('root');
-    
-  }
+  
 
 });

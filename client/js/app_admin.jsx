@@ -1,10 +1,11 @@
 "use strict";
 
-import React from 'react';
-import Router from 'react-router';
-import routes from './routes';
-import Settings from './utils/settings';
+import React          from 'react';
+import Router         from 'react-router';
+import adminRoutes    from './routes_admin';
 
+// Include the admin styling
+require('../styles/styles_admin.less')
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -26,10 +27,10 @@ if (window.matchMedia("(max-width: 639px)").matches){
   deviceType = "desktop";
 }
 
-Router.run(routes, (Handler) => {
+
+Router.run(adminRoutes, (Handler) => {
   return React.render(<Handler />, document.body);
 });
-
 
 
 // Router.run(routes, (Handler) => {
