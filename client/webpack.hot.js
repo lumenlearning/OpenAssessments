@@ -4,15 +4,15 @@ var release           = false;
 var settings          = require('./config/settings.js');
 var webpackConfig     = require('./config/webpack.config.js')(release);
 
-// var compiler = webpack(webpackConfig);
+var compiler = webpack(webpackConfig);
 
-// console.log("Building bundles ......");
+console.log("Building bundles ......");
 
-// compiler.run(function(err, stats){
+compiler.run(function(err, stats){
 
-  // if(err){
-  //   console.log(err);
-  // } else {
+  if(err){
+    console.log(err);
+  } else {
     new webpackDevServer(webpack(webpackConfig), {
       publicPath: webpackConfig.output.publicPath,
       hot: true,
@@ -31,6 +31,6 @@ var webpackConfig     = require('./config/webpack.config.js')(release);
       }
       console.log('Webpack hot load server listening on: ' + webpackConfig.output.publicPath);
      });
-//   }
+  }
 
-// });
+});

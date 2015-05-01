@@ -60,7 +60,7 @@ module.exports = {
       all: clientAppPath + 'js/**/*.js',
       entries: {
         app: clientAppPath + 'js/app.jsx',
-        //app_admin: clientAppPath + 'js/app_admin.jsx',
+        app_admin: clientAppPath + 'js/app_admin.jsx',
         styles: clientAppPath + 'styles/styles.js'
       },
       output: {

@@ -6,7 +6,8 @@ import Dispatcher  from   "../dispatcher";
 export default {
 
   changeMainTab(payload){
-    Dispatcher.dispatch({ action: Constants.CHANGE_MAIN_TAB_PENDING });
+    console.log(payload.mainTab);
+    Dispatcher.dispatch({ action: Constants.CHANGE_MAIN_TAB_PENDING, mainTab: payload.text });
   }
 
 };

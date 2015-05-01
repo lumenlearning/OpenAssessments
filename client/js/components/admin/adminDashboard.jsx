@@ -9,12 +9,17 @@ import assign                                                     from "object-a
 import { Paper, TextField, FlatButton, RaisedButton, FontIcon }   from "material-ui";
 import AdminToolBar                                               from "./adminToolBar";
 import AdminActions                                               from "../../actions/application";
-import Admin                                               from "../../actions/application";
+import ApplicationStore                                           from "../../stores/application";
+import UserDataPanel                                              from "./UserDataPanel";
+import StatisticsPanel                                            from "./StatisticsPanel";
+import ClientDataPanel                                            from "./ClientDataPanel";
+
 export default React.createClass({
 
   getInitialState(){
+    AdminActions.changeMainTab({action: "change_main_tab_pending", text: "Users"});
     return {
-      //tab : ApplicationStore.currentMainTab()
+      tab : ApplicationStore.currentMainTab()
     };
   },
   
@@ -120,7 +125,7 @@ export default React.createClass({
             <div style={styles.infoLabelIcon} className="info-label-icon">
             </div>
             <div style={styles.adminLabelData} className="admin-label-data">
-              <h3>DATAasdf</h3>
+              <h3>DATA</h3>
             </div>
           </Paper>
           <div style={styles.spacer} className="spacer"></div>
@@ -128,7 +133,7 @@ export default React.createClass({
             <div style={styles.infoLabelIcon} className="info-label-icon">
             </div>
             <div style={styles.adminLabelData} className="admin-label-data">
-              <h3>DATAasdf</h3>
+              <h3>DATA</h3>
             </div>
           </Paper>
         </div>
@@ -140,23 +145,23 @@ export default React.createClass({
                 <AdminToolBar />
               </div>
               <div style={styles.adminInfoDock} className="admin-info-dock">
-                {tab}
-                <div className="graph-data-bar">
-                  <div style={styles.graphData} className="graph-data">
-                    <h3>DATA</h3>
-                  </div>
+                {tab}   
+              </div>
+              <div className="graph-data-bar">
+                <div style={styles.graphData} className="graph-data">
+                  <h3>DATA</h3>
+                </div>
 
-                  <div style={styles.graphData} className="graph-data">
-                    <h3>DATA</h3>
-                  </div>
+                <div style={styles.graphData} className="graph-data">
+                  <h3>DATA</h3>
+                </div>
 
-                  <div style={styles.graphData} className="graph-data">
-                    <h3>DATA</h3>
-                  </div>
+                <div style={styles.graphData} className="graph-data">
+                  <h3>DATA</h3>
+                </div>
 
-                  <div style={styles.graphData} className="graph-data">
-                    <h3>DATA</h3>
-                  </div>
+                <div style={styles.graphData} className="graph-data">
+                  <h3>DATA</h3>
                 </div>
               </div>  
             </Paper>

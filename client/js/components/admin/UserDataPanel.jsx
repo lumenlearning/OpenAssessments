@@ -9,9 +9,7 @@ import { Menu }             from "material-ui";
 
 export default React.createClass({
  
-  getInitialState(){
-      
-  },
+  
 
   render() {
     // Some function here that will get all of the users from the db and store them in an object
