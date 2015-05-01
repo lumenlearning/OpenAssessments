@@ -1,1 +1,3 @@
-This is the starting point for your LTI application
+<p>Home Page</p>
+
+<%= link_to("Install #{ Rails.application.secrets.lti_tool_name } into your Canvas account", new_lti_install_path) if signed_in? %>
