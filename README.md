@@ -218,6 +218,10 @@ This application uses PostgreSQL with ActiveRecord.
 
 ###Tests
 
+To run the client tests you will need to install Karma:
+
+`npm install -g karma-cli`
+
 You may need to install chromedriver if you haven't already.
 
 'brew install chromedriver'
