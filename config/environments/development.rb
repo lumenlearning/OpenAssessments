@@ -69,5 +69,5 @@ Rails.application.configure do
       "http://localhost:8080"
     end
   }
-  
+
 end
