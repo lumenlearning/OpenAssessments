@@ -18,7 +18,11 @@ function srcData(){
 }
 
 function bestValue(settings_prop, params_prop, default_prop){
-  return window.OEA_SETTINGS[settings_prop] || QueryString.params()[params_prop] || default_prop;
+	var globals = {};
+	if(window.OEA_SETTINGS){
+		globals = window.OEA_SETTINGS;
+	}
+  return globals[settings_prop] || QueryString.params()[params_prop] || default_prop;
 }
 
 export default {
@@ -46,7 +50,7 @@ export default {
       style: style
     };
 
-    if(!settings.srcUrl && !settings.offline()){
+    if(!settings.srcUrl && !settings.offline){
       throw new Error("No src_url specified: specify a src_url in the url query params.");
     }
 
