@@ -1,0 +1,36 @@
+<div class="container">
+  <%= form_for(:lti_install, url: lti_installs_path, html: { role: 'form' }) do |f| %>
+    
+    <div class="form-group well">
+      <label>Install <%= Rails.application.secrets.lti_tool_name %> for the following accounts:</label>
+      <ul>
+      <%= collection_check_boxes(:lti_install, :account_ids, @accounts, "id", "name") do |b| %>
+        <li>  
+          <%= b.label(class: "checkbox") do %>
+            <%= b.check_box(class: "check_box") %>
+            <%= b.object.name %>
+          <% end %>
+        </li>
+      <% end %>
+      </ul>
+    </div>
+
+    <div class="form-group well">
+      <label>Install <%= Rails.application.secrets.lti_tool_name %> for the following courses:</label>
+      <ul>
+      <%= collection_check_boxes(:lti_install, :course_ids, @courses, "id", "name") do |b| %>
+        <li>  
+          <%= b.label(class: "checkbox") do %>
+            <%= b.check_box(class: "check_box") %>
+            <%= b.object.name %>
+          <% end %>
+        </li>
+      <% end %>
+      </ul>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Install", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
