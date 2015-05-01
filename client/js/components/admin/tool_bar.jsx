@@ -5,9 +5,6 @@ import User                                                                   fr
 import StoreKeeper                                                            from "../mixins/store_keeper";
 import Router                                                                 from "react-router";
 import { Toolbar, ToolbarGroup, DropDownMenu, RaisedButton, TextField, Paper} from "material-ui";
-import UserDataPanel                                                          from "./UserDataPanel";
-import StatisticsPanel                                                        from "./StatisticsPanel";
-import ClientDataPanel                                                        from "./ClientDataPanel";
 import AdminActions                                                           from "../../actions/application";
 
 export default React.createClass({

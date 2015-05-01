@@ -16,7 +16,7 @@ export default React.createClass({
 
       
 
-      let menuItems = [
+      var menuItems = [
         { route: 'home', text: 'Home' }
       ];
 
@@ -40,6 +40,7 @@ export default React.createClass({
         marginTop: '20px', 
       }
     };
+    
     var header = <div style={styles.logoStyle} className="logo">Home</div>;
 
     return (

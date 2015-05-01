@@ -10,7 +10,7 @@ export default React.createClass({
  
   render: function() {
     // Some function here that will get all of the users from the db and store them in an object
-      let menuItems = [
+      var menuItems = [
         {payload: '0', text: "CLIENTS", data: "Atomic Jolt"},
         {payload: '1', text: "CLIENTS", data: "Atomic Jolt"},
         {payload: '2', text: "CLIENTS", data: "Atomic Jolt"},
@@ -21,7 +21,7 @@ export default React.createClass({
         {payload: '7', text: "CLIENTS", data: "Atomic Jolt"}
       ];
 
-      let styles = {
+      var styles = {
         menuStyle: {
           width: '300px',
           marginLeft: '10px',

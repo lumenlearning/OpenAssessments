@@ -7,12 +7,12 @@ import UserActions                                                from "../../ac
 import _                                                          from "lodash";
 import assign                                                     from "object-assign";
 import { Paper, TextField, FlatButton, RaisedButton, FontIcon }   from "material-ui";
-import AdminToolBar                                               from "./adminToolBar";
+import AdminToolBar                                               from "./tool_bar";
 import AdminActions                                               from "../../actions/application";
 import ApplicationStore                                           from "../../stores/application";
-import UserDataPanel                                              from "./UserDataPanel";
-import StatisticsPanel                                            from "./StatisticsPanel";
-import ClientDataPanel                                            from "./ClientDataPanel";
+import UserDataPanel                                              from "./user_data_panel";
+import StatisticsPanel                                            from "./statistics_panel";
+import ClientDataPanel                                            from "./client_data_panel";
 
 export default React.createClass({
 
