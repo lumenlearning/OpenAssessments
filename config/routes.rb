@@ -9,6 +9,12 @@ Rails.application.routes.draw do
 
   root :to => "home#index"
 
+  resources :lti_launches do
+  collection do
+      post :index
+      get :index
+    end
+  end
   resources :lti_installs
   
   devise_for :users, controllers: {
