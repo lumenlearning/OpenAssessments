@@ -26,11 +26,9 @@ if (window.matchMedia("(max-width: 639px)").matches){
   deviceType = "desktop";
 }
 
-Router.run(routes, (Handler) => {
-  return React.render(<Handler />, document.body);
+Router.run(routes, (Handler, state) => {
+  return React.render(<Handler params={state.params} settings={Settings.load()} />, document.body);
 });
-
-
 
 // Router.run(routes, (Handler) => {
 //   return React.render(<Handler routerState={state} deviceType={deviceType} environment="browser" />, document.body);
