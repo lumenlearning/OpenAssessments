@@ -1,26 +1,27 @@
 "use strict";
 
-import React                                   from "react";
-import User                                    from "../../stores/user";
-import StoreKeeper                             from "../mixins/store_keeper";
-import Router                                  from "react-router";
+import React                                                                  from "react";
+import User                                                                   from "../../stores/user";
+import StoreKeeper                                                            from "../mixins/store_keeper";
+import Router                                                                 from "react-router";
 import { Toolbar, ToolbarGroup, DropDownMenu, RaisedButton, TextField, Paper} from "material-ui";
-import UserDataPanel                           from "./UserDataPanel";
-import StatisticsPanel                         from "./StatisticsPanel";
-import ClientDataPanel                         from "./ClientDataPanel";
+import UserDataPanel                                                          from "./UserDataPanel";
+import StatisticsPanel                                                        from "./StatisticsPanel";
+import ClientDataPanel                                                        from "./ClientDataPanel";
+import AdminActions                                                           from "../../actions/application";
 
 export default React.createClass({
 
-  onToolbarChange(){
+  onToolbarChange(e, index, payload){
     // Generate an action
-
+    AdminActions.changeMainTab(payload);
   },
 
   render() {
     var dropDownItems = [
-    {payload: '0', text: 'Users'},
-    {payload: '1', text: 'Client Info'},
-    {payload: '2', text: 'Statistics'}
+      {payload: '0', text: 'Users'},
+      {payload: '1', text: 'Client Info'},
+      {payload: '2', text: 'Statistics'}
     ];
 
     var styles = {

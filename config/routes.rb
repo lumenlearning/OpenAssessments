@@ -9,6 +9,14 @@ Rails.application.routes.draw do
 
   root :to => "default#index"
 
+  resources :lti_launches do
+  collection do
+      post :index
+      get :index
+    end
+  end
+  resources :lti_installs
+  
   devise_for :users, controllers: {
     sessions: "sessions",
     registrations: "registrations",

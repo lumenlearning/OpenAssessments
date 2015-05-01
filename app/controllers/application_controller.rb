@@ -150,6 +150,7 @@ class ApplicationController < ActionController::Base
              find_external_identifier(params["launch_presentation_return_url"]) ||
              find_external_identifier(UrlHelper.host_from_instance_guid(params["tool_consumer_instance_guid"]))
         @user = @external_identifier.user if @external_identifier
+
         if @user
           # If we do LTI and find a different user. Log out the current user and log in the new user.
           # Log the user in
@@ -176,9 +177,13 @@ class ApplicationController < ActionController::Base
             provider: @provider,
             custom_canvas_user_id: params[:custom_canvas_user_id]
           )
+
           sign_in(@user, :event => :authentication)
         end
+      else
+        user_not_authorized
       end
+
     end
 
     def find_external_identifier(url)
@@ -200,8 +205,7 @@ class ApplicationController < ActionController::Base
   private
 
     def user_not_authorized
-      flash[:alert] = "Access denied."
-      redirect_to (request.referrer || root_path)
+      render :file => "public/401.html", :status => :unauthorized
     end
 
     def authenticate_user_from_token!

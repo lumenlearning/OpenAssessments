@@ -67,12 +67,7 @@ class Canvas
     account = api_get_request("accounts/self")
     [account]
   rescue Canvas::UnauthorizedException => ex
-    accounts = api_get_request("course_accounts")
-    if accounts.length > 0
-      accounts
-    else
-      raise Canvas::NoAccountsException, "Your user account doesn't have access to any accounts for course creation"
-    end
+    api_get_request("course_accounts")
   end
 
   def assignments(course_id)
@@ -173,8 +168,6 @@ class Canvas
   end
 
   # Exceptions
-  class NoAccountsException < Exception
-  end
 
   class UnauthorizedException < Exception
   end
