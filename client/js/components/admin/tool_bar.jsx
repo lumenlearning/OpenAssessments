@@ -16,8 +16,8 @@ export default React.createClass({
 
   render() {
     var dropDownItems = [
-      {payload: '0', text: 'Users'},
-      {payload: '1', text: 'Client Info'},
+      {payload: '0', text: 'Client Info'},
+      {payload: '1', text: 'Users'},
       {payload: '2', text: 'Statistics'}
     ];
 

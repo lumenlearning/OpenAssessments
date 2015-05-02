@@ -64,6 +64,10 @@ export default React.createClass({
     }
   },
 
+  toggle: function() {
+    this.refs.leftNav.toggle();
+  },
+
   
 
 });

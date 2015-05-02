@@ -1,30 +1,47 @@
 "use strict";
 
-import React                                                      from "react";
-import { Link }                                                   from "react-router";
-import Validator                                                  from "validator";
-import UserActions                                                from "../../actions/user";
-import _                                                          from "lodash";
-import assign                                                     from "object-assign";
-import { Paper, TextField, FlatButton, RaisedButton, FontIcon }   from "material-ui";
-import AdminToolBar                                               from "./tool_bar";
-import AdminActions                                               from "../../actions/application";
-import ApplicationStore                                           from "../../stores/application";
-import UserDataPanel                                              from "./user_data_panel";
-import StatisticsPanel                                            from "./statistics_panel";
-import ClientDataPanel                                            from "./client_data_panel";
+import React                                                                            from "react";
+import { Link }                                                                         from "react-router";
+import Validator                                                                        from "validator";
+import UserActions                                                                      from "../../actions/user";
+import _                                                                                from "lodash";
+import assign                                                                           from "object-assign";
+import { Paper, TextField, FlatButton, RaisedButton, FontIcon}                          from "material-ui";
+import AdminToolBar                                                                     from "./tool_bar";
+import AdminActions                                                                     from "../../actions/application";
+import ApplicationStore                                                                 from "../../stores/application";
+import UserDataPanel                                                                    from "./user_data_panel";
+import StatisticsPanel                                                                  from "./statistics_panel";
+import ClientDataPanel                                                                  from "./client_data_panel";
 
 export default React.createClass({
 
   getState(){
     return {
-      tab : ApplicationStore.currentMainTab()
+      tab : ApplicationStore.currentMainTab(),
+      clients: ApplicationStore.clientDataList(),
+      users: ApplicationStore.userDataList()
     };
   },
 
   getInitialState(){
-    if(ApplicationStore.currentMainTab == null)
-      AdminActions.changeMainTab({action: "change_main_tab_pending", text: "Users"});
+      
+      // This will eventually come from the database but for now its like this just to test how it works.
+      var menuItems = [
+        {payload: '0', text: "Hello!", data: "Atomic Jolt"},
+        {payload: '1', text: "Other User", data: "Atomic Jolt"},
+        {payload: '2', text: "Some Guy", data: "Atomic Jolt"},
+        {payload: '3', text: "Some Other Guy", data: "Atomic Jolt"},
+        {payload: '4', text: "Some Girl", data: "Atomic Jolt"},
+        {payload: '5', text: "Me again", data: "Atomic Jolt"},
+        {payload: '6', text: "An old man", data: "Atomic Jolt"},
+        {payload: '7', text: "Crazy Person", data: "Atomic Jolt"}
+      ];
+
+      AdminActions.changeMainTab({action: "change_main_tab_pending", text: "Client Info"});
+      AdminActions.getClientData({clientList: menuItems});
+      AdminActions.getUserData({userList: ["asdfasdf"]})
+
     return this.getState();
   },
 
@@ -44,6 +61,7 @@ export default React.createClass({
   },
   
   render(){
+    console.log(this.state.users);
     var styles = {
     
       adminDashboard: {
@@ -90,7 +108,7 @@ export default React.createClass({
         borderTop: '0px',
         borderLeft: '0px',
         borderRight: '0px',
-        borderBottom: '1px solid grey'
+        borderBottom: '1px solid grey',
       },
 
       graphData:{
@@ -114,12 +132,19 @@ export default React.createClass({
     };
 
     var tab;
-    if(this.state.tab == 'Users')
+    var dataList = (<div>USERLIST</div>);
+    var infoPaper;
+    if(this.state.tab == 'Users'){
       tab = <UserDataPanel />;
-    if(this.state.tab == 'Client Info')
-      tab = <ClientDataPanel />;
-    if(this.state.tab == 'Statistics')
+    }
+    if(this.state.tab == 'Client Info'){
+      tab = <ClientDataPanel menuItems={this.state.clients} />;
+      if(this.state.users)
+        dataList = <UserDataPanel menuItems={this.state.users} />;
+    }
+    if(this.state.tab == 'Statistics'){
       tab = <StatisticsPanel />;
+    }
    
     return (
       <div style={styles.adminDashboard}>
@@ -165,7 +190,10 @@ export default React.createClass({
                 <AdminToolBar />
               </div>
               <div style={styles.adminInfoDock} className="admin-info-dock">
-                {tab}   
+                {tab}
+                <div style={{display:"inline"}}>
+                  {dataList} 
+                </div>
               </div>
               <div className="graph-data-bar">
                 <div style={styles.graphData} className="graph-data">

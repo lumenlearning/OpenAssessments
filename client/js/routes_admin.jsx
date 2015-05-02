@@ -4,7 +4,7 @@ import Router           from 'react-router';
 
 import AdminPage        from './components/admin/page';
 import Login            from './components/admin/login';
-import AdminDashboard   from './components/admin/dashboard'
+import AdminDashboard   from './components/admin/dashboard';
 
 var Route         = Router.Route;
 var NotFoundRoute = Router.NotFoundRoute;

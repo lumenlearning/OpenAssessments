@@ -1,10 +1,11 @@
 "use strict";
 
-import React                from "react";
-import User                 from "../../stores/user";
-import StoreKeeper          from "../mixins/store_keeper";
-import Router               from "react-router";
-import { Menu }             from "material-ui";
+import React                                      from "react";
+import User                                       from "../../stores/user";
+import StoreKeeper                                from "../mixins/store_keeper";
+import Router                                     from "react-router";
+import { Menu,FloatingActionButton }              from "material-ui";
+import AdminActions                               from "../../actions/application";
 
 
 export default React.createClass({
@@ -12,47 +13,49 @@ export default React.createClass({
   
 
   render() {
-    // Some function here that will get all of the users from the db and store them in an object
-      var menuItems = [
-        {payload: '0', text: "Joseph Ditton", data: "Atomic Jolt"},
-        {payload: '1', text: "Other User", data: "Atomic Jolt"},
-        {payload: '2', text: "Some Guy", data: "Atomic Jolt"},
-        {payload: '3', text: "Some Other Guy", data: "Atomic Jolt"},
-        {payload: '4', text: "Some Girl", data: "Atomic Jolt"},
-        {payload: '5', text: "Me again", data: "Atomic Jolt"},
-        {payload: '6', text: "An old man", data: "Atomic Jolt"},
-        {payload: '7', text: "Crazy Person", data: "Atomic Jolt"}
-      ];
 
-      var styles = {
-        menuStyle: {
-          width: '300px',
-          marginLeft: '10px',
-          height: '435px',
-          overflow: 'auto',
-          padding: "10px",
-        
-        },
-        menuItemStyle: {
-          width: '250px'
-        },
-        userDataStyle:{
-            display: "inline-block",
+    var styles = {
+      
+      menuStyle: {
+        width: '300px',
+        marginLeft: '10px',
+        height: '335px',
+        overflow: 'auto',
+        padding: "10px",
+      },
 
-        },
+      menuItemStyle: {
+        width: '250px'
+      },
 
-      };
+      wrapper: {
+        display: "inline-block",
+        height: "435px"
+      },
+      buttonStyle: {
+        display: "block",
+        margin: "10px"
+      },
+
+      labelStyle: {
+        marginBottom: "-10px",
+        marginLeft: "15px"
+      }
+    };
 
     return (
-      <div style={styles.userDataStyle}>
+      <div style={styles.wrapper}>
+        <h4 style={styles.labelStyle}>Users</h4>
         <div style={styles.menuStyle} className="menuBox">
           <div style={styles.menuItemStyle}>
-            <Menu menuItems={menuItems} zDepth='2' onItemClick={this.menuClicked} />
+            <Menu menuItems={this.props.menuItems} zDepth='2' onItemClick={this.menuClicked} />
           </div>
         </div>
-          <div style={styles.userDataStyle}></div>
+        <div style={styles.buttonStyle}>
+          <FloatingActionButton />
+          <FloatingActionButton secondary={true}/>
+        </div>  
       </div>
-     
     );
   },
 
