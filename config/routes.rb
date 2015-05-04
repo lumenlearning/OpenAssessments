@@ -29,6 +29,10 @@ Rails.application.routes.draw do
   resources :canvas_authentications
   resources :admin, only: [:index]
   
+  namespace :admin do
+    resources :accounts
+  end
+
   resources :assessments
   resources :assessment_loaders
   resources :assessment_results

@@ -10,9 +10,9 @@ export default React.createClass({
 
   render(){
 
-    let title = "Admin";
+    var title = "Admin";
 
-    let githubButton = (
+    var githubButton = (
       <IconButton
         className="github-icon-button"
         iconClassName="muidocs-icon-custom-github"

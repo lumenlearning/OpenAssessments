@@ -5,10 +5,7 @@ import User                                                                   fr
 import StoreKeeper                                                            from "../mixins/store_keeper";
 import Router                                                                 from "react-router";
 import { Toolbar, ToolbarGroup, DropDownMenu, RaisedButton, TextField, Paper} from "material-ui";
-import UserDataPanel                                                          from "./UserDataPanel";
-import StatisticsPanel                                                        from "./StatisticsPanel";
-import ClientDataPanel                                                        from "./ClientDataPanel";
-import AdminActions                                                           from "../../actions/application";
+import AdminActions                                                           from "../../actions/admin";
 
 export default React.createClass({
 
@@ -19,9 +16,7 @@ export default React.createClass({
 
   render() {
     var dropDownItems = [
-      {payload: '0', text: 'Users'},
-      {payload: '1', text: 'Client Info'},
-      {payload: '2', text: 'Statistics'}
+      {payload: '0', text: 'Client Info'},
     ];
 
     var styles = {

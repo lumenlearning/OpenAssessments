@@ -1,10 +1,9 @@
 "use strict";
 
-import React from 'react';
-import Router from 'react-router';
-import routes from './routes';
-import Settings from './utils/settings';
-
+import React          from 'react';
+import Router         from 'react-router';
+import Routes         from './routes';
+import SettingsAction from './actions/settings';
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -26,8 +25,11 @@ if (window.matchMedia("(max-width: 639px)").matches){
   deviceType = "desktop";
 }
 
-Router.run(routes, (Handler, state) => {
-  return React.render(<Handler params={state.params} settings={Settings.load(window.OEA_SETTINGS)} />, document.body);
+// Initialize store singletons
+SettingsAction.load(window.DEFAULT_SETTINGS);
+
+Router.run(Routes, (Handler) => {
+  return React.render(<Handler />, document.body);
 });
 
 // Router.run(routes, (Handler) => {

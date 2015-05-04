@@ -60,6 +60,7 @@ gem 'rails_12factor'
 # API Related
 gem 'httparty'
 gem 'typhoeus'
+gem 'rack-cors', :require => 'rack/cors'
 
 # Charts
 gem "chartkick"
@@ -91,7 +92,6 @@ group :development, :test do
   gem 'byebug'
   gem 'factory_girl_rails'
   gem 'faker'
-  gem 'fakeweb'
   gem 'rspec-rails'
   gem 'email_spec'
 end

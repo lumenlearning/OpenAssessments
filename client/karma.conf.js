@@ -28,6 +28,7 @@ module.exports = function(config) {
 
     files: [
       './specs_support/spec_helper.js',
+      './specs_support/mock_ajax.js',
       //'./js/**/*.spec.js'         // Use webpack to build each test individually. If changed here, match the change in preprocessors
       './webpack.tests.js'          // More performant but tests cannot be run individually
     ],

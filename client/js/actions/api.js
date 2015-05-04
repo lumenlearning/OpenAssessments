@@ -1,9 +1,10 @@
 "use strict";
 
-import Request      from "superagent";
-import User         from "../stores/user";
-import Constants    from "../constants";
-import Dispatcher   from "../dispatcher";
+import Request       from "superagent";
+import User          from "../stores/user";
+import Constants     from "../constants";
+import Dispatcher    from "../dispatcher";
+import SettingsStore from '../stores/settings';
 
 const TIMEOUT = 10000;
 
@@ -22,11 +23,11 @@ function token() {
   return User.token();
 }
 
-function makeUrl(settings, part) {
+function makeUrl(part) {
   if(part.indexOf("http") >= 0){
     return part;
   } else {
-    return settings.apiUrl + part;
+	return SettingsStore.current().apiUrl + '/' + part;
   }
 }
 
@@ -53,46 +54,45 @@ function post(url, body) {
     });
 }
 
-function dispatch(settings, key, response) {
+function dispatch(key, response) {
   Dispatcher.dispatch({
     action: key,
-    data: response,
-    settings: settings
+    data: response
   });
 }
 
 // Dispatch a response based on the server response
-function dispatchResponse(settings, key) {
+function dispatchResponse(key) {
   return function(err, response) {
     if(err && err.timeout === TIMEOUT) {
-      dispatch(settings, Constants.TIMEOUT, response);
+      dispatch(Constants.TIMEOUT, response);
     } else if(response.status === 400) {
-      dispatch(settings, Constants.NOT_AUTHORIZED, response);
+      dispatch(Constants.NOT_AUTHORIZED, response);
     } else if(!response.ok) {
-      dispatch(settings, Constants.ERROR, response);
+      dispatch(Constants.ERROR, response);
     } else {
-      dispatch(settings, key, response);
+      dispatch(key, response);
     }
   };
 }
 
-function doRequest(settings, key, url, callback){
+function doRequest(key, url, callback){
   abortPendingRequests(key);
-  var request = _pendingRequests[key] = callback(makeUrl(settings, url));
-  request.end(dispatchResponse(settings, key));
+  let request = _pendingRequests[key] = callback(makeUrl(url));
+  request.end(dispatchResponse(key));
   return request;
 }
 
 export default {
 
-  get(settings, key, url){
-    return doRequest(settings, key, url, function(fullUrl){
+  get(key, url){
+    return doRequest(key, url, function(fullUrl){
       return get(fullUrl);
     });
   },
 
-  post(settings, key, url, body){
-    return doRequest(settings, key, url, function(fullUrl){
+  post(key, url, body){
+    return doRequest(key, url, function(fullUrl){
       return post(fullUrl, body);
     });
   }

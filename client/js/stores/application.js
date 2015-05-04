@@ -5,28 +5,50 @@ import Constants      from "../constants";
 import StoreCommon    from "./store_common";
 import assign         from "object-assign";
 
-let _application = {};
+var _application = {};
 
 // Extend Application Store with EventEmitter to add eventing capabilities
-let ApplicationStore = assign({}, StoreCommon, {
+var ApplicationStore = assign({}, StoreCommon, {
 
   // Return current tab
   currentMainTab(){
     return _application.mainTab;
+  },
+
+  clientDataList(){
+    return _application.clientList;
+  },
+
+  userDataList(){
+    return _application.userDataList;
+  },
+
+  currentSelectedUser(){
+    return _application.currentSelectedUser;
   }
 
 });
 
 // Register callback with Dispatcher
 Dispatcher.register(function(payload) {
-  let action = payload.action;
+  var action = payload.action;
   
   switch(action){
 
     case Constants.CHANGE_MAIN_TAB_PENDING:
-      _application.mainTab = payload.mainTab
+      _application.mainTab = payload.mainTab;
       break;
+    case Constants.ACCOUNTS_LOADING:
+      _application.clientList = payload.clientList;
+      break; 
 
+    case Constants.LOADING_USER_DATA:
+      _application.userDataList = payload.userList;
+      break; 
+
+    case Constants.LOADING_SELECTED_USER_DATA:
+      _application.currentSelectedUser = payload.currentSelectedUser;
+      break; 
     default:
       return true;
   }

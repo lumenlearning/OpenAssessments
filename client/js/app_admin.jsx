@@ -2,7 +2,8 @@
 
 import React          from 'react';
 import Router         from 'react-router';
-import adminRoutes    from './routes_admin';
+import AdminRoutes    from './routes_admin';
+import SettingsAction from './actions/settings';
 
 // Include the admin styling
 require('../styles/styles_admin.less')
@@ -27,8 +28,10 @@ if (window.matchMedia("(max-width: 639px)").matches){
   deviceType = "desktop";
 }
 
+// Initialize store singletons
+SettingsAction.load(window.DEFAULT_SETTINGS);
 
-Router.run(adminRoutes, (Handler) => {
+Router.run(AdminRoutes, (Handler) => {
   return React.render(<Handler />, document.body);
 });
 
