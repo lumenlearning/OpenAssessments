@@ -20,33 +20,33 @@ function srcData(){
 
 export default {
 
-	bestValue(settings_prop, params_prop, default_prop){
-		return this.globalSettings[settings_prop] || QueryString.params()[params_prop] || default_prop;
-	},
+	load(globalSettings){
 
-  load(globalSettings){
+    globalSettings = globalSettings || {};
 
-  	this.globalSettings = globalSettings || {};
+    var bestValue = function(settings_prop, params_prop, default_prop){
+      return globalSettings[settings_prop] || QueryString.params()[params_prop] || default_prop;
+    }
 
-    var style = this.bestValue('style', 'style', null);
+    var style = bestValue('style', 'style', null);
     if(style && style.indexOf('.css') < 0){
       style = '/assets/themes/' + style + '.css?body=1';
       $('head').append('<link href="' + style + '" media="all" rel="stylesheet">');
     }
         
     var settings = {
-      apiUrl: this.bestValue('apiUrl', 'api_url', '/'),
-      srcUrl: this.bestValue('srcUrl', 'src_url'),
-      srcData: srcData,
-      offline: this.bestValue('offline', 'offline', false),
-      assessmentId: this.bestValue('assessmentId', 'assessment_id'),
-      eId: this.bestValue('eId', 'eid'),
-      externalUserId: this.bestValue('externalUserId', 'external_user_id'),
-      keywords: this.bestValue('keywords', 'keywords'),
-      resultsEndPoint: this.bestValue('resultsEndPoint', 'results_end_point', 'http://localhost:4200/api'),
-      confidenceLevels: this.bestValue('confidenceLevels', 'confidence_levels', false),
-      enableStart: this.bestValue('enableStart', 'enable_start', false),
-      style: style
+      apiUrl           : bestValue('apiUrl', 'api_url', '/'),
+      srcUrl           : bestValue('srcUrl', 'src_url'),
+      srcData          : srcData,
+      offline          : bestValue('offline', 'offline', false),
+      assessmentId     : bestValue('assessmentId', 'assessment_id'),
+      eId              : bestValue('eId', 'eid'),
+      externalUserId   : bestValue('externalUserId', 'external_user_id'),
+      keywords         : bestValue('keywords', 'keywords'),
+      resultsEndPoint  : bestValue('resultsEndPoint', 'results_end_point', 'http://localhost:4200/api'),
+      confidenceLevels : bestValue('confidenceLevels', 'confidence_levels', false),
+      enableStart      : bestValue('enableStart', 'enable_start', false),
+      style            : style
     };
 
     if(!settings.srcUrl && !settings.offline){
