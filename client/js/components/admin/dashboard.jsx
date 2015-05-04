@@ -8,7 +8,7 @@ import _                                                                        
 import assign                                                                           from "object-assign";
 import { Paper, TextField, FlatButton, RaisedButton, FontIcon}                          from "material-ui";
 import AdminToolBar                                                                     from "./tool_bar";
-import AdminActions                                                                     from "../../actions/application";
+import AdminActions                                                                     from "../../actions/admin";
 import ApplicationStore                                                                 from "../../stores/application";
 import UserList                                                                         from "./user_list";
 import StatisticsPanel                                                                  from "./statistics_panel";

@@ -5,7 +5,7 @@ import User                                                                   fr
 import StoreKeeper                                                            from "../mixins/store_keeper";
 import Router                                                                 from "react-router";
 import { Toolbar, ToolbarGroup, DropDownMenu, RaisedButton, TextField, Paper} from "material-ui";
-import AdminActions                                                           from "../../actions/application";
+import AdminActions                                                           from "../../actions/admin";
 
 export default React.createClass({
 

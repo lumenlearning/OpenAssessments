@@ -5,7 +5,7 @@ import User                                       from "../../stores/user";
 import StoreKeeper                                from "../mixins/store_keeper";
 import Router                                     from "react-router";
 import { Menu,FloatingActionButton }              from "material-ui";
-import AdminActions                               from "../../actions/application";
+import AdminActions                               from "../../actions/admin";
 
 
 export default React.createClass({

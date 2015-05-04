@@ -3,7 +3,7 @@
 import React                                            from "react";
 import User                                             from "../../stores/user";
 import { Paper, FlatButton, RaisedButton, FontIcon, Dialog }    from "material-ui";
-import AdminActions                                     from "../../actions/application";
+import AdminActions                                     from "../../actions/admin";
 
 export default React.createClass({
   

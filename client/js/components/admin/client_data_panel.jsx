@@ -4,7 +4,7 @@ import React                from "react";
 import User                 from "../../stores/user";
 import Router               from "react-router";
 import { Menu }             from "material-ui";
-import AdminActions         from "../../actions/application";
+import AdminActions         from "../../actions/admin";
 export default React.createClass({
   
   selectClient(e, index, payload){
