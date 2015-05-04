@@ -7,6 +7,11 @@ This project provides a starting point for building a Canvas LTI or OAuth applic
 To test your Canvas application with Canvas you will need to provide a public SSL url. The simpliest way to do this is to
 use ngrok which can be downloaded from https://ngrok.com/.
 
+### Modify application name
+Change the name of the application to a name that you prefer. Open application.rb and change CanvasStarterApp to the 
+name you choose. Do a global search and replace for canvas_starter_app and change it to the name you choose. Do a global
+search and replace for canvasstarterapp.
+
 ### Secrets file
 Rename config/secrets.example.yml to config.secrets.yml. Open the file and change each entry to values that are 
 relevant for your application. You will need to request a Canvas ID and Secret from Instructure. You will also
