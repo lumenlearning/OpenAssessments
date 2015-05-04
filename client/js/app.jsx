@@ -27,7 +27,7 @@ if (window.matchMedia("(max-width: 639px)").matches){
 }
 
 Router.run(routes, (Handler, state) => {
-  return React.render(<Handler params={state.params} settings={Settings.load()} />, document.body);
+  return React.render(<Handler params={state.params} settings={Settings.load(window.OEA_SETTINGS)} />, document.body);
 });
 
 // Router.run(routes, (Handler) => {

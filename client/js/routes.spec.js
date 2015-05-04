@@ -9,8 +9,12 @@ var Route = Router.Route;
 describe('default route', function () {
   it('renders assessment', function (done) {
     Router.run(routes, '/', function (Handler, state){
-      var html = React.renderToString(<Handler params={state.params} settings={Settings.load()} />);
-      expect(html).toMatch(/Home/);
+    	var globalSettings = {
+    		srcUrl: "http://www.example.com"
+    	}
+    	var settings = Settings.load(globalSettings);
+      var html = React.renderToString(<Handler params={state.params} settings={settings} />);
+      expect(html).toMatch(/assessment/);
       done();
     });
   });

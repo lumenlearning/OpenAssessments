@@ -17,41 +17,40 @@ function srcData(){
   return result;
 }
 
-function bestValue(settings_prop, params_prop, default_prop){
-	var globals = {};
-	if(window.OEA_SETTINGS){
-		globals = window.OEA_SETTINGS;
-	}
-  return globals[settings_prop] || QueryString.params()[params_prop] || default_prop;
-}
 
 export default {
 
-  load(){
+	bestValue(settings_prop, params_prop, default_prop){
+		return this.globalSettings[settings_prop] || QueryString.params()[params_prop] || default_prop;
+	},
 
-    var style = bestValue('style', 'style', null);
+  load(globalSettings){
+
+  	this.globalSettings = globalSettings || {};
+
+    var style = this.bestValue('style', 'style', null);
     if(style && style.indexOf('.css') < 0){
       style = '/assets/themes/' + style + '.css?body=1';
       $('head').append('<link href="' + style + '" media="all" rel="stylesheet">');
     }
         
     var settings = {
-      apiUrl: bestValue('apiUrl', 'api_url', '/'),
-      srcUrl: bestValue('srcUrl', 'src_url'),
+      apiUrl: this.bestValue('apiUrl', 'api_url', '/'),
+      srcUrl: this.bestValue('srcUrl', 'src_url'),
       srcData: srcData,
-      offline: bestValue('offline', 'offline', false),
-      assessmentId: bestValue('assessmentId', 'assessment_id'),
-      eId: bestValue('eId', 'eid'),
-      externalUserId: bestValue('externalUserId', 'external_user_id'),
-      keywords: bestValue('keywords', 'keywords'),
-      resultsEndPoint: bestValue('resultsEndPoint', 'results_end_point', 'http://localhost:4200/api'),
-      confidenceLevels: bestValue('confidenceLevels', 'confidence_levels', false),
-      enableStart: bestValue('enableStart', 'enable_start', false),
+      offline: this.bestValue('offline', 'offline', false),
+      assessmentId: this.bestValue('assessmentId', 'assessment_id'),
+      eId: this.bestValue('eId', 'eid'),
+      externalUserId: this.bestValue('externalUserId', 'external_user_id'),
+      keywords: this.bestValue('keywords', 'keywords'),
+      resultsEndPoint: this.bestValue('resultsEndPoint', 'results_end_point', 'http://localhost:4200/api'),
+      confidenceLevels: this.bestValue('confidenceLevels', 'confidence_levels', false),
+      enableStart: this.bestValue('enableStart', 'enable_start', false),
       style: style
     };
 
     if(!settings.srcUrl && !settings.offline){
-      throw new Error("No src_url specified: specify a src_url in the url query params.");
+      throw "No src_url specified: specify a src_url in the url query params.";
     }
 
     return settings;
