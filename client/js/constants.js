@@ -10,6 +10,9 @@ export default {
 
   ADD_MESSAGE: "add_message",
 
+  // settings
+  SETTINGS_LOAD: "settings_load",
+
   // Errors
   TIMEOUT: "timeout",
   ERROR: "error",
