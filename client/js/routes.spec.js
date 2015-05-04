@@ -7,8 +7,9 @@ import routes   from './routes';
 var Route = Router.Route;
 
 describe('default route', function () {
+
   it('renders assessment', function (done) {
-    Router.run(routes, '/', function (Handler, state){
+    Router.run(routes, '/', function (Handler, state) {
     	var globalSettings = {
     		srcUrl: "http://www.example.com"
     	}
@@ -18,4 +19,5 @@ describe('default route', function () {
       done();
     });
   });
+
 });
