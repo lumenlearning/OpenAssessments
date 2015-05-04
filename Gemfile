@@ -46,6 +46,7 @@ gem 'rails_12factor'
 
 # API Related
 gem 'httparty'
+gem 'rack-cors', :require => 'rack/cors'
 
 group :development do
   gem 'spring'
