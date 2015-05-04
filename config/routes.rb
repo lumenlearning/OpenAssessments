@@ -27,6 +27,10 @@ Rails.application.routes.draw do
   resources :canvas_authentications
   resources :admin, only: [:index]
   
+  namespace :admin do
+    resources :accounts
+  end
+
   mount MailPreview => 'mail_view' if Rails.env.development?
 
 end
