@@ -10,6 +10,7 @@ import { Paper, TextField, FlatButton, RaisedButton, FontIcon}                  
 import AdminToolBar                                                                     from "./tool_bar";
 import AdminActions                                                                     from "../../actions/admin";
 import ApplicationStore                                                                 from "../../stores/application";
+import AccountsStore                                                                    from "../../stores/accounts";
 import UserList                                                                         from "./user_list";
 import StatisticsPanel                                                                  from "./statistics_panel";
 import ClientDataPanel                                                                  from "./client_data_panel";
@@ -21,35 +22,28 @@ export default React.createClass({
   getState(){
     return {
       tab : ApplicationStore.currentMainTab(),
-      clients: ApplicationStore.clientDataList(),
+      accounts: AccountsStore.current(),
       users: ApplicationStore.userDataList(),
       selectedUser: ApplicationStore.currentSelectedUser(),
     };
   },
 
   getInitialState(){
-      
-      // This will eventually come from the database but for now its like this just to test how it works.
-      var menuItems = [
-        {payload: '0', text: "Hello!", data: "Atomic Jolt"},
-        {payload: '1', text: "Other User", data: "Atomic Jolt"},
-        {payload: '2', text: "Some Guy", data: "Atomic Jolt"},
-        {payload: '3', text: "Some Other Guy", data: "Atomic Jolt"},
-        {payload: '4', text: "Some Girl", data: "Atomic Jolt"},
-        {payload: '5', text: "Me again", data: "Atomic Jolt"},
-        {payload: '6', text: "An old man", data: "Atomic Jolt"},
-        {payload: '7', text: "Crazy Person", data: "Atomic Jolt"}
-      ];
-      var initialUser = {
-        currentSelectedUser: 
-          {
-            name: " ", email: " ", username: " ", role: " "
-          }
-        };
-      AdminActions.changeMainTab({action: "change_main_tab_pending", text: "Client Info"});
-      AdminActions.getClientData({clientList: menuItems});
-      AdminActions.getUserData({userList: []});
-      AdminActions.getCurrentSelectedUser(initialUser);
+  
+    var state = this.getState();
+    var initialUser = {
+      currentSelectedUser: 
+        {
+          name: " ", email: " ", username: " ", role: " "
+        }
+      };
+    AdminActions.changeMainTab({action: "change_main_tab_pending", text: "Client Info"});
+    AdminActions.getUserData({userList: []});
+    AdminActions.getCurrentSelectedUser(initialUser);
+
+    if(state.accounts.length <= 0){
+      AdminActions.loadAccounts();
+    }
 
     return this.getState();
   },
@@ -154,7 +148,7 @@ export default React.createClass({
       tab = <UserList />;
     }
     if(this.state.tab == 'Client Info'){
-      tab = <ClientDataPanel menuItems={this.state.clients} />;
+      tab = <ClientDataPanel menuItems={this.state.accounts} />;
       if(this.state.users)
         dataList = <UserList menuItems={this.state.users} />;
     }

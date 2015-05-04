@@ -38,7 +38,7 @@ Dispatcher.register(function(payload) {
     case Constants.CHANGE_MAIN_TAB_PENDING:
       _application.mainTab = payload.mainTab;
       break;
-    case Constants.LOADING_CLIENT_DATA:
+    case Constants.ACCOUNTS_LOADING:
       _application.clientList = payload.clientList;
       break; 
 
