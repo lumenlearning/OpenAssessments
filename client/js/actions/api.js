@@ -1,9 +1,10 @@
 "use strict";
 
-import Request      from "superagent";
-import User         from "../stores/user";
-import Constants    from "../constants";
-import Dispatcher   from "../dispatcher";
+import Request       from "superagent";
+import User          from "../stores/user";
+import Constants     from "../constants";
+import Dispatcher    from "../dispatcher";
+import SettingsStore from '../stores/settings';
 
 const TIMEOUT = 10000;
 
@@ -23,7 +24,7 @@ function token() {
 }
 
 function makeUrl(part) {
-  return GlobalSettings.apiUrl + part;
+  return SettingsStore.current().apiUrl + '/' + part;
 }
 
 // GET request with a token param

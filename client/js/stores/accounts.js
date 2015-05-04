@@ -8,7 +8,7 @@ import assign         from "object-assign";
 var _accounts = [];
 
 function loadAccounts(data){
-  _accounts = data;
+  _accounts = JSON.parse(data);
 }
 
 // Extend User Store with EventEmitter to add eventing capabilities
@@ -28,7 +28,7 @@ Dispatcher.register(function(payload) {
   switch(action){
 
     case Constants.ACCOUNTS_LOADED:
-      loadAccounts(payload.data);
+      loadAccounts(payload.data.text);
       break;
 
     default:

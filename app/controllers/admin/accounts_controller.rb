@@ -5,7 +5,9 @@ class Admin::AccountsController < ApplicationController
 
   def index
     @accounts = Account.all
-    respond_with(@accounts)
+    respond_to do |format|
+      format.json { render json: @accounts }
+    end
   end
 
 end
