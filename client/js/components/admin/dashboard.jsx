@@ -10,9 +10,11 @@ import { Paper, TextField, FlatButton, RaisedButton, FontIcon}                  
 import AdminToolBar                                                                     from "./tool_bar";
 import AdminActions                                                                     from "../../actions/application";
 import ApplicationStore                                                                 from "../../stores/application";
-import UserDataPanel                                                                    from "./user_data_panel";
+import UserList                                                                         from "./user_list";
 import StatisticsPanel                                                                  from "./statistics_panel";
 import ClientDataPanel                                                                  from "./client_data_panel";
+import UserData                                                                         from "./user_data";
+
 
 export default React.createClass({
 
@@ -20,7 +22,8 @@ export default React.createClass({
     return {
       tab : ApplicationStore.currentMainTab(),
       clients: ApplicationStore.clientDataList(),
-      users: ApplicationStore.userDataList()
+      users: ApplicationStore.userDataList(),
+      selectedUser: ApplicationStore.currentSelectedUser(),
     };
   },
 
@@ -37,10 +40,16 @@ export default React.createClass({
         {payload: '6', text: "An old man", data: "Atomic Jolt"},
         {payload: '7', text: "Crazy Person", data: "Atomic Jolt"}
       ];
-
+      var initialUser = {
+        currentSelectedUser: 
+          {
+            name: " ", email: " ", username: " ", role: " "
+          }
+        };
       AdminActions.changeMainTab({action: "change_main_tab_pending", text: "Client Info"});
       AdminActions.getClientData({clientList: menuItems});
-      AdminActions.getUserData({userList: ["asdfasdf"]})
+      AdminActions.getUserData({userList: []});
+      AdminActions.getCurrentSelectedUser(initialUser);
 
     return this.getState();
   },
@@ -65,7 +74,9 @@ export default React.createClass({
     var styles = {
     
       adminDashboard: {
-        margin: "auto",
+        marginLeft: "auto",
+        marginRight: "auto",
+        width: "1150px"
       },
 
       infoLabels: {
@@ -102,13 +113,14 @@ export default React.createClass({
 
       adminInfoDock: {
         width: 'auto',
-        height: '440px',
+        height: '450px',
         borderColor: 'grey',
         borderStyle: 'solid',
         borderTop: '0px',
         borderLeft: '0px',
         borderRight: '0px',
         borderBottom: '1px solid grey',
+        
       },
 
       graphData:{
@@ -123,6 +135,10 @@ export default React.createClass({
         display: 'inline-block'
       },
 
+      graphDataBar: {
+        marginTop: "10px"
+      },
+
       spacer: {
         width: "28px",
         height: "100px",
@@ -135,16 +151,17 @@ export default React.createClass({
     var dataList = (<div>USERLIST</div>);
     var infoPaper;
     if(this.state.tab == 'Users'){
-      tab = <UserDataPanel />;
+      tab = <UserList />;
     }
     if(this.state.tab == 'Client Info'){
       tab = <ClientDataPanel menuItems={this.state.clients} />;
       if(this.state.users)
-        dataList = <UserDataPanel menuItems={this.state.users} />;
+        dataList = <UserList menuItems={this.state.users} />;
     }
     if(this.state.tab == 'Statistics'){
       tab = <StatisticsPanel />;
     }
+    console.log(this.state.selectedUser);
    
     return (
       <div style={styles.adminDashboard}>
@@ -182,7 +199,6 @@ export default React.createClass({
             </div>
           </Paper>
         </div>
-
         <div className="admin-report">
           <div className="admin-graphs">
             <Paper style={styles.graphPaper} className="graph-paper">
@@ -190,26 +206,10 @@ export default React.createClass({
                 <AdminToolBar />
               </div>
               <div style={styles.adminInfoDock} className="admin-info-dock">
-                {tab}
-                <div style={{display:"inline"}}>
+                <div style={{display: "inline-block"}}>
+                  {tab}
                   {dataList} 
-                </div>
-              </div>
-              <div className="graph-data-bar">
-                <div style={styles.graphData} className="graph-data">
-                  <h3>DATA</h3>
-                </div>
-
-                <div style={styles.graphData} className="graph-data">
-                  <h3>DATA</h3>
-                </div>
-
-                <div style={styles.graphData} className="graph-data">
-                  <h3>DATA</h3>
-                </div>
-
-                <div style={styles.graphData} className="graph-data">
-                  <h3>DATA</h3>
+                  <UserData user={this.state.selectedUser}/>
                 </div>
               </div>  
             </Paper>

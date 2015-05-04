@@ -18,5 +18,6 @@ export default {
   // Admin
   CHANGE_MAIN_TAB_PENDING: "change_main_tab_pending",
   LOADING_CLIENT_DATA: "loading_client_data",
-  LOADING_USER_DATA: "loading_user_data"
+  LOADING_USER_DATA: "loading_user_data",
+  LOADING_SELECTED_USER_DATA: "loading_selected_user_data"
 };

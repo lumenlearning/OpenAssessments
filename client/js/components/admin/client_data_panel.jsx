@@ -47,7 +47,7 @@ export default React.createClass({
     return (
       <div style={styles.menuStyle} className="menuBox">
         <div style={styles.menuItemStyle}>
-          <Menu menuItems={this.props.menuItems} zDepth='2' onItemClick={this.selectClient}/>
+          <Menu menuItems={this.props.menuItems} zDepth={2} onItemClick={this.selectClient}/>
         </div>
       </div>
     );

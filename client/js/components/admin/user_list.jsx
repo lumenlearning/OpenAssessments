@@ -33,7 +33,6 @@ export default React.createClass({
         height: "435px"
       },
       buttonStyle: {
-        display: "block",
         margin: "10px"
       },
 
@@ -48,23 +47,40 @@ export default React.createClass({
         <h4 style={styles.labelStyle}>Users</h4>
         <div style={styles.menuStyle} className="menuBox">
           <div style={styles.menuItemStyle}>
-            <Menu menuItems={this.props.menuItems} zDepth='2' onItemClick={this.menuClicked} />
+            <Menu menuItems={this.props.menuItems} zDepth='2' onItemClick={this.userMenuClicked} />
           </div>
         </div>
         <div style={styles.buttonStyle}>
-          <FloatingActionButton />
-          <FloatingActionButton secondary={true}/>
+          <FloatingActionButton onClick={this.deleteButtonClicked}/>
+          <FloatingActionButton secondary={true} onClick={this.addButtonClicked}/>
         </div>  
       </div>
     );
   },
 
-  menuClicked (e, key, payload){
-    //console.log(payload.text);
-   // console.log(e);
-    //console.log(key);
- 
+  addButtonClicked(){
+    // generate an action to add a user
+    console.log("ADD BUTTON CLICKED");
+  },
 
+  deleteButtonClicked(){
+    // Generate action to delete a user
+    console.log("DELETE BUTTON CLICKED");
+  },
+
+  userMenuClicked (e, index, payload){
+    // Generate an action to get display all of the user information from the database.
+    var user = {
+      currentSelectedUser: {
+        name: payload.text,
+        email: "test@email.com",
+        username: "myUserName",
+        role: "Admin",     
+      } 
+    };
+
+    AdminActions.getCurrentSelectedUser(user);
+    console.log("USERMENU BUTTON CLICKED");
   }
 
   

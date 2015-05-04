@@ -21,7 +21,12 @@ var ApplicationStore = assign({}, StoreCommon, {
 
   userDataList(){
     return _application.userDataList;
+  },
+
+  currentSelectedUser(){
+    return _application.currentSelectedUser;
   }
+
 });
 
 // Register callback with Dispatcher
@@ -39,7 +44,11 @@ Dispatcher.register(function(payload) {
 
     case Constants.LOADING_USER_DATA:
       _application.userDataList = payload.userList;
-    break;  
+      break; 
+
+    case Constants.LOADING_SELECTED_USER_DATA:
+      _application.currentSelectedUser = payload.currentSelectedUser;
+      break; 
     default:
       return true;
   }
