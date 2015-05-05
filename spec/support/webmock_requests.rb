@@ -49,7 +49,7 @@ RSpec.configure do |config|
     #
     # Courses
     #
-    stub_request(:get, %r|http[s]*://www.example.*com/api/v1/courses|).
+    stub_request(:get, %r|http[s]*://.+\.example.*com/api/v1/courses|).
       to_return(
         status: 200,
         body: canvas_courses,
@@ -59,7 +59,7 @@ RSpec.configure do |config|
     #
     # Accounts
     #
-    stub_request(:get, %r|http[s]*://www.example.*com/api/v1/accounts/self|).
+    stub_request(:get, %r|http[s]*://.+\.example.*com/api/v1/accounts/self|).
       to_return(
         status: 200, 
         body: canvas_accounts, 
@@ -73,7 +73,7 @@ RSpec.configure do |config|
     #
     ['accounts', 'courses'].each do |kind|
      
-      canvas_external_tool_url = %r|http[s]*://www.example.*com/api/v1/#{kind}/.+/external_tools|
+      canvas_external_tool_url = %r|http[s]*://.+\.example.*com/api/v1/#{kind}/.+/external_tools|
 
       stub_request(:get, canvas_external_tool_url).
         to_return(
