@@ -8,7 +8,7 @@ import SettingsStore from '../stores/settings';
 
 const TIMEOUT = 10000;
 
-let _pendingRequests = {};
+var _pendingRequests = {};
 
 function abortPendingRequests(key) {
   if(_pendingRequests[key]) {
@@ -23,8 +23,12 @@ function token() {
   return User.token();
 }
 
-function makeUrl(part) {
-  return SettingsStore.current().apiUrl + '/' + part;
+function makeUrl(part){
+  if(part.indexOf("http") >= 0){
+    return part;
+  } else {
+    return SettingsStore.current().apiUrl + '/' + part;
+  }
 }
 
 // GET request with a token param
@@ -74,7 +78,7 @@ function dispatchResponse(key) {
 
 function doRequest(key, url, callback){
   abortPendingRequests(key);
-  let request = _pendingRequests[key] = callback(makeUrl(url));
+  var request = _pendingRequests[key] = callback(makeUrl(url));
   request.end(dispatchResponse(key));
   return request;
 }
