@@ -9,7 +9,6 @@ import assign                                                                   
 import { Paper, TextField, FlatButton, RaisedButton, FontIcon}                          from "material-ui";
 import AdminToolBar                                                                     from "./tool_bar";
 import AdminActions                                                                     from "../../actions/admin";
-import AdminAccountActions                                                                     from "../../actions/admin_accounts";
 import ApplicationStore                                                                 from "../../stores/application";
 import AccountsStore                                                                    from "../../stores/accounts";
 import UserList                                                                         from "./user_list";
@@ -23,8 +22,8 @@ export default React.createClass({
   getState(){
     return {
       tab : ApplicationStore.currentMainTab(),
-      accounts: AccountsStore.current(),
-      users: ApplicationStore.userDataList(),
+      accounts: AccountsStore.currentAccounts(),
+      users: AccountsStore.currentUsers(),
       selectedUser: ApplicationStore.currentSelectedUser(),
     };
   },
@@ -45,7 +44,7 @@ export default React.createClass({
     AdminActions.getCurrentSelectedUser(initialUser);
 
     if(state.accounts.length <= 0){
-      AdminAccountActions.loadAccounts();
+      AdminActions.loadAccounts();
     }
     
     return this.getState();
@@ -154,8 +153,12 @@ export default React.createClass({
     }
     if(this.state.tab == 'Client Info'){
       tab = <ClientDataPanel menuItems={this.state.accounts} />;
-      if(this.state.users)
+      if(this.state.users != null){
         dataList = <UserList menuItems={this.state.users} />;
+      } else {
+        var noUsers = [{payload: "1", text: "No Users"}];
+        dataList = <UserList menuItems={noUsers} />
+      }
     }
     if(this.state.tab == 'Statistics'){
       tab = <StatisticsPanel />;

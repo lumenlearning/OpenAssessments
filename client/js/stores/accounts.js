@@ -6,13 +6,25 @@ import StoreCommon    from "./store_common";
 import assign         from "object-assign";
 
 var _accounts = [];
+var _users = [];
 
 function loadAccounts(data){
   //console.log(data);
   var accountList = JSON.parse(data);
+  // translates the data into a format material ui can understand;
   for(var i=0; i< accountList.length; i++){
     var s = "" + i;
     _accounts[i] = {payload: s, text: accountList[i].name, id: accountList[i].id };
+  }
+}
+
+function loadUsers(data){
+  console.log("DO I GET CALLED");
+  var userList = JSON.parse(data);
+  // translates the data into a format material ui can understand;
+  for(var i=0; i< userList.length; i++){
+    var s = "" + i;
+    _users[i] = {payload: s, text: userList[i].name};
   }
 }
 
@@ -20,8 +32,11 @@ function loadAccounts(data){
 var AccountsStore = assign({}, StoreCommon, {
 
   // Return current user
-  current(){
+  currentAccounts(){
     return _accounts;
+  },
+  currentUsers(){
+    return _users;
   }
 
 });
@@ -36,6 +51,10 @@ Dispatcher.register(function(payload) {
       //console.log(payload.data);
       loadAccounts(payload.data.text);
       break;
+    case Constants.USERS_LOADED:
+      console.log(payload.data);
+      loadUsers(payload.data.text);
+    break;
 
     default:
       return true;

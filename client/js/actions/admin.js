@@ -5,6 +5,20 @@ import Dispatcher  from   "../dispatcher";
 import Api         from   "./api";
 export default {
 
+  loadAccounts(){
+    Dispatcher.dispatch({action: Constants.ACCOUNTS_LOADING});
+    Api.get(Constants.ACCOUNTS_LOADED, "admin/accounts/");
+  },
+
+  loadUsers(accountId, page){
+    if(!page){
+      page = 1;
+    }
+    var perPage = 100;
+    Dispatcher.dispatch({action: Constants.USERS_LOADING});
+    Api.get(Constants.USERS_LOADED, "admin/accounts/" + accountId + "/users?page=" + page + "&per_page=" + perPage);
+  },
+
   changeMainTab(payload){
     Dispatcher.dispatch({ action: Constants.CHANGE_MAIN_TAB_PENDING, mainTab: payload.text });
   },

@@ -28,7 +28,9 @@ Rails.application.routes.draw do
   resources :admin, only: [:index]
   
   namespace :admin do
-    resources :accounts
+    resources :accounts do
+      resources :users
+    end
   end
 
   mount MailPreview => 'mail_view' if Rails.env.development?
