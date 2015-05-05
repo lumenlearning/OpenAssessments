@@ -39,7 +39,11 @@ RSpec.describe LtiInstallsController, type: :controller do
         @authentication = FactoryGirl.create(:authentication, user: @user, provider: 'canvas')
       end
       it "Adds the LTI tool to the specified accounts" do
-        post :create, { lti_install: {account_ids: ["43460000000000017"]} }
+        post :create, { lti_install: {account_ids: ["43460000000000017"], course_ids: [""]} }
+        expect(response).to have_http_status(200)
+      end
+      it "Adds the LTI tool to the specified courses" do
+        post :create, { lti_install: {account_ids: [""], course_ids: ["43460000000000228"]} }
         expect(response).to have_http_status(200)
       end
     end
@@ -48,7 +52,7 @@ RSpec.describe LtiInstallsController, type: :controller do
         @authentication = FactoryGirl.create(:authentication, user: @user, provider: 'canvas')
       end
       it "Indicates the LTI tool was not installed" do
-        post :create, { lti_install: {account_ids: []} }
+        post :create, { lti_install: {account_ids: [], course_ids: []} }
         expect(response).to have_http_status(200)
       end
     end

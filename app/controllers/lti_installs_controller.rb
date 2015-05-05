@@ -34,38 +34,33 @@ class LtiInstallsController < ApplicationController
     @errors = []
     @accounts = []
     @courses = []
-
-    selected_accounts = api.accounts.find_all{|a| params[:lti_install][:account_ids].include?(a['id']) }
-
-    # Validate that the user has admin level access
-    selected_accounts.each do |canvas_account|
-      
-      canvas_account['asset_url'] = "https://#{Rails.application.secrets.canvas_tools_assets_domain}/#{account_code}"
-      canvas_account['settings_url'] = "#{main_account.canvas_uri}/accounts/#{canvas_account['id']}/settings"
-
-      account_code = "#{main_account.code}"
-      lti_options = {
-        launch_url: "https://#{account_code}.#{Rails.application.secrets.lti_launch_domain}/lti_launches",
-        env: Rails.env,
-        title: Rails.application.secrets.lti_tool_name,
-        description: Rails.application.secrets.lti_tool_description,
-        icon: "No ICO",
-        domain: "#{account_code}.#{Rails.application.secrets.lti_launch_domain}",
-        course_navigation: {
-          text: Rails.application.secrets.lti_tool_name,
-          visibility: "admins",
-          default: "enabled",
-          enabled: true
-        } 
-      }
-      
-      # Install the LTI tool into each account
+    
+    account_code = "#{main_account.code}"
+    
+    lti_options = {
+      launch_url: "https://#{account_code}.#{Rails.application.secrets.lti_launch_domain}/lti_launches",
+      env: Rails.env,
+      title: Rails.application.secrets.lti_tool_name,
+      description: Rails.application.secrets.lti_tool_description,
+      icon: "No ICO",
+      domain: "#{account_code}.#{Rails.application.secrets.lti_launch_domain}",
+      course_navigation: {
+        text: Rails.application.secrets.lti_tool_name,
+        visibility: "admins",
+        default: "enabled",
+        enabled: true
+      } 
+    }
+    
+    # Install the LTI tool into each selected account
+    params[:lti_install][:account_ids].reject{|id| id.blank?}.each do |canvas_account_id|
+      canvas_account = { 'id' => canvas_account_id }
       result = Integrations::CanvasAccountsLti.setup(
         canvas_account, 
         main_account.lti_key, 
         main_account.lti_secret,
         main_account.canvas_uri,
-        main_account.canvas_token, 
+        auth.token, 
         lti_options
       )
 
@@ -74,6 +69,26 @@ class LtiInstallsController < ApplicationController
         @errors << canvas_account
       else
         @accounts << canvas_account
+      end
+
+    end
+
+    # Install the LTI tool into each selected course
+    params[:lti_install][:course_ids].reject{|id| id.blank?}.each do |canvas_course_id|
+      canvas_course = { 'id' => canvas_course_id }
+      result = Integrations::CanvasCoursesLti.setup(
+        canvas_course,
+        main_account.lti_key, 
+        main_account.lti_secret,
+        auth, 
+        lti_options
+      )
+
+      # Check the result to make sure there wasn't an error
+      if(!result['id'])
+        @errors << canvas_course
+      else
+        @courses << canvas_course
       end
 
     end
