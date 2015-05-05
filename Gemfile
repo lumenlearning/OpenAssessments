@@ -48,6 +48,9 @@ gem 'rails_12factor'
 gem 'httparty'
 gem 'rack-cors', :require => 'rack/cors'
 
+# Paging
+gem 'will_paginate', '~> 3.0.6'
+
 group :development do
   gem 'spring'
   gem 'better_errors'
