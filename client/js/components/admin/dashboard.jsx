@@ -9,6 +9,7 @@ import assign                                                                   
 import { Paper, TextField, FlatButton, RaisedButton, FontIcon}                          from "material-ui";
 import AdminToolBar                                                                     from "./tool_bar";
 import AdminActions                                                                     from "../../actions/admin";
+import AdminAccountActions                                                                     from "../../actions/admin_accounts";
 import ApplicationStore                                                                 from "../../stores/application";
 import AccountsStore                                                                    from "../../stores/accounts";
 import UserList                                                                         from "./user_list";
@@ -31,20 +32,22 @@ export default React.createClass({
   getInitialState(){
   
     var state = this.getState();
+    
     var initialUser = {
       currentSelectedUser: 
-        {
-          name: " ", email: " ", username: " ", role: " "
-        }
-      };
+      {
+        name: " ", email: " ", username: " ", role: " "
+      }
+    };
+
     AdminActions.changeMainTab({action: "change_main_tab_pending", text: "Client Info"});
     AdminActions.getUserData({userList: []});
     AdminActions.getCurrentSelectedUser(initialUser);
 
     if(state.accounts.length <= 0){
-      AdminActions.loadAccounts();
+      AdminAccountActions.loadAccounts();
     }
-
+    
     return this.getState();
   },
 
