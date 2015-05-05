@@ -55,11 +55,13 @@ export default React.createClass({
 
   // Listen for changes in the stores
   componentDidMount(){
+    AccountsStore.addChangeListener(this.storeChanged);
     ApplicationStore.addChangeListener(this.storeChanged);
   },
 
   // Remove change listers from stores
   componentWillUnmount(){
+    AccountsStore.removeChangeListener(this.storeChanged);
     ApplicationStore.removeChangeListener(this.storeChanged);
   },
   
