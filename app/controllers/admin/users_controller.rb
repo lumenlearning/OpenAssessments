@@ -1,4 +1,5 @@
 class Admin::UsersController < ApplicationController
+  respond_to :json
 
   # before_filter :authenticate_user!
   before_filter :setup_will_paginate
@@ -9,33 +10,30 @@ class Admin::UsersController < ApplicationController
   # /account/1/users
   def index
     @account = Account.find(params[:account_id])
-    respond_to do |format|
-      format.json { render json: @account.users.paginate(page: @page, per_page: @per_paget) }
-    end
+    
   end
 
   # /account/1/users
   def create
-    if @user = @account.create_user(create_params)
-      respond_to do |format|
-        format.json { render json: @user, status: success }
-      end
+    @account = Account.find(params[:account_id])
+    if @user = @account.users.create(create_params)
+      respond_with @user
     else
-      respond_to do |format|
-        format.json { render json: @user.errors, status: unprocessable_entity }
-      end
+      respond_with @user.errors
     end
   end
 
   # /account/1/users/1
   def update
+    @user = User.find(params[:id])
     if @user.update_attributes(update_params)
+      #byebug
       respond_to do |format|
-        format.json { render json: @user, status: success }
+        format.json { render json: @user }
       end
     else
-      respond_to do |format|
-        format.json { render json: @user.errors, status: unprocessable_entity }
+     respond_to do |format|
+        format.json { render json: @user.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -43,19 +41,25 @@ class Admin::UsersController < ApplicationController
   # /account/1/users/1
   def destroy
     @user.destroy
-    respond_to do |format|
-      format.json { render json: @user, status: status }
-    end
+    respond_with @user
   end
 
   private
 
     def create_params
-      params.require(:user).permit(:name)
+      params.require(:user).permit(
+        :name,
+        :email,
+        :password,
+        :password_confirmation
+        )
     end
 
     def update_params
-      params.require(:user).permit(:role)
+      params.require(:user).permit(
+        :name,
+        :email        
+        )
     end
 
 end

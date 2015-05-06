@@ -14,18 +14,18 @@ RSpec.describe Admin::UsersController, type: :controller do
   describe "POST create" do
     describe "with valid params" do
       it "creates the user and returns the object as json" do
-        params = FactoryGirl.attributesFor(:user)
-        post :create, account_id: @account, user: params
-        expect(response).to have_http_status(200)
+        params = FactoryGirl.attributes_for(:user)
+        post :create, account_id: @account, user: params, format: :json
+        expect(response).to have_http_status(:success)
         expect(JSON.parse(response.body)['name']).to eq(params[:name])
       end
     end
     describe "with invalid params" do
       it "returns an error" do
-        params = FactoryGirl.attributesFor(:user)
+        params = FactoryGirl.attributes_for(:user)
         params[:email] = nil
-        post :create, account_id: @account, user: params
-        expect(response).to have_http_status(403)
+        post :create, account_id: @account, user: params, format: :json
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
@@ -34,18 +34,25 @@ RSpec.describe Admin::UsersController, type: :controller do
     before do
       @user = FactoryGirl.create(:user)
     end
+    
     describe "with valid params" do
       it "updates the user and returns the object as json" do
+        params = @user.attributes
         new_name = "Billy Joel"
-        put :update, account_id: @account, id: @user.id, name: new_name
-        expect(response).to have_http_status(200)
-        expect(JSON.parse(response.body)['name']).to eq(new_name)
+        params[:name] = new_name
+        put :update, account_id: @account, id: @user.id, user: params, name: new_name, format: :json
+        expect(response).to have_http_status(:success)
+        expect(JSON.parse(response.body)['name']).to eq(params[:name])
       end
     end
+
     describe "with invalid params" do
       it "returns an error" do
-        put :update, account_id: @account, id: @user.id, name: nil
-        expect(response).to have_http_status(403)
+        params = @user.attributes
+        new_email = nil
+        params[:email] = new_email
+        put :update, account_id: @account, id: @user.id, user: params, email: new_email, format: :json
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
