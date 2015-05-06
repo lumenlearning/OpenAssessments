@@ -10,7 +10,10 @@ class Admin::UsersController < ApplicationController
   # /account/1/users
   def index
     @account = Account.find(params[:account_id])
-    
+    @users = @account.users
+    respond_to do |format|
+        format.json { render json: @account.users.paginate(page: @page, per_page: @per_paget) }
+    end
   end
 
   # /account/1/users

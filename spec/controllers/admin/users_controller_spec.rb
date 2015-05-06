@@ -4,10 +4,19 @@ RSpec.describe Admin::UsersController, type: :controller do
   
   before do
     @account = FactoryGirl.create(:account)
+    testParams = FactoryGirl.attributes_for(:user)
+    @account.users.create(testParams)
+    testParams = FactoryGirl.attributes_for(:user)
+    @account.users.create(testParams)
+    testParams = FactoryGirl.attributes_for(:user)
+    @account.users.create(testParams)
   end
 
   describe "GET index" do
     it "should render users for the given account" do
+      get :index, account_id: @account, format: :json
+      byebug
+      expect(response).to have_http_status(:success)
     end
   end
 
@@ -16,7 +25,7 @@ RSpec.describe Admin::UsersController, type: :controller do
       it "creates the user and returns the object as json" do
         params = FactoryGirl.attributes_for(:user)
         post :create, account_id: @account, user: params, format: :json
-        expect(response).to have_http_status(:success)
+        
         expect(JSON.parse(response.body)['name']).to eq(params[:name])
       end
     end
