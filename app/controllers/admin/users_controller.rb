@@ -2,7 +2,9 @@ class Admin::UsersController < ApplicationController
 
   # before_filter :authenticate_user!
   before_filter :setup_will_paginate
-  # load_and_authorize_resource
+
+  #load_and_authorize_resource :account
+  #load_and_authorize_resource :user, through: :account
 
   # /account/1/users
   def index
