@@ -25,7 +25,6 @@ RSpec.describe Admin::UsersController, type: :controller do
       it "creates the user and returns the object as json" do
         params = FactoryGirl.attributes_for(:user)
         post :create, account_id: @account, user: params, format: :json
-        
         expect(JSON.parse(response.body)['name']).to eq(params[:name])
       end
     end

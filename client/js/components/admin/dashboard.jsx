@@ -74,51 +74,25 @@ export default React.createClass({
       adminDashboard: {
         marginLeft: "auto",
         marginRight: "auto",
-        width: "1150px"
-      },
+        marginBottom: "10px",
+        width: "1125px"
 
-      infoLabels: {
-        width: '264px',
-        height: '100px',
-        display: 'inline-block',
-      },
-
-      infoLabelIcon: {
-        width: '100px',
-        height: '100px',
-        borderColor: 'grey',
-        borderStyle: 'solid',
-        borderWidth: '1px',
-        display: 'inline-block'
-      },
-
-      adminLabelData: {
-        display: 'inline-block',
-        margin: "auto",
       },
 
       graphPaper: {
         width: 'auto',
-        height: '600px',
+        height: 'auto',
         marginTop: '20px',
       },
 
       graphTitleBar: {
         width: 'auto',
         height: '60px',
-        
       },
 
       adminInfoDock: {
         width: 'auto',
-        height: '450px',
-        borderColor: 'grey',
-        borderStyle: 'solid',
-        borderTop: '0px',
-        borderLeft: '0px',
-        borderRight: '0px',
-        borderBottom: '1px solid grey',
-        
+        height: '550px'
       },
 
       graphData:{
@@ -137,10 +111,9 @@ export default React.createClass({
         marginTop: "10px"
       },
 
-      spacer: {
-        width: "28px",
-        height: "100px",
-        display: 'inline-block'
+      headingStyle: {
+        marginLeft: "10px",
+        marginBottom: "0px"
       }
 
     };
@@ -163,60 +136,29 @@ export default React.createClass({
     if(this.state.tab == 'Statistics'){
       tab = <StatisticsPanel />;
     }
-    console.log(this.state.selectedUser);
+    //console.log(this.state.selectedUser);
    
     return (
-      <div style={styles.adminDashboard}>
-        <div className="data-labels">
-          <Paper style={styles.infoLabels} className="info-label">
-            <div style={styles.infoLabelIcon} className="info-label-icon">
+      <div style={styles.adminDashboard} zDepth={2}>
+          <Paper style={styles.graphPaper} className="graph-paper">
+            <div style={styles.graphTitleBar} className="graph-title-bar">
+              <AdminToolBar />
             </div>
-            <div style={styles.adminLabelData} className="admin-label-data">
-              <h3>DATA</h3>
-            </div>
-            </Paper>
-            <div style={styles.spacer} className="spacer"></div>
-            <Paper style={styles.infoLabels} className="info-label">
-              <div style={styles.infoLabelIcon} className="info-label-icon">
+            <div style={styles.adminInfoDock} className="admin-info-dock">
+              <div style={{display: "inline-block"}}>
+                <h4 style={styles.headingStyle}>Accounts</h4>
+                {tab} 
               </div>
-              <div style={styles.adminLabelData} className="admin-label-data">
-                <h3>DATA</h3>
+              <div style={{display: "inline-block"}}>
+                <h4 style={styles.headingStyle}>Users</h4>
+                {dataList}
               </div>
+              <div style={{display: "inline-block", float:"right"}}>
+                <h4 style={styles.headingStyle}>User Info</h4>
+                <UserData user={this.state.selectedUser}/>
+              </div> 
+            </div>  
           </Paper>
-        <div style={styles.spacer} className="spacer"></div>
-
-          <Paper style={styles.infoLabels} className="info-label">
-            <div style={styles.infoLabelIcon} className="info-label-icon">
-            </div>
-            <div style={styles.adminLabelData} className="admin-label-data">
-              <h3>DATA</h3>
-            </div>
-          </Paper>
-          <div style={styles.spacer} className="spacer"></div>
-          <Paper style={styles.infoLabels} className="info-label">
-            <div style={styles.infoLabelIcon} className="info-label-icon">
-            </div>
-            <div style={styles.adminLabelData} className="admin-label-data">
-              <h3>DATA</h3>
-            </div>
-          </Paper>
-        </div>
-        <div className="admin-report">
-          <div className="admin-graphs">
-            <Paper style={styles.graphPaper} className="graph-paper">
-              <div style={styles.graphTitleBar} className="graph-title-bar">
-                <AdminToolBar />
-              </div>
-              <div style={styles.adminInfoDock} className="admin-info-dock">
-                <div style={{display: "inline-block"}}>
-                  {tab}
-                  {dataList} 
-                  <UserData user={this.state.selectedUser}/>
-                </div>
-              </div>  
-            </Paper>
-          </div>
-        </div>
       </div>
     );
   }

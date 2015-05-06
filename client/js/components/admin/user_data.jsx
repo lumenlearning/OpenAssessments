@@ -37,10 +37,14 @@ export default React.createClass({
     var styles = {
       wrapperStyle: {
         width: "510px",
-        height: "425px",
-        display: "inline-block",
-        float: "right",
-        margin:  "10px"
+        height: "435px",
+        padding: "10px"
+      },
+
+      paperStyle: {
+        height: "435",
+        width: "480px",
+        marginBottom: "250px"
       }
     }
 
@@ -50,22 +54,24 @@ export default React.createClass({
     ];
 
     return(
-      <Paper style={styles.wrapperStyle} className="user-data-wrapper" zDepth={2}>
-        <div className="user-info-labels">
-          <h2>Name: {this.props.user.name}</h2>
-          <h3>email: {this.props.user.email}</h3>
-          <h3>Username: {this.props.user.username}</h3>
-          <h3>Role: {this.props.user.role}</h3>
-        </div>
-        
-        <div className="user-info-buttons">
-          <RaisedButton className="edit-roles-button" label="Edit Role" secondary={true} onClick={this.editButtonClicked}/>
-          <RaisedButton className="edit-roles-button" label="Reset Password" primary={true} onClick={this.resetButtonClicked}/>
-        </div>
+      <div style={styles.wrapperStyle}>
+        <Paper style={styles.paperStyle} className="user-data-wrapper" zDepth={2}>
+          <div className="user-info-labels">
+            <h2>Name: {this.props.user.name}</h2>
+            <h3>email: {this.props.user.email}</h3>
+            <h3>Username: {this.props.user.username}</h3>
+            <h3>Role: {this.props.user.role}</h3>
+          </div>
+          
+          <div className="user-info-buttons">
+            <RaisedButton className="edit-roles-button" label="Edit Role" secondary={true} onClick={this.editButtonClicked}/>
+            <RaisedButton className="edit-roles-button" label="Reset Password" primary={true} onClick={this.resetButtonClicked}/>
+          </div>
+        </Paper>
         <Dialog ref="password" title="Reset Password?" actions={standardActions} actionFocus="submit" modal={true} dismissOnClickAway={false}>
-          Are you sure you would like to reset the password for this user?
-        </Dialog>
-      </Paper>
+            Are you sure you would like to reset the password for this user?
+          </Dialog>
+      </div>
     )
   }
 });

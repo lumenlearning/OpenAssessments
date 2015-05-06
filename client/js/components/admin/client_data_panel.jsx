@@ -16,28 +16,21 @@ export default React.createClass({
     var styles = {
       menuStyle: {
         width: '300px',
-        marginLeft: '10px',
         height: '435px',
         overflow: 'auto',
         padding: "10px",
-        display: "inline-block"
       },
       menuItemStyle: {
         width: '250px'
       },
-      paperStyle: {
-        width: "260px"
-      }
     };
 
     return (
-      
-        <div style={styles.menuStyle} className="menuBox">
-          <div style={styles.menuItemStyle}>
-            <Menu menuItems={this.props.menuItems} zDepth={2} onItemClick={this.selectClient}/>
-          </div>
+      <div style={styles.menuStyle} className="menuBox">
+        <div style={styles.menuItemStyle}>
+          <Menu menuItems={this.props.menuItems} zDepth={2} onItemClick={this.selectClient}/>
         </div>
-      
+      </div>
     );
   },
 
