@@ -19,22 +19,29 @@ function loadAccounts(data){
 }
 
 function loadUsers(data){
-  console.log("DO I GET CALLED");
   var userList = JSON.parse(data);
   // translates the data into a format material ui can understand;
+  _users = [];
   for(var i=0; i< userList.length; i++){
     var s = "" + i;
-    _users[i] = {payload: s, text: userList[i].name};
+    _users[i] = {
+      payload: s, 
+      text: userList[i].name, 
+      data: userList[i].email, 
+      role: userList[i].role,
+    };
   }
 }
 
 // Extend User Store with EventEmitter to add eventing capabilities
 var AccountsStore = assign({}, StoreCommon, {
 
-  // Return current user
+  // Return the accounts
   currentAccounts(){
     return _accounts;
   },
+
+  // Return current users
   currentUsers(){
     return _users;
   }
@@ -48,13 +55,13 @@ Dispatcher.register(function(payload) {
   switch(action){
 
     case Constants.ACCOUNTS_LOADED:
-      //console.log(payload.data);
       loadAccounts(payload.data.text);
+
       break;
     case Constants.USERS_LOADED:
-      console.log(payload.data);
       loadUsers(payload.data.text);
-    break;
+
+      break;
 
     default:
       return true;

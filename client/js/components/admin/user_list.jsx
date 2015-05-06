@@ -42,14 +42,12 @@ export default React.createClass({
     var user = {
       currentSelectedUser: {
         name: payload.text,
-        email: "test@email.com",
-        username: "myUserName",
-        role: "Admin",     
+        email: payload.data,
+        role: (payload.email == 1) ? "Admin" : "End User",     
       } 
     };
 
-    AdminActions.getCurrentSelectedUser(user);
-    console.log("USERMENU BUTTON CLICKED");
+    AdminActions.setCurrentSelectedUser(user);
   }
 
   

@@ -40,8 +40,7 @@ export default React.createClass({
     };
 
     AdminActions.changeMainTab({action: "change_main_tab_pending", text: "Client Info"});
-    AdminActions.getUserData({userList: []});
-    AdminActions.getCurrentSelectedUser(initialUser);
+    AdminActions.setCurrentSelectedUser(initialUser);
 
     if(state.accounts.length <= 0){
       AdminActions.loadAccounts();
@@ -68,7 +67,6 @@ export default React.createClass({
   },
   
   render(){
-    console.log(this.state.users);
     var styles = {
     
       adminDashboard: {
@@ -120,10 +118,8 @@ export default React.createClass({
 
     var tab;
     var dataList = (<div>USERLIST</div>);
-    var infoPaper;
-    if(this.state.tab == 'Users'){
-      tab = <UserList />;
-    }
+    // For now this will always be true but incase we need to
+    // Add another tab to the admin page in the future we can do that.
     if(this.state.tab == 'Client Info'){
       tab = <ClientDataPanel menuItems={this.state.accounts} />;
       if(this.state.users != null){
@@ -133,32 +129,28 @@ export default React.createClass({
         dataList = <UserList menuItems={noUsers} />
       }
     }
-    if(this.state.tab == 'Statistics'){
-      tab = <StatisticsPanel />;
-    }
-    //console.log(this.state.selectedUser);
    
     return (
       <div style={styles.adminDashboard} zDepth={2}>
-          <Paper style={styles.graphPaper} className="graph-paper">
-            <div style={styles.graphTitleBar} className="graph-title-bar">
-              <AdminToolBar />
+        <Paper style={styles.graphPaper} className="graph-paper">
+          <div style={styles.graphTitleBar} className="graph-title-bar">
+            <AdminToolBar />
+          </div>
+          <div style={styles.adminInfoDock} className="admin-info-dock">
+            <div style={{display: "inline-block"}}>
+              <h4 style={styles.headingStyle}>Accounts</h4>
+              {tab} 
             </div>
-            <div style={styles.adminInfoDock} className="admin-info-dock">
-              <div style={{display: "inline-block"}}>
-                <h4 style={styles.headingStyle}>Accounts</h4>
-                {tab} 
-              </div>
-              <div style={{display: "inline-block"}}>
-                <h4 style={styles.headingStyle}>Users</h4>
-                {dataList}
-              </div>
-              <div style={{display: "inline-block", float:"right"}}>
-                <h4 style={styles.headingStyle}>User Info</h4>
-                <UserData user={this.state.selectedUser}/>
-              </div> 
-            </div>  
-          </Paper>
+            <div style={{display: "inline-block"}}>
+              <h4 style={styles.headingStyle}>Users</h4>
+              {dataList}
+            </div>
+            <div style={{display: "inline-block", float:"right"}}>
+              <h4 style={styles.headingStyle}>User Info</h4>
+              <UserData user={this.state.selectedUser}/>
+            </div> 
+          </div>  
+        </Paper>
       </div>
     );
   }

@@ -27,8 +27,7 @@ export default {
     Dispatcher.dispatch({action: Constants.LOADING_USER_DATA, userList: payload.userList});
   },
 
-  getCurrentSelectedUser(payload){
-    console.log(payload.currentSelectedUser);
+  setCurrentSelectedUser(payload){
     Dispatcher.dispatch({action: Constants.LOADING_SELECTED_USER_DATA, currentSelectedUser: payload.currentSelectedUser});
   }
 

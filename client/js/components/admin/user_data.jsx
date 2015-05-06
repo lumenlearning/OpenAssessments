@@ -7,17 +7,6 @@ import AdminActions                                     from "../../actions/admi
 
 export default React.createClass({
   
-  getInitialState(){
-    return {
-      user: {
-        name: "Joseph Ditton",
-        email: "dittonjs@gmail.com",
-        username: "dittonjs",
-        role: "Admin"
-      }
-    }
-  },
-  
   editButtonClicked(){
     // open dialog to edit information  
   },
@@ -44,7 +33,11 @@ export default React.createClass({
       paperStyle: {
         height: "435",
         width: "480px",
-        marginBottom: "250px"
+        marginBottom: "250px",
+      },
+
+      labelStyle: {
+        padding: "10px",
       }
     }
 
@@ -56,21 +49,20 @@ export default React.createClass({
     return(
       <div style={styles.wrapperStyle}>
         <Paper style={styles.paperStyle} className="user-data-wrapper" zDepth={2}>
-          <div className="user-info-labels">
+          <div style={styles.labelStyle} className="user-info-labels">
             <h2>Name: {this.props.user.name}</h2>
             <h3>email: {this.props.user.email}</h3>
-            <h3>Username: {this.props.user.username}</h3>
             <h3>Role: {this.props.user.role}</h3>
           </div>
           
-          <div className="user-info-buttons">
+          <div style={styles.labelStyle} className="user-info-buttons">
             <RaisedButton className="edit-roles-button" label="Edit Role" secondary={true} onClick={this.editButtonClicked}/>
             <RaisedButton className="edit-roles-button" label="Reset Password" primary={true} onClick={this.resetButtonClicked}/>
           </div>
         </Paper>
         <Dialog ref="password" title="Reset Password?" actions={standardActions} actionFocus="submit" modal={true} dismissOnClickAway={false}>
-            Are you sure you would like to reset the password for this user?
-          </Dialog>
+          Are you sure you would like to reset the password for this user?
+        </Dialog>
       </div>
     )
   }
