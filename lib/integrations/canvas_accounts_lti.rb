@@ -17,6 +17,7 @@ module Integrations
         "config_type" => "by_xml",
         "config_xml" => config_xml
       }
+      
       if(id = self.find_tool_id(existing_tools, lti_options[:launch_url]))
         tool = self.find_tool(existing_tools, lti_options[:launch_url])
         # Make sure the the LTI key associated with the tool exists in our system.

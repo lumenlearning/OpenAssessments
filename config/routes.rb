@@ -30,7 +30,9 @@ Rails.application.routes.draw do
   resources :admin, only: [:index]
   
   namespace :admin do
-    resources :accounts
+    resources :accounts do
+      resources :users
+    end
   end
 
   resources :assessments

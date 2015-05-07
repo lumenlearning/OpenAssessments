@@ -63,11 +63,23 @@ class Canvas
     false  
   end
 
+  def all_accounts
+    all = []
+    self.accounts.each do |account|
+      all << account
+      all = all.concat(self.sub_accounts(account['id']))
+    end
+    all
+  end
+
   def accounts
-    account = api_get_request("accounts/self")
-    [account]
+    api_get_request("accounts")
   rescue Canvas::UnauthorizedException => ex
     api_get_request("course_accounts")
+  end
+
+  def sub_accounts(account_id)
+    api_get_request("accounts/#{account_id}/sub_accounts")
   end
 
   def assignments(course_id)

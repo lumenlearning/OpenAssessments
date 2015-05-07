@@ -30,6 +30,10 @@ export default {
   ACCOUNTS_LOADING: "accounts_loading",
   ACCOUNTS_LOADED: "accounts_loaded",
   
-  LOADING_USER_DATA: "loading_user_data",
-  LOADING_SELECTED_USER_DATA: "loading_selected_user_data"
+  USERS_LOADING: "users_loading",
+  USERS_LOADED: "users_loaded",
+  LOADING_SELECTED_USER_DATA: "loading_selected_user_data",
+
+  USER_UPDATING: "user_updating",
+  USER_UPDATED: "user_updated",
 };

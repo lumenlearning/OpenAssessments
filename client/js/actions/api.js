@@ -54,6 +54,29 @@ function post(url, body) {
     });
 }
 
+// PUT request with a token param
+function put(url, body) {
+  return Request
+    .put(url)
+    .send(body)
+    .set('Accept', 'application/json')
+    .timeout(TIMEOUT)
+    .query({
+      authtoken: token()
+    });
+}
+
+// DELETER request with a token param
+function del(url) {
+  return Request
+    .del(url)
+    .set('Accept', 'application/json')
+    .timeout(TIMEOUT)
+    .query({
+      authtoken: token()
+    });
+}
+
 function dispatch(key, response) {
   Dispatcher.dispatch({
     action: key,

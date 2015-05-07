@@ -39,14 +39,6 @@ export default React.createClass({
             <RouteHandler />
           </div>
         </div>
-
-        <div className="footer full-width-section mui-dark-theme">
-          <p>
-            Built by <a href="http://www.atomicjolt.com">Atomic Jolt</a>.
-          </p>
-          {githubButton}
-        </div>
-
       </AppCanvas>
 
     );

@@ -2,7 +2,7 @@ import React    from 'react';
 import Router   from 'react-router';
 
 import SettingsStore   from './settings';
-import SettingsActions  from '../actions/settings';
+import SettingsActions from '../actions/settings';
 import Dispatcher      from '../dispatcher';
 
 describe('SettingsStore', () => {

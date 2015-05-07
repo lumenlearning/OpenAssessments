@@ -1,7 +1,7 @@
 <% if accounts && accounts.length > 0 -%>
 <div class="container">
   <h3><%=title%></h3>
-  <li>
+  <ul>
     <% accounts.each do |account| -%>
       <li><%= account['name'] %></li>
     <% end -%>

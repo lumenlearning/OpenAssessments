@@ -102,6 +102,28 @@ class ApplicationController < ActionController::Base
     end
 
     # **********************************************
+    # Paging methods
+    #
+
+    def setup_paging
+      @page = (params[:page] || 1).to_i
+      @page = 1 if @page < 1
+      @per_page = (params[:per_page] || (::Rails.env=='test' ? 1 : 40)).to_i
+    end
+
+    def set_will_paginate_string
+      # Because I18n.locale are dynamically determined in ApplicationController,
+      # it should not put in config/initializers/will_paginate.rb
+      WillPaginate::ViewHelpers.pagination_options[:previous_label] = "previous"
+      WillPaginate::ViewHelpers.pagination_options[:next_label] = "next"
+    end
+
+    def setup_will_paginate
+      setup_paging
+      set_will_paginate_string
+    end
+
+    # **********************************************
     #
     # OAuth related functionality:
     #
@@ -145,10 +167,10 @@ class ApplicationController < ActionController::Base
       provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
 
       if provider.valid_request?(request)
-
         @external_identifier = find_external_identifier(request.referer) ||
              find_external_identifier(params["launch_presentation_return_url"]) ||
-             find_external_identifier(UrlHelper.host_from_instance_guid(params["tool_consumer_instance_guid"]))
+             find_external_identifier(params["custom_canvas_api_domain"])
+
         @user = @external_identifier.user if @external_identifier
 
         if @user
@@ -164,13 +186,24 @@ class ApplicationController < ActionController::Base
           name = params[:roles] if name.blank? # If the name is blank then use their
 
           # If there isn't an email then we have to make one up. We use the user_id and instance guid
-          email = params[:lis_person_contact_email_primary] || "#{params[:user_id]}@#{params[:tool_consumer_instance_guid]}"
+          email = params[:lis_person_contact_email_primary] || "#{params[:user_id]}@#{params["custom_canvas_api_domain"]}"
+          
           @user = User.new(email: email, name: name)
           @user.password             = ::SecureRandom::hex(15)
           @user.password_confirmation = @user.password
           @user.account = current_account
           @user.skip_confirmation!
-          @user.save!
+
+          begin
+            @user.save!
+          rescue ActiveRecord::RecordInvalid => ex
+            if ex.to_s == "Validation failed: Email has already been taken"
+              @user.email = "#{params[:user_id]}@#{params["custom_canvas_api_domain"]}"
+              @user.save!
+            else
+              raise ex
+            end
+          end
 
           @external_identifier = @user.external_identifiers.create(
             identifier: params[:user_id],

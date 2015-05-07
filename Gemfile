@@ -62,6 +62,9 @@ gem 'httparty'
 gem 'typhoeus'
 gem 'rack-cors', :require => 'rack/cors'
 
+# Paging
+gem 'will_paginate', '~> 3.0.6'
+
 # Charts
 gem "chartkick"
 gem 'groupdate' # for grouping the chart data by date

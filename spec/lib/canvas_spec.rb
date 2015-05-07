@@ -114,10 +114,28 @@ describe Canvas do
     end
   end
 
+  describe "all_accounts" do
+    it "retrieves all accounts and subaccounts" do
+      all = @api.all_accounts
+      expect(all.length).to be > 0
+    end
+  end
+
   describe "accounts" do
     it "should retrieve accounts from the Canvas API" do
       accounts = @api.accounts
       expect(accounts.length).to be > 0
+    end
+  end
+
+  describe "sub_accounts" do
+    it "should retrieve sub accounts from the Canvas API for the given account" do
+      accounts = @api.sub_accounts("43460000000000001")
+      expect(accounts.length).to be > 0
+      manual = accounts.find{|a| a['id'] == 43460000000000002}
+      expect(manual).to be_present
+      demo = accounts.find{|a| a['id'] == 43460000000000017}
+      expect(demo).to be_present
     end
   end
 

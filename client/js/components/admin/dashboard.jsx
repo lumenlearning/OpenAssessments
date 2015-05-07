@@ -22,8 +22,8 @@ export default React.createClass({
   getState(){
     return {
       tab : ApplicationStore.currentMainTab(),
-      accounts: AccountsStore.current(),
-      users: ApplicationStore.userDataList(),
+      accounts: AccountsStore.currentAccounts(),
+      users: AccountsStore.currentUsers(),
       selectedUser: ApplicationStore.currentSelectedUser(),
     };
   },
@@ -31,20 +31,21 @@ export default React.createClass({
   getInitialState(){
   
     var state = this.getState();
+    
     var initialUser = {
       currentSelectedUser: 
-        {
-          name: " ", email: " ", username: " ", role: " "
-        }
-      };
+      {
+        name: " ", email: " ", username: " ", role: " "
+      }
+    };
+
     AdminActions.changeMainTab({action: "change_main_tab_pending", text: "Client Info"});
-    AdminActions.getUserData({userList: []});
-    AdminActions.getCurrentSelectedUser(initialUser);
+    AdminActions.setCurrentSelectedUser(initialUser);
 
     if(state.accounts.length <= 0){
       AdminActions.loadAccounts();
     }
-
+    
     return this.getState();
   },
 
@@ -55,66 +56,41 @@ export default React.createClass({
 
   // Listen for changes in the stores
   componentDidMount(){
+    AccountsStore.addChangeListener(this.storeChanged);
     ApplicationStore.addChangeListener(this.storeChanged);
   },
 
   // Remove change listers from stores
   componentWillUnmount(){
+    AccountsStore.removeChangeListener(this.storeChanged);
     ApplicationStore.removeChangeListener(this.storeChanged);
   },
   
   render(){
-    console.log(this.state.users);
     var styles = {
     
       adminDashboard: {
         marginLeft: "auto",
         marginRight: "auto",
-        width: "1150px"
-      },
+        marginBottom: "10px",
+        width: "1125px"
 
-      infoLabels: {
-        width: '264px',
-        height: '100px',
-        display: 'inline-block',
-      },
-
-      infoLabelIcon: {
-        width: '100px',
-        height: '100px',
-        borderColor: 'grey',
-        borderStyle: 'solid',
-        borderWidth: '1px',
-        display: 'inline-block'
-      },
-
-      adminLabelData: {
-        display: 'inline-block',
-        margin: "auto",
       },
 
       graphPaper: {
         width: 'auto',
-        height: '600px',
+        height: 'auto',
         marginTop: '20px',
       },
 
       graphTitleBar: {
         width: 'auto',
         height: '60px',
-        
       },
 
       adminInfoDock: {
         width: 'auto',
-        height: '450px',
-        borderColor: 'grey',
-        borderStyle: 'solid',
-        borderTop: '0px',
-        borderLeft: '0px',
-        borderRight: '0px',
-        borderBottom: '1px solid grey',
-        
+        height: '550px'
       },
 
       graphData:{
@@ -133,82 +109,48 @@ export default React.createClass({
         marginTop: "10px"
       },
 
-      spacer: {
-        width: "28px",
-        height: "100px",
-        display: 'inline-block'
+      headingStyle: {
+        marginLeft: "10px",
+        marginBottom: "0px"
       }
 
     };
 
     var tab;
     var dataList = (<div>USERLIST</div>);
-    var infoPaper;
-    if(this.state.tab == 'Users'){
-      tab = <UserList />;
-    }
+    // For now this will always be true but incase we need to
+    // Add another tab to the admin page in the future we can do that.
     if(this.state.tab == 'Client Info'){
       tab = <ClientDataPanel menuItems={this.state.accounts} />;
-      if(this.state.users)
+      if(this.state.users != null){
         dataList = <UserList menuItems={this.state.users} />;
+      } else {
+        var noUsers = [{payload: "1", text: "No Users"}];
+        dataList = <UserList menuItems={noUsers} />
+      }
     }
-    if(this.state.tab == 'Statistics'){
-      tab = <StatisticsPanel />;
-    }
-    console.log(this.state.selectedUser);
    
     return (
-      <div style={styles.adminDashboard}>
-        <div className="data-labels">
-          <Paper style={styles.infoLabels} className="info-label">
-            <div style={styles.infoLabelIcon} className="info-label-icon">
-            </div>
-            <div style={styles.adminLabelData} className="admin-label-data">
-              <h3>DATA</h3>
-            </div>
-            </Paper>
-            <div style={styles.spacer} className="spacer"></div>
-            <Paper style={styles.infoLabels} className="info-label">
-              <div style={styles.infoLabelIcon} className="info-label-icon">
-              </div>
-              <div style={styles.adminLabelData} className="admin-label-data">
-                <h3>DATA</h3>
-              </div>
-          </Paper>
-        <div style={styles.spacer} className="spacer"></div>
-
-          <Paper style={styles.infoLabels} className="info-label">
-            <div style={styles.infoLabelIcon} className="info-label-icon">
-            </div>
-            <div style={styles.adminLabelData} className="admin-label-data">
-              <h3>DATA</h3>
-            </div>
-          </Paper>
-          <div style={styles.spacer} className="spacer"></div>
-          <Paper style={styles.infoLabels} className="info-label">
-            <div style={styles.infoLabelIcon} className="info-label-icon">
-            </div>
-            <div style={styles.adminLabelData} className="admin-label-data">
-              <h3>DATA</h3>
-            </div>
-          </Paper>
-        </div>
-        <div className="admin-report">
-          <div className="admin-graphs">
-            <Paper style={styles.graphPaper} className="graph-paper">
-              <div style={styles.graphTitleBar} className="graph-title-bar">
-                <AdminToolBar />
-              </div>
-              <div style={styles.adminInfoDock} className="admin-info-dock">
-                <div style={{display: "inline-block"}}>
-                  {tab}
-                  {dataList} 
-                  <UserData user={this.state.selectedUser}/>
-                </div>
-              </div>  
-            </Paper>
+      <div style={styles.adminDashboard} zDepth={2}>
+        <Paper style={styles.graphPaper} className="graph-paper">
+          <div style={styles.graphTitleBar} className="graph-title-bar">
+            <AdminToolBar />
           </div>
-        </div>
+          <div style={styles.adminInfoDock} className="admin-info-dock">
+            <div style={{display: "inline-block"}}>
+              <h4 style={styles.headingStyle}>Accounts</h4>
+              {tab} 
+            </div>
+            <div style={{display: "inline-block"}}>
+              <h4 style={styles.headingStyle}>Users</h4>
+              {dataList}
+            </div>
+            <div style={{display: "inline-block", float:"right"}}>
+              <h4 style={styles.headingStyle}>User Info</h4>
+              <UserData user={this.state.selectedUser}/>
+            </div> 
+          </div>  
+        </Paper>
       </div>
     );
   }
