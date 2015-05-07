@@ -47,7 +47,7 @@ var AccountsStore = assign({}, StoreCommon, {
   }
 
 });
-
+ 
 // Register callback with Dispatcher
 Dispatcher.register(function(payload) {
   var action = payload.action;
@@ -61,6 +61,10 @@ Dispatcher.register(function(payload) {
     case Constants.USERS_LOADED:
       loadUsers(payload.data.text);
 
+      break;
+    case Constants.USERS_UPDATED:
+      // UPDATE THE USERS LIST AND SUCH
+      console.log(payload.data.text);
       break;
 
     default:

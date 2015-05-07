@@ -48,7 +48,8 @@ Dispatcher.register(function(payload) {
 
     case Constants.LOADING_SELECTED_USER_DATA:
       _application.currentSelectedUser = payload.currentSelectedUser;
-      break; 
+      break;
+     
     default:
       return true;
   }

@@ -29,6 +29,15 @@ export default {
 
   setCurrentSelectedUser(payload){
     Dispatcher.dispatch({action: Constants.LOADING_SELECTED_USER_DATA, currentSelectedUser: payload.currentSelectedUser});
-  }
+  },
+
+  updateUser(accountID, userID, payload){
+    Dispatcher.dispatch({action: Constants.USER_UPDATING});
+    Api.put(Constants.USER_UPDATED, "admin/accounts/"+ accountID + "/users/"+userID+ "?user[name]=" + payload.newName + "&user[email]=" + payload.newEmail + "&user[role]" + payload.newRole);
+  },
+
+  deleteUser(){
+
+  }, 
 
 };

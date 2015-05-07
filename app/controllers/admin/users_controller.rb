@@ -12,7 +12,7 @@ class Admin::UsersController < ApplicationController
     @account = Account.find(params[:account_id])
     @users = @account.users
     respond_to do |format|
-        format.json { render json: @account.users.paginate(page: @page, per_page: @per_paget) }
+        format.json { render json: @account.users.paginate(page: @page, per_page: @per_page) }
     end
   end
 
@@ -30,7 +30,6 @@ class Admin::UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(update_params)
-      #byebug
       respond_to do |format|
         format.json { render json: @user }
       end
@@ -61,7 +60,8 @@ class Admin::UsersController < ApplicationController
     def update_params
       params.require(:user).permit(
         :name,
-        :email        
+        :email,
+        :role        
         )
     end
 
