@@ -8,7 +8,7 @@ class LtiInstallsController < ApplicationController
     auth = current_user.authentications.find_by(provider: 'canvas')
     if auth
       api = Canvas.new(current_account.canvas_uri, auth.token)
-      @accounts = api.accounts.map{|a| OpenStruct.new(a) }
+      @accounts = api.all_accounts.map{|a| OpenStruct.new(a) }
       @courses = api.courses.map{|a| OpenStruct.new(a) }
     else
       flash[:info] = "Please authenticate with Canvas before attempting to install an LTI tool"
@@ -53,8 +53,7 @@ class LtiInstallsController < ApplicationController
     }
     
     # Install the LTI tool into each selected account
-    params[:lti_install][:account_ids].reject{|id| id.blank?}.each do |canvas_account_id|
-      canvas_account = { 'id' => canvas_account_id }
+    api.all_accounts.find_all{|a| params[:lti_install][:account_ids].include?(a['id'].to_s) }.each do |canvas_account|
       result = Integrations::CanvasAccountsLti.setup(
         canvas_account, 
         main_account.lti_key, 
@@ -63,7 +62,7 @@ class LtiInstallsController < ApplicationController
         auth.token, 
         lti_options
       )
-
+      
       # Check the result to make sure there wasn't an error
       if(!result['id'])
         @errors << canvas_account
@@ -74,8 +73,7 @@ class LtiInstallsController < ApplicationController
     end
 
     # Install the LTI tool into each selected course
-    params[:lti_install][:course_ids].reject{|id| id.blank?}.each do |canvas_course_id|
-      canvas_course = { 'id' => canvas_course_id }
+    api.courses.find_all{|a| params[:lti_install][:course_ids].include?(a['id'].to_s) }.each do |canvas_course|
       result = Integrations::CanvasCoursesLti.setup(
         canvas_course,
         main_account.lti_key, 
@@ -92,7 +90,6 @@ class LtiInstallsController < ApplicationController
       end
 
     end
-
   end
 
   private 
