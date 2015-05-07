@@ -15,7 +15,6 @@ RSpec.describe Admin::UsersController, type: :controller do
   describe "GET index" do
     it "should render users for the given account" do
       get :index, account_id: @account, format: :json
-      byebug
       expect(response).to have_http_status(:success)
     end
   end
