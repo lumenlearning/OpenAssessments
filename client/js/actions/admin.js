@@ -33,7 +33,7 @@ export default {
 
   updateUser(accountID, userID, payload){
     Dispatcher.dispatch({action: Constants.USER_UPDATING});
-    Api.put(Constants.USER_UPDATED, "admin/accounts/"+ accountID + "/users/"+userID+ "?user[name]=" + payload.newName + "&user[email]=" + payload.newEmail + "&user[role]" + payload.newRole);
+    Api.put(Constants.USER_UPDATED, "admin/accounts/"+ accountID + "/users/" + userID, payload);
   },
 
   deleteUser(){

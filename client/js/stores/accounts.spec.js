@@ -2,7 +2,7 @@ import React    from 'react';
 import Router   from 'react-router';
 
 import AccountsStore   from './accounts';
-import AccountsActions from '../actions/admin_accounts';
+import AccountsActions from '../actions/admin';
 import SettingsActions from '../actions/settings';
 import Dispatcher      from '../dispatcher';
 
