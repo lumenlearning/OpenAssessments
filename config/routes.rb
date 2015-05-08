@@ -7,7 +7,7 @@ end
 
 Rails.application.routes.draw do
 
-  root :to => "home#index"
+  root to: "home#index"
 
   resources :lti_launches do
   collection do
@@ -23,6 +23,15 @@ Rails.application.routes.draw do
     omniauth_callbacks: "omniauth_callbacks"
   }
   
+  as :user do
+    get   '/auth/failure'         => 'sessions#new'
+    get     'users/auth/:provider'  => 'users/omniauth_callbacks#passthru'
+    get     'sign_in'               => 'sessions#new'
+    post    'sign_in'               => 'sessions#create'
+    get     'sign_up'               => 'devise/registrations#new'
+    delete  'sign_out'              => 'sessions#destroy'
+  end
+
   resources :users
   resources :canvas_authentications
   resources :admin, only: [:index]
