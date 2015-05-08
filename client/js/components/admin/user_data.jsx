@@ -33,12 +33,14 @@ export default React.createClass({
   updateInfo(){
     //Generate an action to reset the password and email the user to sign in again.
     var newInfo = {
-      newName: this.refs.name.text,
-      newEmail: this.refs.email.text,
-      newRole: "1"
-    }
+      user: {
+        name: this.refs.name.text,
+        email: this.refs.email.text,
+        role: "1"
+      }
+    };
 
-    //AdminActions.updateUser(this.props.user.accountID, this.props.user.ID, newInfo);
+    AdminActions.updateUser(this.props.user.accountID, this.props.user.userID, newInfo);
     this.refs.information.dismiss();
   },
 

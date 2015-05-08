@@ -118,6 +118,18 @@ export default {
     return doRequest(key, url, function(fullUrl){
       return post(fullUrl, body);
     });
-  }
+  },
+
+  put(key, url, body){
+    return doRequest(key, url, function(fullUrl){
+      return put(fullUrl, body);
+    });
+  },
+
+  del(key, url){
+    return doRequest(key, url, function(fullUrl){
+      return del(fullUrl);
+    });
+  } 
 
 };

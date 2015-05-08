@@ -29,6 +29,8 @@ function loadUsers(data){
       text: userList[i].name, 
       data: userList[i].email, 
       role: userList[i].role,
+      userID: userList[i].id,
+      accountID: userList[i].account_id
     };
   }
 }
@@ -73,7 +75,7 @@ Dispatcher.register(function(payload) {
 
   // If action was responded to, emit change event
   AccountsStore.emitChange();
-
+  
   return true;
 
 });
