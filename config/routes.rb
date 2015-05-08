@@ -7,7 +7,7 @@ end
 
 Rails.application.routes.draw do
 
-  root :to => "default#index"
+  root to: "default#index"
 
   resources :lti_launches do
   collection do
@@ -26,6 +26,16 @@ Rails.application.routes.draw do
   resources :users do
     resources :assessments, except: [:update, :edit], :controller => "assessments"
   end
+
+  as :user do
+    get   '/auth/failure'         => 'sessions#new'
+    get     'users/auth/:provider'  => 'users/omniauth_callbacks#passthru'
+    get     'sign_in'               => 'sessions#new'
+    post    'sign_in'               => 'sessions#create'
+    get     'sign_up'               => 'devise/registrations#new'
+    delete  'sign_out'              => 'sessions#destroy'
+  end
+
   resources :canvas_authentications
   resources :admin, only: [:index]
   

@@ -23,20 +23,13 @@ module Integrations
     end
 
     # canvas_authentications can either be a single value or an array
-    def self.setup(course, consumer_key, shared_secret, canvas_authentications, lti_options = {})
+    def self.setup(course, consumer_key, shared_secret, provider_url, token, lti_options = {})
 
       raise "Please provide an LTI launch url" if lti_options[:launch_url].blank?
 
       config_xml = Lti::Canvas.config_xml(lti_options)
 
-      if course['authentication_id']
-        canvas_authentication = canvas_authentications.find{|auth| auth.id == course['authentication_id'].to_i}
-        course.delete('authentication_id')
-      else
-        canvas_authentication = canvas_authentications
-      end
-
-      api = Canvas.new(canvas_authentication.provider_url, canvas_authentication.token)
+      api = Canvas.new(provider_url, token)
       existing_tools = api.get_course_lti_tools(course['id'])
 
       # Reset config for each iteration since we might not want the key and secret

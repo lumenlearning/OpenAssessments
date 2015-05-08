@@ -101,13 +101,13 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in_or_register(kind)
     rescue ActiveRecord::RecordInvalid => ex
       # A user is already registered with the same email and he tried to sign in using facebook but the account is not connected to facebook.
-      if @user.errors[:email].include? I18n.t :taken, :scope => [:activerecord, :errors, :messages]
+      if @user.errors[:email].include? I18n.t :taken, scope: [:errors, :messages]
         session[:prompt_setup_service] = kind
         flash[:notice] = "There's already an account with the same email as your #{kind} account.
           Please login first and then connect your #{kind} account to login with #{kind} in the future."
         redirect_to sign_in_url
       # Sign up from social networks without email (twitter and linkedin)
-      elsif @user.errors[:email].include? I18n.t :blank, :scope => [:errors, :messages]
+      elsif @user.errors[:email].include? I18n.t :blank, scope: [:errors, :messages]
         session["devise.omniauth_data"] = auth
         flash[:notice] = "Please add an email to associate with this account"
         redirect_to new_user_registration_url

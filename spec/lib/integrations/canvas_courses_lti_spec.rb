@@ -12,7 +12,6 @@ describe Integrations::CanvasCoursesLti do
     @lti_rich_editor_button_image_url = "http://www.example.com/launch"
     @provider_url = "http://www.example.com"
     @env = "test"
-    @canvas_authentication = FactoryGirl.create(:authentication, :provider => "canvas", :token => @token, :provider_url => @provider_url)
   end
 
   describe "courses" do
@@ -29,7 +28,7 @@ describe Integrations::CanvasCoursesLti do
         button_url: @lti_rich_editor_button_image_url,
         env: @env
       }
-      result = Integrations::CanvasCoursesLti.setup(@course, @consumer_key, @shared_secret, @canvas_authentication, lti_options)
+      result = Integrations::CanvasCoursesLti.setup(@course, @consumer_key, @shared_secret, @provider_url, @token, lti_options)
       expect(result.parsed_response).to eq(@result)
     end
     it "should update an existing LTI tool in the specified course" do
@@ -39,7 +38,7 @@ describe Integrations::CanvasCoursesLti do
         button_url: @lti_rich_editor_button_image_url,
         env: @env
       }
-      result = Integrations::CanvasCoursesLti.setup(@course, @consumer_key, @shared_secret, @canvas_authentication, lti_options)
+      result = Integrations::CanvasCoursesLti.setup(@course, @consumer_key, @shared_secret, @provider_url, @token, lti_options)
       expect(result.parsed_response).to eq(@result)
     end    
   end
