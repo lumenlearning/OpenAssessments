@@ -2,13 +2,13 @@
 
 import React                        from "react";
 import User                         from "../../stores/user";
-import Router                       from "react-router";
+import { Router, Link }             from "react-router";
 import { Menu, Paper }              from "material-ui";
 import AdminActions                 from "../../actions/admin";
 export default React.createClass({
   
   selectClient(e, index, payload){
-    AdminActions.loadUsers(payload.id, 1);
+    //AdminActions.loadUsers(payload.id, 1);
   },
 
   render: function() {
@@ -25,10 +25,15 @@ export default React.createClass({
       },
     };
 
+    var accountList = this.props.menuItems.map(function(account){
+      return <li><Link to="account" params={{accountId: account.id}}>{account.text}</Link></li>;
+    })
     return (
       <div style={styles.menuStyle} className="menuBox">
         <div style={styles.menuItemStyle}>
-          <Menu menuItems={this.props.menuItems} zDepth={2} onItemClick={this.selectClient}/>
+          <ul>
+            {accountList}
+          </ul>
         </div>
       </div>
     );
