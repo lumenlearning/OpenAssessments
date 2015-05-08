@@ -43,7 +43,9 @@ export default React.createClass({
       currentSelectedUser: {
         name: payload.text,
         email: payload.data,
-        role: (payload.email == 1) ? "Admin" : "End User",     
+        role: (payload.email == 1) ? "Admin" : "End User", 
+        userID: payload.userID,
+        clientID: payload.clientID    
       } 
     };
 

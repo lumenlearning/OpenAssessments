@@ -38,7 +38,7 @@ export default React.createClass({
       newRole: "1"
     }
 
-    //AdminActions.updateUser(this.props.user.accountID, this.props.user.ID, newInfo);
+    AdminActions.updateUser(this.props.user.accountID, this.props.user.ID, newInfo);
     this.refs.information.dismiss();
   },
 
