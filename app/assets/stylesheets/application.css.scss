@@ -42,7 +42,6 @@ footer p img{
   height: 55px;
 }
 
-
 .about_content{
   min-height:95%;
   height:auto !important;
@@ -52,4 +51,12 @@ footer p img{
 
 .alerts{
   margin:5px 0;
+}
+
+.waiting{
+  display: none;
+}
+
+.field_with_errors {
+  @extend .has-error;
 }
