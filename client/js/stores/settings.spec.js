@@ -1,11 +1,11 @@
-import React    from 'react';
-import Router   from 'react-router';
+import React    from "react";
+import Router   from "react-router";
 
-import SettingsStore   from './settings';
-import SettingsActions from '../actions/settings';
-import Dispatcher      from '../dispatcher';
+import SettingsStore   from "./settings";
+import SettingsActions from "../actions/settings";
+import Dispatcher      from "../dispatcher";
 
-describe('SettingsStore', () => {
+describe("SettingsStore", () => {
 
   beforeEach(() => {
     jasmine.clock().install(); // Mock out the built in timers
@@ -15,7 +15,7 @@ describe('SettingsStore', () => {
     jasmine.clock().uninstall();
   });
   
-  describe("", () => {
+  describe("with initial state", () => {
 
     var defaultSettings = {
       apiUrl: "http://www.example.com/api"
