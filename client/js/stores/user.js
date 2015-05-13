@@ -36,7 +36,7 @@ var UserStore = assign({}, StoreCommon, {
 });
 
 // Register callback with Dispatcher
-Dispatcher.register(function(payload) {
+Dispatcher.register((payload) => {
   var action = payload.action;
   
   switch(action){
