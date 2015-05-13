@@ -32,6 +32,15 @@ describe('messages', () => {
       var result = TestUtils.renderIntoDocument(<Messages/>);
       expect(React.findDOMNode(result).textContent).toContain(message);
     });
+
+    it('re-renders with new messages', () => {
+      var newMessage = "A new message to make sure the messages re-renders when the store changes";
+      MessagesActions.addMessage(newMessage);
+      jasmine.clock().tick(); // Advance the clock to the next tick
+      var result = TestUtils.renderIntoDocument(<Messages/>);
+      expect(React.findDOMNode(result).textContent).toContain(newMessage);
+    });
+
   });
 
 });
