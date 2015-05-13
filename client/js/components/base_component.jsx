@@ -6,8 +6,8 @@ import React                                                                    
 export default class BaseComponent extends React.Component {
   
   constructor() {
-    this._bind("storeChanged");
     super();
+    this._bind("storeChanged");
   }
 
   _bind(...methods) {

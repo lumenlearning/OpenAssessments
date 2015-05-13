@@ -11,8 +11,8 @@ import _             from "lodash";
 export default class Messages extends BaseComponent{
 
   constructor(){
-    this.stores = [MessagesStore];
     super();
+    this.stores = [MessagesStore];
     this.state = this.getState();
   }
 
