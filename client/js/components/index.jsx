@@ -10,7 +10,7 @@ export default React.createClass({
 
   render(){
 
-    var title = "Canvas Starter App asdfasdf";
+    var title = "Canvas Starter App";
 
     var githubButton = (
       <IconButton
