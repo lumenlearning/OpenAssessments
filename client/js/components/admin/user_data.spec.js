@@ -14,7 +14,7 @@ describe('user_data', function() {
 
   it("renders the user's name", function() {
     var result = TestUtils.renderIntoDocument(<UserData user={user} />);
-    expect(result.getDOMNode().textContent).toContain(`Name: ${user.name}`);
+    expect(React.findDOMNode(result).textContent).toContain(`Name: ${user.name}`);
   });
   
 });

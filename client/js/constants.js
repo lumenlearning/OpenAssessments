@@ -9,6 +9,8 @@ export default {
   REGISTER_PENDING: "register_pending",
 
   ADD_MESSAGE: "add_message",
+  REMOVE_MESSAGE: "remove_message",
+  CLEAR_MESSAGES: "clear_messages",
 
   // settings
   SETTINGS_LOAD: "settings_load",

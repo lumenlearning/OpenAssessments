@@ -1,24 +1,27 @@
 "use strict";
 
-import React        from 'react';
-import Messages     from "../../stores/messages";
-import Message      from "./message";
-import StoreKeeper  from "../mixins/store_keeper";
-import { Toolbar } from "material-ui";
+import React         from "react";
+import MessagesStore from "../../stores/messages";
+import Message       from "./message";
+import { Toolbar }   from "material-ui";
+import BaseComponent from "../base_component";
+import _             from "lodash";
 
-export default React.createClass({
 
-  mixins: [StoreKeeper],
+export default class Messages extends BaseComponent{
 
-  statics: {
-    stores: [Messages],   // Subscribe to changes in the messages store
-    getState: () => {     // Method to retrieve state from stores
-      return {
-        messages: Messages.current(),
-        hasMessages: Messages.hasMessages()
-      };
+  constructor(){
+    this.stores = [MessagesStore];
+    super();
+    this.state = this.getState();
+  }
+
+  getState(){
+    return {
+      messages: MessagesStore.current(),
+      hasMessages: MessagesStore.hasMessages()
     }
-  },
+  }
 
   render() {
 
@@ -26,7 +29,7 @@ export default React.createClass({
       return null;
     }
 
-    let messages = this.state.messages.map(function(message){
+    var messages = _.map(this.state.messages, function(message){
       return <Message>{message}</Message>;
     });
 
@@ -38,4 +41,4 @@ export default React.createClass({
       </Toolbar>
     );
   }
-});
+}
