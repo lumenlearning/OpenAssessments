@@ -29,9 +29,32 @@ Most LTI applications need to be single page applications in order to avoid a bu
 browsers. The Canvas Starter App uses React. During development run the (React Hot Loader)[https://github.com/gaearon/react-hot-loader]
 
 ####Webpack Integration
-'npm install -g webpack'
 
-'cd client && webpack'
+  `npm install -g webpack`
+
+  `cd client && webpack`
+
+####Install Javascript Libraries
+To get started run:
+
+  `npm install`
+
+(npm-shrinkwrap)[https://github.com/uber/npm-shrinkwrap] is used to lock specific versions.
+npm-shrinkwrap.json is included in the project. To verify your package.json & node_modules tree are in sync run:
+  
+  `npm-shrinkwrap`
+
+To find outdated modules run:
+  
+  `npm outdated`
+
+Packages must be updated manually. For example:
+
+  `npm update lodash`
+
+After updating be sure to run shrinkwrap again:
+
+  `npm-shrinkwrap`
 
 ###ngrok
 
