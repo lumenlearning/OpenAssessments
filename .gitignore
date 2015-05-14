@@ -11,7 +11,7 @@ capybara-*.html
 rerun.txt
 pickle-email-*.html
 secrets.js
-*_wp_bundle.js
+*_web_pack_bundle.js
 
 # TODO Comment out these rules if you are OK with secrets being uploaded to the repo
 config/secrets.yml

@@ -43,7 +43,7 @@ module.exports = function(release){
     entry: entries,
     output: {
       path: release ? settings.prodOutput : settings.devOutput,
-      filename: '[name]_wp_bundle.js',
+      filename: '[name]_web_pack_bundle.js',
       publicPath: release ? settings.scripts.paths.relativeOutput.prod : 'http://localhost:' + settings.ports.hotPort + settings.devRelativeOutput,
       sourceMapFilename: "debugging/[file].map",
       pathinfo: !release // http://webpack.github.io/docs/configuration.html#output-pathinfo
@@ -63,10 +63,10 @@ module.exports = function(release){
       new webpack.optimize.UglifyJsPlugin(),
       new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.optimize.AggressiveMergingPlugin(),
-      //new ExtractTextPlugin("[name]_wp_bundle.css"),
+      //new ExtractTextPlugin("[name]_web_pack_bundle.css"),
       //new webpack.optimize.CommonsChunkPlugin('init.js') // Use to extract common code from multiple entry points into a single init.js
     ] : [
-      //new ExtractTextPlugin("[name]_wp_bundle.css"),
+      //new ExtractTextPlugin("[name]_web_pack_bundle.css"),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoErrorsPlugin()
     ],

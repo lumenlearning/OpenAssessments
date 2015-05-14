@@ -22,7 +22,7 @@ compiler.run(function(err, stats){
       inline: true,
       progress: true,
       headers: { "Access-Control-Allow-Origin": "*" },
-      filename: '[name]_wp_bundle.js',
+      filename: '[name]_web_pack_bundle.js',
       noInfo: false,
       quiet: true,
     }).listen(settings.ports.hotPort, 'localhost', function(err, result){
