@@ -9,8 +9,8 @@ var prodRelativeOutput    = '/assets/';
 var devOutput     = path.join(__dirname, '../../app/assets/javascripts');
 var prodOutput    = path.join(__dirname, '../../app/assets/javascripts');
 
-var hotPort = 8080;
-var devAssetsUrl = 'https://cs_assets.ngrok.com'
+var hotPort = 4004;
+var devAssetsUrl = 'https://oaassets.ngrok.com'
 
 module.exports = {
   title: info.title,
@@ -25,7 +25,7 @@ module.exports = {
   prodOutput: prodOutput,
 
   // Used by pageSpeed. This should be the url of your production server
-  applicationUrl: 'http://www.example.com',
+  applicationUrl: 'http://www.openassessments.com',
 
   // Dev urls
   devAssetsUrl: devAssetsUrl || 'http://localhost:' + hotPort,
