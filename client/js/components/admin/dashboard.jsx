@@ -22,7 +22,7 @@ export default React.createClass({
   getState(){
     return {
       tab : ApplicationStore.currentMainTab(),
-      accounts: AccountsStore.currentAccounts(),
+      accounts: AccountsStore.current(),
       users: AccountsStore.currentUsers(),
       selectedUser: ApplicationStore.currentSelectedUser(),
     };

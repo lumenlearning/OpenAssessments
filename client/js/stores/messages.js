@@ -50,6 +50,16 @@ Dispatcher.register(function(payload) {
       addMessage(payload.data);
       break;
 
+    // Respond to REMOVE_MESSAGE action
+    case Constants.REMOVE_MESSAGE:
+      removeMessage(payload.messageId);
+      break;
+
+    // Respond to CLEAR_MESSAGES action
+    case Constants.CLEAR_MESSAGES:
+      clearMessages();
+      break;
+
     default:
       return true;
   }
@@ -61,6 +71,9 @@ Dispatcher.register(function(payload) {
 
 });
 
+function clearMessages(){
+  _messages = {};
+}
 
 function addServerMessage(message){
   var messageId = addMessage(JSON.parse(message.text).message);

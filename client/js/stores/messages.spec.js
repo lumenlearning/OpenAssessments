@@ -1,6 +1,5 @@
-import React    from 'react';
-import Router   from 'react-router';
-
+import React           from 'react';
+import Router          from 'react-router';
 import MessagesStore   from './messages';
 import MessageActions  from '../actions/messages';
 import Dispatcher      from '../dispatcher';
@@ -17,6 +16,12 @@ describe('MessagesStore', () => {
   
   describe("No messages", () => {
     
+    beforeEach(() => {
+      // Ensure the store is empty
+      MessageActions.clearMessages();
+      jasmine.clock().tick(); // Advance the clock to the next tick
+    });
+
     describe("current", () => {
       it("returns current messages", (done) => {
         var messages = MessagesStore.current();
@@ -28,7 +33,7 @@ describe('MessagesStore', () => {
     describe("hasMessages", () => {
       it("returns false", (done) => {
         expect(MessagesStore.hasMessages()).toBe(false);
-        done();
+        done(); 
       });
     });
 
@@ -36,7 +41,7 @@ describe('MessagesStore', () => {
   
   describe("Has messages", () => {
 
-    var message = "A message";
+    var message = "A message to test has messages in the message spec store.";
 
     beforeEach(() => {
       MessageActions.addMessage(message);
@@ -46,7 +51,10 @@ describe('MessagesStore', () => {
     describe("current", () => {
       it("returns current messages", (done) => {
         var messages = MessagesStore.current();
-        expect(messages).toEqual({ 1: message });
+        var storedMessage = _.find(messages, (v, k) => {
+          return v == message;
+        });
+        expect(storedMessage).toEqual(message);
         done();
       });
     }); 

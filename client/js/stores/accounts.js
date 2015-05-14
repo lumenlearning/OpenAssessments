@@ -39,7 +39,7 @@ function loadUsers(data){
 var AccountsStore = assign({}, StoreCommon, {
 
   // Return the accounts
-  currentAccounts(){
+  current(){
     return _accounts;
   },
 

@@ -2,8 +2,8 @@
 
 import React          from 'react';
 
-export default React.createClass({
-
+export default class Message extends React.Component{
+  
   render() {
     return (
       <li>
@@ -11,4 +11,5 @@ export default React.createClass({
       </li>
     );
   }
-});
+
+}

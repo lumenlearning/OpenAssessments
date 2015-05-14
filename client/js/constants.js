@@ -14,6 +14,8 @@ export default {
   ASSESSMENT_LOADED: "assessment_loaded",
 
   ADD_MESSAGE: "add_message",
+  REMOVE_MESSAGE: "remove_message",
+  CLEAR_MESSAGES: "clear_messages",
 
   // settings
   SETTINGS_LOAD: "settings_load",

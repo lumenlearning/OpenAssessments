@@ -10,6 +10,12 @@ export default {
       action: Constants.ADD_MESSAGE,
       data: message
     });
+  },
+
+  clearMessages(){
+    Dispatcher.dispatch({ 
+      action: Constants.CLEAR_MESSAGES
+    });
   }
 
 };
