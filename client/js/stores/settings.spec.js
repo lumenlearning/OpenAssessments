@@ -18,7 +18,8 @@ describe("SettingsStore", () => {
   describe("with initial state", () => {
 
     var defaultSettings = {
-      apiUrl: "http://www.example.com/api"
+      apiUrl: "http://www.example.com/api",
+      srcUrl: "http://www.example.com/src"
     };
 
     beforeEach(() => {
@@ -29,7 +30,35 @@ describe("SettingsStore", () => {
     describe("current", () => {
       it("returns current settings", (done) => {
         var settings = SettingsStore.current();
-        expect(settings).toEqual(defaultSettings);
+        expect(settings.apiUrl).toEqual(defaultSettings.apiUrl);
+        expect(settings.srcUrl).toEqual(defaultSettings.srcUrl);
+        done();
+      });
+    });
+
+    describe("errors", () => {
+      it("doesn't have errors", function (done) {
+        expect(SettingsStore.errors()).toEqual({});
+        done();
+      });
+    });
+
+  });
+
+  describe("missing srcUrl", () => {
+
+    var defaultSettings = {
+      apiUrl: "http://www.example.com/api"
+    };
+
+    beforeEach(() => {
+      SettingsActions.load(defaultSettings);
+      jasmine.clock().tick(); // Advance the clock to the next tick
+    });
+
+    describe("errors", () => {
+      it("has errors if src_url value is not present", function (done) {
+        expect(SettingsStore.errors().srcUrl.length > 0).toBe(true);
         done();
       });
     });

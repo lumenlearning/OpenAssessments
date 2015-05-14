@@ -5,8 +5,29 @@ import Constants      from "../constants";
 import StoreCommon    from "./store_common";
 import assign         from "object-assign";
 import QueryString    from '../utils/query_string';
+import Utils          from '../utils/utils';
+import $              from 'jquery';
 
 var _settings = {};
+var _errors = {};
+
+function srcData(){
+  var data = $('#srcData').html();
+  if(data === undefined){
+    return null;
+  }
+  var result = Utils.htmlDecodeWithRoot(data);
+  if($(result).length == 1){ // We ended up with an empty <root> element. Try returning the raw result
+    result = data;
+  }
+  result = result.trim();
+  result = result.replace('<![CDATA[', '');
+  result = result.replace('<!--[CDATA[', '');
+  if(result.slice(-3) == ']]>'){
+    result = result.slice(0,-3);
+  }
+  return result;
+}
 
 function loadSettings(defaultSettings){
 
@@ -18,8 +39,23 @@ function loadSettings(defaultSettings){
       
   _settings = {
     apiUrl           : bestValue('apiUrl', 'api_url', '/'),
+    srcUrl           : bestValue('srcUrl', 'src_url'),
+    srcData          : srcData(),
+    offline          : bestValue('offline', 'offline', false),
+    assessmentId     : bestValue('assessmentId', 'assessment_id'),
+    eId              : bestValue('eId', 'eid'),
+    externalUserId   : bestValue('externalUserId', 'external_user_id'),
+    keywords         : bestValue('keywords', 'keywords'),
+    resultsEndPoint  : bestValue('resultsEndPoint', 'results_end_point', 'http://localhost:4200/api'),
+    confidenceLevels : bestValue('confidenceLevels', 'confidence_levels', false),
+    enableStart      : bestValue('enableStart', 'enable_start', false),
+    style            : bestValue('style', 'style', null)
   };
   
+  if(!_settings.srcUrl && !_settings.offline){
+    _errors.srcUrl = "No src_url specified: specify a src_url in the url query params.";
+  }
+
 }
 
 
@@ -29,6 +65,10 @@ var SettingsStore = assign({}, StoreCommon, {
   // Return current messages
   current(){
     return _settings;
+  },
+
+  errors(){
+    return _errors;
   }
 
 });
