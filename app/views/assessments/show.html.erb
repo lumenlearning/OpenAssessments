@@ -26,33 +26,7 @@
     </div>
   </div>
 <% else -%>
-  <script id="srcData" type="text/x-data">
-    <%= @src_data %>
-  </script>
-
-  <%= render(partial: 'assessments/edx_data', object: @edx_verticals) if @edx_verticals.present? -%>
-  <%= render(partial: 'assessments/edx_data', object: @edx_problems) if @edx_problems.present? -%>
-
-  <script type="text/javascript">
-    window.DEFAULT_SETTINGS = {
-      srcUrl: '<%= @src_url %>',
-      style: '<%= params[:style] %>',
-      assessmentId: <%= @assessment_id %>,
-      <% if @external_user_id %>
-      externalUserId: <%= @external_user_id  %>,
-      <% end %>
-      <% if @keywords %>
-      keywords: '<%= @keywords %>',
-      <% end %>
-      resultsEndPoint: '<%= @results_end_point || "http://#{request.host_with_port}/api" %>',
-      confidenceLevels: <%= @confidence_levels %>,
-      enableStart: <%= @enable_start %>,
-      <% if @eid %>
-      eId: '<%= @eid %>',
-      <% end %>
-      offline: <%= @src_data.present? %>
-    };
-  </script>
+  <%= render partial: "assessments/assessment_setup" %>
 <% end -%>
 
 <%= javascript_include_tag "open_comm.js" %>
