@@ -23,21 +23,40 @@ export default React.createClass({
       searchBarStyle: {
         marginTop: '9px',
         display: 'inline-block',
+      },
+
+      graphPaper: {
+        width: 'auto',
+        height: '60px',
+        background: 'white'
+      },
+
+      graphTitleBar: {
+        width: 'auto'
+      },
+
+      leftFloat: {
+        float: 'left'
+      },
+
+      rightFloat: {
+        paddingRight: '20px',
+        float: 'right'
       }
     };
 
     return (
-      <Toolbar>
-        <ToolbarGroup key={0} float="left">
+      <Paper style={styles.graphPaper} className="graph-paper">
+        <div style={styles.leftFloat}>
           <DropDownMenu menuItems={dropDownItems} onChange={this.onToolbarChange}/>
-        </ToolbarGroup>
-        <ToolbarGroup key={1} float="right">
+        </div>
+        <div style={styles.rightFloat}>
           <div style={styles.searchBarStyle}>
             <TextField hintText="Search..." />
           </div>
           <RaisedButton label="Search" secondary={true} />
-        </ToolbarGroup>
-      </Toolbar>
+        </div>
+      </Paper>
     );
   }
 
