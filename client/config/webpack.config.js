@@ -43,7 +43,6 @@ module.exports = function(release){
     entries[name] = cssEntries[name];
   }
 
-
   return {
     context: __dirname,
     entry: entries,
