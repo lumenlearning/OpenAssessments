@@ -30,7 +30,7 @@ module.exports = function(release){
     var originalEntries = settings.scripts.paths.entries;
     entries = {};
     for(var name in originalEntries){
-      entries[name] = ['webpack-dev-server/client?' + settings.devAssetsUrl + settings.devRelativeOutput, 'webpack/hot/only-dev-server', originalEntries[name]];
+      entries[name] = ['webpack-dev-server/client?' + settings.devAssetsUrl + settings.devRelativeOutput, 'webpack/hot/dev-server', originalEntries[name]];
     }
   }
 
@@ -56,7 +56,9 @@ module.exports = function(release){
       modulesDirectories: ["node_modules", "vendor"]
     },
     cache: true,
-    debug: !release,
+    quiet: false,
+    noInfo: false,
+    debug: false,
     outputPathinfo: !release,
     devtool: release ? false : "eval",  // http://webpack.github.io/docs/configuration.html#devtool
     stats: {
