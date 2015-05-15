@@ -6,18 +6,23 @@ import Dispatcher  from   "../dispatcher";
 
 export default {
 
-  loadAssessment(settings){
-    
-    Dispatcher.dispatch({ action: Constants.ASSESSMENT_LOAD_PENDING });
-
-    if(settings.offline && settings.srcData){
-      Dispatcher.dispatch({ action: Constants.ASSESSMENT_LOADED, data: settings.srcData });
-    } else {
-      Api.get(settings, Constants.ASSESSMENT_LOADED, settings.srcUrl);
-    }
+  loadLocalAssessment(settings, srcData){
+    Dispatcher.dispatch({ 
+      action: Constants.ASSESSMENT_LOADED,
+      settings: settings,
+      data: {
+        text: srcData
+      }
+    });
   },
 
-  assessmentViewed(settings, assessment){
+  loadAssessment(srcUrl){
+    Dispatcher.dispatch({ action: Constants.ASSESSMENT_LOAD_PENDING });
+    Api.get(settings, Constants.ASSESSMENT_LOADED, srcUrl);
+  },
+
+  assessmentViewed(settings, srcUrl, assessment){
+    return;
     var body = {
       assessment_result : {
         offline          : settings.offline,
