@@ -9,8 +9,8 @@ var prodRelativeOutput    = '/assets/';
 var devOutput     = path.join(__dirname, '../../app/assets/javascripts');
 var prodOutput    = path.join(__dirname, '../../app/assets/javascripts');
 
-var hotPort = 8080;
-var devAssetsUrl = 'https://cs_assets.ngrok.com' // Set to null to use localhost
+var hotPort = 8081;
+var devAssetsUrl = null; //'https://cs_assets.ngrok.com' // Set to null to use localhost
 
 module.exports = {
   title: info.title,
