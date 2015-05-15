@@ -1,31 +1,40 @@
 "use strict";
 
-import React from 'react';
+import React              from 'react';
 import AssessmentActions  from "../../actions/assessment";
-import Assessment         from "../../stores/assessment";
+import AssessmentStore    from "../../stores/assessment";
+import SettingsStore      from "../../stores/settings";
+import BaseComponent      from "../base_component";
 
-export default React.createClass({
-  
-  getInitialState(){
-    var assessment = Assessment.current();
+export default class AssessmentComponent extends BaseComponent{
+ 
+  constructor(){
+    this.stores = [AssessmentStore];
+    super();
+    this.state = this.getState();
+  }
 
-    if(assessment == null){
-      // Trigger action to load assessment
-      AssessmentActions.loadAssessment(this.props.settings);
-    }
-
+  getState(){
     return {
-      assessment: assessment
+      assessment: AssessmentStore.current(),
+      settings: SettingsStore.current()
     }
-
-  },
+  }
 
   componentDidMount(){
+    super.componentDidMount();
     if(this.state.assessment){
       // Trigger action to indicate the assessment was viewed
-      AssessmentActions.assessmentViewed(this.props.settings, this.state.assessment);  
+      AssessmentActions.assessmentViewed(this.state.settings, this.state.assessment);  
     }
-  },
+
+    var style = SettingsStore.current().style;
+    if(style && style.indexOf('.css') < 0){
+      style = '/assets/themes/' + style + '.css?body=1';
+      $('head').append('<link href="' + style + '" media="all" rel="stylesheet">');
+    }
+
+  }
 
   render(){
     return <div className="assessment">
@@ -37,7 +46,7 @@ export default React.createClass({
                 Question 1
               </div>
               <div className="enable_start">
-                <button className="btn btn-info">Check Your Understanding</button>
+                <button className="btn btn-info">Check Your Understanding </button>
               </div>
             </div>
           </div>
@@ -55,7 +64,7 @@ export default React.createClass({
                     </div>
                     <div>
                       <div>
-                        <div className="btn btn-block btn-question">
+                        <div className="btn btn-block btn-question" onClick={this.doClick}>
                           <label className="radio">
                             <input name="response" type="radio" value="4868" /> Response 1
                           </label>
@@ -91,4 +100,5 @@ export default React.createClass({
       </div>
     </div>;
   }
-});
+
+}
