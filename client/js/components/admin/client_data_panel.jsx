@@ -26,7 +26,8 @@ export default React.createClass({
     };
 
     var accountList = this.props.menuItems.map(function(account){
-      return <li><Link to="account" params={{accountId: account.id}}>{account.text}</Link></li>;
+      //debugger;
+      return <li><Link to="account" params={{accountId: account.id}}>{account.name}</Link></li>;
     })
     return (
       <div style={styles.menuStyle} className="menuBox">

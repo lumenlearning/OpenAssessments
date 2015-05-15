@@ -4,19 +4,19 @@ import Dispatcher     from "../dispatcher";
 import Constants      from "../constants";
 import StoreCommon    from "./store_common";
 import assign         from "object-assign";
+import _              from "lodash";
 
 var _accounts = [];
 var _users = [];
 
 function loadAccounts(data){
   //console.log(data);
-  var accountList = JSON.parse(data);
+  _accounts = JSON.parse(data);
   // translates the data into a format material ui can understand;
-  for(var i=0; i< accountList.length; i++){
-    var s = "" + i;
-    _accounts[i] = {payload: s, text: accountList[i].name, id: accountList[i].id };
-  }
+ 
 }
+
+
 
 function loadUsers(data){
   var userList = JSON.parse(data);
@@ -46,6 +46,14 @@ var AccountsStore = assign({}, StoreCommon, {
   // Return current users
   currentUsers(){
     return _users;
+  },
+  
+  accountById(id){
+    var account =  _.find(_accounts, function(account){
+      return account.id == id;
+    });
+    //debugger;
+  return account;
   }
 
 });
