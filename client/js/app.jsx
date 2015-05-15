@@ -1,9 +1,11 @@
 "use strict";
 
-import React          from 'react';
-import Router         from 'react-router';
-import Routes         from './routes';
-import SettingsAction from './actions/settings';
+import React             from 'react';
+import Router            from 'react-router';
+import Routes            from './routes';
+import SettingsActions   from './actions/settings';
+import AssessmentActions from "./actions/assessment";
+import $                 from "jquery";
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -26,7 +28,8 @@ if (window.matchMedia("(max-width: 639px)").matches){
 }
 
 // Initialize store singletons
-SettingsAction.load(window.DEFAULT_SETTINGS);
+SettingsActions.load(window.DEFAULT_SETTINGS);
+AssessmentActions.loadLocalAssessment(window.DEFAULT_SETTINGS, $('#srcData').text());
 
 Router.run(Routes, (Handler) => {
   return React.render(<Handler />, document.body);
