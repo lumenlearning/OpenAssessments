@@ -10,50 +10,17 @@ export default React.createClass({
 
   render(){
 
-    var title = "Canvas Starter App";
-
-    var githubButton = (
-      <IconButton
-        className="github-icon-button"
-        iconClassName="muidocs-icon-custom-github"
-        href="https://github.com/atomicjolt/canvas_starter_app"
-        linkButton={true} />
-    );
-
     return (
-      <AppCanvas predefinedLayout={1}>
-
-        <AppBar
-          className="mui-dark-theme"
-          onMenuIconButtonTouchTap={this._onMenuIconButtonTouchTap}
-          title={title}
-          zDepth={0}>
-          {githubButton}
-        </AppBar>
-
-        <LeftNav ref="leftNav" />
-
-        <div className="mui-app-content-canvas page-with-nav">
-          <Messages/>
-          <div className="page-with-nav-content">
-            <RouteHandler />
-          </div>
-        </div>
-
-        <div className="footer full-width-section mui-dark-theme">
+      <div>
+        <h1>Canvas Starter App</h1>
+        <RouteHandler />
+        <div className="footer">
           <p>
             Built by <a href="http://www.atomicjolt.com">Atomic Jolt</a>.
           </p>
-          {githubButton}
         </div>
-
-      </AppCanvas>
-
+      </div>
     );
-  },
-
-  _onMenuIconButtonTouchTap: function() {
-    this.refs.leftNav.toggle();
   }
 
 });
