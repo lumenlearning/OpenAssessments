@@ -73,12 +73,6 @@ export default React.createClass({
         marginLeft: "auto",
         marginRight: "auto",
         marginBottom: "10px",
-        background: 'lightgrey',
-      },
-
-      adminInfoDock: {
-        width: 'auto',
-        height: '550px',
       },
 
       graphData:{
@@ -100,6 +94,12 @@ export default React.createClass({
       headingStyle: {
         marginLeft: "10px",
         marginBottom: "0px"
+      },
+
+      accountBlockStyle: {
+        width: '300px',
+        margin: 'auto',
+        marginTop: '30px',
       }
 
     };
@@ -122,7 +122,7 @@ export default React.createClass({
       <div style={styles.adminDashboard}>
         <AdminToolBar />
         <div style={styles.adminInfoDock} className="admin-info-dock">
-          <div>
+          <div style={styles.accountBlockStyle}>
             <h4 style={styles.headingStyle}>Accounts</h4>
             {tab}
           </div>

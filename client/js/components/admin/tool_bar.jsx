@@ -27,7 +27,7 @@ export default React.createClass({
 
       graphPaper: {
         width: 'auto',
-        height: '60px',
+        minHeight: '60px',
         background: 'white'
       },
 
