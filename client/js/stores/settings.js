@@ -78,7 +78,6 @@ Dispatcher.register(function(payload) {
   
   switch(payload.action){
 
-    // Respond to TIMEOUT action
     case Constants.SETTINGS_LOAD:
       loadSettings(payload.data);
       break;
