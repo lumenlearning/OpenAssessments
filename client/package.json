@@ -35,6 +35,7 @@
     "autoprefixer-loader": "^1.0.0",
     "babel-core": "^5.3.1",
     "babel-loader": "^5.0.0",
+    "chunk-manifest-webpack-plugin": "0.0.1",
     "coveralls": "^2.11.2",
     "css-loader": "^0.12.0",
     "ecstatic": "^0.7.6",

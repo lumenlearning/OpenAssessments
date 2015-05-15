@@ -3,4 +3,5 @@
     apiUrl: '<%= application_base_url %>'
   };
 </script>
-<%= javascript_include_tag 'app_admin_web_pack_bundle' %>
+<%= webpack_manifest_script %> 
+<%= webpack_bundle_tag 'app_admin' %>
