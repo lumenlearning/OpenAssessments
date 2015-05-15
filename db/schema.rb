@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20150318170605) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "accounts", force: true do |t|
+  create_table "accounts", force: :cascade do |t|
     t.string   "name"
     t.string   "domain"
     t.string   "lti_key"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20150318170605) do
   add_index "accounts", ["code"], name: "index_accounts_on_code", using: :btree
   add_index "accounts", ["domain"], name: "index_accounts_on_domain", unique: true, using: :btree
 
-  create_table "authentications", force: true do |t|
+  create_table "authentications", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "provider"
     t.datetime "created_at",                                null: false
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20150318170605) do
   add_index "authentications", ["provider", "uid"], name: "index_authentications_on_provider_and_uid", using: :btree
   add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
 
-  create_table "external_identifiers", force: true do |t|
+  create_table "external_identifiers", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "identifier"
     t.string   "provider"
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 20150318170605) do
   add_index "external_identifiers", ["identifier", "provider"], name: "index_external_identifiers_on_identifier_and_provider", using: :btree
   add_index "external_identifiers", ["user_id"], name: "index_external_identifiers_on_user_id", using: :btree
 
-  create_table "permissions", force: true do |t|
+  create_table "permissions", force: :cascade do |t|
     t.integer  "role_id"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 20150318170605) do
 
   add_index "permissions", ["role_id", "user_id"], name: "index_permissions_on_role_id_and_user_id", using: :btree
 
-  create_table "profiles", force: true do |t|
+  create_table "profiles", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "location"
     t.decimal  "lat",           precision: 15, scale: 10
@@ -96,13 +96,13 @@ ActiveRecord::Schema.define(version: 20150318170605) do
     t.string   "linkedin"
   end
 
-  create_table "roles", force: true do |t|
+  create_table "roles", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "user_accounts", force: true do |t|
+  create_table "user_accounts", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "account_id"
     t.string   "role"
@@ -112,7 +112,7 @@ ActiveRecord::Schema.define(version: 20150318170605) do
 
   add_index "user_accounts", ["user_id", "account_id"], name: "index_user_accounts_on_user_id_and_account_id", using: :btree
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",        null: false
     t.string   "encrypted_password",     default: "",        null: false
     t.string   "reset_password_token"
