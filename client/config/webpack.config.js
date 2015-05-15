@@ -28,7 +28,7 @@ module.exports = function(release){
     var originalEntries = settings.scripts.paths.entries;
     entries = {};
     for(var name in originalEntries){
-      entries[name] = ['webpack-dev-server/client?http://localhost:' + settings.ports.hotPort, 'webpack/hot/only-dev-server', originalEntries[name]];
+      entries[name] = ['webpack-dev-server/client?' + settings.devAssetsUrl, 'webpack/hot/only-dev-server', originalEntries[name]];
     }
   }
 
