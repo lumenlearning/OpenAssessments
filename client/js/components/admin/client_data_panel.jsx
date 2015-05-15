@@ -19,11 +19,11 @@ export default React.createClass({
         width: '300px',
         height: '435px',
         overflow: 'auto',
-        padding: "10px",
+        padding: "10px"
       },
       menuItemStyle: {
         width: '250px'
-      },
+      }
     };
 
     var accountList = this.props.menuItems.map(function(account){
@@ -46,7 +46,7 @@ export default React.createClass({
         </div>
       </div>
     );
-  },
+  }
 
 
 
