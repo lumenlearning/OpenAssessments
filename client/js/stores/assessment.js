@@ -9,6 +9,7 @@ import Assessment     from "../models/assessment";
 var _assessment = null;
 var _assessmentIsLoading = false;
 
+
 // Extend User Store with EventEmitter to add eventing capabilities
 var AssessmentStore = assign({}, StoreCommon, {
 
@@ -36,7 +37,9 @@ Dispatcher.register(function(payload) {
     // Respond to ASSESSMENT_LOADED action
     case Constants.ASSESSMENT_LOADED:
       _assessmentIsLoading = false;
-      _assessment = Assessment.parseAssessment(payload.settings, payload.data.text);
+      if(payload.data.text && payload.data.text.length > 0){
+        _assessment = Assessment.parseAssessment(payload.settings, payload.data.text);
+      }
       break;
 
     default:
