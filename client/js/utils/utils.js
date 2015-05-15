@@ -1,4 +1,4 @@
-export default {
+ var Utils = {
 
   currentTime: function(){
     return new Date().getTime();
@@ -34,3 +34,5 @@ export default {
   }
 
 };
+
+export default Utils;
