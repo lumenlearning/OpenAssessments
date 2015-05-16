@@ -1,7 +1,6 @@
 "use strict";
 
 import React        from "react";
-import { Link }     from "react-router";
 import Validator    from "validator";
 import UserActions  from "../../actions/user";
 import _            from "lodash";

@@ -2,27 +2,33 @@
 
 var webpack             = require('webpack');
 var path                = require('path');
-var ExtractTextPlugin   = require("extract-text-webpack-plugin");
+var ExtractTextPlugin   = require('extract-text-webpack-plugin');
+var ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 var settings            = require('./settings.js');
 
 module.exports = function(release){
 
+  var excludeFromStats = [
+    /node_modules[\\\/]react(-router)?[\\\/]/
+  ];
+
   var autoprefix = '{browsers:["Android 2.3", "Android >= 4", "Chrome >= 20", "Firefox >= 24", "Explorer >= 8", "iOS >= 6", "Opera >= 12", "Safari >= 6"]}';
-  var jsLoaders = ['babel-loader?experimental&optional=runtime'];
+  var jsLoaders = ["babel-loader?stage=0"];
+
   var cssLoaders = ['style-loader', 'css-loader', 'autoprefixer-loader?' + autoprefix];
 
   var scssLoaders = cssLoaders.slice(0);
     scssLoaders.push('sass-loader?outputStyle=expanded&includePaths[]=' + (path.resolve(__dirname, './node_modules/bootstrap-sass')));
 
   var lessLoaders = cssLoaders.slice(0);
-      lessLoaders.push('less-loader');
+      lessLoaders.push("less-loader");
  
   var entries;
 
   if(release){
     entries = settings.scripts.paths.entries;
   } else {
-    jsLoaders.unshift('react-hot');
+    jsLoaders.unshift("react-hot-loader");
 
     // Configure entries with hotloader
     var originalEntries = settings.scripts.paths.entries;
@@ -37,13 +43,13 @@ module.exports = function(release){
     entries[name] = cssEntries[name];
   }
 
-
   return {
     context: __dirname,
     entry: entries,
     output: {
       path: release ? settings.prodOutput : settings.devOutput,
-      filename: '[name]_web_pack_bundle.js',
+      filename: release ? '[name]-[chunkhash]_web_pack_bundle.js' : '[name]_web_pack_bundle.js',
+      chunkFilename: release ? '[id]-[chunkhash]_web_pack_bundle.js' : "[id].js",
       publicPath: release ? settings.scripts.paths.relativeOutput.prod : settings.devAssetsUrl + settings.devRelativeOutput,
       sourceMapFilename: "debugging/[file].map",
       pathinfo: !release // http://webpack.github.io/docs/configuration.html#output-pathinfo
@@ -53,7 +59,11 @@ module.exports = function(release){
       modulesDirectories: ["node_modules", "vendor"]
     },
     cache: true,
-    devtool: release ? false : "eval",          // http://webpack.github.io/docs/configuration.html#devtool
+    quiet: false,
+    noInfo: false,
+    debug: false,
+    outputPathinfo: !release,
+    devtool: release ? false : "eval",  // http://webpack.github.io/docs/configuration.html#devtool
     stats: {
       colors: true
     },
@@ -63,10 +73,15 @@ module.exports = function(release){
       new webpack.optimize.UglifyJsPlugin(),
       new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.optimize.AggressiveMergingPlugin(),
+      new ChunkManifestPlugin({
+        filename: 'webpack-common-manifest.json',
+        manfiestVariable: 'webpackBundleManifest'
+      })
       //new ExtractTextPlugin("[name]_web_pack_bundle.css"),
       //new webpack.optimize.CommonsChunkPlugin('init.js') // Use to extract common code from multiple entry points into a single init.js
     ] : [
       //new ExtractTextPlugin("[name]_web_pack_bundle.css"),
+      new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"', '__DEV__': true }),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoErrorsPlugin()
     ],
@@ -82,7 +97,12 @@ module.exports = function(release){
         //{ test: /.*\.(eot|woff2|woff|ttf)/,    loader: 'file?hash=sha512&digest=hex&size=16&name=cd [hash].[ext]'}
         { test: /\.(png|woff|woff2|eot|ttf|svg)($|\?)/, loader: 'url-loader' }
       ]
-      
+    },
+    devServer: {
+      stats: {
+        cached: false,
+        exclude: excludeFromStats
+      }
     }
   };
 };

@@ -63,11 +63,4 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  # In development send *wp-bundle.js to the webpack-dev-server
-  config.action_controller.asset_host = Proc.new { |source|
-    if source.include?('web_pack_bundle')
-      Rails.application.secrets.assets_url
-    end
-  }
-
 end

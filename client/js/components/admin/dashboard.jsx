@@ -29,11 +29,11 @@ export default React.createClass({
   },
 
   getInitialState(){
-  
+
     var state = this.getState();
-    
+
     var initialUser = {
-      currentSelectedUser: 
+      currentSelectedUser:
       {
         name: " ", email: " ", username: " ", role: " "
       }
@@ -45,7 +45,7 @@ export default React.createClass({
     if(state.accounts.length <= 0){
       AdminActions.loadAccounts();
     }
-    
+
     return this.getState();
   },
 
@@ -65,32 +65,14 @@ export default React.createClass({
     AccountsStore.removeChangeListener(this.storeChanged);
     ApplicationStore.removeChangeListener(this.storeChanged);
   },
-  
+
   render(){
     var styles = {
-    
+
       adminDashboard: {
         marginLeft: "auto",
         marginRight: "auto",
         marginBottom: "10px",
-        width: "1125px"
-
-      },
-
-      graphPaper: {
-        width: 'auto',
-        height: 'auto',
-        marginTop: '20px',
-      },
-
-      graphTitleBar: {
-        width: 'auto',
-        height: '60px',
-      },
-
-      adminInfoDock: {
-        width: 'auto',
-        height: '550px'
       },
 
       graphData:{
@@ -112,6 +94,12 @@ export default React.createClass({
       headingStyle: {
         marginLeft: "10px",
         marginBottom: "0px"
+      },
+
+      accountBlockStyle: {
+        width: '300px',
+        margin: 'auto',
+        marginTop: '30px',
       }
 
     };
@@ -129,28 +117,16 @@ export default React.createClass({
         dataList = <UserList menuItems={noUsers} />
       }
     }
-   
+
     return (
-      <div style={styles.adminDashboard} zDepth={2}>
-        <Paper style={styles.graphPaper} className="graph-paper">
-          <div style={styles.graphTitleBar} className="graph-title-bar">
-            <AdminToolBar />
+      <div style={styles.adminDashboard}>
+        <AdminToolBar />
+        <div style={styles.adminInfoDock} className="admin-info-dock">
+          <div style={styles.accountBlockStyle}>
+            <h4 style={styles.headingStyle}>Accounts</h4>
+            {tab}
           </div>
-          <div style={styles.adminInfoDock} className="admin-info-dock">
-            <div style={{display: "inline-block"}}>
-              <h4 style={styles.headingStyle}>Accounts</h4>
-              {tab} 
-            </div>
-            <div style={{display: "inline-block"}}>
-              <h4 style={styles.headingStyle}>Users</h4>
-              {dataList}
-            </div>
-            <div style={{display: "inline-block", float:"right"}}>
-              <h4 style={styles.headingStyle}>User Info</h4>
-              <UserData user={this.state.selectedUser}/>
-            </div> 
-          </div>  
-        </Paper>
+        </div>
       </div>
     );
   }

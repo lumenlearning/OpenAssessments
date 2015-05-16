@@ -4,8 +4,8 @@ import React                from "react";
 
 export default React.createClass({
 
-  render(){
 
+  render(){
     return <div/>
   }
 
