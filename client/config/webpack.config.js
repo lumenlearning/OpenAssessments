@@ -50,7 +50,7 @@ module.exports = function(release){
       path: release ? settings.prodOutput : settings.devOutput,
       filename: release ? '[name]-[chunkhash]_web_pack_bundle.js' : '[name]_web_pack_bundle.js',
       chunkFilename: release ? '[id]-[chunkhash]_web_pack_bundle.js' : "[id].js",
-      publicPath: release ? settings.scripts.paths.relativeOutput.prod : settings.devRelativeOutput,
+      publicPath: release ? settings.scripts.paths.relativeOutput.prod : settings.devAssetsUrl + settings.devRelativeOutput,
       sourceMapFilename: "debugging/[file].map",
       pathinfo: !release // http://webpack.github.io/docs/configuration.html#output-pathinfo
     },
