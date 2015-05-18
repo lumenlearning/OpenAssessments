@@ -1,5 +1,7 @@
 "use strict";
 
+"use strict";
+
 import React                                                                            from "react";
 import { Link }                                                                         from "react-router";
 import Validator                                                                        from "validator";
@@ -11,26 +13,20 @@ import AdminToolBar                                                             
 import AdminActions                                                                     from "../../actions/admin";
 import ApplicationStore                                                                 from "../../stores/application";
 import AccountsStore                                                                    from "../../stores/accounts";
-import AccountsList                                                                     from "./accounts_list";
-
-
 
 export default React.createClass({
 
   getState(){
     return {
-      accounts: AccountsStore.current(),
-      router: this.context.router,
+      users: AccountsStore.currentUsers(),
+      currentAccount: AccountsStore.accountById(this.props.params.accountId)
     };
   },
 
   getInitialState(){
 
     var state = this.getState();
-    AdminActions.resetUsersStore();
-    if(state.accounts.length <= 0){
-      AdminActions.loadAccounts();
-    }
+    AdminActions.loadUsers(this.props.params.accountId);
     return this.getState();
   },
 
@@ -52,38 +48,19 @@ export default React.createClass({
   },
 
   render(){
+
     var styles = {
-
-      adminDashboard: {
-        marginLeft: "auto",
-        marginRight: "auto",
-        marginBottom: "10px",
-      },
-
-
-      headingStyle: {
-        marginLeft: "10px",
-        marginBottom: "0px"
-      },
-
-      accountBlockStyle: {
-        width: '300px',
-        margin: 'auto',
-        marginTop: '30px',
+      accountDashboard: {
+        marginLeft: "300px"
       }
-
-    };
+    }
 
     return (
-      <div style={styles.adminDashboard}>
-        <AdminToolBar />
-        <div style={styles.adminInfoDock} className="admin-info-dock">
-          <div style={styles.accountBlockStyle}>
-            <h4 style={styles.headingStyle}>Accounts</h4>
-            <AccountsList menuItems={this.state.accounts} />;
-          </div>
-        </div>
+      <div style={styles.accountDashboard}>
+        <h3>{this.state.currentAccount.name}</h3>
+        <h4><Link to="users-list" params={{accountId: this.props.params.accountId}}>Users</Link></h4>
       </div>
-    );
+      )
   }
+
 });

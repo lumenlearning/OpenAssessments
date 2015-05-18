@@ -1,7 +1,5 @@
 "use strict";
 
-"use strict";
-
 import React                                                                            from "react";
 import { Link }                                                                         from "react-router";
 import Validator                                                                        from "validator";
@@ -13,20 +11,25 @@ import AdminToolBar                                                             
 import AdminActions                                                                     from "../../actions/admin";
 import ApplicationStore                                                                 from "../../stores/application";
 import AccountsStore                                                                    from "../../stores/accounts";
+import AccountsList                                                                     from "./accounts_list";
+
+
 
 export default React.createClass({
 
   getState(){
     return {
-      users: AccountsStore.currentUsers(),
-      currentAccount: AccountsStore.accountById(this.props.params.accountId)
+      accounts: AccountsStore.current(),
     };
   },
 
   getInitialState(){
 
     var state = this.getState();
-    AdminActions.loadUsers(this.props.params.accountId);
+    AdminActions.resetUsersStore();
+    if(state.accounts.length <= 0){
+      AdminActions.loadAccounts();
+    }
     return this.getState();
   },
 
@@ -48,17 +51,37 @@ export default React.createClass({
   },
 
   render(){
+    var styles = {
 
-    var userList = this.state.users.map(function(account){
-      return(<h2>{account.name}</h2>);
-    });
+      adminDashboard: {
+        marginLeft: "auto",
+        marginRight: "auto",
+        marginBottom: "10px",
+      },
+
+
+      headingStyle: {
+        marginLeft: "10px",
+        marginBottom: "0px"
+      },
+
+      accountBlockStyle: {
+        width: '300px',
+        margin: 'auto',
+        marginTop: '30px',
+      }
+
+    };
 
     return (
-      <div>
-        <h3>{this.state.currentAccount.name}</h3>
-        {userList}
+      <div style={styles.adminDashboard}>
+        <div style={styles.adminInfoDock} className="admin-info-dock">
+          <div style={styles.accountBlockStyle}>
+            <h4 style={styles.headingStyle}>Accounts</h4>
+            <AccountsList menuItems={this.state.accounts} />;
+          </div>
+        </div>
       </div>
-      )
+    );
   }
-
 });

@@ -29,28 +29,10 @@ export default React.createClass({
     };
 
     return (
-      <div style={styles.menuStyle} className="menuBox">
-        <div style={styles.menuItemStyle}>
-          <Menu menuItems={this.props.menuItems} zDepth={2} onItemClick={this.userMenuClicked} />
-        </div>
-      </div>  
+      <div>Users</div> 
     );
   },
 
-  userMenuClicked (e, index, payload){
-    // Generate an action to get display all of the user information from the database.
-    var user = {
-      currentSelectedUser: {
-        name: payload.text,
-        email: payload.data,
-        role: (payload.email == 1) ? "Admin" : "End User", 
-        userID: payload.userID,
-        clientID: payload.clientID    
-      } 
-    };
-
-    AdminActions.setCurrentSelectedUser(user);
-  }
 
   
 
