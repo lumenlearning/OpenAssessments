@@ -23,8 +23,8 @@ gem "bower-rails"
 
 # authentication, authorization, integrations
 gem 'devise'
-gem 'omniauth', '~> 1.1.3'
-gem 'omniauth-canvas', '~> 0.0.4' #, :path => '~/projects/omniauth-canvas'
+gem 'omniauth', '~> 1.2.2'
+gem 'omniauth-canvas', '~> 0.1.0' #, :path => '~/projects/omniauth-canvas'
 gem 'oauth', '~> 0.4.7'
 gem 'ims-lti', '~> 1.1.8' # IMS LTI tool consumers and providers
 gem 'cancancan'
