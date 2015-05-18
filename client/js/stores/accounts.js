@@ -16,23 +16,8 @@ function loadAccounts(data){
  
 }
 
-
-
 function loadUsers(data){
-  var userList = JSON.parse(data);
-  // translates the data into a format material ui can understand;
-  _users = [];
-  for(var i=0; i< userList.length; i++){
-    var s = "" + i;
-    _users[i] = {
-      payload: s, 
-      text: userList[i].name, 
-      data: userList[i].email, 
-      role: userList[i].role,
-      userID: userList[i].id,
-      accountID: userList[i].account_id
-    };
-  }
+  _users = JSON.parse(data);
 }
 
 // Extend User Store with EventEmitter to add eventing capabilities
@@ -75,6 +60,10 @@ Dispatcher.register(function(payload) {
     case Constants.USERS_UPDATED:
       // UPDATE THE USERS LIST AND SUCH
       console.log(payload.data.text);
+      break;
+    case Constants.RESET_USERS:
+      // reset the users list to prepare for a different account
+      _users = [];
       break;
 
     default:

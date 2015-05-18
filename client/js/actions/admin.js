@@ -19,6 +19,10 @@ export default {
     Api.get(Constants.USERS_LOADED, "admin/accounts/" + accountId + "/users?page=" + page + "&per_page=" + perPage);
   },
 
+  resetUsersStore(){
+    Dispatcher.dispatch({action: Constants.RESET_USERS});
+  },
+
   changeMainTab(payload){
     Dispatcher.dispatch({ action: Constants.CHANGE_MAIN_TAB_PENDING, mainTab: payload.text });
   },

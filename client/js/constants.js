@@ -38,4 +38,6 @@ export default {
 
   USER_UPDATING: "user_updating",
   USER_UPDATED: "user_updated",
+
+  RESET_USERS: "reset_users"
 };
