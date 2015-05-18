@@ -39,6 +39,14 @@ var AccountsStore = assign({}, StoreCommon, {
     });
     //debugger;
   return account;
+  },
+
+  userById(id){
+    var user =  _.find(_users, function(user){
+      return user.id == id;
+    });
+
+  return user;
   }
 
 });

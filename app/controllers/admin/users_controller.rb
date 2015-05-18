@@ -28,6 +28,7 @@ class Admin::UsersController < ApplicationController
 
   # /account/1/users/1
   def update
+    byebug
     @user = User.find(params[:id])
     if @user.update_attributes(update_params)
       respond_to do |format|
