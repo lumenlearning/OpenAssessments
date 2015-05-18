@@ -32,7 +32,7 @@ export default React.createClass({
     return (
       <div style={styles.menuStyle} className="menuBox">
         <div style={styles.menuItemStyle}>
-            <Menu menuItems={accountList} zDepth={0} />
+          <Menu className="accounts-menu" menuItems={accountList} zDepth={0} />
         </div>
       </div>
     );
