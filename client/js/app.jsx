@@ -32,7 +32,7 @@ SettingsActions.load(window.DEFAULT_SETTINGS);
 AssessmentActions.loadLocalAssessment(window.DEFAULT_SETTINGS, $('#srcData').text());
 
 Router.run(Routes, (Handler) => {
-  return React.render(<Handler />, document.body);
+  return React.render(<Handler />, document.getElementById('assessment-container'));
 });
 
 // Router.run(routes, (Handler) => {
