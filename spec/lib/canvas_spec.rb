@@ -20,9 +20,7 @@ describe Canvas do
   describe "api_put_request" do
     it "calls the given url with a PUT request" do
       payload = {}
-      response = double(:code => "200")
-      result = {}
-      allow(result).to receive(:response).and_return(response)
+      result = http_party_put_response
       expect(HTTParty).to receive(:put).with("#{@base_uri}/api/v1/courses", :headers => @api.headers, :body => payload).and_return(result)
       @api.api_put_request("courses", payload)
     end
@@ -31,9 +29,7 @@ describe Canvas do
   describe "api_post_request" do
     it "calls the given url with a POST request" do
       payload = {}
-      response = double(:code => "200")
-      result = {}
-      allow(result).to receive(:response).and_return(response)
+      result = http_party_post_response
       expect(HTTParty).to receive(:post).with("#{@base_uri}/api/v1/courses", :headers => @api.headers, :body => payload).and_return(result)
       @api.api_post_request("courses", payload)
     end
@@ -41,9 +37,7 @@ describe Canvas do
 
   describe "api_get_request" do
     it "calls the given url with a GET request" do
-      response = double(:code => "200")
-      result = {}
-      allow(result).to receive(:response).and_return(response)
+      result = http_party_get_response
       expect(HTTParty).to receive(:get).with("#{@base_uri}/api/v1/courses", :headers => @api.headers).and_return(result)
       @api.api_get_request("courses")
     end
@@ -51,39 +45,23 @@ describe Canvas do
   
   describe "check_result" do
     it "should raise an UnauthorizedException if 401 not authorized" do
-      response = double(:code => "401")
-      result = { 
-        "errors" => "Not Authorized"
-      }
-      allow(result).to receive(:response).and_return(response)
-      expect { @api.check_result(result) }.to raise_exception(Canvas::UnauthorizedException)
+      result = http_party_get_response(401, 'Unauthorized')
+      expect { @api.check_result(result.response) }.to raise_exception(Canvas::UnauthorizedException)
     end    
     it "should raise an NotFoundException if 404 not found" do
-      response = double(:code => "404")
-      result = { 
-        "errors" => "Not Authorized"
-      }
-      allow(result).to receive(:response).and_return(response)
+      result = http_party_get_response(404, 'Not Found')
       expect { @api.check_result(result) }.to raise_exception(Canvas::NotFoundException)
     end
     it "should raise an InvalidRequestException if canvas call fails" do
-      response = double(:code => "500")
-      result = { 
-        "errors" => "Something terrible happened"
-      }
-      allow(result).to receive(:response).and_return(response)
+      result = http_party_get_response(500, 'Internal Server Error', "{errors:'Something terrible'}")
       expect { @api.check_result(result) }.to raise_exception(Canvas::InvalidRequestException)
     end
     it "should return the result for a 200" do
-      response = double(:code => "200")
-      result = {}
-      allow(result).to receive(:response).and_return(response)
+      result = http_party_get_response
       expect(@api.check_result(result)).to eq(result)
     end
     it "should return the result for a 201" do
-      response = double(:code => "201")
-      result = {}
-      allow(result).to receive(:response).and_return(response)
+      result = http_party_get_response(201)
       expect(@api.check_result(result)).to eq(result)
     end
   end
