@@ -18,9 +18,13 @@ function abortPendingRequests(key) {
   }
 }
 
-// Get the access token from the user
-function token() {
-  return User.token();
+// Get the JWT from the user
+function jwt() {
+  return User.jwt();
+}
+
+function csrfToken() {
+  return SettingsStore.current().csrfToken;
 }
 
 function makeUrl(part){
@@ -31,50 +35,46 @@ function makeUrl(part){
   }
 }
 
-// GET request with a token param
+// GET request with a JWT token and CSRF token
 function get(url) {
   return Request
     .get(url)
     .timeout(TIMEOUT)
     .set('Accept', 'application/json')
-    .query({
-      authtoken: token()
-    });
+    .set('Authorization', 'Bearer ' + jwt())
+    .set('X-CSRF-Token', csrfToken());
 }
 
-// POST request with a token param
+// POST request with a JWT token and CSRF token
 function post(url, body) {
   return Request
     .post(url)
     .send(body)
     .set('Accept', 'application/json')
     .timeout(TIMEOUT)
-    .query({
-      authtoken: token()
-    });
+    .set('Authorization', 'Bearer ' + jwt())
+    .set('X-CSRF-Token', csrfToken());
 }
 
-// PUT request with a token param
+// PUT request with a JWT token and CSRF token
 function put(url, body) {
   return Request
     .put(url)
     .send(body)
     .set('Accept', 'application/json')
     .timeout(TIMEOUT)
-    .query({
-      authtoken: token()
-    });
+    .set('Authorization', 'Bearer ' + jwt())
+    .set('X-CSRF-Token', csrfToken());
 }
 
-// DELETER request with a token param
+// DELETER request with a JWT token and CSRF token
 function del(url) {
   return Request
     .del(url)
     .set('Accept', 'application/json')
     .timeout(TIMEOUT)
-    .query({
-      authtoken: token()
-    });
+    .set('Authorization', 'Bearer ' + jwt())
+    .set('X-CSRF-Token', csrfToken());
 }
 
 function dispatch(key, response) {
@@ -130,6 +130,6 @@ export default {
     return doRequest(key, url, function(fullUrl){
       return del(fullUrl);
     });
-  } 
+  }
 
 };

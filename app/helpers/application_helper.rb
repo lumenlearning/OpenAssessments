@@ -16,4 +16,9 @@ module ApplicationHelper
     request.original_url.gsub(request.original_fullpath, '')
   end
 
+  def jwt_token
+    return unless signed_in?
+    AuthToken.issue_token({ user_id: current_user.id })
+  end
+
 end

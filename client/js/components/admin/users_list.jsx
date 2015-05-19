@@ -6,31 +6,25 @@ import Validator                                                                
 import UserActions                                                                      from "../../actions/user";
 import _                                                                                from "lodash";
 import assign                                                                           from "object-assign";
-import { Paper, TextField, FlatButton, RaisedButton, FontIcon}                          from "material-ui";
-import AdminToolBar                                                                     from "./tool_bar";
+import { Paper, TextField, FlatButton, RaisedButton, FontIcon, Menu, Dialog}            from "material-ui";
 import AdminActions                                                                     from "../../actions/admin";
 import ApplicationStore                                                                 from "../../stores/application";
 import AccountsStore                                                                    from "../../stores/accounts";
-import AccountsList                                                                     from "./accounts_list";
-
-
+import EditUserForm                                                                     from "./edit_user_form";
 
 export default React.createClass({
-
+ 
   getState(){
     return {
-      accounts: AccountsStore.current(),
-      router: this.context.router,
+      users: AccountsStore.currentUsers(),
+      currentAccount: AccountsStore.accountById(this.props.params.accountId),
+      currentUser: {name: "", email: "", role: ""}
     };
   },
 
   getInitialState(){
-
     var state = this.getState();
-    AdminActions.resetUsersStore();
-    if(state.accounts.length <= 0){
-      AdminActions.loadAccounts();
-    }
+    AdminActions.loadUsers(this.props.params.accountId);
     return this.getState();
   },
 
@@ -51,39 +45,45 @@ export default React.createClass({
     ApplicationStore.removeChangeListener(this.storeChanged);
   },
 
-  render(){
+  onMenuItemClick(e, key, payload){
+    console.log(payload);
+    this.setState({currentUser: AccountsStore.userById(payload.user.id)});
+    this.refs.editForm.editButtonClicked();
+  },
+
+  render() {
+
+    // We are going to need this later so dont delete it even though its empty
     var styles = {
 
-      adminDashboard: {
-        marginLeft: "auto",
-        marginRight: "auto",
-        marginBottom: "10px",
-      },
-
-
-      headingStyle: {
-        marginLeft: "10px",
-        marginBottom: "0px"
-      },
-
-      accountBlockStyle: {
-        width: '300px',
-        margin: 'auto',
-        marginTop: '30px',
-      }
-
     };
+    
+    var updateActions = [
+      { text: 'Cancel' },
+      { text: 'Update', onClick: this.updateInfo, ref: 'submit' }
+    ];
+
+    var dropDownItems = [
+      {payload: '0', text: 'End User'},
+      {payload: '1', text: 'Admin'},
+    ];
+
+    var usersList = this.state.users.map(function(user){
+      
+      return { payload: user.id.toString(), text: user.name, user: user}
+      
+    });
 
     return (
-      <div style={styles.adminDashboard}>
-        <AdminToolBar />
-        <div style={styles.adminInfoDock} className="admin-info-dock">
-          <div style={styles.accountBlockStyle}>
-            <h4 style={styles.headingStyle}>Accounts</h4>
-            <AccountsList menuItems={this.state.accounts} />;
-          </div>
-        </div>
-      </div>
+      <div>
+        Users
+        <Menu menuItems={usersList} onItemClick={this.onMenuItemClick}/>
+        <EditUserForm ref="editForm" user={this.state.currentUser}/>
+      </div> 
     );
-  }
+  },
+
+
+  
+
 });

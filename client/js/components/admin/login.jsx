@@ -11,7 +11,7 @@ export default React.createClass({
 
   getInitialState(){
     return {
-    validations: {}
+      validations: {}
     };
   },
 
@@ -19,8 +19,10 @@ export default React.createClass({
     e.preventDefault();
     if(this.validateAll()){
       UserActions.login({
-        email: this.refs.email.getValue(),
-        password: this.refs.password.getValue()
+        user: {
+          email: this.refs.email.getValue(),
+          password: this.refs.password.getValue()
+        }
       });
     }
   },
@@ -51,12 +53,12 @@ export default React.createClass({
   render: function(){
     return (<div className="login-screen">
       <Paper className="login-paper">
-        <form action="/login" method="post" onSubmit={this.handleLogin}>
+        <form action="/users/sign_in" method="post" onSubmit={this.handleLogin}>
           <h4>Admin Login</h4>
 
           <TextField hintText="johndoe@example.com" floatingLabelText="Email" ref="email" onBlur={this.validateEmail} errorText={this.state.validations.email} />
           <TextField type="password" hintText="******" floatingLabelText="Password" ref="password" />
-          
+
 
           <FlatButton className="login-button" label="Login" primary={true} />
         </form>

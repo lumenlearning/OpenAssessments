@@ -102,6 +102,28 @@ class ApplicationController < ActionController::Base
     end
 
     # **********************************************
+    # JWT methods
+    #
+
+    class InvalidTokenError < StandardError; end
+
+    def validate_token
+      begin
+        authorization = request.headers['Authorization']
+        raise InvalidTokenError if authorization.nil?
+
+        token = request.headers['Authorization'].split(' ').last
+        decoded_token = AuthToken.valid?(token)
+
+        raise InvalidTokenError if Rails.application.secrets.auth0_client_id != decoded_token[0]["aud"]
+
+        @user = decoded_token
+      rescue JWT::DecodeError, InvalidTokenError
+        render :json => { :error => "Unauthorized: Invalid token." }, status: :unauthorized
+      end
+    end
+
+    # **********************************************
     # Paging methods
     #
 
@@ -187,7 +209,7 @@ class ApplicationController < ActionController::Base
 
           # If there isn't an email then we have to make one up. We use the user_id and instance guid
           email = params[:lis_person_contact_email_primary] || "#{params[:user_id]}@#{params["custom_canvas_api_domain"]}"
-          
+
           @user = User.new(email: email, name: name)
           @user.password             = ::SecureRandom::hex(15)
           @user.password_confirmation = @user.password

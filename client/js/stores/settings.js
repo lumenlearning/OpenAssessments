@@ -35,8 +35,11 @@ function loadSettings(defaultSettings){
 
   var bestValue = function(settings_prop, params_prop, default_prop){
     return defaultSettings[settings_prop] || QueryString.params()[params_prop] || default_prop;
-  }
-      
+  };
+
+  var jwt = defaultSettings.jwt || null;
+  localStorage.setItem('jwt', jwt);
+
   _settings = {
     apiUrl           : bestValue('apiUrl', 'api_url', '/'),
     srcUrl           : bestValue('srcUrl', 'src_url'),
@@ -49,7 +52,8 @@ function loadSettings(defaultSettings){
     resultsEndPoint  : bestValue('resultsEndPoint', 'results_end_point', 'http://localhost:4200/api'),
     confidenceLevels : bestValue('confidenceLevels', 'confidence_levels', false),
     enableStart      : bestValue('enableStart', 'enable_start', false),
-    style            : bestValue('style', 'style', null)
+    style            : bestValue('style', 'style', null),
+    csrfToken        : defaultSettings.csrfToken || null
   };
   
   if(!_settings.srcUrl && !_settings.offline){
@@ -75,7 +79,7 @@ var SettingsStore = assign({}, StoreCommon, {
 
 // Register callback with Dispatcher
 Dispatcher.register(function(payload) {
-  
+
   switch(payload.action){
 
     case Constants.SETTINGS_LOAD:

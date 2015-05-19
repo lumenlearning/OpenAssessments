@@ -9,8 +9,8 @@ var prodRelativeOutput    = '/assets/';
 var devOutput     = path.join(__dirname, '../../app/assets/javascripts');
 var prodOutput    = path.join(__dirname, '../../app/assets/javascripts');
 
-var hotPort = 4004;
-var devAssetsUrl = 'https://oaassets.ngrok.com'
+var hotPort = process.env.ASSETS_PORT || 8080;
+var devAssetsUrl = process.env.ASSETS_URL; // null will use localhost
 
 module.exports = {
   title: info.title,

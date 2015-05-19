@@ -1,7 +1,3 @@
-<script type="text/javascript">
-  window.DEFAULT_SETTINGS = {
-    apiUrl: '<%= application_base_url %>'
-  };
-</script>
-<%= webpack_manifest_script %> 
+<%= render 'shared/default_client_settings' %>
+<%= webpack_manifest_script %>
 <%= webpack_bundle_tag 'app_admin' %>

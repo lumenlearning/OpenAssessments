@@ -28,6 +28,7 @@ gem 'oauth', '~> 0.4.7'
 gem 'ims-lti', '~> 1.1.8' # IMS LTI tool consumers and providers
 gem 'cancancan'
 gem 'attr_encrypted'
+gem 'jwt', '~> 1.5.0' # json web token
 
 # core extensions
 gem 'addressable', '~> 2.3.5' #URI implementation
@@ -55,7 +56,6 @@ gem 'unicorn-rails'
 
 # Used for deploying to Heroku. Can be removed if not deploying to Heroku.
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
-gem 'rails_12factor'
 
 # API Related
 gem 'httparty'
@@ -106,5 +106,9 @@ group :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', require: false
   gem 'webmock'
+end
+
+group :production do
+  gem 'rails_12factor'
 end
 

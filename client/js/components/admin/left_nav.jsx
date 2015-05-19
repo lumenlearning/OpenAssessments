@@ -14,11 +14,18 @@ export default React.createClass({
     stores: [User],    // Subscribe to changes in the messages store
     getState: () => {  // Method to retrieve state from stores
 
-      
+      var loggedIn = User.loggedIn();
 
       var menuItems = [
-        { route: 'home', text: 'Home' }
+        // { route: 'home', text: 'Home' }
       ];
+
+      if(loggedIn){
+        menuItems.push({ route: 'dashboard', text: 'Dashboard' });
+        menuItems.push({ route: 'logout', text: 'Logout' });
+      } else {
+        menuItems.push({ route: 'login', text: 'Sign In' });
+      }
 
       return {
         menuItems: menuItems
@@ -37,10 +44,10 @@ export default React.createClass({
 
     var styles = {
       logoStyle: {
-        marginTop: '20px', 
+        marginTop: '20px',
       }
     };
-    
+
     var header = <div style={styles.logoStyle} className="logo">Home</div>;
 
     return (
@@ -68,6 +75,8 @@ export default React.createClass({
     this.refs.leftNav.toggle();
   },
 
-  
+  _onLeftNavChange: function(e, key, payload) {
+    this.transitionTo(payload.route);
+  }
 
 });
