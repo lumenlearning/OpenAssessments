@@ -9,8 +9,8 @@ import BaseComponent      from "../base_component";
 export default class AssessmentComponent extends BaseComponent{
  
   constructor(){
-    this.stores = [AssessmentStore];
     super();
+    this.stores = [AssessmentStore];
     this.state = this.getState();
   }
 
