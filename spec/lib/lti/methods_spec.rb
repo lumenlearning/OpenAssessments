@@ -4,12 +4,12 @@ class LtiMethodsTester
   attr_accessor :lti_key, :lti_secret
   def self.before_save(foo); end
   def self.before_create(foo); end
+  def self.find_by(foo); end
   include Lti::Methods
 end
 
 describe Lti::Methods do
   before do
-    allow(LtiMethodsTester).to receive(:find_by).and_return(nil)
     @test = LtiMethodsTester.new
   end
   describe "#set_lti" do
