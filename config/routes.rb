@@ -9,12 +9,6 @@ Rails.application.routes.draw do
 
   root to: "default#index"
 
-  resources :lti_launches do
-  collection do
-      post :index
-      get :index
-    end
-  end
   resources :lti_installs
   
   devise_for :users, controllers: {
@@ -24,7 +18,7 @@ Rails.application.routes.draw do
   }
   
   resources :users do
-    resources :assessments, except: [:update, :edit], :controller => "assessments"
+    resources :assessments, except: [:update, :edit, :show], controller: "assessments"
   end
 
   as :user do
@@ -45,7 +39,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :assessments
+  resources :assessments do
+    member do
+      post :show
+    end
+  end
+
   resources :assessment_loaders
   resources :assessment_results
   resources :item_results

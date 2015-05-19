@@ -14,7 +14,7 @@ class LtiInstallsController < ApplicationController
     account_code = "#{main_account.code}"
     
     lti_options = {
-      launch_url: "https://#{account_code}.#{Rails.application.secrets.lti_launch_domain}/lti_launches",
+      launch_url: "https://#{account_code}.#{Rails.application.secrets.lti_launch_domain}/assessments/#{params[:assessment_id]}",
       env: Rails.env,
       title: Rails.application.secrets.lti_tool_name,
       description: Rails.application.secrets.lti_tool_description,

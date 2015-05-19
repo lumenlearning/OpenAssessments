@@ -1,9 +1,13 @@
 require 'open-uri'
 
 class AssessmentsController < ApplicationController
+
   skip_before_filter :verify_authenticity_token
+  
   before_filter :skip_trackable
   before_filter :authenticate_user!, only: [:new, :create, :destroy]
+  before_filter :check_lti, only: [:show]
+
   load_and_authorize_resource except: [:index, :show, :create]
 
   respond_to :html
@@ -103,4 +107,9 @@ class AssessmentsController < ApplicationController
       params.require(:assessment).permit(:title, :description, :xml_file, :license, :keywords)
     end
 
+    def check_lti
+      if request.post?
+        do_lti
+      end
+    end
 end

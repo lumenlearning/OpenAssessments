@@ -1,10 +1,11 @@
 require "rails_helper"
 
-RSpec.describe LtiLaunchesController, type: :controller do
+RSpec.describe AssessmentsController, type: :controller do
   
   before do
     @account = setup_lti_account
-    
+    @assessment = FactoryGirl.create(:assessment)
+
     allow(controller).to receive(:current_account).and_return(@account)
     allow(Account).to receive(:find_by).with(:lti_key).and_return(@account)
 
@@ -13,7 +14,7 @@ RSpec.describe LtiLaunchesController, type: :controller do
     @lti_url = 'school.edu'
   end
 
-  describe "index" do
+  describe "show" do
 
     describe "LTI" do
       before do
@@ -22,9 +23,10 @@ RSpec.describe LtiLaunchesController, type: :controller do
 
       describe "POST - correct params" do
         context "matching external identifier" do
-          it "setups the user, log them in and redirect" do
-            params = lti_params({"launch_url" => lti_launches_url})
-            post :index, params
+          it "setups the user, logs them in and redirects" do
+            params = lti_params({"launch_url" => assessment_url(@assessment) })
+            params[:id] = @assessment.id
+            post :show, params
             expect(response).to have_http_status(200)
             expect(assigns(:user)).to be
             expect(assigns(:user).email).to eq(params["lis_person_contact_email_primary"])
@@ -34,9 +36,10 @@ RSpec.describe LtiLaunchesController, type: :controller do
 
       describe "POST - invalid params" do
         it "should return unauthorized status" do
-          params = lti_params({"launch_url" => lti_launches_url})
+          params = lti_params({"launch_url" => assessment_url(@assessment)})
           params[:context_title] = 'invalid'
-          post :index, params
+          params[:id] = @assessment.id
+          post :show, params
           expect(response).to have_http_status(401)
         end
       end
