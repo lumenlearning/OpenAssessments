@@ -21,6 +21,7 @@ class AssessmentsController < ApplicationController
   end
 
   def show
+
     if params[:load_ui] == 'true'
       @embedded = false
     else
@@ -67,6 +68,9 @@ class AssessmentsController < ApplicationController
         end
       end
     end
+
+    # extract LTI values
+    @external_user_id ||= params[:user_id]
 
     respond_to do |format|
       format.html { render layout: @embedded ? 'assessment' : 'application' }
