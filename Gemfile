@@ -29,6 +29,7 @@ gem 'oauth', '~> 0.4.7'
 gem 'ims-lti', '~> 1.1.8' # IMS LTI tool consumers and providers
 gem 'cancancan'
 gem 'attr_encrypted'
+gem 'jwt', '~> 1.5.0' # json web token
 
 # Email
 gem 'sendgrid'
