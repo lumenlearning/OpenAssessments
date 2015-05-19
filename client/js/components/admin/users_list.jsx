@@ -46,7 +46,6 @@ export default React.createClass({
   },
 
   onMenuItemClick(e, key, payload){
-    console.log(payload);
     this.setState({currentUser: AccountsStore.userById(payload.user.id)});
     this.refs.editForm.editButtonClicked();
   },

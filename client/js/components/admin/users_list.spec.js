@@ -2,7 +2,7 @@ import React              from 'react';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import UsersList           from './users_list';
 
-describe('user_data', function() {
+describe('users_list', function() {
 
   it("renders the users list", function() {
     var result = TestUtils.renderIntoDocument(<UsersList />);

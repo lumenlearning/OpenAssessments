@@ -17,7 +17,8 @@ function loadSettings(defaultSettings){
   };
 
   var jwt = defaultSettings.jwt || null;
-  localStorage.setItem('jwt', jwt);
+  if(jwt!==null)
+    localStorage.setItem('jwt', jwt);
 
   _settings = {
     apiUrl           : bestValue('apiUrl', 'api_url', '/'),

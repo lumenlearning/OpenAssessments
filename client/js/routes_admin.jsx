@@ -14,10 +14,10 @@ var Redirect      = Router.Redirect;
 
 var adminRoutes = (
   <Route handler={AdminPage}>
-  	<DefaultRoute name="dashboard" handler={AccountSelection}/>
+    <DefaultRoute name="dashboard" handler={AccountSelection}/>
+  	<Route name="login" handler={Login}/>
     <Route name="account" path="/account/:accountId" handler={AccountDashboard}/>
     <Route name="users-list" path="/users/:accountId" handler={UsersList}/>
-    <Route name="login" handler={Login}/>
   </Route>
 );
 module.exports = adminRoutes;

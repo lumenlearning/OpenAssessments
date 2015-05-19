@@ -10,7 +10,6 @@ var _user = {};
 // log the user in
 function login(payload){
   _user.email = payload.data.body.email;
-  _user.loggedIn = true;
   _user.displayName = payload.data.body.displayName;
   // We get a JWT back.
   var jwt = payload.data.body.jwt_token;
@@ -20,13 +19,11 @@ function login(payload){
 // Register
 function register(user){
   _user.email = user.email;
-  _user.loggedIn = true;
   _user.displayName = user.displayName;
 }
 
 function loadUserFromSettings(payload) {
   _user.email = payload.data.email;
-  _user.loggedIn = payload.data.loggedIn;
   _user.displayName = payload.data.displayName;
 }
 
@@ -39,7 +36,7 @@ var UserStore = assign({}, StoreCommon, {
   },
 
   loggedIn(){
-    return _user.loggedIn;
+    return localStorage.getItem('jwt') !== null;
   },
 
   jwt(){

@@ -1,7 +1,7 @@
 "use strict";
 
 import React                                                                            from "react";
-import { Link }                                                                         from "react-router";
+import Router                                                                           from "react-router";
 import Validator                                                                        from "validator";
 import UserActions                                                                      from "../../actions/user";
 import _                                                                                from "lodash";
@@ -12,10 +12,15 @@ import AdminActions                                                             
 import ApplicationStore                                                                 from "../../stores/application";
 import AccountsStore                                                                    from "../../stores/accounts";
 import AccountsList                                                                     from "./accounts_list";
+import UsersStore                                                                       from "../../stores/user";
 
+var Link = Router.Link;
 
 
 export default React.createClass({
+  contextTypes: {
+    router: React.PropTypes.func
+  },
 
   getState(){
     return {
@@ -24,6 +29,10 @@ export default React.createClass({
   },
 
   getInitialState(){
+    if(!UsersStore.loggedIn()){
+      this.context.router.transitionTo('login');
+      return null;
+    }
 
     var state = this.getState();
     AdminActions.resetUsersStore();

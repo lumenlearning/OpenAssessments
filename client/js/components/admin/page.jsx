@@ -27,7 +27,7 @@ export default React.createClass({
           className="mui-dark-theme"
           onMenuIconButtonTouchTap={this._onMenuIconButtonTouchTap}
           title={title}
-          zDepth={0}>
+          zDepth={1}>
           {githubButton}
         </AppBar>
 
