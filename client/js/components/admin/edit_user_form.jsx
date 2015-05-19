@@ -20,6 +20,7 @@ export default React.createClass({
     var role = this.refs.newRole.state.selectedIndex + 1;
     var payload = {user: {name: this.refs.name.getValue(), email: this.refs.name.getValue, role: role}};
     AdminActions.updateUser(this.props.user.account_id, this.props.user.id, payload);
+    AdminActions.loadUsers(this.props.user.account_id, 1);
     this.refs.information.dismiss();
   },
 
