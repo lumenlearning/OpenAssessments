@@ -43,7 +43,6 @@ gem 'unicorn-rails'
 
 # Used for deploying to Heroku. Can be removed if not deploying to Heroku.
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
-gem 'rails_12factor'
 
 # API Related
 gem 'httparty'
@@ -85,5 +84,9 @@ group :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', require: false
   gem 'webmock'
+end
+
+group :production do
+  gem 'rails_12factor'
 end
 
