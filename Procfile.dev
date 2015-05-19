@@ -1,8 +1,8 @@
 # To run:
 # foreman start -f Procfile.dev
 
-web: rails server -p3040
+web: rails server -p $APP_PORT
 webpack: cd client && nodemon webpack.hot.js
 
-ngrok_webpack: ngrok --subdomain cs_assets --log stdout 8080
-ngrok_rails: ngrok --subdomain canvasstarterapp --log stdout 3040
+ngrok_webpack: ngrok --subdomain $ASSETS_SUBDOMAIN --log stdout $ASSETS_PORT
+ngrok_rails: ngrok --subdomain $APP_SUBDOMAIN --log stdout $APP_PORT

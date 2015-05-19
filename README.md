@@ -7,6 +7,29 @@ This project provides a starting point for building a Canvas LTI or OAuth applic
 To test your Canvas application with Canvas you will need to provide a public SSL url. The simpliest way to do this is to
 use ngrok which can be downloaded from https://ngrok.com/.
 
+###Foreman
+Foreman makes it simple to startup all the services required to run the application in development mode. To start the application using foreman simply run:
+
+  `foreman start -f Procfile.dev`
+
+  * Make sure you have the latest version of Foreman installed.
+
+####Environment
+Foreman will automatically find and read a .env file. Rename `.env.example` to `.env` and
+configure it to your liking.
+
+###Without Foreman
+If you need to run services individually or just don't like Foreman you can run each service seperately:
+
+  `rails server`
+
+  `cd client && nodemon webpack.hot.js`
+
+  `ngrok_webpack: ngrok --subdomain cs_assets --log stdout 8080`
+
+  `ngrok_rails: ngrok --subdomain canvasstarterapp --log stdout 3000`
+
+
 ### Modify application name
 Change the name of the application to a name that you prefer. Open application.rb and change CanvasStarterApp to the 
 name you choose. Do a global search and replace for canvas_starter_app and change it to the name you choose. Do a global
