@@ -62,7 +62,7 @@ class Admin::UsersController < ApplicationController
       params.require(:user).permit(
         :name,
         :email,
-        :role        
+        :role
         )
     end
 
