@@ -78,7 +78,7 @@ export default React.createClass({
         <div style={styles.adminInfoDock} className="admin-info-dock">
           <div style={styles.accountBlockStyle}>
             <h4 style={styles.headingStyle}>Accounts</h4>
-            <AccountsList menuItems={this.state.accounts} />;
+            <AccountsList menuItems={this.state.accounts} />
           </div>
         </div>
       </div>

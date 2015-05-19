@@ -17,6 +17,7 @@ var adminRoutes = (
   	<DefaultRoute name="dashboard" handler={AccountSelection}/>
     <Route name="account" path="/account/:accountId" handler={AccountDashboard}/>
     <Route name="users-list" path="/users/:accountId" handler={UsersList}/>
+    <Route name="login" handler={Login}/>
   </Route>
 );
 module.exports = adminRoutes;

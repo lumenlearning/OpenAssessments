@@ -8,12 +8,12 @@ export default {
 
   login(payload){
     Dispatcher.dispatch({ action: Constants.LOGIN_PENDING });
-    Api.post(Constants.LOGIN, "sessions/", payload);
+    Api.post(Constants.LOGIN, "users/sign_in", payload);
   },
 
   register(payload) {
     Dispatcher.dispatch({ action: Constants.REGISTER_PENDING });
-    Api.post(Constants.REGISTER, "users/", payload);
+    Api.post(Constants.REGISTER, "users/sign_up", payload);
   }
 
 };

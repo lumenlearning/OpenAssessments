@@ -14,12 +14,16 @@ function loadSettings(defaultSettings){
 
   var bestValue = function(settings_prop, params_prop, default_prop){
     return defaultSettings[settings_prop] || QueryString.params()[params_prop] || default_prop;
-  }
-      
+  };
+
+  var jwt = defaultSettings.jwt || null;
+  localStorage.setItem('jwt', jwt);
+
   _settings = {
     apiUrl           : bestValue('apiUrl', 'api_url', '/'),
+    csrfToken        : defaultSettings.csrfToken || null
   };
-  
+
 }
 
 
@@ -35,7 +39,7 @@ var SettingsStore = assign({}, StoreCommon, {
 
 // Register callback with Dispatcher
 Dispatcher.register(function(payload) {
-  
+
   switch(payload.action){
 
     // Respond to TIMEOUT action
