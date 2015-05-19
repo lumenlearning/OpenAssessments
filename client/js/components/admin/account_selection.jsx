@@ -31,7 +31,7 @@ export default React.createClass({
   getInitialState(){
     if(!UsersStore.loggedIn()){
       this.context.router.transitionTo('login');
-      return null;
+      return {accounts: ""}
     }
 
     var state = this.getState();
@@ -81,16 +81,19 @@ export default React.createClass({
       }
 
     };
-
-    return (
-      <div style={styles.adminDashboard}>
-        <div style={styles.adminInfoDock} className="admin-info-dock">
-          <div style={styles.accountBlockStyle}>
-            <h4 style={styles.headingStyle}>Accounts</h4>
-            <AccountsList menuItems={this.state.accounts} />
+    if(UsersStore.loggedIn()){
+      return (
+        <div style={styles.adminDashboard}>
+          <div style={styles.adminInfoDock} className="admin-info-dock">
+            <div style={styles.accountBlockStyle}>
+              <h4 style={styles.headingStyle}>Accounts</h4>
+              <AccountsList menuItems={this.state.accounts} />
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return <div />
+    }
   }
 });

@@ -14,6 +14,11 @@ export default {
   register(payload) {
     Dispatcher.dispatch({ action: Constants.REGISTER_PENDING });
     Api.post(Constants.REGISTER, "users/sign_up", payload);
-  }
+  },
+
+  logout(){
+    Dispatcher.dispatch({ action: Constants.LOGOUT_PENDING });
+    Api.del(Constants.LOGOUT, "sign_out");
+  },
 
 };

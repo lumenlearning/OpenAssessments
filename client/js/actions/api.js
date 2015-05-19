@@ -89,7 +89,7 @@ function dispatchResponse(key) {
   return function(err, response) {
     if(err && err.timeout === TIMEOUT) {
       dispatch(Constants.TIMEOUT, response);
-    } else if(response.status === 400) {
+    } else if(response.status === 400 || response.status === 401) {
       dispatch(Constants.NOT_AUTHORIZED, response);
     } else if(!response.ok) {
       dispatch(Constants.ERROR, response);

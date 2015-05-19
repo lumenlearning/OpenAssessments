@@ -14,7 +14,10 @@ export default React.createClass({
   },
 
   getInitialState(){
-
+    if(UserStore.loggedIn()){
+      this.context.router.transitionTo("dashboard");
+      return { validations: {} }
+    }
     return {
       validations: {}
     };

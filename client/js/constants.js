@@ -7,6 +7,8 @@ export default {
   LOGIN_PENDING: "login_pending",
   REGISTER: "register",
   REGISTER_PENDING: "register_pending",
+  LOGOUT_PENDING: "logout_pending",
+  LOGOUT: "logout",
 
   ADD_MESSAGE: "add_message",
   REMOVE_MESSAGE: "remove_message",
