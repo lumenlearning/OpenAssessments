@@ -48,7 +48,6 @@ export default React.createClass({
   },
 
   onMenuItemClick(e, key, payload){
-    //this.setState({currentUser: AccountsStore.userById(payload.user.id)});
     if(this.refs[payload.ref].isChecked()){
       this.refs[payload.ref].setChecked(false);
       AdminActions.removeFromSelectedUsers(payload.user);
@@ -61,6 +60,11 @@ export default React.createClass({
   editButtonClicked(){
     this.setState({currentUser: AccountsStore.userById(this.state.selectedUsers[0].id)});
     this.refs.editForm.editButtonClicked();
+    
+    for(var i=0; i<this.state.users.length; i++){
+      var hash = "check-" + this.state.users[i].id;
+      this.refs[hash].setChecked(false);
+    }
   },
 
   deleteButtonClicked(){
@@ -140,14 +144,20 @@ export default React.createClass({
     } else {
       buttons = <FlatButton style={styles.button} label="Delete Selected" primary={true} onClick={this.deleteButtonClicked}/>
     }
-
+    var roleId = 0;
+    if(this.state.currentUser.role == "user")
+      roleId = 0
+    if(this.state.currentUser.role == "instructor")
+      roleId = 1
+    if(this.state.currentUser.role == "admin")
+      roleId = 2
     return (
       <div style={styles.container}>
         Users {buttons}
         <div style={styles.menu}>
           <Menu menuItems={usersList} onItemClick={this.onMenuItemClick} />
         </div>
-        <EditUserForm ref="editForm" user={this.state.currentUser}/>
+        <EditUserForm ref="editForm" user={this.state.currentUser} selectedIndex={roleId}/>
       </div> 
     );
   },

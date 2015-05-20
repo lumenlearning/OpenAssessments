@@ -11,10 +11,7 @@ var _users = [];
 var _selectedUsers = [];
 
 function loadAccounts(data){
-  //console.log(data);
   _accounts = JSON.parse(data);
-  // translates the data into a format material ui can understand;
- 
 }
 
 function loadUsers(data){
@@ -22,8 +19,8 @@ function loadUsers(data){
 }
 
 function addToSelectedUsers(payload){
-
-  _selectedUsers.push(payload);
+  if(checkUniquness(payload))
+    _selectedUsers.push(payload);
 }
 
 function removeFromSelectedUsers(payload){
@@ -32,6 +29,14 @@ function removeFromSelectedUsers(payload){
       _selectedUsers.splice(i, 1);
     }
   }
+}
+
+function checkUniquness(payload){
+  for(var i=0; i< _selectedUsers.length; i++){
+    if(payload.id == _selectedUsers[i].id)
+      return false;
+  }
+  return true;
 }
 
 // Extend User Store with EventEmitter to add eventing capabilities
@@ -82,9 +87,9 @@ Dispatcher.register(function(payload) {
       loadUsers(payload.data.text);
 
       break;
-    case Constants.USERS_UPDATED:
+    case Constants.USER_UPDATED:
       // UPDATE THE USERS LIST AND SUCH
-      console.log(payload.data.text);
+      _selectedUsers = [];
       break;
     case Constants.RESET_USERS:
       // reset the users list to prepare for a different account
@@ -96,7 +101,8 @@ Dispatcher.register(function(payload) {
 
     case Constants.REMOVE_USER:
       removeFromSelectedUsers(payload.payload);
-      break; 
+      break;
+
     case Constants.DELETE_USERS:
       _selectedUsers = [];
       break;
