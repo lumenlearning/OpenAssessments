@@ -36,5 +36,11 @@ export default {
   USER_UPDATING: "user_updating",
   USER_UPDATED: "user_updated",
 
-  RESET_USERS: "reset_users"
+  RESET_USERS: "reset_users",
+
+  ADD_USER: "add_user",
+  REMOVE_USER: "remove_user",
+
+  DELETE_USERS: "delete_users",
+  DELETING_USERS: "deleting_users",
 };

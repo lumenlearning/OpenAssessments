@@ -100,7 +100,8 @@ function dispatchResponse(key) {
 }
 
 function doRequest(key, url, callback){
-  abortPendingRequests(key);
+  if(key != Constants.DELETE_USERS)
+    abortPendingRequests(key);
   var request = _pendingRequests[key] = callback(makeUrl(url));
   request.end(dispatchResponse(key));
   return request;

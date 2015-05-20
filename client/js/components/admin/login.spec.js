@@ -48,10 +48,10 @@ describe ('Admin login', function(){
       expect(login.handleLogin).toHaveBeenCalled();
     });
 
-    xit('It calls the handleLogin method when the submit button is clicked', function(){
-      TestUtils.Simulate.click(button);
-      expect(login.handleLogin).toHaveBeenCalled();
-    });
+    // it('It calls the handleLogin method when the submit button is clicked', function(){
+    //   TestUtils.Simulate.click(button);
+    //   expect(login.handleLogin).toHaveBeenCalled();
+    // });
   });
 
 });

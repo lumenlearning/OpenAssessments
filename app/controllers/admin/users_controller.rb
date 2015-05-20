@@ -42,6 +42,7 @@ class Admin::UsersController < ApplicationController
 
   # /account/1/users/1
   def destroy
+    @user = User.find(params[:id]);
     @user.destroy
     respond_with @user
   end

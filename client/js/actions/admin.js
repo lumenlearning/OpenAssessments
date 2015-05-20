@@ -40,8 +40,21 @@ export default {
     Api.put(Constants.USER_UPDATED, "admin/accounts/"+ accountID + "/users/" + userID, payload);
   },
 
-  deleteUser(){
+  addToSelectedUsers(payload){
+    Dispatcher.dispatch({action: Constants.ADD_USER, payload: payload});
+  },
 
+  removeFromSelectedUsers(payload){
+    Dispatcher.dispatch({action: Constants.REMOVE_USER, payload: payload});
+  },
+
+  deleteUsers(payload){
+    for(var i=0; i<payload.length; i++){
+      var url = "admin/accounts/" + payload[i].account_id + "/users/" + payload[i].id;
+      Dispatcher.dispatch({action: Constants.DELETING_USERS});
+      Api.del(Constants.DELETE_USERS, url);
+    }
+    this.loadUsers(payload[0].account_id, 1);
   },
 
 };
