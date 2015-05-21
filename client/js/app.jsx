@@ -29,10 +29,11 @@ if (window.matchMedia("(max-width: 639px)").matches){
 
 // Initialize store singletons
 SettingsActions.load(window.DEFAULT_SETTINGS);
-AssessmentActions.loadLocalAssessment(window.DEFAULT_SETTINGS, $('#srcData').text());
+AssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, $('#srcData').text());
 
-Router.run(Routes, (Handler) => {
-  return React.render(<Handler />, document.getElementById('assessment-container'));
+Router.run(Routes, (Handler, state) => {
+  var params = state.params;
+  return React.render(<Handler params={params} />, document.getElementById('assessment-container'));
 });
 
 // Router.run(routes, (Handler) => {

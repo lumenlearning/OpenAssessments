@@ -8,9 +8,7 @@ import Assessment   from './components/main/assessment';
 import Login        from './components/sessions/login';
 import Logout       from './components/sessions/logout';
 import Register     from './components/users/register';
-import Dashboard    from './components/main/dashboard';
 import NotFound     from './components/not_found';
-import Connections  from './components/users/connections';
 import About        from './components/main/about';
 
 var Route         = Router.Route;
@@ -24,8 +22,6 @@ var routes = (
     <Route name="login" handler={Login}/>
     <Route name="register" handler={Register}/>
     <Route name="logout" handler={Logout}/>
-    <Route name="dashboard" handler={Dashboard}/>
-    <Route name="connections" handler={Connections}/>
     <Route name="about" handler={About}/>
     <NotFoundRoute handler={NotFound}/>
   </Route>

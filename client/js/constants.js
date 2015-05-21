@@ -12,6 +12,9 @@ export default {
   ASSESSMENT_LOAD: "assessment_load",
   ASSESSMENT_LOAD_PENDING: "assessment_load_pending",
   ASSESSMENT_LOADED: "assessment_loaded",
+  ASSESSMENT_NEXT_QUESTION: "assessment_next_question",
+  ASSESSMENT_PREVIOUS_QUESTION: "assessment_previous_question",
+  ASSESSMENT_START: "assessment_start",
 
   ADD_MESSAGE: "add_message",
   REMOVE_MESSAGE: "remove_message",

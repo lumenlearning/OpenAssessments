@@ -2,13 +2,28 @@
 
 import Dispatcher     from "../dispatcher";
 import Constants      from "../constants";
+import Utils          from "../utils/utils";
 import StoreCommon    from "./store_common";
 import assign         from "object-assign";
 import Assessment     from "../models/assessment";
 
-var _assessment = null;
-var _assessmentIsLoading = false;
+const NOT_LOADED = 0;
+const LOADING = 1;
+const LOADED = 2;
+const READY = 3;
+const STARTED = 4;
 
+var _assessment = null;
+var _assessmentResult = null;
+var _assessmentState = NOT_LOADED;
+var _startedAt;
+
+var _sectionIndex = 0;
+var _questionIndex = 0;
+
+function parseAssessmentResult(result){
+  _assessmentResult = JSON.parse(result);
+}
 
 // Extend User Store with EventEmitter to add eventing capabilities
 var AssessmentStore = assign({}, StoreCommon, {
@@ -17,8 +32,36 @@ var AssessmentStore = assign({}, StoreCommon, {
     return _assessment;
   },
 
+  assessmentResult(){
+    return _assessmentResult;
+  },
+
+  isReady(){
+    return _assessmentState >= READY;
+  },
+
+  isLoaded(){
+    return _assessmentState >= LOADED;
+  },
+
+  isStarted(){
+    return _assessmentState >= STARTED;
+  },
+
   isLoading(){
-    return _assessmentIsLoading;
+    return _assessmentState == LOADING;
+  },
+
+  currentQuestion(){
+    return _assessment;
+  },
+
+  currentIndex(){
+    return _questionIndex;
+  },
+
+  questionCount(){
+    return 10;
   }
 
 });
@@ -29,18 +72,37 @@ Dispatcher.register(function(payload) {
   
   switch(action){
 
-    // Respond to ASSESSMENT_LOAD_PENDING action
     case Constants.ASSESSMENT_LOAD_PENDING:
-      _assessmentIsLoading = true;
+      _assessmentState = LOADING;
       break;
 
-    // Respond to ASSESSMENT_LOADED action
     case Constants.ASSESSMENT_LOADED:
-      _assessmentIsLoading = false;
+      _assessmentState = LOADED;
       if(payload.data.text && payload.data.text.length > 0){
         _assessment = Assessment.parseAssessment(payload.settings, payload.data.text);
       }
       break;
+
+    case Constants.ASSESSMENT_START:
+      _startedAt = Utils.currentTime();
+      _assessmentState = STARTED;
+      break;
+
+    case Constants.ASSESSMENT_VIEWED:
+      if(payload.data.text && payload.data.text.length > 0){
+        _assessmentResult = parseAssessmentResult(payload.data.text);
+        _assessmentState = READY;
+      }
+      break;
+
+    case Constants.ASSESSMENT_NEXT_QUESTION:
+      
+      break;
+
+    case Constants.ASSESSMENT_PREVIOUS_QUESTION:
+      
+      break;
+
 
     default:
       return true;
