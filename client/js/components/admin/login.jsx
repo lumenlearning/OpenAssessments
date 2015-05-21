@@ -80,13 +80,13 @@ export default React.createClass({
   render: function(){
     var styles = {
       paper: {
-        backgroundColor: "white",
+        backgroundColor: "white"
       },
 
       container: {
         marginTop: "10px"
       }
-    }
+    };
     return (
       <div className="login-screen" style={styles.container}>
         <Paper className="login-paper" style={styles.paper} zDepth={0}>
@@ -97,7 +97,7 @@ export default React.createClass({
             <TextField type="password" hintText="******" floatingLabelText="Password" ref="password" />
 
 
-            <FlatButton className="login-button" label="Login" primary={true} />
+            <FlatButton className="login-button" label="Login" primary={true} ref="submit-button" />
           </form>
         </Paper>
       </div>);

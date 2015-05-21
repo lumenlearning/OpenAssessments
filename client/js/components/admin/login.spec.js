@@ -33,14 +33,14 @@ describe ('Admin login', function(){
   });
 
   xit('It submits the form when the Login button is pressed', function(){
-    var submitSpy = jasmine.createSpy();
+    var submitSpy = jasmine.createSpy('submitSpy');
     var container = document.createElement('div');
     var instance = React.render(<Login />, container);
-    var button = instance.findDOMNode('login-button');
-    container.addEventListener('onsubmit', submitSpy, false);
+    var button = instance.getDOMNode('submit-button');
+    container.addEventListener('onSubmit', submitSpy, false);
     TestUtils.Simulate.click(button);
     expect(submitSpy).toHaveBeenCalled();
-    container.removeEventListener('onsubmit', submitSpy, false);
+    container.removeEventListener('onSubmit', submitSpy, false);
   });
 
   it('It calls the handleLogin method when the form is submitted', function(){ //The submit has to be called twice, for reasons unknown
@@ -50,11 +50,27 @@ describe ('Admin login', function(){
     expect(login.handleLogin).toHaveBeenCalled();
   });
 
+  xit('It calls the handleLogin method with an email address in the form', function(){  //Trying to figure out double submit issue
+    spyOn(login, 'handleLogin');
+    var email = Utils.findTextField(textFields, 'email');
+    email.getDOMNode().value = 'johndoe@example.com';
+    TestUtils.Simulate.submit(form);
+    //TestUtils.Simulate.submit(form);
+    expect(login.handleLogin).toHaveBeenCalled();
+  });
+
   it('It calls the validateEmail when the form is submitted', function(){
     spyOn(login, 'validateEmail');
     TestUtils.Simulate.submit(form);
     expect(login.validateEmail).toHaveBeenCalled();
   });
 
+  it('It calls the validateEmail method with an email address in the form', function(){
+    spyOn(login, 'validateEmail');
+    var email = Utils.findTextField(textFields, 'email');
+    email.getDOMNode().value = 'johndoe@example.com';
+    TestUtils.Simulate.submit(form);
+    expect(login.validateEmail).toHaveBeenCalled();
+  });
 });
 
