@@ -30,8 +30,14 @@ module.exports = function(config) {
       './specs_support/spec_helper.js',
       './specs_support/mock_ajax.js',
       //'./js/**/*.spec.js'         // Use webpack to build each test individually. If changed here, match the change in preprocessors
-      './webpack.tests.js'          // More performant but tests cannot be run individually
+      './webpack.tests.js',         // More performant but tests cannot be run individually
+      { pattern: 'fixtures/*',      // fixtures
+          watched: true,
+          served:  true,
+          included: false
+      }
     ],
+
 
     // Transpile tests with the karma-webpack plugin
     preprocessors: {
@@ -56,7 +62,7 @@ module.exports = function(config) {
     autoWatch: true,
 
     // Use jasmine as the test framework
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine-jquery', 'jasmine'],
 
     reporters: reporters,
 
