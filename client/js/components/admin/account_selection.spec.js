@@ -5,15 +5,19 @@ import StubRouterContext  from '../../../specs_support/stub_router_context';
 
 describe('account_selection', function() {
   // TO RUN MORE TESTS YOU WILL HAVE TO SIMULATE LOGGING IN
-  beforeEach(function(){
-    localStorage.setItem('jwt', "asdfasdfasf");
-  });
 
   it('renders account selection page', function() {
+    localStorage.setItem('jwt', "asdfasdfasf");
     var Subject = StubRouterContext(AccountSelection, {});
     var result = TestUtils.renderIntoDocument(<Subject />);
     expect(result.getDOMNode().textContent).toContain("Account");
     localStorage.removeItem('jwt');
+  });
+
+  it('does not render the page if you are not logged in', function() {
+    var Subject = StubRouterContext(AccountSelection, {});
+    var result = TestUtils.renderIntoDocument(<Subject />);
+    expect(result.getDOMNode().textContent).not.toContain("Account");
   });
 
 });
