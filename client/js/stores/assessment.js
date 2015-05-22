@@ -15,12 +15,13 @@ const READY = 3;
 const STARTED = 4;
 
 var _assessment = null;
+var _items = [];
 var _assessmentResult = null;
 var _assessmentState = NOT_LOADED;
 var _startedAt;
 
 var _sectionIndex = 0;
-var _questionIndex = 0;
+var _itemIndex = 0;
 
 function parseAssessmentResult(result){
   _assessmentResult = JSON.parse(result);
@@ -54,15 +55,15 @@ var AssessmentStore = assign({}, StoreCommon, {
   },
 
   currentQuestion(){
-    return _assessment;
+    return _items[_itemIndex] || {};
   },
 
   currentIndex(){
-    return _questionIndex;
+    return _itemIndex;
   },
 
   questionCount(){
-    return 10;
+    return _items.length;
   }
 
 });
@@ -84,6 +85,12 @@ Dispatcher.register(function(payload) {
         if(text.length > 0){
           _assessmentState = LOADED;
           _assessment = Assessment.parseAssessment(payload.settings, payload.data.text);
+          if( _assessment && 
+              _assessment.sections && 
+              _assessment.sections[_sectionIndex] &&
+              _assessment.sections[_sectionIndex].items){
+            _items = _assessment.sections[_sectionIndex].items;
+          }
         }
       }
       break;
@@ -101,7 +108,7 @@ Dispatcher.register(function(payload) {
       break;
 
     case Constants.ASSESSMENT_NEXT_QUESTION:
-      
+      // Will need to advance sections and items.
       break;
 
     case Constants.ASSESSMENT_PREVIOUS_QUESTION:
