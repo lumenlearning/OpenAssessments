@@ -54,7 +54,6 @@ export default class Item extends BaseComponent{
     var prevButtonClassName = "btn btn-prev-item " + ((this.props.currentIndex > 0) ? "" : "disabled");
     var nextButtonClassName = "btn btn-next-item " + ((this.props.currentIndex < this.props.questionCount - 1) ? "" : "disabled");
     var currentIndex = this.props.currentIndex + 1;
-    debugger
 
     var material = (
           <div
