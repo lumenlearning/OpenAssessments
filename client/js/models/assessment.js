@@ -3,13 +3,9 @@ import Utils      from '../utils/utils';
 import EdX        from './edx';
 import Qti        from './qti';
 
-// import Section    from "./section";
-// import EdXSection from "./edx_section";
-// import EdXItem    from "./edx_item";
+export default class Assessment{
 
-export default {
-
-  parseAssessment(settings, data){
+  static parseAssessment(settings, data){
     var xml = $(data);
     var assessmentXml   = xml.find('assessment').addBack('assessment');
     var questestinterop = xml.find('questestinterop').addBack('questestinterop');
@@ -24,23 +20,22 @@ export default {
         error: "Open Assessments could not find valid QTI or EdX XML. Nothing will be rendered. Please verify that your XML meets one of these standards."
       };
     }
-  },
+  }
 
-  parseQti(assessmentXml, xml){
+  static parseQti(assessmentXml, xml){
     var assessment = {
       id         : assessmentXml.attr('ident'),
       title      : assessmentXml.attr('title'),
-      standard   : 'qti',
-      objectives : []
+      standard   : 'qti'
     };
-    $.each(xml.find('assessment > objectives matref'), function(index, item){
-      assessment.objectives.push($(item).attr('linkrefid'));
-    }.bind(this));
+    assessment.objectives = xml.find('assessment > objectives matref').map((index, item) => {
+      return $(item).attr('linkrefid');
+    });
     assessment.sections = Qti.parseSections(xml);
     return assessment;
-  },
+  }
 
-  parseEdX(settings, sequential){
+  static parseEdX(settings, sequential){
     var url = settings.srcUrl;
     var id  = url.slice(url.indexOf('sequential')).replace('.xml', '');
     var assessment = {
@@ -79,4 +74,4 @@ export default {
     }.bind(this));
   }
 
-};
+}

@@ -1,9 +1,9 @@
 import $   from 'jquery';
 import _   from 'lodash';
 
-var Qti = {
+export default class Qti{
 
-  parseSections(xml){
+  static parseSections(xml){
 
     var fromXml = (xml) => {
       xml = $(xml);
@@ -27,14 +27,14 @@ var Qti = {
 
     return this.listFromXml(xml, 'section', fromXml, buildDefault);
 
-  },
+  }
 
-  parseItems(xml){
+  static parseItems(xml){
 
     var fromXml = (xml) => {
       xml = $(xml);
 
-      var objectives = _.map(xml.find('objectives matref'), function(index, item){ 
+      var objectives = xml.find('objectives matref').map((index, item) => { 
         return $(item).attr('linkrefid'); 
       });
 
@@ -43,7 +43,8 @@ var Qti = {
         title      : xml.attr('title'),
         objectives : objectives,
         xml        : xml,
-        material   : this.material()
+        material   : this.material(xml),
+        answers    : this.parseAnswers(xml)
       };
 
       $.each(xml.find('itemmetadata > qtimetadata > qtimetadatafield'), function(i, x){
@@ -66,25 +67,26 @@ var Qti = {
 
     return this.listFromXml(xml, 'item', fromXml);
   
-  },
+  }
 
-  parseAnswers(xml){
+  static parseAnswers(xml){
 
     var fromXml = (xml) => {
       xml = $(xml);
       return {
-        id  : xml.attr('ident'),
-        xml : xml
+        id       : xml.attr('ident'),
+        material : this.buildMaterial(xml.find('material').children()),
+        xml      : xml
       };
     };
 
     return this.listFromXml(xml, 'response_lid > render_choice > response_label', fromXml);
 
-  },
+  }
 
   // Process nodes based on QTI spec here:
   // http://www.imsglobal.org/question/qtiv1p2/imsqti_litev1p2.html#1404782
-  buildMaterial(nodes){
+  static buildMaterial(nodes){
     var result = '';
     $.each(nodes, function(i, item){
       var parsedItem = $(item);
@@ -112,29 +114,29 @@ var Qti = {
     });
 
     return result;
-  },
+  }
 
-  listFromXml(xml, selector, fromXml, buildDefault){
+  static listFromXml(xml, selector, fromXml, buildDefault){
     xml = $(xml);
-    var list = _.map(xml.find(selector), function(i, x){
+    var list = xml.find(selector).map((i, x) => {
       return fromXml(x);
-    });
+    }).toArray(); // Make sure we have a normal javascript array not a jquery array.
     if(list.length <= 0 && buildDefault){
       list = [buildDefault(xml)];
     }
     return list;
-  },
+  }
 
   // //////////////////////////////////////////////////////////
   // Item related functionality
   //
-  buildResponseGroup(node){
+  static buildResponseGroup(node){
     // TODO this is an incomplete attempt to build a drag and drop
     // question type based on the drag_and_drop.xml in seeds/qti
     return this.buildMaterial($(node).find('material').children());
-  },
+  }
 
-  material(xml){
+  static material(xml){
     
     var material = xml.find('presentation > material').children();
     if(material.length > 0){
@@ -146,9 +148,9 @@ var Qti = {
       return Qti.reduceFlow(flow);
     }
 
-  },
+  }
 
-  reduceFlow(flow){
+  static reduceFlow(flow){
     var result = '';
     $.each(flow.children(), function(i, node){
       if(node.nodeName.toLowerCase() === 'flow'){
@@ -160,6 +162,4 @@ var Qti = {
     return result;
   }
 
-};
-
-export default Qti;
+}
