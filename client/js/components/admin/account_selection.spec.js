@@ -1,3 +1,5 @@
+"use strict";
+
 import React              from 'react';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import AccountSelection   from './account_selection';
