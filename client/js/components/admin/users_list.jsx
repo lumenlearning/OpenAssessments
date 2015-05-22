@@ -7,6 +7,7 @@ import UserActions                                                              
 import _                                                                                from "lodash";
 import assign                                                                           from "object-assign";
 import { Paper, TextField, FlatButton, RaisedButton, FontIcon, Menu, Dialog}            from "material-ui";
+import Checkbox                                                                         from "./checkbox";
 import AdminActions                                                                     from "../../actions/admin";
 import ApplicationStore                                                                 from "../../stores/application";
 import AccountsStore                                                                    from "../../stores/accounts";
@@ -18,7 +19,8 @@ export default React.createClass({
     return {
       users: AccountsStore.currentUsers(),
       currentAccount: AccountsStore.accountById(this.props.params.accountId),
-      currentUser: {name: "", email: "", role: ""}
+      currentUser: {name: "", email: "", role: ""},
+      selectedUsers: AccountsStore.getSelectedUsers(),
     };
   },
 
@@ -46,14 +48,60 @@ export default React.createClass({
   },
 
   onMenuItemClick(e, key, payload){
-    this.setState({currentUser: AccountsStore.userById(payload.user.id)});
+    if(this.refs[payload.ref].isChecked()){
+      this.refs[payload.ref].setChecked(false);
+      AdminActions.removeFromSelectedUsers(payload.user);
+    } else {
+      this.refs[payload.ref].setChecked(true);
+      AdminActions.addToSelectedUsers(payload.user);
+    }
+  },
+
+  editButtonClicked(){
+    this.setState({currentUser: AccountsStore.userById(this.state.selectedUsers[0].id)});
     this.refs.editForm.editButtonClicked();
+    
+    for(var i=0; i<this.state.users.length; i++){
+      var hash = "check-" + this.state.users[i].id;
+      this.refs[hash].setChecked(false);
+    }
+  },
+
+  deleteButtonClicked(){
+    AdminActions.deleteUsers(this.state.selectedUsers);
+    for(var i=0; i<this.state.users.length; i++){
+      var hash = "check-" + this.state.users[i].id;
+      this.refs[hash].setChecked(false);
+    }
   },
 
   render() {
-
-    // We are going to need this later so dont delete it even though its empty
     var styles = {
+      container: {
+        width: "300px",
+        margin: "auto",
+      },
+
+      menu: {
+        marginTop: "10px",
+        width: "300px"
+      },
+
+      block: {
+        display: "inline-block",
+
+      },
+
+      checkbox: {
+        display: "inline-block",
+        float: "right",
+        marginTop: "10px"
+      },
+
+      button: {
+        marginLeft: "10px"
+      }
+
 
     };
     
@@ -69,15 +117,47 @@ export default React.createClass({
 
     var usersList = this.state.users.map(function(user){
       
-      return { payload: user.id.toString(), text: user.name, user: user}
+      var ref = "check-" + user.id; 
+      var text = (
+        <div>
+          <div style={styles.block}>
+            {user.name}
+          </div>
+          <div style={styles.checkbox}>
+            <Checkbox ref={ref} />
+          </div>
+        </div>
+      );
+      return { payload: user.id.toString(), text: text, user: user, ref: ref}
       
     });
 
+    var buttons;
+    if(this.state.selectedUsers.length == 0){
+      buttons = <div/>;
+    } else if(this.state.selectedUsers.length == 1){
+      buttons = (
+        <div>
+          <FlatButton style={styles.button} label="Edit User" primary={false} onClick={this.editButtonClicked} />
+          <FlatButton style={styles.button} label="Delete Selected" primary={true}  onClick={this.deleteButtonClicked}/>
+        </div>)
+    } else {
+      buttons = <FlatButton style={styles.button} label="Delete Selected" primary={true} onClick={this.deleteButtonClicked}/>
+    }
+    var roleId = 0;
+    if(this.state.currentUser.role == "user")
+      roleId = 0
+    if(this.state.currentUser.role == "instructor")
+      roleId = 1
+    if(this.state.currentUser.role == "admin")
+      roleId = 2
     return (
-      <div>
-        Users
-        <Menu menuItems={usersList} onItemClick={this.onMenuItemClick}/>
-        <EditUserForm ref="editForm" user={this.state.currentUser}/>
+      <div style={styles.container}>
+        Users {buttons}
+        <div style={styles.menu}>
+          <Menu menuItems={usersList} onItemClick={this.onMenuItemClick} />
+        </div>
+        <EditUserForm ref="editForm" user={this.state.currentUser} selectedIndex={roleId}/>
       </div> 
     );
   },

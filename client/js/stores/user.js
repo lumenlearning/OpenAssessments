@@ -6,6 +6,7 @@ import StoreCommon    from "./store_common";
 import assign         from "object-assign";
 
 var _user = {};
+var logoutState = 1;
 
 // log the user in
 function login(payload){
@@ -14,6 +15,7 @@ function login(payload){
   // We get a JWT back.
   var jwt = payload.data.body.jwt_token;
   localStorage.setItem('jwt', jwt);
+  logoutState = 1;
 }
 
 // Register
@@ -25,6 +27,11 @@ function register(user){
 function loadUserFromSettings(payload) {
   _user.email = payload.data.email;
   _user.displayName = payload.data.displayName;
+}
+
+function logout(){
+  localStorage.removeItem('jwt');
+  logoutState = 2;
 }
 
 // Extend User Store with EventEmitter to add eventing capabilities
@@ -43,6 +50,10 @@ var UserStore = assign({}, StoreCommon, {
     return localStorage.getItem('jwt');
   },
 
+  logoutStatus(){
+    return logoutState;
+  }
+
 });
 
 // Register callback with Dispatcher
@@ -59,6 +70,10 @@ Dispatcher.register((payload) => {
     // Respond to REGISTER action
     case Constants.REGISTER:
       register(payload.user);
+      break;
+
+    case Constants.LOGOUT:
+      logout(payload);
       break;
 
     default:

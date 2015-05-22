@@ -1,19 +1,19 @@
+"use strict";
+
 import React              from 'react';
 import TestUtils          from 'react/lib/ReactTestUtils';
-import Login              from '../../../js/components/admin/login';
+import Login              from './login';
 import Utils              from '../../../specs_support/utils';
 
 describe ('Admin login', function(){
   var login;
   var textFields;
   var form;
-  var button;
 
   beforeEach(function(){
     login = TestUtils.renderIntoDocument(<Login />);
     textFields = TestUtils.scryRenderedDOMComponentsWithClass(login, 'mui-text-field');
     form = TestUtils.findRenderedDOMComponentWithTag(login, 'form');
-    button = TestUtils.findRenderedDOMComponentWithClass(login, 'login-button');
   });
 
   it('Renders the login component', function(){
@@ -27,7 +27,6 @@ describe ('Admin login', function(){
   });
 
   it('outputs a validation error if no email is provided', function(){
-    var form = TestUtils.findRenderedDOMComponentWithTag(login, 'form');
     TestUtils.Simulate.submit(form);
 
     var email = Utils.findTextField(textFields, 'email');
@@ -35,23 +34,32 @@ describe ('Admin login', function(){
     expect(email.getDOMNode().textContent).toContain('Invalid email');
   });
 
-  describe('the form is submitted', function(){
-
-    beforeEach(function(){
-      spyOn(login, 'handleLogin');
-
-    });
-
-    it('It calls the handleLogin method', function(){ //The submit has to be called twice, for reasons unknown
-      TestUtils.Simulate.submit(form);
-      TestUtils.Simulate.submit(form);
-      expect(login.handleLogin).toHaveBeenCalled();
-    });
-
-    xit('It calls the handleLogin method when the submit button is clicked', function(){
-      TestUtils.Simulate.click(button);
-      expect(login.handleLogin).toHaveBeenCalled();
-    });
+  it('It calls the handleLogin method when the form is submitted', function(){ //The submit has to be called twice, for reasons unknown
+    spyOn(login, 'handleLogin');
+    TestUtils.Simulate.submit(form);
+    expect(login.handleLogin).toHaveBeenCalled();
   });
 
+  it('It calls the handleLogin method with an email address in the form', function(){  //Trying to figure out double submit issue
+    spyOn(login, 'handleLogin');
+    var email = Utils.findTextField(textFields, 'email');
+    email.getDOMNode().value = 'johndoe@example.com';
+    TestUtils.Simulate.submit(form);
+    expect(login.handleLogin).toHaveBeenCalled();
+  });
+
+  it('It calls the validateEmail when the form is submitted', function(){
+    spyOn(login, 'validateEmail');
+    TestUtils.Simulate.submit(form);
+    expect(login.validateEmail).toHaveBeenCalled();
+  });
+
+  it('It calls the validateEmail method with an email address in the form', function(){
+    spyOn(login, 'validateEmail');
+    var email = Utils.findTextField(textFields, 'email');
+    email.getDOMNode().value = 'johndoe@example.com';
+    TestUtils.Simulate.submit(form);
+    expect(login.validateEmail).toHaveBeenCalled();
+  });
 });
+

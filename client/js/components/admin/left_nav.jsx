@@ -8,7 +8,11 @@ import { LeftNav }          from "material-ui";
 
 export default React.createClass({
 
-  mixins: [StoreKeeper, Router.Navigation],
+  mixins: [StoreKeeper],
+
+  contextTypes: {
+    router: React.PropTypes.func
+  },
 
   statics: {
     stores: [User],    // Subscribe to changes in the messages store
@@ -76,7 +80,7 @@ export default React.createClass({
   },
 
   _onLeftNavChange: function(e, key, payload) {
-    this.transitionTo(payload.route);
+    this.context.router.transitionTo(payload.route);
   }
 
 });

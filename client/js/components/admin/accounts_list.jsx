@@ -7,7 +7,7 @@ import { Menu, Paper }              from "material-ui";
 import AdminActions                 from "../../actions/admin";
 export default React.createClass({
 
-
+  // There is a better way to do this.
   handleClick(e, key, payload){
     // pass the click event to the Link tag 
     this.refs[payload.ref].handleClick(e);

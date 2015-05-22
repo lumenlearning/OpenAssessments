@@ -39,9 +39,12 @@ function loadSettings(defaultSettings){
     return defaultSettings[settings_prop] || QueryString.params()[params_prop] || default_prop;
   };
 
-  var jwt = defaultSettings.jwt || null;
-  if(jwt!==null)
+  var jwt = defaultSettings.jwt.length ? defaultSettings.jwt : null;
+  if(jwt!==null) {
     localStorage.setItem('jwt', jwt);
+  } else {
+    localStorage.removeItem('jwt');
+  }
 
     var enableStart = bestValue('enableStart', 'enable_start', false);
     enableStart = (enableStart == true || enableStart == 'true');

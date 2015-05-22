@@ -7,6 +7,8 @@ export default {
   LOGIN_PENDING: "login_pending",
   REGISTER: "register",
   REGISTER_PENDING: "register_pending",
+  LOGOUT_PENDING: "logout_pending",
+  LOGOUT: "logout",
 
   // Assessments
   ASSESSMENT_LOAD: "assessment_load",
@@ -42,5 +44,11 @@ export default {
   USER_UPDATING: "user_updating",
   USER_UPDATED: "user_updated",
 
-  RESET_USERS: "reset_users"
+  RESET_USERS: "reset_users",
+
+  ADD_USER: "add_user",
+  REMOVE_USER: "remove_user",
+
+  DELETE_USERS: "delete_users",
+  DELETING_USERS: "deleting_users",
 };

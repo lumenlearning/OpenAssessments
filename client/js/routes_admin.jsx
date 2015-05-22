@@ -6,6 +6,7 @@ import Login              from './components/admin/login';
 import AccountSelection   from './components/admin/account_selection';
 import AccountDashboard   from './components/admin/account_dashboard';
 import UsersList          from './components/admin/users_list';
+import Logout             from './components/admin/logout';
 
 var Route         = Router.Route;
 var NotFoundRoute = Router.NotFoundRoute;
@@ -19,6 +20,7 @@ var adminRoutes = (
     <Route name="account" path="/account/:accountId" handler={Account}/>
     <Route name="account" path="/account/:accountId" handler={AccountDashboard}/>
     <Route name="users-list" path="/users/:accountId" handler={UsersList}/>
+    <Route name="logout" path="/logout/" handler={Logout}/>
   </Route>
 );
 module.exports = adminRoutes;
