@@ -27,7 +27,7 @@ describe('AssessmentsStore', () => {
   describe("Loaded Assessment", () => {
     
     beforeEach(() => {
-      AssessmentActions.loadAssessment(settings, srcData){
+      AssessmentActions.loadAssessment(settings, srcData);
       jasmine.clock().tick(); // Advance the clock to the next tick
     });
 

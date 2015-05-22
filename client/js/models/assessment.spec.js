@@ -23,7 +23,7 @@ describe('assessment', () => {
       expect(assessment.sections.length).toEqual(1);
       expect(assessment.sections[0].items.length).toEqual(10);
       var item = assessment.sections[0].items[0];
-      expect(item.assessment_question_identifierref).toEqual"icee9d09b0a2ace374f01019034d68155";
+      expect(item.assessment_question_identifierref).toEqual("icee9d09b0a2ace374f01019034d68155");
       expect(item.id).toEqual("i3590da31ca486c260f96e955482aca41");
       expect(item.title).toEqual("Question 1");
 
