@@ -19,7 +19,8 @@ describe("SettingsStore", () => {
 
     var defaultSettings = {
       apiUrl: "http://www.example.com/api",
-      srcUrl: "http://www.example.com/src"
+      srcUrl: "http://www.example.com/src",
+      enableStart: 'true'
     };
 
     beforeEach(() => {
@@ -32,6 +33,12 @@ describe("SettingsStore", () => {
         var settings = SettingsStore.current();
         expect(settings.apiUrl).toEqual(defaultSettings.apiUrl);
         expect(settings.srcUrl).toEqual(defaultSettings.srcUrl);
+        done();
+      });
+
+      it("sets a boolean value for enableStart", (done) => {
+        var settings = SettingsStore.current();
+        expect(settings.enableStart).toBe(true);
         done();
       });
     });

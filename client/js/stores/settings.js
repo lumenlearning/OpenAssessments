@@ -31,6 +31,8 @@ function srcData(){
 
 function loadSettings(defaultSettings){
 
+  _errors = {};
+
   defaultSettings = defaultSettings || {};
 
   var bestValue = function(settings_prop, params_prop, default_prop){
@@ -40,6 +42,9 @@ function loadSettings(defaultSettings){
   var jwt = defaultSettings.jwt || null;
   if(jwt!==null)
     localStorage.setItem('jwt', jwt);
+
+    var enableStart = bestValue('enableStart', 'enable_start', false);
+    enableStart = (enableStart == true || enableStart == 'true');
 
   _settings = {
     apiUrl           : bestValue('apiUrl', 'api_url', '/'),
@@ -52,7 +57,7 @@ function loadSettings(defaultSettings){
     keywords         : bestValue('keywords', 'keywords'),
     resultsEndPoint  : bestValue('resultsEndPoint', 'results_end_point', 'http://localhost:4200/api'),
     confidenceLevels : bestValue('confidenceLevels', 'confidence_levels', false),
-    enableStart      : bestValue('enableStart', 'enable_start', false),
+    enableStart      : enableStart,
     style            : bestValue('style', 'style', null),
     csrfToken        : defaultSettings.csrfToken || null
   };
