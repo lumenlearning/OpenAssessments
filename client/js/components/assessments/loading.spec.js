@@ -7,7 +7,7 @@ describe('loading', function() {
   var result = TestUtils.renderIntoDocument(<Loading />);
 
   it('renders a loading assessment message', function() {
-    expect(result.getDOMNode().textContent).toContain("Loading Assessment");
+    expect(React.findDOMNode(result).textContent).toContain("Loading Assessment");
   });
   
 });
