@@ -28,7 +28,7 @@ export default class Item extends BaseComponent{
 
     switch(this.props.question.question_type){
       case 'multiple_choice_question':
-        item = <QtiMultipleChoice />;
+        item = <QtiMultipleChoice items={this.props.question.answers} />;
         break;
       // case 'drag_and_drop':
       //   item = this.checkEdXDragAndDrop();
@@ -55,13 +55,13 @@ export default class Item extends BaseComponent{
         <div className="question">
           <div className="header">
             <span className="counter">{this.props.currentIndex} of {this.props.questionCount}</span>
-            <p>{this.props.question.name}</p>
+            <p>{this.props.question.title}</p>
           </div>
           <form className="edit_item">
             <div className="full_question">
               <div className="inner_question">
                 <div className="question_text">
-                  Question goes here
+                  {this.props.question.material}
                 </div>
                 {item}
               </div>
