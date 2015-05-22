@@ -9,7 +9,15 @@
   // Documentation: http://www.jshint.com/docs/options/
   "browser": true,
   "esnext": true,
-  "globals": {},
+  "globals": {
+    "describe": true,
+    "beforeEach": true,
+    "it": true,
+    "expect": true,
+    "xit": true,
+    "spyOn": true,
+    "jasmine": true
+  },
   "globalstrict": true,
   "quotmark": false,
   "undef": true,
