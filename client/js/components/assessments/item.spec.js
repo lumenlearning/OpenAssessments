@@ -3,11 +3,20 @@ import TestUtils          from 'react/lib/ReactTestUtils';
 import Item               from './item';
 
 describe('loading', function() {
-  
-  var result = TestUtils.renderIntoDocument(<Item />);
+
+  var question = {};
+  var currentIndex = 1;
+  var settings = {};
+  var questionCount = 10;
+
+  var result = TestUtils.renderIntoDocument(<Item 
+    question={question} 
+    currentIndex={currentIndex} 
+    settings={settings}
+    questionCount={questionCount} />);
 
   it('renders an item', function() {
-    expect(result.getDOMNode().textContent).toContain("Item Assessment");
+    expect(React.findDOMNode(result).textContent).toContain("1 of 10");
   });
   
 });
