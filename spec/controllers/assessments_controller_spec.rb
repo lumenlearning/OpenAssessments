@@ -43,9 +43,25 @@ RSpec.describe AssessmentsController, type: :controller do
           expect(response).to have_http_status(401)
         end
       end
-
     end
-
   end
+
+  context "logged in" do
+    login_user
+    describe "CREATE - Valid Params" do
+      it "should return a valid assessment" do
+
+        xml = File.new("#{Rails.root}/db/qti/assessment.xml")
+        params = FactoryGirl.attributes_for(:assessment)
+        params[:title] = 'Test'
+        params[:description] = 'Test description'
+        params[:xml_file] = xml
+        params[:license] = 'test'
+        post :create, assessment: params
+        expect(response).to have_http_status(:ok)
+      end  
+    end
+  end
+  
 
 end

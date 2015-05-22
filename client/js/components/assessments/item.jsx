@@ -8,6 +8,7 @@ import QtiMultipleChoice  from "./qti_multiple_choice";
 export default class Item extends BaseComponent{
   
   next(){
+    console.log("Called");
     AssessmentActions.nextQuestion();
   }
 
@@ -50,18 +51,30 @@ export default class Item extends BaseComponent{
       //   break;
     }
 
+    var prevButtonClassName = "btn btn-prev-item " + ((this.props.currentIndex > 0) ? "" : "disabled");
+    var nextButtonClassName = "btn btn-next-item " + ((this.props.currentIndex < this.props.questionCount - 1) ? "" : "disabled");
+    var currentIndex = this.props.currentIndex + 1;
+    debugger
+
+    var material = (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: this.props.question.material
+            }}></div>
+          );
+    
     return (
       <div className="assessment_container">
         <div className="question">
           <div className="header">
-            <span className="counter">{this.props.currentIndex} of {this.props.questionCount}</span>
+            <span className="counter">{currentIndex} of {this.props.questionCount}</span>
             <p>{this.props.question.title}</p>
           </div>
           <form className="edit_item">
             <div className="full_question">
               <div className="inner_question">
                 <div className="question_text">
-                  {this.props.question.material}
+                  {material}
                 </div>
                 {item}
               </div>
@@ -72,10 +85,10 @@ export default class Item extends BaseComponent{
             </div>
           </form>
           <div className="nav_buttons">
-            <button className="btn btn-prev-item disabled" onClick={this.next}>
+            <button className={prevButtonClassName} onClick={this.previous}>
               <i className="glyphicon glyphicon-chevron-left"></i> <span>Previous</span>
             </button>
-            <button className="btn btn-next-item" onClick={this.previous}>
+            <button className={nextButtonClassName} onClick={this.next}>
               <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
             </button>
           </div>

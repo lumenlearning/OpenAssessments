@@ -109,10 +109,13 @@ Dispatcher.register(function(payload) {
 
     case Constants.ASSESSMENT_NEXT_QUESTION:
       // Will need to advance sections and items.
+      if(_itemIndex < _items.length - 1) 
+        _itemIndex++;
       break;
 
     case Constants.ASSESSMENT_PREVIOUS_QUESTION:
-      
+      if(_itemIndex > 0)
+        _itemIndex--;
       break;
 
 

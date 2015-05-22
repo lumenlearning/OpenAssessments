@@ -30,17 +30,15 @@ class Assessment < ActiveRecord::Base
     assessment.published_at = published_at
     assessment.save!
 
-    sumative_xml = input_xml
-    sumative_xml.gsub! /<conditionvar>(.*?)<\/conditionvar>/m, ''
-    assessment.assessment_xmls.create!(:xml => sumative_xml) 
-
-    # assessment.assessment_xmls.create!(:xml => input_xml)
+    assessment.assessment_xmls.create!(:xml => input_xml)
 
     if xml && xml.respond_to?(:sections)
       assessment.create_subitems(xml)
     end
 
-
+    sumative_xml = input_xml
+    sumative_xml.gsub! /<conditionvar>(.*?)<\/conditionvar>/m, ''
+    assessment.assessment_xmls.create!(:xml => sumative_xml)
 
     assessment
   end
