@@ -7,6 +7,7 @@ import StoreCommon    from "./store_common";
 import assign         from "object-assign";
 import Assessment     from "../models/assessment";
 
+const INVALID = -1;
 const NOT_LOADED = 0;
 const LOADING = 1;
 const LOADED = 2;
@@ -77,9 +78,13 @@ Dispatcher.register(function(payload) {
       break;
 
     case Constants.ASSESSMENT_LOADED:
-      _assessmentState = LOADED;
-      if(payload.data.text && payload.data.text.length > 0){
-        _assessment = Assessment.parseAssessment(payload.settings, payload.data.text);
+      _assessmentState = INVALID;
+      if(payload.data.text){
+        var text = payload.data.text.trim();
+        if(text.length > 0){
+          _assessmentState = LOADED;
+          _assessment = Assessment.parseAssessment(payload.settings, payload.data.text);
+        }
       }
       break;
 
