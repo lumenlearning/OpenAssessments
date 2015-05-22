@@ -23,7 +23,7 @@ export default React.createClass({
   render() {
 
     return (
-      <Checkbox ref="checkbox" onCheck={this.handleCheck}/>
+      <Checkbox ref="checkbox" onCheck={(e) => this.handleCheck(e)}/>
     );
   }
 

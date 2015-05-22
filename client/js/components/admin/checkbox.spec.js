@@ -1,16 +1,23 @@
+"use strict";
+
 import React              from 'react';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import Checkbox           from './checkbox';
 
 describe('checkbox', function() {
+  var checkbox;
+
+  beforeEach(function() {
+    checkbox = TestUtils.renderIntoDocument(<Checkbox />);
+  });
 
   it('renders the checkbox', function() {
-    var result = TestUtils.renderIntoDocument(<Checkbox />);
-    expect(result).toBeDefined();
-    spyOn(result, 'handleCheck');
-    console.log(result.refs.checkbox.refs.enhancedSwitch.refs.checkbox)
-    var input = result.refs.checkbox.refs.enhancedSwitch.refs.checkbox;
-    TestUtils.Simulate.click(input);
-    expect(result.handleCheck).toHaveBeenCalled();
+    expect(checkbox).toBeDefined();
+  });
+
+  it('Calls handleCheck when the checkbox is checked', function() {
+    spyOn(checkbox, 'handleCheck');
+    TestUtils.Simulate.change(checkbox.getDOMNode().firstChild, {"checked": true});
+    expect(checkbox.handleCheck).toHaveBeenCalled();
   });
 });
