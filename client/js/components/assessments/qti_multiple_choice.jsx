@@ -6,7 +6,7 @@ import RadioButton  from "./radio_button";
 export default React.createClass({
 
   render(){
-    var items = this.props.items.map(function(item){
+    var items = this.props.items.map((item) => {
       return <RadioButton item={item}/>;
     });
 
