@@ -7,18 +7,23 @@ import Dispatcher  from   "../dispatcher";
 export default {
 
   loadAssessment(settings, srcData){
-    if(srcData.length > 0){
-      Dispatcher.dispatch({ 
-        action: Constants.ASSESSMENT_LOADED,
-        settings: settings,
-        data: {
-          text: srcData
-        }
-      });
-    } else {
-      Dispatcher.dispatch({ action: Constants.ASSESSMENT_LOAD_PENDING });
-      Api.get(Constants.ASSESSMENT_LOADED, srcUrl);
+    
+    if(srcData){
+      srcData = srcData.trim();
+      if(srcData.length > 0){
+        Dispatcher.dispatch({ 
+          action: Constants.ASSESSMENT_LOADED,
+          settings: settings,
+          data: {
+            text: srcData
+          }
+        });
+        return;
+      }
     }
+
+    Dispatcher.dispatch({ action: Constants.ASSESSMENT_LOAD_PENDING });
+    Api.get(Constants.ASSESSMENT_LOADED, settings.srcUrl);
   },
 
   nextQuestion(){
