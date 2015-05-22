@@ -22,28 +22,28 @@ describe('edx multiple choice', function() {
   var result = TestUtils.renderIntoDocument(<EdxMultipleChoice item={item} />);
 
   it('renders the title', function() {
-    expect(result.getDOMNode().textContent).toContain(item.title);
+    expect(React.findDOMNode(result).textContent).toContain(item.title);
   });
 
   it('renders the messages', function() {
-    expect(result.getDOMNode().textContent).toContain(item.messages[0]);
-    expect(result.getDOMNode().textContent).toContain(item.messages[1]);
+    expect(React.findDOMNode(result).textContent).toContain(item.messages[0]);
+    expect(React.findDOMNode(result).textContent).toContain(item.messages[1]);
   });
 
   it('renders a message', function() {
-    expect(result.getDOMNode().textContent).toContain(item.messages[0]);
+    expect(React.findDOMNode(result).textContent).toContain(item.messages[0]);
   });
 
   it('renders the question', function() {
-    expect(result.getDOMNode().textContent).toContain(item.question);
+    expect(React.findDOMNode(result).textContent).toContain(item.question);
   });
 
   it('does not render the solution if the question is not answered', function() {
-    expect(result.getDOMNode().textContent).toContain(item.solution);
+    expect(React.findDOMNode(result).textContent).toContain(item.solution);
   });
 
   it('renders the solution', function() {
     var result = TestUtils.renderIntoDocument(<EdxMultipleChoice item={answeredItem} />);
-    expect(result.getDOMNode().textContent).toContain(answeredItem.solution);
+    expect(React.findDOMNode(result).textContent).toContain(answeredItem.solution);
   });
 });

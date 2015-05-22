@@ -16,20 +16,20 @@ describe('edx numeric input', function() {
   var result = TestUtils.renderIntoDocument(<EdxNumericInput item={item} />);
 
   it('renders the title', function() {
-    expect(result.getDOMNode().textContent).toContain(item.title);
+    expect(React.findDOMNode(result).textContent).toContain(item.title);
   });
 
   it('renders the question', function() {
-    expect(result.getDOMNode().textContent).toContain(item.question);
+    expect(React.findDOMNode(result).textContent).toContain(item.question);
   });
 
   it('renders the messages', function() {
-    expect(result.getDOMNode().textContent).toContain(item.messages[0]);
-    expect(result.getDOMNode().textContent).toContain(item.messages[1]);
+    expect(React.findDOMNode(result).textContent).toContain(item.messages[0]);
+    expect(React.findDOMNode(result).textContent).toContain(item.messages[1]);
   });
 
   it('does not render the solution', function() {
-    expect(result.getDOMNode().textContent).not.toContain(item.solution);
+    expect(React.findDOMNode(result).textContent).not.toContain(item.solution);
   });
 
 });
@@ -46,7 +46,7 @@ describe('edx numeric input graded', function() {
   var result = TestUtils.renderIntoDocument(<EdxNumericInput item={item} />);
 
   it('renders the solution', function() {
-    expect(result.getDOMNode().textContent).toContain(item.solution);
+    expect(React.findDOMNode(result).textContent).toContain(item.solution);
   });
 
 });

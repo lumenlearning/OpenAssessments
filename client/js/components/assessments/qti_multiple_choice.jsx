@@ -3,7 +3,7 @@
 import React        from "react";
 import RadioButton  from "./radio_button";
 
-export default React.createClass({
+export default class QtiMultipleChoice extends React.Component{
 
   render(){
     var items = this.props.items.map((item) => {
@@ -12,4 +12,4 @@ export default React.createClass({
 
     return <div>{items}</div>;
   }
-});
+}

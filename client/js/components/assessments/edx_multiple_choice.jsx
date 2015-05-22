@@ -2,7 +2,7 @@
 
 import React        from "react";
 
-export default React.createClass({
+export default class EdxMultipleChoice extends React.Component{
   render(){
     var messages = '';
     var solution = '';
@@ -40,4 +40,4 @@ export default React.createClass({
               </div>
             </div>
   }
-});
+}

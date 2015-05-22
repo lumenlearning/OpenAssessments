@@ -3,14 +3,13 @@
 import React from 'react';
 import Store from '../../stores/assessment';
 
-export default React.createClass({
+export default class EdxNumericInput extends React.Component{
 
-  getInitialState: function() {
-    return {
-      messages: [],
-      isGraded: false
-    };
-  },
+  constructor() {
+    super();
+    this.messages = [];
+    this.isGraded = false;
+  }
 
   render(){
     var messages = '';
@@ -52,4 +51,4 @@ export default React.createClass({
   }
 
 
-});
+}

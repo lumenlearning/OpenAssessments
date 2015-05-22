@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default React.createClass({
+export default class RadioButton extends React.Component{
 
   render(){
     return (
@@ -14,4 +14,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+}
