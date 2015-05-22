@@ -90,7 +90,7 @@ export default React.createClass({
     return (
       <div className="login-screen" style={styles.container}>
         <Paper className="login-paper" style={styles.paper} zDepth={0}>
-          <form action="/users/sign_in" method="post" onSubmit={this.handleLogin}>
+          <form action="/users/sign_in" method="post" onSubmit={(e) => this.handleLogin(e)}>
             <h4>Admin Login</h4>
 
             <TextField hintText="johndoe@example.com" floatingLabelText="Email" ref="email" onBlur={this.validateEmail} errorText={this.state.validations.email} />

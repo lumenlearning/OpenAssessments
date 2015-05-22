@@ -1,6 +1,8 @@
+"use strict";
+
 import React              from 'react';
 import TestUtils          from 'react/lib/ReactTestUtils';
-import Login              from '../../../js/components/admin/login';
+import Login              from './login';
 import Utils              from '../../../specs_support/utils';
 
 describe ('Admin login', function(){
@@ -32,30 +34,17 @@ describe ('Admin login', function(){
     expect(email.getDOMNode().textContent).toContain('Invalid email');
   });
 
-  xit('It submits the form when the Login button is pressed', function(){
-    var submitSpy = jasmine.createSpy('submitSpy');
-    var container = document.createElement('div');
-    var instance = React.render(<Login />, container);
-    var button = instance.getDOMNode('submit-button');
-    container.addEventListener('onSubmit', submitSpy, false);
-    TestUtils.Simulate.click(button);
-    expect(submitSpy).toHaveBeenCalled();
-    container.removeEventListener('onSubmit', submitSpy, false);
-  });
-
   it('It calls the handleLogin method when the form is submitted', function(){ //The submit has to be called twice, for reasons unknown
     spyOn(login, 'handleLogin');
-    TestUtils.Simulate.submit(form);
     TestUtils.Simulate.submit(form);
     expect(login.handleLogin).toHaveBeenCalled();
   });
 
-  xit('It calls the handleLogin method with an email address in the form', function(){  //Trying to figure out double submit issue
+  it('It calls the handleLogin method with an email address in the form', function(){  //Trying to figure out double submit issue
     spyOn(login, 'handleLogin');
     var email = Utils.findTextField(textFields, 'email');
     email.getDOMNode().value = 'johndoe@example.com';
     TestUtils.Simulate.submit(form);
-    //TestUtils.Simulate.submit(form);
     expect(login.handleLogin).toHaveBeenCalled();
   });
 
