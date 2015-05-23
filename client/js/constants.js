@@ -17,6 +17,7 @@ export default {
   ASSESSMENT_NEXT_QUESTION: "assessment_next_question",
   ASSESSMENT_PREVIOUS_QUESTION: "assessment_previous_question",
   ASSESSMENT_START: "assessment_start",
+  ASSESSMENT_CHECK_ANSWER: "assessment_check_answer",
 
   ADD_MESSAGE: "add_message",
   REMOVE_MESSAGE: "remove_message",

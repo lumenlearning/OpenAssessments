@@ -19,12 +19,17 @@ var _items = [];
 var _assessmentResult = null;
 var _assessmentState = NOT_LOADED;
 var _startedAt;
+var _selectedConfidenceLevel = 0;
 
 var _sectionIndex = 0;
 var _itemIndex = 0;
 
 function parseAssessmentResult(result){
   _assessmentResult = JSON.parse(result);
+}
+
+function checkAnswer(){
+  Assessment.checkAnswer(selectedConfidenceLevel);
 }
 
 // Extend User Store with EventEmitter to add eventing capabilities
@@ -93,6 +98,10 @@ Dispatcher.register(function(payload) {
           }
         }
       }
+      break;
+
+    case Constants.ASSESSMENT_CHECK_ANSWER:
+      checkAnswer();
       break;
 
     case Constants.ASSESSMENT_START:

@@ -26,6 +26,10 @@ export default {
     Api.get(Constants.ASSESSMENT_LOADED, settings.srcUrl);
   },
 
+  checkAnswer(){
+    Dispatcher.dispatch({ action: Constants.ASSESSMENT_CHECK_ANSWER });
+  },
+
   nextQuestion(){
     Dispatcher.dispatch({ action: Constants.ASSESSMENT_NEXT_QUESTION });
   },
