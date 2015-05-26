@@ -6,6 +6,10 @@ import { Paper, FlatButton, RaisedButton, FontIcon, Dialog, DropDownMenu, TextFi
 import AdminActions                                                                       from "../../actions/admin";
 
 export default React.createClass({
+
+  propTypes: {
+    user: React.PropTypes.object.isRequired
+  },
   
   editButtonClicked(){
     // open dialog to edit information 
@@ -55,11 +59,11 @@ export default React.createClass({
       paperStyle: {
         height: "435",
         width: "480px",
-        marginBottom: "250px",
+        marginBottom: "250px"
       },
 
       labelStyle: {
-        padding: "10px",
+        padding: "10px"
       }
     };
 
