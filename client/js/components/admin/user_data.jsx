@@ -84,7 +84,7 @@ export default React.createClass({
 
     var dropDownItems = [
       {payload: '0', text: 'End User'},
-      {payload: '1', text: 'Admin'},
+      {payload: '1', text: 'Admin'}
     ];
 
     return(
