@@ -39,7 +39,7 @@ export default React.createClass({
     if(newVal == "")
       toReturn = currentVal;
     else 
-      toReturn = newVal
+      toReturn = newVal;
 
     return toReturn;
   },

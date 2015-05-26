@@ -16,6 +16,10 @@ import AccountsStore                                                            
 
 export default React.createClass({
 
+  propTypes: {
+    params: React.PropTypes.object.isRequired
+  },
+
   getState(){
     return {
       users: AccountsStore.currentUsers(),

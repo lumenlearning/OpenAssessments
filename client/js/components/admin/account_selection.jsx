@@ -25,7 +25,7 @@ export default React.createClass({
   getState(){
     return {
       accounts: AccountsStore.current(),
-      router: this.context.router,
+      router: this.context.router
     };
   },
 
@@ -66,7 +66,7 @@ export default React.createClass({
       adminDashboard: {
         marginLeft: "auto",
         marginRight: "auto",
-        marginBottom: "10px",
+        marginBottom: "10px"
       },
 
 
@@ -78,7 +78,7 @@ export default React.createClass({
       accountBlockStyle: {
         width: '300px',
         margin: 'auto',
-        marginTop: '30px',
+        marginTop: '30px'
       }
 
     };
