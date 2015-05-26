@@ -48,7 +48,7 @@ export default React.createClass({
 
     var styles = {
       logoStyle: {
-        marginTop: '20px',
+        marginTop: '20px'
       }
     };
 

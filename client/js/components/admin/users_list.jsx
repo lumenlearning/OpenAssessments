@@ -15,7 +15,7 @@ import EditUserForm                                                             
 
 export default React.createClass({
 
-  propTypes:{
+  propTypes: {
     params: React.PropTypes.object.isRequired
   },
  
@@ -24,7 +24,7 @@ export default React.createClass({
       users: AccountsStore.currentUsers(),
       currentAccount: AccountsStore.accountById(this.props.params.accountId),
       currentUser: {name: "", email: "", role: ""},
-      selectedUsers: AccountsStore.getSelectedUsers(),
+      selectedUsers: AccountsStore.getSelectedUsers()
     };
   },
 
@@ -83,7 +83,7 @@ export default React.createClass({
     var styles = {
       container: {
         width: "300px",
-        margin: "auto",
+        margin: "auto"
       },
 
       menu: {
@@ -92,8 +92,7 @@ export default React.createClass({
       },
 
       block: {
-        display: "inline-block",
-
+        display: "inline-block"
       },
 
       checkbox: {
@@ -116,7 +115,7 @@ export default React.createClass({
 
     var dropDownItems = [
       {payload: '0', text: 'End User'},
-      {payload: '1', text: 'Admin'},
+      {payload: '1', text: 'Admin'}
     ];
 
     var usersList = this.state.users.map(function(user){
@@ -150,11 +149,11 @@ export default React.createClass({
     }
     var roleId = 0;
     if(this.state.currentUser.role == "user")
-      roleId = 0
+      roleId = 0;
     if(this.state.currentUser.role == "instructor")
-      roleId = 1
+      roleId = 1;
     if(this.state.currentUser.role == "admin")
-      roleId = 2
+      roleId = 2;
     return (
       <div style={styles.container}>
         Users {buttons}
@@ -164,9 +163,7 @@ export default React.createClass({
         <EditUserForm ref="editForm" user={this.state.currentUser} selectedIndex={roleId}/>
       </div> 
     );
-  },
+  }
 
-
-  
 
 });

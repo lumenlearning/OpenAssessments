@@ -7,7 +7,7 @@ import AdminActions                                                             
 
 export default React.createClass({
 
-  propTypes:{
+  propTypes: {
     user: React.PropTypes.object.isRequired
   },
   
@@ -59,11 +59,11 @@ export default React.createClass({
       paperStyle: {
         height: "435",
         width: "480px",
-        marginBottom: "250px",
+        marginBottom: "250px"
       },
 
       labelStyle: {
-        padding: "10px",
+        padding: "10px"
       }
     };
 
