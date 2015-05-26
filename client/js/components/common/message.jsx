@@ -14,6 +14,4 @@ export default class Message extends React.Component{
 
 }
 
-Message.propTypes={
-  children: React.PropTypes.node
-};
+Message.propTypes = { children: React.PropTypes.string };
