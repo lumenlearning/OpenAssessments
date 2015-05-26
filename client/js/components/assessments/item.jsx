@@ -10,10 +10,22 @@ export default class Item extends BaseComponent{
   render() {
     var item = "";
     var result = "";
-    if(false){
-      result = <div className="check_answer_result">
-                <p></p>
-              </div>;
+
+
+    if(this.props.messageIndex == -1){
+      result =  <div className="check_answer_result">
+                  <p></p>
+                </div>;
+    }
+    else if(this.props.messageIndex == 0){
+      result =  <div className="check_answer_result">
+                  <p>Incorrect</p>
+                </div>;
+    }
+    else {
+      result =  <div className="check_answer_result">
+                  <p>Correct</p>
+                </div>;
     }
 
     switch(this.props.question.question_type){
@@ -68,7 +80,7 @@ export default class Item extends BaseComponent{
               </div>
               {result}
               <div className="lower_level">
-                <input className="btn btn-check-answer" type="submit" value="Check Answer" onClick={() => { AssessmentActions.checkAnswer(); }}/>
+                <input className="btn btn-check-answer" value="Check Answer" onClick={() => { AssessmentActions.checkAnswer(); }}/>
               </div>
             </div>
           </form>
@@ -91,5 +103,6 @@ Item.propTypes = {
   question         : React.PropTypes.object.isRequired,
   currentIndex     : React.PropTypes.number.isRequired,
   settings         : React.PropTypes.object.isRequired,
-  questionCount    : React.PropTypes.number.isRequired
+  questionCount    : React.PropTypes.number.isRequired,
+  messageIndex     : React.PropTypes.number.isRequired
 };

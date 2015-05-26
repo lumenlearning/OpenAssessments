@@ -22,7 +22,7 @@ var _assessmentState = NOT_LOADED;
 var _startedAt;
 var _selectedConfidenceLevel = 0;
 var _selectedAnswerId = null;
-
+var _answerMessageIndex = -1;
 var _sectionIndex = 0;
 var _itemIndex = 0;
 
@@ -31,8 +31,7 @@ function parseAssessmentResult(result){
 }
 
 function checkAnswer(){
-  debugger;
-  Assessment.checkAnswer(_assessmentXml, _selectedAnswerId, _selectedConfidenceLevel, _items[_itemIndex].question_type);
+  return Assessment.checkAnswer(_assessmentXml, _selectedAnswerId, _selectedConfidenceLevel, _items[_itemIndex].question_type);
 }
 
 // Extend User Store with EventEmitter to add eventing capabilities
@@ -74,6 +73,14 @@ var AssessmentStore = assign({}, StoreCommon, {
     return _items.length;
   },
 
+  selectedAnswerId(){
+    return _selectedAnswerId;
+  },
+
+  answerMessageIndex(){
+    return _answerMessageIndex;
+  }
+
 });
 
 // Register callback with Dispatcher
@@ -106,7 +113,11 @@ Dispatcher.register(function(payload) {
       break;
 
     case Constants.ASSESSMENT_CHECK_ANSWER:
-      checkAnswer();
+      var answer = checkAnswer();
+      if(answer.correct)
+        _answerMessageIndex = 1;
+      else
+        _answerMessageIndex = 0;
       break;
 
     case Constants.ASSESSMENT_START:
