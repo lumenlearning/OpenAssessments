@@ -33,7 +33,7 @@ export default class Item extends BaseComponent{
         item = <QtiMultipleChoice items={this.props.question.answers} />;
         break;
       // case 'drag_and_drop':
-      //   item = this.checkEdXDragAndDrop();
+      //   item = <EdxMultipleChoice items={this.props.questions.answers} />
       //   break;
       // case 'edx_drag_and_drop':
       //   item = this.checkEdXDragAndDrop();
@@ -80,7 +80,7 @@ export default class Item extends BaseComponent{
               </div>
               {result}
               <div className="lower_level">
-                <input className="btn btn-check-answer" value="Check Answer" onClick={() => { AssessmentActions.checkAnswer(); }}/>
+                <input type="button" className="btn btn-check-answer" value="Check Answer" onClick={() => { AssessmentActions.checkAnswer(); }}/>
               </div>
             </div>
           </form>
