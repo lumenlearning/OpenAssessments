@@ -40,7 +40,6 @@ export default class Assessment extends BaseComponent{
   }
 
   render(){
-
     var content;
 
     if(!this.state.isLoaded){
@@ -57,7 +56,6 @@ export default class Assessment extends BaseComponent{
 
       // TODO figure out when to mark an item as viewed. assessmentResult must be valid before this call is made.
       // AssessmentActions.itemViewed(this.state.settings, this.state.assessment, this.state.assessmentResult);
-
     }
 
     return <div className="assessment">

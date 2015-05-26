@@ -18,6 +18,8 @@ export default {
   ASSESSMENT_PREVIOUS_QUESTION: "assessment_previous_question",
   ASSESSMENT_START: "assessment_start",
   ASSESSMENT_CHECK_ANSWER: "assessment_check_answer",
+  ASSESSMENT_VIEWED: "assessment_viewed",
+  ANSWER_SELECTED: "answer_selected",
 
   ADD_MESSAGE: "add_message",
   REMOVE_MESSAGE: "remove_message",

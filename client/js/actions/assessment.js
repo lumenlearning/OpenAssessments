@@ -26,6 +26,10 @@ export default {
     Api.get(Constants.ASSESSMENT_LOADED, settings.srcUrl);
   },
 
+  answerSelected(selectedAnswerId){
+    Dispatcher.dispatch({action: Constants.ANSWER_SELECTED, selectedAnswerId: selectedAnswerId});
+  },
+
   checkAnswer(){
     Dispatcher.dispatch({ action: Constants.ASSESSMENT_CHECK_ANSWER });
   },

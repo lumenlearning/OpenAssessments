@@ -74,15 +74,15 @@ export default class Assessment{
     }.bind(this));
   }
 
-  static checkAnswer(xml, selectedAnswerId, start, objectives, selectedConfidenceLevel){
+  static checkAnswer(xml, selectedAnswerId, selectedConfidenceLevel, questionType){
     // TODO implement checkAnswer, checkMultipleChoiceAnswer, and all other answer related methods.
     // There's still quite a bit of the ember code left. We'll need to pass values to this 
     // method rather than call things like settings.get. ItemResult.create should be moved to an action and use api.js
-    
+    var assessmentXml = $(xml);
     var results;
-    switch(this.get('question_type')){
+    switch(questionType){
       case 'multiple_choice_question':
-        results = this.checkMultipleChoiceAnswer(xml, selectedAnswerId);
+        results = this.checkMultipleChoiceAnswer(assessmentXml, selectedAnswerId);
         break;
       case 'edx_drag_and_drop':
         results = this.checkEdXDragAndDrop();
@@ -95,24 +95,24 @@ export default class Assessment{
         break;
     }
 
-    var end = Utils.currentTime();
-    var settings = this.get('settings');
-    ItemResult.create({
-      offline: settings.get('offline'),
-      assessment_result_id: this.get('controllers.application').get('model').get('assessment_result.id'),
-      resultsEndPoint: settings.get('resultsEndPoint'),
-      eId: settings.get('eId'),
-      external_user_id: settings.get('externalUserId'),
-      keywords: settings.get('keywords'),
-      objectives: objectives,
-      src_url: settings.get('srcUrl'),
-      identifier: this.get('id'),
-      session_status: 'final',
-      time_spent: end - start,
-      confidence_level: selectedConfidenceLevel,
-      correct: results.correct,
-      score: results.score
-    }).save();
+    // var end = Utils.currentTime();
+    // var settings = this.get('settings');
+    // ItemResult.create({
+    //   offline: settings.get('offline'),
+    //   assessment_result_id: this.get('controllers.application').get('model').get('assessment_result.id'),
+    //   resultsEndPoint: settings.get('resultsEndPoint'),
+    //   eId: settings.get('eId'),
+    //   external_user_id: settings.get('externalUserId'),
+    //   keywords: settings.get('keywords'),
+    //   objectives: objectives,
+    //   src_url: settings.get('srcUrl'),
+    //   identifier: this.get('id'),
+    //   session_status: 'final',
+    //   time_spent: end - start,
+    //   confidence_level: selectedConfidenceLevel,
+    //   correct: results.correct,
+    //   score: results.score
+    // }).save();
 
     return results;
   }
@@ -133,7 +133,7 @@ export default class Assessment{
           conditionMet = true;
         }
       } else if(condition.find('conditionvar > unanswered').length){
-        if(Ember.isEmpty(selectedAnswerId)){
+        if(selectedAnswerId === null){
           conditionMet = true;
         }
       } else if(condition.find('conditionvar > not').length){
@@ -142,7 +142,7 @@ export default class Assessment{
             conditionMet = true;
           }
         } else if(condition.find('conditionvar > not > unanswered').length) {
-          if(!Ember.isEmpty(selectedAnswerId)){
+          if(selectedAnswerId !== null){
             conditionMet = true;
           }
         }

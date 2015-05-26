@@ -15,11 +15,13 @@ const READY = 3;
 const STARTED = 4;
 
 var _assessment = null;
+var _assessmentXml = null;
 var _items = [];
 var _assessmentResult = null;
 var _assessmentState = NOT_LOADED;
 var _startedAt;
 var _selectedConfidenceLevel = 0;
+var _selectedAnswerId = null;
 
 var _sectionIndex = 0;
 var _itemIndex = 0;
@@ -29,7 +31,8 @@ function parseAssessmentResult(result){
 }
 
 function checkAnswer(){
-  Assessment.checkAnswer(selectedConfidenceLevel);
+  debugger;
+  Assessment.checkAnswer(_assessmentXml, _selectedAnswerId, _selectedConfidenceLevel, _items[_itemIndex].question_type);
 }
 
 // Extend User Store with EventEmitter to add eventing capabilities
@@ -69,7 +72,7 @@ var AssessmentStore = assign({}, StoreCommon, {
 
   questionCount(){
     return _items.length;
-  }
+  },
 
 });
 
@@ -88,14 +91,16 @@ Dispatcher.register(function(payload) {
       if(payload.data.text){
         var text = payload.data.text.trim();
         if(text.length > 0){
-          _assessmentState = LOADED;
-          _assessment = Assessment.parseAssessment(payload.settings, payload.data.text);
+          _assessment = Assessment.parseAssessment(payload.settings, text);
+          _assessmentXml = text;
           if( _assessment && 
               _assessment.sections && 
               _assessment.sections[_sectionIndex] &&
               _assessment.sections[_sectionIndex].items){
             _items = _assessment.sections[_sectionIndex].items;
           }
+          _assessmentState = LOADED;
+        
         }
       }
       break;
@@ -110,9 +115,11 @@ Dispatcher.register(function(payload) {
       break;
 
     case Constants.ASSESSMENT_VIEWED:
+    debugger;
       if(payload.data.text && payload.data.text.length > 0){
         _assessmentResult = parseAssessmentResult(payload.data.text);
         _assessmentState = READY;
+        _assessmentViewed = true;
       }
       break;
 
@@ -125,6 +132,10 @@ Dispatcher.register(function(payload) {
     case Constants.ASSESSMENT_PREVIOUS_QUESTION:
       if(_itemIndex > 0)
         _itemIndex--;
+      break;
+
+    case Constants.ANSWER_SELECTED:
+        _selectedAnswerId = payload.selectedAnswerId;
       break;
 
 
