@@ -6,14 +6,19 @@ import { Paper, FlatButton, RaisedButton, FontIcon, Dialog, DropDownMenu, TextFi
 import AdminActions                                                                       from "../../actions/admin";
 
 export default React.createClass({
+
+  propTypes:{
+    user: React.PropTypes.object.isRequired,
+    selectedIndex: React.PropTypes.element  //Find out the correct type
+  },
   
   getInitialState(){
     return {
       dropDownItems: [
       {payload: 0, text: 'End User', selectedIndex: 0},
       {payload: 1, text: 'Instructor', selectedIndex: 1},
-      {payload: 2, text: 'Admin', selectedIndex: 2},
-      ],
+      {payload: 2, text: 'Admin', selectedIndex: 2}
+      ]
     }
   },
 
@@ -39,7 +44,7 @@ export default React.createClass({
     if(newVal == "")
       toReturn = currentVal;
     else 
-      toReturn = newVal
+      toReturn = newVal;
 
     return toReturn;
   },

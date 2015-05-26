@@ -7,6 +7,10 @@ import { Menu, Paper }              from "material-ui";
 import AdminActions                 from "../../actions/admin";
 export default React.createClass({
 
+  propTypes: {
+    menuItems: React.PropTypes.array.isRequired
+  },
+
   // There is a better way to do this.
   handleClick(e, key, payload){
     // pass the click event to the Link tag 
@@ -28,7 +32,7 @@ export default React.createClass({
     };
 
     var accountList = this.props.menuItems.map(function(account){
-      var param = {accountId: account.id}
+      var param = {accountId: account.id};
       var ref = "linkTo" + account.id;
       var link = (<Link ref={ref} to="account" params={param}>{account.name}</Link>);
       return { payload: account.id.toString(), text: link, ref: ref}
