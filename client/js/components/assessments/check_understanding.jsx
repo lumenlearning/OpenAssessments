@@ -4,7 +4,7 @@ import React              from 'react';
 import AssessmentActions  from "../../actions/assessment";
 
 export default class CheckUnderstanding extends React.Component{
-  
+
   start(){
     AssessmentActions.start();
   }
