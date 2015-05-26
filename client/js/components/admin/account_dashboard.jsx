@@ -13,7 +13,7 @@ import AccountsStore                                                            
 
 export default React.createClass({
 
-  propTypes:{
+  propTypes: {
     params: React.PropTypes.object.isRequired
   },
 

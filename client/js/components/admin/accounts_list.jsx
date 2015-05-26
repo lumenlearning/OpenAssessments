@@ -8,7 +8,7 @@ import AdminActions                 from "../../actions/admin";
 
 export default React.createClass({
 
-  propTypes:{
+  propTypes: {
     menuItems: React.PropTypes.array.isRequired
   },
 
@@ -33,7 +33,7 @@ export default React.createClass({
     };
 
     var accountList = this.props.menuItems.map(function(account){
-      var param = {accountId: account.id}
+      var param = {accountId: account.id};
       var ref = "linkTo" + account.id;
       var link = (<Link ref={ref} to="account" params={param}>{account.name}</Link>);
       return { payload: account.id.toString(), text: link, ref: ref}
