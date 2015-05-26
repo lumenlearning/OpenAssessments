@@ -4,6 +4,8 @@ import React              from 'react';
 import BaseComponent      from "../base_component";
 import AssessmentActions  from "../../actions/assessment";
 import QtiMultipleChoice  from "./qti_multiple_choice";
+import QtiTrueFalse       from "./qti_true_false";
+import QtiTextOnly       from "./qti_text_only.jsx";
 
 export default class Item extends BaseComponent{
   nextButtonClicked(){
@@ -39,9 +41,12 @@ export default class Item extends BaseComponent{
       case 'multiple_choice_question':
         item = <QtiMultipleChoice items={this.props.question.answers} />;
         break;
-      // case 'drag_and_drop':
-      //   item = <EdxMultipleChoice items={this.props.questions.answers} />
-      //   break;
+      case 'true_false_question':
+        item = <QtiTrueFalse items={this.props.question.answers} />;
+        break;
+      case 'text_only_question':
+        item = <QtiTextOnly items={this.props.question.answers} />;
+        break;
       // case 'edx_drag_and_drop':
       //   item = this.checkEdXDragAndDrop();
       //   break;
@@ -69,7 +74,7 @@ export default class Item extends BaseComponent{
               __html: this.props.question.material
             }}></div>
           );
-    
+
     return (
       <div className="assessment_container">
         <div className="question">
