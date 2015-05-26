@@ -53,7 +53,7 @@ export default React.createClass({
       accountDashboard: {
         marginLeft: "300px"
       }
-    }
+    };
 
     return (
       <div style={styles.accountDashboard}>
