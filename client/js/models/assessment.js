@@ -126,7 +126,6 @@ export default class Assessment{
     var feedbacks = [];
     var correct = false;
     var respconditions = xml.find('respcondition');
-    debugger;
     for (var i =0; i<respconditions.length; i++){
       var condition = respconditions[i];
       condition = $(condition);
