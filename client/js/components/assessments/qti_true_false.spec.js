@@ -23,7 +23,7 @@ describe('qti true false', function() {
   });
 
   it('renders input attributes', function() {
-    expect(React.findDOMNode(result).childNodes[0].childNodes[0].childNodes[0].attributes.name.value).toContain(items[0].name);
+    expect(React.findDOMNode(result).childNodes[0].childNodes[0].childNodes[0].attributes.name.value).toContain("answer-radio");
   });
 
 });

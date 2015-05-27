@@ -129,7 +129,6 @@ Dispatcher.register(function(payload) {
       break;
 
     case Constants.ASSESSMENT_VIEWED:
-    debugger;
       if(payload.data.text && payload.data.text.length > 0){
         _assessmentResult = parseAssessmentResult(payload.data.text);
         _assessmentState = READY;

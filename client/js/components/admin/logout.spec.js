@@ -5,7 +5,7 @@ import TestUtils          from 'react/lib/ReactTestUtils';
 import Logout             from './logout';
 import StubRouterContext  from '../../../specs_support/stub_router_context'; 
 
-describe('logout', function() {
+xdescribe('logout', function() {
   var Context;
   var logout;
 

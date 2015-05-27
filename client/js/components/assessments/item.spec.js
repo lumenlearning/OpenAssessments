@@ -5,7 +5,7 @@ import Item               from './item';
 describe('loading', function() {
 
   var question = {};
-  var currentIndex = 1;
+  var currentIndex = 0;
   var settings = {};
   var questionCount = 10;
 

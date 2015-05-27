@@ -1,0 +1,255 @@
+<?xml version = "1.0" encoding = "UTF-8" standalone = "no"?>
+<!DOCTYPE questestinterop SYSTEM "ims_qtiasiv1p2.dtd" [
+<!-- This is an IMS test extension for OBJECT rendering.  -->
+<!ELEMENT ims_render_object (response_label+)>
+<!ATTLIST ims_render_object
+    shuffle (Yes|No) 'No'
+    orientation (Row|Column) #REQUIRED>
+]>
+<!-- Author:  Paul Roberts                -->
+<!-- Date:    22nd January, 2002              -->
+<!-- Version 1.2 Compliant Example: BasicExampleQMK   -->
+<!-- Basic Drag-n-drop Example              -->
+<questestinterop>
+  <qticomment>This illustrates an example 'drap - drop' question.
+    Candidates are required to place a label showing the name of a planet in the appropriate position to identify the planets in our solar system.
+    Each correctly placed label gives the candidate one mark.
+    If one or more of the labels is incorrectly placed, feedback is given naming the planets in correct order.
+  </qticomment>
+  <item title = "The Planets" ident = "qm_1052138399372757">
+    <presentation>
+      <flow>
+        <flow>
+          <material>
+            <mattext texttype = "text/plain">Place the text markers inside the relevant boxes to identify the planets of our solar system.</mattext>
+          </material>
+        </flow>
+        <flow>
+          <material>
+            <mattext>A point will be awarded for every correct answer.</mattext>
+          </material>
+        </flow>
+        <flow>
+          <material>
+            <matimage imagtype = "image/jpg" uri = "http://i.space.com/images/i/000/009/474/i02/nasa-solar-system-graphic-72.jpg?1304698777" height = "220" width = "560"/>
+          </material>
+        </flow>
+        <response_grp ident = "planets" rcardinality = "Multiple">
+          <render_extension>
+            <ims_render_object orientation = "Row">
+              <response_label ident = "earth_source" match_max = "1" match_group = "mercury_target, venus_target, earth_target, mars_target, jupiter_target, saturn_target, uranus_target, neptune_target, pluto_target">
+                <material>
+                  <matimage imagtype = "image/jpg" uri = "http://i.neoseeker.com/mgv/294370/370/49/earth.jpg" height = "16" width = "39"/>
+                </material>
+              </response_label>
+              <response_label ident = "venus_source" match_max = "1" match_group = "mercury_target, venus_target, earth_target, mars_target, jupiter_target, saturn_target, uranus_target, neptune_target, pluto_target">
+                <material>
+                  <matimage imagtype = "image/jpg" uri = "http://upload.wikimedia.org/wikipedia/commons/8/85/Venus_globe.jpg" height = "16" width = "50"/>
+                </material>
+              </response_label>
+              <response_label ident = "jupiter_source" match_max = "1" match_group = "mercury_target, venus_target, earth_target, mars_target, jupiter_target, saturn_target, uranus_target, neptune_target, pluto_target">
+                <material>
+                  <matimage imagtype = "image/jpg" uri = "http://www.celestiamotherlode.net/catalog/images/screenshots/various/jupiter_Jupiter_Texture_1__.jpg" height = "16" width = "50"/>
+                </material>
+              </response_label>
+              <response_label ident = "mars_source" match_max = "1" match_group = "mercury_target, venus_target, earth_target, mars_target, jupiter_target, saturn_target, uranus_target, neptune_target, pluto_target">
+                <material>
+                  <matimage imagtype = "image/jpg" uri = "http://www.greek-mythology-pantheon.com/wp-content/uploads/Greek_Gods_and_Goddesses/Ares_Mars_Greek_God/Ares_Mars_Greek_God_Art_06_by_SteveArgyle.jpg" height = "16" width = "58"/>
+                </material>
+              </response_label>
+              <response_label ident = "neptune_source" match_max = "1" match_group = "mercury_target, venus_target, earth_target, mars_target, jupiter_target, saturn_target, uranus_target, neptune_target, pluto_target">
+                <material>
+                  <matimage imagtype = "image/jpg" uri = "http://www.greek-mythology-pantheon.com/wp-content/uploads/Greek_Gods_and_Goddesses/Poseidon_Neptune_Greek_God/Poseidon_Neptune_Greek_God_Art_01_by_GenzoMan.jpg" height = "16" width = "56"/>
+                </material>
+              </response_label>
+              <response_label ident = "pluto_source" match_max = "1" match_group = "mercury_target, venus_target, earth_target, mars_target, jupiter_target, saturn_target, uranus_target, neptune_target, pluto_target">
+                <material>
+                  <matimage imagtype = "image/jpg" uri = "http://img1.wikia.nocookie.net/__cb20141225200321/five-nights-at-treasure-island/images/5/59/743-Pluto.jpg" height = "16" width = "34"/>
+                </material>
+              </response_label>
+              <response_label ident = "saturn_source" match_max = "1" match_group = "mercury_target, venus_target, earth_target, mars_target, jupiter_target, saturn_target, uranus_target, neptune_target, pluto_target">
+                <material>
+                  <matimage imagtype = "image/jpg" uri = "http://apod.nasa.gov/apod/image/0412/saturn_malmerCassini_5m.jpg" height = "16" width = "51"/>
+                </material>
+              </response_label>
+              <response_label ident = "uranus_source" match_max = "1" match_group = "mercury_target, venus_target, earth_target, mars_target, jupiter_target, saturn_target, uranus_target, neptune_target, pluto_target">
+                <material>
+                  <matimage imagtype = "image/jpg" uri = "http://www.wwu.edu/skywise/planets/neptune.jpg" height = "16" width = "62"/>
+                </material>
+              </response_label>
+              <response_label ident = "mercury_source" match_max = "1" match_group = "mercury_target, venus_target, earth_target, mars_target, jupiter_target, saturn_target, uranus_target, neptune_target, pluto_target">
+                <material>
+                  <matimage imagtype = "image/jpg" uri = "http://www.periodictable.com/Samples/080.14/s13.JPG" height = "16" width = "59"/>
+                </material>
+              </response_label>
+              <response_label ident = "mercury_target" rarea = "Rectangle">40, 40, 25,80</response_label>
+              <response_label ident = "venus_target" rarea = "Rectangle">80, 80, 25,80</response_label>
+              <response_label ident = "earth_target" rarea = "Rectangle">120, 1200, 25,80</response_label>
+              <response_label ident = "mars_target" rarea = "Rectangle">160, 80, 25,80</response_label>
+              <response_label ident = "jupiter_target" rarea = "Rectangle">200, 40, 25,80</response_label>
+              <response_label ident = "saturn_target" rarea = "Rectangle">250, 50, 25,80</response_label>
+              <response_label ident = "uranus_target" rarea = "Rectangle">325, 60, 25,80</response_label>
+              <response_label ident = "neptune_target" rarea = "Rectangle">425, 80, 25,80</response_label>
+              <response_label ident = "pluto_target" rarea = "Rectangle">500, 120, 25,80</response_label>
+            </ims_render_object>
+          </render_extension>
+        </response_grp>
+      </flow>
+    </presentation>
+    <resprocessing>
+      <outcomes>
+        <decvar/>
+      </outcomes>
+      <respcondition title = "mercury" continue = "Yes">
+        <conditionvar>
+          <varsubset respident = "planets" setmatch = "Exact">mercury_source, mercury_target</varsubset>
+        </conditionvar>
+        <setvar action = "Add">1</setvar>
+        <displayfeedback linkrefid = "mercury"/>
+      </respcondition>
+      <respcondition title = "venus" continue = "Yes">
+        <conditionvar>
+          <varsubset respident = "planets" setmatch = "Exact">venus_source, venus_target</varsubset>
+        </conditionvar>
+        <setvar action = "Add">1</setvar>
+        <displayfeedback linkrefid = "venus"/>
+      </respcondition>
+      <respcondition title = "earth" continue = "Yes">
+        <conditionvar>
+          <varsubset respident = "planets" setmatch = "Exact">earth_source, earth_target</varsubset>
+        </conditionvar>
+        <setvar action = "Add">1</setvar>
+        <displayfeedback linkrefid = "earth"/>
+      </respcondition>
+      <respcondition title = "mars" continue = "Yes">
+        <conditionvar>
+          <varsubset respident = "planets" setmatch = "Exact">mars_source, mars_target</varsubset>
+        </conditionvar>
+        <setvar action = "Add">1</setvar>
+        <displayfeedback linkrefid = "mars"/>
+      </respcondition>
+      <respcondition title = "jupiter" continue = "Yes">
+        <conditionvar>
+          <varsubset respident = "planets" setmatch = "Exact">jupiter_source, jupiter_target</varsubset>
+        </conditionvar>
+        <setvar action = "Add">1</setvar>
+        <displayfeedback linkrefid = "jupiter"/>
+      </respcondition>
+      <respcondition title = "saturn" continue = "Yes">
+        <conditionvar>
+          <varsubset respident = "planets" setmatch = "Exact">saturn_source, saturn_target</varsubset>
+        </conditionvar>
+        <setvar action = "Add">1</setvar>
+        <displayfeedback linkrefid = "saturn"/>
+      </respcondition>
+      <respcondition title = "uranus" continue = "Yes">
+        <conditionvar>
+          <varsubset respident = "planets" setmatch = "Exact">uranus_source, uranus_target</varsubset>
+        </conditionvar>
+        <setvar action = "Add">1</setvar>
+        <displayfeedback linkrefid = "uranus"/>
+      </respcondition>
+      <respcondition title = "neptune" continue = "Yes">
+        <conditionvar>
+          <varsubset respident = "planets" setmatch = "Exact">neptune_source, neptune_target</varsubset>
+        </conditionvar>
+        <setvar action = "Add">1</setvar>
+        <displayfeedback linkrefid = "neptune"/>
+      </respcondition>
+      <respcondition title = "pluto" continue = "Yes">
+        <conditionvar>
+          <varsubset respident = "planets" setmatch = "Exact">pluto_source, pluto_target</varsubset>
+        </conditionvar>
+        <setvar action = "Add">1</setvar>
+        <displayfeedback linkrefid = "pluto"/>
+      </respcondition>
+      <respcondition title = "wrong">
+        <conditionvar>
+          <or>
+            <not>
+              <varsubset respident = "planets" setmatch = "Exact">mercury_source, mercury_target</varsubset>
+            </not>
+            <not>
+              <varsubset respident = "planets" setmatch = "Exact">venus_source, venus_target</varsubset>
+            </not>
+            <not>
+              <varsubset respident = "planets" setmatch = "Exact">earth_source, earth_target</varsubset>
+            </not>
+            <not>
+              <varsubset respident = "planets" setmatch = "Exact">mars_source, mars_target</varsubset>
+            </not>
+            <not>
+              <varsubset respident = "planets" setmatch = "Exact">jupiter_source, jupiter_target</varsubset>
+            </not>
+            <not>
+              <varsubset respident = "planets" setmatch = "Exact">saturn_source, saturn_target</varsubset>
+            </not>
+            <not>
+              <varsubset respident = "planets" setmatch = "Exact">uranus_source, uranus_target</varsubset>
+            </not>
+            <not>
+              <varsubset respident = "planets" setmatch = "Exact">neptune_source, neptune_target</varsubset>
+            </not>
+            <not>
+              <varsubset respident = "planets" setmatch = "Exact">pluto_source, pluto_target</varsubset>
+            </not>
+          </or>
+        </conditionvar>
+        <setvar action = "Add">0</setvar>
+        <displayfeedback linkrefid = "wrong"/>
+      </respcondition>
+    </resprocessing>
+    <itemfeedback ident = "mercury" view = "Candidate">
+      <material>
+        <mattext texttype = "text/plain">Mercury was correctly identified.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident = "venus" view = "Candidate">
+      <material>
+        <mattext texttype = "text/plain">Venus was correctly identified.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident = "earth" view = "Candidate">
+      <material>
+        <mattext texttype = "text/plain">Earth was correctly identified.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident = "mars" view = "Candidate">
+      <material>
+        <mattext texttype = "text/plain">Mars was correctly identified.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident = "jupiter" view = "Candidate">
+      <material>
+        <mattext texttype = "text/plain">Juipter was correctly identified.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident = "saturn" view = "Candidate">
+      <material>
+        <mattext texttype = "text/plain">Saturn was correctly identified.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident = "uranus" view = "Candidate">
+      <material>
+        <mattext texttype = "text/plain">Uranus was correctly identified.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident = "neptune" view = "Candidate">
+      <material>
+        <mattext texttype = "text/plain">Neptune was correctly identified.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident = "pluto" view = "Candidate">
+      <material>
+        <mattext texttype = "text/plain">Pluto was correctly identified.</mattext>
+      </material>
+    </itemfeedback>
+    <itemfeedback ident = "wrong" view = "Candidate">
+      <material>
+        <mattext texttype = "text/plain">From left to right, the planets are in this order:
+        Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune and Pluto.
+        </mattext>
+      </material>
+    </itemfeedback>
+  </item>
+</questestinterop>

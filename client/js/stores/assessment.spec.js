@@ -1,7 +1,7 @@
 import React             from 'react';
 import Router            from 'react-router';
-import AssessmentsStore  from './messages';
-import AssessmentActions from '../actions/messages';
+import AssessmentsStore  from './assessment';
+import AssessmentActions from '../actions/assessment';
 import Dispatcher        from '../dispatcher';
 
 describe('AssessmentsStore', () => {
@@ -34,15 +34,16 @@ describe('AssessmentsStore', () => {
     describe("current", () => {
       it("returns current the current assessment", (done) => {
         var assessment = AssessmentsStore.current();
+        console.log()
         expect(assessment).toBeDefined();
         expect(assessment.id).toEqual("ib8d9c142765b2287684aad0b5387e45b");
         done();
       });
     });
     
-    describe("isReady", () => {
+    describe("isLoaded", () => {
       it("returns true", (done) => {
-        expect(AssessmentsStore.isReady()).toBe(true);
+        expect(AssessmentsStore.isLoaded()).toBe(true);
         done(); 
       });
     });

@@ -5,7 +5,7 @@ import TestUtils          from 'react/lib/ReactTestUtils';
 import AccountSelection   from './account_selection';
 import StubRouterContext  from '../../../specs_support/stub_router_context'; 
 
-describe('account_selection', function() {
+xdescribe('account_selection', function() {
   // TO RUN MORE TESTS YOU WILL HAVE TO SIMULATE LOGGING IN
 
   it('renders account selection page', function() {

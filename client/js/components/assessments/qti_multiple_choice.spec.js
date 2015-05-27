@@ -7,12 +7,10 @@ describe('qti multiple choice', function() {
   var items = [
   	{
   		id: 1,
-      name: "QTI Multiple Choice",
     	material: "The multiple choice label"
   	},
   	{
   		id: 2,
-      name: "QTI Multiple Choice 2",
     	material: "The multiple choice label 2"
   	}
   ];
@@ -23,7 +21,7 @@ describe('qti multiple choice', function() {
   });
 
   it('renders input attributes', function() {
-    expect(React.findDOMNode(result).childNodes[0].childNodes[0].childNodes[0].attributes.name.value).toContain(items[0].name);
+    expect(React.findDOMNode(result).childNodes[0].childNodes[0].childNodes[0].attributes.name.value).toContain("answer-radio");
   });
 
 });
