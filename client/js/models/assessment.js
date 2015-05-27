@@ -127,9 +127,8 @@ export default class Assessment{
     for (var i =0; i<respconditions.length; i++){
       var condition = respconditions[i];
       condition = $(condition);
-      console.log(condition);
       var conditionMet = false;
-      
+
       if(condition.find('conditionvar > varequal').length){
         var varequal = condition.find('conditionvar > varequal');
 
