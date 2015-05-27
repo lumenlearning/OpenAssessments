@@ -52,10 +52,6 @@ gem 'ruby-saml-mod'
 # deployment
 gem 'unicorn'
 gem 'unicorn-rails'
-#gem 'rails_12factor' # Use 12 factor for heroku deployment
-
-# Used for deploying to Heroku. Can be removed if not deploying to Heroku.
-gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 
 # API Related
 gem 'httparty'
@@ -71,6 +67,7 @@ gem 'groupdate' # for grouping the chart data by date
 
 # Monitoring
 gem 'newrelic_rpm'
+gem 'health_check'
 
 group :development do
   gem 'spring'

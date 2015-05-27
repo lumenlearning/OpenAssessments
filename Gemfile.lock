@@ -1,9 +1,3 @@
-GIT
-  remote: git://github.com/alexpeattie/heroku_secrets.git
-  revision: 717af8e0acf399bc88d2c8c1a7e230023942af0f
-  specs:
-    heroku_secrets (0.0.2)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -139,6 +133,8 @@ GEM
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
     hashie (3.4.1)
+    health_check (1.5.1)
+      rails (>= 2.3.0)
     hike (1.2.3)
     hitimes (1.2.2)
     httparty (0.13.4)
@@ -386,7 +382,7 @@ DEPENDENCIES
   guard-bundler
   guard-rails
   guard-rspec
-  heroku_secrets!
+  health_check
   httparty
   hub
   ims-lti (~> 1.1.8)
