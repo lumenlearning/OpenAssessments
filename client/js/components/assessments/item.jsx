@@ -5,7 +5,8 @@ import BaseComponent      from "../base_component";
 import AssessmentActions  from "../../actions/assessment";
 import QtiMultipleChoice  from "./qti_multiple_choice";
 import QtiTrueFalse       from "./qti_true_false";
-import QtiTextOnly       from "./qti_text_only.jsx";
+import QtiTextOnly        from "./qti_text_only";
+import QtiDragAndDrop        from "./qti_drag_and_drop"
 
 export default class Item extends BaseComponent{
   nextButtonClicked(){
@@ -19,7 +20,7 @@ export default class Item extends BaseComponent{
   render() {
     var item = "";
     var result = "";
-
+debugger;
 
     if(this.props.messageIndex == -1){
       result =  <div className="check_answer_result">
@@ -47,11 +48,11 @@ export default class Item extends BaseComponent{
       case 'text_only_question':
         item = <QtiTextOnly items={this.props.question} />;
         break;
+      case 'drag_and_drop':
+        item = <QtiDragAndDrop items={this.props.question} />;
+        break;
       // case 'edx_drag_and_drop':
-      //   item = this.checkEdXDragAndDrop();
-      //   break;
-      // case 'edx_numerical_input':
-      //   item = this.checkEdXNumeric();
+      //   item = <EdxDragAndDrop items={this.props.question} />;
       //   break;
       // case 'edx_text_input':
       //   item = this.checkEdXMultipleChoice();

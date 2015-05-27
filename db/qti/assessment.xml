@@ -64,10 +64,10 @@
               <fieldlabel>points_possible</fieldlabel>
               <fieldentry>1</fieldentry>
             </qtimetadatafield>
-            <qtimetadatafield>
+            <metadatafield>
               <fieldlabel>assessment_question_identifierref</fieldlabel>
               <fieldentry>icee9d09b0a2ace374f01019034d68155</fieldentry>
-            </qtimetadatafield>
+            </metadatafield>
           </qtimetadata>
         </itemmetadata>
         <objectives>
