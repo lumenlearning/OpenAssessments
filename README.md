@@ -1,6 +1,6 @@
 #Open Assessments
 
-This project provides a starting point for building a Canvas LTI or OAuth application. 
+This project provides a starting point for building a Canvas LTI or OAuth application.
 
 ##Usage
 
@@ -11,19 +11,19 @@ Most qti in active use seems to be the qti 1.2 lite variant. Full qti comes pack
 See the API Documentation for the documentation on oEmbed.
 
 ####edX Support
-Open Assessments supports the drag and drop and multiple choice question types from edX. 
+Open Assessments supports the drag and drop and multiple choice question types from edX.
 For more information on the edX xml structure see http://edx-open-learning-xml.readthedocs.org/en/latest/index.html
 
 ####Assessment by Url
-Assessments can be loaded directly from a remote url - the assessment need not be loaded into http://www.openassessments.com. 
+Assessments can be loaded directly from a remote url - the assessment need not be loaded into http://www.openassessments.com.
 Just specify a src_url. CORS must be enabled on the server specified by src_url. Example:
 
 http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest&src_url=https%253A%252F%252Fdl.dropboxusercontent.com%252Fu%252F7594429%252FedXCourse%252Fsequential%252F97cc2d1812204294b5fcbb91a1157368.xml
 
 ####Stats
-For assessments loaded into http://www.openassessments.com you simply need to browse to the assessment and click on the bar graph. 
+For assessments loaded into http://www.openassessments.com you simply need to browse to the assessment and click on the bar graph.
 Stats are available on the site, as json and as csv. Loading stats for an assessment that was loaded via a src_url is a bit trickier.
-You'll want to specify an 'eid' (external identifier). In theory you can query later on based on src_url but that makes things hard to control and a 
+You'll want to specify an 'eid' (external identifier). In theory you can query later on based on src_url but that makes things hard to control and a
 bit unpredictable. Here's an example using our MIT edX course:
 
 http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest&src_url=https%253A%252F%252Fdl.dropboxusercontent.com%252Fu%252F7594429%252FedXCourse%252Fsequential%252F97cc2d1812204294b5fcbb91a1157368.xml
@@ -72,12 +72,15 @@ If you need to run services individually or just don't like Foreman you can run 
 
 
 ### Modify application name
-Change the name of the application to a name that you prefer. Open application.rb and change CanvasStarterApp to the 
+Change the name of the application to a name that you prefer. Open application.rb and change CanvasStarterApp to the
 name you choose. Do a global search and replace for canvas_starter_app and change it to the name you choose. Do a global
 search and replace for canvasstarterapp.
 
 ### Secrets file
-Rename config/secrets.example.yml to config.secrets.yml. Open the file and change each entry to values that are 
+Run:
+`bin/bootstrap`
+
+or manually set up secrets: Rename config/secrets.example.yml to config.secrets.yml. Open the file and change each entry to values that are
 relevant for your application. You will need to request a Canvas ID and Secret from Instructure. You will also
 need to setup a default account and provide that account's "code" for the "application_code" entry in
 secrets.yml. See the [seeds](Seeds) section below for information on setting up the default account.
@@ -105,11 +108,11 @@ To get started run:
 
 (npm-shrinkwrap)[https://github.com/uber/npm-shrinkwrap] is used to lock specific versions.
 npm-shrinkwrap.json is included in the project. To verify your package.json & node_modules tree are in sync run:
-  
+
   `npm-shrinkwrap`
 
 To find outdated modules run:
-  
+
   `npm outdated`
 
 Packages must be updated manually. For example:
@@ -128,7 +131,7 @@ __Create a local tunnel__
 
 `ngrok --subdomain openassessments 3000`
 
-(`openassessments` can be any subdomain). Only use letters or numbers in the name. 
+(`openassessments` can be any subdomain). Only use letters or numbers in the name.
 Special characters like '_' will result in errors.
 
 Once you have created the tunnel you will access your application using the ngrok url:
@@ -139,7 +142,7 @@ Once you have created the tunnel you will access your application using the ngro
 
 Open db/seeds.rb and configuration a default account for development and production. Here's a summary
 of the values and their purpose:
--  code         Uniquely identifies the account. This is used for the subdomain when running applications on 
+-  code         Uniquely identifies the account. This is used for the subdomain when running applications on
                 a single domain. Create a default account in the seeds.rb file and then open up `config/secrets`.yml
                 and be sure to provide the code from the default account for the `application_code`. Only use letters
                 and numbers in the code. Special characters will result in errors.
@@ -147,7 +150,7 @@ of the values and their purpose:
 -  name         Name the account anything you'd like
 -  lti_key      A unique key for the LTI application you are building. This will be provided to Canvas
 -  lti_secret   The shared secret for your LTI application. This will be provided to Canvas and will be
-                used to sign the LTI request. Generate this value using `rake secret`. Alternatively if you 
+                used to sign the LTI request. Generate this value using `rake secret`. Alternatively if you
                 leave this field empty an LTI secret will be automatically generated for the account.
 -  canvas_uri   The URI of the Canvas institution to be associated with a specific account.
 
@@ -166,18 +169,27 @@ __Oauth2 Redirect URI:__
 https://openassessments.ngrok.com/auth/canvas/callback
 
 __Icon URL:__
-https://openassessments.ngrok.com/oauth_icon.png 
+https://openassessments.ngrok.com/oauth_icon.png
 
 Once your request is approved you will receive a Canvas ID and Secret.
 and then add the ID and Secret into the file using these fields:
-canvas_id: 
-canvas_secret: 
+canvas_id:
+canvas_secret:
 
 ##Deployment
 
+###Elasticbeanstalk
+Ensure that
+`bin/bootstrap`
+was run initially to setup the correct symlinks
+
+Run
+`bin/deploy`
+to deploy
+
 ###Heroku
 
-Make sure you have signed up for a heroku account [Heroku](http://www.heroku.com). Then follow the instructions provided by 
+Make sure you have signed up for a heroku account [Heroku](http://www.heroku.com). Then follow the instructions provided by
 Heroku to create your application.
 
 Push secrets to production:
