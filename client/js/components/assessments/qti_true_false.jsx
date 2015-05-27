@@ -1,9 +1,15 @@
 "use strict";
 
-import React			from "react";
+import React        from "react";
+import RadioButton  from "./radio_button";
 
-export default class QtiTrueFalse extends React.Component{
-	static render(){
-		return <p>This is a test</p>;
-	};
+export default class QtiMultipleChoice extends React.Component{
+
+  render(){
+    var items = this.props.items.map((item) => {
+      return <RadioButton item={item} name="answer-radio"/>;
+    });
+
+    return <div>{items}</div>;
+  }
 }

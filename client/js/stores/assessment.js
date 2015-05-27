@@ -31,8 +31,10 @@ function parseAssessmentResult(result){
 }
 
 function checkAnswer(){
-  console.log(_selectedAnswerId);
-  return Assessment.checkAnswer(_assessmentXml, _selectedAnswerId, _selectedConfidenceLevel, _items[_itemIndex].question_type);
+  if(_selectedAnswerId !== null)
+    return Assessment.checkAnswer(_assessmentXml, _selectedAnswerId, _selectedConfidenceLevel, _items[_itemIndex].question_type);
+  else 
+    return null;
 }
 
 // Extend User Store with EventEmitter to add eventing capabilities
@@ -115,9 +117,9 @@ Dispatcher.register(function(payload) {
 
     case Constants.ASSESSMENT_CHECK_ANSWER:
       var answer = checkAnswer();
-      if(answer.correct)
+      if(answer != null && answer.correct)
         _answerMessageIndex = 1;
-      else
+      else if (answer != null && !answer.correct)
         _answerMessageIndex = 0;
       break;
 

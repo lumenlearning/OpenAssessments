@@ -84,6 +84,9 @@ export default class Assessment{
       case 'multiple_choice_question':
         results = this.checkMultipleChoiceAnswer(assessmentXml, selectedAnswerId);
         break;
+      case 'true_false_question':
+        results = this.checkMultipleChoiceAnswer(assessmentXml, selectedAnswerId);
+        break;
       case 'edx_drag_and_drop':
         results = this.checkEdXDragAndDrop();
         break;
@@ -123,7 +126,7 @@ export default class Assessment{
     var feedbacks = [];
     var correct = false;
     var respconditions = xml.find('respcondition');
-    
+    debugger;
     for (var i =0; i<respconditions.length; i++){
       var condition = respconditions[i];
       condition = $(condition);
