@@ -45,7 +45,7 @@ export default class Item extends BaseComponent{
         item = <QtiTrueFalse items={this.props.question.answers} />;
         break;
       case 'text_only_question':
-        item = <QtiTextOnly items={this.props.question.answers} />;
+        item = <QtiTextOnly items={this.props.question} />;
         break;
       // case 'edx_drag_and_drop':
       //   item = this.checkEdXDragAndDrop();

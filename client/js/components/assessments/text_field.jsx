@@ -3,11 +3,10 @@
 import React			from 'react';
 
 export default class TextField extends React.Component{
-
-	render(){
+	render(){ //Placeholder, I want a canvas text block here
 		return(
 			<div >
-				<input type="text" value={this.props.item.id} name={this.props.item.name} />
+				<input type="text" value="PlaceHolder" />
 			</div>
 		);
 	}

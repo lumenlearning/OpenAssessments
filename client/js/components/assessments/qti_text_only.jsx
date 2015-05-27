@@ -1,9 +1,11 @@
 "use strict";
 
 import React        from "react";
+import TextField		from "./text_field"
 
 export default class QtiTextOnly extends React.Component{
-	static render(){
+
+	render(){
 		return <TextField />;
-	};
+	}
 }
