@@ -17,6 +17,8 @@ secrets.js
 
 # TODO Comment out these rules if you are OK with secrets being uploaded to the repo
 config/secrets.yml
+config/database.yml
+bin/deploy
 
 ## Environment normalisation:
 /.bundle
@@ -33,6 +35,9 @@ config/secrets.yml
 *.bowerrc
 bower.json
 
+OpenAssessments.zip
 client/node_modules
 npm-debug.log
 /app/assets/javascripts/styles.css
+
+public/assets

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Meant to be run from root directory of project
+# ./bin/bootstrap
+DROPBOX_FOLDER=aj-dev/OpenAssessments
+
+# All config files for project
+files=("bin/deploy" "config/secrets.yml" "config/database.yml")
+
+for file in "${files[@]}"
+do
+  if [ -e $file ]
+  then
+    rm $file
+  fi
+  ln -s "$HOME/Dropbox/$DROPBOX_FOLDER/$file" $file
+done
