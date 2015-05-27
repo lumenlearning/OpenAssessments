@@ -20,6 +20,7 @@ export default {
   ASSESSMENT_CHECK_ANSWER: "assessment_check_answer",
   ASSESSMENT_VIEWED: "assessment_viewed",
   ANSWER_SELECTED: "answer_selected",
+  CLEAR_SELECTED_ANSWERS: "clear_selected_answers",
 
   ADD_MESSAGE: "add_message",
   REMOVE_MESSAGE: "remove_message",

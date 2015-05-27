@@ -7,7 +7,7 @@ export default class QtiMultipleChoice extends React.Component{
 
   render(){
     var items = this.props.items.map((item) => {
-      return <RadioButton item={item}/>;
+      return <RadioButton item={item} name="answer-radio"/>;
     });
 
     return <div>{items}</div>;

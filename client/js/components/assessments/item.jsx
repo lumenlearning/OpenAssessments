@@ -6,7 +6,14 @@ import AssessmentActions  from "../../actions/assessment";
 import QtiMultipleChoice  from "./qti_multiple_choice";
 
 export default class Item extends BaseComponent{
-  
+  nextButtonClicked(){
+    AssessmentActions.nextQuestion();
+  }
+
+  previousButtonClicked(){
+    AssessmentActions.previousQuestion();
+  }
+
   render() {
     var item = "";
     var result = "";
@@ -85,10 +92,10 @@ export default class Item extends BaseComponent{
             </div>
           </form>
           <div className="nav_buttons">
-            <button className={prevButtonClassName} onClick={() => { AssessmentActions.previousQuestion() }}>
+            <button className={prevButtonClassName} onClick={() => { this.previousButtonClicked() }}>
               <i className="glyphicon glyphicon-chevron-left"></i> <span>Previous</span>
             </button>
-            <button className={nextButtonClassName} onClick={() => { AssessmentActions.nextQuestion() }}>
+            <button className={nextButtonClassName} onClick={() => { this.nextButtonClicked() }}>
               <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
             </button>
           </div>

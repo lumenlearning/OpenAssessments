@@ -31,6 +31,7 @@ function parseAssessmentResult(result){
 }
 
 function checkAnswer(){
+  console.log(_selectedAnswerId);
   return Assessment.checkAnswer(_assessmentXml, _selectedAnswerId, _selectedConfidenceLevel, _items[_itemIndex].question_type);
 }
 
@@ -136,19 +137,24 @@ Dispatcher.register(function(payload) {
 
     case Constants.ASSESSMENT_NEXT_QUESTION:
       // Will need to advance sections and items.
-      if(_itemIndex < _items.length - 1) 
+      if(_itemIndex < _items.length - 1){ 
         _itemIndex++;
+        _selectedAnswerId = null;
+        _answerMessageIndex = -1;  
+      }
       break;
 
     case Constants.ASSESSMENT_PREVIOUS_QUESTION:
-      if(_itemIndex > 0)
+      if(_itemIndex > 0){
         _itemIndex--;
+        _selectedAnswerId = null;
+        _answerMessageIndex = -1;
+      }
       break;
 
     case Constants.ANSWER_SELECTED:
         _selectedAnswerId = payload.selectedAnswerId;
       break;
-
 
     default:
       return true;

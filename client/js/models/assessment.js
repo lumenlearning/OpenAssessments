@@ -118,17 +118,21 @@ export default class Assessment{
   }
 
   static checkMultipleChoiceAnswer(xml, selectedAnswerId){
+
     var score = 0; // TODO we should get var names and types from the QTI. For now we just use the default 'score'
     var feedbacks = [];
     var correct = false;
-
-    $.each(xml.find('respcondition'), function(i, condition){
-
+    var respconditions = xml.find('respcondition');
+    
+    for (var i =0; i<respconditions.length; i++){
+      var condition = respconditions[i];
       condition = $(condition);
+      console.log(condition);
       var conditionMet = false;
-
+      
       if(condition.find('conditionvar > varequal').length){
         var varequal = condition.find('conditionvar > varequal');
+
         if(varequal.text() === selectedAnswerId){
           conditionMet = true;
         }
@@ -170,14 +174,21 @@ export default class Assessment{
             feedback.attr('view') === 'Candidate' ){  //All, Administrator, AdminAuthority, Assessor, Author, Candidate, InvigilatorProctor, Psychometrician, Scorer, Tutor
             var result = Qti.buildMaterial(feedback.find('material').children());
             if(feedbacks.indexOf(result) === -1){
-              feedbacks.pushObject(result);
+              feedbacks.push(result);
             }
           }
         }
       }
 
-      if(condition.attr('continue') === 'No'){ return false; }
-    });
+      if(correct){
+        return {
+          feedbacks: feedbacks,
+          score: score,
+          correct: correct
+        };
+      }
+      //if(condition.attr('continue') === 'No'){ return false; }
+    }
 
     return {
       feedbacks: feedbacks,

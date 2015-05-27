@@ -13,10 +13,15 @@ export default class RadioButton extends React.Component{
     return (
       <div className="btn btn-block btn-question">
         <label className="radio">
-          <input type="radio" value={this.props.item.id} name={this.props.item.name} onClick={()=>{ this.answerSelected() }}/>
+          <input type="radio" name={this.props.name} onClick={()=>{ this.answerSelected() }}/>
           {this.props.item.material}
         </label>
       </div>
     );
   }
 }
+
+RadioButton.propTypes = { 
+  item: React.PropTypes.object.isRequired,
+  name: React.PropTypes.string.isRequired
+};
