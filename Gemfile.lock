@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/atomicjolt/font_assets.git
+  revision: 9dcb8b367109098f4a5f12e34de20240fc19b2eb
+  specs:
+    font_assets (0.1.11)
+      rack
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -104,8 +111,6 @@ GEM
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.8)
-    font_assets (0.1.11)
-      rack
     formatador (0.2.5)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
@@ -377,7 +382,7 @@ DEPENDENCIES
   email_spec
   factory_girl_rails
   faker
-  font_assets
+  font_assets!
   groupdate
   guard-bundler
   guard-rails
