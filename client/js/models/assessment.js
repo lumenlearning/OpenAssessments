@@ -13,7 +13,6 @@ export default class Assessment{
     var assessmentXml   = xml.find('assessment').addBack('assessment');
     var questestinterop = xml.find('questestinterop').addBack('questestinterop');
     var sequential      = xml.find('sequential').addBack('sequential');
-    //debugger
     if(assessmentXml.length > 0 || questestinterop.length > 0){
       return this.parseQti(assessmentXml, xml);
     } else if(sequential.length > 0){
@@ -46,7 +45,7 @@ export default class Assessment{
       title    : sequential.attr('display_name'),
       standard : 'edX',
       sections : [],
-      items: [],
+      items: []
     };
 
     var baseUrl = url.substr(0, url.indexOf('sequential'));

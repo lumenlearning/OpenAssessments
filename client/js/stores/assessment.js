@@ -133,7 +133,6 @@ Dispatcher.register(function(payload) {
       if(payload.data.text && payload.data.text.length > 0){
         _assessmentResult = parseAssessmentResult(payload.data.text);
         _assessmentState = READY;
-        _assessmentViewed = true;
       }
       break;
 
