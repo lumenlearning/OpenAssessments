@@ -1,6 +1,6 @@
 import $     from 'jquery';
 import Utils from '../utils/utils';
-
+import Request       from "superagent";
 export default {
 
   // ////////////////////////////////////////////////////
@@ -28,10 +28,10 @@ export default {
     var responses = xml.find('customresponse');
     if(responses.length > 0){
       $.each(xml.find('customresponse'), function(i, x){
-        list.pushObject(klass.fromEdX(Utils.makeId(), x, question_type));
+        list.push(klass.fromEdX(Utils.makeId(), x, question_type));
       });
     } else {
-      list.pushObject(klass.fromEdX(Utils.makeId(), xml, question_type));
+      list.push(klass.fromEdX(Utils.makeId(), xml, question_type));
     }
     return list;
   },
@@ -52,8 +52,7 @@ export default {
 
   },
 
-  crawlEdX: function(children, baseUrl, callback){
-    var promises = [];
+  crawlEdX: function(children, baseUrl, settings, callback){
     $.each(children, function(i, child){
       var id = $(child).attr('url_name');
       if(id === undefined){ // Data is embedded in the document
@@ -61,17 +60,15 @@ export default {
         return callback(id, null, child);
       }
       var url = baseUrl + id + '.xml';
-      if(this.get('offline')){
+      if(settings.offline){
         var data = Utils.htmlDecodeWithRoot($('#' + id).html());
         callback(id, url, data);
       } else {
-        var promise = this.makeAjax(url, function(data){
+        this.makeAjax(url, function(data){
           callback(id, url, data);
         }.bind(this));
-        promises.push(promise);
       }
     }.bind(this));
-    return promises;
   },
 
   // Not all edX nodes will have a url_name or a valid id in which case we have 
@@ -92,7 +89,7 @@ export default {
   padArray: function(arrayProxy, children){
     $.each(children, function(i, child){
       var id = $(child).attr('url_name') || $(child).attr('id');
-      arrayProxy.pushObject(id);
+      arrayProxy.push(id);
     }.bind(this));
   },
 
@@ -110,9 +107,9 @@ export default {
   },
 
   makeAjax: function(url, callback, retried){
-    var promise = ajax.request(url);
-    promise.then(function(data){
-      callback(data);
+    var promise = Request.get(url)
+    .end(function(err, res){
+      callback(res);
     }.bind(this), function(result){
       if(!retried && Utils.getLocation(url).hostname != Utils.getLocation(location.href).hostname){
         this.makeAjax('/proxy?url=' + encodeURI(url), callback, true)

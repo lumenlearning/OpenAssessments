@@ -1,7 +1,10 @@
-import $          from 'jquery';
-import Utils      from '../utils/utils';
-import EdX        from './edx';
-import Qti        from './qti';
+import $                  from 'jquery';
+import Utils              from '../utils/utils';
+import EdX                from './edx';
+import Qti                from './qti';
+import EdXSection         from './edx_section';
+import EdXItem            from './edx_item';
+import AssessmentActions  from "../actions/assessment";
 
 export default class Assessment{
 
@@ -10,12 +13,12 @@ export default class Assessment{
     var assessmentXml   = xml.find('assessment').addBack('assessment');
     var questestinterop = xml.find('questestinterop').addBack('questestinterop');
     var sequential      = xml.find('sequential').addBack('sequential');
-
+    //debugger
     if(assessmentXml.length > 0 || questestinterop.length > 0){
       return this.parseQti(assessmentXml, xml);
     } else if(sequential.length > 0){
       return this.parseEdX(settings, sequential);
-    } else {
+    } else{
       return {
         error: "Open Assessments could not find valid QTI or EdX XML. Nothing will be rendered. Please verify that your XML meets one of these standards."
       };
@@ -41,37 +44,36 @@ export default class Assessment{
     var assessment = {
       id       : id,
       title    : sequential.attr('display_name'),
-      standard : 'edX'
+      standard : 'edX',
+      sections : [],
+      items: [],
     };
 
     var baseUrl = url.substr(0, url.indexOf('sequential'));
 
     var seqentialChildren = sequential.children();
     EdX.ensureIds('edx_sequential_', seqentialChildren);
-    EdX.padArray(this.get('sections'), seqentialChildren);
     
-    var promises = EdX.crawlEdX(sequential.children(), baseUrl + 'vertical/', function(id, url, data){
+    //EdX.padArray(sequential.get('sections'), seqentialChildren);
+    EdX.crawlEdX(sequential.children(), baseUrl + 'vertical/', settings, function(id, url, data){
       var section = EdXSection.fromEdX(id, url, data);
-
-      EdX.findAndSetObject(this.get('sections'), section);
-
-      var children = section.get('xml').children();
+      
+      //EdX.findAndSetObject(section.sections, section);
+      AssessmentActions.edXLoadSection(section);
+      var children = section.xml.children();
       EdX.ensureIds('edx_item_', children);
-      EdX.padArray(section.get('items'), children);
-      var sectionPromises = EdX.crawlEdX(children, baseUrl + 'problem/', function(id, url, data){
+      //EdX.padArray(section.get('items'), children);
+      EdX.crawlEdX(children, baseUrl + 'problem/', settings, function(id, url, data){
         var item = EdXItem.fromEdX(id, url, data);
-        if(item){
-          EdX.findAndSetObject(section.get('items'), item);
-        }
+        AssessmentActions.edXLoadItem(item);
       }.bind(this));
-      if(promises){
-        Ember.RSVP.Promise.all(promises.concat(sectionPromises)).then(function(){
-          this.trigger('loaded');
-        }.bind(this));
-      } else {
-        this.trigger('loaded');
-      }
+
+      // if(promises){
+      //   Promise.all(promises.concat(sectionPromises)).then(function(){
+
+      //   });      // }
     }.bind(this));
+    return assessment;
   }
 
   static checkAnswer(xml, selectedAnswerId, selectedConfidenceLevel, questionType){

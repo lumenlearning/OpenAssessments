@@ -26,6 +26,20 @@ export default {
     Api.get(Constants.ASSESSMENT_LOADED, settings.srcUrl);
   },
 
+  edXLoadSection(section){
+    console.log(section.xml)
+    Dispatcher.dispatch({action: Constants.EDX_LOAD_SECTION, section: section});
+  },
+
+  edXLoadItem(item){
+    console.log(item.xml);
+    Dispatcher.dispatch({action: Constants.EDX_LOAD_ITEM, item: item});
+  },
+
+  edXLoadAssessment(assessment){
+    Dispatcher.dispatch({action: Constants.EDX_LOAD_ASSESSMENT, assessment: assessment});
+  },
+
   answerSelected(selectedAnswerId){
     Dispatcher.dispatch({action: Constants.ANSWER_SELECTED, selectedAnswerId: selectedAnswerId});
   },

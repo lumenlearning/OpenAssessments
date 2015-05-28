@@ -21,6 +21,9 @@ export default {
   ASSESSMENT_VIEWED: "assessment_viewed",
   ANSWER_SELECTED: "answer_selected",
   CLEAR_SELECTED_ANSWERS: "clear_selected_answers",
+  EDX_LOAD_SECTION: "edx_load_section",
+  EDX_LOAD_ITEM: "edx_load_item",
+  EDX_LOAD_ASSESSMENT: "edx_load_assessment",
 
   ADD_MESSAGE: "add_message",
   REMOVE_MESSAGE: "remove_message",

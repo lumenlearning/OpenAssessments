@@ -6,6 +6,7 @@ import Utils          from "../utils/utils";
 import StoreCommon    from "./store_common";
 import assign         from "object-assign";
 import Assessment     from "../models/assessment";
+import SettingsStore  from "./settings"
 
 const INVALID = -1;
 const NOT_LOADED = 0;
@@ -101,7 +102,7 @@ Dispatcher.register(function(payload) {
       if(payload.data.text){
         var text = payload.data.text.trim();
         if(text.length > 0){
-          _assessment = Assessment.parseAssessment(payload.settings, text);
+          _assessment = Assessment.parseAssessment(SettingsStore.current(), text);
           _assessmentXml = text;
           if( _assessment && 
               _assessment.sections && 
@@ -156,6 +157,19 @@ Dispatcher.register(function(payload) {
     case Constants.ANSWER_SELECTED:
         _selectedAnswerId = payload.selectedAnswerId;
       break;
+
+    case Constants.EDX_LOAD_SECTION:
+      if(_assessment){
+        _assessment.section = [];
+        _assessment.section.push(payload.section);
+      }
+      break;
+    case Constants.EDX_LOAD_ITEM:
+      if(_assessment){
+        _assessment.items.push(payload.item);
+      }
+      break;
+
 
     default:
       return true;
