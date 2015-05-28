@@ -4,7 +4,6 @@ import React              from 'react';
 import BaseComponent      from "../base_component";
 import AssessmentActions  from "../../actions/assessment";
 import QtiMultipleChoice  from "./qti_multiple_choice";
-import QtiTrueFalse       from "./qti_true_false";
 import QtiTextOnly        from "./qti_text_only";
 import QtiDragAndDrop     from "./qti_drag_and_drop"
 
@@ -42,7 +41,7 @@ export default class Item extends BaseComponent{
         item = <QtiMultipleChoice items={this.props.question.answers} />;
         break;
       case 'true_false_question':
-        item = <QtiTrueFalse items={this.props.question.answers} />;
+        item = <QtiMultipleChoice items={this.props.question.answers} />;
         break;
       case 'text_only_question':
         item = <QtiTextOnly items={this.props.question} />;
@@ -114,7 +113,6 @@ export default class Item extends BaseComponent{
 Item.propTypes = { 
   question         : React.PropTypes.object.isRequired,
   currentIndex     : React.PropTypes.number.isRequired,
-  settings         : React.PropTypes.object.isRequired,
   questionCount    : React.PropTypes.number.isRequired,
   messageIndex     : React.PropTypes.number.isRequired
 };

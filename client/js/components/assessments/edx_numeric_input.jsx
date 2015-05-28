@@ -49,6 +49,8 @@ export default class EdxNumericInput extends React.Component{
       </div>
     );
   }
-
-
 }
+
+EdxNumericInput.propTypes = {
+  item: React.PropTypes.object.isRequired
+};

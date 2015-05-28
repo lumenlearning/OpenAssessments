@@ -25,3 +25,7 @@ export default class CheckUnderstanding extends React.Component{
   }
 
 }
+
+CheckUnderstanding.propTypes = {
+  name: React.PropTypes.string.isRequired
+};

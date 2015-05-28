@@ -41,3 +41,7 @@ export default class EdxMultipleChoice extends React.Component{
             </div>
   }
 }
+
+EdxMultipleChoice.propTypes = {
+  item: React.PropTypes.object.isRequired
+};

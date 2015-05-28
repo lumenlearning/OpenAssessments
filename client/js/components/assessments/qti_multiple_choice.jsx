@@ -13,3 +13,6 @@ export default class QtiMultipleChoice extends React.Component{
     return <div>{items}</div>;
   }
 }
+QtiMultipleChoice.propTypes = {
+  items: React.PropTypes.array.isRequired
+};
