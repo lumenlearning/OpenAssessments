@@ -52,7 +52,7 @@ export default React.createClass({
   render: function(){
     return (<div className="login-screen">
       <Paper className="login-paper">
-        <form action="/login" method="post" onSubmit={this.handleLogin}>
+        <form action="/login" method="post" onSubmit={onSubmit={(e) => this.handleLogin(e)}}>
           <h4>Login</h4>
 
           <TextField hintText="johndoe@example.com" floatingLabelText="Email" ref="email" onBlur={this.validateEmail} errorText={this.state.validations.email} />

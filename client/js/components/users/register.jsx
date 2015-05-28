@@ -71,7 +71,7 @@ export default React.createClass({
     return (<div>
       <Paper className="register-paper">
         <h1><span className="fa fa-sign-in"></span> Signup</h1>
-        <form action="/signup" method="post" onSubmit={this.handleRegister}>
+        <form action="/signup" method="post" onSubmit={onSubmit={(e) => this.handleRegister(e)}}>
           <TextField hintText="johndoe@example.com" floatingLabelText="Email" errorText={this.state.validations.email} ref="email" onBlur={this.validateEmail} />
           <TextField type="password" hintText="******" floatingLabelText="Password" errorText={this.state.validations.password} ref="password" onBlur={this.validatePassword} />
           <TextField type="password" hintText="******" floatingLabelText="Confirm Password"  errorText={this.state.validations.confirmPassword} ref="confirmPassword" onBlur={this.validateConfirmPassword} />
