@@ -6,7 +6,7 @@ import AssessmentActions  from "../../actions/assessment";
 import QtiMultipleChoice  from "./qti_multiple_choice";
 import QtiTrueFalse       from "./qti_true_false";
 import QtiTextOnly        from "./qti_text_only";
-import QtiDragAndDrop        from "./qti_drag_and_drop"
+import QtiDragAndDrop     from "./qti_drag_and_drop"
 
 export default class Item extends BaseComponent{
   nextButtonClicked(){
@@ -20,7 +20,6 @@ export default class Item extends BaseComponent{
   render() {
     var item = "";
     var result = "";
-//debugger;
 
     if(this.props.messageIndex == -1){
       result =  <div className="check_answer_result">
