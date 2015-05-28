@@ -6,6 +6,10 @@ import { Paper, FlatButton, RaisedButton, FontIcon, Dialog, DropDownMenu, TextFi
 import AdminActions                                                                       from "../../actions/admin";
 
 export default React.createClass({
+
+  propTypes:{
+    user: React.PropTypes.object.isRequired
+  },
   
   editButtonClicked(){
     // open dialog to edit information 

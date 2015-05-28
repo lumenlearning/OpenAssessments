@@ -17,7 +17,7 @@ var adminRoutes = (
   <Route handler={AdminPage}>
     <DefaultRoute name="dashboard" handler={AccountSelection}/>
   	<Route name="login" handler={Login}/>
-    <Route name="account" path="/account/:accountId" handler={Account}/>
+
     <Route name="account" path="/account/:accountId" handler={AccountDashboard}/>
     <Route name="users-list" path="/users/:accountId" handler={UsersList}/>
     <Route name="logout" path="/logout/" handler={Logout}/>

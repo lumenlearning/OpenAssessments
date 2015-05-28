@@ -13,6 +13,10 @@ import AccountsStore                                                            
 
 export default React.createClass({
 
+  propTypes:{
+    params: React.PropTypes.object.isRequired
+  },
+
   getState(){
     return {
       users: AccountsStore.currentUsers(),
@@ -49,7 +53,7 @@ export default React.createClass({
       accountDashboard: {
         marginLeft: "300px"
       }
-    }
+    };
 
     return (
       <div style={styles.accountDashboard}>

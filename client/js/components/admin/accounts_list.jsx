@@ -5,7 +5,12 @@ import User                         from "../../stores/user";
 import {Link}                       from "react-router";
 import { Menu, Paper }              from "material-ui";
 import AdminActions                 from "../../actions/admin";
+
 export default React.createClass({
+
+  propTypes:{
+    menuItems: React.PropTypes.array.isRequired
+  },
 
   // There is a better way to do this.
   handleClick(e, key, payload){

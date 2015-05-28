@@ -14,6 +14,10 @@ import AccountsStore                                                            
 import EditUserForm                                                                     from "./edit_user_form";
 
 export default React.createClass({
+
+  propTypes:{
+    params: React.PropTypes.object.isRequired
+  },
  
   getState(){
     return {
