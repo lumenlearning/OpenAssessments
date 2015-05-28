@@ -20,7 +20,7 @@ export default class Item extends BaseComponent{
   render() {
     var item = "";
     var result = "";
-debugger;
+//debugger;
 
     if(this.props.messageIndex == -1){
       result =  <div className="check_answer_result">
