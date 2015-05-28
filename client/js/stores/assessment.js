@@ -143,7 +143,7 @@ Dispatcher.register(function(payload) {
         _itemIndex++;
         _selectedAnswerId = null;
         _answerMessageIndex = -1;  
-      }
+      } 
       break;
 
     case Constants.ASSESSMENT_PREVIOUS_QUESTION:
@@ -159,10 +159,7 @@ Dispatcher.register(function(payload) {
       break;
 
     case Constants.EDX_LOAD_SECTION:
-      if(_assessment){
-        _assessment.section = [];
-        _assessment.section.push(payload.section);
-      }
+        _items.push(payload.item)
       break;
     case Constants.EDX_LOAD_ITEM:
       if(_assessment){

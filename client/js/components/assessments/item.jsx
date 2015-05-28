@@ -5,7 +5,8 @@ import BaseComponent      from "../base_component";
 import AssessmentActions  from "../../actions/assessment";
 import QtiMultipleChoice  from "./qti_multiple_choice";
 import QtiTextOnly        from "./qti_text_only";
-import QtiDragAndDrop     from "./qti_drag_and_drop"
+import QtiDragAndDrop     from "./qti_drag_and_drop";
+import EdXMultipleChoice  from "./edx_multiple_choice";
 
 export default class Item extends BaseComponent{
   nextButtonClicked(){
@@ -13,6 +14,7 @@ export default class Item extends BaseComponent{
   }
 
   previousButtonClicked(){
+
     AssessmentActions.previousQuestion();
   }
 
@@ -49,18 +51,18 @@ export default class Item extends BaseComponent{
       case 'drag_and_drop':
         item = <QtiDragAndDrop items={this.props.question} />;
         break;
-      // case 'edx_drag_and_drop':
-      //   item = <EdxDragAndDrop items={this.props.question} />;
-      //   break;
-      // case 'edx_text_input':
-      //   item = this.checkEdXMultipleChoice();
-      //   break;
-      // case 'edx_dropdown':
-      //   item = this.checkEdXMultipleChoice();
-      //   break;
-      // case 'edx_multiple_choice':
-      //   item = this.checkEdXMultipleChoice();
-      //   break;
+      case 'edx_drag_and_drop':
+        item = <div>Hello</div>;
+        break;
+      case 'edx_text_input':
+        item = <div>Hello Text</div>;
+        break;
+      case 'edx_dropdown':
+        item = <div>Hello dropdown</div>
+        break;
+      case 'edx_multiple_choice':
+        item = <QtiMultipleChoice items={this.props.question.answers}/>
+        break;
     }
 
     var prevButtonClassName = "btn btn-prev-item " + ((this.props.currentIndex > 0) ? "" : "disabled");
