@@ -6,7 +6,6 @@ import RadioButton  from "./radio_button";
 export default class QtiMultipleChoice extends React.Component{
 
   render(){
-    debugger;
     var items = this.props.items.map((item) => {
       return <RadioButton item={item} name="answer-radio"/>;
     });

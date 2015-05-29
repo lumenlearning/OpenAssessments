@@ -58,10 +58,10 @@ export default class Item extends BaseComponent{
         item = <div>Hello Text</div>;
         break;
       case 'edx_dropdown':
-        item = <div>Hello dropdown</div>
+        item = <div>Hello dropdown</div>;
         break;
       case 'edx_multiple_choice':
-        item = <QtiMultipleChoice items={this.props.question.answers}/>
+        item = <QtiMultipleChoice items={this.props.question.answers}/>;
         break;
     }
 
