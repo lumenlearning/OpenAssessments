@@ -36,8 +36,7 @@ export default class EdxNumericInput extends React.Component{
     //                </div>
     //              </div>);
     //}
-    var answers = this.props.item.answers.toArray();
-    var items = answers.map((item) => {
+    var items = this.props.item.answers.map((item) => {
       return <TextField item={item} name="answer-radio"/>;
     });
 

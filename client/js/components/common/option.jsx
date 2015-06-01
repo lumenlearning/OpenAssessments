@@ -8,10 +8,17 @@ export default class Option extends React.Component{
 	answerSelected(){
 		AssessmentActions.answerSelected(this.props.item.id);
 	}
+
 	render(){
+
+		var materialItems = this.props.item.material.map((mat) =>{
+					return <option value={mat} name={this.props.name}>{mat}</option>;
+				});
 			return(
 			<div>
-					<option value={this.props.item} onClick={()=>{ this.answerSelected() }} >{this.props.item}</option>
+				<select>	
+					{materialItems}
+				</select>
 			</div>
 		);
 	}

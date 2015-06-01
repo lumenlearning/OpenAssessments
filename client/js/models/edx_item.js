@@ -16,7 +16,10 @@ export default class EdXItem{
         answers  : [] 
       };
       item.question_type = EdX.questionType(xml);
-      item.answers = EdXItem.parseAnswers(xml, item.question_type);
+      var answers = EdXItem.parseAnswers(xml, item.question_type);
+      if(answers)
+        item.answers = answers.toArray();
+
       return item;
     } else {
       return null;
@@ -49,6 +52,7 @@ export default class EdXItem{
       answers = xml.find('optionresponse').map((index, item) =>{
         var matStr = item.getElementsByTagName('optioninput')[0].getAttribute('options').replace(/[()']/g, "");
         var matArr = matStr.split(",");
+        
         return{
           id       : index,
           material : matArr,
