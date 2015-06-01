@@ -12,7 +12,7 @@ export default class RadioButton extends React.Component{
   render(){
     return (
       <div className="btn btn-block btn-question">
-        <label className="radio">
+        <label>
           <input type="radio" name={this.props.name} onClick={()=>{ this.answerSelected() }}/>
           {this.props.item.material}
         </label>

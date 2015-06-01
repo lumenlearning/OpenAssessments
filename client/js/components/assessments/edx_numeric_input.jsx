@@ -14,28 +14,28 @@ export default class EdxNumericInput extends React.Component{
 
   render(){
     var messages = '';
-    //if (this.props.item.messages.length) {
-		//
-    //  var renderedMessages = this.props.item.messages.map(function(message){
-    //    return (<li>{message}</li>);
-    //  });
-		//
-    //  messages =  (<div className="panel-messages alert alert-danger" role="alert">
-    //                <ul>
-    //                  {renderedMessages}
-    //                </ul>
-    //              </div>);
-    //}
+    if (this.props.item.messages) {
+		
+     var renderedMessages = this.props.item.messages.map(function(message){
+       return (<li>{message}</li>);
+     });
+		
+     messages =  (<div className="panel-messages alert alert-danger" role="alert">
+                   <ul>
+                     {renderedMessages}
+                   </ul>
+                 </div>);
+    }
 
     var solution = '';
 
-    //if (this.props.item.isGraded) {
-    //  solution = (<div className="panel-footer text-center">
-    //                <div className="solution">
-    //                  {this.props.item.solution}
-    //                </div>
-    //              </div>);
-    //}
+    if (this.props.item.isGraded && this.props.item.solution) {
+     solution = (<div className="panel-footer text-center">
+                   <div className="solution">
+                     {this.props.item.solution}
+                   </div>
+                 </div>);
+    }
     var items = this.props.item.answers.map((item) => {
       return <TextField item={item} name="answer-radio"/>;
     });

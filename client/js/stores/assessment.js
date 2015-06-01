@@ -158,6 +158,7 @@ Dispatcher.register(function(payload) {
       break;
 
     case Constants.EDX_LOAD_SECTION:
+      if(_assessment)
         _assessment.sections.push(payload.item)
       break;
     case Constants.EDX_LOAD_ITEM:
