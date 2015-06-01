@@ -13,9 +13,9 @@ export default class EdXItem{
         xml      : xml,
         standard : 'edX',
         material : xml.find('choicegroup').attr('label'),
-        answers  : EdXItem.parseAnswers(xml)
+        answers  : [] 
       };
-
+      item.answers = EdXItem.parseAnswers(xml);
       item.question_type = EdX.questionType(xml);
 
       return item;

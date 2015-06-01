@@ -45,7 +45,6 @@ export default class Assessment{
       title    : sequential.attr('display_name'),
       standard : 'edX',
       sections : [],
-      items: []
     };
 
     var baseUrl = url.substr(0, url.indexOf('sequential'));

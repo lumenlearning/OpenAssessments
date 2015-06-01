@@ -55,7 +55,6 @@ export default class Assessment extends BaseComponent{
         questionCount    = {this.state.questionCount}
         assessmentResult = {this.state.assessmentResult}
         messageIndex     = {this.state.messageIndex} />;
-
       // TODO figure out when to mark an item as viewed. assessmentResult must be valid before this call is made.
       // AssessmentActions.itemViewed(this.state.settings, this.state.assessment, this.state.assessmentResult);
     }
