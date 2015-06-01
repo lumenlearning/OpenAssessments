@@ -53,19 +53,17 @@ describe('assessment', () => {
   describe('parseEdX', () => {
     
     it('parses assessment xml from EdX into an object', () => {
-      var sequential = readFixtures("edXCourse/sequential/97cc2d1812204294b5fcbb91a1157368.xml");
+      settings = {
+        srcUrl: "edXCourse/sequential/97cc2d1812204294b5fcbb91a1157368.xml"
+      };
+      var sequential = $(readFixtures("edXCourse/sequential/97cc2d1812204294b5fcbb91a1157368.xml"));
       var assessment = Assessment.parseEdX(settings, sequential);
 
       expect(assessment).toBeDefined();
-      expect(assessment.id).toEqual("ib8d9c142765b2287684aad0b5387e45b");
-      expect(assessment.title).toEqual("MIT Questions 1");
-      expect(assessment.standard).toEqual("qti");
+      expect(assessment.id).toEqual("sequential/97cc2d1812204294b5fcbb91a1157368");
+      expect(assessment.title).toEqual("Subsection One");
+      expect(assessment.standard).toEqual("edX");
       expect(assessment.sections.length).toEqual(1);
-      expect(assessment.sections[0].items.length).toEqual(10);
-      var item = assessment.sections[0].items[0];
-      expect(item.assessment_question_identifierref).toEqual("icee9d09b0a2ace374f01019034d68155");
-      expect(item.id).toEqual("i3590da31ca486c260f96e955482aca41");
-      expect(item.title).toEqual("1.1 Exercise 2.");
     });
   });
 

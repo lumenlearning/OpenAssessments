@@ -76,11 +76,12 @@ export default class Edx {
   // no way to identify them in the idPlaceholders method. This method can be called to
   // ensure the child nodes have a valid id that can be used to identify them later on.
   static ensureIds(prefix, children){
-    $.each(children, function(i, child){
-      var id = $(child).attr('url_name') || $(child).attr('id');
+    return $(children).map((i, child) => {
+      var id = this.getId(child);
       if(!id){
         $(child).attr('id', prefix + i);
       }
+      return child;
     });
   }
 
@@ -88,9 +89,13 @@ export default class Edx {
   // the same way every time. Create placeholders that can later be used
   // to correctly order the children after their promises return.
   static idPlaceholders(children){
-    return children.map(function(child){
-      return $(child).attr('url_name') || $(child).attr('id');
+    return $(children).map((i, child) => {
+      return this.getId(child);
     });
+  }
+
+  static getId(child){
+    return $(child).attr('url_name') || $(child).attr('id');
   }
 
   // Find and set obj in the arrayProxy. This searches arrayProxy for an id

@@ -43,18 +43,16 @@ export default class Assessment{
     var assessment = {
       id       : id,
       title    : sequential.attr('display_name'),
-      standard : 'edX',
-      sections : [],
+      standard : 'edX'
     };
 
-    var baseUrl = url.substr(0, url.indexOf('sequential'));
-
-    var seqentialChildren = sequential.children();
-    EdX.ensureIds('edx_sequential_', seqentialChildren);
-    
     // Add ids for the sections before returning the assessment so that we can order them
-    assessment.sections = EdX.idPlaceholders(seqentialChildren);
+    assessment.sections = EdX.idPlaceholders(
+      // Ensure every child has an id
+      EdX.ensureIds('edx_sequential_', sequential.children())
+    );
 
+    var baseUrl = url.substr(0, url.indexOf('sequential'));
     EdX.crawlEdX(sequential.children(), baseUrl + 'vertical/', settings, function(id, url, data){
       var section = EdXSection.fromEdX(id, url, data);
       
