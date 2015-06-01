@@ -1,12 +1,13 @@
-import $     from 'jquery';
-import Utils from '../utils/utils';
-import Request       from "superagent";
-export default {
+import $            from 'jquery';
+import Utils        from '../utils/utils';
+import Request      from "superagent";
+
+export default class Edx {
 
   // ////////////////////////////////////////////////////
   // Problem (Item) functionality
   //
-  buildProblemMaterial: function(xml){
+  static buildProblemMaterial(xml){
     if(this.questionType(xml) == 'edx_numerical_input'){
       return null; // Numeric input will handle all question rendering
     }
@@ -21,9 +22,9 @@ export default {
     contents.find('answer').remove();
     contents.find('drag_and_drop_input').remove();
     return contents.html();
-  },
+  }
 
-  answersFromProblem: function(xml, klass, question_type){
+  static answersFromProblem(xml, klass, question_type){
     var list = Ember.A();
     var responses = xml.find('customresponse');
     if(responses.length > 0){
@@ -34,9 +35,9 @@ export default {
       list.push(klass.fromEdX(Utils.makeId(), xml, question_type));
     }
     return list;
-  },
+  }
 
-  questionType: function(xml){
+  static questionType(xml){
 
     if(xml.find('drag_and_drop_input').length > 0){
       return 'edx_drag_and_drop';
@@ -50,9 +51,9 @@ export default {
       return 'edx_text_input';
     }
 
-  },
+  }
 
-  crawlEdX: function(children, baseUrl, settings, callback){
+  static crawlEdX(children, baseUrl, settings, callback){
     $.each(children, function(i, child){
       var id = $(child).attr('url_name');
       if(id === undefined){ // Data is embedded in the document
@@ -69,33 +70,32 @@ export default {
         }.bind(this));
       }
     }.bind(this));
-  },
+  }
 
   // Not all edX nodes will have a url_name or a valid id in which case we have 
-  // no way to identify them in the padArray method. This method can be called to
+  // no way to identify them in the idPlaceholders method. This method can be called to
   // ensure the child nodes have a valid id that can be used to identify them later on.
-  ensureIds: function(prefix, children){
+  static ensureIds(prefix, children){
     $.each(children, function(i, child){
       var id = $(child).attr('url_name') || $(child).attr('id');
       if(!id){
         $(child).attr('id', prefix + i);
       }
     });
-  },
+  }
 
   // The children are loaded asyncronously but need to be ordered
   // the same way every time. Create placeholders that can later be used
   // to correctly order the children after their promises return.
-  padArray: function(arrayProxy, children){
-    $.each(children, function(i, child){
-      var id = $(child).attr('url_name') || $(child).attr('id');
-      arrayProxy.push(id);
-    }.bind(this));
-  },
+  static idPlaceholders(children){
+    return children.map(function(child){
+      return $(child).attr('url_name') || $(child).attr('id');
+    });
+  }
 
   // Find and set obj in the arrayProxy. This searches arrayProxy for an id
   // that matches the obj's id and replaces it with the obj.
-  findAndSetObject: function(arrayProxy, obj){
+  static findAndSetObject(arrayProxy, obj){
     var idx = arrayProxy.indexOf(obj.get('id'));
     if(idx >= 0){
       arrayProxy.removeAt(idx);
@@ -104,9 +104,9 @@ export default {
     } else {
       return false;
     }
-  },
+  }
 
-  makeAjax: function(url, callback, retried){
+  static makeAjax(url, callback, retried){
     var promise = Request.get(url)
     .end(function(err, res){
       callback(res);
@@ -121,4 +121,4 @@ export default {
     return promise;
   }
 
-};
+}
