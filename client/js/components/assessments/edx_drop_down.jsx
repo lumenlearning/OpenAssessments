@@ -1,7 +1,7 @@
 "use strict";
 
 import React			from 'react';
-import Option		from './option.jsx';
+import Option		from './../common/option.jsx';
 
 export default class EdxDropDown extends React.Component{
 

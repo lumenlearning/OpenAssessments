@@ -7,7 +7,8 @@ export default class TextField extends React.Component{
 	render(){
 		return(
 			<div>
-				<textarea className="form-control" rows="4"></textarea>
+			  {this.props.item.material}
+				<input type="text" className="form-control" />
 			</div>
 		);
 	}

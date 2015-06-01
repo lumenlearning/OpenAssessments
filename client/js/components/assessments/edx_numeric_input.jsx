@@ -1,7 +1,8 @@
-"use strict()";
+"use strict";
 
-import React from 'react';
-import Store from '../../stores/assessment';
+import React      from 'react';
+import Store      from '../../stores/assessment';
+import TextField  from '../common/text_field'
 
 export default class EdxNumericInput extends React.Component{
 
@@ -13,28 +14,32 @@ export default class EdxNumericInput extends React.Component{
 
   render(){
     var messages = '';
-    if (this.props.item.messages.length) {
-
-      var renderedMessages = this.props.item.messages.map(function(message){
-        return (<li>{message}</li>);
-      });
-
-      messages =  (<div className="panel-messages alert alert-danger" role="alert">
-                    <ul>
-                      {renderedMessages}
-                    </ul>
-                  </div>);
-    }
+    //if (this.props.item.messages.length) {
+		//
+    //  var renderedMessages = this.props.item.messages.map(function(message){
+    //    return (<li>{message}</li>);
+    //  });
+		//
+    //  messages =  (<div className="panel-messages alert alert-danger" role="alert">
+    //                <ul>
+    //                  {renderedMessages}
+    //                </ul>
+    //              </div>);
+    //}
 
     var solution = '';
 
-    if (this.props.item.isGraded) {
-      solution = (<div className="panel-footer text-center">
-                    <div className="solution">
-                      {this.props.item.solution}
-                    </div>
-                  </div>);
-    }
+    //if (this.props.item.isGraded) {
+    //  solution = (<div className="panel-footer text-center">
+    //                <div className="solution">
+    //                  {this.props.item.solution}
+    //                </div>
+    //              </div>);
+    //}
+    var answers = this.props.item.answers.toArray();
+    var items = answers.map((item) => {
+      return <TextField item={item} name="answer-radio"/>;
+    });
 
     return (
       <div className="panel-messages-container panel panel-default">
@@ -43,7 +48,7 @@ export default class EdxNumericInput extends React.Component{
           {messages}
         </div>
         <div className="panel-body">
-          {this.props.item.question}
+          {items}
         </div>
         {solution}
       </div>

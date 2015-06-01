@@ -1,7 +1,7 @@
 "use strict";
 
 import React        from "react";
-import RadioButton  from "./radio_button";
+import RadioButton  from "./../common/radio_button";
 
 export default class QtiMultipleChoice extends React.Component{
 

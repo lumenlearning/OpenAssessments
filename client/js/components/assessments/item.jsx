@@ -8,6 +8,7 @@ import QtiTextOnly        from "./qti_text_only";
 import QtiDragAndDrop     from "./qti_drag_and_drop";
 import EdXMultipleChoice  from "./edx_multiple_choice";
 import EdxDropDown        from "./edx_drop_down.jsx";
+import EdxNumericInput    from'./edx_numeric_input.jsx'
 
 export default class Item extends BaseComponent{
   nextButtonClicked(){
@@ -59,11 +60,15 @@ export default class Item extends BaseComponent{
         item = <div>Hello Text</div>;
         break;
       case 'edx_drop_down':
-        item = <EdxDropDown items={this.props.question.answers} />;
+        //item = <EdxDropDown items={this.props.question.answers} />;
+        item = <div>Hello Text</div>;
         break;
       case 'edx_multiple_choice':
         var items= this.props.question.answers.toArray();
         item = <QtiMultipleChoice items={items}/>;
+        break;
+      case 'edx_numerical_input':
+        item = <EdxNumericInput item={this.props.question} />;
         break;
     }
 
