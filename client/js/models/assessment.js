@@ -52,7 +52,9 @@ export default class Assessment{
     var seqentialChildren = sequential.children();
     EdX.ensureIds('edx_sequential_', seqentialChildren);
     
-    //EdX.padArray(sequential.get('sections'), seqentialChildren);
+    // Add ids for the sections before returning the assessment so that we can order them
+    assessment.sections = EdX.idPlaceholders(seqentialChildren);
+
     EdX.crawlEdX(sequential.children(), baseUrl + 'vertical/', settings, function(id, url, data){
       var section = EdXSection.fromEdX(id, url, data);
       
@@ -60,16 +62,12 @@ export default class Assessment{
       AssessmentActions.edXLoadSection(section);
       var children = section.xml.children();
       EdX.ensureIds('edx_item_', children);
-      //EdX.padArray(section.get('items'), children);
+      //EdX.idPlaceholders(section.get('items'), children);
       EdX.crawlEdX(children, baseUrl + 'problem/', settings, function(id, url, data){
         var item = EdXItem.fromEdX(id, url, data);
         AssessmentActions.edXLoadItem(item);
       }.bind(this));
 
-      // if(promises){
-      //   Promise.all(promises.concat(sectionPromises)).then(function(){
-
-      //   });      // }
     }.bind(this));
     return assessment;
   }
