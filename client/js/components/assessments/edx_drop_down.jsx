@@ -6,9 +6,12 @@ import Option		from './../common/option.jsx';
 export default class EdxDropDown extends React.Component{
 
 	render(){
-		debugger;
-		var items = this.props.items.map((item) => {
-			return <Option item={item} name="answer-option"/>;
+		var answers = this.props.items.toArray();
+		var items = answers.map((item) => {
+			var materialItems = item.material.map((mats) =>{
+					return <Option item={mats} name="answer-option"/>;
+				});
+				return materialItems;
 		});
 		return <select>{items}</select>;
 	}

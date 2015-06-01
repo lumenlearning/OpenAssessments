@@ -17,7 +17,6 @@ export default class EdXItem{
       };
       item.question_type = EdX.questionType(xml);
       item.answers = EdXItem.parseAnswers(xml, item.question_type);
-
       return item;
     } else {
       return null;
@@ -47,6 +46,16 @@ export default class EdXItem{
         };
       });
     } else if(questionType == "edx_dropdown"){
+      answers = xml.find('optionresponse').map((index, item) =>{
+        var matStr = item.getElementsByTagName('optioninput')[0].getAttribute('options').replace(/[()']/g, "");
+        var matArr = matStr.split(",");
+        return{
+          id       : index,
+          material : matArr,
+          xml      : item,
+          correct  : item.getElementsByTagName("optioninput")[0].getAttribute('correct')
+        }
+      });
 
     } else if(questionType == "edx_text_input"){
       

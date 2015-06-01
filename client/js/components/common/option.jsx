@@ -8,11 +8,10 @@ export default class Option extends React.Component{
 	answerSelected(){
 		AssessmentActions.answerSelected(this.props.item.id);
 	}
-
 	render(){
-		return(
+			return(
 			<div>
-					<option value={this.props.item.value} onClick={()=>{ this.answerSelected() }} >{this.props.items.value}</option>
+					<option value={this.props.item} onClick={()=>{ this.answerSelected() }} >{this.props.item}</option>
 			</div>
 		);
 	}

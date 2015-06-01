@@ -59,9 +59,8 @@ export default class Item extends BaseComponent{
       case 'edx_text_input':
         item = <div>Hello Text</div>;
         break;
-      case 'edx_drop_down':
-        //item = <EdxDropDown items={this.props.question.answers} />;
-        item = <div>Hello Text</div>;
+      case 'edx_dropdown':
+        item = <EdxDropDown items={this.props.question.answers} />;
         break;
       case 'edx_multiple_choice':
         var items= this.props.question.answers.toArray();
