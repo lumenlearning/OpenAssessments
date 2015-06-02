@@ -41,7 +41,6 @@ export default class Item extends BaseComponent{
                 </div>;
     }
 
-
     item = <UniversalInput item={this.props.question} />;
 
     var prevButtonClassName = "btn btn-prev-item " + ((this.props.currentIndex > 0) ? "" : "disabled");

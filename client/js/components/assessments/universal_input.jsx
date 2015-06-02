@@ -75,5 +75,5 @@ export default class UniversalInput extends React.Component{
   }
 }
 UniversalInput.propTypes = {
-  item: React.PropTypes.array.isRequired
+  item: React.PropTypes.object.isRequired
 };

@@ -51,7 +51,7 @@ export default class QtiMultipleChoice extends React.Component{
               <div className="panel-body">
                 {material}
 
-                {items}  
+                {items}
               </div>
               {solution}
             </div>
