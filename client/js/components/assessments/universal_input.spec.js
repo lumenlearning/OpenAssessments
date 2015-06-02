@@ -56,7 +56,23 @@ describe('Assessment Questions -------------------------------------------------
     });
   });
 
-  xdescribe('Numerical Input', ()=>{});
+  describe('Numerical Input', ()=>{
+
+    beforeEach(()=>{
+      item.question_type = 'edx_numerical_input';
+      result = TestUtils.renderIntoDocument(<UniversalInput item={item} />);
+    });
+
+    it('Renders the question text', ()=>{
+      expect(React.findDOMNode(result).textContent).toContain(item.answers[0].material);
+      expect(React.findDOMNode(result).textContent).toContain(item.answers[1].material);
+    });
+
+    it('Renders the text input', ()=>{
+      expect(TestUtils.scryRenderedDOMComponentsWithTag(result, 'input')).toBeDefined();
+    });
+  });
+
   xdescribe('Text Input', ()=>{});
 
   describe('Drop Down', ()=>{
