@@ -3,12 +3,6 @@
 import React              from 'react';
 import BaseComponent      from "../base_component";
 import AssessmentActions  from "../../actions/assessment";
-import QtiMultipleChoice  from "./qti_multiple_choice";
-import QtiTextOnly        from "./qti_text_only";
-import QtiDragAndDrop     from "./qti_drag_and_drop";
-import EdXMultipleChoice  from "./edx_multiple_choice";
-import EdxDropDown        from "./edx_drop_down.jsx";
-import EdxNumericInput    from'./edx_numeric_input.jsx';
 import UniversalInput     from "./universal_input";
 
 export default class Item extends BaseComponent{

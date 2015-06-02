@@ -13,3 +13,6 @@ export default class TextField extends React.Component{
 		);
 	}
 }
+TextField.propTypes = {
+	item : React.PropTypes.object.isRequired
+};
