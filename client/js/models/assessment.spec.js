@@ -57,6 +57,27 @@ describe('assessment', () => {
       jasmine.Ajax.stubRequest('/edXCourse/vertical/04735103fe064c9da3a1a758bcda2692.xml').andReturn({
         "responseText": readFixtures("edXCourse/vertical/04735103fe064c9da3a1a758bcda2692.xml")
       });
+      jasmine.Ajax.stubRequest('/edXCourse/problem/1bdd2690346d437eacc85567ed79702f.xml'.andReturn({
+        "responseText": readFixtures('/edXCourse/problem/1bdd2690346d437eacc85567ed79702f.xml')
+      });
+      jasmine.Ajax.stubRequest('/edXCourse/problem/d0ef2adedeba45038d69b24517892d1d.xml'.andReturn({
+        "responseText": readFixtures('/edXCourse/problem/d0ef2adedeba45038d69b24517892d1d.xml')
+      });
+      jasmine.Ajax.stubRequest('/edXCourse/problem/78934fbb26f44b2b85d252a4f3c52d54.xml'.andReturn({
+        "responseText": readFixtures('/edXCourse/problem/78934fbb26f44b2b85d252a4f3c52d54.xml')
+      });
+      jasmine.Ajax.stubRequest('/edXCourse/problem/d649f04c5979438fbe82334f07b7d6fe.xml'.andReturn({
+        "responseText": readFixtures('/edXCourse/problem/d649f04c5979438fbe82334f07b7d6fe.xml')
+      });
+      jasmine.Ajax.stubRequest('/edXCourse/problem/8d6900d170f34deeb718866c2954c75f.xml'.andReturn({
+        "responseText": readFixtures('/edXCourse/problem/8d6900d170f34deeb718866c2954c75f.xml')
+      });
+      jasmine.Ajax.stubRequest('/edXCourse/problem/da63a43c68024407aab8ca0f7c790b12.xml'.andReturn({
+        "responseText": readFixtures('/edXCourse/problem/da63a43c68024407aab8ca0f7c790b12.xml')
+      });
+      jasmine.Ajax.stubRequest('/edXCourse/problem/c34a20e2f1e24890baffcfc9ac68dcfc.xml'.andReturn({
+        "responseText": readFixtures('/edXCourse/problem/c34a20e2f1e24890baffcfc9ac68dcfc.xml')
+      });
     });
     
     afterEach(function() {

@@ -2,7 +2,7 @@
 
 import React				from 'react';
 import TestUtils		from '../../../node_modules/react/lib/ReactTestUtils';
-import TextArea			from'./text_area.spec';
+import TextArea			from'./text_area';
 
 describe('Text area', function(){
 

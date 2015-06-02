@@ -1,6 +1,6 @@
 import React              from 'react';
 import TestUtils          from '../../../node_modules/react/lib/ReactTestUtils';
-import RadioButton        from './radio_button.spec';
+import RadioButton        from './radio_button';
 
 describe('radio button', function() {
 
