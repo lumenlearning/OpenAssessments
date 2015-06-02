@@ -41,32 +41,8 @@ export default class Item extends BaseComponent{
                 </div>;
     }
 
-    switch(this.props.question.question_type){
-      
-      case 'drag_and_drop':
-        item = <QtiDragAndDrop items={this.props.question} />;
-        break;
-      case 'edx_drag_and_drop':
-        item = <div>Hello</div>;
-        break;
-      case 'edx_text_input':
-        item = <div>Hello Text</div>;
-        break;
-      case 'text_only_question':
-        item = <QtiTextOnly items={this.props.question} />;
-        break;
-      case 'multiple_choice_question':
-        
-      case 'true_false_question':
-        
-      case 'edx_dropdown':
 
-      case 'edx_multiple_choice':
-
-      case 'edx_numerical_input':
-        item = <UniversalInput item={this.props.question} />;
-        break;
-    }
+    item = <UniversalInput item={this.props.question} />;
 
     var prevButtonClassName = "btn btn-prev-item " + ((this.props.currentIndex > 0) ? "" : "disabled");
     var nextButtonClassName = "btn btn-next-item " + ((this.props.currentIndex < this.props.questionCount - 1) ? "" : "disabled");

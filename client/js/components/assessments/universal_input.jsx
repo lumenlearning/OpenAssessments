@@ -1,9 +1,10 @@
 "use strict";
 
 import React        from "react";
-import RadioButton  from "./../common/radio_button";
-import Option       from "./../common/option";
-import TextField    from "./../common/text_field";
+import RadioButton  from "../common/radio_button";
+import Option       from "../common/option";
+import TextField    from "../common/text_field";
+import TextArea     from "../common/text_area";
 
 export default class UniversalInput extends React.Component{
 
@@ -43,10 +44,12 @@ export default class UniversalInput extends React.Component{
         return <Option item={item} name="answer-option"/>;
       });
     }
-    else if(this.props.item.question_type == "edx_numerical_input"){
+    else if(this.props.item.question_type == "edx_numerical_input" || this.props.item.question_type == "edx_text_input"){
       items = this.props.item.answers.map((item) => {
-        return <TextField item={item} name="answer-radio"/>;
+        return <TextField item={item} name="answer-text"/>;
       });
+    } else if(this.props.item.question_type == "text_only_question"){
+      items = <TextArea />;
     }
     var material = '';
     if(this.props.item.edXMaterial){
@@ -63,7 +66,6 @@ export default class UniversalInput extends React.Component{
               </div>
               <div className="panel-body">
                 {material}
-
                 {items}  
               </div>
               {solution}

@@ -88,7 +88,14 @@ export default class EdXItem{
       });
 
     } else if(questionType == "edx_text_input"){
-      
+      answers = xml.find('stringresponse').map((index, item) => {
+        return {
+          id: index,
+          material: item.children[0].getAttribute('label'),
+          xml: item,
+          correct: item.getAttribute('answer')
+        }
+      });
     } else if(questionType == "edx_drag_and_drop"){
       
     }
