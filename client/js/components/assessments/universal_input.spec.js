@@ -4,7 +4,7 @@ import React              from 'react';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import UniversalInput      from './universal_input';
 
-describe('Assessment Questions --------------------------------------------------------------------------', ()=> {
+describe('Assessment Questions', ()=> {
   var result;
   var item;
 
@@ -51,7 +51,7 @@ describe('Assessment Questions -------------------------------------------------
       expect(TestUtils.scryRenderedDOMComponentsWithTag(result, 'input')).toBeDefined();
     });
 
-    it('It Renders the question text', ()=>{
+    it('It Renders the option text', ()=>{
       expect(React.findDOMNode(result).textContent).toContain(item.answers[0].material);
     });
   });
@@ -63,7 +63,7 @@ describe('Assessment Questions -------------------------------------------------
       result = TestUtils.renderIntoDocument(<UniversalInput item={item} />);
     });
 
-    it('Renders the question text', ()=>{
+    it('Renders the sub-question text', ()=>{
       expect(React.findDOMNode(result).textContent).toContain(item.answers[0].material);
       expect(React.findDOMNode(result).textContent).toContain(item.answers[1].material);
     });
@@ -79,7 +79,7 @@ describe('Assessment Questions -------------------------------------------------
       result = TestUtils.renderIntoDocument(<UniversalInput item={item} />);
     });
 
-    it('Renders the question text', ()=>{
+    it('Renders the sub-question text', ()=>{
       expect(React.findDOMNode(result).textContent).toContain(item.answers[0].material);
       expect(React.findDOMNode(result).textContent).toContain(item.answers[1].material);
     });
