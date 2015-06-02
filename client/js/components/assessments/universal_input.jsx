@@ -34,7 +34,7 @@ export default class UniversalInput extends React.Component{
                  </div>);
     }
     var items = '';
-    if(this.props.item.question_type == "edx_multiple_choice" || this.props.item.question_type == "multiple_choice_question" || this.props.question_type == "true_false_question"){
+    if(this.props.item.question_type == "edx_multiple_choice" || this.props.item.question_type == "multiple_choice_question" || this.props.item.question_type == "true_false_question"){
       items = this.props.item.answers.map((item) => {
         return <RadioButton item={item} name="answer-radio"/>;
       });
