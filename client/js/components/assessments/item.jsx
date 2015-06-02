@@ -8,7 +8,8 @@ import QtiTextOnly        from "./qti_text_only";
 import QtiDragAndDrop     from "./qti_drag_and_drop";
 import EdXMultipleChoice  from "./edx_multiple_choice";
 import EdxDropDown        from "./edx_drop_down.jsx";
-import EdxNumericInput    from'./edx_numeric_input.jsx'
+import EdxNumericInput    from'./edx_numeric_input.jsx';
+import UniversalInput     from "./universal_input";
 
 export default class Item extends BaseComponent{
   nextButtonClicked(){
@@ -41,15 +42,7 @@ export default class Item extends BaseComponent{
     }
 
     switch(this.props.question.question_type){
-      case 'multiple_choice_question':
-        item = <QtiMultipleChoice item={this.props.question} />;
-        break;
-      case 'true_false_question':
-        item = <QtiMultipleChoice item={this.props.question} />;
-        break;
-      case 'text_only_question':
-        item = <QtiTextOnly items={this.props.question} />;
-        break;
+      
       case 'drag_and_drop':
         item = <QtiDragAndDrop items={this.props.question} />;
         break;
@@ -59,14 +52,19 @@ export default class Item extends BaseComponent{
       case 'edx_text_input':
         item = <div>Hello Text</div>;
         break;
+      case 'text_only_question':
+        item = <QtiTextOnly items={this.props.question} />;
+        break;
+      case 'multiple_choice_question':
+        
+      case 'true_false_question':
+        
       case 'edx_dropdown':
-        item = <EdxDropDown item={this.props.question}/>;
-        break;
+
       case 'edx_multiple_choice':
-        item = <QtiMultipleChoice item={this.props.question}/>;
-        break;
+
       case 'edx_numerical_input':
-        item = <EdxNumericInput item={this.props.question} />;
+        item = <UniversalInput item={this.props.question} />;
         break;
     }
 

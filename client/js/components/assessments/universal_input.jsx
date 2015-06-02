@@ -2,8 +2,10 @@
 
 import React        from "react";
 import RadioButton  from "./../common/radio_button";
+import Option       from "./../common/option";
+import TextField    from "./../common/text_field";
 
-export default class QtiMultipleChoice extends React.Component{
+export default class UniversalInput extends React.Component{
 
   render(){
     var messages = '';
@@ -31,12 +33,23 @@ export default class QtiMultipleChoice extends React.Component{
                   </div>
                  </div>);
     }
-    var items = this.props.item.answers.map((item) => {
-      return <RadioButton item={item} name="answer-radio"/>;
-    });
+    var items = '';
+    if(this.props.item.question_type == "edx_multiple_choice" || this.props.question_type == "multiple_choice_question" || this.props.question_type == "true_false_question"){
+      items = this.props.item.answers.map((item) => {
+        return <RadioButton item={item} name="answer-radio"/>;
+      });
+    } else if(this.props.item.question_type == "edx_dropdown"){
+      items = this.props.item.answers.map((item) => {
+        return <Option item={item} name="answer-option"/>;
+      });
+    }
+    else if(this.props.item.question_type == "edx_numerical_input"){
+      items = this.props.item.answers.map((item) => {
+        return <TextField item={item} name="answer-radio"/>;
+      });
+    }
     var material = '';
     if(this.props.item.edXMaterial){
-      //debugger;
       material = ( <div
                     dangerouslySetInnerHTML={{
                       __html: this.props.item.edXMaterial
@@ -59,6 +72,6 @@ export default class QtiMultipleChoice extends React.Component{
            );
   }
 }
-QtiMultipleChoice.propTypes = {
+UniversalInput.propTypes = {
   item: React.PropTypes.array.isRequired
 };

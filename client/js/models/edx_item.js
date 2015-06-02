@@ -12,7 +12,7 @@ export default class EdXItem{
         title    : xml.attr('display_name'),
         xml      : xml,
         standard : 'edX',
-        material : xml.find('choicegroup').attr('label'),
+        edXMaterial : "",
         answers  : [],
         isGraded: true 
       };
@@ -23,6 +23,9 @@ export default class EdXItem{
       var explanation = EdXItem.parseExplanation(xml);
       if(explanation)
         item.solution = explanation;
+      var material = EdXItem.parseMaterial(xml, item.question_type);
+      if(material)
+        item.edXMaterial = material;
       return item;
     } else {
       return null;
@@ -34,11 +37,26 @@ export default class EdXItem{
     return solution.html();
   }
 
+  static parseMaterial(xml, questionType){
+    var contents = xml;
+    contents.find('solution').remove();
+    contents.find('stringresponse').remove();
+    contents.find('customresponse').remove();
+    contents.find('draggable').remove();
+    contents.find('answer').remove();
+    contents.find('drag_and_drop_input').remove();
+    contents.find('multiplechoiceresponse').remove();
+    contents.find('imageresponse').remove();
+    contents.find('numericalresponse').parent().remove();
+    var contentHtml = contents.html();
+    return contentHtml;
+    
+  }
+
   static parseAnswers(xml, questionType){
     var answers;
     if(questionType == "edx_numerical_input"){
       // TODO implement numerical input answers
-      
       answers = xml.find('numericalresponse').map((index, item) => {
         return {
           id       : index,
