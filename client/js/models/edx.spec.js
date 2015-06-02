@@ -9,6 +9,14 @@ describe('EdX', () => {
     jasmine.getFixtures().fixturesPath = "base/fixtures/";
 
   });
+
+  beforeEach(function() {
+    jasmine.Ajax.install();
+  });
+  
+  afterEach(function() {
+    jasmine.Ajax.uninstall();
+  });
   
   describe('buildProblemMaterial', () => {
     

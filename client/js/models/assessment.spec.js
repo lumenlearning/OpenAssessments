@@ -9,7 +9,7 @@ describe('assessment', () => {
     jasmine.getFixtures().fixturesPath = "base/fixtures/";
     settings = {};
   });
-  
+
   describe('parseAssessment', () => {
     
     it('parses assessment xml from QTI into an object', () => {
@@ -52,6 +52,17 @@ describe('assessment', () => {
 
   describe('parseEdX', () => {
     
+    beforeEach(function() {
+      jasmine.Ajax.install();
+      jasmine.Ajax.stubRequest('/edXCourse/vertical/04735103fe064c9da3a1a758bcda2692.xml').andReturn({
+        "responseText": readFixtures("edXCourse/vertical/04735103fe064c9da3a1a758bcda2692.xml")
+      });
+    });
+    
+    afterEach(function() {
+      jasmine.Ajax.uninstall();
+    });
+
     it('parses assessment xml from EdX into an object', () => {
       settings = {
         srcUrl: "edXCourse/sequential/97cc2d1812204294b5fcbb91a1157368.xml"
