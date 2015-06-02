@@ -8,7 +8,7 @@ export default class EdxMultipleChoice extends React.Component{
     var solution = '';
     var question = '';
 
-    if(this.props.item.messages.length){
+    if(this.props.item.messages){
       var renderedMessages = this.props.item.messages.map(function(message){
         return <li>{message}</li>;
       });
@@ -20,12 +20,11 @@ export default class EdxMultipleChoice extends React.Component{
     }
 
     if(this.props.item.isGraded) {
-      solution =  <div className="solution">
-                    {this.props.item.solution}
-                  </div>;
+            solution =  (<div
+                  dangerouslySetInnerHTML={{
+                    __html: this.props.item.solution
+                  }}></div>)
     }
-
-
 
     return  <div className="panel-messages-container panel panel-default">
               <div className="panel-heading text-center">

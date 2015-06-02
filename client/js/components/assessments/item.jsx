@@ -42,10 +42,10 @@ export default class Item extends BaseComponent{
 
     switch(this.props.question.question_type){
       case 'multiple_choice_question':
-        item = <QtiMultipleChoice items={this.props.question.answers} />;
+        item = <QtiMultipleChoice item={this.props.question} />;
         break;
       case 'true_false_question':
-        item = <QtiMultipleChoice items={this.props.question.answers} />;
+        item = <QtiMultipleChoice item={this.props.question} />;
         break;
       case 'text_only_question':
         item = <QtiTextOnly items={this.props.question} />;
@@ -60,10 +60,10 @@ export default class Item extends BaseComponent{
         item = <div>Hello Text</div>;
         break;
       case 'edx_dropdown':
-        item = <EdxDropDown items={this.props.question.answers}/>;
+        item = <EdxDropDown item={this.props.question}/>;
         break;
       case 'edx_multiple_choice':
-        item = <QtiMultipleChoice items={this.props.question.answers}/>;
+        item = <QtiMultipleChoice item={this.props.question}/>;
         break;
       case 'edx_numerical_input':
         item = <EdxNumericInput item={this.props.question} />;

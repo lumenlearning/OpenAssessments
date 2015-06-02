@@ -13,17 +13,25 @@ export default class EdXItem{
         xml      : xml,
         standard : 'edX',
         material : xml.find('choicegroup').attr('label'),
-        answers  : [] 
+        answers  : [],
+        isGraded: true 
       };
       item.question_type = EdX.questionType(xml);
       var answers = EdXItem.parseAnswers(xml, item.question_type);
       if(answers)
         item.answers = answers.toArray();
-
+      var explanation = EdXItem.parseExplanation(xml);
+      if(explanation)
+        item.solution = explanation;
       return item;
     } else {
       return null;
     }
+  }
+
+  static parseExplanation(xml){
+    var solution = xml.find('solution');
+    return solution.html();
   }
 
   static parseAnswers(xml, questionType){
