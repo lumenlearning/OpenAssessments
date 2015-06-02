@@ -16,7 +16,7 @@ export default class Option extends React.Component{
 				});
 			return(
 			<div>
-				<select>	
+				<select>
 					{materialItems}
 				</select>
 			</div>

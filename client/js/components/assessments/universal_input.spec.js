@@ -58,7 +58,28 @@ describe('Assessment Questions -------------------------------------------------
 
   xdescribe('Numerical Input', ()=>{});
   xdescribe('Text Input', ()=>{});
-  xdescribe('Drop Down', ()=>{});
+
+  describe('Drop Down', ()=>{
+
+    beforeEach(()=>{
+      item.question_type = 'edx_dropdown';
+      item.answers = [{ id: 0, material: ['option1', 'option2', 'option3']}];
+      result = TestUtils.renderIntoDocument(<UniversalInput item={item} />);
+    });
+
+    it('Renders the drop down element', ()=>{
+      expect(TestUtils.scryRenderedDOMComponentsWithTag(result, 'select')).toBeDefined();
+    });
+
+    it('All the options are in the dropdown', ()=>{
+        var options = TestUtils.scryRenderedDOMComponentsWithTag(result, 'option');
+        expect(options[0].getDOMNode().textContent).toContain('option1');
+        expect(options[1].getDOMNode().textContent).toEqual('option2');
+        expect(options[2].getDOMNode().textContent).toEqual('option3');
+      }
+    );
+  });
+
   xdescribe('Image Mapped Input', ()=>{});
   xdescribe('Problem with Adaptive Hint', ()=>{});
 
