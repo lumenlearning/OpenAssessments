@@ -58,7 +58,7 @@ export default class EdXItem{
     var draggables = item.find('draggable').map((index, draggable)=>{
       return {
         id: draggable.getAttribute('id'),
-        label: draggable.getAttribute('label'),
+        label: draggable.getAttribute('label')
       }
     });
     return draggables;
@@ -66,6 +66,20 @@ export default class EdXItem{
 
   static parseTargets(item){
 
+  }
+
+  static parseRectCoords(item) {
+    item = $(item);
+    var coords = item.find('rectangle').map((index, coord)=>{
+      var coordStr = coord.getAttribute('rectangle');
+      coordStr.replace(/([()])+/g, "");
+      coordStr.replace(/([-])+/g, ",");
+      var coordArr = coordStr.split(',');
+      return{
+        coords: coordArr
+      }
+    });
+    return coords
   }
 
   static parseDraggableAnswers(item){
@@ -83,7 +97,6 @@ export default class EdXItem{
   static parseAnswers(xml, questionType){
     var answers;
     if(questionType == "edx_numerical_input"){
-      // TODO implement numerical input answers
       answers = xml.find('numericalresponse').map((index, item) => {
         return {
           id       : index,
@@ -133,11 +146,23 @@ export default class EdXItem{
           img: item.getAttribute('img'),
           draggables: draggables,
           targets: targets,
-          correct: correctAnswer,
+          correct: correctAnswer
+        }
+      })
+    } else if (questionType == "edx_image_mapped_input") {
+      var coords = EdXItem.parseRectCoords(item);
+      answers = xml.find('imageinput').map((index, item) => {
+        return{
+          id: index,
+          material: item.getAttribute('src'),
+          width: item.getAttribute('width'),
+          height: item.getAttribute('height'),
+          answer: coords
         }
       })
     }
     return answers;
   }
+
 
 }

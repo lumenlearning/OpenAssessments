@@ -49,6 +49,8 @@ export default class Edx {
       return 'edx_dropdown';
     } else if(xml.find('stringresponse').length > 0){
       return 'edx_text_input';
+    } else if(xml.find('imageresponse').length > 0){
+      return 'edx_image_mapped_input';
     }
 
   }
