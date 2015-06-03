@@ -121,7 +121,6 @@ export default class EdXItem{
           correct  : item.getElementsByTagName("optioninput")[0].getAttribute('correct')
         }
       });
-
     } else if(questionType == "edx_text_input"){
       answers = xml.find('stringresponse').map((index, item) => {
         return {

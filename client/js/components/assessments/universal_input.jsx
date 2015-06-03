@@ -63,10 +63,11 @@ export default class UniversalInput extends React.Component{
         return <CheckBox item={item} name="answer-check"/>;
       });
     } else if (this.props.item.question_type == "edx_image_mapped_input"){
-      //debugger;
       items = this.props.item.answers.map((item)=>{
         return <MappedImage item={item} />;
       });
+    } else if (this.props.item.question_type =="edx_drag_and_drop"){
+
     }
 
     var material = '';
