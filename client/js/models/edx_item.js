@@ -82,7 +82,7 @@ export default class EdXItem{
     item = $(item);
     var answers = item.find('answer').map((index, answer) => {
       var content = answer.textContent;
-      content = content.replace(/([\s])+/g, "");  //Manhandled
+      content = content.replace(/([\s])+/g, "");  //Manhandles the Python to JSON
       content = content.match(/{(.*?)}/g);
       var data = content[0].replace(/(['])+/g, '"');
       var json = JSON.parse(data);
@@ -146,12 +146,15 @@ export default class EdXItem{
         var draggables = EdXItem.parseDraggables(item);
         var targets = EdXItem.parseTargets(item);
         var correctAnswer = EdXItem.parseDraggableAnswers(item);
+        var type = $(item).find('target').length > 0 ? 'key' : 'index';
+        var dnd = $(item).find('drag_and_drop_input');
         return {
           id: index,
-          img: item.getAttribute('img'),
+          img: dnd.attr('img'),
           draggables: draggables,
           targets: targets,
-          correct: correctAnswer
+          correct: correctAnswer,
+          type : type
         }
       })
     } else if (questionType == "edx_image_mapped_input") {

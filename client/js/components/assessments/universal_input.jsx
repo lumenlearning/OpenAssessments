@@ -8,6 +8,7 @@ import TextArea     from "../common/text_area";
 import CheckBox     from "../common/checkbox";
 import MappedImage  from "../common/mapped_image";
 import Matching     from "../common/matching";
+import DragAndDrop  from "../common/drag_and_drop";
 
 export default class UniversalInput extends React.Component{
 
@@ -67,7 +68,9 @@ export default class UniversalInput extends React.Component{
         return <MappedImage item={item} />;
       });
     } else if (this.props.item.question_type =="edx_drag_and_drop"){
-      debugger;
+      items = this.props.item.answers.map((item)=>{
+        return <DragAndDrop item={item} />
+      });
     }
 
     var material = '';
