@@ -70,16 +70,11 @@ export default class EdXItem{
 
   static parseRectCoords(item) {
     item = $(item);
-    var coords = item.find('rectangle').map((index, coord)=>{
-      var coordStr = coord.getAttribute('rectangle');
-      coordStr.replace(/([()])+/g, "");
-      coordStr.replace(/([-])+/g, ",");
-      var coordArr = coordStr.split(',');
-      return{
-        coords: coordArr
-      }
-    });
-    return coords
+    var rectangle = item.attr('rectangle');
+    rectangle.replace(/([()])+/g, "");
+    rectangle.replace(/([-])+/g, ",");
+    var coordArr = rectangle.split(',');
+    return coordArr;
   }
 
   static parseDraggableAnswers(item){
@@ -150,14 +145,14 @@ export default class EdXItem{
         }
       })
     } else if (questionType == "edx_image_mapped_input") {
-      var coords = EdXItem.parseRectCoords(item);
       answers = xml.find('imageinput').map((index, item) => {
+        var coords = EdXItem.parseRectCoords(item);
         return{
           id: index,
           material: item.getAttribute('src'),
           width: item.getAttribute('width'),
           height: item.getAttribute('height'),
-          answer: coords
+          coordinates: coords
         }
       })
     }

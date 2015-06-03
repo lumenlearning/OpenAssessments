@@ -35,6 +35,7 @@ export default class UniversalInput extends React.Component{
                   </div>
                  </div>);
     }
+
     var items = '';
     if(this.props.item.question_type == "edx_multiple_choice" || this.props.item.question_type == "multiple_choice_question" || this.props.item.question_type == "true_false_question"){
       items = this.props.item.answers.map((item) => {
@@ -55,7 +56,10 @@ export default class UniversalInput extends React.Component{
       items = this.props.item.answers.map((item) => {
         return <CheckBox item={item} name="answer-check"/>;
       });
+    } else if (this.props.item.question_type == "edx_image_mapped_input"){
+      items =
     }
+
     var material = '';
     if(this.props.item.edXMaterial){
       material = ( <div
