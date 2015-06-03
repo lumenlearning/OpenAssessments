@@ -27,12 +27,10 @@ export default {
   },
 
   edXLoadSection(section){
-    console.log(section.xml)
     Dispatcher.dispatch({action: Constants.EDX_LOAD_SECTION, section: section});
   },
 
   edXLoadItem(item){
-    console.log(item.xml);
     Dispatcher.dispatch({action: Constants.EDX_LOAD_ITEM, item: item});
   },
 
@@ -40,8 +38,8 @@ export default {
     Dispatcher.dispatch({action: Constants.EDX_LOAD_ASSESSMENT, assessment: assessment});
   },
 
-  answerSelected(selectedAnswerId){
-    Dispatcher.dispatch({action: Constants.ANSWER_SELECTED, selectedAnswerId: selectedAnswerId});
+  answerSelected(item){
+    Dispatcher.dispatch({action: Constants.ANSWER_SELECTED, item: item});
   },
 
   checkAnswer(){
