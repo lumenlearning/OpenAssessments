@@ -7,6 +7,7 @@ import TextField    from "../common/text_field";
 import TextArea     from "../common/text_area";
 import CheckBox     from "../common/checkbox";
 import MappedImage  from "../common/mapped_image";
+import Matching     from "../common/matching";
 
 export default class UniversalInput extends React.Component{
 
@@ -42,9 +43,13 @@ export default class UniversalInput extends React.Component{
       items = this.props.item.answers.map((item) => {
         return <RadioButton item={item} name="answer-radio"/>;
       });
-    } else if(this.props.item.question_type == "edx_dropdown" || this.props.item.question_type == "matching_question"){
+    } else if(this.props.item.question_type == "edx_dropdown"){
       items = this.props.item.answers.map((item) => {
         return <Option item={item} name="answer-option"/>;
+      });
+    } else if(this.props.item.question_type == "matching_question"){
+      items = this.props.item.answers.map((item) => {
+        return <Matching item={item} name="answer-option"/>;
       });
     }
     else if(this.props.item.question_type == "edx_numerical_input" || this.props.item.question_type == "edx_text_input"){
