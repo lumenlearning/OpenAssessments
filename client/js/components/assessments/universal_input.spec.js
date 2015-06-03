@@ -48,11 +48,12 @@ describe('Assessment Questions', ()=> {
     });
 
     it('It Renders the radio buttons', ()=>{
-      expect(TestUtils.scryRenderedDOMComponentsWithTag(result, 'input')).toBeDefined();
+      expect(TestUtils.scryRenderedComponentsWithType(result, 'radio')).toBeDefined();
     });
 
     it('It Renders the option text', ()=>{
       expect(React.findDOMNode(result).textContent).toContain(item.answers[0].material);
+      expect(React.findDOMNode(result).textContent).toContain(item.answers[1].material);
     });
   });
 
@@ -112,6 +113,23 @@ describe('Assessment Questions', ()=> {
 
   xdescribe('Image Mapped Input', ()=>{});
   xdescribe('Problem with Adaptive Hint', ()=>{});
+
+  describe('Multiple Answer', ()=>{
+
+    beforeEach(()=>{
+      item.question_type = 'multiple_answers_question';
+      result = TestUtils.renderIntoDocument(<UniversalInput item={item} />);
+    });
+
+    it('Renders the checkboxes', ()=>{
+      expect(TestUtils.scryRenderedComponentsWithType(result, 'checkbox')).toBeDefined();
+    });
+
+    it('Checkbox text is rendered', ()=>{
+      expect(React.findDOMNode(result).textContent).toContain(item.answers[0].material);
+      expect(React.findDOMNode(result).textContent).toContain(item.answers[1].material);
+    });
+  });
 
   it('Renders the solution', ()=>{
     expect(React.findDOMNode(result).textContent).toContain('solution text');
