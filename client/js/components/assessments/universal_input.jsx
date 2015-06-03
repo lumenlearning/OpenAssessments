@@ -6,6 +6,7 @@ import Option       from "../common/option";
 import TextField    from "../common/text_field";
 import TextArea     from "../common/text_area";
 import CheckBox     from "../common/checkbox";
+import MappedImage  from "../common/mapped_image";
 
 export default class UniversalInput extends React.Component{
 
@@ -57,7 +58,10 @@ export default class UniversalInput extends React.Component{
         return <CheckBox item={item} name="answer-check"/>;
       });
     } else if (this.props.item.question_type == "edx_image_mapped_input"){
-      items =
+      //debugger;
+      items = this.props.item.answers.map((item)=>{
+        return <MappedImage item={item} />;
+      });
     }
 
     var material = '';

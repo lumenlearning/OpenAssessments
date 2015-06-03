@@ -71,8 +71,8 @@ export default class EdXItem{
   static parseRectCoords(item) {
     item = $(item);
     var rectangle = item.attr('rectangle');
-    rectangle.replace(/([()])+/g, "");
-    rectangle.replace(/([-])+/g, ",");
+    rectangle = rectangle.replace(/([()])+/g, "");
+    rectangle = rectangle.replace(/([-])+/g, ",");
     var coordArr = rectangle.split(',');
     return coordArr;
   }
