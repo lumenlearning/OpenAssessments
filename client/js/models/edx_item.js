@@ -53,6 +53,34 @@ export default class EdXItem{
     
   }
 
+  static parseDraggables(item){
+    item = $(item);
+    var draggables = item.find('draggable').map((index, draggable)=>{
+      return {
+        id: draggable.getAttribute('id'),
+        label: draggable.getAttribute('label'),
+      }
+    });
+    return draggables;
+  }
+
+  static parseTargets(item){
+
+  }
+
+  static parseDraggableAnswers(item){
+    item = $(item);
+    item.find('answer').map((index, answer) => {
+      var content = answer.textContent;
+      var startIndex = content.indexOf("{");
+      var endIndex = content.indexOf("}") + 1;
+      var subContent = content.substring(startIndex, endIndex);
+      debugger;
+      return subContent
+
+    });
+  }
+
   static parseAnswers(xml, questionType){
     var answers;
     if(questionType == "edx_numerical_input"){
@@ -97,7 +125,18 @@ export default class EdXItem{
         }
       });
     } else if(questionType == "edx_drag_and_drop"){
-      
+      answers = xml.find('customresponse').map((index, item) => {
+        var draggables = EdXItem.parseDraggables(item);
+        var targets = EdXItem.parseTargets(item);
+        var correctAnswer = EdXItem.parseDraggableAnswers(item);
+        return {
+          id: index,
+          img: item.getAttribute('img'),
+          draggables: draggables,
+          targets: targets,
+          correctAnswer: correctAnswer,
+        }
+      })
     }
     return answers;
   }
