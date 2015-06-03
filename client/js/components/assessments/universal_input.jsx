@@ -5,6 +5,7 @@ import RadioButton  from "../common/radio_button";
 import Option       from "../common/option";
 import TextField    from "../common/text_field";
 import TextArea     from "../common/text_area";
+import CheckBox     from "../common/checkbox";
 
 export default class UniversalInput extends React.Component{
 
@@ -50,6 +51,10 @@ export default class UniversalInput extends React.Component{
       });
     } else if(this.props.item.question_type == "text_only_question"){
       items = <TextArea />;
+    } else if(this.props.item.question_type == "multiple_answers_question"){
+      items = this.props.item.answers.map((item) => {
+        return <CheckBox item={item} name="answer-check"/>;
+      });
     }
     var material = '';
     if(this.props.item.edXMaterial){

@@ -3,7 +3,7 @@
 import React              from 'react';
 import AssessmentActions  from "../../actions/assessment";
 
-export default class RadioButton extends React.Component{
+export default class CheckBox extends React.Component{
   
   answerSelected(){
     AssessmentActions.answerSelected(this.props.item.id);
@@ -21,7 +21,7 @@ export default class RadioButton extends React.Component{
   }
 }
 
-RadioButton.propTypes = { 
+CheckBox.propTypes = { 
   item: React.PropTypes.object.isRequired,
   name: React.PropTypes.string.isRequired
 };

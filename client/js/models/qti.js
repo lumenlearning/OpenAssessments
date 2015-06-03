@@ -44,7 +44,8 @@ export default class Qti{
         objectives : objectives,
         xml        : xml,
         material   : this.material(xml),
-        answers    : this.parseAnswers(xml)
+        answers    : this.parseAnswers(xml),
+        correct    : this.parseCorrect(xml)
       };
 
       $.each(xml.find('itemmetadata > qtimetadata > qtimetadatafield'), function(i, x){
@@ -69,15 +70,39 @@ export default class Qti{
   
   }
 
+  static parseCorrect(xml){
+    var respconditions = xml.find("respcondition");
+    var correctAnswers = []
+    for (var i=0; i<respconditions.length; i++){
+      var condition = $(respconditions[i]);
+      if(condition.find('setvar').text() != '0'){
+        var answer = {
+          id: condition.find('conditionvar > varequal').text(),
+          value: condition.find('setvar').text()
+        }
+        if(answer.id == ""){
+          answer.id = condition.find('conditionvar > and > varequal').map((index, condition) => {
+            condition = $(condition);
+            return condition.text();
+          });
+          answer.id = answer.id.toArray();
+        }
+        correctAnswers.push(answer);
+      }
+    }
+    return correctAnswers;
+  }
+
   static parseAnswers(xml){
 
-    var fromXml = (xml) => {
+    var fromXml = (xml, originalXml) => {
       xml = $(xml);
-      return {
+      var answer = {
         id       : xml.attr('ident'),
         material : this.buildMaterial(xml.find('material').children()),
         xml      : xml
       };
+      return answer;
     };
 
     return this.listFromXml(xml, 'response_lid > render_choice > response_label', fromXml);

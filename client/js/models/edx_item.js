@@ -75,7 +75,6 @@ export default class EdXItem{
       var startIndex = content.indexOf("{");
       var endIndex = content.indexOf("}") + 1;
       var subContent = content.substring(startIndex, endIndex);
-      debugger;
       return subContent
 
     });
@@ -134,7 +133,7 @@ export default class EdXItem{
           img: item.getAttribute('img'),
           draggables: draggables,
           targets: targets,
-          correctAnswer: correctAnswer,
+          correct: correctAnswer,
         }
       })
     }
