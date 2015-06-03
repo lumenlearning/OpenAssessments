@@ -65,7 +65,30 @@ export default class EdXItem{
   }
 
   static parseTargets(item){
+    item = $(item);
+    var targets = item.find('target').map((index, target)=>{
+      return {
+        id: target.getAttribute('id'),
+        xPos: target.getAttribute('x'),
+        yPos: target.getAttribute('y'),
+        width: target.getAttribute('w'),
+        height: target.getAttribute('h')
+      }
+    });
+    return targets;
+  }
 
+  static parseDraggableAnswers(item){
+    item = $(item);
+    var answers = item.find('answer').map((index, answer) => {
+      var content = answer.textContent;
+      content = content.replace(/([\s])+/g, "");  //Manhandled
+      content = content.match(/{(.*?)}/g);
+      var data = content[0].replace(/(['])+/g, '"');
+      var json = JSON.parse(data);
+      return json;
+    });
+    return answers;
   }
 
   static parseRectCoords(item) {
@@ -75,18 +98,6 @@ export default class EdXItem{
     rectangle = rectangle.replace(/([-])+/g, ",");
     var coordArr = rectangle.split(',');
     return coordArr;
-  }
-
-  static parseDraggableAnswers(item){
-    item = $(item);
-    item.find('answer').map((index, answer) => {
-      var content = answer.textContent;
-      var startIndex = content.indexOf("{");
-      var endIndex = content.indexOf("}") + 1;
-      var subContent = content.substring(startIndex, endIndex);
-      return subContent
-
-    });
   }
 
   static parseAnswers(xml, questionType){

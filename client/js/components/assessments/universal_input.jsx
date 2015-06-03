@@ -67,7 +67,7 @@ export default class UniversalInput extends React.Component{
         return <MappedImage item={item} />;
       });
     } else if (this.props.item.question_type =="edx_drag_and_drop"){
-
+      debugger;
     }
 
     var material = '';
