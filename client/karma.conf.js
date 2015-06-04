@@ -62,7 +62,7 @@ module.exports = function(config) {
     autoWatch: true,
 
     // Use jasmine as the test framework
-    frameworks: ['jasmine-jquery', 'jasmine'],
+    frameworks: ['jasmine-ajax', 'jasmine-jquery', 'jasmine'],
 
     reporters: reporters,
 
