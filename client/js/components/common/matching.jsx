@@ -6,7 +6,7 @@ import AssessmentActions  from "../../actions/assessment";
 export default class Matching extends React.Component{
 
   answerSelected(){
-    AssessmentActions.answerSelected(this.props.item.id);
+    AssessmentActions.answerSelected(this.props.item);
   }
 
 
@@ -20,7 +20,7 @@ export default class Matching extends React.Component{
     return(
       <div>
         {this.props.item.matchMaterial}
-        <select>
+        <select ref="match" onChange={()=>{ this.answerSelected()}}>
           {materialItems}
         </select>
       </div>
