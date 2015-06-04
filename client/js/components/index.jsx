@@ -11,6 +11,8 @@ var Colors = mui.Styles.Colors;
 var Typography = mui.Styles.Typography;
 var ThemeManager = new mui.Styles.ThemeManager();
 
+class Index extends React.Component {
+
   constructor(){
     super();
     this.stores = [SettingsStore];

@@ -18,10 +18,6 @@ class AccountDashboard extends React.Component {
     this.state = this.getState();
   }
 
-  propTypes: {
-    params: React.PropTypes.object.isRequired
-  },
-
   getState(){
     return {
       users: AccountsStore.currentUsers(),
