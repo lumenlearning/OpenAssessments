@@ -11,7 +11,7 @@ var Colors = mui.Styles.Colors;
 var Typography = mui.Styles.Typography;
 var ThemeManager = new mui.Styles.ThemeManager();
 
-class Index extends React.Component {
+class Index extends BaseComponent {
 
   constructor(){
     super();
