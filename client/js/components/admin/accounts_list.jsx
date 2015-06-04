@@ -5,19 +5,16 @@ import User                         from "../../stores/user";
 import {Link}                       from "react-router";
 import { Menu, Paper }              from "material-ui";
 import AdminActions                 from "../../actions/admin";
-export default React.createClass({
 
-  propTypes: {
-    menuItems: React.PropTypes.array.isRequired
-  },
+class AccountsList extends React.Component {
 
   // There is a better way to do this.
   handleClick(e, key, payload){
     // pass the click event to the Link tag 
     this.refs[payload.ref].handleClick(e);
-  },
+  }
 
-  render: function() {
+  render(){
 
     var styles = {
       menuStyle: {
@@ -39,16 +36,19 @@ export default React.createClass({
       
     });
 
-
     return (
       <div style={styles.menuStyle} className="menuBox">
         <div style={styles.menuItemStyle}>
-          <Menu className="accounts-menu" menuItems={accountList} zDepth={0} onItemClick={this.handleClick}/>
+          <Menu className="accounts-menu" menuItems={accountList} zDepth={0} onItemClick={(e) => { this.handleClick } }/>
         </div>
       </div>
     );
   }
 
+}
 
+AccountsList.propTypes = {
+  menuItems: React.PropTypes.array.isRequired
+};
 
-});
+module.exports = AccountsList;

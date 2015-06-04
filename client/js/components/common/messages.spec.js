@@ -2,6 +2,7 @@ import React              from 'react';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import Messages           from './messages';
 import MessagesActions    from '../../actions/messages';
+import StubContext        from '../../../specs_support/stub_context'; 
 
 describe('messages', () => {
   
@@ -15,7 +16,8 @@ describe('messages', () => {
   
   describe('no messages', () => {
     it('renders nothing', () => {
-      var result = TestUtils.renderIntoDocument(<Messages/>);
+      var Subject = StubContext(Messages, {});
+      var result = TestUtils.renderIntoDocument(<Subject />);
       expect(React.findDOMNode(result)).toBe(null);
     });
   });
@@ -29,7 +31,8 @@ describe('messages', () => {
     });
 
     it('renders a list of messages', () => {
-      var result = TestUtils.renderIntoDocument(<Messages/>);
+      var Subject = StubContext(Messages, {});
+      var result = TestUtils.renderIntoDocument(<Subject />);
       expect(React.findDOMNode(result).textContent).toContain(message);
     });
 
@@ -37,7 +40,8 @@ describe('messages', () => {
       var newMessage = "A new message to make sure the messages re-renders when the store changes";
       MessagesActions.addMessage(newMessage);
       jasmine.clock().tick(); // Advance the clock to the next tick
-      var result = TestUtils.renderIntoDocument(<Messages/>);
+      var Subject = StubContext(Messages, {});
+      var result = TestUtils.renderIntoDocument(<Subject />);
       expect(React.findDOMNode(result).textContent).toContain(newMessage);
     });
 

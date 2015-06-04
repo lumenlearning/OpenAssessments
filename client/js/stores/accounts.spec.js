@@ -8,20 +8,7 @@ import Dispatcher      from '../dispatcher';
 
 describe('AccountsStore', () => {
 
-  var defaultSettings = {
-    apiUrl: "http://www.example.com/api"
-  };
-
-  beforeEach(() => {
-    SettingsActions.load(defaultSettings);
-    jasmine.Ajax.install();
-    jasmine.clock().install(); // Mock out the built in timers
-  });
-
-  afterEach(() => {
-    jasmine.Ajax.uninstall();
-    jasmine.clock().uninstall();
-  });
+  helpStubAjax(SettingsActions);
   
   describe("", () => {
 

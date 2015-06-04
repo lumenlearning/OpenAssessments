@@ -1,55 +1,51 @@
 "use strict";
 
-import React                                                                            from "react";
-import { Link }                                                                         from "react-router";
-import Validator                                                                        from "validator";
-import UserActions                                                                      from "../../actions/user";
-import _                                                                                from "lodash";
-import assign                                                                           from "object-assign";
-import { Paper, TextField, FlatButton, RaisedButton, FontIcon, Menu, Dialog}            from "material-ui";
-import Checkbox                                                                         from "./checkbox";
-import AdminActions                                                                     from "../../actions/admin";
-import ApplicationStore                                                                 from "../../stores/application";
-import AccountsStore                                                                    from "../../stores/accounts";
-import EditUserForm                                                                     from "./edit_user_form";
+import React            from "react";
+import { Link }         from "react-router";
+import Validator        from "validator";
+import UserActions      from "../../actions/user";
+import _                from "lodash";
+import assign           from "object-assign";
+import Checkbox         from "./checkbox";
+import AdminActions     from "../../actions/admin";
+import ApplicationStore from "../../stores/application";
+import AccountsStore    from "../../stores/accounts";
+import EditUserForm     from "./edit_user_form";
+import { Paper, TextField, FlatButton, RaisedButton, FontIcon, Menu, Dialog} from "material-ui";
 
-export default React.createClass({
+class UsersList extends React.Component {
 
-  propTypes: {
-    params: React.PropTypes.object.isRequired
-  },
- 
-  getState(){
+  constructor(props){
+    super(props);
+    this.state = this.getState(props.params.accountId);
+    this.state.currentUser = {name: "", email: "", role: ""};
+    AdminActions.loadUsers(props.params.accountId);
+  }
+
+  getState(accountId){
     return {
-      users: AccountsStore.currentUsers(),
-      currentAccount: AccountsStore.accountById(this.props.params.accountId),
-      currentUser: {name: "", email: "", role: ""},
-      selectedUsers: AccountsStore.getSelectedUsers()
+      users:          AccountsStore.currentUsers(),
+      currentAccount: AccountsStore.accountById(accountId),
+      selectedUsers:  AccountsStore.getSelectedUsers()
     };
-  },
-
-  getInitialState(){
-    var state = this.getState();
-    AdminActions.loadUsers(this.props.params.accountId);
-    return this.getState();
-  },
+  }
 
   // Method to update state based upon store changes
   storeChanged(){
-    this.setState(this.getState());
-  },
+    this.setState(this.getState(this.props.params.accountId));
+  }
 
   // Listen for changes in the stores
   componentDidMount(){
     AccountsStore.addChangeListener(this.storeChanged);
     ApplicationStore.addChangeListener(this.storeChanged);
-  },
+  }
 
   // Remove change listers from stores
   componentWillUnmount(){
     AccountsStore.removeChangeListener(this.storeChanged);
     ApplicationStore.removeChangeListener(this.storeChanged);
-  },
+  }
 
   onMenuItemClick(e, key, payload){
     if(this.refs[payload.ref].isChecked()){
@@ -59,7 +55,7 @@ export default React.createClass({
       this.refs[payload.ref].setChecked(true);
       AdminActions.addToSelectedUsers(payload.user);
     }
-  },
+  }
 
   editButtonClicked(){
     this.setState({currentUser: AccountsStore.userById(this.state.selectedUsers[0].id)});
@@ -69,7 +65,7 @@ export default React.createClass({
       var hash = "check-" + this.state.users[i].id;
       this.refs[hash].setChecked(false);
     }
-  },
+  }
 
   deleteButtonClicked(){
     AdminActions.deleteUsers(this.state.selectedUsers);
@@ -77,7 +73,7 @@ export default React.createClass({
       var hash = "check-" + this.state.users[i].id;
       this.refs[hash].setChecked(false);
     }
-  },
+  }
 
   render() {
     var styles = {
@@ -141,11 +137,11 @@ export default React.createClass({
     } else if(this.state.selectedUsers.length == 1){
       buttons = (
         <div>
-          <FlatButton style={styles.button} label="Edit User" primary={false} onClick={this.editButtonClicked} />
-          <FlatButton style={styles.button} label="Delete Selected" primary={true}  onClick={this.deleteButtonClicked}/>
+          <FlatButton style={styles.button} label="Edit User" primary={false} onClick={ (e) => { this.editButtonClicked } } />
+          <FlatButton style={styles.button} label="Delete Selected" primary={true}  onClick={ (e) => { this.deleteButtonClicked } } />
         </div>)
     } else {
-      buttons = <FlatButton style={styles.button} label="Delete Selected" primary={true} onClick={this.deleteButtonClicked}/>
+      buttons = <FlatButton style={styles.button} label="Delete Selected" primary={true} onClick={ (e) => { this.deleteButtonClicked } } />
     }
     var roleId = 0;
     if(this.state.currentUser.role == "user")
@@ -165,5 +161,10 @@ export default React.createClass({
     );
   }
 
+}
 
-});
+UsersList.propTypes = {
+  params: React.PropTypes.object.isRequired
+};
+
+module.exports = UsersList;

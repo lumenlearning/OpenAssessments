@@ -16,7 +16,7 @@ function loadSettings(defaultSettings){
     return defaultSettings[settings_prop] || QueryString.params()[params_prop] || default_prop;
   };
 
-  var jwt = defaultSettings.jwt.length ? defaultSettings.jwt : null;
+  var jwt = (defaultSettings.jwt && defaultSettings.jwt.length) ? defaultSettings.jwt : null;
   if(jwt!==null) {
     localStorage.setItem('jwt', jwt);
   } else {

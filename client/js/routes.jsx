@@ -19,7 +19,7 @@ var DefaultRoute  = Router.DefaultRoute;
 var Redirect      = Router.Redirect;
 
 var routes = (
-  <Route handler={Index}>
+  <Route name="root" path="/" handler={Index}>
     <DefaultRoute name="home" handler={Home}/>
     <Route name="login" handler={Login}/>
     <Route name="register" handler={Register}/>

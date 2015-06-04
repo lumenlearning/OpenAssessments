@@ -6,7 +6,7 @@ describe('not_found', function() {
   it('renders a not found message', function() {
  
     var result = TestUtils.renderIntoDocument(<NotFound/>);
-    expect(result.getDOMNode().textContent).toEqual('Not Found');
+    expect(React.findDOMNode(result).textContent).toEqual('Not Found');
 
   });
 });

@@ -5,6 +5,8 @@ import Router         from 'react-router';
 import Routes         from './routes';
 import SettingsAction from './actions/settings';
 
+import ThemeManager   from 'material-ui/lib/styles/theme-manager';
+
 //Needed for onTouchTap
 //Can go away when react 1.0 release
 //Check this repo:
@@ -28,11 +30,26 @@ if (window.matchMedia("(max-width: 639px)").matches){
 // Initialize store singletons
 SettingsAction.load(window.DEFAULT_SETTINGS);
 
-Router.run(Routes, (Handler) => {
-  return React.render(<Handler />, document.body);
-});
+// Router.run(Routes, (Handler) => {
+//   return React.render(<Handler />, document.body);
+// });
 
 
+
+  Router
+    // Runs the router, similiar to the Router.run method. You can think of it as an 
+    // initializer/constructor method.
+    .create({
+      routes: Routes,
+      scrollBehavior: Router.ScrollToTopBehavior
+    })
+    // This is our callback function, whenever the url changes it will be called again. 
+    // Handler: The ReactComponent class that will be rendered  
+    .run(function (Handler) {
+      React.render(<Handler/>, document.body);
+    });
+
+    
 
 // Router.run(routes, (Handler) => {
 //   return React.render(<Handler routerState={state} deviceType={deviceType} environment="browser" />, document.body);

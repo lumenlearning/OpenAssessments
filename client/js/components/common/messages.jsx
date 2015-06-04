@@ -29,8 +29,8 @@ export default class Messages extends BaseComponent{
       return null;
     }
 
-    var messages = _.map(this.state.messages, function(message){
-      return <Message>{message}</Message>;
+    var messages = _.map(this.state.messages, function(message, i){
+      return <Message key={i}>{message}</Message>;
     });
 
     return (

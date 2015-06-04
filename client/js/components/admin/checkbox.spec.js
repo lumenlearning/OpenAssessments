@@ -3,21 +3,28 @@
 import React              from 'react';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import Checkbox           from './checkbox';
+import StubContext        from '../../../specs_support/stub_context'; 
 
 describe('checkbox', function() {
+  
+  var checkboxDOM;
   var checkbox;
 
   beforeEach(function() {
-    checkbox = TestUtils.renderIntoDocument(<Checkbox />);
+    var Subject = StubContext(Checkbox, {});
+    var result = TestUtils.renderIntoDocument(<Subject />);
+    checkboxDOM = React.findDOMNode(result);
+    checkbox = result.originalComponent();
   });
 
   it('renders the checkbox', function() {
-    expect(checkbox).toBeDefined();
+    expect(checkboxDOM).toBeDefined();
   });
 
   it('Calls handleCheck when the checkbox is checked', function() {
     spyOn(checkbox, 'handleCheck');
-    TestUtils.Simulate.change(checkbox.getDOMNode().firstChild, {"checked": true});
+    TestUtils.Simulate.change(checkboxDOM.firstChild, {"checked": true});
     expect(checkbox.handleCheck).toHaveBeenCalled();
   });
+
 });

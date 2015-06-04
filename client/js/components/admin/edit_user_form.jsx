@@ -4,27 +4,25 @@ import React                                                                    
 import User                                                                               from "../../stores/user";
 import { Paper, FlatButton, RaisedButton, FontIcon, Dialog, DropDownMenu, TextField }     from "material-ui";
 import AdminActions                                                                       from "../../actions/admin";
+import StubContext                                                                         from '../../../specs_support/stub_context'; 
 
-export default React.createClass({
 
-  propTypes:{
-    user: React.PropTypes.object.isRequired,
-    selectedIndex: React.PropTypes.element  //Find out the correct type
-  },
+class EditUserForm extends React.Component {
   
-  getInitialState(){
-    return {
+  constructor(){
+    super();
+    this.state = {
       dropDownItems: [
-      {payload: 0, text: 'End User', selectedIndex: 0},
-      {payload: 1, text: 'Instructor', selectedIndex: 1},
-      {payload: 2, text: 'Admin', selectedIndex: 2}
+        {payload: 0, text: 'End User', selectedIndex: 0},
+        {payload: 1, text: 'Instructor', selectedIndex: 1},
+        {payload: 2, text: 'Admin', selectedIndex: 2}
       ]
-    }
-  },
+    };
+  }
 
   editButtonClicked(){
     this.refs.information.show(); 
-  },
+  }
 
   updateInfo(){
     //Generate an action to reset the password and email the user to sign in again.
@@ -36,7 +34,7 @@ export default React.createClass({
     AdminActions.loadUsers(this.props.user.account_id, 1);
     //AdminActions.removeFromSelectedUsers(this.props.user);
     this.refs.information.dismiss();
-  },
+  }
 
   // if they didnt set a value then return the current value
   getNewValue(currentVal, newVal){
@@ -47,18 +45,14 @@ export default React.createClass({
       toReturn = newVal;
 
     return toReturn;
-  },
+  }
 
   render(){
-    var styles = {
-    
-    };
 
     var updateActions = [
       { text: 'Cancel' },
       { text: 'Update', onClick: this.updateInfo, ref: 'submit' }
     ];
-
 
     var title = "Edit Info for " + this.props.user.name;
     
@@ -77,6 +71,16 @@ export default React.createClass({
             <DropDownMenu ref="newRole" menuItems={this.state.dropDownItems} selectedIndex={this.props.selectedIndex} />
           </div>
         </Dialog>
-    )
+    );
+
   }
-});
+
+}
+
+EditUserForm.propTypes = {
+  user:          React.PropTypes.object.isRequired,
+  selectedIndex: React.PropTypes.number.isRequired
+};
+
+
+module.exports = EditUserForm;
