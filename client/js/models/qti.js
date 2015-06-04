@@ -95,11 +95,13 @@ export default class Qti{
 
   static parseAnswers(xml){
 
-    var fromXml = (xml, originalXml) => {
+    var fromXml = (xml) => {
       xml = $(xml);
+      var matchMaterial = xml.parent().parent().find('material')[0].textContent.trim();
       var answer = {
         id       : xml.attr('ident'),
         material : this.buildMaterial(xml.find('material').children()),
+        matchMaterial: matchMaterial, 
         xml      : xml
       };
       return answer;

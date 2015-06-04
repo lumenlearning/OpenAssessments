@@ -22,7 +22,7 @@ var _assessmentResult = null;
 var _assessmentState = NOT_LOADED;
 var _startedAt;
 var _selectedConfidenceLevel = 0;
-var _selectedAnswerId = null;
+var _selectedAnswerIds = [];
 var _answerMessageIndex = -1;
 var _sectionIndex = 0;
 var _itemIndex = 0;
@@ -32,11 +32,28 @@ function parseAssessmentResult(result){
 }
 
 function checkAnswer(){
-  if(_selectedAnswerId !== null)
-    return Assessment.checkAnswer(_assessmentXml, _selectedAnswerId, _selectedConfidenceLevel, _items[_itemIndex].question_type);
-  else 
+  if(_selectedAnswerIds !== null){
+    return Assessment.checkAnswer(_items[_itemIndex], _selectedAnswerIds);
+  } else{ 
     return null;
+  }
 }
+
+function selectAnswer(item){
+  if(_items[_itemIndex].question_type == "multiple_choice_question"){
+    // do something
+    _selectedAnswerIds = item.id;
+  } else if (_items[_itemIndex].question_type == "multiple_answers_question"){
+    if(_selectedAnswerIds.indexOf(item.id) > -1){
+      _selectedAnswerIds.splice(_selectedAnswerIds.indexOf(item.id), 1);
+    } else {
+    _selectedAnswerIds.push(item.id);
+    }
+  } else if (_items[_itemIndex].question_type == "matching_question"){
+    // do something
+  } 
+}
+
 
 // Extend User Store with EventEmitter to add eventing capabilities
 var AssessmentStore = assign({}, StoreCommon, {
@@ -78,7 +95,7 @@ var AssessmentStore = assign({}, StoreCommon, {
   },
 
   selectedAnswerId(){
-    return _selectedAnswerId;
+    return _selectedAnswerIds;
   },
 
   answerMessageIndex(){
@@ -140,7 +157,7 @@ Dispatcher.register(function(payload) {
       // Will need to advance sections and items.
       if(_itemIndex < _items.length - 1){ 
         _itemIndex++;
-        _selectedAnswerId = null;
+        _selectedAnswerIds = [];
         _answerMessageIndex = -1;  
       } 
       break;
@@ -148,13 +165,13 @@ Dispatcher.register(function(payload) {
     case Constants.ASSESSMENT_PREVIOUS_QUESTION:
       if(_itemIndex > 0){
         _itemIndex--;
-        _selectedAnswerId = null;
+        _selectedAnswerIds = [];
         _answerMessageIndex = -1;
       }
       break;
 
     case Constants.ANSWER_SELECTED:
-        _selectedAnswerId = payload.selectedAnswerId;
+      selectAnswer(payload.item);
       break;
 
     case Constants.EDX_LOAD_SECTION:

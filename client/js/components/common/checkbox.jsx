@@ -6,7 +6,7 @@ import AssessmentActions  from "../../actions/assessment";
 export default class CheckBox extends React.Component{
   
   answerSelected(){
-    AssessmentActions.answerSelected(this.props.item.id);
+    AssessmentActions.answerSelected(this.props.item);
   }
 
   render(){

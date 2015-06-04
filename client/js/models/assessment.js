@@ -70,18 +70,17 @@ export default class Assessment{
     return assessment;
   }
 
-  static checkAnswer(xml, selectedAnswerId, selectedConfidenceLevel, questionType){
+  static checkAnswer(item, selectedAnswers){
     // TODO implement checkAnswer, checkMultipleChoiceAnswer, and all other answer related methods.
     // There's still quite a bit of the ember code left. We'll need to pass values to this 
     // method rather than call things like settings.get. ItemResult.create should be moved to an action and use api.js
-    var assessmentXml = $(xml);
     var results;
-    switch(questionType){
+    switch(item.question_type){
       case 'multiple_choice_question':
-        results = this.checkMultipleChoiceAnswer(assessmentXml, selectedAnswerId);
+        results = this.checkMultipleChoiceAnswer(item, selectedAnswers);
         break;
-      case 'true_false_question':
-        results = this.checkMultipleChoiceAnswer(assessmentXml, selectedAnswerId);
+      case 'multiple_answers_question':
+        results = this.checkMultipleAnswerAnswer(item, selectedAnswers);
         break;
       case 'edx_drag_and_drop':
         results = this.checkEdXDragAndDrop();
@@ -116,83 +115,43 @@ export default class Assessment{
     return results;
   }
 
-  static checkMultipleChoiceAnswer(xml, selectedAnswerId){
-
-    var score = 0; // TODO we should get var names and types from the QTI. For now we just use the default 'score'
-    var feedbacks = [];
+  static checkMultipleChoiceAnswer(item, selectedAnswerId){
+    var feedbacks = "";
+    var score = "0";
     var correct = false;
-    var respconditions = xml.find('respcondition');
-    for (var i =0; i<respconditions.length; i++){
-      var condition = respconditions[i];
-      condition = $(condition);
-      var conditionMet = false;
-
-      if(condition.find('conditionvar > varequal').length){
-        var varequal = condition.find('conditionvar > varequal');
-
-        if(varequal.text() === selectedAnswerId){
-          conditionMet = true;
-        }
-      } else if(condition.find('conditionvar > unanswered').length){
-        if(selectedAnswerId === null){
-          conditionMet = true;
-        }
-      } else if(condition.find('conditionvar > not').length){
-        if(condition.find('conditionvar > not > varequal').length){
-          if(selectedAnswerId !== condition.find('conditionvar > not > varequal').text()){
-            conditionMet = true;
-          }
-        } else if(condition.find('conditionvar > not > unanswered').length) {
-          if(selectedAnswerId !== null){
-            conditionMet = true;
-          }
-        }
-      }
-
-      if(conditionMet){
-        var setvar = condition.find('setvar');
-        if(setvar.length > 0){
-          var setvarVal = parseFloat(setvar.text(), 10);
-          if(setvarVal > 0){
-            correct = true;
-            var action = setvar.attr('action');
-            if(action === 'Add'){
-              score += setvarVal;
-            } else if(action === 'Set'){
-              score = setvarVal;
-            }
-          }
-        }
-        var feedbackId = condition.find('displayfeedback').attr('linkrefid');
-        if(feedbackId){
-          var feedback = xml.find('itemfeedback[ident="' + feedbackId + '"]');
-          if(feedback && feedback.attr('view') && feedback.attr('view').length === 0 ||
-            feedback.attr('view') === 'All' ||
-            feedback.attr('view') === 'Candidate' ){  //All, Administrator, AdminAuthority, Assessor, Author, Candidate, InvigilatorProctor, Psychometrician, Scorer, Tutor
-            var result = Qti.buildMaterial(feedback.find('material').children());
-            if(feedbacks.indexOf(result) === -1){
-              feedbacks.push(result);
-            }
-          }
-        }
-      }
-
-      if(correct){
-        return {
-          feedbacks: feedbacks,
-          score: score,
-          correct: correct
-        };
-      }
-      //if(condition.attr('continue') === 'No'){ return false; }
+    if(selectedAnswerId == item.correct[0].id){
+      correct = true;
+      score = item.correct[0].score;
     }
-
     return {
       feedbacks: feedbacks,
       score: score,
       correct: correct
     };
+  }
 
+  static checkMultipleAnswerAnswer(item, selectedAnswerId){
+    var feedbacks; // implement feedbacks
+    var score;
+    var numOfAnswers = item.correct[0].id.length;
+    var numOfCorrectAnswers = 0;
+    var correct;
+    for(var i = 0; i < selectedAnswerId.length; i++){
+      for(var j = 0; j < numOfAnswers; j++){
+        if(selectedAnswerId[i] == item.correct[0].id[j]){
+          numOfCorrectAnswers++;
+        }
+      }
+    }
+    if(numOfAnswers == numOfCorrectAnswers){
+      correct = true;
+      score = "100";
+    }
+    return {
+      feedbacks: feedbacks,
+      score: score,
+      correct: correct
+    };
   }
 
   static checkEdXDragAndDrop(){
@@ -234,3 +193,72 @@ export default class Assessment{
   }
 
 }
+
+    // var score = 0; // TODO we should get var names and types from the QTI. For now we just use the default 'score'
+    // var feedbacks = [];
+    // var correct = false;
+    // var respconditions = xml.find('respcondition');
+    // for (var i =0; i<respconditions.length; i++){
+    //   var condition = respconditions[i];
+    //   condition = $(condition);
+    //   var conditionMet = false;
+
+    //   if(condition.find('conditionvar > varequal').length){
+    //     var varequal = condition.find('conditionvar > varequal');
+
+    //     if(varequal.text() === selectedAnswerId){
+    //       conditionMet = true;
+    //     }
+    //   } else if(condition.find('conditionvar > unanswered').length){
+    //     if(selectedAnswerId === null){
+    //       conditionMet = true;
+    //     }
+    //   } else if(condition.find('conditionvar > not').length){
+    //     if(condition.find('conditionvar > not > varequal').length){
+    //       if(selectedAnswerId !== condition.find('conditionvar > not > varequal').text()){
+    //         conditionMet = true;
+    //       }
+    //     } else if(condition.find('conditionvar > not > unanswered').length) {
+    //       if(selectedAnswerId !== null){
+    //         conditionMet = true;
+    //       }
+    //     }
+    //   }
+
+    //   if(conditionMet){
+    //     var setvar = condition.find('setvar');
+    //     if(setvar.length > 0){
+    //       var setvarVal = parseFloat(setvar.text(), 10);
+    //       if(setvarVal > 0){
+    //         correct = true;
+    //         var action = setvar.attr('action');
+    //         if(action === 'Add'){
+    //           score += setvarVal;
+    //         } else if(action === 'Set'){
+    //           score = setvarVal;
+    //         }
+    //       }
+    //     }
+    //     var feedbackId = condition.find('displayfeedback').attr('linkrefid');
+    //     if(feedbackId){
+    //       var feedback = xml.find('itemfeedback[ident="' + feedbackId + '"]');
+    //       if(feedback && feedback.attr('view') && feedback.attr('view').length === 0 ||
+    //         feedback.attr('view') === 'All' ||
+    //         feedback.attr('view') === 'Candidate' ){  //All, Administrator, AdminAuthority, Assessor, Author, Candidate, InvigilatorProctor, Psychometrician, Scorer, Tutor
+    //         var result = Qti.buildMaterial(feedback.find('material').children());
+    //         if(feedbacks.indexOf(result) === -1){
+    //           feedbacks.push(result);
+    //         }
+    //       }
+    //     }
+    //   }
+
+    //   if(correct){
+    //     return {
+    //       feedbacks: feedbacks,
+    //       score: score,
+    //       correct: correct
+    //     };
+    //   }
+    //   //if(condition.attr('continue') === 'No'){ return false; }
+    // }

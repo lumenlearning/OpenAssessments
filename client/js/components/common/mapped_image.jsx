@@ -21,3 +21,6 @@ export default class MappedImage extends React.Component{
 		)
 	}
 };
+MappedImage.propTypes = {
+	item: React.PropTypes.object.isRequired
+};

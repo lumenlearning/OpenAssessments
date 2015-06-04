@@ -65,7 +65,30 @@ export default class EdXItem{
   }
 
   static parseTargets(item){
+    item = $(item);
+    var targets = item.find('target').map((index, target)=>{
+      return {
+        id: target.getAttribute('id'),
+        xPos: target.getAttribute('x'),
+        yPos: target.getAttribute('y'),
+        width: target.getAttribute('w'),
+        height: target.getAttribute('h')
+      }
+    });
+    return targets;
+  }
 
+  static parseDraggableAnswers(item){
+    item = $(item);
+    var answers = item.find('answer').map((index, answer) => {
+      var content = answer.textContent;
+      content = content.replace(/([\s])+/g, "");  //Manhandles the Python to JSON
+      content = content.match(/{(.*?)}/g);
+      var data = content[0].replace(/(['])+/g, '"');
+      var json = JSON.parse(data);
+      return json;
+    });
+    return answers;
   }
 
   static parseRectCoords(item) {
@@ -75,18 +98,6 @@ export default class EdXItem{
     rectangle = rectangle.replace(/([-])+/g, ",");
     var coordArr = rectangle.split(',');
     return coordArr;
-  }
-
-  static parseDraggableAnswers(item){
-    item = $(item);
-    item.find('answer').map((index, answer) => {
-      var content = answer.textContent;
-      var startIndex = content.indexOf("{");
-      var endIndex = content.indexOf("}") + 1;
-      var subContent = content.substring(startIndex, endIndex);
-      return subContent
-
-    });
   }
 
   static parseAnswers(xml, questionType){
@@ -121,7 +132,6 @@ export default class EdXItem{
           correct  : item.getElementsByTagName("optioninput")[0].getAttribute('correct')
         }
       });
-
     } else if(questionType == "edx_text_input"){
       answers = xml.find('stringresponse').map((index, item) => {
         return {
@@ -136,12 +146,15 @@ export default class EdXItem{
         var draggables = EdXItem.parseDraggables(item);
         var targets = EdXItem.parseTargets(item);
         var correctAnswer = EdXItem.parseDraggableAnswers(item);
+        var type = $(item).find('target').length > 0 ? 'key' : 'index';
+        var dnd = $(item).find('drag_and_drop_input');
         return {
           id: index,
-          img: item.getAttribute('img'),
+          img: dnd.attr('img'),
           draggables: draggables,
           targets: targets,
-          correct: correctAnswer
+          correct: correctAnswer,
+          type : type
         }
       })
     } else if (questionType == "edx_image_mapped_input") {
