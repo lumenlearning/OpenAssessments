@@ -4,9 +4,48 @@ import React                from "react";
 import Messages             from "../common/messages";
 import LeftNav              from "./left_nav";
 import {RouteHandler}       from "react-router";
-import { AppCanvas, AppBar, IconButton } from "material-ui";
+//import { AppCanvas, AppBar, IconButton } from "material-ui";
 
-export default React.createClass({
+var mui = require('material-ui');
+var Colors = mui.Styles.Colors;
+var Typography = mui.Styles.Typography;
+var ThemeManager = new mui.Styles.ThemeManager();
+var { AppCanvas, AppBar, IconButton } = mui;
+
+class Page extends React.Component {
+
+  constructor() {
+    super();
+    this._onMenuIconButtonTouchTap = this._onMenuIconButtonTouchTap.bind(this);
+  }
+
+  getChildContext() {
+    return {
+      muiTheme: ThemeManager.getCurrentTheme()
+    }
+  }
+
+  getStyles() {
+    var darkWhite = Colors.darkWhite;
+    return {
+      footer: {
+        backgroundColor: Colors.grey900,
+        textAlign: 'center'
+      },
+      a: {
+        color: darkWhite
+      },
+      p: {
+        margin: '0 auto',
+        padding: '0',
+        color: Colors.lightWhite,
+        maxWidth: '335px'
+      },
+      iconButton: {
+        color: darkWhite
+      }
+    };
+  }
 
   render(){
 
@@ -42,10 +81,20 @@ export default React.createClass({
       </AppCanvas>
 
     );
-  },
+  }
 
-  _onMenuIconButtonTouchTap: function() {
+  _onMenuIconButtonTouchTap() {
     this.refs.leftNav.toggle();
   }
 
-});
+}
+
+Page.contextTypes = {
+  router: React.PropTypes.func
+};
+
+Page.childContextTypes = {
+  muiTheme: React.PropTypes.object
+};
+
+module.exports = Page;

@@ -3,14 +3,17 @@
 import React              from 'react';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import Logout             from './logout';
-import StubRouterContext  from '../../../specs_support/stub_router_context'; 
+import SettingsActions    from '../../actions/settings';
+import StubContext  from '../../../specs_support/stub_context'; 
 
 xdescribe('logout', function() {
   var Context;
   var logout;
 
+  helpStubAjax(SettingsActions);
+
   beforeEach(function(){
-    Context = StubRouterContext(Logout);
+    Context = StubContext(Logout);
     logout = TestUtils.renderIntoDocument(<Context />);
   });
   

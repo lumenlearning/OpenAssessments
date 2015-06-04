@@ -1,6 +1,9 @@
+"use strict";
+
 import React              from 'react';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import UserData           from './user_data';
+import StubContext  from '../../../specs_support/stub_context';
 
 describe('user_data', function() {
 
@@ -13,7 +16,8 @@ describe('user_data', function() {
   };
 
   it("renders the user's name", function() {
-    var result = TestUtils.renderIntoDocument(<UserData user={user} />);
+    var Subject = StubContext(UserData, { user: user });
+    var result = TestUtils.renderIntoDocument(<Subject />);
     expect(React.findDOMNode(result).textContent).toContain(`Name: ${user.name}`);
   });
   

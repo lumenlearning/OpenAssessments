@@ -1,6 +1,8 @@
-import React    from "react";
-import Router   from "react-router";
+"use strict";
 
+import React           from "react";
+import Router          from "react-router";
+import assign          from "object-assign";
 import SettingsStore   from "./settings";
 import SettingsActions from "../actions/settings";
 import Dispatcher      from "../dispatcher";

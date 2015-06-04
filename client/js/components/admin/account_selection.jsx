@@ -16,18 +16,19 @@ import UsersStore                                                               
 
 var Link = Router.Link;
 
+class AccountSelection extends React.Component {
 
-export default React.createClass({
-  contextTypes: {
-    router: React.PropTypes.func
-  },
+  constructor(){
+    super();
+    this.state = this.getState();
+  }
 
   getState(){
     return {
       accounts: AccountsStore.current(),
       router: this.context.router
     };
-  },
+  }
 
   getInitialState(){
     if(!UsersStore.loggedIn()){
@@ -41,24 +42,24 @@ export default React.createClass({
       AdminActions.loadAccounts();
     }
     return this.getState();
-  },
+  }
 
   // Method to update state based upon store changes
   storeChanged(){
     this.setState(this.getState());
-  },
+  }
 
   // Listen for changes in the stores
   componentDidMount(){
     AccountsStore.addChangeListener(this.storeChanged);
     ApplicationStore.addChangeListener(this.storeChanged);
-  },
+  }
 
   // Remove change listers from stores
   componentWillUnmount(){
     AccountsStore.removeChangeListener(this.storeChanged);
     ApplicationStore.removeChangeListener(this.storeChanged);
-  },
+  }
 
   render(){
     var styles = {
@@ -97,4 +98,12 @@ export default React.createClass({
       return <div />
     }
   }
-});
+
+}
+
+AccountSelection.contextTypes = {
+  router: React.PropTypes.func
+};
+
+module.exports = AccountSelection;
+

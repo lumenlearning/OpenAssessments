@@ -14,7 +14,7 @@ var DefaultRoute  = Router.DefaultRoute;
 var Redirect      = Router.Redirect;
 
 var adminRoutes = (
-  <Route handler={AdminPage}>
+  <Route name="root" path="/" handler={AdminPage}>
     <DefaultRoute name="dashboard" handler={AccountSelection}/>
   	<Route name="login" handler={Login}/>
 

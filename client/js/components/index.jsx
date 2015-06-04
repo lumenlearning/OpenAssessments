@@ -6,7 +6,10 @@ import {RouteHandler}       from "react-router";
 import BaseComponent        from "./base_component";
 import SettingsStore        from "../stores/settings";
 
-export default class Index extends BaseComponent{
+var mui = require('material-ui');
+var Colors = mui.Styles.Colors;
+var Typography = mui.Styles.Typography;
+var ThemeManager = new mui.Styles.ThemeManager();
 
   constructor(){
     super();
@@ -18,6 +21,34 @@ export default class Index extends BaseComponent{
     return {
       settings: SettingsStore.current()
     }
+  }
+
+  getChildContext() {
+    return {
+      muiTheme: ThemeManager.getCurrentTheme()
+    }
+  }
+
+  getStyles() {
+    var darkWhite = Colors.darkWhite;
+    return {
+      footer: {
+        backgroundColor: Colors.grey900,
+        textAlign: 'center'
+      },
+      a: {
+        color: darkWhite
+      },
+      p: {
+        margin: '0 auto',
+        padding: '0',
+        color: Colors.lightWhite,
+        maxWidth: '335px'
+      },
+      iconButton: {
+        color: darkWhite
+      }
+    };
   }
 
   componentDidMount(){  
@@ -36,3 +67,13 @@ export default class Index extends BaseComponent{
   }
 
 }
+
+Index.contextTypes = {
+  router: React.PropTypes.func
+};
+
+Index.childContextTypes = {
+  muiTheme: React.PropTypes.object
+};
+
+module.exports = Index;

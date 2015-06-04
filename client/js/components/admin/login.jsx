@@ -8,20 +8,17 @@ import _            from "lodash";
 import assign       from "object-assign";
 import { Paper, TextField, FlatButton, RaisedButton, FontIcon } from "material-ui";
 
-export default React.createClass({
-  contextTypes: {
-    router: React.PropTypes.func
-  },
+class Login extends React.Component {
 
-  getInitialState(){
+  constructor(){
+    super();
     if(UserStore.loggedIn()){
       this.context.router.transitionTo("dashboard");
-      return { validations: {} }
     }
-    return {
+    this.state = {
       validations: {}
     };
-  },
+  }
 
     // Method to update state based upon store changes
   storeChanged(){
@@ -29,18 +26,18 @@ export default React.createClass({
       this.context.router.transitionTo("dashboard");
       return null;
     }
-  },
+  }
 
   // Listen for changes in the stores
   componentDidMount(){
     UserStore.addChangeListener(this.storeChanged);
 
-  },
+  }
 
   // Remove change listers from stores
   componentWillUnmount(){
     UserStore.removeChangeListener(this.storeChanged);
-  },
+  }
 
   handleLogin(e){
     e.preventDefault();
@@ -52,13 +49,13 @@ export default React.createClass({
         }
       });
     }
-  },
+  }
 
   validateAll(){
     return _.every([
       this.validateEmail()
     ], (v)=> { return v; });
-  },
+  }
 
   validate(isValid, invalidState, emptyState){
     if(!isValid){
@@ -67,7 +64,7 @@ export default React.createClass({
       this.setState(assign(this.state.validations, emptyState));
     }
     return isValid;
-  },
+  }
 
   validateEmail(e){
     return this.validate(
@@ -75,9 +72,9 @@ export default React.createClass({
       { email: "Invalid email" },
       { email: "" }
     );
-  },
+  }
 
-  render: function(){
+  render(){
     var styles = {
       paper: {
         backgroundColor: "white"
@@ -102,4 +99,10 @@ export default React.createClass({
         </Paper>
       </div>);
   }
-});
+}
+
+Login.contextTypes = {
+  router: React.PropTypes.func
+};
+
+module.exports = Login;

@@ -11,7 +11,12 @@ import AdminActions                                                             
 import ApplicationStore                                                                 from "../../stores/application";
 import AccountsStore                                                                    from "../../stores/accounts";
 
-export default React.createClass({
+class AccountDashboard extends React.Component {
+
+  constructor(){
+    super();
+    this.state = this.getState();
+  }
 
   propTypes: {
     params: React.PropTypes.object.isRequired
@@ -22,30 +27,30 @@ export default React.createClass({
       users: AccountsStore.currentUsers(),
       currentAccount: AccountsStore.accountById(this.props.params.accountId)
     };
-  },
+  }
 
   getInitialState(){
     var state = this.getState();
     AdminActions.loadUsers(this.props.params.accountId);
     return this.getState();
-  },
+  }
 
   // Method to update state based upon store changes
   storeChanged(){
     this.setState(this.getState());
-  },
+  }
 
   // Listen for changes in the stores
   componentDidMount(){
     AccountsStore.addChangeListener(this.storeChanged);
     ApplicationStore.addChangeListener(this.storeChanged);
-  },
+  }
 
   // Remove change listers from stores
   componentWillUnmount(){
     AccountsStore.removeChangeListener(this.storeChanged);
     ApplicationStore.removeChangeListener(this.storeChanged);
-  },
+  }
 
   render(){
 
@@ -63,4 +68,11 @@ export default React.createClass({
       )
   }
 
-});
+}
+
+AccountDashboard.propTypes = {
+  params: React.PropTypes.object.isRequired
+};
+
+module.exports = AccountDashboard;
+
