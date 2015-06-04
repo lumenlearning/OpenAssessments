@@ -27,7 +27,6 @@ export default {
   },
 
   edXLoadSection(section){
-    console.log(section.xml)
     Dispatcher.dispatch({action: Constants.EDX_LOAD_SECTION, section: section});
   },
 
