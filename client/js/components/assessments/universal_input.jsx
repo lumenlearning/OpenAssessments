@@ -49,9 +49,7 @@ export default class UniversalInput extends React.Component{
         return <Option item={item} name="answer-option"/>;
       });
     } else if(this.props.item.question_type == "matching_question"){
-      items = this.props.item.answers.map((item) => {
-        return <Matching item={item} name="answer-option"/>;
-      });
+      items = <Matching item={this.props.item} name="answer-option"/>;
     }
     else if(this.props.item.question_type == "edx_numerical_input" || this.props.item.question_type == "edx_text_input"){
       items = this.props.item.answers.map((item) => {
