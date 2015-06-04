@@ -5,34 +5,34 @@ import {Link}       from 'react-router';
 import UserActions  from "../../actions/user";
 import UserStore    from "../../stores/user";
 
-export default React.createClass({
+class Logout extends React.Component{
   
+  constructor(){
+    super();
+    UserActions.logout();
+    this.state = this.getState();
+  }
+
   getState(){
     return {
       logoutState: UserStore.logoutStatus()
     }
-  },
+  }
 
-  getInitialState(){
-    UserActions.logout();
-    return this.getState();
-  },
-
-    // Method to update state based upon store changes
+  // Method to update state based upon store changes
   storeChanged(){
     this.setState(this.getState());
-  },
+  }
 
   // Listen for changes in the stores
   componentDidMount(){
     UserStore.addChangeListener(this.storeChanged);
-
-  },
+  }
 
   // Remove change listers from stores
   componentWillUnmount(){
     UserStore.removeChangeListener(this.storeChanged);
-  },
+  }
 
   render(){
     var content;
@@ -53,4 +53,6 @@ export default React.createClass({
       {content}
     )
   }
-});
+}
+
+module.exports = Logout;
