@@ -4,8 +4,6 @@ import React                                                                    
 import User                                                                               from "../../stores/user";
 import { Paper, FlatButton, RaisedButton, FontIcon, Dialog, DropDownMenu, TextField }     from "material-ui";
 import AdminActions                                                                       from "../../actions/admin";
-import StubContext                                                                         from '../../../specs_support/stub_context'; 
-
 
 class EditUserForm extends React.Component {
   

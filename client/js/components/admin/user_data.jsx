@@ -5,34 +5,30 @@ import User                                                                     
 import { Paper, FlatButton, RaisedButton, FontIcon, Dialog, DropDownMenu, TextField }     from "material-ui";
 import AdminActions                                                                       from "../../actions/admin";
 
-export default React.createClass({
+class UserData extends React.Component{
 
-  propTypes: {
-    user: React.PropTypes.object.isRequired
-  },
-  
   editButtonClicked(){
     // open dialog to edit information 
     this.refs.information.show(); 
-  },
+  }
 
   resetButtonClicked(){
     //
     this.refs.password.show();
-  },
+  }
 
   deleteButtonClicked(){
     this.refs.deleteUser.show();
-  },
+  }
 
   deleteUser(){
     this.refs.deleteUser.dismiss();
-  },
+  }
 
   resetPassword(){
     //Generate an action to reset the password and email the user to sign in again.
     this.refs.password.dismiss();
-  },
+  }
 
   updateInfo(){
     //Generate an action to reset the password and email the user to sign in again.
@@ -46,7 +42,7 @@ export default React.createClass({
 
     AdminActions.updateUser(this.props.user.accountID, this.props.user.userID, newInfo);
     this.refs.information.dismiss();
-  },
+  }
 
   render(){
     var styles = {
@@ -130,4 +126,12 @@ export default React.createClass({
       </div>
     )
   }
-});
+}
+
+UserData.propTypes = {
+  user: React.PropTypes.object.isRequired
+};
+
+module.exports = UserData;
+
+  
