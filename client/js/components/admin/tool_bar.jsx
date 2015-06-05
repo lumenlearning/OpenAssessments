@@ -7,12 +7,12 @@ import Router                                                                 fr
 import { Toolbar, ToolbarGroup, DropDownMenu, RaisedButton, TextField, Paper} from "material-ui";
 import AdminActions                                                           from "../../actions/admin";
 
-export default React.createClass({
+class ToolBar extends React.Component {
 
   onToolbarChange(e, index, payload){
     // Generate an action
     AdminActions.changeMainTab(payload);
-  },
+  }
 
   render() {
     var dropDownItems = [
@@ -60,4 +60,6 @@ export default React.createClass({
     );
   }
 
-});
+}
+
+module.exports = ToolBar;
