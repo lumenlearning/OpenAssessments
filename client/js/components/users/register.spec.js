@@ -3,9 +3,9 @@
 import React              from 'react';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import Register           from './register';
-import StubRouterContext  from '../../support/stub_router_context';
-import Utils              from '../../support/utils';
-import UserActions        from '../../../client/js/actions/user';
+import StubContext        from '../../../specs_support/stub_context';
+import Utils              from '../../../specs_support/utils';
+import UserActions        from '../../actions/user';
 
 describe('register', function() {
   var register;
@@ -14,7 +14,7 @@ describe('register', function() {
 
   beforeEach(function() {
     // Render component wrapped in router context
-    Subject = StubRouterContext(Register, {});
+    Subject = StubContext(Register, {});
     register = TestUtils.renderIntoDocument(<Subject/>);
     textFields = TestUtils.scryRenderedDOMComponentsWithClass(register, 'mui-text-field');
   });
