@@ -4,7 +4,6 @@ import React                from "react";
 import Messages             from "../common/messages";
 import LeftNav              from "./left_nav";
 import {RouteHandler}       from "react-router";
-//import { AppCanvas, AppBar, IconButton } from "material-ui";
 
 var mui = require('material-ui');
 var Colors = mui.Styles.Colors;
