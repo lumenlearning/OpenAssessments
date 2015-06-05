@@ -111,7 +111,19 @@ describe('Assessment Questions', ()=> {
     );
   });
 
-  xdescribe('Image Mapped Input', ()=>{});
+  describe('Image Mapped Input', ()=>{
+
+    beforeEach(()=>{
+      item.question_type = 'edx_image_mapped_input';
+      item.answers = [{ id: 0, material:['100','100','100','100'], coordinates: ['200','200','200','200'], height: 100, width: 100}];
+      result = TestUtils.renderIntoDocument(<UniversalInput item={item} />);
+    });
+    it('Renders the image to the page', ()=>{
+      expect(TestUtils.scryRenderedDOMComponentsWithTag(result, 'img')).toBeDefined();
+    });
+
+  });
+
   xdescribe('Problem with Adaptive Hint', ()=>{});
 
   describe('Multiple Answer', ()=>{
