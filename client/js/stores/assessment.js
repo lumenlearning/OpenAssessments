@@ -6,8 +6,8 @@ import Utils          from "../utils/utils";
 import StoreCommon    from "./store_common";
 import assign         from "object-assign";
 import Assessment     from "../models/assessment";
-import SettingsStore  from "./settings"
-
+import SettingsStore  from "./settings";
+import EdX            from "../models/edx";
 const INVALID = -1;
 const NOT_LOADED = 0;
 const LOADING = 1;
@@ -187,7 +187,7 @@ Dispatcher.register(function(payload) {
 
     case Constants.EDX_LOAD_SECTION:
       if(_assessment){
-        EdX.findAndSetObject(_assessment.sections, payload.item);
+        //EdX.findAndSetObject(_assessment.sections, payload.item);
       }
       break;
     case Constants.EDX_LOAD_ITEM:
