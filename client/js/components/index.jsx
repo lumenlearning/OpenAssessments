@@ -10,7 +10,7 @@ var Colors = mui.Styles.Colors;
 var Typography = mui.Styles.Typography;
 var ThemeManager = new mui.Styles.ThemeManager();
 
-var { AppBar, AppCanvas, Menu, IconButton } = mui;
+var { AppCanvas } = mui;
 
 class Index extends React.Component {
 
@@ -22,28 +22,6 @@ class Index extends React.Component {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     }
-  }
-
-  getStyles() {
-    var darkWhite = Colors.darkWhite;
-    return {
-      footer: {
-        backgroundColor: Colors.grey900,
-        textAlign: 'center'
-      },
-      a: {
-        color: darkWhite
-      },
-      p: {
-        margin: '0 auto',
-        padding: '0',
-        color: Colors.lightWhite,
-        maxWidth: '335px'
-      },
-      iconButton: {
-        color: darkWhite
-      }
-    };
   }
 
   render(){
