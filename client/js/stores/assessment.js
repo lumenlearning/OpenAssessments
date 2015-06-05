@@ -175,8 +175,9 @@ Dispatcher.register(function(payload) {
       break;
 
     case Constants.EDX_LOAD_SECTION:
-      if(_assessment)
-        _assessment.sections.push(payload.item)
+      if(_assessment){
+        EdX.findAndSetObject(_assessment.sections, payload.item);
+      }
       break;
     case Constants.EDX_LOAD_ITEM:
         _items.push(payload.item);

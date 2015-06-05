@@ -3,8 +3,8 @@ import $   from "jquery";
 
 export default class EdXItem{
 
-  static fromEdX(id, url, xml){
-    xml = $(xml.text).find('problem').addBack('problem');
+  static fromEdX(id, url, res){
+    var xml = $(res.text || res.xhr.responseText).find('problem').addBack('problem');
     if(xml.length > 0){
       var item = {
         id       : id,
