@@ -3,7 +3,7 @@
 import React        from "react";
 import { Link }     from "react-router";
 
-export default React.createClass({
+export default class Dashboard extends React.Component{
   render(){
     return (<div>
       <div className="page-header text-center">
@@ -12,4 +12,5 @@ export default React.createClass({
       </div>
     </div>);
   }
-});
+};
+module.export = Dashboard;
