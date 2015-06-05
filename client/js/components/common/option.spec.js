@@ -16,4 +16,11 @@ describe('option', function() {
     expect(React.findDOMNode(result).textContent).toContain(item.material[2]);
   });
 
+  it('calls the answerSelected function when change', () => {
+    spyOn(result, "answerSelected");
+    var select = TestUtils.findRenderedDOMComponentWithTag(result, 'select');
+    TestUtils.Simulate.change(select);
+    expect(result.answerSelected).toHaveBeenCalled();
+  });
+
 });

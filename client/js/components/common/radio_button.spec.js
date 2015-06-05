@@ -18,4 +18,11 @@ describe('radio button', function() {
     expect(React.findDOMNode(result).childNodes[0].childNodes[0].attributes.name.value).toContain("answer-radio");
   });
 
+  it('calls the answerSelected function on click', () => {
+    spyOn(result, "answerSelected");
+    var radio = TestUtils.findRenderedDOMComponentWithTag(result, 'input');
+    TestUtils.Simulate.click(radio);
+    expect(result.answerSelected).toHaveBeenCalled();
+  });
+
 });
