@@ -51,7 +51,18 @@ function selectAnswer(item){
     }
   } else if (_items[_itemIndex].question_type == "matching_question"){
     // do something
+    updateMatchingAnswer(item);
   } 
+}
+
+function updateMatchingAnswer(item){
+  for (var i = 0; i < _selectedAnswerIds.length; i++){
+    if(_selectedAnswerIds[i].answerNumber == item.answerNumber){
+      _selectedAnswerIds[i].selectedAnswer = item.selectedAnswer;
+      return;
+    }
+  }
+ _selectedAnswerIds.push(item);
 }
 
 

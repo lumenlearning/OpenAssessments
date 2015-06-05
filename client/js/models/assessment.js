@@ -80,6 +80,9 @@ export default class Assessment{
       case 'multiple_answers_question':
         results = this.checkMultipleAnswerAnswer(item, selectedAnswers);
         break;
+      case 'matching_question':
+        results = this.checkMatchingAnswer(item, selectedAnswers);
+        break;
       case 'edx_drag_and_drop':
         results = this.checkEdXDragAndDrop();
         break;
@@ -133,7 +136,7 @@ export default class Assessment{
     var score;
     var numOfAnswers = item.correct[0].id.length;
     var numOfCorrectAnswers = 0;
-    var correct;
+    var correct = false;
     for(var i = 0; i < selectedAnswerId.length; i++){
       for(var j = 0; j < numOfAnswers; j++){
         if(selectedAnswerId[i] == item.correct[0].id[j]){
@@ -150,6 +153,45 @@ export default class Assessment{
       score: score,
       correct: correct
     };
+  }
+
+  static checkMatchingAnswer(item, selectedAnswerId){
+    var feedbacks = ""; // implement feedbacks
+    var score = "0";
+    var numOfAnswers = item.correct.length
+    var numOfCorrectAnswers = 0;
+    var correct = false;
+    // if they didnt match all of the answers then return false.
+    if(item.correct.length > selectedAnswerId.length){
+      return false;
+    }
+
+    for(var i = 0; i < numOfAnswers; i++){
+      for (var j = 0; j < item.answers.length; j++){
+        if(item.correct[i].id == item.answers[j].id){
+          for(var k = 0; k < selectedAnswerId.length; k++){
+            if(selectedAnswerId[k].answerNumber == "answer-" + i){
+              if(selectedAnswerId[k].selectedAnswer.trim() == item.answers[j].material.trim()){
+                numOfCorrectAnswers++;
+              }
+            }
+          }
+          break;
+        }
+      }
+    }
+    if(numOfCorrectAnswers == numOfAnswers){
+      correct = true;
+      score = 100;
+    }
+
+    return {
+      feedbacks: feedbacks,
+      score: score,
+      correct: correct
+    };
+
+
   }
 
   static checkEdXDragAndDrop(){

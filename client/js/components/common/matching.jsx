@@ -6,14 +6,16 @@ import AssessmentActions  from "../../actions/assessment";
 export default class Matching extends React.Component{
 
   answerSelected(e, key){
-    console.log(e);
-    var target = e.target.parentNode.textContent;
-    var selectedAnswer = e.currentTarget.attributes.value;
+    var target = e.target.parentNode.firstChild.textContent;
+    var selectedAnswer = e.currentTarget.value;
+    var answerNumber = e.currentTarget.name;
     var item = {
       id: target,
       selectedAnswer: selectedAnswer,
+      answerNumber: answerNumber,
       item: this.props.item
     }
+
     AssessmentActions.answerSelected(item);
   }
 
@@ -46,7 +48,8 @@ export default class Matching extends React.Component{
       items.push(item);
     }
     var materialItems = items.map((item, index)=>{
-      return <div>{materialName[index]}<select onChange={(e, key) => {this.answerSelected(e, key)}}><option>Select Answer</option>{item.answers.map((answer)=>{
+      var ref = "answer-" + index;
+      return <div>{materialName[index]}<select name={ref} onChange={(e, key) => {this.answerSelected(e, key)}}><option>[Select Answer]</option>{item.answers.map((answer)=>{
         return <option>{answer.material}</option>
       })}</select></div>
     })
