@@ -47,7 +47,7 @@ export default class Matching extends React.Component{
       items.push(item);
     }
     var materialItems = items.map((item, index)=>{
-      return <div>{materialName[index]}<select onChange={(e, key) => {this.answerSelected(e, key)}}>{item.answers.map((answer)=>{
+      return <div>{materialName[index]}<select onChange={(e, key) => {this.answerSelected(e, key)}}><option>Select Answer</option>{item.answers.map((answer)=>{
         return <option>{answer.material}</option>
       })}</select></div>
     })
