@@ -6,16 +6,28 @@ describe('matching', function() {
 
   var item = {
     id: 1,
-    material: "test,test2,test3",
-    matchMaterial: "salad"
+    material: "matching",
+    answers: [{
+      id: "0",
+      matchMaterial: "test",
+      material: "match this",
+    },
+    {
+      id: "1",
+      matchMaterial: "test",
+      material: "match this also",
+    }],
+    correct: [{
+      id: "0",
+    }]
   };
   var result = TestUtils.renderIntoDocument(<Matching item={item} name="answer-option" />);
 
   it('renders the dropdown items', function() {
     expect(React.findDOMNode(result).textContent).toContain("test");
-    expect(React.findDOMNode(result).textContent).toContain("test2");
-    expect(React.findDOMNode(result).textContent).toContain("test3");
-    expect(React.findDOMNode(result).textContent).toContain("salad");
+    expect(React.findDOMNode(result).textContent).toContain("match this");
+    expect(React.findDOMNode(result).textContent).toContain("match this also");
+  
   });
 
 });

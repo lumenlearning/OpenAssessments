@@ -14,7 +14,6 @@ export default class Matching extends React.Component{
       selectedAnswer: selectedAnswer,
       item: this.props.item
     }
-    debugger;
     AssessmentActions.answerSelected(item);
   }
 
