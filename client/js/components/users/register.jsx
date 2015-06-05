@@ -8,13 +8,12 @@ import _            from "lodash";
 import assign       from "object-assign";
 import { Paper, TextField, FlatButton, RaisedButton, FontIcon } from "material-ui";
 
-export default React.createClass({
+class Register extends React.Component {
 
-  getInitialState(){
-    return {
-    validations: {}
-    };
-  },
+  constructor(){
+    super()
+    this.state.validations = {};
+  }
 
   validateEmail(e){
     return this.validate(
@@ -22,7 +21,7 @@ export default React.createClass({
       { email: "Invalid email" },
       { email: "" }
     );
-  },
+  }
 
   validatePassword(e){
     return this.validate(
@@ -30,7 +29,7 @@ export default React.createClass({
       { password: "Password must be at least 5 characters" },
       { password: "" }
     );
-  },
+  }
 
   validateConfirmPassword(){
     return this.validate(
@@ -38,7 +37,7 @@ export default React.createClass({
       { confirmPassword: "Passwords do not match" },
       { confirmPassword: "" }
     );
-  },
+  }
 
   validate(isValid, invalidState, emptyState){
     if(!isValid){
@@ -47,7 +46,7 @@ export default React.createClass({
       this.setState(assign(this.state.validations, emptyState));
     }
     return isValid;
-  },
+  }
 
   validateAll(){
     return _.every([
@@ -55,7 +54,7 @@ export default React.createClass({
       this.validatePassword(),
       this.validateConfirmPassword()
     ], (v)=> { return v; });
-  },
+  }
 
   handleRegister(e){
     e.preventDefault();
@@ -65,7 +64,7 @@ export default React.createClass({
         password: this.refs.password.getValue()
       });
     }
-  },
+  }
 
   render(){
     return (<div>
@@ -83,5 +82,6 @@ export default React.createClass({
       </Paper>
     </div>);
   }
+}
 
-});
+module.exports = Register;
