@@ -1,14 +1,17 @@
 "use strict";
 
-import React        from 'react';
-import {Link}       from 'react-router';
-import UserActions  from "../../actions/user";
-import UserStore    from "../../stores/user";
+import React         from 'react';
+import {Link}        from 'react-router';
+import BaseComponent from "../base_component";
+import UserActions   from "../../actions/user";
+import UserStore     from "../../stores/user";
 
-class Logout extends React.Component{
-  
+class Logout extends BaseComponent {
+
   constructor(){
     super();
+
+    this.stores = [UserStore];
     UserActions.logout();
     this.state = this.getState();
   }
@@ -16,42 +19,27 @@ class Logout extends React.Component{
   getState(){
     return {
       logoutState: UserStore.logoutStatus()
-    }
-  }
-
-  // Method to update state based upon store changes
-  storeChanged(){
-    this.setState(this.getState());
-  }
-
-  // Listen for changes in the stores
-  componentDidMount(){
-    UserStore.addChangeListener(this.storeChanged);
-  }
-
-  // Remove change listers from stores
-  componentWillUnmount(){
-    UserStore.removeChangeListener(this.storeChanged);
+    };
   }
 
   render(){
     var content;
-    if(this.state.logoutState == 1){
-      return <h3>One Moment</h3>
-    } else if (this.state.login == 2) {
-      return ( 
+    if (this.state.logoutState === 1) {
+      return <h3>One Moment</h3>;
+    } else if (this.state.logoutState === 2) {
+      return (
         <div>
           <h2>You have successfully logged out</h2>
           <Link to="login">Home</Link>
-        </div> 
-      )
+        </div>
+      );
     } else {
-      return <h3>There was an error logging out, please try again</h3>
+      return <h3>There was an error logging out, please try again</h3>;
     }
 
     return (
       {content}
-    )
+    );
   }
 }
 
