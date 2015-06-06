@@ -1,52 +1,78 @@
 "use strict";
 
 import React                from "react";
-import User                 from "../../stores/user";
-import StoreKeeper          from "../mixins/store_keeper";
+import UserStore            from "../../stores/user";
+import BaseComponent        from "../base_component";
 import Router               from "react-router";
-import { LeftNav } from "material-ui";
+import { LeftNav }          from "material-ui";
 
-export default React.createClass({
+class LeftNavigation extends BaseComponent {
 
-  mixins: [StoreKeeper, Router.Navigation],
+  constructor() {
+    super();
 
-  statics: {
-    stores: [User],    // Subscribe to changes in the messages store
-    getState: () => {  // Method to retrieve state from stores
+    this.stores = [UserStore];
+    this.state = this.getState();
 
-      let loggedIn = User.loggedIn();
+    this._bind("_getSelectedIndex", "toggle", "_onLeftNavChange", "_onHeaderClick");
+    this.selectedIndex = null;
+  }
 
-      let menuItems = [
-        { route: 'home', text: 'Home' }
-      ];
+  getState(){
+    var loggedIn = UserStore.loggedIn();
 
-      if(loggedIn){
-        menuItems.push({ route: 'logout', text: 'Logout' });
-        menuItems.push({ route: 'dashboard', text: 'Dashboard' });
-        menuItems.push({ route: 'connections', text: 'Connections' });
-      } else {
-        menuItems.push({ route: 'login', text: 'Sign In' });
-        menuItems.push({ route: 'register', text: 'Sign Up' });
-      }
+    var menuItems = [
+      { route: 'home', text: 'Home' }
+    ];
 
-      return {
-        loggedIn: loggedIn,
-        menuItems: menuItems
-      };
-
+    if (loggedIn) {
+      menuItems.push({ route: 'logout', text: 'Logout' });
+      menuItems.push({ route: 'dashboard', text: 'Dashboard' });
+      menuItems.push({ route: 'connections', text: 'Connections' });
+    } else {
+      menuItems.push({ route: 'login', text: 'Sign In' });
+      menuItems.push({ route: 'register', text: 'Sign Up' });
     }
-  },
 
-  getInitialState: function() {
     return {
-      selectedIndex: null
+      loggedIn: loggedIn,
+      menuItems: menuItems
     };
-  },
+  }
 
-  render: function() {
+  toggle() {
+    this.refs.leftNav.toggle();
+  }
 
+  _getSelectedIndex() {
+    var currentItem;
 
-    var header = <div className="logo" onClick={this._onHeaderClick}>Home</div>;
+    for (var i = this.state.menuItems.length - 1; i >= 0; i--) {
+      currentItem = this.state.menuItems[i];
+      if (currentItem.route && this.context.router.isActive(currentItem.route)) return i;
+    }
+  }
+
+  _onLeftNavChange(e, key, payload) {
+    this.context.router.transitionTo(payload.route);
+  }
+
+  _onHeaderClick() {
+    this.context.router.transitionTo('root');
+    this.refs.leftNav.close();
+  }
+
+  getStyles() {
+    return {
+      logoStyle: {
+        marginTop: '20px'
+      }
+    };
+  }
+
+  render() {
+    var styles = this.getStyles();
+    var header = <div style={styles.logoStyle} className="logo" onClick={(e) => this._onHeaderClick(e)}>Home</div>;
 
     return (
       <LeftNav
@@ -56,30 +82,14 @@ export default React.createClass({
         header={header}
         menuItems={this.state.menuItems}
         selectedIndex={this._getSelectedIndex()}
-        onChange={this._onLeftNavChange} />
+        onChange={(e, key, payload) => this._onLeftNavChange(e, key, payload)} />
     );
-  },
-
-  toggle: function() {
-    this.refs.leftNav.toggle();
-  },
-
-  _getSelectedIndex: function() {
-    var currentItem;
-
-    for (var i = this.state.menuItems.length - 1; i >= 0; i--) {
-      currentItem = this.state.menuItems[i];
-      if (currentItem.route && this.context.router.isActive(currentItem.route)) return i;
-    }
-  },
-
-  _onLeftNavChange: function(e, key, payload) {
-    this.transitionTo(payload.route);
-  },
-
-  _onHeaderClick: function() {
-    this.transitionTo('root');
-    this.refs.leftNav.close();
   }
 
-});
+}
+
+LeftNavigation.contextTypes = {
+  router: React.PropTypes.func.isRequired
+};
+
+module.exports = LeftNavigation;
