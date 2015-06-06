@@ -12,11 +12,13 @@
   "globals": {
     "describe": true,
     "beforeEach": true,
+    "afterEach": true,
     "it": true,
     "expect": true,
     "xit": true,
     "spyOn": true,
-    "jasmine": true
+    "jasmine": true,
+    "module": true
   },
   "globalstrict": true,
   "quotmark": false,
