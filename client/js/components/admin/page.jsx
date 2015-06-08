@@ -4,7 +4,6 @@ import React                from "react";
 import Messages             from "../common/messages";
 import LeftNav              from "./left_nav";
 import {RouteHandler}       from "react-router";
-//import { AppCanvas, AppBar, IconButton } from "material-ui";
 
 var mui = require('material-ui');
 var Colors = mui.Styles.Colors;
@@ -22,33 +21,14 @@ class Page extends React.Component {
   getChildContext() {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
-    }
-  }
-
-  getStyles() {
-    var darkWhite = Colors.darkWhite;
-    return {
-      footer: {
-        backgroundColor: Colors.grey900,
-        textAlign: 'center'
-      },
-      a: {
-        color: darkWhite
-      },
-      p: {
-        margin: '0 auto',
-        padding: '0',
-        color: Colors.lightWhite,
-        maxWidth: '335px'
-      },
-      iconButton: {
-        color: darkWhite
-      }
     };
   }
 
-  render(){
+  _onMenuIconButtonTouchTap() {
+    this.refs.leftNav.toggle();
+  }
 
+  render(){
     var title = "Admin";
 
     var githubButton = (
@@ -64,7 +44,7 @@ class Page extends React.Component {
 
         <AppBar
           className="mui-dark-theme"
-          onMenuIconButtonTouchTap={this._onMenuIconButtonTouchTap}
+          onLeftIconButtonTouchTap={(e) => this._onMenuIconButtonTouchTap(e)}
           title={title}
           zDepth={1}>
           {githubButton}
@@ -82,11 +62,6 @@ class Page extends React.Component {
 
     );
   }
-
-  _onMenuIconButtonTouchTap() {
-    this.refs.leftNav.toggle();
-  }
-
 }
 
 Page.contextTypes = {

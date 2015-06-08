@@ -1,67 +1,70 @@
 "use strict";
 
-import React                                                                            from "react";
-import { Link }                                                                         from "react-router";
-import Validator                                                                        from "validator";
-import UserActions                                                                      from "../../actions/user";
-import _                                                                                from "lodash";
-import assign                                                                           from "object-assign";
-import { Paper, TextField, FlatButton, RaisedButton, FontIcon}                          from "material-ui";
-import AdminActions                                                                     from "../../actions/admin";
-import ApplicationStore                                                                 from "../../stores/application";
-import AccountsStore                                                                    from "../../stores/accounts";
+import React            from "react";
+import { Link }         from "react-router";
+import Validator        from "validator";
+import UserActions      from "../../actions/user";
+import _                from "lodash";
+import assign           from "object-assign";
+import BaseComponent    from "../base_component";
+import AdminActions     from "../../actions/admin";
+import ApplicationStore from "../../stores/application";
+import AccountsStore    from "../../stores/accounts";
+import { Paper, TextField, FlatButton, RaisedButton, FontIcon}  from "material-ui";
 
-class AccountDashboard extends React.Component {
+class AccountDashboard extends BaseComponent {
 
-  constructor(){
-    super();
-    this.state = this.getState();
+  constructor(props, context){
+    super(props, context);
+
+    this.stores = [ApplicationStore, AccountsStore];
+    this.state = this.getState(props);
+
+    AdminActions.loadUsers(props.params.accountId);
+    if(this.state.currentAccount === undefined){
+      AdminActions.loadAccounts();
+    }
   }
 
-  getState(){
+  getState(props){
+    var accountId;
+    if (props) {
+      accountId = props.params.accountId;
+    } else {
+      accountId = this.props.params.accountId;
+    }
+
+    var currentAccountName;
+    var currentAccount = AccountsStore.accountById(accountId);
+    if (currentAccount) {
+      currentAccountName = currentAccount.name;
+    }
+
     return {
       users: AccountsStore.currentUsers(),
-      currentAccount: AccountsStore.accountById(this.props.params.accountId)
+      currentAccount: currentAccount,
+      currentAccountName: currentAccountName
     };
   }
 
-  getInitialState(){
-    var state = this.getState();
-    AdminActions.loadUsers(this.props.params.accountId);
-    return this.getState();
-  }
-
-  // Method to update state based upon store changes
-  storeChanged(){
-    this.setState(this.getState());
-  }
-
-  // Listen for changes in the stores
-  componentDidMount(){
-    AccountsStore.addChangeListener(this.storeChanged);
-    ApplicationStore.addChangeListener(this.storeChanged);
-  }
-
-  // Remove change listers from stores
-  componentWillUnmount(){
-    AccountsStore.removeChangeListener(this.storeChanged);
-    ApplicationStore.removeChangeListener(this.storeChanged);
-  }
-
-  render(){
-
-    var styles = {
+  getStyles() {
+    return {
       accountDashboard: {
         marginLeft: "300px"
       }
     };
+  }
+
+  render(){
+
+    var styles = this.getStyles();
 
     return (
       <div style={styles.accountDashboard}>
-        <h3>{this.state.currentAccount.name}</h3>
+        <h3>{this.state.currentAccountName}</h3>
         <h4><Link to="users-list" params={{accountId: this.props.params.accountId}}>Users</Link></h4>
       </div>
-      )
+      );
   }
 
 }

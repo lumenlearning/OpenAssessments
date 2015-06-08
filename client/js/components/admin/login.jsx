@@ -1,42 +1,42 @@
 "use strict";
 
-import React        from "react";
-import Validator    from "validator";
-import UserActions  from "../../actions/user";
-import UserStore    from "../../stores/user"
-import _            from "lodash";
-import assign       from "object-assign";
+import React         from "react";
+import Validator     from "validator";
+import UserActions   from "../../actions/user";
+import UserStore     from "../../stores/user";
+import BaseComponent from "../base_component";
+import _             from "lodash";
+import assign        from "object-assign";
 import { Paper, TextField, FlatButton, RaisedButton, FontIcon } from "material-ui";
 
-class Login extends React.Component {
+class Login extends BaseComponent {
 
-  constructor(){
-    super();
-    if(UserStore.loggedIn()){
-      this.context.router.transitionTo("dashboard");
+  constructor(props, context){
+    super(props, context);
+
+    this.stores = [UserStore];
+    this.state = this.getState();
+
+    this._bind("handleLogin", "validateAll", "validate", "validateEmail");
+    if(this.state.loggedIn) {
+      context.router.transitionTo("dashboard");
     }
-    this.state = {
+  }
+
+  getState() {
+    return {
+      loggedIn: UserStore.loggedIn(),
       validations: {}
     };
   }
 
-    // Method to update state based upon store changes
+  // Method to update state based upon store changes
   storeChanged(){
-    if(UserStore.loggedIn()){
+    super.storeChanged();
+    if(this.state.loggedIn) {
       this.context.router.transitionTo("dashboard");
       return null;
     }
-  }
-
-  // Listen for changes in the stores
-  componentDidMount(){
-    UserStore.addChangeListener(this.storeChanged);
-
-  }
-
-  // Remove change listers from stores
-  componentWillUnmount(){
-    UserStore.removeChangeListener(this.storeChanged);
   }
 
   handleLogin(e){
@@ -66,7 +66,7 @@ class Login extends React.Component {
     return isValid;
   }
 
-  validateEmail(e){
+  validateEmail(){
     return this.validate(
       Validator.isEmail(this.refs.email.getValue()),
       { email: "Invalid email" },
@@ -74,8 +74,8 @@ class Login extends React.Component {
     );
   }
 
-  render(){
-    var styles = {
+  getStyles() {
+    return {
       paper: {
         backgroundColor: "white"
       },
@@ -84,6 +84,10 @@ class Login extends React.Component {
         marginTop: "10px"
       }
     };
+  }
+
+  render(){
+    var styles = this.getStyles();
     return (
       <div className="login-screen" style={styles.container}>
         <Paper className="login-paper" style={styles.paper} zDepth={0}>

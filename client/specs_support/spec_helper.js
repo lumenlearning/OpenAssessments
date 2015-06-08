@@ -1,3 +1,5 @@
+"use strict";
+
 // Test helper. Load libraries and polyfills
 
 // Function.prototype.bind polyfill used by PhantomJS
@@ -36,8 +38,9 @@ function helpStubAjax(SettingsActions){
 var helpDefaultSettings = {
   apiUrl: "http://www.example.com/api"
 };
+
 function helpLoadSettings(SettingsActions){
-  
+
   helpMockClock();
 
   beforeEach(function(){
