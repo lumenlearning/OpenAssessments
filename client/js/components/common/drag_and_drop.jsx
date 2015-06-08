@@ -3,7 +3,8 @@
 import React							from 'react';
 import AssessmentActions	from '../../actions/assessment';
 import DropZone						from './drop_zone';
-import Draggable					from './draggable'
+import Draggable					from './draggable';
+import DropZoneIndex			from './drop_zone_index';
 
 export default class DragAndDrop extends React.Component{
 
@@ -36,6 +37,14 @@ export default class DragAndDrop extends React.Component{
 				return(
 						<DropZone key={"dropZone"+index} item={item} />
 					)
+			});
+		}
+		else if (this.props.item.type == 'index'){
+			var correct = this.props.item.correct.toArray();
+			zones = correct.map((item, index)=>{
+				return(
+					<DropZoneIndex key={"dropZone"+index} item={item} />
+				)
 			});
 		}
 

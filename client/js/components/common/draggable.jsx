@@ -7,7 +7,6 @@ export default class Draggable extends React.Component{
 
 	allowDrop(ev) {
 		ev.preventDefault();
-		console.log('Draggable allow drop');
 	}
 
 	drop(ev) {
@@ -19,7 +18,6 @@ export default class Draggable extends React.Component{
 
 	drag(ev) {
 		ev.dataTransfer.setData("text", ev.target.id);
-		console.log('Help! Im bein drug');
 	}
 
 	render(){
@@ -37,7 +35,7 @@ export default class Draggable extends React.Component{
 
 
 		return (
-			<div id={id} onDrop={(e)=>{this.drop(e)}} onDragOver={(e)=>{this.allowDrop(e)}} style ={divStyle}>
+			<div id={id} onDrop={(e)=>{this.drop(e)}} onDragOver={(e)=>{this.allowDrop(e)}} style={divStyle}>
 				<div draggable="true" onDragStart={(e)=>{this.drag(e)}} id={this.props.item.id + this._reactInternalInstance._rootNodeID} width="88" height="31"> {this.props.item.label} </div>
 			</div>
 		)

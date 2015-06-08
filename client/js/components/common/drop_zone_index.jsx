@@ -21,15 +21,12 @@ export default class DropZone extends React.Component{
 		//TODO move style out of here, maybe
 		var divStyle = {
 			position: 'absolute',
-			width: this.props.item.width.toString(),
-			height: this.props.item.height.toString(),
-			top: this.props.item.yPos.toString(),
-			left: this.props.item.xPos.toString(),
+
 			border: '1px solid #aaaaaa'
 		};
 		var id = "zone" + this.props.item.id;
 
-
+debugger;
 		return(
 			<div id={id} onDrop={(e)=>{this.drop(e)}} onDragOver={(e)=>{this.allowDrop(e)}} style ={divStyle}></div>
 		)
