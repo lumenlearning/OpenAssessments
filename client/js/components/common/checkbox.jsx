@@ -11,7 +11,7 @@ export default class CheckBox extends React.Component{
   }
 
   render(){
-    var checked = (AssessmentStore.studentAnswers().indexOf(this.props.item.id) > -1) ? "true" : null;
+    var checked = (AssessmentStore.studentAnswers() && AssessmentStore.studentAnswers().indexOf(this.props.item.id) > -1) ? "true" : null;
     return (
       <div className="btn btn-block btn-question">
         <label>
