@@ -9,15 +9,15 @@ export default class DragAndDrop extends React.Component{
 
 	render(){
 		var drags = this.props.item.draggables.toArray();
-		var zones = drags.map((item)=>{
+		var banks = drags.map((item)=>{
 			return (
 				<div>
-					<DropZone item={item} />
-			  	<Draggable item = {item} />
+					<Draggable item={item} />
 				</div>
 			)
 		});
 
+		var zones;
 		if(this.props.item.type == 'key'){
 
 		}
@@ -25,7 +25,7 @@ export default class DragAndDrop extends React.Component{
 		return(
 			<div>
 				<img src={this.props.item.img} alt="Drag and Drop image" />
-				{zones}
+				{banks}
 			</div>
 		)
 	}
