@@ -12,7 +12,9 @@ class Register extends React.Component {
 
   constructor(){
     super()
-    this.state.validations = {};
+    this.state = {
+      validations: {}
+    };
   }
 
   validateEmail(e){
@@ -71,9 +73,9 @@ class Register extends React.Component {
       <Paper className="register-paper">
         <h1><span className="fa fa-sign-in"></span> Signup</h1>
         <form action="/signup" method="post" onSubmit={(e) => this.handleRegister(e)}>
-          <TextField hintText="johndoe@example.com" floatingLabelText="Email" errorText={this.state.validations.email} ref="email" onBlur={this.validateEmail} />
-          <TextField type="password" hintText="******" floatingLabelText="Password" errorText={this.state.validations.password} ref="password" onBlur={this.validatePassword} />
-          <TextField type="password" hintText="******" floatingLabelText="Confirm Password"  errorText={this.state.validations.confirmPassword} ref="confirmPassword" onBlur={this.validateConfirmPassword} />
+          <TextField hintText="johndoe@example.com" floatingLabelText="Email" errorText={this.state.validations.email} ref="email" onBlur={(e) => this.validateEmail(e)} />
+          <TextField type="password" hintText="******" floatingLabelText="Password" errorText={this.state.validations.password} ref="password" onBlur={(e)=>this.validatePassword(e)} />
+          <TextField type="password" hintText="******" floatingLabelText="Confirm Password"  errorText={this.state.validations.confirmPassword} ref="confirmPassword" onBlur={(e)=>this.validateConfirmPassword(e)} />
           <RaisedButton className="sign-up-button"label="Signup" primary={true} />
         </form>
         <p>
