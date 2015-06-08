@@ -89,7 +89,6 @@ export default class UniversalInput extends React.Component{
         });
         break;
       case"edx_drag_and_drop":
-        //debugger;
         items = item.answers.map((answer)=>{
           return <DragAndDrop key={item.id + "_" + answer.id} item={answer} />
         });

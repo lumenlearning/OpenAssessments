@@ -5,8 +5,25 @@ import AssessmentActions		from '../../actions/assessment';
 
 export default class Draggable extends React.Component{
 
-	render(){
+	allowDrop(ev) {
+		ev.preventDefault();
+		console.log('Draggable allow drop');
+	}
 
+	drop(ev) {
+		ev.preventDefault();
+		var data = ev.dataTransfer.getData("text");
+		ev.target.appendChild(document.getElementById(data));
+		console.log(data);
+	}
+
+	drag(ev) {
+		ev.dataTransfer.setData("text", ev.target.id);
+		console.log('Help! Im bein drug');
+	}
+
+	render(){
+//debugger;
 		//TODO move style out of here, maybe
 		var divStyle = {
 			float: 'left',
@@ -18,23 +35,10 @@ export default class Draggable extends React.Component{
 		};
 		var id = "zone" + this.props.item.id;
 
-		function allowDrop(ev) {
-			ev.preventDefault();
-		}
-
-		function drop(ev) {
-			ev.preventDefault();
-			var data = ev.dataTransfer.getData("text");
-			ev.target.appendChild(document.getElementById(data));
-		}
-
-		function drag(ev) {
-			ev.dataTransfer.setData("text", ev.target.id);
-		}
 
 		return (
-			<div id={id} ondrop="drop(event)" ondragover="allowDrop(event)" style ={divStyle}>
-				<div draggable="true" ondragstart="drag(event)" id={this.props.item.id} width="88" height="31"> {this.props.item.label} </div>
+			<div id={id} onDrop={(e)=>{this.drop(e)}} onDragOver={(e)=>{this.allowDrop(e)}} style ={divStyle}>
+				<div draggable="true" onDragStart={(e)=>{this.drag(e)}} id={this.props.item.id + this._reactInternalInstance._rootNodeID} width="88" height="31"> {this.props.item.label} </div>
 			</div>
 		)
 	}

@@ -5,30 +5,35 @@ import AssessmentActions	from '../../actions/assessment';
 import Draggable				from './draggable';
 
 export default class DropZone extends React.Component{
+
+	allowDrop(ev) {
+		ev.preventDefault();
+		console.log('I allow Drops');
+	}
+
+	drop(ev) {
+		ev.preventDefault();
+		var data = ev.dataTransfer.getData("text");
+		ev.target.appendChild(document.getElementById(data));
+		console.log(data);
+	}
+
+
 	render() {
 		//TODO move style out of here, maybe
 		var divStyle = {
-			float: 'left',
-			width: '100px',
-			height: '35px',
-			margin: '10px',
-			padding: '10px',
+			position: 'absolute',
+			width: this.props.item.width.toString(),
+			height: this.props.item.height.toString(),
+			top: this.props.item.yPos.toString(),
+			left: this.props.item.xPos.toString(),
 			border: '1px solid #aaaaaa'
 		};
 		var id = "zone" + this.props.item.id;
 
-		function allowDrop(ev) {
-			ev.preventDefault();
-		}
-
-		function drop(ev) {
-			ev.preventDefault();
-			var data = ev.dataTransfer.getData("text");
-			ev.target.appendChild(document.getElementById(data));
-		}
 
 		return(
-			<div id={id} ondrop="drop(event)" ondragover="allowDrop(event)" style ={divStyle}></div>
+			<div id={id} onDrop={(e)=>{this.drop(e)}} onDragOver={(e)=>{this.allowDrop(e)}} style ={divStyle}></div>
 		)
 	}
 };
