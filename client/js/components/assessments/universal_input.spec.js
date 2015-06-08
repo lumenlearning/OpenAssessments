@@ -16,7 +16,7 @@ describe('Assessment Questions', ()=> {
       xml      : null,
       standard : 'edX',
       edXMaterial : "<p>hello world</p>",
-      answers  : [{material: "test1"}, {material: "test2"}],
+      answers  : [{id: "0", material: "test1"}, {id: "1", material: "test2"}],
       isGraded : true,
       messages : ["My Message1", "My Message2"],
       solution : "<p>solution text</p>"

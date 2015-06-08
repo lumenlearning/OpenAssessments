@@ -56,7 +56,6 @@ export default class UniversalInput extends React.Component{
         items = <Matching item={item} name="answer-option"/>;
         break;
       case "edx_numerical_input":
-        break;
       case "edx_text_input":
         items = item.answers.map((answer) => {
           return <TextField key={item.id + "_" + answer.id} item={answer} name="answer-text"/>;
