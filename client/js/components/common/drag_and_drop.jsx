@@ -2,29 +2,20 @@
 
 import React							from 'react';
 import AssessmentActions	from '../../actions/assessment';
-import DropZone					from './drop_zone';
+import DropZone						from './drop_zone';
+import Draggable					from './draggable'
 
 export default class DragAndDrop extends React.Component{
-	//
-	//allowDrop(ev) {
-	//	ev.preventDefault();
-	//}
-	//
-	//drag(ev) {
-	//	ev.dataTransfer.setData("text", ev.target.id);
-	//}
-	//
-	//drop(ev) {
-	//	ev.preventDefault();
-	//	var data = ev.dataTransfer.getData("text");
-	//	ev.target.appendChild(document.getElementById(data));
-	//}
 
 	render(){
-		//debugger;
-		//var item = '';
-		var zones = this.props.item.draggables.map((item)=>{
-			return <DropZone item={item} />;
+		var drags = this.props.item.draggables.toArray();
+		var zones = drags.map((item)=>{
+			return (
+				<div>
+					<DropZone item={item} />
+			  	<Draggable item = {item} />
+				</div>
+			)
 		});
 
 		if(this.props.item.type == 'key'){
@@ -34,7 +25,7 @@ export default class DragAndDrop extends React.Component{
 		return(
 			<div>
 				<img src={this.props.item.img} alt="Drag and Drop image" />
-				{zones};
+				{zones}
 			</div>
 		)
 	}
