@@ -2,6 +2,7 @@
 
 import React              from 'react';
 import AssessmentActions  from "../../actions/assessment";
+import AssessmentStore    from "../../stores/assessment";
 
 export default class Matching extends React.Component{
 
@@ -22,11 +23,6 @@ export default class Matching extends React.Component{
 
 
   render(){
-
-    // var items = this.props.item.material.split(",");
-    // var materialItems = items.map((mat) =>{
-    //   return <option value={mat} name={this.props.name}>{mat}</option>;
-    // });
     var items = [];
     var material = [];
     var materialName = [];
@@ -49,8 +45,13 @@ export default class Matching extends React.Component{
     }
     var materialItems = items.map((item, index)=>{
       var ref = "answer-" + index;
-      return <div>{materialName[index]}<select name={ref} onChange={(e, key) => {this.answerSelected(e, key)}}><option>[Select Answer]</option>{item.answers.map((answer)=>{
-        return <option>{answer.material}</option>
+      return <div>{materialName[index]}<select key={ref}name={ref} onChange={(e, key) => {this.answerSelected(e, key)}}><option key={"defualt-option-key" + index} selected={null}>[Select Answer]</option>{
+        item.answers.map((answer, i)=>{
+          var selected; 
+          var key = ref + "-option-" + i;
+          if(AssessmentStore.studentAnswers()[index])
+            selected = (AssessmentStore.studentAnswers()[index].selectedAnswer.trim() == answer.material.trim());
+          return <option key={key} selected={selected}>{answer.material.trim()}</option>
       })}</select></div>
     })
     return(
