@@ -137,21 +137,32 @@ export default class Assessment{
     var numOfAnswers = item.correct[0].id.length;
     var numOfCorrectAnswers = 0;
     var correct = false;
-    for(var i = 0; i < selectedAnswerId.length; i++){
-      for(var j = 0; j < numOfAnswers; j++){
-        if(selectedAnswerId[i] == item.correct[0].id[j]){
-          numOfCorrectAnswers++;
+
+    // if they selected the right amount of answers then check if they are the right answers
+    if(selectedAnswerId.length == numOfAnswers){      
+      for(var i = 0; i < selectedAnswerId.length; i++){
+        for(var j = 0; j < numOfAnswers; j++){
+          if(selectedAnswerId[i] == item.correct[0].id[j]){
+            numOfCorrectAnswers++;
+          }
         }
       }
+      if(numOfAnswers == numOfCorrectAnswers){
+        correct = true;
+        score = "100";
+      }
+      return {
+        feedbacks: feedbacks,
+        score: score,
+        correct: correct
+      };
     }
-    if(numOfAnswers == numOfCorrectAnswers){
-      correct = true;
-      score = "100";
-    }
+
+    // if they selected to few or to many then return incorrect
     return {
-      feedbacks: feedbacks,
-      score: score,
-      correct: correct
+        feedbacks: feedbacks,
+        score: score,
+        correct: correct
     };
   }
 
