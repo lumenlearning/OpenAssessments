@@ -6,7 +6,7 @@ import AssessmentActions  from "../../actions/assessment";
 export default class Option extends React.Component{
 
 	answerSelected(){
-		AssessmentActions.answerSelected(this.props.item.id);
+		//AssessmentActions.answerSelected(this.props.item.id);
 	}
 
 	render(){
@@ -16,7 +16,7 @@ export default class Option extends React.Component{
 				});
 			return(
 			<div>
-				<select>
+				<select onChange={()=>{this.answerSelected()}}>
 					{materialItems}
 				</select>
 			</div>

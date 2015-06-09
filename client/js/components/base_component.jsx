@@ -5,8 +5,8 @@ import React                                                                    
 // watchStores() and unWatchStores() directly.
 export default class BaseComponent extends React.Component {
   
-  constructor() {
-    super();
+  constructor(props, context) {
+    super(props, context);
     this._bind("storeChanged");
   }
 

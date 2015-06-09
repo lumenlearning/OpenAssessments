@@ -2,6 +2,8 @@
 
 import React              from 'react';
 import AssessmentActions  from "../../actions/assessment";
+import AssessmentStore    from "../../stores/assessment";
+import _                  from "lodash";
 
 export default class Matching extends React.Component{
 
@@ -19,40 +21,57 @@ export default class Matching extends React.Component{
     AssessmentActions.answerSelected(item);
   }
 
-
-
-  render(){
-
-    // var items = this.props.item.material.split(",");
-    // var materialItems = items.map((mat) =>{
-    //   return <option value={mat} name={this.props.name}>{mat}</option>;
-    // });
-    var items = [];
-    var material = [];
-    var materialName = [];
-    for(var i = 0; i < this.props.item.answers.length; i++){
-      if(i%this.props.item.correct.length==0){
-        materialName.push(this.props.item.answers[i].matchMaterial)
-      }
-    }
-    for(var i = 0; i < this.props.item.correct.length; i++){
-      var item = {
-        id: this.props.item.correct[i].id,
+  getResponses(item){
+    var responses = [];
+    for(var i = 0; i < item.correct.length; i++){
+      var response = {
+        id: item.correct[i].id,
         material: '',
         answers: []
       }
-      for(var j =0; j < this.props.item.answers.length/this.props.item.correct.length; j++){
-        item.material = this.props.item.answers[j].matchMaterial;
-        item.answers.push(this.props.item.answers[j]);
+      for(var j =0; j < item.answers.length/item.correct.length; j++){
+        response.material = item.answers[j].matchMaterial;
+        response.answers.push(item.answers[j]);
       }
-      items.push(item);
+      responses.push(response);
     }
-    var materialItems = items.map((item, index)=>{
-      var ref = "answer-" + index;
-      return <div>{materialName[index]}<select name={ref} onChange={(e, key) => {this.answerSelected(e, key)}}><option>[Select Answer]</option>{item.answers.map((answer)=>{
-        return <option>{answer.material}</option>
-      })}</select></div>
+    return responses;
+  }
+
+  getMaterialNames(){
+    return _.chain(this.props.item.answers)
+    .map((answer, i) => {
+      return answer.matchMaterial;
     })
+    .uniq()
+    .value();
+  }
+
+  render(){
+    var responses = this.getResponses(this.props.item);
+    var materialNames = this.getMaterialNames();
+    
+    var materialItems = responses.map((item, index)=>{
+      var name = "answer-" + index;
+      var ref = "answer-" + item.id;
+      
+      var answers = (AssessmentStore.studentAnswers()) ? AssessmentStore.studentAnswers()[index] : {selectedAnswer: ""};
+      var selectedAnswer;
+      var options = item.answers.map((answer, i)=>{
+        if(answers && (answers.selectedAnswer.trim() == answer.material.trim())){
+          selectedAnswer = answers.selectedAnswer.trim();
+        }
+        return <option key={ref + "-option-" + i} value={answer.material.trim()}>{answer.material.trim()}</option>
+      });
+      return <div>
+        {materialNames[index]}
+        <select key={ref} name={name} value={selectedAnswer} onChange={(e, key) => {this.answerSelected(e, key)}}>
+          <option key={"default-option-key" + index} selected={null}>[Select Answer]</option>
+          { options }
+        </select>
+      </div>;
+    });
+
     return(
       <div>
         {materialItems}

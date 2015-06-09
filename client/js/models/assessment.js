@@ -132,8 +132,8 @@ export default class Assessment{
   }
 
   static checkMultipleAnswerAnswer(item, selectedAnswerId){
-    var feedbacks; // implement feedbacks
-    var score;
+    var feedbacks = ""; // implement feedbacks
+    var score = "0";
     var numOfAnswers = item.correct[0].id.length;
     var numOfCorrectAnswers = 0;
     var correct = false;
@@ -182,7 +182,7 @@ export default class Assessment{
     }
     if(numOfCorrectAnswers == numOfAnswers){
       correct = true;
-      score = 100;
+      score = "100";
     }
 
     return {

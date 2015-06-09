@@ -1,87 +1,113 @@
 "use strict";
 
-import React        from "react";
-import RadioButton  from "../common/radio_button";
-import Option       from "../common/option";
-import TextField    from "../common/text_field";
-import TextArea     from "../common/text_area";
-import CheckBox     from "../common/checkbox";
-import MappedImage  from "../common/mapped_image";
-import Matching     from "../common/matching";
-import DragAndDrop  from "../common/drag_and_drop";
+import React                from "react";
+import RadioButton          from "../common/radio_button";
+import Option               from "../common/option";
+import TextField            from "../common/text_field";
+import TextArea             from "../common/text_area";
+import CheckBox             from "../common/checkbox";
+import MappedImage          from "../common/mapped_image";
+import Matching             from "../common/matching";
+import DragAndDrop          from "../common/drag_and_drop";
+import CommunicationHandler from "../../utils/communication_handler";
 
 export default class UniversalInput extends React.Component{
 
+  constructor(){
+    super();
+    CommunicationHandler.init();
+  }
+
+  componentDidMount(){
+    CommunicationHandler.sendSize();
+  }
+
+  componentDidUpdate(){
+    CommunicationHandler.sendSize();
+  }
+
   render(){
+    var item = this.props.item;
     var messages = '';
-    if (this.props.item.messages) {
-    
-      var renderedMessages = this.props.item.messages.map(function(message){
+    var solution = '';
+    var items = '';
+
+    if(item.messages){
+      var renderedMessages = item.messages.map(function(message){
        return (<li>{message}</li>);
       });
-
-      messages =  (<div className="panel-messages alert alert-danger" role="alert">
+      messages = (<div className="panel-messages alert alert-danger" role="alert">
                    <ul>
                      {renderedMessages}
                    </ul>
                  </div>);
     }
 
-    var solution = '';
-
-    if (this.props.item.isGraded && this.props.item.solution) {
+    if(item.isGraded && item.solution){
       solution = (<div className="panel-footer text-center">
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: this.props.item.solution
+                      __html: item.solution
                     }}>
                   </div>
                  </div>);
     }
 
-    var items = '';
-    if(this.props.item.question_type == "edx_multiple_choice" || this.props.item.question_type == "multiple_choice_question" || this.props.item.question_type == "true_false_question"){
-      items = this.props.item.answers.map((item) => {
-        return <RadioButton item={item} name="answer-radio"/>;
-      });
-    } else if(this.props.item.question_type == "edx_dropdown"){
-      items = this.props.item.answers.map((item) => {
-        return <Option item={item} name="answer-option"/>;
-      });
-    } else if(this.props.item.question_type == "matching_question"){
-      items = <Matching item={this.props.item} name="answer-option"/>;
-    }
-    else if(this.props.item.question_type == "edx_numerical_input" || this.props.item.question_type == "edx_text_input"){
-      items = this.props.item.answers.map((item) => {
-        return <TextField item={item} name="answer-text"/>;
-      });
-    } else if(this.props.item.question_type == "text_only_question"){
-      items = <TextArea />;
-    } else if(this.props.item.question_type == "multiple_answers_question"){
-      items = this.props.item.answers.map((item) => {
-        return <CheckBox item={item} name="answer-check"/>;
-      });
-    } else if (this.props.item.question_type == "edx_image_mapped_input"){
-      items = this.props.item.answers.map((item)=>{
-        return <MappedImage item={item} />;
-      });
-    } else if (this.props.item.question_type =="edx_drag_and_drop"){
-      items = this.props.item.answers.map((item)=>{
-        return <DragAndDrop item={item} />
-      });
+    switch(item.question_type){
+      case "edx_multiple_choice":
+      case "multiple_choice_question":
+      case "true_false_question":
+        items = item.answers.map((answer) => {
+          return <RadioButton key={item.id + "_" + answer.id} item={answer} name="answer-radio"/>;
+        });
+        break;
+      case "edx_dropdown":
+        items = item.answers.map((answer) => {
+          return <Option key={item.id + "_" + answer.id} item={answer} name="answer-option"/>;
+        });
+        break;
+      case "matching_question":
+        items = <Matching item={item} name="answer-option"/>;
+        break;
+      case "edx_numerical_input":
+      case "edx_text_input":
+        items = item.answers.map((answer) => {
+          return <TextField key={item.id + "_" + answer.id} item={answer} name="answer-text"/>;
+        });
+        break;
+      case "text_only_question":
+        items = <TextArea />;
+        break;
+      case "multiple_answers_question":
+        items = item.answers.map((answer) => {
+          return <CheckBox key={item.id + "_" + answer.id} item={answer} name="answer-check"/>;
+        });
+        break;
+      case "edx_image_mapped_input":
+        items = item.answers.map((answer)=>{
+          return <MappedImage key={item.id + "_" + answer.id} item={answer} />;
+        });
+        break;
+      case"edx_drag_and_drop":
+        //debugger;
+        items = item.answers.map((answer)=>{
+          return <DragAndDrop key={item.id + "_" + answer.id} item={answer} />
+        });
+        break;
     }
 
+
     var material = '';
-    if(this.props.item.edXMaterial){
+    if(item.edXMaterial){
       material = ( <div
                     dangerouslySetInnerHTML={{
-                      __html: this.props.item.edXMaterial
+                      __html: item.edXMaterial
                     }}>
                   </div> )
     }
     return (<div className="panel-messages-container panel panel-default">
               <div className="panel-heading text-center">
-                {this.props.item.title}
+                {item.title}
                 {messages}
               </div>
               <div className="panel-body">

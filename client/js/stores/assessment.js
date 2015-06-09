@@ -6,8 +6,8 @@ import Utils          from "../utils/utils";
 import StoreCommon    from "./store_common";
 import assign         from "object-assign";
 import Assessment     from "../models/assessment";
-import SettingsStore  from "./settings"
-
+import SettingsStore  from "./settings";
+import EdX            from "../models/edx";
 const INVALID = -1;
 const NOT_LOADED = 0;
 const LOADING = 1;
@@ -26,6 +26,7 @@ var _selectedAnswerIds = [];
 var _answerMessageIndex = -1;
 var _sectionIndex = 0;
 var _itemIndex = 0;
+var _studentAnswers = [];
 
 function parseAssessmentResult(result){
   _assessmentResult = JSON.parse(result);
@@ -63,6 +64,13 @@ function updateMatchingAnswer(item){
     }
   }
  _selectedAnswerIds.push(item);
+
+}
+
+function setUpStudentAnswers(numOfQuestions){
+  for (var i = 0; i < numOfQuestions; i++){
+    _studentAnswers[i] = [];
+  }
 }
 
 
@@ -111,6 +119,10 @@ var AssessmentStore = assign({}, StoreCommon, {
 
   answerMessageIndex(){
     return _answerMessageIndex;
+  },
+
+  studentAnswers(){
+    return _studentAnswers[_itemIndex];
   }
 
 });
@@ -137,6 +149,7 @@ Dispatcher.register(function(payload) {
               _assessment.sections[_sectionIndex] &&
               _assessment.sections[_sectionIndex].items){
             _items = _assessment.sections[_sectionIndex].items;
+            setUpStudentAnswers(_items.length)
           }
           _assessmentState = LOADED;
         
@@ -167,16 +180,18 @@ Dispatcher.register(function(payload) {
     case Constants.ASSESSMENT_NEXT_QUESTION:
       // Will need to advance sections and items.
       if(_itemIndex < _items.length - 1){ 
+        _studentAnswers[_itemIndex] = _selectedAnswerIds;
         _itemIndex++;
-        _selectedAnswerIds = [];
+        _selectedAnswerIds = _studentAnswers[_itemIndex];
         _answerMessageIndex = -1;  
       } 
       break;
 
     case Constants.ASSESSMENT_PREVIOUS_QUESTION:
       if(_itemIndex > 0){
+        _studentAnswers[_itemIndex] = _selectedAnswerIds;
         _itemIndex--;
-        _selectedAnswerIds = [];
+        _selectedAnswerIds = _studentAnswers[_itemIndex];
         _answerMessageIndex = -1;
       }
       break;
@@ -187,7 +202,7 @@ Dispatcher.register(function(payload) {
 
     case Constants.EDX_LOAD_SECTION:
       if(_assessment){
-        EdX.findAndSetObject(_assessment.sections, payload.item);
+        //EdX.findAndSetObject(_assessment.sections, payload.item);
       }
       break;
     case Constants.EDX_LOAD_ITEM:

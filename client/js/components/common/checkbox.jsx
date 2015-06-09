@@ -2,6 +2,7 @@
 
 import React              from 'react';
 import AssessmentActions  from "../../actions/assessment";
+import AssessmentStore    from "../../stores/assessment";
 
 export default class CheckBox extends React.Component{
   
@@ -10,10 +11,11 @@ export default class CheckBox extends React.Component{
   }
 
   render(){
+    var checked = (AssessmentStore.studentAnswers() && AssessmentStore.studentAnswers().indexOf(this.props.item.id) > -1) ? "true" : null;
     return (
       <div className="btn btn-block btn-question">
         <label>
-          <input type="checkbox" name={this.props.name} onClick={()=>{ this.answerSelected() }}/>
+          <input type="checkbox" defaultChecked={checked} name={this.props.name} onClick={()=>{ this.answerSelected() }}/>
           {this.props.item.material}
         </label>
       </div>

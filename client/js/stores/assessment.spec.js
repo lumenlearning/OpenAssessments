@@ -34,7 +34,6 @@ describe('AssessmentsStore', () => {
     describe("current", () => {
       it("returns current the current assessment", (done) => {
         var assessment = AssessmentsStore.current();
-        console.log()
         expect(assessment).toBeDefined();
         expect(assessment.id).toEqual("ib8d9c142765b2287684aad0b5387e45b");
         done();

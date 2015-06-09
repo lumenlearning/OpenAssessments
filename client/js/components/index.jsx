@@ -6,9 +6,9 @@ import {RouteHandler}       from "react-router";
 import BaseComponent        from "./base_component";
 import SettingsStore        from "../stores/settings";
 
-var mui = require('material-ui');
-var Colors = mui.Styles.Colors;
-var Typography = mui.Styles.Typography;
+var mui          = require('material-ui');
+var Colors       = mui.Styles.Colors;
+var Typography   = mui.Styles.Typography;
 var ThemeManager = new mui.Styles.ThemeManager();
 
 class Index extends BaseComponent {

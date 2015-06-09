@@ -1,4 +1,4 @@
-import $ from 'jquery';
+import $            from 'jquery';
 import Communicator from '../utils/communicator';
 
 export default {

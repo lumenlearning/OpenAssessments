@@ -7,8 +7,6 @@ import SettingsActions   from './actions/settings';
 import AssessmentActions from "./actions/assessment";
 import $                 from "jquery";
 
-import ThemeManager   from 'material-ui/lib/styles/theme-manager';
-
 //Needed for onTouchTap
 //Can go away when react 1.0 release
 //Check this repo:
