@@ -82,13 +82,13 @@ class AssessmentsController < ApplicationController
 
   def create
     xml = assessment_params[:xml_file].read
-    assessment = Assessment.from_xml(xml, current_user)
-    assessment.title = assessment_params[:title] if assessment_params[:title].present?
-    assessment.description = assessment_params[:description] if assessment_params[:description].present?
-    assessment.license = assessment_params[:license] if assessment_params[:license].present?
-    assessment.keyword_list.add(assessment_params[:keywords], parse: true) if assessment_params[:keywords].present?
-    assessment.save!
-    respond_with(assessment)
+    @assessment = Assessment.from_xml(xml, current_user)
+    @assessment.title = assessment_params[:title] if assessment_params[:title].present?
+    @assessment.description = assessment_params[:description] if assessment_params[:description].present?
+    @assessment.license = assessment_params[:license] if assessment_params[:license].present?
+    @assessment.keyword_list.add(assessment_params[:keywords], parse: true) if assessment_params[:keywords].present?
+    @assessment.save!
+    respond_with(@assessment)
   end
 
   def destroy
