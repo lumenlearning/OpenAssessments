@@ -8,7 +8,7 @@ describe('About', ()=> {
   it('renders the about heading', ()=> {
 
     var result = TestUtils.renderIntoDocument(<About/>);
-    expect(React.findDOMNode(result).textContent).toEqual('About');
+    expect(React.findDOMNode(result).textContent).toEqual('Open Assessments');
 
   });
 });
