@@ -1,7 +1,7 @@
 (function(){
-  var oeaIframe = document.getElementById('openassessments_container');
+  var iframe = document.getElementById('openassessments_container');
 
-  if(!oeaIframe){ return; }
+  if(!iframe){ return; }
 
   var Communicator = {
     enableListener: function(handler){
@@ -14,7 +14,7 @@
     },
 
     commMsg: function(msg, payload){
-      oeaIframe.contentWindow.postMessage({'open_assessments_msg': msg, 'payload': payload}, '*');
+      iframe.contentWindow.postMessage({'open_assessments_msg': msg, 'payload': payload}, '*');
     }
 
   };
@@ -27,8 +27,8 @@
     },
 
     resizeIframe: function(payload){
-      //oeaIframe.style.width = payload.width + "px";
-      oeaIframe.style.height = payload.height + "px";
+      //iframe.style.width = payload.width + "px";
+      iframe.style.height = payload.height + "px";
     },
 
     handleComm: function(e){
