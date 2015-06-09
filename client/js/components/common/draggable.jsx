@@ -23,18 +23,19 @@ export default class Draggable extends React.Component{
 
 	render(){
 		//TODO move style out of here, maybe
-		var divStyle = {
+		var draggableStyle = {
 			float: 'left',
 			margin: '10px',
 			padding: '10px',
 			border: '1px solid #aaaaaa',
-			diplay: 'inline'
+			diplay: 'inline',
+			zIndex: '2'
 		};
 		var id = "zone" + this.props.item.id;
 
 
 		return (
-			<div id={id} onDrop={(e)=>{this.drop(e)}} onDragOver={(e)=>{this.allowDrop(e)}} style={divStyle}>
+			<div id={id} onDrop={(e)=>{this.drop(e)}} onDragOver={(e)=>{this.allowDrop(e)}} style={draggableStyle}>
 				<div draggable="true" onDragStart={(e)=>{this.drag(e)}} id={this.props.item.id + this._reactInternalInstance._rootNodeID} width="88" height="31"> {this.props.item.label} </div>
 			</div>
 		)

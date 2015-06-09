@@ -6,31 +6,41 @@ import Draggable				from './draggable';
 
 export default class DropZone extends React.Component{
 
+	constructor(){
+		super();
+		this.x = 0;
+		this.y = 0;
+	}
+
 	allowDrop(ev) {
 		ev.preventDefault();
-		console.log('You can drop here');
+		this.x = event.clientX;
+		this.y = event.clientY;
+		console.log(ev.clientX, + ' ' + ev.clientY);
 	}
 
 	drop(ev) {
 		ev.preventDefault();
 		var data = ev.dataTransfer.getData("text");
-		ev.target.appendChild(document.getElementById(data));
+		ev.currentTarget.appendChild(document.getElementById(data));
+		document.getElementById(data).setAttribute('style', 'top:'+this.y+'; left:'+this.x+'; position: fixed; ');
 	}
 
 
 	render() {
 		//TODO move style out of here, maybe
-		var divStyle = {
-			//position: 'absolute',
-			//float: 'left',
-			//display: 'inline',
-			border: '1px solid #aaaaaa'
+		var dropZoneIndexStyle = {
+			border: '1px solid #aaaaaa',
+			position: 'relative'
+		};
+		var dropZoneImageStyle={
+			zIndex: '-1'
 		};
 		var id = "zone" + this.props.item.id;
 
 		return(
-			<div className="ClassyAsFu" id={id} onDrop={(e)=>{this.drop(e)}} onDragOver={(e)=>{this.allowDrop(e)}} style ={divStyle}>
-				<img src={this.props.item.img} alt="Drag and Drop image" />
+			<div id={id} onDrop={(e)=>{this.drop(e)}} onDragOver={(e)=>{this.allowDrop(e)}} style ={dropZoneIndexStyle}>
+				<img src={this.props.item.img} alt="Drag and Drop image" style={dropZoneImageStyle} />
 			</div>
 		)
 	}
