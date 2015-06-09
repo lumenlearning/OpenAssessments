@@ -30,15 +30,23 @@ class Assessment < ActiveRecord::Base
     assessment.published_at = published_at
     assessment.save!
 
-    assessment.assessment_xmls.create!(:xml => input_xml)
+    # Create a formative xml entry
+    assessment.assessment_xmls.create!(
+      xml: input_xml,
+      kind: "formative"
+    )
 
     if xml && xml.respond_to?(:sections)
       assessment.create_subitems(xml)
     end
 
-    # sumative_xml = input_xml
-    # sumative_xml.gsub! /<conditionvar>(.*?)<\/conditionvar>/m, ''
-    # assessment.assessment_xmls.create!(:xml => sumative_xml)
+    # Create a summative xml entry (no answers in xml)
+    sumative_xml = input_xml
+    sumative_xml.gsub! /<conditionvar>(.*?)<\/conditionvar>/m, ''
+    assessment.assessment_xmls.create!(
+      xml: sumative_xml,
+      kind: "summative"
+    )
 
     assessment
   end
