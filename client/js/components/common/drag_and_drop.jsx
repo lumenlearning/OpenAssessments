@@ -12,59 +12,47 @@ export default class DragAndDrop extends React.Component{
 		var id = "dragDrop" + this.props.item.id;
 
 		var dragDropStyle = {
-			position: 'relative'
-		};
-		var imgStyle = {
-			position: 'absolute',
-			top: '0',
-			right: '0'
-		};
-		var bankStyle = {
-			display: 'block'
+			position: 'relative',
+			display: 'block',
+			clear: 'both'
 		};
 
 		var drags = this.props.item.draggables.toArray();
 		var banks = drags.map((item, index)=>{
 			return (
-				<Draggable alan={"Bank"+index} item={item} />
+				<Draggable key={"Bank"+index} item={item} />
 			)
 		});
 
-		var zones;
 		if(this.props.item.type == 'key'){
 			var targets = this.props.item.targets.toArray();
-			zones = targets.map((item, index)=>{
+			var zones = targets.map((item, index)=>{
 				return(
 						<DropZone key={"dropZone"+index} item={item} />
 					)
 			});
+			return(
+				<div>
+
+					<div id={id} style={dragDropStyle}>
+						<img src={this.props.item.img} alt="Drag and Drop image" />
+						{zones}
+					</div>
+					<div >
+						{banks}
+					</div>
+				</div>
+			)
 		}
 		else if (this.props.item.type == 'index'){
-			var correct = this.props.item.correct.toArray();
-			zones = correct.map((item, index)=>{
-				return(
-					<DropZoneIndex key={"dropZone"+index} item={item} />
-				)
-			});
+			return (
+				<div style={dragDropStyle}>
+					<DropZoneIndex item={this.props.item}/>
+					{banks};
+				</div>
+		);
 		}
 
-		return(
-			<div style={bankStyle}>
 
-				<div id={id} style={dragDropStyle}>
-					<img src={this.props.item.img} alt="Drag and Drop image" />
-					{zones}
-				</div>
-				<div >
-					{banks}
-				</div>
-				<hr />
-				<hr />
-				<hr />
-				<hr />
-				<hr />
-				<hr />
-			</div>
-		)
 	}
 };

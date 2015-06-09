@@ -8,6 +8,7 @@ export default class DropZone extends React.Component{
 
 	allowDrop(ev) {
 		ev.preventDefault();
+		console.log('You can drop here');
 	}
 
 	drop(ev) {
@@ -20,15 +21,17 @@ export default class DropZone extends React.Component{
 	render() {
 		//TODO move style out of here, maybe
 		var divStyle = {
-			position: 'absolute',
-
+			//position: 'absolute',
+			//float: 'left',
+			//display: 'inline',
 			border: '1px solid #aaaaaa'
 		};
 		var id = "zone" + this.props.item.id;
 
-debugger;
 		return(
-			<div id={id} onDrop={(e)=>{this.drop(e)}} onDragOver={(e)=>{this.allowDrop(e)}} style ={divStyle}></div>
+			<div className="ClassyAsFu" id={id} onDrop={(e)=>{this.drop(e)}} onDragOver={(e)=>{this.allowDrop(e)}} style ={divStyle}>
+				<img src={this.props.item.img} alt="Drag and Drop image" />
+			</div>
 		)
 	}
 };

@@ -18,18 +18,17 @@ export default class Draggable extends React.Component{
 
 	drag(ev) {
 		ev.dataTransfer.setData("text", ev.target.id);
+		console.log('im being drug');
 	}
 
 	render(){
-//debugger;
 		//TODO move style out of here, maybe
 		var divStyle = {
 			float: 'left',
-			width: '100px',
-			height: '35px',
 			margin: '10px',
 			padding: '10px',
-			border: '1px solid #aaaaaa'
+			border: '1px solid #aaaaaa',
+			diplay: 'inline'
 		};
 		var id = "zone" + this.props.item.id;
 
