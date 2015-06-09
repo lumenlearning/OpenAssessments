@@ -134,7 +134,7 @@ describe('Assessment Questions', ()=> {
     });
 
     it('Renders the checkboxes', ()=>{
-      expect(TestUtils.scryRenderedComponentsWithType(result, 'checkbox')).toBeDefined();
+      expect(TestUtils.scryRenderedComponentsWithType(result,'checkbox')).toBeDefined();
     });
 
     it('Checkbox text is rendered', ()=>{
@@ -147,8 +147,8 @@ describe('Assessment Questions', ()=> {
     expect(React.findDOMNode(result).textContent).toContain('solution text');
   });
 
-  xit('does not render the solution if the question is not answered', ()=>{
-    expect(React.findDOMNode(result).textContent).toContain(item.solution);
+  xit('Does not render the solution if the question is not answered', ()=>{
+    expect(React.findDOMNode(result).textContent).toContain(item.answers);
   });
 
 });
