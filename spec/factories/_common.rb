@@ -4,6 +4,10 @@ FactoryGirl.define do
     "lti_key_#{n}"
   end
 
+  sequence :identifier do |n|
+    "id_#{n}"
+  end
+
   sequence :domain do |n|
     "www.example#{n}.com"
   end
@@ -48,4 +52,12 @@ FactoryGirl.define do
     "#{n} West #{n} South"
   end
 
+  sequence :bank_id do |n|
+    "asdf#{n}"
+  end
+
+  sequence :objective_id do |n|
+    "oiu#{n}"
+  end
+  
 end
