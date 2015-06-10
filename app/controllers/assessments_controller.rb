@@ -50,10 +50,11 @@ class AssessmentsController < ApplicationController
         # Build an embed code and stats page for an assessment loaded via a url
         @embed_code = embed_code(nil, @confidence_levels, @eid, @enable_start, params[:offline].present?, params[:src_url])
       end
+
     end
-
+    
     @assessment_id = @assessment ? @assessment.id : params[:assessment_id] || 'null'
-
+    @kind = Assessment.find(@assessment_id).assessment_xmls.last.kind
     if params[:offline].present? && @src_url.present?
       @src_data = open(@src_url).read
       xml = EdxSequentialParser.parse(@src_data)

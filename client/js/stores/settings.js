@@ -56,6 +56,7 @@ function loadSettings(defaultSettings){
     offline          : bestValue('offline', 'offline', false),
     assessmentId     : bestValue('assessmentId', 'assessment_id'),
     eId              : bestValue('eId', 'eid'),
+    kind             : bestValue('kind', 'kind', 'formative'),
     externalUserId   : bestValue('externalUserId', 'external_user_id'),
     keywords         : bestValue('keywords', 'keywords'),
     resultsEndPoint  : bestValue('resultsEndPoint', 'results_end_point', 'http://localhost:4200/api'),
@@ -64,7 +65,7 @@ function loadSettings(defaultSettings){
     style            : bestValue('style', 'style', null),
     csrfToken        : defaultSettings.csrfToken || null
   };
-  
+
   if(!_settings.srcUrl && !_settings.offline){
     _errors.srcUrl = "No src_url specified: specify a src_url in the url query params.";
   }
