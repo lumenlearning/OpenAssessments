@@ -61,7 +61,7 @@ export default class EdXItem{
         label: draggable.getAttribute('label')
       }
     });
-    return draggables;
+    return draggables.toArray();
   }
 
   static parseTargets(item){
@@ -75,7 +75,7 @@ export default class EdXItem{
         height: target.getAttribute('h')
       }
     });
-    return targets;
+    return targets.toArray();
   }
 
   static parseDraggableAnswers(item){

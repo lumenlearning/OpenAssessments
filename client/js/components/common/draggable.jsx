@@ -13,12 +13,10 @@ export default class Draggable extends React.Component{
 		ev.preventDefault();
 		var data = ev.dataTransfer.getData("text");
 		ev.target.appendChild(document.getElementById(data));
-		console.log(data);
 	}
 
 	drag(ev) {
 		ev.dataTransfer.setData("text", ev.target.id);
-		console.log('im being drug');
 	}
 
 	render(){

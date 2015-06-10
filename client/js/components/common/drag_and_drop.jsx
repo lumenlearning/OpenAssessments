@@ -16,17 +16,14 @@ export default class DragAndDrop extends React.Component{
 			display: 'block',
 			clear: 'both'
 		};
-
-		var drags = this.props.item.draggables.toArray();
-		var banks = drags.map((item, index)=>{
+		var banks = this.props.item.draggables.map((item, index)=>{
 			return (
 				<Draggable key={"Bank"+index} item={item} />
 			)
 		});
 
 		if(this.props.item.type == 'key'){
-			var targets = this.props.item.targets.toArray();
-			var zones = targets.map((item, index)=>{
+			var zones = this.props.item.targets.map((item, index)=>{
 				return(
 						<DropZone key={"dropZone"+index} item={item} />
 					)
@@ -55,4 +52,7 @@ export default class DragAndDrop extends React.Component{
 
 
 	}
+};
+DragAndDrop.propTypes = {
+	item: React.PropTypes.object.isRequired
 };

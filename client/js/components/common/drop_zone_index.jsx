@@ -16,7 +16,6 @@ export default class DropZone extends React.Component{
 		ev.preventDefault();
 		this.x = event.clientX;
 		this.y = event.clientY;
-		console.log(ev.clientX, + ' ' + ev.clientY);
 	}
 
 	drop(ev) {
