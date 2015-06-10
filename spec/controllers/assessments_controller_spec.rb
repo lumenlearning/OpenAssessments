@@ -4,7 +4,7 @@ RSpec.describe AssessmentsController, type: :controller do
   
   before do
     @account = setup_lti_account
-    @assessment = FactoryGirl.create(:assessment)
+    @assessment = make_assessment
 
     allow(controller).to receive(:current_account).and_return(@account)
     allow(Account).to receive(:find_by).with(:lti_key).and_return(@account)
@@ -14,7 +14,28 @@ RSpec.describe AssessmentsController, type: :controller do
     @lti_url = 'school.edu'
   end
 
+  describe "GET index" do
+    it "returns http success" do
+      get 'index'
+      expect(response).to have_http_status(200)
+    end
+  end
+
   describe "show" do
+
+    describe "GET" do
+      it "returns http success" do
+        get 'show', :id => @assessment.id
+        expect(response).to have_http_status(200)
+      end
+    end
+
+    describe "GET with confidence_levels true" do
+      it "returns the confidence_level" do
+        get 'show', id: @assessment.id, confidence_levels: true
+        expect(assigns[:confidence_levels]).to eq(true)
+      end
+    end
 
     describe "LTI" do
       before do
@@ -47,20 +68,38 @@ RSpec.describe AssessmentsController, type: :controller do
   end
 
   context "logged in" do
+    
     login_user
-    describe "CREATE - Valid Params" do
-      it "should return a valid assessment" do
 
-        xml = File.new("#{Rails.root}/db/qti/assessment.xml")
+    describe "CREATE - Valid Params" do
+      
+      it "should return a valid assessment" do
+        xml_file = Rack::Test::UploadedFile.new File.join(Rails.root, 'spec', 'fixtures', 'assessment.xml')
         params = FactoryGirl.attributes_for(:assessment)
         params[:title] = 'Test'
         params[:description] = 'Test description'
-        params[:xml_file] = xml
+        params[:xml_file] = xml_file
         params[:license] = 'test'
         post :create, assessment: params
-        expect(response).to have_http_status(:ok)
+        expect(response).to have_http_status(302)
       end  
+
+      it "sets a license and keywords" do
+        xml_file = Rack::Test::UploadedFile.new File.join(Rails.root, 'spec', 'fixtures', 'assessment.xml')
+        assessment = FactoryGirl.attributes_for(:assessment).merge({xml_file: xml_file, license: "foo license", keywords: "foo keywords"} )
+        post :create, assessment: assessment
+        expect(assigns(:assessment).license).to eq("foo license")
+        expect(assigns(:assessment).keyword_list).to eq(["foo keywords"])
+      end
+
+      it "sets creates two assessment xmls" do
+        xml_file = Rack::Test::UploadedFile.new File.join(Rails.root, 'spec', 'fixtures', 'assessment.xml')
+        assessment = FactoryGirl.attributes_for(:assessment).merge({xml_file: xml_file, license: "foo license", keywords: "foo keywords"} )
+        post :create, assessment: assessment
+        expect(assigns(:assessment).assessment_xmls.length).to eq(2)
+      end
     end
+
   end
   
 
