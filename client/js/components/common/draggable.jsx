@@ -26,7 +26,7 @@ export default class Draggable extends React.Component{
 			margin: '10px',
 			padding: '10px',
 			border: '1px solid #aaaaaa',
-			diplay: 'inline',
+			display: 'inline',
 			zIndex: '2'
 		};
 		var id = "zone" + this.props.item.id;

@@ -16,6 +16,7 @@ export default class DragAndDrop extends React.Component{
 			display: 'block',
 			clear: 'both'
 		};
+
 		var banks = this.props.item.draggables.map((item, index)=>{
 			return (
 				<Draggable key={"Bank"+index} item={item} />
@@ -45,14 +46,17 @@ export default class DragAndDrop extends React.Component{
 			return (
 				<div style={dragDropStyle}>
 					<DropZoneIndex item={this.props.item}/>
-					{banks};
+					{banks}
+
 				</div>
 		);
 		}
-
-
+		else{
+			return <p>Error: Type undefined</p>
+		}
 	}
 };
+
 DragAndDrop.propTypes = {
 	item: React.PropTypes.object.isRequired
 };
