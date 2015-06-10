@@ -25,7 +25,7 @@ class AssessmentsController < ApplicationController
     if params[:load_ui] == 'true'
       @embedded = false
     else
-      @embedded = params[:src_url].present? || params[:embed].present?
+      @embedded = params[:src_url].present? || params[:embed].present? || @is_lti
     end
     @confidence_levels = params[:confidence_levels] ? true : false
     @enable_start = params[:enable_start] ? true : false
@@ -114,6 +114,7 @@ class AssessmentsController < ApplicationController
     def check_lti
       if request.post?
         do_lti
+        @is_lti = true
       end
     end
 end

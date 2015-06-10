@@ -19,13 +19,7 @@ class LtiInstallsController < ApplicationController
       title: Rails.application.secrets.lti_tool_name,
       description: Rails.application.secrets.lti_tool_description,
       icon: "No ICO",
-      domain: "#{account_code}.#{Rails.application.secrets.lti_launch_domain}",
-      course_navigation: {
-        text: Rails.application.secrets.lti_tool_name,
-        visibility: "admins",
-        default: "enabled",
-        enabled: true
-      } 
+      domain: "#{account_code}.#{Rails.application.secrets.lti_launch_domain}"
     }
     
     account_errors, @account_installs = setup_lti(main_account, lti_options, Integrations::CanvasAccountsLti, @accounts, :account_ids)
