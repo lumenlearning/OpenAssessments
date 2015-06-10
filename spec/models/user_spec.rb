@@ -27,6 +27,13 @@ describe User do
     user.save!
   end
 
+  describe "create_anonymous" do
+    it "should create a new user with an email and password" do
+      user = User.create_anonymous
+      expect(user.email).to be_present
+    end
+  end
+
   describe "user profile" do
     it "adds a profile after the user is created" do
       expect(@user.profile).to be_present
