@@ -12,7 +12,7 @@
     style: '<%= params[:style] %>',
     assessmentId: <%= @assessment_id %>,
     <% if @external_user_id %>
-    externalUserId: <%= @external_user_id  %>,
+    externalUserId: '<%= @external_user_id  %>',
     <% end %>
     <% if @keywords %>
     keywords: '<%= @keywords %>',
