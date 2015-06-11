@@ -17,6 +17,9 @@ export default class Draggable extends React.Component{
 
 	drag(ev) {
 		ev.dataTransfer.setData("text", ev.target.id);
+		var rect = ev.target.getBoundingClientRect();
+		ev.currentTarget.setAttribute('offsetX', (event.clientX - rect.left).toString());
+		ev.currentTarget.setAttribute('offsetY', (event.clientY - rect.top).toString());
 	}
 
 	render(){

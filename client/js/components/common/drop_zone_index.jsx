@@ -22,8 +22,11 @@ export default class DropZone extends React.Component{
 		ev.preventDefault();
 		var rect = ev.target.getBoundingClientRect();
 		var data = ev.dataTransfer.getData("text");
-		ev.currentTarget.appendChild(document.getElementById(data));
-		document.getElementById(data).setAttribute('style', 'position:absolute; top:'+(this.y-rect.top)+'px; left:'+(this.x-rect.left)+'px; ');
+		var obj = document.getElementById(data);
+		ev.currentTarget.appendChild(obj);
+		document.getElementById(data).setAttribute('style', 'position:absolute; top:'+
+			((this.y-rect.top) - Number(obj.getAttribute('offsetY')))+'px; left:'+
+			((this.x-rect.left) - Number(obj.getAttribute('offsetX')))+'px; ');
 	}
 
 
