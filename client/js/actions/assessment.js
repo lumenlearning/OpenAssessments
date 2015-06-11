@@ -50,6 +50,13 @@ export default {
     console.log(assessment);
     console.log(studentAnswers)
     Dispatcher.dispatch({action: Constants.ASSESSMENT_SUBMITTED})
+    var body = {
+      itemToGrade: {
+        assessment: assessment,
+        answers   : studentAnswers
+      }
+    }
+    Api.post(Constants.ASSESSMENT_GRADED,'/api/grades', body);
   },
 
   nextQuestion(){

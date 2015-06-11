@@ -200,6 +200,7 @@ class ApplicationController < ActionController::Base
           session[:lis_result_sourcedid]    = params["lis_result_sourcedid"]
           session[:lis_outcome_service_url] = params["lis_outcome_service_url"]
           session[:lis_user_id]             = params["user_id"]
+          @is_writeback = true
         end
 
         if @user

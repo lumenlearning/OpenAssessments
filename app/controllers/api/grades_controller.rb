@@ -6,6 +6,7 @@ class Api::GradesController < ApplicationController
   def create
 
     # store lis stuff in session
+
     params = {
       lis_result_sourcedid: session[:lis_result_sourcedid],
       lis_outcome_service_url: session[:lis_outcome_service_url],

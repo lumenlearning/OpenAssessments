@@ -33,6 +33,11 @@ class AssessmentsController < ApplicationController
     @keywords = params[:keywords] if params[:keywords]
     @external_user_id = params[:external_user_id] if params[:external_user_id]
     @results_end_point = ensure_scheme(params[:results_end_point]) if params[:results_end_point].present?
+    if @is_writeback # For now all LTI requests with grade writeback will produce summative assessments. All others will be formative.
+      @kind = "summative"
+    else
+      @kind = "formative"
+    end
     if params[:id].present? && !['load', 'offline'].include?(params[:id])
       @assessment = Assessment.find(params[:id])
       @eid ||= @assessment.identifier
@@ -54,7 +59,7 @@ class AssessmentsController < ApplicationController
     end
     
     @assessment_id = @assessment ? @assessment.id : params[:assessment_id] || 'null'
-    # @kind = Assessment.find(@assessment_id).assessment_xmls.last.kind
+    
     if params[:offline].present? && @src_url.present?
       @src_data = open(@src_url).read
       xml = EdxSequentialParser.parse(@src_data)
