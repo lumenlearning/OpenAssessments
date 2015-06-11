@@ -46,6 +46,12 @@ export default {
     Dispatcher.dispatch({ action: Constants.ASSESSMENT_CHECK_ANSWER });
   },
 
+  submitAssessment(assessment, studentAnswers){
+    console.log(assessment);
+    console.log(studentAnswers)
+    Dispatcher.dispatch({action: Constants.ASSESSMENT_SUBMITTED})
+  },
+
   nextQuestion(){
     Dispatcher.dispatch({ action: Constants.ASSESSMENT_NEXT_QUESTION });
   },

@@ -28,7 +28,8 @@ export default class Assessment extends BaseComponent{
       assessmentResult : AssessmentStore.assessmentResult(),
       showStart        : showStart,
       settings         : SettingsStore.current(),
-      messageIndex     : AssessmentStore.answerMessageIndex() 
+      messageIndex     : AssessmentStore.answerMessageIndex(),
+      studentAnswers   : AssessmentStore.allStudentAnswers() 
     }
   }
 
@@ -38,6 +39,11 @@ export default class Assessment extends BaseComponent{
       // Trigger action to indicate the assessment was viewed
       AssessmentActions.assessmentViewed(this.state.settings, this.state.assessment);  
     }
+  }
+
+  submitButtonClicked(){
+    console.log("submit button clicked");
+    AssessmentActions.submitAssessment(this.state.assessment, this.state.studentAnswers);
   }
 
   render(){
@@ -58,6 +64,7 @@ export default class Assessment extends BaseComponent{
       // TODO figure out when to mark an item as viewed. assessmentResult must be valid before this call is made.
       // AssessmentActions.itemViewed(this.state.settings, this.state.assessment, this.state.assessmentResult);
     }
+    var submitButton = (this.state.currentIndex == this.state.questionCount - 1) ? <button className="btn btn-submit" onClick={()=>{this.submitButtonClicked()}}><span>Submit</span></button> : "";
 
 
 
@@ -66,6 +73,7 @@ export default class Assessment extends BaseComponent{
         <div className="section_container">
           {content}
         </div>
+        {submitButton}
       </div>
     </div>;
   }

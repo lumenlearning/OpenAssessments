@@ -123,6 +123,10 @@ var AssessmentStore = assign({}, StoreCommon, {
 
   studentAnswers(){
     return _studentAnswers[_itemIndex];
+  },
+
+  allStudentAnswers(){
+    return _studentAnswers;
   }
 
 });

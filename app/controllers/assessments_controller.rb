@@ -54,7 +54,7 @@ class AssessmentsController < ApplicationController
     end
     
     @assessment_id = @assessment ? @assessment.id : params[:assessment_id] || 'null'
-    @kind = Assessment.find(@assessment_id).assessment_xmls.last.kind
+    # @kind = Assessment.find(@assessment_id).assessment_xmls.last.kind
     if params[:offline].present? && @src_url.present?
       @src_data = open(@src_url).read
       xml = EdxSequentialParser.parse(@src_data)

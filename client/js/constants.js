@@ -19,6 +19,7 @@ export default {
   ASSESSMENT_START: "assessment_start",
   ASSESSMENT_CHECK_ANSWER: "assessment_check_answer",
   ASSESSMENT_VIEWED: "assessment_viewed",
+  ASSESSMENT_SUBMITTED: "assessment_submitted",
   ANSWER_SELECTED: "answer_selected",
   CLEAR_SELECTED_ANSWERS: "clear_selected_answers",
   EDX_LOAD_SECTION: "edx_load_section",
