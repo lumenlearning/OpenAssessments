@@ -72,7 +72,8 @@ export default class EdXItem{
         xPos: target.getAttribute('x'),
         yPos: target.getAttribute('y'),
         width: target.getAttribute('w'),
-        height: target.getAttribute('h')
+        height: target.getAttribute('h'),
+        onePerTarget: item.find('drag_and_drop_input').attr('one_per_target')
       }
     });
     return targets.toArray();
@@ -151,6 +152,10 @@ export default class EdXItem{
         return {
           id: index,
           img: dnd.attr('img'),
+          targetOutline: dnd.attr('target_outline'),
+          onePerTarget: dnd.attr('one_per_target'),
+          noLabels: dnd.attr('no_labels'),
+          labelBgColor: dnd.attr('label_bg_color'),
           draggables: draggables,
           targets: targets,
           correct: correctAnswer,

@@ -31,7 +31,11 @@ export default class DropZone extends React.Component{
 
 
 		return(
-			<div className="dropZone" id={id} onDrop={(e)=>{this.drop(e)}} onDragOver={(e)=>{this.allowDrop(e)}} style ={divStyle}></div>
+			<div className="dropZone" id={id} onDrop={(e)=>{
+			if(!(this.props.item.onePerTarget && document.getElementById(id).hasChildNodes())) this.drop(e);
+			}} onDragOver={(e)=>{
+			  if(!(this.props.item.onePerTarget && document.getElementById(id).hasChildNodes())) this.allowDrop(e);
+			}} style ={divStyle}></div>
 		)
 	}
 };
