@@ -4,7 +4,7 @@ import React						from 'react';
 import TestUtils    		from 'react/lib/ReactTestUtils';
 import DropZoneIndex		from './drop_zone_index';
 
-describe('Drop zone for index type ----------------------------------------------------------------------------------', ()=>{
+describe('Drop zone for index type', ()=>{
 	var instance;
 	var item;
 	var zone;

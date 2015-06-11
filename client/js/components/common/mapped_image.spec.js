@@ -34,7 +34,7 @@ describe ('Mapped Image', ()=>{
 	});
 
 	xit('Calls the onClick', ()=>{
-		spyon(result, 'onclickFunction');
+		spyOn(result, 'onclickFunction');
 		var clickableArea = TestUtils.findRenderedDOMComponentWithTag(result, 'area');
 		TestUtils.Simulate.click(clickableArea);
 		expect(result.onclickFunction).toHaveBeenCalled();

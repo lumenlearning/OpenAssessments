@@ -38,7 +38,28 @@ describe('Assessment Questions', ()=> {
     expect(React.findDOMNode(result).textContent).toContain(item.messages[1]);
   });
 
-  xdescribe('Drag and Drop', ()=>{});
+  describe('Drag and Drop', ()=>{
+    beforeEach(()=>{
+      item.answers = [{
+        id: 0,
+        type: 'key',
+        draggables: [{id:'0', label:'drag1'},{id:'1', label:'drag2'},{id:'2', label:'drag3'}],
+        targets: [{id:'0', height:'100', width:'180', xPos:'10', yPos:'10'}],
+        img: 'http://www.bealecorner.com/trv900/respat/eia1956-small.jpg'
+      },{
+        id: 0,
+        type: 'value',
+        draggables: [{id:'0', label:'drag1'},{id:'1', label:'drag2'},{id:'2', label:'drag3'}],
+        img: 'http://www.bealecorner.com/trv900/respat/eia1956-small.jpg'
+      }];
+      item.question_type = 'edx_drag_and_drop';
+      result = TestUtils.renderIntoDocument(<UniversalInput item={item} />);
+    });
+
+    it('Renders the components', ()=>{
+      expect(TestUtils.scryRenderedDOMComponentsWithTag(result, 'DragAndDrop')).toBeDefined();
+    });
+  });
 
   describe('Multiple Choice', ()=>{
 
