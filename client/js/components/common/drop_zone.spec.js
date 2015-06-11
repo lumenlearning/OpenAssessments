@@ -2,34 +2,31 @@
 
 import React				from 'react';
 import TestUtils    from 'react/lib/ReactTestUtils';
-import Draggable		from './draggable';
+import DropZone			from './drop_zone';
 
-describe('Draggable Object', ()=>{
+describe('Drop Zone', ()=>{
 	var instance;
 	var item;
 	var zone;
-	var object;
 
 	beforeEach(()=>{
 		item = {
 			id: 0,
-			label: 'A Label'
+			width: 128,
+			height: 64,
+			xPos: 10,
+			yPos: 20
 		};
-		instance = TestUtils.renderIntoDocument(<Draggable item={item} />);
+		instance = TestUtils.renderIntoDocument(<DropZone item={item} />);
 		zone = TestUtils.findRenderedDOMComponentWithClass(instance, 'dropZone');
-		object = TestUtils.findRenderedDOMComponentWithClass(instance, 'draggable');
 	});
 
 	it('Renders', ()=>{
-		expect(instance).toBeDefined();
-		expect(React.findDOMNode(instance).textContent).toContain('A Label');
 		expect(zone).toBeDefined();
-	});
-	it('Is draggable', ()=>{
-		expect(object.props.draggable).toBeTruthy();
-		spyOn(instance, 'drag');
-		TestUtils.Simulate.dragStart(object);
-		expect(instance.drag).toHaveBeenCalled();
+		expect(zone.props.style.top).toEqual('20');
+		expect(zone.props.style.left).toEqual('10');
+		expect(zone.props.style.height).toEqual('64');
+		expect(zone.props.style.width).toEqual('128');
 	});
 	it('Is droppable', ()=>{
 		spyOn(instance, 'drop');
