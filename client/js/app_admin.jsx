@@ -4,6 +4,7 @@ import React          from 'react';
 import Router         from 'react-router';
 import AdminRoutes    from './routes_admin';
 import SettingsAction from './actions/settings';
+import AdminActions   from "./actions/admin";
 
 // Include the admin styling
 require('../styles/styles_admin.less')
@@ -30,6 +31,7 @@ if (window.matchMedia("(max-width: 639px)").matches){
 
 // Initialize store singletons
 SettingsAction.load(window.DEFAULT_SETTINGS);
+AdminActions.loadAccounts();
 
 Router.run(AdminRoutes, (Handler) => {
   return React.render(<Handler />, document.body);

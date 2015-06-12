@@ -4,6 +4,8 @@ import React                from "react";
 import UserStore            from "../../stores/user";
 import BaseComponent        from "../base_component";
 import Router               from "react-router";
+import Defines              from "../defines";
+import AccountSelection     from './account_selection';
 import { LeftNav }          from "material-ui";
 
 class LeftNavigation extends BaseComponent {
@@ -56,8 +58,14 @@ class LeftNavigation extends BaseComponent {
 
   getStyles() {
     return {
-      logoStyle: {
-        marginTop: '20px'
+      headerStyle: {
+        marginTop: "20px",
+        backgroundColor: Defines.colors.grey,
+        cursor: "pointer",
+        fontSize: "24px",
+        color: Defines.colors.white,
+        paddingTop: "0px",
+        marginBottom: "8px"
       }
     };
   }
@@ -66,7 +74,10 @@ class LeftNavigation extends BaseComponent {
 
     var styles = this.getStyles();
 
-    var header = <div style={styles.logoStyle} className="logo">Home</div>;
+    var header = 
+      <div style={styles.headerStyle}>
+        <AccountSelection />
+      </div>;
 
     return (
       <LeftNav

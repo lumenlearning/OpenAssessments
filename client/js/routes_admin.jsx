@@ -1,9 +1,9 @@
 "use strict";
 import React              from 'react';
 import Router             from 'react-router';
+import AccountsList       from './components/admin/accounts_list';
 import AdminPage          from './components/admin/page';
 import Login              from './components/admin/login';
-import AccountSelection   from './components/admin/account_selection';
 import AccountDashboard   from './components/admin/account_dashboard';
 import UsersList          from './components/admin/users_list';
 import Logout             from './components/admin/logout';
@@ -15,7 +15,7 @@ var Redirect      = Router.Redirect;
 
 var adminRoutes = (
   <Route name="root" path="/" handler={AdminPage}>
-    <DefaultRoute name="dashboard" handler={AccountSelection}/>
+    <DefaultRoute name="home" handler={AccountsList}/>
   	<Route name="login" handler={Login}/>
     <Route name="account" path="/account/:accountId" handler={AccountDashboard}/>
     <Route name="users-list" path="/users/:accountId" handler={UsersList}/>

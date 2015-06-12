@@ -7,6 +7,7 @@ import UserStore     from "../../stores/user";
 import BaseComponent from "../base_component";
 import _             from "lodash";
 import assign        from "object-assign";
+import Defines       from "../defines";
 import { Paper, TextField, FlatButton, RaisedButton, FontIcon } from "material-ui";
 
 class Login extends BaseComponent {
@@ -77,31 +78,29 @@ class Login extends BaseComponent {
   getStyles() {
     return {
       paper: {
-        backgroundColor: "white"
+        backgroundColor: Defines.colors.white,
+        width: "345px",
+        margin: "auto"
       },
 
       container: {
-        marginTop: "10px"
+        margin: "10px auto"
       }
     };
   }
 
   render(){
     var styles = this.getStyles();
-    return (
-      <div className="login-screen" style={styles.container}>
-        <Paper className="login-paper" style={styles.paper} zDepth={0}>
+    return <div style={styles.container}>
+        <Paper style={styles.paper} zDepth={0}>
           <form action="/users/sign_in" method="post" onSubmit={(e) => this.handleLogin(e)}>
             <h4>Admin Login</h4>
-
             <TextField hintText="johndoe@example.com" floatingLabelText="Email" ref="email" onBlur={this.validateEmail} errorText={this.state.validations.email} />
             <TextField type="password" hintText="******" floatingLabelText="Password" ref="password" />
-
-
-            <FlatButton className="login-button" label="Login" primary={true} ref="submit-button" />
+            <FlatButton label="Login" primary={true} ref="submit-button" />
           </form>
         </Paper>
-      </div>);
+      </div>;
   }
 }
 

@@ -16,7 +16,7 @@ export default class BaseComponent extends React.Component {
 
   // Method to update state based upon store changes
   storeChanged(){
-    this.setState(this.getState());
+    this.setState(this.getState(this.props, this.context));
   }
 
   componentDidMount(){

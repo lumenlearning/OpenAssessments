@@ -15,7 +15,6 @@ describe('left_nav', function() {
     localStorage.setItem('jwt', "aoeuaoeu");
     var Subject = new StubContext(LeftNav, {});
     var result = TestUtils.renderIntoDocument(<Subject />);
-    expect(React.findDOMNode(result).textContent).toContain("Home");
     expect(React.findDOMNode(result).textContent).toContain("Dashboard");
     expect(React.findDOMNode(result).textContent).toContain("Logout");
     localStorage.removeItem('jwt');
