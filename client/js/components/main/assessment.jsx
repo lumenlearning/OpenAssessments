@@ -29,7 +29,8 @@ export default class Assessment extends BaseComponent{
       showStart        : showStart,
       settings         : SettingsStore.current(),
       messageIndex     : AssessmentStore.answerMessageIndex(),
-      studentAnswers   : AssessmentStore.allStudentAnswers() 
+      studentAnswers   : AssessmentStore.allStudentAnswers(),
+      allQuestions     : AssessmentStore.allQuestions() 
     }
   }
 
@@ -42,8 +43,7 @@ export default class Assessment extends BaseComponent{
   }
 
   submitButtonClicked(){
-    console.log("submit button clicked");
-    AssessmentActions.submitAssessment(this.state.assessment, this.state.studentAnswers);
+    AssessmentActions.submitAssessment(this.state.assessment.id, this.state.assessment.assessmentId, this.state.allQuestions, this.state.studentAnswers);
   }
 
   render(){

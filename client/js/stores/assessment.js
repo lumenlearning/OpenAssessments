@@ -127,6 +127,10 @@ var AssessmentStore = assign({}, StoreCommon, {
 
   allStudentAnswers(){
     return _studentAnswers;
+  },
+
+  allQuestions(){
+    return _items;
   }
 
 });

@@ -6,7 +6,28 @@ class Api::GradesController < ApplicationController
   def create
 
     # store lis stuff in session
+  
 
+    body = JSON.parse(request.body.read);
+    item_to_grade = body["itemToGrade"]
+    questions = item_to_grade["questions"]
+    answers = item_to_grade["answers"]
+    assessment_id = item_to_grade["assessmentId"]
+    assessment = Assessment.find(assessment_id)
+    assessment_xml = AssessmentParser.parse(assessment.assessment_xmls.first.xml).first
+
+    debugger
+    # if identifier == assessment.identifier
+    #   # respond with some sort of error
+    #   # break out of function
+    # end
+
+    
+
+
+
+   
+    
     params = {
       lis_result_sourcedid: session[:lis_result_sourcedid],
       lis_outcome_service_url: session[:lis_outcome_service_url],

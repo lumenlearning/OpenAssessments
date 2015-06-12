@@ -14,7 +14,7 @@ export default class Assessment{
     var questestinterop = xml.find('questestinterop').addBack('questestinterop');
     var sequential      = xml.find('sequential').addBack('sequential');
     if(assessmentXml.length > 0 || questestinterop.length > 0){
-      return this.parseQti(assessmentXml, xml);
+      return this.parseQti(settings.assessmentId, assessmentXml, xml);
     } else if(sequential.length > 0){
       return this.parseEdX(settings, sequential);
     } else{
@@ -24,11 +24,12 @@ export default class Assessment{
     }
   }
 
-  static parseQti(assessmentXml, xml){
+  static parseQti(assessmentId, assessmentXml, xml){
     var assessment = {
-      id         : assessmentXml.attr('ident'),
-      title      : assessmentXml.attr('title'),
-      standard   : 'qti'
+      id           : assessmentXml.attr('ident'),
+      title        : assessmentXml.attr('title'),
+      standard     : 'qti',
+      assessmentId : assessmentId,
     };
     assessment.objectives = xml.find('assessment > objectives matref').map((index, item) => {
       return $(item).attr('linkrefid');

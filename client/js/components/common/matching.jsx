@@ -4,7 +4,7 @@ import React              from 'react';
 import AssessmentActions  from "../../actions/assessment";
 import AssessmentStore    from "../../stores/assessment";
 import _                  from "lodash";
-
+import Utils              from "../../utils/utils";
 export default class Matching extends React.Component{
 
   answerSelected(e, key){
@@ -61,12 +61,12 @@ export default class Matching extends React.Component{
         if(answers && (answers.selectedAnswer.trim() == answer.material.trim())){
           selectedAnswer = answers.selectedAnswer.trim();
         }
-        return <option key={ref + "-option-" + i} value={answer.material.trim()}>{answer.material.trim()}</option>
+        return <option key={Utils.makeId()} value={answer.material.trim()}>{answer.material.trim()}</option>
       });
       return <div>
         {materialNames[index]}
         <select key={ref} name={name} value={selectedAnswer} onChange={(e, key) => {this.answerSelected(e, key)}}>
-          <option key={"default-option-key" + index} selected={null}>[Select Answer]</option>
+          <option key={"default-option-key" + Utils.makeId()} selected={null}>[Select Answer]</option>
           { options }
         </select>
       </div>;
