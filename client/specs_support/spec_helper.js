@@ -28,6 +28,26 @@ function helpStubAjax(SettingsActions){
 
   beforeEach(function(){
     jasmine.Ajax.install();
+
+    // Stub request to load problems
+    var accounts_payload = JSON.stringify([{
+      "id":1,
+      "name":"Canvas Starter App",
+      "domain":"bfcoderServer.ngrok.com",
+      "lti_key":"canvasstarterapp",
+      "lti_secret":"d52ca2",
+      "canvas_uri":"https://canvas.instructure.com",
+      "code":"bfcoderServer"
+    }]);
+
+    jasmine.Ajax.stubRequest(
+        /.*\/api\/admin\/accounts\//
+      ).andReturn({
+      "status": 200,
+      "contentType": "json",
+      "statusText": "OK",
+      "responseText": accounts_payload
+    });
   });
 
   afterEach(function(){
