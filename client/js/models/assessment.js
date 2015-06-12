@@ -85,7 +85,7 @@ export default class Assessment{
         results = this.checkMatchingAnswer(item, selectedAnswers);
         break;
       case 'edx_drag_and_drop':
-        results = this.checkEdXDragAndDrop();
+        results = this.checkEdXDragAndDrop(item);
         break;
       case 'edx_numerical_input':
         results = this.checkEdXNumeric();
@@ -206,8 +206,14 @@ export default class Assessment{
 
   }
 
-  static checkEdXDragAndDrop(){
-    return this.checkEdX();
+  static checkEdXDragAndDrop(item){
+    item.answers.map((item)=>{
+      var correct = item.correct;
+      if(item.type == 'key'){
+
+      }
+    });
+    //debugger;
   }
 
   static checkEdXNumeric(){

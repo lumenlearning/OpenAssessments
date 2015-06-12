@@ -37,8 +37,6 @@ describe('Draggable Object', ()=>{
 		expect(instance.drop).toHaveBeenCalled();
 	});
 	it('Has drag over', ()=>{
-		spyOn(instance, 'allowDrop');
-		TestUtils.Simulate.dragOver(zone);
-		expect(instance.allowDrop).toHaveBeenCalled();
+		expect(object.props.onDragOver).toBeDefined();
 	});
 });
