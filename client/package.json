@@ -21,6 +21,7 @@
     "fixed-data-table": "^0.3.0",
     "flux": "^2.0.3",
     "lodash": "^3.9.3",
+    "material-design-icons": "^2.0.0",
     "material-ui": "^0.9.0",
     "null-loader": "^0.1.1",
     "object-assign": "^2.0.0",
