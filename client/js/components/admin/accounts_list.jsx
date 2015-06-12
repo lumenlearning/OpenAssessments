@@ -58,6 +58,9 @@ class AccountsList extends BaseComponent {
       listItemLink : {
         color        : Defines.colors.black,
         fontSize     : "14pt"
+      },
+      addButton : {
+        color: Defines.colors.grey
       }
     };
   }
@@ -76,7 +79,7 @@ class AccountsList extends BaseComponent {
             <Link ref={ref} style={styles.listItemLink} to="account" params={param}>{account.name}</Link>
           </li>;
       });
-      
+
       accountList = <ul style={styles.list}>
         {items}
       </ul>;
@@ -87,7 +90,7 @@ class AccountsList extends BaseComponent {
 
     return <div style={styles.container}>
         <h2 style={styles.title}>Choose Account</h2>
-        <FloatingActionButton><i className="material-icons md-18">add</i></FloatingActionButton>
+        <FloatingActionButton style={styles.addButton}><i className="material-icons md-18">add</i></FloatingActionButton>
         <div style={styles.listContainer}>
           {accountList}
         </div>
