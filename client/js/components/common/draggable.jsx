@@ -12,6 +12,7 @@ export default class Draggable extends React.Component{
 	drop(ev) {
 		ev.preventDefault();
 		var data = ev.dataTransfer.getData("text");
+		document.getElementById(data).removeAttribute('style');
 		ev.target.appendChild(document.getElementById(data));
 	}
 
@@ -36,7 +37,7 @@ export default class Draggable extends React.Component{
 
 
 		return (
-			<div className="dropZone" id={id} onDrop={(e)=>{this.drop(e)}} onDragOver={(e)=>{this.allowDrop(e)}} style={draggableStyle}>
+			<div className="dropZone" id={id} onDrop={(e)=>{this.drop(e)}} onDragOver={(e)=>{document.getElementById(id).hasChildNodes() ? e.stopPropagation() : this.allowDrop(e)}} style={draggableStyle}>
 				<div className="draggable" draggable="true" onDragOver={(e)=>{e.stopPropagation()}} onDrop={(e)=>{e.stopPropagation()}} onDragStart={(e)=>{this.drag(e)}}
 						 id={this.props.item.id + this._reactInternalInstance._rootNodeID} width="88" height="31">
 					{this.props.item.label}
