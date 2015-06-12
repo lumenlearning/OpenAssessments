@@ -37,7 +37,7 @@ export default class Draggable extends React.Component{
 
 		return (
 			<div className="dropZone" id={id} onDrop={(e)=>{this.drop(e)}} onDragOver={(e)=>{this.allowDrop(e)}} style={draggableStyle}>
-				<div className="draggable" draggable="true" onDragStart={(e)=>{this.drag(e)}}
+				<div className="draggable" draggable="true" onDragOver={(e)=>{e.stopPropagation()}} onDrop={(e)=>{e.stopPropagation()}} onDragStart={(e)=>{this.drag(e)}}
 						 id={this.props.item.id + this._reactInternalInstance._rootNodeID} width="88" height="31">
 					{this.props.item.label}
 				</div>
