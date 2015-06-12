@@ -7,7 +7,7 @@ import SettingsAction from './actions/settings';
 import AdminActions   from "./actions/admin";
 
 // Include the admin styling
-require('../styles/styles_admin.less')
+require('../styles/styles_admin.less');
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release

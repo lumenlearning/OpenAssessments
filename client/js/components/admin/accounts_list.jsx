@@ -87,7 +87,7 @@ class AccountsList extends BaseComponent {
 
     return <div style={styles.container}>
         <h2 style={styles.title}>Choose Account</h2>
-        <FloatingActionButton iconClassName="md-icon dp48" />
+        <FloatingActionButton><i className="material-icons md-18">add</i></FloatingActionButton>
         <div style={styles.listContainer}>
           {accountList}
         </div>

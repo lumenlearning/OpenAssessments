@@ -4,5 +4,5 @@
 web: rails server -p $APP_PORT
 webpack: cd client && nodemon webpack.hot.js
 
-ngrok_webpack: ngrok --subdomain $ASSETS_SUBDOMAIN --log stdout $ASSETS_PORT
-ngrok_rails: ngrok --subdomain $APP_SUBDOMAIN --log stdout $APP_PORT
+#ngrok_webpack: ngrok --subdomain $ASSETS_SUBDOMAIN --log stdout $ASSETS_PORT
+#ngrok_rails: ngrok --subdomain $APP_SUBDOMAIN --log stdout $APP_PORT
