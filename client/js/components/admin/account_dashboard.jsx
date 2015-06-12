@@ -5,6 +5,7 @@ import BaseComponent    from "../base_component";
 import AdminActions     from "../../actions/admin";
 import ApplicationStore from "../../stores/application";
 import AccountsStore    from "../../stores/accounts";
+import {Link}           from "react-router";
 
 class AccountDashboard extends BaseComponent {
 
@@ -48,6 +49,7 @@ class AccountDashboard extends BaseComponent {
     return (
       <div style={styles.accountDashboard}>
         <h3>{this.state.currentAccountName}</h3>
+        <Link to="users" params={{accountId: this.props.params.accountId}}>Users</Link>
       </div>);
   }
 
