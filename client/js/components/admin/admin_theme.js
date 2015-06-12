@@ -23,7 +23,7 @@ export default class AdminTheme{
         color: Defines.colors.teal
         // textColor: String,
         // height: Number
-      }
+      },
       // button: {
       //   height: Number,
       //   minWidth: Number,
@@ -52,16 +52,16 @@ export default class AdminTheme{
       //   secondaryTextColor: String,
       //   disabledColor: String
       // },
-      // floatingActionButton: {
-      //   buttonSize: Number,
-      //   miniSize: Number,
-      //   color: String,
-      //   iconColor: String,
-      //   secondaryColor: String,
-      //   secondaryIconColor: String,
-      //   disabledColor: String,
-      //   disabledTextColor: String
-      // },
+       floatingActionButton: {
+         buttonSize: 40,
+         //miniSize: Number,
+         color: Defines.colors.lightGrey,
+         iconColor: Defines.colors.black,
+         //secondaryColor: String,
+         //secondaryIconColor: String,
+         //disabledColor: String,
+         //disabledTextColor: String
+       },
       // leftNav: {
       //   width: Number,
       //   color: String,
