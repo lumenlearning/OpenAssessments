@@ -5,6 +5,7 @@ import BaseComponent    from "../base_component";
 import AdminActions     from "../../actions/admin";
 import ApplicationStore from "../../stores/application";
 import AccountsStore    from "../../stores/accounts";
+import UserStore        from "../../stores/user";
 import {Link}           from "react-router";
 
 class AccountDashboard extends BaseComponent {
@@ -16,6 +17,13 @@ class AccountDashboard extends BaseComponent {
 
     if(props.params.accountId){
       AdminActions.loadUsers(props.params.accountId);
+    }
+  }
+
+  static willTransitionTo(transition, params, query, callback) {
+    if (!UserStore.loggedIn()) {
+      transition.abort();
+      callback();
     }
   }
 
