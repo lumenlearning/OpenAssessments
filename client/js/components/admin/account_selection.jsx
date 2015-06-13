@@ -23,7 +23,6 @@ class AccountSelection extends BaseComponent {
 
   getStyles(){
     return {
-      
     };
   }
 
@@ -38,7 +37,7 @@ class AccountSelection extends BaseComponent {
     if(this.state.accounts.length > 0){
       return <DropDownMenu menuItems={menuItems} />;
     } else {
-      return <div />
+      return <div />;
     }
   }
 
@@ -49,4 +48,3 @@ AccountSelection.contextTypes = {
 };
 
 module.exports = AccountSelection;
-
