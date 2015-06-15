@@ -11,14 +11,19 @@ import Item               from "../assessments/item";
 
 export default class Assessment extends BaseComponent{
  
-  constructor(){
-    super();
+  constructor(props, context){
+    super(props, context);
     this.stores = [AssessmentStore, SettingsStore];
-    this.state = this.getState();
+    this.state = this.getState(context);
+    this.context = context;    
   }
 
-  getState(){
+  getState(props, context){
+    console.log(context);
     var showStart = SettingsStore.current().enableStart && !AssessmentStore.isStarted();
+    if(AssessmentStore.assessmentResult() != null){
+      context.router.transitionTo("assessment-result");
+    }
     return {
       assessment       : AssessmentStore.current(),
       isLoaded         : AssessmentStore.isLoaded(),
@@ -30,7 +35,7 @@ export default class Assessment extends BaseComponent{
       settings         : SettingsStore.current(),
       messageIndex     : AssessmentStore.answerMessageIndex(),
       studentAnswers   : AssessmentStore.allStudentAnswers(),
-      allQuestions     : AssessmentStore.allQuestions() 
+      allQuestions     : AssessmentStore.allQuestions(), 
     }
   }
 
@@ -48,7 +53,6 @@ export default class Assessment extends BaseComponent{
 
   render(){
     var content;
-
     if(!this.state.isLoaded){
       content = <Loading />;  
     } else if(this.state.showStart){
@@ -79,3 +83,7 @@ export default class Assessment extends BaseComponent{
   }
 
 }
+
+Assessment.contextTypes = {
+  router: React.PropTypes.func
+};

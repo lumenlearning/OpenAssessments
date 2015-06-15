@@ -11,7 +11,7 @@ class Api::GradesController < ApplicationController
     body = JSON.parse(request.body.read);
     item_to_grade = body["itemToGrade"]
     questions = item_to_grade["questions"]
-
+    correct_list = []
     answers = item_to_grade["answers"]
     assessment_id = item_to_grade["assessmentId"]
     assessment = Assessment.find(assessment_id)
@@ -19,7 +19,6 @@ class Api::GradesController < ApplicationController
     doc.remove_namespaces!
     xml_questions = doc.xpath("//item")
 
-    
     questions.each_with_index do |question, index|
 
       # make sure we are looking at the right question
@@ -38,29 +37,39 @@ class Api::GradesController < ApplicationController
         if correct
           answered_correctly += 1
         end
+        correct_list[index] = correct
       end
 
       # TODO if the question id's dont match then check the rest of the id's
       # if the Id isn't found then there has been an error and return the error
     
     end
-    debugger
-
-    params = {
-      lis_result_sourcedid: session[:lis_result_sourcedid],
-      lis_outcome_service_url: session[:lis_outcome_service_url],
-      user_id: session[:lis_user_id]
+    score = Float(answered_correctly) / Float(questions.length)
+    score *= Float(100)
+    graded_assessment = { 
+      score: score,
+      feedback: "Study Harder",
+      correct_list: correct_list
     }
-    provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
 
-    # post the given score to the TC
-    score = (params['score'] != '' ? params['score'] : nil)
-    res = provider.post_replace_result!(params['score'])
+    respond_to do |format|
+      format.json { render json: graded_assessment }
+    end
+    # params = {
+    #   lis_result_sourcedid: session[:lis_result_sourcedid],
+    #   lis_outcome_service_url: session[:lis_outcome_service_url],
+    #   user_id: session[:lis_user_id]
+    # }
+    # provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
 
-    # Need to figure out error handling - these will need to be passed to the client
-    # or we can also post scores async using activejob in which case we'll want to
-    # log any errors and make them visible in the admin ui
-    success = res.success?
+    # # post the given score to the TC
+    # score = (params['score'] != '' ? params['score'] : nil)
+    # res = provider.post_replace_result!(params['score'])
+
+    # # Need to figure out error handling - these will need to be passed to the client
+    # # or we can also post scores async using activejob in which case we'll want to
+    # # log any errors and make them visible in the admin ui
+    # success = res.success?
       
     # Ping analytics server
   end

@@ -215,10 +215,15 @@ Dispatcher.register(function(payload) {
         //EdX.findAndSetObject(_assessment.sections, payload.item);
       }
       break;
+
     case Constants.EDX_LOAD_ITEM:
         _items.push(payload.item);
       break;
 
+    case Constants.ASSESSMENT_GRADED:
+        console.log(payload);
+        parseAssessmentResult(payload.data.text);
+      break;
 
     default:
       return true;
