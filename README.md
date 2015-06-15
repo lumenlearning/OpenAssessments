@@ -40,7 +40,7 @@ Rename `.env.example` to `.env` and configure it to your liking.
 3. Do a global search and replace for `canvasstarterapp` (use only letters or numbers for this name. Special characters like '_' will result in errors).
 
 #### Secrets file
-Rename config/secrets.example.yml to config/secrets.yml. Open the file and change each entry to values that are relevant for your application. 
+Rename `config/secrets.example.yml` to `config/secrets.yml`. Open the file and change each entry to values that are relevant for your application. 
 
 *This file should not be committed to your repository.*
 
