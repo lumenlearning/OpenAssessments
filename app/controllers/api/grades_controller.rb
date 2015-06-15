@@ -7,27 +7,45 @@ class Api::GradesController < ApplicationController
 
     # store lis stuff in session
   
-
+    answered_correctly = 0;
     body = JSON.parse(request.body.read);
     item_to_grade = body["itemToGrade"]
     questions = item_to_grade["questions"]
+
     answers = item_to_grade["answers"]
     assessment_id = item_to_grade["assessmentId"]
     assessment = Assessment.find(assessment_id)
-    assessment_xml = AssessmentParser.parse(assessment.assessment_xmls.first.xml).first
+    doc = Nokogiri::XML(assessment.assessment_xmls.first.xml)
+    doc.remove_namespaces!
+    xml_questions = doc.xpath("//item")
 
+    
+    questions.each_with_index do |question, index|
+
+      # make sure we are looking at the right question
+      if question["id"] == xml_questions[index].attributes["ident"].value
+        correct = false;
+        type = xml_questions[index].children.xpath("qtimetadata").children.xpath("fieldentry").children.text
+        
+        # grade the question based off of question type
+        if type == "multiple_choice_question"
+          correct = grade_multiple_choice(xml_questions[index], answers[index])  
+        elsif type == "multiple_answers_question"
+          correct = grade_multiple_answers(xml_questions[index], answers[index])
+        elsif type == "matching_question"
+          correct = grade_matching(xml_questions[index], answers[index])
+        end
+        if correct
+          answered_correctly += 1
+        end
+      end
+
+      # TODO if the question id's dont match then check the rest of the id's
+      # if the Id isn't found then there has been an error and return the error
+    
+    end
     debugger
-    # if identifier == assessment.identifier
-    #   # respond with some sort of error
-    #   # break out of function
-    # end
 
-    
-
-
-
-   
-    
     params = {
       lis_result_sourcedid: session[:lis_result_sourcedid],
       lis_outcome_service_url: session[:lis_outcome_service_url],
@@ -45,6 +63,46 @@ class Api::GradesController < ApplicationController
     success = res.success?
       
     # Ping analytics server
+  end
+
+  private
+
+  def grade_multiple_choice(question, answer) 
+    correct = false;
+    choices = question.children.xpath("respcondition")
+    choices.each_with_index do |choice, index|
+      
+      # if the students response id matches the correct response id for the question the answer is correct
+      if choice.xpath("setvar")[0].children.text == "100" && answer == choice.xpath("conditionvar").xpath("varequal").children.text
+        correct = true;
+      end
+    end
+    correct
+  end
+
+  def grade_multiple_answers(question, answers)
+    correct = false;
+    choices = question.children.xpath("respcondition").children.xpath("and").xpath("varequal")
+    correct_count = 0
+    total_correct = choices.length
+    # if the answers to many or to few then return false
+    if answers.length != total_correct
+      return correct
+    end 
+    choices.each_with_index do |choice, index|
+      if answers.include?(choice.text)
+        correct_count += 1;
+      end
+    end
+    if correct_count == total_correct
+      correct = true
+    end
+    debugger
+    correct
+  end
+
+  def grade_matching(question, answers)
+    return false;
   end
   
 end

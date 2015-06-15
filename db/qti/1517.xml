@@ -1,0 +1,702 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+  <assessment title="DNA Transcription and Translation" ident="1517">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>qmd_timelimit</fieldlabel>
+        <fieldentry/>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry/>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <section title="Transcription" ident="3815">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>1</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item title="" ident="2321">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Which of the following is the "central dogma"?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="6262">
+                  <material>
+                    <mattext texttype="text/html">Amino acids make up proteins, proteins make up RNA, and RNA makes up DNA.</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="2954">
+                  <material>
+                    <mattext texttype="text/html">Genes specify the sequence of proteins which are assembled by RNA.</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8710">
+                  <material>
+                    <mattext texttype="text/html">Genes specify the sequence of mRNAs, which in turn specifies the sequence of proteins.</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">6262</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">2954</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">8710</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="6854">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Which pre-mRNA processing step is important for initiating translation?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="9639">
+                  <material>
+                    <mattext texttype="text/html">poly-A tail</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3762">
+                  <material>
+                    <mattext texttype="text/html">RNA editing</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3341">
+                  <material>
+                    <mattext texttype="text/html">7-methylguanosine cap</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">9639</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">3762</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">3341</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="958">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Identify the three phases of transcription</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="543">
+                  <material>
+                    <mattext texttype="text/html">Initiation</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3057">
+                  <material>
+                    <mattext texttype="text/html">Elongation</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="916">
+                  <material>
+                    <mattext texttype="text/html">Termination</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5034">
+                  <material>
+                    <mattext texttype="text/html">Promotion</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8840">
+                  <material>
+                    <mattext texttype="text/html">Methylation</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">543</varequal>
+                  <varequal respident="response1">3057</varequal>
+                  <varequal respident="response1">916</varequal>
+                  <not>
+                    <varequal respident="response1">5034</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">8840</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="5825">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>matching_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Match the RNA polymerase with its product.</mattext>
+            </material>
+            <response_lid ident="response_8835">
+              <material>
+                <mattext texttype="text/plain">RNA polymerase I--rRNAs</mattext>
+              </material>
+              <render_choice>
+                <response_label ident="8835">
+                  <material>
+                    <mattext texttype="text/plain">RNA polymerase I--rRNAs</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9104">
+                  <material>
+                    <mattext texttype="text/plain">RNA polymerase II--mRNAs</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1665">
+                  <material>
+                    <mattext texttype="text/plain">RNA polymerase III--rRNA, tRNAs, small nuclear RNAs</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+            <response_lid ident="response_9104">
+              <material>
+                <mattext texttype="text/plain">RNA polymerase II--mRNAs</mattext>
+              </material>
+              <render_choice>
+                <response_label ident="8835">
+                  <material>
+                    <mattext texttype="text/plain">RNA polymerase I--rRNAs</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9104">
+                  <material>
+                    <mattext texttype="text/plain">RNA polymerase II--mRNAs</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1665">
+                  <material>
+                    <mattext texttype="text/plain">RNA polymerase III--rRNA, tRNAs, small nuclear RNAs</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+            <response_lid ident="response_1665">
+              <material>
+                <mattext texttype="text/plain">RNA polymerase III--rRNA, tRNAs, small nuclear RNAs</mattext>
+              </material>
+              <render_choice>
+                <response_label ident="8835">
+                  <material>
+                    <mattext texttype="text/plain">RNA polymerase I--rRNAs</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9104">
+                  <material>
+                    <mattext texttype="text/plain">RNA polymerase II--mRNAs</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1665">
+                  <material>
+                    <mattext texttype="text/plain">RNA polymerase III--rRNA, tRNAs, small nuclear RNAs</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition>
+              <conditionvar>
+                <varequal respident="response_8835">8835</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Add">33.33</setvar>
+            </respcondition>
+            <respcondition>
+              <conditionvar>
+                <varequal respident="response_9104">9104</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Add">33.33</setvar>
+            </respcondition>
+            <respcondition>
+              <conditionvar>
+                <varequal respident="response_1665">1665</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Add">33.33</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="4522">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">For the DNA sequence of the 5'-3' strand AATGCTAC, choose the mRNA transcript.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="6363">
+                  <material>
+                    <mattext texttype="text/html">3'-TTACGATG-5'</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3748">
+                  <material>
+                    <mattext texttype="text/html">3'-CCGUAGCA-5'</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8692">
+                  <material>
+                    <mattext texttype="text/html">3'-UUACGAUC-5'</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">6363</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">3748</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">8692</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+      </section>
+      <section title="Translation" ident="3325">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>1</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item title="" ident="4427">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>matching_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Match the correct term with the statement that best defines it.</mattext>
+            </material>
+            <response_lid ident="response_6466">
+              <material>
+                <mattext texttype="text/plain">Codons</mattext>
+              </material>
+              <render_choice>
+                <response_label ident="6466">
+                  <material>
+                    <mattext texttype="text/plain">3 nucleotide sequence of RNA that specifies the sequence of amino acids in the protein.</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1910">
+                  <material>
+                    <mattext texttype="text/plain">A nearly universal code specifying which codon specifies which amino acid.</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6836">
+                  <material>
+                    <mattext texttype="text/plain">Links information in mRNA codons with specific amino acids</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="584">
+                  <material>
+                    <mattext texttype="text/plain">Contain rRNA that has enzymatic activity to covalently link the amino acids specified by the codons</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+            <response_lid ident="response_1910">
+              <material>
+                <mattext texttype="text/plain">The Genetic Code</mattext>
+              </material>
+              <render_choice>
+                <response_label ident="6466">
+                  <material>
+                    <mattext texttype="text/plain">3 nucleotide sequence of RNA that specifies the sequence of amino acids in the protein.</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1910">
+                  <material>
+                    <mattext texttype="text/plain">A nearly universal code specifying which codon specifies which amino acid.</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6836">
+                  <material>
+                    <mattext texttype="text/plain">Links information in mRNA codons with specific amino acids</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="584">
+                  <material>
+                    <mattext texttype="text/plain">Contain rRNA that has enzymatic activity to covalently link the amino acids specified by the codons</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+            <response_lid ident="response_6836">
+              <material>
+                <mattext texttype="text/plain">Transfer RNA</mattext>
+              </material>
+              <render_choice>
+                <response_label ident="6466">
+                  <material>
+                    <mattext texttype="text/plain">3 nucleotide sequence of RNA that specifies the sequence of amino acids in the protein.</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1910">
+                  <material>
+                    <mattext texttype="text/plain">A nearly universal code specifying which codon specifies which amino acid.</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6836">
+                  <material>
+                    <mattext texttype="text/plain">Links information in mRNA codons with specific amino acids</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="584">
+                  <material>
+                    <mattext texttype="text/plain">Contain rRNA that has enzymatic activity to covalently link the amino acids specified by the codons</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+            <response_lid ident="response_584">
+              <material>
+                <mattext texttype="text/plain">Ribosomes</mattext>
+              </material>
+              <render_choice>
+                <response_label ident="6466">
+                  <material>
+                    <mattext texttype="text/plain">3 nucleotide sequence of RNA that specifies the sequence of amino acids in the protein.</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1910">
+                  <material>
+                    <mattext texttype="text/plain">A nearly universal code specifying which codon specifies which amino acid.</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6836">
+                  <material>
+                    <mattext texttype="text/plain">Links information in mRNA codons with specific amino acids</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="584">
+                  <material>
+                    <mattext texttype="text/plain">Contain rRNA that has enzymatic activity to covalently link the amino acids specified by the codons</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition>
+              <conditionvar>
+                <varequal respident="response_6466">6466</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Add">25.00</setvar>
+            </respcondition>
+            <respcondition>
+              <conditionvar>
+                <varequal respident="response_1910">1910</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Add">25.00</setvar>
+            </respcondition>
+            <respcondition>
+              <conditionvar>
+                <varequal respident="response_6836">6836</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Add">25.00</setvar>
+            </respcondition>
+            <respcondition>
+              <conditionvar>
+                <varequal respident="response_584">584</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Add">25.00</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="2799">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">The AUC and AUA codons in mRNA both specify isoleucine. What feature of the genetic code best explains this?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="1747">
+                  <material>
+                    <mattext texttype="text/html">universality</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1671">
+                  <material>
+                    <mattext texttype="text/html">redundancy</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5608">
+                  <material>
+                    <mattext texttype="text/html">degeneracy</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">1747</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">1671</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">5608</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="4616">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">In any given species, there are at least how many types of aminoacyl tRNA synthetases?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="4996">
+                  <material>
+                    <mattext texttype="text/html">40</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="4526">
+                  <material>
+                    <mattext texttype="text/html">100</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5508">
+                  <material>
+                    <mattext texttype="text/html">20</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">4996</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">4526</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">5508</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="3537">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">How many nucleotides are in 12 mRNA codons?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="5746">
+                  <material>
+                    <mattext texttype="text/html">12</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9859">
+                  <material>
+                    <mattext texttype="text/html">24</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="489">
+                  <material>
+                    <mattext texttype="text/html">36</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">5746</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">9859</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">489</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+      </section>
+    </section>
+  </assessment>
+</questestinterop>

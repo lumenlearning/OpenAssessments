@@ -33,7 +33,7 @@ class Assessment < ActiveRecord::Base
     # Create a formative xml entry
     assessment.assessment_xmls.create!(
       xml: input_xml,
-      kind: "test"
+      kind: "formative"
     )
 
     if xml && xml.respond_to?(:sections)

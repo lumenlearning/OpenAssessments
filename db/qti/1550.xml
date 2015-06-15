@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+  <assessment title="Modern Biology" ident="1550">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>qmd_timelimit</fieldlabel>
+        <fieldentry/>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry/>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <section title="Enabling Technologies" ident="9523">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>1</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item title="" ident="9021">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">What technique can be used for studying the gene for cystic fibrosis?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="6426">
+                  <material>
+                    <mattext texttype="text/html">northern blotting</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7592">
+                  <material>
+                    <mattext texttype="text/html">cellular cloning</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6742">
+                  <material>
+                    <mattext texttype="text/html">molecular cloning</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">6426</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">7592</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">6742</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="9589">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">DNA can be separated based on fragment size using ____.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="9016">
+                  <material>
+                    <mattext texttype="text/html">PCR</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6387">
+                  <material>
+                    <mattext texttype="text/html">restriction enzymes</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7537">
+                  <material>
+                    <mattext texttype="text/html">gel electrophoresis</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">9016</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">6387</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">7537</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="8466">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">A specific gene can be altered in order to study its basic function via ____.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="8747">
+                  <material>
+                    <mattext texttype="text/html">cloning</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9053">
+                  <material>
+                    <mattext texttype="text/html">DNA extraction</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1107">
+                  <material>
+                    <mattext texttype="text/html">gene targeting</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">8747</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">9053</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">1107</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+      </section>
+      <section title="Biotechnology Applications" ident="3181">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>1</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item title="" ident="7673">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Identify the ways scientists use polymerase chain reaction (PRC)</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="5330">
+                  <material>
+                    <mattext texttype="text/html">for forensic DNA analysis</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3996">
+                  <material>
+                    <mattext texttype="text/html">to clone gene fragments</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="459">
+                  <material>
+                    <mattext texttype="text/html">to identify contaminant foreign DNA</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="308">
+                  <material>
+                    <mattext texttype="text/html">to create disease cures</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="818">
+                  <material>
+                    <mattext texttype="text/html">to breed chimeras</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">5330</varequal>
+                  <varequal respident="response1">3996</varequal>
+                  <varequal respident="response1">459</varequal>
+                  <not>
+                    <varequal respident="response1">308</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">818</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="5321">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Gene therapy can be used to introduce foreign DNA into cells ________.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="300">
+                  <material>
+                    <mattext texttype="text/html">for molecular cloning</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8515">
+                  <material>
+                    <mattext texttype="text/html">by PCR</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="4726">
+                  <material>
+                    <mattext texttype="text/html">of tissues to cure inheritable disease</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">300</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">8515</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">4726</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="9415">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Insulin produced by molecular cloning is _______.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="7895">
+                  <material>
+                    <mattext texttype="text/html">of pig origin</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6088">
+                  <material>
+                    <mattext texttype="text/html">made by the human pancreas</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9195">
+                  <material>
+                    <mattext texttype="text/html">a recombinant protein</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">7895</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">6088</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">9195</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="7351">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">GMOs are created by ________.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="3614">
+                  <material>
+                    <mattext texttype="text/html">generating genomic DNA fragments with restriction endonucleases</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="2963">
+                  <material>
+                    <mattext texttype="text/html">overexpressing proteins in E. coli</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7956">
+                  <material>
+                    <mattext texttype="text/html">introducing recombinant DNA into an organism by any means</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">3614</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">2963</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">7956</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+      </section>
+      <section title="Cultural Impact of Genetics and Genomics" ident="4568">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>1</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item title="" ident="5794">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Testing a chemotherapy drug for safety before it is approved for marketing is an example of what general type of science?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="9671">
+                  <material>
+                    <mattext texttype="text/html">basic</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="577">
+                  <material>
+                    <mattext texttype="text/html">expedited</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6857">
+                  <material>
+                    <mattext texttype="text/html">applied</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">9671</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">577</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">6857</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="2102">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Whereas technology is science applied to solving real-world problems, basic or “pure" science tends to be more focused on ________.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="8426">
+                  <material>
+                    <mattext texttype="text/html">finding cures to diseases</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3037">
+                  <material>
+                    <mattext texttype="text/html">developing products or services that improve human life</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="4357">
+                  <material>
+                    <mattext texttype="text/html">scientific discovery for its own sake</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">8426</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">3037</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">4357</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="7243">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Select the best example of how basic and applied science have worked together.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="8442">
+                  <material>
+                    <mattext texttype="text/html">the use of plasmid vectors to clone and sequence an unknown section of mouse DNA, and the expression of the protein of the mouse gene subsequently discovered</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5446">
+                  <material>
+                    <mattext texttype="text/html">the discovery that the Hox genes in fruit flies are fundamental in determining the fate of embryo segments</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7732">
+                  <material>
+                    <mattext texttype="text/html">the discovery of the structure of DNA, the elucidation that DNA replication is “semi-conservative,” and the screening for genetic disorders</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">8442</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">5446</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">7732</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+      </section>
+    </section>
+  </assessment>
+</questestinterop>

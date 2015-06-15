@@ -1,0 +1,1479 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+  <assessment title="Metabolism and ATP" ident="1668">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>qmd_timelimit</fieldlabel>
+        <fieldentry/>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry/>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <section title="Reduction Reactions" ident="7491">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>1</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item title="" ident="9586">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Most of the chemical reactions that directly produce free energy in living systems are of what type?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="3533">
+                  <material>
+                    <mattext texttype="text/html">gluconeogenesis or sugar-making reactions</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7757">
+                  <material>
+                    <mattext texttype="text/html">lipogenesis or fatty acid-making reactions</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1010">
+                  <material>
+                    <mattext texttype="text/html">oxidation reduction or redox reactions</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">3533</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">7757</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">1010</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="6505">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Energy is stored long-term in the bonds of _____ and used short-term to perform work from a(n) _____ molecule.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="6842">
+                  <material>
+                    <mattext texttype="text/html">ATP : glucose</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8339">
+                  <material>
+                    <mattext texttype="text/html">an anabolic molecule : catabolic molecule</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="575">
+                  <material>
+                    <mattext texttype="text/html">glucose : ATP</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">6842</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">8339</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">575</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="9177">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">A reducing chemical reaction ________.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="7718">
+                  <material>
+                    <mattext texttype="text/html">removes a hydrogen atom from the substrate</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9685">
+                  <material>
+                    <mattext texttype="text/html">reduces the compound to a simpler form</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3190">
+                  <material>
+                    <mattext texttype="text/html">adds an electron to the substrate</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">7718</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">9685</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">3190</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+      </section>
+      <section title="Cellular Respiration" ident="5695">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>1</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item title="" ident="2702">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>matching_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Select the most appropriate word from the list below to complete the following paragraph: 
+Respiration is the release of A from B and takes place in all C of the body. In the course of respiration, B is broken down to D and E . If oxygen is used for this process, the respiration is called F If oxygen is not used in the process, the respiration is called G. Each stage of respiration is speeded up by a particular H .</mattext>
+            </material>
+            <response_lid ident="response_9063">
+              <material>
+                <mattext texttype="text/plain">A</mattext>
+              </material>
+              <render_choice>
+                <response_label ident="9063">
+                  <material>
+                    <mattext texttype="text/plain">Energy</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6141">
+                  <material>
+                    <mattext texttype="text/plain">Food</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5184">
+                  <material>
+                    <mattext texttype="text/plain">Cells</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7569">
+                  <material>
+                    <mattext texttype="text/plain">Carbon Dioxide</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1276">
+                  <material>
+                    <mattext texttype="text/plain">Water</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8717">
+                  <material>
+                    <mattext texttype="text/plain">Aerobic</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7189">
+                  <material>
+                    <mattext texttype="text/plain">Anaerobic</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5201">
+                  <material>
+                    <mattext texttype="text/plain">Enzyme</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+            <response_lid ident="response_6141">
+              <material>
+                <mattext texttype="text/plain">B</mattext>
+              </material>
+              <render_choice>
+                <response_label ident="9063">
+                  <material>
+                    <mattext texttype="text/plain">Energy</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6141">
+                  <material>
+                    <mattext texttype="text/plain">Food</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5184">
+                  <material>
+                    <mattext texttype="text/plain">Cells</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7569">
+                  <material>
+                    <mattext texttype="text/plain">Carbon Dioxide</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1276">
+                  <material>
+                    <mattext texttype="text/plain">Water</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8717">
+                  <material>
+                    <mattext texttype="text/plain">Aerobic</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7189">
+                  <material>
+                    <mattext texttype="text/plain">Anaerobic</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5201">
+                  <material>
+                    <mattext texttype="text/plain">Enzyme</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+            <response_lid ident="response_5184">
+              <material>
+                <mattext texttype="text/plain">C</mattext>
+              </material>
+              <render_choice>
+                <response_label ident="9063">
+                  <material>
+                    <mattext texttype="text/plain">Energy</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6141">
+                  <material>
+                    <mattext texttype="text/plain">Food</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5184">
+                  <material>
+                    <mattext texttype="text/plain">Cells</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7569">
+                  <material>
+                    <mattext texttype="text/plain">Carbon Dioxide</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1276">
+                  <material>
+                    <mattext texttype="text/plain">Water</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8717">
+                  <material>
+                    <mattext texttype="text/plain">Aerobic</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7189">
+                  <material>
+                    <mattext texttype="text/plain">Anaerobic</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5201">
+                  <material>
+                    <mattext texttype="text/plain">Enzyme</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+            <response_lid ident="response_7569">
+              <material>
+                <mattext texttype="text/plain">D</mattext>
+              </material>
+              <render_choice>
+                <response_label ident="9063">
+                  <material>
+                    <mattext texttype="text/plain">Energy</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6141">
+                  <material>
+                    <mattext texttype="text/plain">Food</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5184">
+                  <material>
+                    <mattext texttype="text/plain">Cells</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7569">
+                  <material>
+                    <mattext texttype="text/plain">Carbon Dioxide</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1276">
+                  <material>
+                    <mattext texttype="text/plain">Water</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8717">
+                  <material>
+                    <mattext texttype="text/plain">Aerobic</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7189">
+                  <material>
+                    <mattext texttype="text/plain">Anaerobic</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5201">
+                  <material>
+                    <mattext texttype="text/plain">Enzyme</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+            <response_lid ident="response_1276">
+              <material>
+                <mattext texttype="text/plain">E</mattext>
+              </material>
+              <render_choice>
+                <response_label ident="9063">
+                  <material>
+                    <mattext texttype="text/plain">Energy</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6141">
+                  <material>
+                    <mattext texttype="text/plain">Food</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5184">
+                  <material>
+                    <mattext texttype="text/plain">Cells</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7569">
+                  <material>
+                    <mattext texttype="text/plain">Carbon Dioxide</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1276">
+                  <material>
+                    <mattext texttype="text/plain">Water</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8717">
+                  <material>
+                    <mattext texttype="text/plain">Aerobic</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7189">
+                  <material>
+                    <mattext texttype="text/plain">Anaerobic</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5201">
+                  <material>
+                    <mattext texttype="text/plain">Enzyme</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+            <response_lid ident="response_8717">
+              <material>
+                <mattext texttype="text/plain">F</mattext>
+              </material>
+              <render_choice>
+                <response_label ident="9063">
+                  <material>
+                    <mattext texttype="text/plain">Energy</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6141">
+                  <material>
+                    <mattext texttype="text/plain">Food</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5184">
+                  <material>
+                    <mattext texttype="text/plain">Cells</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7569">
+                  <material>
+                    <mattext texttype="text/plain">Carbon Dioxide</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1276">
+                  <material>
+                    <mattext texttype="text/plain">Water</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8717">
+                  <material>
+                    <mattext texttype="text/plain">Aerobic</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7189">
+                  <material>
+                    <mattext texttype="text/plain">Anaerobic</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5201">
+                  <material>
+                    <mattext texttype="text/plain">Enzyme</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+            <response_lid ident="response_7189">
+              <material>
+                <mattext texttype="text/plain">G</mattext>
+              </material>
+              <render_choice>
+                <response_label ident="9063">
+                  <material>
+                    <mattext texttype="text/plain">Energy</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6141">
+                  <material>
+                    <mattext texttype="text/plain">Food</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5184">
+                  <material>
+                    <mattext texttype="text/plain">Cells</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7569">
+                  <material>
+                    <mattext texttype="text/plain">Carbon Dioxide</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1276">
+                  <material>
+                    <mattext texttype="text/plain">Water</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8717">
+                  <material>
+                    <mattext texttype="text/plain">Aerobic</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7189">
+                  <material>
+                    <mattext texttype="text/plain">Anaerobic</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5201">
+                  <material>
+                    <mattext texttype="text/plain">Enzyme</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+            <response_lid ident="response_5201">
+              <material>
+                <mattext texttype="text/plain">H</mattext>
+              </material>
+              <render_choice>
+                <response_label ident="9063">
+                  <material>
+                    <mattext texttype="text/plain">Energy</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6141">
+                  <material>
+                    <mattext texttype="text/plain">Food</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5184">
+                  <material>
+                    <mattext texttype="text/plain">Cells</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7569">
+                  <material>
+                    <mattext texttype="text/plain">Carbon Dioxide</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1276">
+                  <material>
+                    <mattext texttype="text/plain">Water</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8717">
+                  <material>
+                    <mattext texttype="text/plain">Aerobic</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7189">
+                  <material>
+                    <mattext texttype="text/plain">Anaerobic</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5201">
+                  <material>
+                    <mattext texttype="text/plain">Enzyme</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition>
+              <conditionvar>
+                <varequal respident="response_9063">9063</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Add">12.50</setvar>
+            </respcondition>
+            <respcondition>
+              <conditionvar>
+                <varequal respident="response_6141">6141</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Add">12.50</setvar>
+            </respcondition>
+            <respcondition>
+              <conditionvar>
+                <varequal respident="response_5184">5184</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Add">12.50</setvar>
+            </respcondition>
+            <respcondition>
+              <conditionvar>
+                <varequal respident="response_7569">7569</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Add">12.50</setvar>
+            </respcondition>
+            <respcondition>
+              <conditionvar>
+                <varequal respident="response_1276">1276</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Add">12.50</setvar>
+            </respcondition>
+            <respcondition>
+              <conditionvar>
+                <varequal respident="response_8717">8717</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Add">12.50</setvar>
+            </respcondition>
+            <respcondition>
+              <conditionvar>
+                <varequal respident="response_7189">7189</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Add">12.50</setvar>
+            </respcondition>
+            <respcondition>
+              <conditionvar>
+                <varequal respident="response_5201">5201</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Add">12.50</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="1967">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">During the second half of glycolysis, what occurs?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="2192">
+                  <material>
+                    <mattext texttype="text/html">ATP is used up.</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="146">
+                  <material>
+                    <mattext texttype="text/html">Fructose is split in two.</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="615">
+                  <material>
+                    <mattext texttype="text/html">ATP is made.</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">2192</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">146</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">615</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="9823">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">What is removed from pyruvate during its conversion into an acetyl group?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="5998">
+                  <material>
+                    <mattext texttype="text/html">oxygen</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7771">
+                  <material>
+                    <mattext texttype="text/html">water</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1437">
+                  <material>
+                    <mattext texttype="text/html">carbon dioxide</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">5998</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">7771</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">1437</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="303">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Chemiosmosis involves ________.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="1397">
+                  <material>
+                    <mattext texttype="text/html">the movement of hydrogen atoms across a mitochondrial membrane</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5559">
+                  <material>
+                    <mattext texttype="text/html">the movement of electrons across the cell membrane</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3025">
+                  <material>
+                    <mattext texttype="text/html">the movement of hydrogen ions across a mitochondrial membrane</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">1397</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">5559</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">3025</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="3067">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">How many NADH molecules are produced for each molecule of glucose that proceeds to the citric acid cycle?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="9347">
+                  <material>
+                    <mattext texttype="text/html">four</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8087">
+                  <material>
+                    <mattext texttype="text/html">eight</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5422">
+                  <material>
+                    <mattext texttype="text/html">six</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">9347</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">8087</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">5422</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="8250">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">The energy currency used by cells is ________.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="8816">
+                  <material>
+                    <mattext texttype="text/html">ADP</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1769">
+                  <material>
+                    <mattext texttype="text/html">AMP</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9507">
+                  <material>
+                    <mattext texttype="text/html">ATP</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">8816</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">1769</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">9507</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+      </section>
+      <section title="Fermentation" ident="5792">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>1</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item title="" ident="9859">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">The two main types of anaerobic cellular respiration are lactic acid fermentation and</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="7145">
+                  <material>
+                    <mattext texttype="text/html">beta oxidation</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1734">
+                  <material>
+                    <mattext texttype="text/html">oxidative phosphorylation</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7234">
+                  <material>
+                    <mattext texttype="text/html">alcohol fermentation</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">7145</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">1734</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">7234</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="1233">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Which of the following fermentation methods can occur in animal skeletal muscles?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="8514">
+                  <material>
+                    <mattext texttype="text/html">alcohol fermentation</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3955">
+                  <material>
+                    <mattext texttype="text/html">propionic fermentation</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1424">
+                  <material>
+                    <mattext texttype="text/html">lactic acid fermentation</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">8514</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">3955</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">1424</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="4850">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Select the type of organisms that can perform both aerobic respiration and lactic fermentation.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="6576">
+                  <material>
+                    <mattext texttype="text/html">facultative anaerobes</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8116">
+                  <material>
+                    <mattext texttype="text/html">humans</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="80">
+                  <material>
+                    <mattext texttype="text/html">obligate anaerobes</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8092">
+                  <material>
+                    <mattext texttype="text/html">yeast</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">6576</varequal>
+                  <varequal respident="response1">8116</varequal>
+                  <not>
+                    <varequal respident="response1">80</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">8092</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+      </section>
+      <section title="Photosynthesis" ident="9115">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>1</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item title="" ident="8731">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">The light-independent reactions of photosynthesis occur in the stroma of chloroplasts and consist of what three steps?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="6860">
+                  <material>
+                    <mattext texttype="text/html">photosystem I; photosystem II; and cytochrome complex</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3083">
+                  <material>
+                    <mattext texttype="text/html">decomposition; rearrangement; and synthesis</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="2400">
+                  <material>
+                    <mattext texttype="text/html">fixation; reduction; and regeneration</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">6860</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">3083</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">2400</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="1638">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">​Which of the following is the only biological process in which energy from light is transformed into chemical energy within cells?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="50">
+                  <material>
+                    <mattext texttype="text/html">phooinduction</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8733">
+                  <material>
+                    <mattext texttype="text/html">electron transport</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="4412">
+                  <material>
+                    <mattext texttype="text/html">photosynthesis</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">50</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">8733</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">4412</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="1280">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">The only organisms capable of photosynthesis are plants, cyanobacteria, and ________.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="1854">
+                  <material>
+                    <mattext texttype="text/html">yeasts</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="2982">
+                  <material>
+                    <mattext texttype="text/html">green-pigmented insects, reptiles, and amphibians</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="2436">
+                  <material>
+                    <mattext texttype="text/html">algae</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">1854</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">2982</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">2436</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="2795">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Plants use light energy to drive the formation of carbon-rich sugars via photosynthesis, using what as a source of carbon?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="7193">
+                  <material>
+                    <mattext texttype="text/html">lactic acid</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="2904">
+                  <material>
+                    <mattext texttype="text/html">alcohol</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1200">
+                  <material>
+                    <mattext texttype="text/html">carbon dioxide</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">7193</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">2904</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">1200</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="5698">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">​​The essential molecular structure in plants that converts light energy into chemical energy during photosynthesis is called a ________.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="9476">
+                  <material>
+                    <mattext texttype="text/html">mitochondrium</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="4166">
+                  <material>
+                    <mattext texttype="text/html">photoact</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6005">
+                  <material>
+                    <mattext texttype="text/html">photosystem</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">9476</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">4166</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">6005</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="4640">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">What two main products result from photosynthesis?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="2434">
+                  <material>
+                    <mattext texttype="text/html">simple sugars</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1923">
+                  <material>
+                    <mattext texttype="text/html">oxygen</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8813">
+                  <material>
+                    <mattext texttype="text/html">carbon dioxide</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="4815">
+                  <material>
+                    <mattext texttype="text/html">sugar chains</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">2434</varequal>
+                  <varequal respident="response1">1923</varequal>
+                  <not>
+                    <varequal respident="response1">8813</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">4815</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+      </section>
+    </section>
+  </assessment>
+</questestinterop>
