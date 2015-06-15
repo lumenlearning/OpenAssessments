@@ -97,12 +97,25 @@ class Api::GradesController < ApplicationController
     if correct_count == total_correct
       correct = true
     end
-    debugger
+
     correct
   end
 
   def grade_matching(question, answers)
-    return false;
+    correct = false;
+    choices = question.children.xpath("respcondition")
+    total_correct = choices.length
+    correct_count = 0
+    choices.each_with_index do |choice, index|
+      if answers[index] && choice.xpath("conditionvar").xpath("varequal").children.text == answers[index]["answerId"]
+        correct_count += 1
+      end
+    end
+    if correct_count == total_correct
+      correct = true
+    end
+
+    correct
   end
   
 end
