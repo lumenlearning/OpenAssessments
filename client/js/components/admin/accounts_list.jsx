@@ -6,7 +6,7 @@ import BaseComponent    from "../base_component";
 import AdminActions     from "../../actions/admin";
 import Defines          from "../defines";
 import { Link }         from "react-router";
-import { FloatingActionButton } from "material-ui";
+import { FloatingActionButton, FontIcon } from "material-ui";
 
 class AccountsList extends BaseComponent {
 
@@ -87,7 +87,7 @@ class AccountsList extends BaseComponent {
 
     return <div style={styles.container}>
         <h2 style={styles.title}>Choose Account</h2>
-        <FloatingActionButton iconClassName="material-icons md-18 plus" />
+        <FloatingActionButton iconClassName="material-icons-content-add" />
         <div style={styles.listContainer}>
           {accountList}
         </div>
@@ -96,5 +96,5 @@ class AccountsList extends BaseComponent {
   }
 
 }
-
+//iconClassName="material-icons md-18 plus"
 module.exports = AccountsList;
