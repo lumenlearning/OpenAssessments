@@ -58,12 +58,14 @@ function selectAnswer(item){
 
 function updateMatchingAnswer(item){
   for (var i = 0; i < _selectedAnswerIds.length; i++){
-    if(_selectedAnswerIds[i].answerNumber == item.answerNumber){
+    if(_selectedAnswerIds[i] && _selectedAnswerIds[i].answerNumber == item.answerNumber){
       _selectedAnswerIds[i].selectedAnswer = item.selectedAnswer;
       return;
     }
   }
- _selectedAnswerIds.push(item);
+  var index = parseInt(item.answerNumber.replace("answer-", ""));
+
+ _selectedAnswerIds[index] = item;
 
 }
 

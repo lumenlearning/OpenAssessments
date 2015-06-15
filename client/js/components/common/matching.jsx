@@ -11,11 +11,13 @@ export default class Matching extends React.Component{
     var target = e.target.parentNode.firstChild.textContent;
     var selectedAnswer = e.currentTarget.value;
     var answerNumber = e.currentTarget.name;
+    var answerId = e.currentTarget.children[e.currentTarget.selectedIndex].id
     var item = {
       id: target,
       selectedAnswer: selectedAnswer,
       answerNumber: answerNumber,
-      item: this.props.item
+      item: this.props.item,
+      answerId: answerId
     }
 
     AssessmentActions.answerSelected(item);
@@ -61,12 +63,12 @@ export default class Matching extends React.Component{
         if(answers && (answers.selectedAnswer.trim() == answer.material.trim())){
           selectedAnswer = answers.selectedAnswer.trim();
         }
-        return <option key={Utils.makeId()} value={answer.material.trim()}>{answer.material.trim()}</option>
+        return <option key={Utils.makeId()} value={answer.material.trim()} id={answer.id}>{answer.material.trim()}</option>
       });
       return <div>
         {materialNames[index]}
         <select key={ref} name={name} value={selectedAnswer} onChange={(e, key) => {this.answerSelected(e, key)}}>
-          <option key={"default-option-key" + Utils.makeId()} selected={null}>[Select Answer]</option>
+          <option key={"default-option-key" + Utils.makeId()} selected={null} id="0000">[Select Answer]</option>
           { options }
         </select>
       </div>;
