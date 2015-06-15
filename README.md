@@ -7,9 +7,11 @@ This project provides a starting point for building a Canvas LTI or OAuth applic
 ###With Foreman
 Foreman makes it simple to startup all the services required to run the application in development mode. To start the application using foreman simply run:
 
-`$ foreman start -f Procfile.dev`
+```
+$ foreman start -f Procfile.dev
+```
 
-* Make sure you have the latest version of Foreman installed.
+Make sure you have the latest version of Foreman installed.
 
 ####Environment
 Foreman will automatically find and read the .env file.
@@ -21,7 +23,7 @@ If you need to run services individually or just don't like Foreman you can run 
 $ rails server
 $ cd client && nodemon webpack.hot.js
 $ ngrok --subdomain master_assets --log stdout 8080
-$ ngrok --subdomain canvasappmasters --log stdout 3000
+$ ngrok --subdomain canvasstarterapp --log stdout 3000
 ```
 
 
@@ -60,7 +62,7 @@ Learn more about [Installing Rails](http://railsapps.github.io/installing-rails.
 ####NGROK
 To test your application with Canvas you will need to provide a public SSL url. The simpliest way to do this is to use ngrok which can be downloaded from [ngrok](https://ngrok.com/).
 
-Running 'ngrok --subdomain canvasappmasters --log stdout 3000' will create a tunnel. You will access your application using the ngrok url:
+Running 'ngrok --subdomain canvasstarterapp --log stdout 3000' will create a tunnel. You will access your application using the ngrok url:
 
 `https://canvasstarterapp.ngrok.com`
 
@@ -74,25 +76,35 @@ $ cd client && webpack
 ####Install Javascript Libraries
 To get started run:
 
-`$ npm install`
+```
+$ npm install
+```
 
 #####npm-shrinkwrap
 [npm-shrinkwrap](https://github.com/uber/npm-shrinkwrap) is used to lock specific versions.
 npm-shrinkwrap.json is included in the project. To verify your package.json & node_modules tree are in sync run:
 
-`$ npm shrinkwrap`
+```
+$ npm shrinkwrap
+```
 
 To find outdated modules run:
 
-`$ npm outdated`
+```
+$ npm outdated
+```
 
 Packages must be updated manually. For example:
 
-`$ npm update lodash`
+```
+$ npm update lodash
+```
 
 After updating be sure to run shrinkwrap again:
 
-`$ npm shrinkwrap`
+```
+$ npm shrinkwrap
+```
 
 ####React
 Most LTI applications need to be single page applications in order to avoid a bug that prevents cookies from being written in some
@@ -102,21 +114,22 @@ browsers. The Canvas Starter App uses React. During development run the [React H
 ###<a name="seeds"></a>Setting up Database
 
 Open db/seeds.rb and configuration a default account for development and production. Here's a summary of the values and their purpose:
-| Title        | Description |
-|--------------|-------------|
-| **code**     | 	Uniquely identifies the account. This is used for the subdomain when running 
-applications on a single domain. Create a default account in the seeds.rb file and then open up `config/secrets`.yml and be sure to provide the code from the default account for the `application_code`. Only use letters and numbers in the code. Special characters will result in errors.
-| **domain**   |  Custom domain name
-| **name**     | 	Name the account anything you'd like
-| **lti_key**  |	A unique key for the LTI application you are building. This will be provided 
-to Canvas
-|**lti_secret**|  The shared secret for your LTI application. This will be provided to Canvas 
+
+- **code:** Uniquely identifies the account. This is used for the subdomain when running 
+applications on a single domain.
+- **domain:** Custom domain name.
+- **name:** Name the account anything you'd like.
+- **lti_key:** A unique key for the LTI application you are building. This will be provided to Canvas.
+- **lti_secret:** The shared secret for your LTI application. This will be provided to Canvas 
 and will be used to sign the LTI request. Generate this value using `rake secret`. Alternatively if you leave this field empty an LTI secret will be automatically generated for the account.
-|**canvas_uri**|  The URI of the Canvas institution to be associated with a specific account.
+- **canvas_uri:** The URI of the Canvas institution to be associated with a specific account.
+
 
 Once you've setup your seeds file run it to setup database defaults:
 
-`$ rake db:setup`
+```
+$ rake db:setup
+```
 or
 
 ```
@@ -133,10 +146,10 @@ Most of the fields will be specific to your organization. The Oauth2 Redirect UR
 development URI will use ngrok while the production URI will use your domain.
 
 __Oauth2 Redirect URI:__
-https://canvasappmasters.ngrok.com/auth/canvas/callback
+https://canvasstarterapp.ngrok.com/auth/canvas/callback
 
 __Icon URL:__
-https://canvasappmasters.ngrok.com/oauth_icon.png 
+https://canvasstarterapp.ngrok.com/oauth_icon.png 
 
 Once your request is approved you will receive a Canvas ID and Secret.
 and then add the ID and Secret into the file using these fields:
@@ -150,10 +163,14 @@ canvas_secret:
 Make sure you have signed up for a heroku account [Heroku](http://www.heroku.com). Then follow the instructions provided by Heroku to create your application.
 
 Push secrets to production:
-`$ rake heroku:secrets RAILS_ENV=production`
+```
+$ rake heroku:secrets RAILS_ENV=production
+```
 
 Deploy to Heroku:
-`$ git push heroku master`
+```
+$ git push heroku master
+```
 
 ###Other Services
 
@@ -178,8 +195,12 @@ This application uses PostgreSQL with ActiveRecord.
 
 You may need to install chromedriver if you haven't already.
 
-`$ brew install chromedriver`
+```
+$ brew install chromedriver
+```
 
 To run tests:
 
-`$ rake spec`
+```
+$ rake spec
+```
