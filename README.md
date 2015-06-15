@@ -35,12 +35,14 @@ $ ngrok --subdomain canvasstarterapp --log stdout 3000
 Rename `.env.example` to `.env` and configure it to your liking.
 
 #### Modify application name
-Open application.rb and change CanvasStarterApp to the name you choose. Do a global search and replace for canvas_starter_app and change it to the name you choose. Do a global search and replace for canvasstarterapp (use only letters or numbers for this name. Special characters like '_' will result in errors).
+1. Open application.rb and change `CanvasStarterApp` to the name you choose.
+2. Do a global search and replace for `canvas_starter_app` and change it to the name you choose. 
+3. Do a global search and replace for `canvasstarterapp` (use only letters or numbers for this name. Special characters like '_' will result in errors).
 
 #### Secrets file
 Rename config/secrets.example.yml to config/secrets.yml. Open the file and change each entry to values that are relevant for your application. 
 
-config/secrets.yml will be used to hold values that should be kept safe and which should not be commited to your repository.
+*This file should not be committed to your repository.*
 
 You will need to [request a Canvas ID and Secret from Instructure](#developer_key). You will also
 need to setup a default account and provide that account's "code" for the "application_code" entry in secrets.yml. See the [seeds](#seeds) section below for information on setting up the default account.
@@ -145,16 +147,14 @@ Go to the [Canvas Developer Key Request Form](https://docs.google.com/forms/d/1C
 Most of the fields will be specific to your organization. The Oauth2 Redirect URI and Icon URL will be as follows below. Be sure to replace `canvasstarterapp.ngrok.com` with your domain. You will need an ID and secret for development and for production. The
 development URI will use ngrok while the production URI will use your domain.
 
-__Oauth2 Redirect URI:__
+**Oauth2 Redirect URI:**
 https://canvasstarterapp.ngrok.com/auth/canvas/callback
 
-__Icon URL:__
+**Icon URL:**
 https://canvasstarterapp.ngrok.com/oauth_icon.png 
 
-Once your request is approved you will receive a Canvas ID and Secret.
-and then add the ID and Secret into the file using these fields:
-canvas_id: 
-canvas_secret: 
+Once your request is approved you will receive a Canvas ID and Secret. Add these credentials to the `config/secrets.yml` file under `canvas_id` and `canvas_secret`.
+
 
 ##Deployment
 
@@ -184,7 +184,7 @@ Atomic Jolt has built a number of applications based on this source.
 
 This project was created for the Sales team at Instructure. It makes it simple to populate a sample Canvas course using values from Google Drive Spreadsheets.
 
-Source Code: [https://github.com/atomicjolt/canvas_starter_app](https://github.com/atomicjolt/canvas_starter_app)
+Source Code: [https://github.com/atomicjolt/canvas_starter_app](https://github.com/atomicjolt/demo_arigato)
 
 
 ##Database
