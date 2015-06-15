@@ -58,6 +58,12 @@ class AccountsList extends BaseComponent {
       listItemLink : {
         color        : Defines.colors.black,
         fontSize     : "14pt"
+      },
+      floatingActionButton : {
+        float: "right",
+        position: "relative",
+        top: "-20px",
+        right: "15px"
       }
     };
   }
@@ -87,7 +93,7 @@ class AccountsList extends BaseComponent {
 
     return <div style={styles.container}>
         <h2 style={styles.title}>Choose Account</h2>
-        <FloatingActionButton iconClassName="material-icons-content-add" />
+        <FloatingActionButton style={styles.floatingActionButton} iconClassName="material-icons-content-add" />
         <div style={styles.listContainer}>
           {accountList}
         </div>
