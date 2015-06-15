@@ -50,20 +50,23 @@ class AccountsList extends BaseComponent {
         padding : "0"
       },
       listItem : {
+        fontSize     : "14pt",
         height       : "60px",
         paddingLeft  : "25px",
         width        : "100%",
-        borderBottom : "solid 1px " + Defines.colors.lightGrey
+        borderBottom : "solid 1px " + Defines.colors.lightGrey,
       },
       listItemLink : {
         color        : Defines.colors.black,
-        fontSize     : "14pt"
+        fontSize     : "14pt",
+        verticalAlign: "middle",
+        display      : "table-cell"
       },
       floatingActionButton : {
-        float: "right",
-        position: "relative",
-        top: "-20px",
-        right: "15px"
+        float        : "right",
+        position     : "relative",
+        top          : "-20px",
+        right        : "15px"
       }
     };
   }
@@ -102,5 +105,4 @@ class AccountsList extends BaseComponent {
   }
 
 }
-//iconClassName="material-icons md-18 plus"
 module.exports = AccountsList;
