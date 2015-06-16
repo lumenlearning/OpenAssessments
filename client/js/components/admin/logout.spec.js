@@ -20,5 +20,8 @@ describe('logout', function() {
   it("renders the logout page", function() {
     expect(logout).toBeDefined();
   });
-  
+
+  afterEach(()=>{
+    React.unmountComponentAtNode(React.findDOMNode(logout).parentNode)
+  });
 });

@@ -67,8 +67,7 @@ class AccountsList extends BaseComponent {
         float        : "right",
         position     : "relative",
         top          : "-20px",
-        right        : "15px",
-        zDepth       : 1
+        right        : "15px"
       }
     };
   }

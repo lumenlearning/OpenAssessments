@@ -6,9 +6,19 @@ import Page        from './page';
 import StubContext from '../../../specs_support/stub_context';
 
 describe('page', function() {
+  var Subject;
+  var result;
+
+  beforeEach(()=>{
+    Subject = StubContext(Page, {});
+    result = TestUtils.renderIntoDocument(<Subject />);
+  });
+
   it('renders the page', function() {
-    var Subject = StubContext(Page, {});
-    var result = TestUtils.renderIntoDocument(<Subject />);
     expect(React.findDOMNode(result)).toBeDefined();
+  });
+
+  afterEach(()=>{
+    React.unmountComponentAtNode(React.findDOMNode(result).parentNode)
   });
 });

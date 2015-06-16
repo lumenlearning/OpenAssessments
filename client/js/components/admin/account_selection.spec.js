@@ -11,12 +11,16 @@ import StubContext        from '../../../specs_support/stub_context';
 describe('account_selection', function() {
   // TO RUN MORE TESTS YOU WILL HAVE TO SIMULATE LOGGING IN
   var Subject = new StubContext(AccountSelection, {});
+  var result;
 
   helpStubAjax(SettingsActions);
 
+  beforeEach(()=>{
+    result = TestUtils.renderIntoDocument(<Subject />);
+  });
+
   it('renders account selection page', function() {
     localStorage.setItem('jwt', "asdfasdfasf");
-    var result = TestUtils.renderIntoDocument(<Subject />);
     AccountsActions.loadAccounts();
     jasmine.clock().tick(); // Advance the clock to the next tick
     var currentAccounts = AccountsStore.current();
@@ -28,13 +32,16 @@ describe('account_selection', function() {
 
   xit('does not render the page if you are not logged in', function() {
     // TODO if the user is not logged in, the component will abort the transition
-    var result = TestUtils.renderIntoDocument(<Subject />);
     AccountsActions.loadAccounts();
     jasmine.clock().tick(); // Advance the clock to the next tick
     var currentAccounts = AccountsStore.current();
     currentAccounts.forEach((currentAccount) => {
       expect(React.findDOMNode(result).textContent).not.toContain(currentAccount.name);
     });
+  });
+
+  afterEach(()=>{
+    React.unmountComponentAtNode(React.findDOMNode(result).parentNode);
   });
 
 });

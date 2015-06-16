@@ -6,13 +6,14 @@ import Checkbox           from './checkbox';
 import StubContext        from '../../../specs_support/stub_context'; 
 
 describe('checkbox', function() {
-  
   var checkboxDOM;
   var checkbox;
+  var Subject;
+  var result;
 
   beforeEach(function() {
-    var Subject = StubContext(Checkbox, {});
-    var result = TestUtils.renderIntoDocument(<Subject />);
+    Subject = StubContext(Checkbox, {});
+    result = TestUtils.renderIntoDocument(<Subject />);
     checkboxDOM = React.findDOMNode(result);
     checkbox = result.originalComponent();
   });
@@ -25,6 +26,10 @@ describe('checkbox', function() {
     spyOn(checkbox, 'handleCheck');
     TestUtils.Simulate.change(checkboxDOM.firstChild, {"checked": true});
     expect(checkbox.handleCheck).toHaveBeenCalled();
+  });
+
+  afterEach(()=>{
+    React.unmountComponentAtNode(React.findDOMNode(result).parentNode)
   });
 
 });

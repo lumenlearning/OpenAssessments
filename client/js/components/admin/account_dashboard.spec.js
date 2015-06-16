@@ -34,4 +34,8 @@ describe('account_dashboard', function() {
     expect(React.findDOMNode(result).textContent).toContain(currentAccountName);
   });
 
+  afterEach(()=>{
+    React.unmountComponentAtNode(React.findDOMNode(dashboard).parentNode);
+  });
+
 });
