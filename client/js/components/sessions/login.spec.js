@@ -11,10 +11,12 @@ describe ('Login', function(){
   var loginDOM;
   var labels;
   var form;
+  var Subject;
+  var result;
 
   beforeEach(function(){
-    var Subject = StubContext(Login);
-    var result = TestUtils.renderIntoDocument(<Subject />);
+    Subject = StubContext(Login);
+    result = TestUtils.renderIntoDocument(<Subject />);
     login = result.originalComponent();
     loginDOM = React.findDOMNode(result);
     labels = TestUtils.scryRenderedDOMComponentsWithTag(result, 'label');
@@ -62,6 +64,10 @@ describe ('Login', function(){
     email.getDOMNode().value = 'johndoe@example.com';
     TestUtils.Simulate.submit(form);
     expect(login.validateEmail).toHaveBeenCalled();
+  });
+
+  afterEach(()=>{
+    React.unmountComponentAtNode(React.findDOMNode(result).parentNode)
   });
 });
 
