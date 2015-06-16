@@ -6,7 +6,8 @@ import BaseComponent    from "../base_component";
 import AdminActions     from "../../actions/admin";
 import Defines          from "../defines";
 import { Link }         from "react-router";
-import { FloatingActionButton, FontIcon } from "material-ui";
+import { FloatingActionButton } from "material-ui";
+import ToolBar          from "./tool_bar";
 
 class AccountsList extends BaseComponent {
 
@@ -54,7 +55,7 @@ class AccountsList extends BaseComponent {
         height       : "60px",
         paddingLeft  : "25px",
         width        : "100%",
-        borderBottom : "solid 1px " + Defines.colors.lightGrey,
+        borderBottom : "solid 1px " + Defines.colors.lightGrey
       },
       listItemLink : {
         color        : Defines.colors.black,
@@ -66,7 +67,8 @@ class AccountsList extends BaseComponent {
         float        : "right",
         position     : "relative",
         top          : "-20px",
-        right        : "15px"
+        right        : "15px",
+        zDepth       : 1
       }
     };
   }
@@ -94,13 +96,18 @@ class AccountsList extends BaseComponent {
       accountList = <p>Loading</p>;
     }
 
-    return <div style={styles.container}>
-        <h2 style={styles.title}>Choose Account</h2>
-        <FloatingActionButton style={styles.floatingActionButton} iconClassName="material-icons-content-add" />
-        <div style={styles.listContainer}>
-          {accountList}
+    return(
+      <div>
+        <ToolBar />
+        <div style={styles.container}>
+          <h2 style={styles.title}>Choose Account</h2>
+          <FloatingActionButton style={styles.floatingActionButton} iconClassName="material-icons-content-add" zDepth={1}/>
+          <div style={styles.listContainer}>
+            {accountList}
+          </div>
         </div>
-      </div>;
+      </div>
+  )
 
   }
 

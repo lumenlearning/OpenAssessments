@@ -42,9 +42,9 @@ export default class AdminTheme{
       //   selectColor: String,
       //   selectTextColor: String,
       // },
-      // dropDownMenu: {
-      //   accentColor: String,
-      // },
+       dropDownMenu: {
+         accentColor: Defines.colors.black
+       },
       // flatButton: {
       //   color: String,
       //   textColor: String,
@@ -55,7 +55,7 @@ export default class AdminTheme{
        floatingActionButton: {
          buttonSize: 40,
          //miniSize: Number,
-         color: Defines.colors.lightGrey,
+         color: Defines.colors.snow,
          iconColor: Defines.colors.black,
          //secondaryColor: String,
          //secondaryIconColor: String,
