@@ -20,8 +20,12 @@ export default class AssessmentResult extends BaseComponent{
   }
 
   render(){
+    var progressStyle = {width:"100%"};
     return( 
     <div>
+      <div className="progress">
+        <div className="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style={progressStyle}></div>
+      </div>
       <div className="form-group panel panel-default">
         <h1>
         Score: {this.state.assessmentResult.score}
