@@ -13,7 +13,7 @@ import ApplicationStore from "../../stores/application";
 import AccountsStore    from "../../stores/accounts";
 import EditUserForm     from "./edit_user_form";
 import { Paper, TextField, FlatButton, RaisedButton, FontIcon, Menu, Dialog} from "material-ui";
-import { Table, Column }        from "fixed-data-table";
+// import { Table, Column }        from "fixed-data-table";
 
 class Users extends BaseComponent {
 
@@ -76,24 +76,7 @@ class Users extends BaseComponent {
     var styles = this.getStyles();
     
     return (
-      <div >
-        <Table
-          rowHeight={10}
-          rowGetter={this.rowGetter}
-          rowsCount={this.state.users.length}
-          width={400}
-          height={100}
-          headerHeight={50}>
-          <Column
-            label="id"
-            width={10}
-            dataKey={"id"}/>
-          <Column
-            label="email"
-            width={10}
-            dataKey={"email"}/>
-
-        </Table>  
+      <div >  
       </div>
     );
   }
