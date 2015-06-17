@@ -76,7 +76,7 @@ var AccountsStore = assign({}, StoreCommon, {
 // Register callback with Dispatcher
 Dispatcher.register(function(payload) {
   var action = payload.action;
-  
+  debugger;
   switch(action){
 
     case Constants.ACCOUNTS_LOADED:
