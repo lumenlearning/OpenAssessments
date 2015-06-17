@@ -72,7 +72,7 @@ export default class Assessment extends BaseComponent{
       // AssessmentActions.itemViewed(this.state.settings, this.state.assessment, this.state.assessmentResult);
     }
     var submitButton = (this.state.currentIndex == this.state.questionCount - 1) ? <button className="btn btn-submit" onClick={()=>{this.submitButtonClicked()}}><span>Submit</span></button> : "";
-    var percentCompleted = this.checkProgress(this.state.currentIndex, this.state.questionCount -1);
+    var percentCompleted = this.checkProgress(this.state.currentIndex, this.state.questionCount);
     var progressStyle = {width:percentCompleted+"%"};
 
 
