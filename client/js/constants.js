@@ -59,4 +59,6 @@ export default {
 
   DELETE_USERS: "delete_users",
   DELETING_USERS: "deleting_users",
+
+  CLEAR_STORE: "clear_store" 
 };

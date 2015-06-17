@@ -19,7 +19,6 @@ export default class Assessment extends BaseComponent{
   }
 
   getState(props, context){
-    console.log(context);
     var showStart = SettingsStore.current().enableStart && !AssessmentStore.isStarted();
     if(AssessmentStore.assessmentResult() != null){
       context.router.transitionTo("assessment-result");
@@ -51,6 +50,10 @@ export default class Assessment extends BaseComponent{
     AssessmentActions.submitAssessment(this.state.assessment.id, this.state.assessment.assessmentId, this.state.allQuestions, this.state.studentAnswers);
   }
 
+  checkProgress(current, total){
+    return Math.floor(current/total * 100);
+  }
+
   render(){
     var content;
     if(!this.state.isLoaded){
@@ -69,10 +72,14 @@ export default class Assessment extends BaseComponent{
       // AssessmentActions.itemViewed(this.state.settings, this.state.assessment, this.state.assessmentResult);
     }
     var submitButton = (this.state.currentIndex == this.state.questionCount - 1) ? <button className="btn btn-submit" onClick={()=>{this.submitButtonClicked()}}><span>Submit</span></button> : "";
-
+    var percentCompleted = this.checkProgress(this.state.currentIndex, this.state.questionCount -1);
+    var progressStyle = {width:percentCompleted+"%"};
 
 
     return <div className="assessment">
+      <div className="progress">
+        <div className="progress-bar" role="progressbar" aria-valuenow={percentCompleted} aria-valuemin="0" aria-valuemax="100" style={progressStyle}></div>
+      </div>
       <div className="section_list">
         <div className="section_container">
           {content}

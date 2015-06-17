@@ -75,6 +75,21 @@ function setUpStudentAnswers(numOfQuestions){
   }
 }
 
+function clearStore(){
+  _assessment = null;
+  _assessmentXml = null;
+  _items = [];
+  _assessmentResult = null;
+  _assessmentState = NO_LOADED;
+  _startedAt;
+  _selectedConfidenceLevel = 0;
+  _selectedAnswerIds = [];
+  _answerMessageIndex = -1;
+  _sectionIndex = 0;
+  _itemIndex = 0;
+  _studentAnswers = [];
+}
+
 
 // Extend User Store with EventEmitter to add eventing capabilities
 var AssessmentStore = assign({}, StoreCommon, {
@@ -221,10 +236,13 @@ Dispatcher.register(function(payload) {
       break;
 
     case Constants.ASSESSMENT_GRADED:
-        console.log(payload);
+
         parseAssessmentResult(payload.data.text);
       break;
 
+    case Constants.CLEAR_STORE:
+      clearStore();
+      break;
     default:
       return true;
   }

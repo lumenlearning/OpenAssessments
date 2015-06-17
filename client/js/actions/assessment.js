@@ -30,6 +30,10 @@ export default {
     Dispatcher.dispatch({action: Constants.EDX_LOAD_SECTION, section: section});
   },
 
+  clearStore(){
+    Dispatcher.dispatch({action: Constants.CLEAR_STORE});
+  },
+
   edXLoadItem(item){
     Dispatcher.dispatch({action: Constants.EDX_LOAD_ITEM, item: item});
   },

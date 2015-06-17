@@ -26,6 +26,6 @@ describe('assessment result', function() {
 
     var result = TestUtils.renderIntoDocument(<AssessmentResult />);
     var content = React.findDOMNode(result).textContent;
-    expect(content.length > 0).toBe(true);
+    expect(content.length > 0).toBe(true)
   });
 });
