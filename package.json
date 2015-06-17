@@ -25,6 +25,5 @@
   "license": "MIT",
   "homepage": "https://github.com/atomicjolt/canvas_starter_app",
   "dependencies": {
-    "material-design-icons": "^2.0.0"
   }
 }
