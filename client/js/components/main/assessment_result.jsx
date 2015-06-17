@@ -21,30 +21,41 @@ export default class AssessmentResult extends BaseComponent{
 
   getStyles(){
     return {
-      resultsStyle: {
-        width: "30%",
-        height: "120px",
-      },
-
       progressStyle: {
         width:"100%"
       },
-
+      wrapperStyle:{
+        width: "100%",
+        position: "relative"
+      },
+      resultsStyle: {
+        width: "30%",
+        height: "120px",
+        positon: "absolute",
+        top: "0",
+        marginLeft: "3%",
+        backgroundColor: "#c0c0c0"
+      },
       goodWork: {
         width: "30%",
         height: "120px",
-        marginLeft: "22px",
+        position: "absolute",
+        top: "0",
+        left: "35%",
+        backgroundColor: "#b4b4c9"
       },
-
       improve: {
         width: "30%",
         height: "120px",
-        marginLeft: "22px",
-
+        position: "absolute",
+        top: "0",
+        left: "67%",
+        backgroundColor: "#f1c692"
       },
-
-      wrapperStyle:{
-        //display: "inline-block"   
+      yourScoreStyle: {
+        backgroundColor: "#f19b2c",
+        color: "#fff",
+        borderRadius: "25px"
       }
     }
   }
@@ -56,25 +67,33 @@ export default class AssessmentResult extends BaseComponent{
       <div className="progress">
         <div className="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style={styles.progressStyle}></div>
       </div>
+
       <div style={styles.wrapperStyle}>
-        <div style={styles.resultsStyle} className="form-group panel panel-default">
-          <p>Your Score< /p>
-          <h1>
-            Score: {this.state.assessmentResult.score}
-          </h1>
+
+        <div style={styles.resultsStyle} >
+          <h3>Your Quiz Results</h3>
+          <div class="label label-default">
+            <h1>
+              Score: {this.state.assessmentResult.score}
+            </h1>
+          </div>
           <p>See Overall Score</p>
         </div>
-        <div style={styles.goodWork} className="form-group panel panel-default">
+
+        <div style={styles.goodWork} >
           <div><p>You answered questions that cover these concepts correctly</p></div>
         </div>
-        <div style={styles.improve} className="form-group panel panel-default">
+
+        <div style={styles.improve} >
           <div>
             <h1>
               Feedback: {this.state.assessmentResult.feedback}
             </h1>
           </div>
         </div>
+
       </div>
+
     </div>);
   }
 
