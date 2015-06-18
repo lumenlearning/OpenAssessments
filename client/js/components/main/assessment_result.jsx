@@ -55,7 +55,9 @@ export default class AssessmentResult extends BaseComponent{
       yourScoreStyle: {
         backgroundColor: "#f19b2c",
         color: "#fff",
-        borderRadius: "25px"
+        borderRadius: "25px",
+        marginLeft: "auto",
+        marginRight: "auto"
       }
     }
   }
@@ -72,12 +74,11 @@ export default class AssessmentResult extends BaseComponent{
 
         <div style={styles.resultsStyle} >
           <h3>Your Quiz Results</h3>
-          <div class="label label-default">
-            <h1>
-              Score: {this.state.assessmentResult.score}
-            </h1>
+          <div style={styles.yourScoreStyle}>
+            <h5>Your Score</h5>
+            <h1>Score: {this.state.assessmentResult.score}</h1>
+            <h6><a>See Overall Score</a></h6>
           </div>
-          <p>See Overall Score</p>
         </div>
 
         <div style={styles.goodWork} >
