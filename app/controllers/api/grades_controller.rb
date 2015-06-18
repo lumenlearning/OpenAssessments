@@ -83,8 +83,6 @@ class Api::GradesController < ApplicationController
       feedback: "Study Harder",
       correct_list: correct_list
     }
-
-    debugger
     
     respond_to do |format|
       format.json { render json: graded_assessment }
