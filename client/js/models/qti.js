@@ -45,7 +45,8 @@ export default class Qti{
         xml        : xml,
         material   : this.material(xml),
         answers    : this.parseAnswers(xml),
-        correct    : this.parseCorrect(xml)
+        correct    : this.parseCorrect(xml),
+        timeSpent  : 0
       };
 
       $.each(xml.find('itemmetadata > qtimetadata > qtimetadatafield'), function(i, x){

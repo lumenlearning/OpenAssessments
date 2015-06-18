@@ -47,7 +47,7 @@ export default class Assessment extends BaseComponent{
   }
 
   submitButtonClicked(){
-    AssessmentActions.submitAssessment(this.state.assessment.id, this.state.assessment.assessmentId, this.state.allQuestions, this.state.studentAnswers);
+    AssessmentActions.submitAssessment(this.state.assessment.id, this.state.assessment.assessmentId, this.state.allQuestions, this.state.studentAnswers, this.state.settings);
   }
 
   checkProgress(current, total){

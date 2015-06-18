@@ -50,14 +50,15 @@ export default {
     Dispatcher.dispatch({ action: Constants.ASSESSMENT_CHECK_ANSWER });
   },
 
-  submitAssessment(identifier, assessmentId, questions, studentAnswers){
+  submitAssessment(identifier, assessmentId, questions, studentAnswers, settings){
     Dispatcher.dispatch({action: Constants.ASSESSMENT_SUBMITTED})
     var body = {
       itemToGrade: {
         questions    : questions,
         answers      : studentAnswers,
         assessmentId : assessmentId,
-        identifier   : identifier
+        identifier   : identifier,
+        settings     : settings
       }
     }
     Api.post(Constants.ASSESSMENT_GRADED,'/api/grades', body);

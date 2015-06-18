@@ -11,6 +11,7 @@ class Api::GradesController < ApplicationController
     body = JSON.parse(request.body.read);
     item_to_grade = body["itemToGrade"]
     questions = item_to_grade["questions"]
+    settings = item_to_grade["settings"]
     correct_list = []
     answers = item_to_grade["answers"]
     assessment_id = item_to_grade["assessmentId"]
@@ -18,11 +19,13 @@ class Api::GradesController < ApplicationController
     doc = Nokogiri::XML(assessment.assessment_xmls.first.xml)
     doc.remove_namespaces!
     xml_questions = doc.xpath("//item")
-
+    result = assessment.assessment_results.build
+    result.save!
     questions.each_with_index do |question, index|
 
       # make sure we are looking at the right question
       if question["id"] == xml_questions[index].attributes["ident"].value
+
         correct = false;
         type = xml_questions[index].children.xpath("qtimetadata").children.xpath("fieldentry").children.text
         
@@ -38,13 +41,41 @@ class Api::GradesController < ApplicationController
           answered_correctly += 1
         end
         correct_list[index] = correct
-      end
+        # TODO create item result
 
+        if item = assessment.items.find_by(identifier: question["id"])
+        # create the item result
+          item.item_results.create(
+            identifier: question["id"],
+            correct: correct,
+            time_elapsed: question["timeSpent"],
+            src_url: settings["srcUrl"],
+            assessment_result_id: assessment_result.id,
+            # TODO confidence levels
+            # TODO score
+          )
+        else
+          item = assessment.items.build
+          item.identifier = question["id"]
+          item.question_text = question["material"]
+          if item.save!
+            item.item_results.create(
+              identifier: question["id"],
+              correct: correct,
+              time_elapsed: question["timeSpent"],
+              src_url: settings["srcUrl"],
+              assessment_result_id: result.id,
+              # TODO confidence levels
+              # TODO score
+            )
+          end
+        end
+      end
       # TODO if the question id's dont match then check the rest of the id's
       # if the Id isn't found then there has been an error and return the error
     
     end
-
+    # TODO Create assessment_result
     score = Float(answered_correctly) / Float(questions.length)
     score *= Float(100)
     graded_assessment = { 
@@ -53,6 +84,8 @@ class Api::GradesController < ApplicationController
       correct_list: correct_list
     }
 
+    debugger
+    
     respond_to do |format|
       format.json { render json: graded_assessment }
     end

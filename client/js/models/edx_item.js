@@ -14,7 +14,8 @@ export default class EdXItem{
         standard : 'edX',
         edXMaterial : "",
         answers  : [],
-        isGraded: true 
+        isGraded: true,
+        timeSpent: 0 
       };
       item.question_type = EdX.questionType(xml);
       var answers = EdXItem.parseAnswers(xml, item.question_type);

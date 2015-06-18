@@ -91,6 +91,9 @@ function clearStore(){
   _studentAnswers = [];
 }
 
+function calculateTime(start, end){
+  return end - start;
+};
 
 // Extend User Store with EventEmitter to add eventing capabilities
 var AssessmentStore = assign({}, StoreCommon, {
@@ -186,11 +189,16 @@ Dispatcher.register(function(payload) {
               _assessment.sections[_sectionIndex] &&
               _assessment.sections[_sectionIndex].items){
             _items = _assessment.sections[_sectionIndex].items;
+
             setUpStudentAnswers(_items.length)
           }
           _assessmentState = LOADED;
-          if(!_startedAt)
+          if(!_startedAt){
+
+            // set the start time for the assessment and the first question
+            _items[0].startTime = Utils.currentTime()
             _startedAt = Utils.currentTime();
+          }
         }
       }
       break;
@@ -204,8 +212,12 @@ Dispatcher.register(function(payload) {
       break;
 
     case Constants.ASSESSMENT_START:
-      if(!_startedAt)
+      if(!_startedAt){
+            
+        // set the start time for the assessment and the first question
+        _items[0].startTime = Utils.currentTime()
         _startedAt = Utils.currentTime();
+      }
       _assessmentState = STARTED;
       break;
 
@@ -218,9 +230,11 @@ Dispatcher.register(function(payload) {
 
     case Constants.ASSESSMENT_NEXT_QUESTION:
       // Will need to advance sections and items.
-      if(_itemIndex < _items.length - 1){ 
+      if(_itemIndex < _items.length - 1){
+        _items[_itemIndex].timeSpent += calculateTime(_items[_itemIndex].startTime, Utils.currentTime()); 
         _studentAnswers[_itemIndex] = _selectedAnswerIds;
         _itemIndex++;
+        _items[_itemIndex].startTime = Utils.currentTime();
         _selectedAnswerIds = _studentAnswers[_itemIndex];
         _answerMessageIndex = -1;  
       } 
@@ -228,8 +242,10 @@ Dispatcher.register(function(payload) {
 
     case Constants.ASSESSMENT_PREVIOUS_QUESTION:
       if(_itemIndex > 0){
+        _items[_itemIndex].timeSpent += calculateTime(_items[_itemIndex].startTime, Utils.currentTime());
         _studentAnswers[_itemIndex] = _selectedAnswerIds;
         _itemIndex--;
+        _items[_itemIndex].startTime = Utils.currentTime();
         _selectedAnswerIds = _studentAnswers[_itemIndex];
         _answerMessageIndex = -1;
       }
@@ -254,8 +270,8 @@ Dispatcher.register(function(payload) {
       parseAssessmentResult(payload.data.text);
       break;
     case Constants.ASSESSMENT_SUBMITTED:
-      
-      _finishedAt = Utils.currentTime();  
+      _items[_itemIndex].timeSpent += calculateTime(_items[_itemIndex].startTime, Utils.currentTime());
+      _finishedAt = Utils.currentTime(); 
       break;
 
     case Constants.CLEAR_STORE:
