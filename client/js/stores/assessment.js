@@ -152,7 +152,14 @@ var AssessmentStore = assign({}, StoreCommon, {
   },
 
   timeSpent(){
-    return _finishedAt - _startedAt;
+    var time = _finishedAt - _startedAt;
+    var minutes = Math.floor(time/1000/60);
+    time -= minutes*1000*60
+    var seconds = Math.floor(time/1000);
+    return {
+      minutes: minutes,
+      seconds: seconds
+    }
   },
 
 });
@@ -182,7 +189,8 @@ Dispatcher.register(function(payload) {
             setUpStudentAnswers(_items.length)
           }
           _assessmentState = LOADED;
-        
+          if(!_startedAt)
+            _startedAt = Utils.currentTime();
         }
       }
       break;
@@ -196,7 +204,8 @@ Dispatcher.register(function(payload) {
       break;
 
     case Constants.ASSESSMENT_START:
-      _startedAt = Utils.currentTime();
+      if(!_startedAt)
+        _startedAt = Utils.currentTime();
       _assessmentState = STARTED;
       break;
 
@@ -241,17 +250,18 @@ Dispatcher.register(function(payload) {
       break;
 
     case Constants.ASSESSMENT_GRADED:
-
-        _finishedAt = Utils.currentTime();
+      
+      parseAssessmentResult(payload.data.text);
       break;
     case Constants.ASSESSMENT_SUBMITTED:
-
-        parseAssessmentResult(payload.data.text);
+      
+      _finishedAt = Utils.currentTime();  
       break;
 
     case Constants.CLEAR_STORE:
       clearStore();
       break;
+
     default:
       return true;
   }

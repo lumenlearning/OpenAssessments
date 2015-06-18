@@ -15,7 +15,8 @@ export default class AssessmentResult extends BaseComponent{
 
   getState(props, context){
     return {
-      assessmentResult: AssessmentStore.assessmentResult()
+      assessmentResult : AssessmentStore.assessmentResult(),
+      timeSpent        : AssessmentStore.timeSpent()   
     }
   }
 
@@ -79,7 +80,7 @@ export default class AssessmentResult extends BaseComponent{
             <h1 style={styles.center}>Score: {Math.trunc(this.state.assessmentResult.score)}</h1>
             <h6 style={styles.center}><a>See Overall Score</a></h6>
           </div>
-          <p>Time Spent:</p>
+          <p>Time Spent: {this.state.timeSpent.minutes} mins {this.state.timeSpent.seconds} sec</p>
           <p>Target Time:</p>
         </div>
 

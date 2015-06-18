@@ -44,7 +44,7 @@ class Api::GradesController < ApplicationController
       # if the Id isn't found then there has been an error and return the error
     
     end
-    debugger
+
     score = Float(answered_correctly) / Float(questions.length)
     score *= Float(100)
     graded_assessment = { 
