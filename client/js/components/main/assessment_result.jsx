@@ -34,7 +34,6 @@ export default class AssessmentResult extends BaseComponent{
         positon: "absolute",
         top: "0",
         marginLeft: "3%",
-        backgroundColor: "#c0c0c0"
       },
       goodWork: {
         width: "30%",
@@ -42,7 +41,6 @@ export default class AssessmentResult extends BaseComponent{
         position: "absolute",
         top: "0",
         left: "35%",
-        backgroundColor: "#b4b4c9"
       },
       improve: {
         width: "30%",
@@ -50,14 +48,16 @@ export default class AssessmentResult extends BaseComponent{
         position: "absolute",
         top: "0",
         left: "67%",
-        backgroundColor: "#f1c692"
       },
       yourScoreStyle: {
         backgroundColor: "#f19b2c",
         color: "#fff",
         borderRadius: "25px",
-        marginLeft: "auto",
-        marginRight: "auto"
+        textAlign: "center",
+        padding: "2%"
+      },
+      improveScoreStyle:{
+        color: "#f00"
       }
     }
   }
@@ -75,26 +75,28 @@ export default class AssessmentResult extends BaseComponent{
         <div style={styles.resultsStyle} >
           <h3>Your Quiz Results</h3>
           <div style={styles.yourScoreStyle}>
-            <h5>Your Score</h5>
-            <h1>Score: {this.state.assessmentResult.score}</h1>
-            <h6><a>See Overall Score</a></h6>
+            <h5 style={styles.center}>Your Score</h5>
+            <h1 style={styles.center}>Score: {Math.trunc(this.state.assessmentResult.score)}</h1>
+            <h6 style={styles.center}><a>See Overall Score</a></h6>
           </div>
+          <p>Time Spent:</p>
+          <p>Target Time:</p>
         </div>
 
         <div style={styles.goodWork} >
-          <div><p>You answered questions that cover these concepts correctly</p></div>
+          <h3>Good Work On These Concepts</h3>
+          <p>You answered questions that covered these concepts correctly.</p>
+          <p>Put Green ul here</p>
         </div>
 
         <div style={styles.improve} >
-          <div>
-            <h1>
-              Feedback: {this.state.assessmentResult.feedback}
-            </h1>
-          </div>
+          <h3 style={styles.improveScoreStyle}>How To Improve your Score <i className="glyphicon glyphicon-warning-sign" ></i></h3>
+          <p>You can retake this quiz in 1 hour - plenty of time to review these sections!</p>
+          <h5>{this.state.assessmentResult.feedback}</h5>
+          <a className="btn btn-default" href="#" role="button">See Questions</a>
         </div>
 
       </div>
-
     </div>);
   }
 
