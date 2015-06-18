@@ -21,6 +21,7 @@ var _items = [];
 var _assessmentResult = null;
 var _assessmentState = NOT_LOADED;
 var _startedAt;
+var _finishedAt
 var _selectedConfidenceLevel = 0;
 var _selectedAnswerIds = [];
 var _answerMessageIndex = -1;
@@ -148,7 +149,11 @@ var AssessmentStore = assign({}, StoreCommon, {
 
   allQuestions(){
     return _items;
-  }
+  },
+
+  timeSpent(){
+    return _finishedAt - _startedAt;
+  },
 
 });
 
@@ -236,6 +241,10 @@ Dispatcher.register(function(payload) {
       break;
 
     case Constants.ASSESSMENT_GRADED:
+
+        _finishedAt = Utils.currentTime();
+      break;
+    case Constants.ASSESSMENT_SUBMITTED:
 
         parseAssessmentResult(payload.data.text);
       break;
