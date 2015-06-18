@@ -50,6 +50,10 @@ export default {
     Dispatcher.dispatch({ action: Constants.ASSESSMENT_CHECK_ANSWER });
   },
 
+  selectConfidenceLevel(level){
+    Dispatcher.dispatch({action: Constants.LEVEL_SELECTED, level: level});
+  },
+  
   submitAssessment(identifier, assessmentId, questions, studentAnswers, settings){
     Dispatcher.dispatch({action: Constants.ASSESSMENT_SUBMITTED})
     var body = {

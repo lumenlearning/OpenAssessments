@@ -14,7 +14,20 @@ export default class Item extends BaseComponent{
     AssessmentActions.previousQuestion();
   }
 
+  confidenceLevelClicked(e){
+    e.preventDefault()
+    AssessmentActions.selectConfidenceLevel(e.target.value);
+  }
+
+  getStyles(){
+    return { 
+      margin: {
+       marginLeft: "5px"
+      }
+    }
+  }
   render() {
+    var styles = this.getStyles()
     var item = "";
     var result = "";
 
@@ -46,7 +59,9 @@ export default class Item extends BaseComponent{
               __html: this.props.question.material
             }}></div>
           );
-
+    var level = "";
+    if (this.props.question.confidenceLevel)
+      level = <div className="check_answer_result"><p>{'You chose "' + this.props.question.confidenceLevel + '" as your confidence level'}</p></div>;
     return (
       <div className="assessment_container">
         <div className="question">
@@ -63,8 +78,11 @@ export default class Item extends BaseComponent{
                 {item}
               </div>
               {result}
+              {level}
               <div className="lower_level">
-                <input type="button" className="btn btn-check-answer" value="Check Answer" onClick={() => { AssessmentActions.checkAnswer(); }}/>
+                <input type="button" className="btn btn-check-answer" value="Maybe?" onClick={(e) => { this.confidenceLevelClicked(e) }}/>
+                <input type="button" style={styles.margin} className="btn btn-check-answer" value="Probably." onClick={(e) => { this.confidenceLevelClicked(e) }}/>
+                <input type="button" style={styles.margin} className="btn btn-check-answer" value="Definitely!" onClick={(e) => { this.confidenceLevelClicked(e) }}/>
               </div>
             </div>
           </form>

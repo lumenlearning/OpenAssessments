@@ -50,7 +50,7 @@ class Api::GradesController < ApplicationController
             correct: correct,
             time_elapsed: question["timeSpent"],
             src_url: settings["srcUrl"],
-            assessment_result_id: assessment_result.id,
+            assessment_result_id: result.id,
             # TODO confidence levels
             # TODO score
           )
