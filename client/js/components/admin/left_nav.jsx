@@ -28,11 +28,7 @@ class LeftNavigation extends BaseComponent {
     ];
 
     if(loggedIn){
-      menuItems.push({ route: 'dashboard', text:<div><i className="material-icons">dashboard</i>Dashboard</div> });
-        //<FlatButton label="Dashboard">
-          //<FontIcon  className="material-icons-action-account-circle"/>
-        //</FlatButton>});
-        //
+      menuItems.push({ route: 'account', text:<div><i className="material-icons">dashboard</i>Dashboard</div>  });
       menuItems.push({ route: 'users', text: <div><i className="material-icons">account_circle</i>Users</div> });
       menuItems.push({ route: '', text: <div><i className="material-icons">done</i>Assessments</div> });
       menuItems.push({ route: 'logout', text: <div><i className="material-icons">exit_to_app</i>Logout</div> });
