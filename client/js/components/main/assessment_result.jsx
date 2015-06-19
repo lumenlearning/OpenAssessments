@@ -38,6 +38,14 @@ export default class AssessmentResult extends BaseComponent{
       },
       improveScoreStyle:{
         color: "#f00"
+      },
+      alignLeft: {
+        float: 'left',
+        color: "#458B00"
+      },
+      alignRight: {
+        float: 'right',
+        color: "#458B00"
       }
     }
   }
@@ -59,18 +67,20 @@ export default class AssessmentResult extends BaseComponent{
             <h1 style={styles.center}>Score: {Math.trunc(this.state.assessmentResult.score)}</h1>
             <h6 style={styles.center}><a>See Overall Score</a></h6>
           </div>
-          <p>Time Spent: {this.state.timeSpent.minutes} mins {this.state.timeSpent.seconds} sec</p>
-          <p>Target Time:</p>
+          Time Spent: {this.state.timeSpent.minutes} mins {this.state.timeSpent.seconds} sec
+          <br />
+          Target Time:
         </div>
 
         <div className="col-md-4" >
-          <h3>Good Work On These Concepts</h3>
+          <h3><strong>Good Work On These Concepts</strong></h3>
           <p>You answered questions that covered these concepts correctly.</p>
-          <p>Put Green ul here</p>
+          <p style={styles.alignLeft}>Put Green ul here</p><i className="glyphicon glyphicon-ok" style={styles.alignRight}></i>
+          <div style={{clear: 'both'}}></div>
         </div>
 
         <div className="col-md-4" >
-          <h3 style={styles.improveScoreStyle}>How To Improve your Score <i className="glyphicon glyphicon-warning-sign" ></i></h3>
+          <h3 style={styles.improveScoreStyle}><strong>How To Improve your Score <i className="glyphicon glyphicon-warning-sign" ></i></strong></h3>
           <p>You can retake this quiz in 1 hour - plenty of time to review these sections!</p>
           <h5>{this.state.assessmentResult.feedback}</h5>
           <a className="btn btn-default" href="#" role="button">See Questions</a>
