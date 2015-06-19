@@ -6,12 +6,12 @@ import BaseComponent        from "../base_component";
 import Router               from "react-router";
 import Defines              from "../defines";
 import AccountSelection     from './account_selection';
-import { LeftNav }          from "material-ui";
+import { LeftNav, IconButton, FontIcon, FlatButton }          from "material-ui";
 
 class LeftNavigation extends BaseComponent {
 
-  constructor() {
-    super();
+  constructor(props, context) {
+    super(props, context);
 
     this.stores = [UserStore];
     this.state = this.getState();
@@ -28,8 +28,14 @@ class LeftNavigation extends BaseComponent {
     ];
 
     if(loggedIn){
-      menuItems.push({ route: 'dashboard', text: 'Dashboard' });
-      menuItems.push({ route: 'logout', text: 'Logout' });
+      menuItems.push({ route: 'dashboard', text:
+        <FlatButton label="Dashboard">
+          <FontIcon  className="material-icons-action-account-circle"/>
+        </FlatButton>});
+        //<div><i className="material-icons">dashboard</i>Dashboard</div>
+      menuItems.push({ route: 'users', text: <div><i className="material-icons">account_circle</i>Users</div> });
+      menuItems.push({ route: '', text: <div><i className="material-icons">done</i>Assessments</div> });
+      menuItems.push({ route: 'logout', text: <div><i className="material-icons">exit_to_app</i>Logout</div> });
     } else {
       menuItems.push({ route: 'login', text: 'Sign In' });
     }

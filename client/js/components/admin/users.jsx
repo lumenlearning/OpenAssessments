@@ -47,7 +47,7 @@ class Users extends BaseComponent {
   editButtonClicked(){
     this.setState({currentUser: AccountsStore.userById(this.state.selectedUsers[0].id)});
     this.refs.editForm.editButtonClicked();
-    
+
     for(var i=0; i<this.state.users.length; i++){
       var hash = "check-" + this.state.users[i].id;
       this.refs[hash].setChecked(false);
@@ -76,7 +76,8 @@ class Users extends BaseComponent {
     var styles = this.getStyles();
     
     return (
-      <div >  
+      <div >
+
       </div>
     );
   }

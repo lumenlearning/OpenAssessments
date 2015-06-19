@@ -20,7 +20,7 @@ class AccountDashboard extends BaseComponent {
     }
   }
 
-  static willTransitionTo(transition, params, query, callback) {
+  willTransitionTo(transition, params, query, callback) {
     if (!UserStore.loggedIn()) {
       transition.abort();
       callback();
@@ -53,7 +53,7 @@ class AccountDashboard extends BaseComponent {
   render(){
 
     var styles = this.getStyles();
-
+    console.log("Hello from the Dashboard!");
     return (
       <div style={styles.accountDashboard}>
         <h3>{this.state.currentAccountName}</h3>
