@@ -12,7 +12,8 @@ import AdminActions     from "../../actions/admin";
 import ApplicationStore from "../../stores/application";
 import AccountsStore    from "../../stores/accounts";
 import EditUserForm     from "./edit_user_form";
-import { Paper, TextField, FlatButton, RaisedButton, FontIcon, Menu, Dialog} from "material-ui";
+import { Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, RaisedButton} from "material-ui";
+import Defines          from "../defines";
 // import { Table, Column }        from "fixed-data-table";
 
 class Users extends BaseComponent {
@@ -64,7 +65,12 @@ class Users extends BaseComponent {
 
   getStyles(){
     return {
-
+      toolbarStyle: {
+        backgroundColor: Defines.colors.lightGrey
+      },
+      titleStyle:{
+        color: Defines.colors.black
+      }
     }
   }
 
@@ -72,12 +78,24 @@ class Users extends BaseComponent {
     return this.state.users[index];
   }
 
+  addUser(){
+    AdminActions.createUser()
+  }
+
   render() {
     var styles = this.getStyles();
     
     return (
       <div >
-        <h2>Users</h2>
+        <Toolbar style={styles.toolbarStyle}>
+          <ToolbarGroup key={0} float="left">
+            <ToolbarTitle style={styles.titleStyle} text="Users" />
+          </ToolbarGroup>
+          <ToolbarGroup key={1} float="right">
+            <FontIcon className="material-icons-action-search" />
+            <RaisedButton label="Create New User" onClick={()=>{addUser()}} primary={true} />
+          </ToolbarGroup>
+        </Toolbar>
       </div>
     );
   }

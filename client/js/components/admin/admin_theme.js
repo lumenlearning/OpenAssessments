@@ -93,16 +93,16 @@ export default class AdminTheme{
       //   disabledColor: String,
       //   size: Number,
       // },
-      // raisedButton: {
+       raisedButton: {
       //   color: String,
       //   textColor: String,
-      //   primaryColor: String,
+         primaryColor: Defines.colors.darkGrey,
       //   primaryTextColor: String,
       //   secondaryColor: String,
       //   secondaryTextColor: String,
       //   disabledColor: String,
       //   disabledTextColor: String
-      // }
+       }
     }
   }
 }
