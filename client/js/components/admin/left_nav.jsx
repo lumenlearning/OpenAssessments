@@ -28,10 +28,10 @@ class LeftNavigation extends BaseComponent {
     ];
 
     if(loggedIn){
-      menuItems.push({ route: 'account', text:<div><i className="material-icons">dashboard</i>Dashboard</div>  });
-      menuItems.push({ route: 'users', text: <div><i className="material-icons">account_circle</i>Users</div> });
-      menuItems.push({ route: '', text: <div><i className="material-icons">done</i>Assessments</div> });
-      menuItems.push({ route: 'logout', text: <div><i className="material-icons">exit_to_app</i>Logout</div> });
+      menuItems.push({ route: 'account', text:<div><i style={this.getStyles().iconStyle} className="material-icons">dashboard</i>Dashboard</div>  });
+      menuItems.push({ route: 'users', text: <div><i style={this.getStyles().iconStyle} className="material-icons">account_circle</i>Users</div> });
+      menuItems.push({ route: '', text: <div><i style={this.getStyles().iconStyle} className="material-icons">done</i>Assessments</div> });
+      menuItems.push({ route: 'logout', text: <div><i style={this.getStyles().iconStyle} className="material-icons">exit_to_app</i>Logout</div> });
     } else {
       menuItems.push({ route: 'login', text: 'Sign In' });
     }
@@ -61,13 +61,18 @@ class LeftNavigation extends BaseComponent {
   getStyles() {
     return {
       headerStyle: {
-        marginTop: "20px",
         backgroundColor: Defines.colors.grey,
         cursor: "pointer",
         fontSize: "24px",
         color: Defines.colors.white,
-        paddingTop: "0px",
-        marginBottom: "8px"
+        paddingTop: "8px",
+        marginBottom: "-6px",
+        textColor: Defines.colors.white
+      },
+      iconStyle: {
+        marginRight: "34px",
+        verticalAlign: "middle",
+        color: Defines.colors.darkGrey
       }
     };
   }
@@ -96,7 +101,8 @@ class LeftNavigation extends BaseComponent {
 }
 
 LeftNavigation.contextTypes = {
-  router: React.PropTypes.func.isRequired
+  router: React.PropTypes.func.isRequired,
+  muiTheme: React.PropTypes.object
 };
 
 module.exports = LeftNavigation;

@@ -42,9 +42,9 @@ export default class AdminTheme{
       //   selectColor: String,
       //   selectTextColor: String,
       // },
-       dropDownMenu: {
-         accentColor: Defines.colors.black
-       },
+      // dropDownMenu: {
+      //   accentColor: Defines.colors.black
+      // },
       // flatButton: {
       //   color: String,
       //   textColor: String,
@@ -70,13 +70,13 @@ export default class AdminTheme{
       //   backgroundColor: String,
       //   containerBackgroundColor: String,
       // },
-      // menuItem: {
+       menuItem: {
       //   dataHeight: Number,
       //   height: Number,
       //   hoverColor: String,
       //   padding: Number,
-      //   selectedTextColor: String,
-      // },
+         selectedTextColor: Defines.colors.teal,
+       },
       // menuSubheader: {
       //   padding: Number,
       //   borderColor: String,

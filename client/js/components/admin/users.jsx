@@ -77,7 +77,7 @@ class Users extends BaseComponent {
     
     return (
       <div >
-
+        <h2>Users</h2>
       </div>
     );
   }
