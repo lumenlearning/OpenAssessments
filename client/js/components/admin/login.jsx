@@ -20,7 +20,7 @@ class Login extends BaseComponent {
 
     this._bind("handleLogin", "validateAll", "validate", "validateEmail");
     if(this.state.loggedIn) {
-      context.router.transitionTo("dashboard");
+      context.router.transitionTo("home");
     }
   }
 
@@ -35,7 +35,7 @@ class Login extends BaseComponent {
   storeChanged(){
     super.storeChanged();
     if(this.state.loggedIn) {
-      this.context.router.transitionTo("dashboard");
+      this.context.router.transitionTo("home");
       return null;
     }
   }
@@ -79,28 +79,41 @@ class Login extends BaseComponent {
     return {
       paper: {
         backgroundColor: Defines.colors.white,
+      },
+
+      container: {
         width: "345px",
         margin: "auto"
       },
 
-      container: {
-        margin: "10px auto"
+      button: {
+        backgroundColor : Defines.colors.white,
+        color           : Defines.colors.teal,
+      },
+
+      form: {
+        padding: "10px"
       }
     };
   }
 
   render(){
     var styles = this.getStyles();
-    return <div style={styles.container}>
+    return( 
+    <div style={styles.container}>
+      <h3>Login</h3>
         <Paper style={styles.paper} zDepth={0}>
-          <form action="/users/sign_in" method="post" onSubmit={(e) => this.handleLogin(e)}>
-            <h4>Admin Login</h4>
-            <TextField hintText="johndoe@example.com" floatingLabelText="Email" ref="email" onBlur={this.validateEmail} errorText={this.state.validations.email} />
-            <TextField type="password" hintText="******" floatingLabelText="Password" ref="password" />
-            <FlatButton label="Login" primary={true} ref="submit-button" />
+          <form style={styles.form} action="/users/sign_in" method="post" onSubmit={(e) => this.handleLogin(e)}>
+            <div>
+              <TextField hintText="johndoe@example.com" floatingLabelText="Email" ref="email" onBlur={this.validateEmail} errorText={this.state.validations.email} />
+              <TextField type="password" hintText="******" floatingLabelText="Password" ref="password" />
+            </div>
+            <div>
+              <FlatButton style={styles.button} label="Login" primary={true} ref="submit-button" />
+            </div>
           </form>
         </Paper>
-      </div>;
+      </div>);
   }
 }
 

@@ -4,6 +4,7 @@ import React            from "react";
 import AccountsStore    from "../../stores/accounts";
 import BaseComponent    from "../base_component";
 import AdminActions     from "../../actions/admin";
+import UsersStore       from "../../stores/user";
 import Defines          from "../defines";
 import { Link }         from "react-router";
 import { FloatingActionButton } from "material-ui";
@@ -16,6 +17,10 @@ class AccountsList extends BaseComponent {
     this._bind("getState");
     this.stores = [AccountsStore];
     this.state = this.getState();
+    AdminActions.loadAccounts();
+    if(!UsersStore.loggedIn()) {
+      context.router.transitionTo("login");
+    }
   }
 
   getState(){
@@ -111,4 +116,7 @@ class AccountsList extends BaseComponent {
   }
 
 }
+AccountsList.contextTypes = {
+  router: React.PropTypes.func
+};
 module.exports = AccountsList;

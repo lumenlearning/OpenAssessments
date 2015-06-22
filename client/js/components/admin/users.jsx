@@ -22,7 +22,6 @@ class Users extends BaseComponent {
     super(props);
     this.state = this.getState(props.params.accountId);
     this.state.currentUser = {name: "", email: "", role: ""};
-    this._bind("rowGetter");
     this.stores = [AccountsStore, ApplicationStore];
     AdminActions.loadUsers(props.params.accountId);
   }
@@ -74,9 +73,6 @@ class Users extends BaseComponent {
     }
   }
 
-  rowGetter(index){
-    return this.state.users[index];
-  }
 
   addUser(){
     AdminActions.createUser()

@@ -31,7 +31,7 @@ if (window.matchMedia("(max-width: 639px)").matches){
 
 // Initialize store singletons
 SettingsAction.load(window.DEFAULT_SETTINGS);
-AdminActions.loadAccounts();
+
 
 Router.run(AdminRoutes, (Handler) => {
   return React.render(<Handler />, document.body);

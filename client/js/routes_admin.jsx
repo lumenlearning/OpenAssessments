@@ -15,8 +15,8 @@ var Redirect      = Router.Redirect;
 
 var adminRoutes = (
   <Route name="root" path="/" handler={AdminPage}>
-    <DefaultRoute name="home" handler={AccountsList}/>
-  	<Route name="login" handler={Login}/>
+    <DefaultRoute name="login" handler={Login}/>
+  	<Route name="home" handler={AccountsList}/>
     <Route name="account" path="/account/:accountId" handler={AccountDashboard}/>
     <Route name="users" path="/users/:accountId" handler={UsersList}/>
     <Route name="logout" path="/logout/" handler={Logout}/>
