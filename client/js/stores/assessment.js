@@ -195,7 +195,8 @@ Dispatcher.register(function(payload) {
           _assessmentState = LOADED;
           if(!_startedAt){
 
-            // set the start time for the assessment and the first question
+            // set the start time for the assessment and the first question (only qti)
+            if(_items[0])
             _items[0].startTime = Utils.currentTime()
             _startedAt = Utils.currentTime();
           }

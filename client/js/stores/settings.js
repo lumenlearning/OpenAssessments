@@ -65,7 +65,6 @@ function loadSettings(defaultSettings){
     style            : bestValue('style', 'style', null),
     csrfToken        : defaultSettings.csrfToken || null
   };
-
   if(!_settings.srcUrl && !_settings.offline){
     _errors.srcUrl = "No src_url specified: specify a src_url in the url query params.";
   }

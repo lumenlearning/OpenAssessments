@@ -55,6 +55,7 @@ export default class Assessment extends BaseComponent{
   }
 
   render(){
+    console.log(this.state.settings.confidenceLevels)
     var content;
     if(!this.state.isLoaded){
       content = <Loading />;  
@@ -67,7 +68,8 @@ export default class Assessment extends BaseComponent{
         settings         = {this.state.settings}
         questionCount    = {this.state.questionCount}
         assessmentResult = {this.state.assessmentResult}
-        messageIndex     = {this.state.messageIndex} />;
+        messageIndex     = {this.state.messageIndex} 
+        confidenceLevels = {this.state.settings.confidenceLevels}/>;
       // TODO figure out when to mark an item as viewed. assessmentResult must be valid before this call is made.
       // AssessmentActions.itemViewed(this.state.settings, this.state.assessment, this.state.assessmentResult);
     }
