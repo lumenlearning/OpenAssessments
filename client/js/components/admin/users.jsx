@@ -12,7 +12,7 @@ import AdminActions     from "../../actions/admin";
 import ApplicationStore from "../../stores/application";
 import AccountsStore    from "../../stores/accounts";
 import EditUserForm     from "./edit_user_form";
-import { Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, RaisedButton} from "material-ui";
+import { Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, RaisedButton, Paper} from "material-ui";
 import Defines          from "../defines";
 // import { Table, Column }        from "fixed-data-table";
 
@@ -69,7 +69,51 @@ class Users extends BaseComponent {
       },
       titleStyle:{
         color: Defines.colors.black
-      }
+      },
+      table: {
+
+      },
+      paper: {
+        margin: "auto 20px",
+        marginRight: "48px"
+      },
+      row: {
+        height: "60px"
+      },
+      id: {
+        borderBottom: "1px solid " + Defines.colors.lightGrey,
+        borderRight: "1px solid " + Defines.colors.lightGrey, 
+        width: "110px",
+      },
+      avatar: {
+        borderBottom: "1px solid " + Defines.colors.lightGrey,
+        borderRight: "1px solid " + Defines.colors.lightGrey, 
+        width: "100px",
+      },
+      username: {
+        borderBottom: "1px solid " + Defines.colors.lightGrey,
+        borderRight: "1px solid " + Defines.colors.lightGrey, 
+        width: "200px",
+      },
+      role: {
+        borderBottom: "1px solid " + Defines.colors.lightGrey,
+        borderRight: "1px solid " + Defines.colors.lightGrey, 
+        width: "140px",
+      },
+      sCount: {
+        borderBottom: "1px solid " + Defines.colors.lightGrey,
+        borderRight: "1px solid " + Defines.colors.lightGrey, 
+        width: "140px",
+      },
+      lastS: {
+        borderBottom: "1px solid " + Defines.colors.lightGrey,
+        borderRight: "1px solid " + Defines.colors.lightGrey, 
+        width: "160px",
+      },
+      icons: {
+        borderBottom: "1px solid " + Defines.colors.lightGrey, 
+        width: "200px",
+      },
     }
   }
 
@@ -80,7 +124,30 @@ class Users extends BaseComponent {
 
   render() {
     var styles = this.getStyles();
-    
+    var headers = (
+        <tr style={styles.row}>
+          <th style={styles.id}>ID</th>
+          <th style={styles.avatar}>Avatar</th>
+          <th style={styles.username}>Username</th>
+          <th style={styles.role}>Role</th>
+          <th style={styles.sCount}>Sign In Count</th>
+          <th style={styles.lastS}>Last Sign In</th>
+          <th style={styles.icons}></th>
+        </tr>
+      )
+    var users = this.state.users.map((user)=>{
+      return (
+        <tr style={styles.row}>
+          <td style={styles.id}>{user.id}</td>
+          <td style={styles.avatar}>{user.avatar}</td>
+          <td style={styles.username}>{user.email}</td>
+          <td style={styles.role}>{user.role}</td>
+          <td style={styles.sCount}>SIGN IN COUNT</td>
+          <td style={styles.lastS}>LAST SIGN IN</td>
+          <td style={styles.icons}>Buttons</td>
+        </tr>
+        )
+    })
     return (
       <div >
         <Toolbar style={styles.toolbarStyle}>
@@ -92,6 +159,12 @@ class Users extends BaseComponent {
             <RaisedButton label="Create New User" onClick={()=>{addUser()}} primary={true} />
           </ToolbarGroup>
         </Toolbar>
+        <Paper style={styles.paper}>
+          <table style={styles.table}>
+            {headers}
+            {users}
+          </table>
+        </Paper>
       </div>
     );
   }
