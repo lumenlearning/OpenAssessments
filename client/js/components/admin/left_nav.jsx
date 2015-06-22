@@ -2,6 +2,7 @@
 
 import React                from "react";
 import UserStore            from "../../stores/user";
+import AccountsStore        from "../../stores/accounts";
 import BaseComponent        from "../base_component";
 import Router               from "react-router";
 import Defines              from "../defines";
@@ -13,7 +14,7 @@ class LeftNavigation extends BaseComponent {
   constructor(props, context) {
     super(props, context);
 
-    this.stores = [UserStore];
+    this.stores = [UserStore, AccountsStore];
     this.state = this.getState();
 
     this._bind("_getSelectedIndex", "toggle", "_onLeftNavChange");
@@ -28,8 +29,11 @@ class LeftNavigation extends BaseComponent {
     ];
 
     if(loggedIn){
-      menuItems.push({ route: 'account', text:<div><i style={this.getStyles().iconStyle} className="material-icons">dashboard</i>Dashboard</div>  });
-      menuItems.push({ route: 'users', text: <div><i style={this.getStyles().iconStyle} className="material-icons">account_circle</i>Users</div> });
+      if(AccountsStore.currentId()) {
+        var id = AccountsStore.currentId();
+        menuItems.push({ route: 'account', accountId: id, text:<div><i style={this.getStyles().iconStyle} className="material-icons">dashboard</i>Dashboard</div>  });
+        menuItems.push({ route: 'users', accountId: id, text: <div><i style={this.getStyles().iconStyle} className="material-icons">account_circle</i>Users</div> });
+      }
       menuItems.push({ route: '', text: <div><i style={this.getStyles().iconStyle} className="material-icons">done</i>Assessments</div> });
       menuItems.push({ route: 'logout', text: <div><i style={this.getStyles().iconStyle} className="material-icons">exit_to_app</i>Logout</div> });
     } else {
@@ -55,7 +59,9 @@ class LeftNavigation extends BaseComponent {
   }
 
   _onLeftNavChange(e, key, payload) {
-    this.context.router.transitionTo(payload.route);
+    var id = payload.accountId ? {accountId: payload.accountId} : null;
+    this.context.router.transitionTo(payload.route, id);
+
   }
 
   getStyles() {

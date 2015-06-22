@@ -29,12 +29,6 @@ class AccountsList extends BaseComponent {
     };
   }
 
-  // There is a better way to do this.
-  handleClick(e, key, payload){
-    // pass the click event to the Link tag 
-    this.refs[payload.ref].handleClick(e);
-  }
-
   getStyles(){
     return {
       container: {
@@ -77,6 +71,7 @@ class AccountsList extends BaseComponent {
     };
   }
 
+
   render(){
 
     var styles = this.getStyles();
@@ -102,7 +97,6 @@ class AccountsList extends BaseComponent {
 
     return(
       <div>
-        <ToolBar />
         <div style={styles.container}>
           <h2 style={styles.title}>Choose Account</h2>
           <FloatingActionButton style={styles.floatingActionButton} iconClassName="material-icons-content-add" zDepth={1}/>

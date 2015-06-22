@@ -15,7 +15,7 @@ export default {
       page = 1;
     }
     var perPage = 100;
-    Dispatcher.dispatch({action: Constants.USERS_LOADING});
+    Dispatcher.dispatch({action: Constants.USERS_LOADING, payload: accountId});
     Api.get(Constants.USERS_LOADED, "admin/accounts/" + accountId + "/users?page=" + page + "&per_page=" + perPage);
   },
 
