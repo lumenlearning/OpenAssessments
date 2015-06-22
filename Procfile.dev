@@ -11,6 +11,3 @@ webpack: cd client && nodemon webpack.hot.js
 # ngrok 2.0
 ngrok_start: ngrok start --none
 ngrok_init: ruby ./ngrok.rb
-
-# ngrok 2.0 yml
-#ngrok start -config=./ngrok.yml app assets
