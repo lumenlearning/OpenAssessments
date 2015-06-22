@@ -9,6 +9,7 @@ import _              from "lodash";
 var _accounts = [];
 var _users = [];
 var _selectedUsers = [];
+var _currentAccountId = null;
 
 function loadAccounts(data){
   _accounts = JSON.parse(data);
@@ -45,6 +46,11 @@ var AccountsStore = assign({}, StoreCommon, {
   // Return the accounts
   current(){
     return _accounts;
+  },
+
+  currentId(){
+    console.log(_currentAccountId)
+    return _currentAccountId;
   },
 
   // Return current users
@@ -105,6 +111,10 @@ Dispatcher.register(function(payload) {
 
     case Constants.DELETE_USERS:
       _selectedUsers = [];
+      break;
+    case Constants.USERS_LOADING:
+      console.log(payload)
+      _currentAccountId = payload.payload;
       break;
 
     default:
