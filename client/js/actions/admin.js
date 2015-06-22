@@ -57,4 +57,8 @@ export default {
     this.loadUsers(payload[0].account_id, 1);
   },
 
+  createUser(){
+    Dispatcher.dispatch({action: Constants.CREATING_USER});
+    Api.post(Constants.CREATED_USER, '/admin/accounts/:account_id/users')
+  },
 };

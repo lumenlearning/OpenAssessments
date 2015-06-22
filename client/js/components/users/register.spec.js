@@ -179,4 +179,7 @@ describe('register', function() {
     expect(UserActions.register).toHaveBeenCalledWith(expectedRegisterObject);
   });
 
+  afterEach(()=>{
+    React.unmountComponentAtNode(React.findDOMNode(result).parentNode)
+  });
 });

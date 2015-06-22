@@ -4,8 +4,9 @@ import React                                                                  fr
 import User                                                                   from "../../stores/user";
 import StoreKeeper                                                            from "../mixins/store_keeper";
 import Router                                                                 from "react-router";
-import { Toolbar, ToolbarGroup, DropDownMenu, RaisedButton, TextField, Paper} from "material-ui";
+import { Toolbar, ToolbarGroup, DropDownMenu, RaisedButton, TextField, Paper, IconButton} from "material-ui";
 import AdminActions                                                           from "../../actions/admin";
+import Defines          from "../defines";
 
 class ToolBar extends React.Component {
 
@@ -22,9 +23,15 @@ class ToolBar extends React.Component {
     var styles = {
       searchBarStyle: {
         marginTop: '9px',
-        display: 'inline-block',
+        display: 'inline-block'
       },
-
+      toolbar: {
+        position: 'relative',
+        background: Defines.colors.white,
+        top: '-24px',
+        left: '-22',
+        width: '103%'
+      },
       graphPaper: {
         width: 'auto',
         minHeight: '60px',
@@ -46,17 +53,14 @@ class ToolBar extends React.Component {
     };
 
     return (
-      <Paper style={styles.graphPaper} className="graph-paper">
-        <div style={styles.leftFloat}>
-          <DropDownMenu menuItems={dropDownItems} onChange={this.onToolbarChange}/>
-        </div>
-        <div style={styles.rightFloat}>
-          <div style={styles.searchBarStyle}>
-            <TextField hintText="Search..." />
-          </div>
-          <RaisedButton label="Search" secondary={true} />
-        </div>
-      </Paper>
+      <Toolbar style={styles.toolbar} >
+        <ToolbarGroup key={0} float="left">
+          <DropDownMenu menuItems={dropDownItems} />
+        </ToolbarGroup>
+        <ToolbarGroup key={1} float="right">
+          <IconButton iconClassName="material-icons-action-help" tooltip="Help" />
+        </ToolbarGroup>
+      </Toolbar>
     );
   }
 

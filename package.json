@@ -23,5 +23,7 @@
   ],
   "author": "atomicjolt",
   "license": "MIT",
-  "homepage": "https://github.com/atomicjolt/openassessments"
+  "homepage": "https://github.com/atomicjolt/openassessments",
+  "dependencies": {
+  }
 }

@@ -1,20 +1,35 @@
 "use strict";
 
-import React        from "react";
-import { Link }     from "react-router";
-import Validator    from "validator";
-import UserActions  from "../../actions/user";
-import _            from "lodash";
-import assign       from "object-assign";
+import React         from "react";
+import {             Link }                     from "react-router";
+import Validator     from "validator";
+import UserActions   from "../../actions/user";
+import _             from "lodash";
+import assign        from "object-assign";
+import UserStore     from "../../stores/user";
+import BaseComponent from "../base_component";
 import { Paper, TextField, FlatButton, RaisedButton, FontIcon } from "material-ui";
 
-export default React.createClass({
+class Login extends BaseComponent {
 
-  getInitialState(){
+  constructor(props, context){
+    super(props, context);
+
+    this.stores = [UserStore];
+    this.state = this.getState();
+
+    this._bind("handleLogin", "validateAll", "validate", "validateEmail");
+    if(this.state.loggedIn) {
+      context.router.transitionTo("dashboard");
+    }
+  }
+
+  getState() {
     return {
-    validations: {}
+      loggedIn: UserStore.loggedIn(),
+      validations: {}
     };
-  },
+  }
 
   handleLogin(e){
     e.preventDefault();
@@ -24,13 +39,13 @@ export default React.createClass({
         password: this.refs.password.getValue()
       });
     }
-  },
+  }
 
   validateAll(){
     return _.every([
       this.validateEmail()
     ], (v)=> { return v; });
-  },
+  }
 
   validate(isValid, invalidState, emptyState){
     if(!isValid){
@@ -39,7 +54,7 @@ export default React.createClass({
       this.setState(assign(this.state.validations, emptyState));
     }
     return isValid;
-  },
+  }
 
   validateEmail(e){
     return this.validate(
@@ -47,9 +62,24 @@ export default React.createClass({
       { email: "Invalid email" },
       { email: "" }
     );
-  },
+  }
 
-  render: function(){
+  getStyles() {
+    return {
+      paper: {
+        backgroundColor: "white",
+        width: "345px",
+        margin: "auto"
+      },
+
+      container: {
+        marginTop: "10px",
+        margin: "auto"
+      }
+    };
+  }
+
+  render(){
     return (<div className="login-screen">
       <Paper className="login-paper">
         <form action="/login" method="post" onSubmit={(e) => this.handleLogin(e)}>
@@ -86,4 +116,11 @@ export default React.createClass({
 
     </div>);
   }
-});
+
+}
+
+Login.contextTypes = {
+  router: React.PropTypes.func
+};
+
+module.exports = Login;

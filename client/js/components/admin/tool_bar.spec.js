@@ -8,15 +8,21 @@ import StubContext    from '../../../specs_support/stub_context';
 describe('toolBar', function(){
   var toolBar;
   var toolBarDOM;
+  var Subject;
+  var result;
 
   beforeEach(function(){
-    var Subject = StubContext(ToolBar, {});
-    var result = TestUtils.renderIntoDocument(<Subject />);
+    Subject = StubContext(ToolBar, {});
+    result = TestUtils.renderIntoDocument(<Subject />);
     toolBarDOM = React.findDOMNode(result);
     toolBar = result.originalComponent();
   });
+
   it('It renders the toolbar', function(){
     expect(toolBarDOM).toBeDefined();
   });
 
+  afterEach(()=>{
+    React.unmountComponentAtNode(React.findDOMNode(result).parentNode)
+  });
 });

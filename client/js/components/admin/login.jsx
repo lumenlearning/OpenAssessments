@@ -7,6 +7,7 @@ import UserStore     from "../../stores/user";
 import BaseComponent from "../base_component";
 import _             from "lodash";
 import assign        from "object-assign";
+import Defines       from "../defines";
 import { Paper, TextField, FlatButton, RaisedButton, FontIcon } from "material-ui";
 
 class Login extends BaseComponent {
@@ -19,7 +20,7 @@ class Login extends BaseComponent {
 
     this._bind("handleLogin", "validateAll", "validate", "validateEmail");
     if(this.state.loggedIn) {
-      context.router.transitionTo("dashboard");
+      context.router.transitionTo("home");
     }
   }
 
@@ -34,7 +35,7 @@ class Login extends BaseComponent {
   storeChanged(){
     super.storeChanged();
     if(this.state.loggedIn) {
-      this.context.router.transitionTo("dashboard");
+      this.context.router.transitionTo("home");
       return null;
     }
   }
@@ -77,28 +78,39 @@ class Login extends BaseComponent {
   getStyles() {
     return {
       paper: {
-        backgroundColor: "white"
+        backgroundColor: Defines.colors.white,
       },
 
       container: {
-        marginTop: "10px"
+        width: "345px",
+        margin: "auto"
+      },
+
+      button: {
+        backgroundColor : Defines.colors.white,
+        color           : Defines.colors.teal,
+      },
+
+      form: {
+        padding: "10px"
       }
     };
   }
 
   render(){
     var styles = this.getStyles();
-    return (
-      <div className="login-screen" style={styles.container}>
-        <Paper className="login-paper" style={styles.paper} zDepth={0}>
-          <form action="/users/sign_in" method="post" onSubmit={(e) => this.handleLogin(e)}>
-            <h4>Admin Login</h4>
-
-            <TextField hintText="johndoe@example.com" floatingLabelText="Email" ref="email" onBlur={this.validateEmail} errorText={this.state.validations.email} />
-            <TextField type="password" hintText="******" floatingLabelText="Password" ref="password" />
-
-
-            <FlatButton className="login-button" label="Login" primary={true} ref="submit-button" />
+    return( 
+    <div style={styles.container}>
+      <h3>Login</h3>
+        <Paper style={styles.paper} zDepth={0}>
+          <form style={styles.form} action="/users/sign_in" method="post" onSubmit={(e) => this.handleLogin(e)}>
+            <div>
+              <TextField hintText="johndoe@example.com" floatingLabelText="Email" ref="email" onBlur={this.validateEmail} errorText={this.state.validations.email} />
+              <TextField type="password" hintText="******" floatingLabelText="Password" ref="password" />
+            </div>
+            <div>
+              <FlatButton style={styles.button} label="Login" primary={true} ref="submit-button" />
+            </div>
           </form>
         </Paper>
       </div>);

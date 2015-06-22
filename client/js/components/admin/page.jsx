@@ -4,17 +4,22 @@ import React                from "react";
 import Messages             from "../common/messages";
 import LeftNav              from "./left_nav";
 import {RouteHandler}       from "react-router";
+import AdminTheme           from "./admin_theme";
+import Defines              from "../defines";
 
 var mui = require('material-ui');
-var Colors = mui.Styles.Colors;
 var Typography = mui.Styles.Typography;
 var ThemeManager = new mui.Styles.ThemeManager();
-var { AppCanvas, AppBar, IconButton } = mui;
+var { AppCanvas, AppBar, IconButton, FullWidthSection } = mui;
+
+var { Spacing } = mui.Styles;
+var { StyleResizable } = mui.Mixins;
 
 class Page extends React.Component {
 
   constructor() {
     super();
+    ThemeManager.setTheme(AdminTheme);
     this._onMenuIconButtonTouchTap = this._onMenuIconButtonTouchTap.bind(this);
   }
 
@@ -28,39 +33,51 @@ class Page extends React.Component {
     this.refs.leftNav.toggle();
   }
 
+  getStyles(){
+    var styles = {
+      root: {
+        paddingTop: Spacing.desktopKeylineIncrement + 'px'
+      },
+      content: {
+        boxSizing: 'border-box',
+        padding: Spacing.desktopGutter + 'px'
+      },
+      a: {
+        color: Defines.colors.grey
+      },
+      p: {
+        margin: "0 auto",
+        padding: "0",
+        color: Defines.colors.white,
+        maxWidth: "335px"
+      },
+      appBar: {
+        position: "relative"
+      }
+    };
+
+    return styles;
+  }
+
   render(){
+
+    var styles = this.getStyles();
     var title = "Admin";
 
-    var githubButton = (
-      <IconButton
-        className="github-icon-button"
-        iconClassName="muidocs-icon-custom-github"
-        href="https://github.com/atomicjolt/canvas_starter_app"
-        linkButton={true} />
-    );
-
-    return (
-      <AppCanvas predefinedLayout={1}>
-
+    return <AppCanvas predefinedLayout={1}>
         <AppBar
-          className="mui-dark-theme"
           onLeftIconButtonTouchTap={(e) => this._onMenuIconButtonTouchTap(e)}
           title={title}
-          zDepth={1}>
-          {githubButton}
-        </AppBar>
-
+          zDepth={0}
+          style={styles.appBar} />
         <LeftNav ref="leftNav" />
-
-        <div className="mui-app-content-canvas page-with-nav">
-          <Messages/>
-          <div className="page-with-nav-content">
+        <div style={styles.root}>
+          <Messages />
+          <div style={styles.content}>
             <RouteHandler />
           </div>
         </div>
-      </AppCanvas>
-
-    );
+      </AppCanvas>;
   }
 }
 

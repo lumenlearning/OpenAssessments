@@ -63,6 +63,7 @@ class Index extends BaseComponent {
   }
 
   render(){
+
     return (
       <RouteHandler {...this.props} />
     );

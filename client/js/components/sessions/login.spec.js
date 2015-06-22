@@ -6,7 +6,7 @@ import Login              from './login';
 import Utils              from '../../../specs_support/utils';
 import StubContext        from '../../../specs_support/stub_context';
 
-describe ('Admin login', function(){
+describe ('Login', function(){
   var login;
   var loginDOM;
   var labels;

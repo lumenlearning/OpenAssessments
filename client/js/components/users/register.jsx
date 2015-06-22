@@ -68,15 +68,28 @@ class Register extends React.Component {
     }
   }
 
+  getStyles(){
+    return {
+      register: {
+        width: "400px",
+        margin: "5% auto"  
+      },
+      signUpButton: {
+        marginTop: "20px"
+      }
+    };
+  }
+
   render(){
+    var styles = this.getStyles();
     return (<div>
-      <Paper className="register-paper">
+      <Paper style={styles.register}>
         <h1><span className="fa fa-sign-in"></span> Signup</h1>
         <form action="/signup" method="post" onSubmit={(e) => this.handleRegister(e)}>
           <TextField hintText="johndoe@example.com" floatingLabelText="Email" errorText={this.state.validations.email} ref="email" onBlur={(e) => this.validateEmail(e)} />
           <TextField type="password" hintText="******" floatingLabelText="Password" errorText={this.state.validations.password} ref="password" onBlur={(e)=>this.validatePassword(e)} />
-          <TextField type="password" hintText="******" floatingLabelText="Confirm Password"  errorText={this.state.validations.confirmPassword} ref="confirmPassword" onBlur={(e)=>this.validateConfirmPassword(e)} />
-          <RaisedButton className="sign-up-button"label="Signup" primary={true} />
+          <TextField type="password" hintText="******" floatingLabelText="Confirm Password" errorText={this.state.validations.confirmPassword} ref="confirmPassword" onBlur={(e)=>this.validateConfirmPassword(e)} />
+          <RaisedButton style={styles.signUpButton} label="Signup" primary={true} />
         </form>
         <p>
           Already have an account? <Link to="login">Login</Link>
