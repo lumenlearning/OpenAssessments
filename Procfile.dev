@@ -1,8 +1,8 @@
 # To run:
 # foreman start -f Procfile.dev
 
-#web: rails server -p $APP_PORT
-#webpack: cd client && nodemon webpack.hot.js
+web: rails server -p $APP_PORT
+webpack: cd client && nodemon webpack.hot.js
 
 # ngrok 1.0
 # ngrok_webpack: ngrok --subdomain $ASSETS_SUBDOMAIN --log stdout $ASSETS_PORT
