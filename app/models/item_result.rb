@@ -6,7 +6,7 @@ class ItemResult < ActiveRecord::Base
   acts_as_taggable_on :keywords
   acts_as_taggable_on :objectives
 
-  #before_save :validate_session_status
+  before_save :validate_session_status
 
   scope :by_status_final, -> { where(session_status: 'final') }
 

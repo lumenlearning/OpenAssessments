@@ -51,6 +51,7 @@ class Api::GradesController < ApplicationController
             time_elapsed: question["timeSpent"],
             src_url: settings["srcUrl"],
             assessment_result_id: result.id,
+            session_status: "final"
             # TODO confidence levels
             # TODO score
           )
@@ -59,12 +60,13 @@ class Api::GradesController < ApplicationController
           item.identifier = question["id"]
           item.question_text = question["material"]
           if item.save!
-            item.item_results.create(
+            item_result = item.item_results.create(
               identifier: question["id"],
               correct: correct,
               time_elapsed: question["timeSpent"],
               src_url: settings["srcUrl"],
               assessment_result_id: result.id,
+              session_status: "final"
               # TODO confidence levels
               # TODO score
             )
