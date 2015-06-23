@@ -49,7 +49,6 @@ var AccountsStore = assign({}, StoreCommon, {
   },
 
   currentId(){
-    console.log(_currentAccountId)
     return _currentAccountId;
   },
 
@@ -113,7 +112,7 @@ Dispatcher.register(function(payload) {
       _selectedUsers = [];
       break;
     case Constants.USERS_LOADING:
-      console.log(payload)
+
       _currentAccountId = payload.payload;
       break;
 

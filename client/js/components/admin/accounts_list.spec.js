@@ -5,7 +5,7 @@ import TestUtils          from 'react/lib/ReactTestUtils';
 import AccountsList       from './accounts_list';
 import StubContext        from '../../../specs_support/stub_context'; 
 
-describe('accounts_list', function() {
+xdescribe('accounts_list', function() {
   var accounts;
   var Subject;
   var result;

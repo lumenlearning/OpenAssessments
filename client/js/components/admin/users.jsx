@@ -7,14 +7,14 @@ import Validator        from "validator";
 import UserActions      from "../../actions/user";
 import _                from "lodash";
 import assign           from "object-assign";
-import Checkbox         from "./checkbox";
+//import Checkbox         from "./checkbox";
 import AdminActions     from "../../actions/admin";
 import ApplicationStore from "../../stores/application";
 import AccountsStore    from "../../stores/accounts";
 import AdminStore       from "../../stores/admin";
 import EditUserForm     from "./edit_user_form";
 import Expandable       from "./expandable";
-import { Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, RaisedButton, Paper} from "material-ui";
+import { Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, RaisedButton, Paper, IconButton, Checkbox} from "material-ui";
 import Defines          from "../defines";
 // import { Table, Column }        from "fixed-data-table";
 
@@ -91,12 +91,12 @@ class Users extends BaseComponent {
       id: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
         borderRight: "1px solid " + Defines.colors.lightGrey, 
-        width: "10%",
+        width: "8%",
       },
       avatar: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
         borderRight: "1px solid " + Defines.colors.lightGrey, 
-        width: "10%",
+        width: "8%",
       },
       username: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
@@ -106,7 +106,7 @@ class Users extends BaseComponent {
       role: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
         borderRight: "1px solid " + Defines.colors.lightGrey, 
-        width: "14%",
+        width: "10%",
       },
       sCount: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
@@ -120,8 +120,15 @@ class Users extends BaseComponent {
       },
       icons: {
         borderBottom: "1px solid " + Defines.colors.lightGrey, 
-        width: "16%",
+        width: "28%",
       },
+      span: {
+        display: "table-cell",
+        verticalAlign: "middle",
+      },
+      button: {
+        marginLeft: "15px"
+      }
     }
   }
 
@@ -157,14 +164,35 @@ class Users extends BaseComponent {
           <td style={styles.role}>{user.role}</td>
           <td style={styles.sCount}>SIGN IN COUNT</td>
           <td style={styles.lastS}>LAST SIGN IN</td>
-          <td style={styles.icons}><RaisedButton label="SHOW DETAILS" onClick={(e)=>{this.toggle(e, user.id)}} /></td>
-        </tr>
+          <td style={styles.icons}>
+            <span style={styles.span}> 
+              <div >
+                <RaisedButton  label="SHOW DETAILS" onClick={(e)=>{this.toggle(e, user.id)}} />
+              </div>
+            </span>
+            <span style={styles.span}>
+              <div style={styles.button}>
+                <IconButton iconStyle={styles.iconStyle} iconClassName="material-icons-action-create" />
+              </div>
+            </span>
+            <span style={styles.span}>
+              <div style={styles.button}>
+                <IconButton iconStyle={styles.iconStyle} iconClassName="material-icons-action-delete" />
+              </div>
+            </span>
+            <span style={styles.span}>
+              <div style={styles.button}>
+                <Checkbox />
+              </div>
+            </span>
+          </td>
+        </tr>        
         <Expandable ref={user.id + "expandable"}/>
         </div>
         )
     })
     return (
-      <div >
+      <div>
         <div style={styles.div}>
         <Toolbar style={styles.toolbarStyle}>
           <ToolbarGroup key={0} float="left">
