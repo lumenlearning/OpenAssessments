@@ -6,6 +6,10 @@ import LeftNav              from "./left_nav";
 import {RouteHandler}       from "react-router";
 import AdminTheme           from "./admin_theme";
 import Defines              from "../defines";
+import BaseComponent        from "../base_component";
+import AdminStore           from "../../stores/admin";
+import AdminActions         from "../../actions/admin";
+
 
 var mui = require('material-ui');
 var Typography = mui.Styles.Typography;
@@ -15,12 +19,14 @@ var { AppCanvas, AppBar, IconButton, FullWidthSection } = mui;
 var { Spacing } = mui.Styles;
 var { StyleResizable } = mui.Mixins;
 
-class Page extends React.Component {
+class Page extends BaseComponent {
 
   constructor() {
     super();
+    this.state = this.getState()
     ThemeManager.setTheme(AdminTheme);
     this._onMenuIconButtonTouchTap = this._onMenuIconButtonTouchTap.bind(this);
+    this.stores = [AdminStore];
   }
 
   getChildContext() {
@@ -30,10 +36,18 @@ class Page extends React.Component {
   }
 
   _onMenuIconButtonTouchTap() {
+    AdminActions.changeNav()
     this.refs.leftNav.toggle();
   }
 
-  getStyles(){
+  getState(){
+    return {
+      navStatus: AdminStore.navStatus()
+    }
+  }
+
+  getStyles(status){
+    var marginLeft = status ? "256px" : "0px";
     var styles = {
       root: {
         paddingTop: Spacing.desktopKeylineIncrement + 'px'
@@ -53,6 +67,15 @@ class Page extends React.Component {
       },
       appBar: {
         position: "relative"
+      },
+      span: {
+        marginLeft: marginLeft,
+        transition: "margin .3s"
+      },
+      iconStyle: {
+        marginRight: "10px",
+        marginLeft: "10px",
+        color: Defines.colors.white
       }
     };
 
@@ -61,15 +84,19 @@ class Page extends React.Component {
 
   render(){
 
-    var styles = this.getStyles();
+    var styles = this.getStyles(this.state.navStatus);
     var title = "Admin";
-
+    
+    var leftIcon = <span style={styles.span}><IconButton iconStyle={styles.iconStyle} iconClassName="material-icons-action-dehaze" onTouchTap={()=>{this._onMenuIconButtonTouchTap()}}/></span>
+    //var leftIcon = <span style={styles.span}><i style={styles.iconStyle} className="material-icons" onClick={()=>{this._onMenuIconButtonTouchTap()}}>dehaze</i></span>
     return <AppCanvas predefinedLayout={1}>
         <AppBar
           onLeftIconButtonTouchTap={(e) => this._onMenuIconButtonTouchTap(e)}
           title={title}
           zDepth={0}
-          style={styles.appBar} />
+          style={styles.appBar}
+          iconElementLeft={leftIcon} />
+
         <LeftNav ref="leftNav" />
         <div style={styles.root}>
           <Messages />
