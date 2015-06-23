@@ -4,6 +4,10 @@
 web: rails server -p $APP_PORT
 webpack: cd client && nodemon webpack.hot.js
 
-# localtunnel.me
-lt_webpack: lt --subdomain $ASSETS_SUBDOMAIN --port $ASSETS_PORT
-lt_rails: lt --subdomain $APP_SUBDOMAIN --port $APP_PORT
+# ngrok 1.0
+# ngrok_webpack: ngrok --subdomain $ASSETS_SUBDOMAIN --log stdout $ASSETS_PORT
+# ngrok_rails: ngrok --subdomain $APP_SUBDOMAIN --log stdout $APP_PORT
+
+# ngrok 2.0
+ngrok_start: ngrok start --none
+ngrok_init: ruby ./ngrok.rb

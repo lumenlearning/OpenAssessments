@@ -22,9 +22,10 @@ If you need to run services individually or just don't like Foreman you can run 
 ```
 $ rails server
 $ cd client && nodemon webpack.hot.js
-$ lt --subdomain masterassets --port 8080
-$ lt --subdomain canvasstarterapp --port 3000
+$ ngrok --subdomain master_assets --log stdout 8080
+$ ngrok --subdomain canvasstarterapp --log stdout 3000
 ```
+
 
 ##Setting up Canvas Starter App
 
@@ -60,13 +61,12 @@ This application requires:
 
 Learn more about [Installing Rails](http://railsapps.github.io/installing-rails.html).
 
-####localtunnel
-To test your application with Canvas you will need to provide a public SSL url. The simpliest way to do this is to use localtunnel which can be installed with
-`npm install -g localtunnel`
+####NGROK
+To test your application with Canvas you will need to provide a public SSL url. The simpliest way to do this is to use ngrok which can be downloaded from [ngrok](https://ngrok.com/).
 
-Running 'lt --subdomain canvasstarterapp --port 3000' will create a tunnel. You will access your application using the localtunnel url:
+Running 'ngrok --subdomain canvasstarterapp --log stdout 3000' will create a tunnel. You will access your application using the ngrok url:
 
-`https://canvasstarterapp.localtunnel.me`
+`https://canvasstarterapp.ngrok.com`
 
 ####Webpack
 Packs CommonJs/AMD modules for the browser.
@@ -144,14 +144,14 @@ $ rake db:seed
 ###<a name="developer_key"></a>Request a Canvas Developer Key
 
 Go to the [Canvas Developer Key Request Form](https://docs.google.com/forms/d/1C5vOpWHAAl-cltj2944-NM0w16AiCvKQFJae3euwwM8/viewform)
-Most of the fields will be specific to your organization. The Oauth2 Redirect URI and Icon URL will be as follows below. Be sure to replace `canvasstarterapp.localtunnel.me` with your domain. You will need an ID and secret for development and for production. The
-development URI will use localtunnel while the production URI will use your domain.
+Most of the fields will be specific to your organization. The Oauth2 Redirect URI and Icon URL will be as follows below. Be sure to replace `canvasstarterapp.ngrok.com` with your domain. You will need an ID and secret for development and for production. The
+development URI will use ngrok while the production URI will use your domain.
 
 **Oauth2 Redirect URI:**
-https://canvasstarterapp.localtunnel.me/auth/canvas/callback
+https://canvasstarterapp.ngrok.com/auth/canvas/callback
 
 **Icon URL:**
-https://canvasstarterapp.localtunnel.me/oauth_icon.png 
+https://canvasstarterapp.ngrok.com/oauth_icon.png 
 
 Once your request is approved you will receive a Canvas ID and Secret. Add these credentials to the `config/secrets.yml` file under `canvas_id` and `canvas_secret`.
 

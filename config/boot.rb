@@ -5,7 +5,7 @@ require 'bundler/setup' if File.exist?(ENV['BUNDLE_GEMFILE'])
 
 
 # Rails 4.2 stopped binding to 0.0.0.0 see http://guides.rubyonrails.org/4_2_release_notes.html#default-host-for-rails-server
-# This breaks localtunnel. The code below was added to restore the binding to 0.0.0.0
+# This breaks ngrok. The code below was added to restore the binding to 0.0.0.0
 # https://github.com/samuelkadolph/unicorn-rails/issues/12
 require 'rubygems'
 require 'rails/commands/server'
