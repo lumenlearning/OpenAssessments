@@ -43,4 +43,5 @@ export default {
 
   DELETE_USERS: "delete_users",
   DELETING_USERS: "deleting_users",
+  NAV_CHANGED: "nav_changed"
 };

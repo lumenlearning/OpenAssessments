@@ -45,7 +45,7 @@ class AccountsList extends BaseComponent {
         backgroundColor : Defines.colors.white
       },
       list : {
-        width : "100%",
+        width : "90%",
         margin : "0",
         padding : "0"
       },
