@@ -42,7 +42,8 @@ class LeftNavigation extends BaseComponent {
     }
 
     return {
-      menuItems: menuItems
+      menuItems: menuItems,
+      account: AccountsStore.accountById(AccountsStore.currentId())
     };
   }
 
@@ -92,8 +93,8 @@ class LeftNavigation extends BaseComponent {
   render() {
 
     var styles = this.getStyles();
-    var name = AccountsStore.currentId() ? <div style={styles.headerText}>{AccountsStore.accountById(AccountsStore.currentId()).name}</div>: ""
-    var header = 
+    var name = this.state.account ? <div style={styles.headerText}>{this.state.account.name}</div>: ""
+    var header =
       <div style={styles.headerStyle}>
         {name}
       </div>;

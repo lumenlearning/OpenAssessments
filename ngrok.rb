@@ -4,14 +4,14 @@ def wait
   # Block execution until the ngrok is ready
   started = false
   until started do
-    sleep 0.5  
+    sleep 0.5
     begin
       TCPSocket.new('localhost', 4040)
       started = true
       puts "ngrok started"
     rescue Errno::ECONNREFUSED => e
       puts "Waiting for ngrok to start"
-    end  
+    end
   end
   sleep 0.5
 end
