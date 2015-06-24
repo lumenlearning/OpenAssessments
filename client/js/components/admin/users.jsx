@@ -57,12 +57,8 @@ class Users extends BaseComponent {
     }
   }
 
-  deleteButtonClicked(){
-    AdminActions.deleteUsers(this.state.selectedUsers);
-    for(var i=0; i<this.state.users.length; i++){
-      var hash = "check-" + this.state.users[i].id;
-      this.refs[hash].setChecked(false);
-    }
+  deleteButtonClicked(user){
+    AdminActions.deleteUser(user);
   }
 
   getStyles(status){
@@ -156,8 +152,8 @@ class Users extends BaseComponent {
       )
     var users = this.state.users.map((user, index)=>{
       return (
-        <div>
-        <tr key={index + user.role} style={styles.row}>
+        <div key={user.id +"" + index}>
+        <tr style={styles.row}>
           <td style={styles.id}>{user.id}</td>
           <td style={styles.avatar}>{user.avatar}</td>
           <td style={styles.username}>{user.email}</td>
@@ -177,7 +173,7 @@ class Users extends BaseComponent {
             </span>
             <span style={styles.span}>
               <div style={styles.button}>
-                <IconButton iconStyle={styles.iconStyle} iconClassName="material-icons-action-delete" />
+                <IconButton iconStyle={styles.iconStyle} iconClassName="material-icons-action-delete" onTouchTap={()=>{this.deleteButtonClicked(user)}} />
               </div>
             </span>
             <span style={styles.span}>
@@ -206,7 +202,7 @@ class Users extends BaseComponent {
         <Paper style={styles.paper}>
           <table style={styles.table}>
             {headers}
-            {users}
+            <tbody>{users}</tbody>
           </table>
         </Paper>
         </div>

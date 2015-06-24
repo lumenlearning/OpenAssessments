@@ -44,7 +44,9 @@ class Admin::UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id]);
     @user.destroy
-    respond_with @user
+    respond_to do |format|
+      format.json { render json: @user }
+    end
   end
 
   private

@@ -110,7 +110,13 @@ Dispatcher.register(function(payload) {
 
     case Constants.DELETE_USERS:
       _selectedUsers = [];
+      var userToRemove = JSON.parse(payload.data.text);
+      _.remove(_users,(user)=>{
+        return user.id == userToRemove.id;
+      })
+      //_users.find(payload.data.user)
       break;
+      
     case Constants.USERS_LOADING:
 
       _currentAccountId = payload.payload;
