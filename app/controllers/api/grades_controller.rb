@@ -22,7 +22,6 @@ class Api::GradesController < ApplicationController
     result = assessment.assessment_results.build
     result.save!
     questions.each_with_index do |question, index|
-
       # make sure we are looking at the right question
       if question["id"] == xml_questions[index].attributes["ident"].value
 
@@ -45,30 +44,49 @@ class Api::GradesController < ApplicationController
 
         if item = assessment.items.find_by(identifier: question["id"])
         # create the item result
+
+          rendered_time, referer, user = tracking_info
           item.item_results.create(
             identifier: question["id"],
+            item_id: item.id,
+            eid: item.id,
             correct: correct,
+            external_user_id: params["external_user_id"],
             time_elapsed: question["timeSpent"],
             src_url: settings["srcUrl"],
             assessment_result_id: result.id,
-            session_status: "final"
-            # TODO confidence levels
+            session_status: "final",
+            ip_address: request.ip,
+            referer: referer,
+            rendered_datestamp: rendered_time,
+            confidence_level: question["confidenceLevel"],
+            score: question["score"]
+            # TODO confidence level
             # TODO score
           )
         else
+          rendered_time, referer, user = tracking_info
           item = assessment.items.build
           item.identifier = question["id"]
           item.question_text = question["material"]
           if item.save!
             item_result = item.item_results.create(
               identifier: question["id"],
+              item_id: item.id,
+              eid: item.id,
               correct: correct,
+              external_user_id: params["external_user_id"],
               time_elapsed: question["timeSpent"],
               src_url: settings["srcUrl"],
               assessment_result_id: result.id,
-              session_status: "final"
-              # TODO confidence levels
-              # TODO score
+              session_status: "final",
+              ip_address: request.ip,
+              referer: referer,
+              rendered_datestamp: rendered_time,
+              confidence_level: question["confidenceLevel"],
+              score: question["score"]
+            # TODO confidence levels
+            # TODO score
             )
           end
         end
