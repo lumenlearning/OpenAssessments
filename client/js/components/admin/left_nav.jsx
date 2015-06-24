@@ -29,6 +29,7 @@ class LeftNavigation extends BaseComponent {
     ];
 
     if(loggedIn){
+      menuItems.push({ route: 'home', text: <div><i style={this.getStyles().iconStyle} className="material-icons">group</i>Accounts</div> });
       if(AccountsStore.currentId()) {
         var id = AccountsStore.currentId();
         menuItems.push({ route: 'account', accountId: id, text:<div><i style={this.getStyles().iconStyle} className="material-icons">dashboard</i>Dashboard</div>  });
@@ -67,6 +68,7 @@ class LeftNavigation extends BaseComponent {
   getStyles() {
     return {
       headerStyle: {
+        height: "62px",
         backgroundColor: Defines.colors.grey,
         cursor: "pointer",
         fontSize: "24px",
@@ -79,6 +81,10 @@ class LeftNavigation extends BaseComponent {
         marginRight: "34px",
         verticalAlign: "middle",
         color: Defines.colors.darkGrey
+      },
+      headerText: {
+        marginLeft: "10px",
+        marginTop: "10px"
       }
     };
   }
@@ -86,16 +92,16 @@ class LeftNavigation extends BaseComponent {
   render() {
 
     var styles = this.getStyles();
-
+    var name = AccountsStore.currentId() ? <div style={styles.headerText}>{AccountsStore.accountById(AccountsStore.currentId()).name}</div>: ""
     var header = 
       <div style={styles.headerStyle}>
-        <AccountSelection />
+        {name}
       </div>;
 
     return (
       <LeftNav
         ref="leftNav"
-        docked={false}
+        docked={true}
         isInitiallyOpen={false}
         header={header}
         menuItems={this.state.menuItems}

@@ -7,12 +7,14 @@ import Validator        from "validator";
 import UserActions      from "../../actions/user";
 import _                from "lodash";
 import assign           from "object-assign";
-import Checkbox         from "./checkbox";
+//import Checkbox         from "./checkbox";
 import AdminActions     from "../../actions/admin";
 import ApplicationStore from "../../stores/application";
 import AccountsStore    from "../../stores/accounts";
+import AdminStore       from "../../stores/admin";
 import EditUserForm     from "./edit_user_form";
-import { Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, RaisedButton, Paper} from "material-ui";
+import Expandable       from "./expandable";
+import { Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, RaisedButton, Paper, IconButton, Checkbox} from "material-ui";
 import Defines          from "../defines";
 // import { Table, Column }        from "fixed-data-table";
 
@@ -22,15 +24,16 @@ class Users extends BaseComponent {
     super(props);
     this.state = this.getState(props.params.accountId);
     this.state.currentUser = {name: "", email: "", role: ""};
-    this.stores = [AccountsStore, ApplicationStore];
+    this.stores = [AccountsStore, ApplicationStore, AdminStore];
     AdminActions.loadUsers(props.params.accountId);
   }
 
   getState(accountId){
     return {
-      users:          AccountsStore.currentUsers(),
-      currentAccount: AccountsStore.accountById(accountId),
-      selectedUsers:  AccountsStore.getSelectedUsers()
+      users          : AccountsStore.currentUsers(),
+      currentAccount : AccountsStore.accountById(accountId),
+      selectedUsers  : AccountsStore.getSelectedUsers(),
+      navStatus      : AdminStore.navStatus()
     };
   }
 
@@ -62,7 +65,8 @@ class Users extends BaseComponent {
     }
   }
 
-  getStyles(){
+  getStyles(status){
+    var marginLeft = status ? "256px" : "0px";
     return {
       toolbarStyle: {
         backgroundColor: Defines.colors.lightGrey
@@ -70,8 +74,12 @@ class Users extends BaseComponent {
       titleStyle:{
         color: Defines.colors.black
       },
+      div: {
+        marginLeft: marginLeft,
+        transition: "margin .3s"
+      },
       table: {
-
+        width: "100%"
       },
       paper: {
         margin: "auto 20px",
@@ -83,47 +91,58 @@ class Users extends BaseComponent {
       id: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
         borderRight: "1px solid " + Defines.colors.lightGrey, 
-        width: "110px",
+        width: "8%",
       },
       avatar: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
         borderRight: "1px solid " + Defines.colors.lightGrey, 
-        width: "100px",
+        width: "8%",
       },
       username: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
         borderRight: "1px solid " + Defines.colors.lightGrey, 
-        width: "200px",
+        width: "20%",
       },
       role: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
         borderRight: "1px solid " + Defines.colors.lightGrey, 
-        width: "140px",
+        width: "10%",
       },
       sCount: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
         borderRight: "1px solid " + Defines.colors.lightGrey, 
-        width: "140px",
+        width: "14%",
       },
       lastS: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
         borderRight: "1px solid " + Defines.colors.lightGrey, 
-        width: "160px",
+        width: "16%",
       },
       icons: {
         borderBottom: "1px solid " + Defines.colors.lightGrey, 
-        width: "200px",
+        width: "28%",
       },
+      span: {
+        display: "table-cell",
+        verticalAlign: "middle",
+      },
+      button: {
+        marginLeft: "15px"
+      }
     }
   }
 
+  toggle(e, id){
+    var ref = id + "expandable";
+    this.refs[ref].toggle()
+  }
 
   addUser(){
     AdminActions.createUser()
   }
 
   render() {
-    var styles = this.getStyles();
+    var styles = this.getStyles(this.state.navStatus);
     var headers = (
         <tr style={styles.row}>
           <th style={styles.id}>ID</th>
@@ -135,21 +154,46 @@ class Users extends BaseComponent {
           <th style={styles.icons}></th>
         </tr>
       )
-    var users = this.state.users.map((user)=>{
+    var users = this.state.users.map((user, index)=>{
       return (
-        <tr style={styles.row}>
+        <div>
+        <tr key={index + user.role} style={styles.row}>
           <td style={styles.id}>{user.id}</td>
           <td style={styles.avatar}>{user.avatar}</td>
           <td style={styles.username}>{user.email}</td>
           <td style={styles.role}>{user.role}</td>
           <td style={styles.sCount}>SIGN IN COUNT</td>
           <td style={styles.lastS}>LAST SIGN IN</td>
-          <td style={styles.icons}>Buttons</td>
-        </tr>
+          <td style={styles.icons}>
+            <span style={styles.span}> 
+              <div >
+                <RaisedButton  label="SHOW DETAILS" onClick={(e)=>{this.toggle(e, user.id)}} />
+              </div>
+            </span>
+            <span style={styles.span}>
+              <div style={styles.button}>
+                <IconButton iconStyle={styles.iconStyle} iconClassName="material-icons-action-create" />
+              </div>
+            </span>
+            <span style={styles.span}>
+              <div style={styles.button}>
+                <IconButton iconStyle={styles.iconStyle} iconClassName="material-icons-action-delete" />
+              </div>
+            </span>
+            <span style={styles.span}>
+              <div style={styles.button}>
+                <Checkbox />
+              </div>
+            </span>
+          </td>
+        </tr>        
+        <Expandable ref={user.id + "expandable"}/>
+        </div>
         )
     })
     return (
-      <div >
+      <div>
+        <div style={styles.div}>
         <Toolbar style={styles.toolbarStyle}>
           <ToolbarGroup key={0} float="left">
             <ToolbarTitle style={styles.titleStyle} text="Users" />
@@ -165,6 +209,7 @@ class Users extends BaseComponent {
             {users}
           </table>
         </Paper>
+        </div>
       </div>
     );
   }

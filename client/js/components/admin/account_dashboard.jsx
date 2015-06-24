@@ -53,7 +53,6 @@ class AccountDashboard extends BaseComponent {
   render(){
 
     var styles = this.getStyles();
-    console.log("Hello from the Dashboard!");
     return (
       <div style={styles.accountDashboard}>
         <h3>{this.state.currentAccountName}</h3>

@@ -19,6 +19,10 @@ export default {
     Api.get(Constants.USERS_LOADED, "admin/accounts/" + accountId + "/users?page=" + page + "&per_page=" + perPage);
   },
 
+  changeNav(){
+    Dispatcher.dispatch({action: Constants.NAV_CHANGED});
+  },
+
   resetUsersStore(){
     Dispatcher.dispatch({action: Constants.RESET_USERS});
   },
