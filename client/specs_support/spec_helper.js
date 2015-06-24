@@ -33,7 +33,7 @@ function helpStubAjax(SettingsActions){
     var accounts_payload = JSON.stringify([{
       "id":1,
       "name":"Canvas Starter App",
-      "domain":"bfcoderServer.ngrok.com",
+      "domain":"bfcoderServer.ngrok.io",
       "lti_key":"canvasstarterapp",
       "lti_secret":"d52ca2",
       "canvas_uri":"https://canvas.instructure.com",
