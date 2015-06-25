@@ -5,7 +5,7 @@ module ApplicationHelper
   end
 
   def application_base_url
-    request.original_url.gsub(request.original_fullpath, '')
+    request.base_url
   end
 
   def jwt_token
