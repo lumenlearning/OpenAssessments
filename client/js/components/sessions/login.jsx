@@ -35,8 +35,10 @@ class Login extends BaseComponent {
     e.preventDefault();
     if(this.validateAll()){
       UserActions.login({
-        email: this.refs.email.getValue(),
-        password: this.refs.password.getValue()
+        user: {
+          email: this.refs.email.getValue(),
+          password: this.refs.password.getValue()
+        }
       });
     }
   }
