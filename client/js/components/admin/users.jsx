@@ -7,7 +7,7 @@ import Validator        from "validator";
 import UserActions      from "../../actions/user";
 import _                from "lodash";
 import assign           from "object-assign";
-//import Checkbox         from "./checkbox";
+import CreateUserForm   from "./create_user_form";
 import AdminActions     from "../../actions/admin";
 import ApplicationStore from "../../stores/application";
 import AccountsStore    from "../../stores/accounts";
@@ -134,7 +134,7 @@ class Users extends BaseComponent {
   }
 
   addUser(){
-    AdminActions.createUser()
+    this.refs.createUserForm.show();
   }
 
   render() {
@@ -152,7 +152,7 @@ class Users extends BaseComponent {
       )
     var users = this.state.users.map((user, index)=>{
       return (
-        <div key={user.id +"" + index}>
+        <tbody key={user.id +"" + index}>
         <tr style={styles.row}>
           <td style={styles.id}>{user.id}</td>
           <td style={styles.avatar}>{user.avatar}</td>
@@ -184,7 +184,7 @@ class Users extends BaseComponent {
           </td>
         </tr>        
         <Expandable ref={user.id + "expandable"}/>
-        </div>
+        </tbody>
         )
     })
     return (
@@ -196,16 +196,17 @@ class Users extends BaseComponent {
           </ToolbarGroup>
           <ToolbarGroup key={1} float="right">
             <FontIcon className="material-icons-action-search" />
-            <RaisedButton label="Create New User" onClick={()=>{addUser()}} primary={true} />
+            <RaisedButton label="Create New User" onClick={()=>{this.addUser()}} primary={true} />
           </ToolbarGroup>
         </Toolbar>
         <Paper style={styles.paper}>
           <table style={styles.table}>
             {headers}
-            <tbody>{users}</tbody>
+            {users}
           </table>
         </Paper>
         </div>
+        <CreateUserForm ref="createUserForm" accountId={this.props.params.accountId} />
       </div>
     );
   }
