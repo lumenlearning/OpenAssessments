@@ -86,7 +86,7 @@ function dispatch(key, response) {
 
 // Dispatch a response based on the server response
 function dispatchResponse(key) {
-  return function(err, response) {
+  return (err, response) => {
     if(err && err.timeout === TIMEOUT) {
       dispatch(Constants.TIMEOUT, response);
     } else if(response.status === 401) {
@@ -97,7 +97,7 @@ function dispatchResponse(key) {
       window.location = response.body.url;
     } else if(!response.ok) {
       dispatch(Constants.ERROR, response);
-    } else {
+    } else if(key) {
       dispatch(key, response);
     }
   };
@@ -106,34 +106,41 @@ function dispatchResponse(key) {
 function doRequest(key, url, requestMethod){
   abortPendingRequests(key);
   var request = _pendingRequests[url] = requestMethod(makeUrl(url));
-  if(key){
-    request.end(dispatchResponse(key));  
-  }
-  return request;
+  return new Promise((resolve, reject) => {
+    request.end((error, res) => {
+      dispatchResponse(key)(error, res);
+      if (error) {
+        reject(error);
+      } else {
+        resolve(res);
+      }
+    });
+  });
 }
+
 
 export default {
 
   get(key, url){
-    return doRequest(key, url, function(fullUrl){
+    return doRequest(key, url, (fullUrl) => {
       return get(fullUrl);
     });
   },
 
   post(key, url, body){
-    return doRequest(key, url, function(fullUrl){
+    return doRequest(key, url, (fullUrl) => {
       return post(fullUrl, body);
     });
   },
 
   put(key, url, body){
-    return doRequest(key, url, function(fullUrl){
+    return doRequest(key, url, (fullUrl) => {
       return put(fullUrl, body);
     });
   },
 
   del(key, url){
-    return doRequest(key, url, function(fullUrl){
+    return doRequest(key, url, (fullUrl) => {
       return del(fullUrl);
     });
   }
