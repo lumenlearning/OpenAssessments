@@ -89,8 +89,12 @@ function dispatchResponse(key) {
   return function(err, response) {
     if(err && err.timeout === TIMEOUT) {
       dispatch(Constants.TIMEOUT, response);
-    } else if(response.status === 400 || response.status === 401) {
+    } else if(response.status === 401) {
       dispatch(Constants.NOT_AUTHORIZED, response);
+    } else if(response.status === 400) {
+      dispatch(Constants.ERROR, response);
+    } else if(response.status === 302) {
+      window.location = response.body.url;
     } else if(!response.ok) {
       dispatch(Constants.ERROR, response);
     } else {
@@ -99,11 +103,12 @@ function dispatchResponse(key) {
   };
 }
 
-function doRequest(key, url, callback){
-  if(key != Constants.DELETE_USERS)
-    abortPendingRequests(key);
-  var request = _pendingRequests[key] = callback(makeUrl(url));
-  request.end(dispatchResponse(key));
+function doRequest(key, url, requestMethod){
+  abortPendingRequests(key);
+  var request = _pendingRequests[url] = requestMethod(makeUrl(url));
+  if(key){
+    request.end(dispatchResponse(key));  
+  }
   return request;
 }
 
