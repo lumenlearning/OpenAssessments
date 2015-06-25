@@ -16,6 +16,13 @@ export default {
     Dispatcher.dispatch({ 
       action: Constants.CLEAR_MESSAGES
     });
+  },
+  
+  removeMessage(messageID) {
+    Dispatcher.dispatch({
+      action: Constants.REMOVE_MESSAGE,
+      data: messageID
+    });
   }
 
 };
