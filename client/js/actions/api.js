@@ -104,7 +104,7 @@ function dispatchResponse(key) {
 }
 
 function doRequest(key, url, requestMethod){
-  abortPendingRequests(key);
+  abortPendingRequests(url);
   var request = _pendingRequests[url] = requestMethod(makeUrl(url));
   return new Promise((resolve, reject) => {
     request.end((error, res) => {
