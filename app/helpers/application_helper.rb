@@ -5,7 +5,7 @@ module ApplicationHelper
   end
 
   def application_base_url
-    request.base_url
+    File.join(request.base_url, "/")
   end
 
   def jwt_token
