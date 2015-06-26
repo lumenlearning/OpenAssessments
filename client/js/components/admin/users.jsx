@@ -13,10 +13,12 @@ import AdminActions     from "../../actions/admin";
 import ApplicationStore from "../../stores/application";
 import AccountsStore    from "../../stores/accounts";
 import AdminStore       from "../../stores/admin";
+import EditUserForm     from "./edit_user_form";
+import AdminStore       from "../../stores/admin";
 import Expandable       from "./expandable";
-import { Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, RaisedButton, Paper, IconButton, Checkbox} from "material-ui";
 import Defines          from "../defines";
-// import { Table, Column }        from "fixed-data-table";
+import Container        from "./container";
+import { Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, RaisedButton, Paper, IconButton, Checkbox} from "material-ui";
 
 class Users extends BaseComponent {
 
@@ -24,7 +26,7 @@ class Users extends BaseComponent {
     super(props);
     this.state = this.getState(props.params.accountId);
     this.state.currentUser = {name: "", email: "", role: ""};
-    this.stores = [AccountsStore, ApplicationStore, AdminStore];
+    this.stores = [AccountsStore, ApplicationStore];
     AdminActions.loadUsers(props.params.accountId);
   }
 
@@ -32,8 +34,7 @@ class Users extends BaseComponent {
     return {
       users          : AccountsStore.currentUsers(),
       currentAccount : AccountsStore.accountById(accountId),
-      selectedUsers  : AccountsStore.getSelectedUsers(),
-      navStatus      : AdminStore.navStatus()
+      selectedUsers  : AccountsStore.getSelectedUsers()
     };
   }
 
@@ -55,18 +56,13 @@ class Users extends BaseComponent {
     AdminActions.deleteUser(user);
   }
 
-  getStyles(status){
-    var marginLeft = status ? "256px" : "0px";
+  getStyles(){
     return {
       toolbarStyle: {
         backgroundColor: Defines.colors.lightGrey
       },
       titleStyle:{
         color: Defines.colors.black
-      },
-      div: {
-        marginLeft: marginLeft,
-        transition: "margin .3s"
       },
       table: {
         width: "100%"
@@ -132,7 +128,7 @@ class Users extends BaseComponent {
   }
 
   render() {
-    var styles = this.getStyles(this.state.navStatus);
+    var styles = this.getStyles();
     var headers = (
         <tr style={styles.row}>
           <th style={styles.id}>ID</th>
@@ -184,23 +180,23 @@ class Users extends BaseComponent {
     })
     return (
       <div>
-        <div style={styles.div}>
-        <Toolbar style={styles.toolbarStyle}>
-          <ToolbarGroup key={0} float="left">
-            <ToolbarTitle style={styles.titleStyle} text="Users" />
-          </ToolbarGroup>
-          <ToolbarGroup key={1} float="right">
-            <FontIcon className="material-icons-action-search" />
-            <RaisedButton label="Create New User" onClick={()=>{this.addUser()}} primary={true} />
-          </ToolbarGroup>
-        </Toolbar>
-        <Paper style={styles.paper}>
-          <table style={styles.table}>
-            {headers}
-            {users}
-          </table>
-        </Paper>
-        </div>
+        <Container>
+          <Toolbar style={styles.toolbarStyle}>
+            <ToolbarGroup key={0} float="left">
+              <ToolbarTitle style={styles.titleStyle} text="Users" />
+            </ToolbarGroup>
+            <ToolbarGroup key={1} float="right">
+              <FontIcon className="material-icons-action-search" />
+              <RaisedButton label="Create New User" onClick={()=>{this.addUser()}} primary={true} />
+            </ToolbarGroup>
+          </Toolbar>
+          <Paper style={styles.paper}>
+            <table style={styles.table}>
+              {headers}
+              {users}
+            </table>
+          </Paper>
+        </Container>
         <CreateUserForm ref="createUserForm" accountId={this.props.params.accountId} />
       </div>
     );

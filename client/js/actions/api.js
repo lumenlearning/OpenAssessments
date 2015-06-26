@@ -86,49 +86,61 @@ function dispatch(key, response) {
 
 // Dispatch a response based on the server response
 function dispatchResponse(key) {
-  return function(err, response) {
+  return (err, response) => {
     if(err && err.timeout === TIMEOUT) {
       dispatch(Constants.TIMEOUT, response);
-    } else if(response.status === 400 || response.status === 401) {
+    } else if(response.status === 401) {
       dispatch(Constants.NOT_AUTHORIZED, response);
+    } else if(response.status === 400) {
+      dispatch(Constants.ERROR, response);
+    } else if(response.status === 302) {
+      window.location = response.body.url;
     } else if(!response.ok) {
       dispatch(Constants.ERROR, response);
-    } else {
+    } else if(key) {
       dispatch(key, response);
     }
   };
 }
 
-function doRequest(key, url, callback){
-  if(key != Constants.DELETE_USERS)
-    abortPendingRequests(key);
-  var request = _pendingRequests[key] = callback(makeUrl(url));
-  request.end(dispatchResponse(key));
-  return request;
+function doRequest(key, url, requestMethod){
+  abortPendingRequests(key);
+  var request = _pendingRequests[url] = requestMethod(makeUrl(url));
+  return new Promise((resolve, reject) => {
+    request.end((error, res) => {
+      dispatchResponse(key)(error, res);
+      if (error) {
+        reject(error);
+      } else {
+        resolve(res);
+      }
+    });
+  });
 }
+
 
 export default {
 
   get(key, url){
-    return doRequest(key, url, function(fullUrl){
+    return doRequest(key, url, (fullUrl) => {
       return get(fullUrl);
     });
   },
 
   post(key, url, body){
-    return doRequest(key, url, function(fullUrl){
+    return doRequest(key, url, (fullUrl) => {
       return post(fullUrl, body);
     });
   },
 
   put(key, url, body){
-    return doRequest(key, url, function(fullUrl){
+    return doRequest(key, url, (fullUrl) => {
       return put(fullUrl, body);
     });
   },
 
   del(key, url){
-    return doRequest(key, url, function(fullUrl){
+    return doRequest(key, url, (fullUrl) => {
       return del(fullUrl);
     });
   }
