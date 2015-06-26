@@ -31,7 +31,9 @@ function makeUrl(part){
   if(part.indexOf("http") >= 0){
     return part;
   } else {
-    return SettingsStore.current().apiUrl + '/' + part;
+    var slash = _.last(SettingsStore.current().apiUrl.split("")) == "/" ? "" :"/";
+    return SettingsStore.current().apiUrl + slash + part;
+    }
   }
 }
 
