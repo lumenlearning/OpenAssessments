@@ -13,8 +13,6 @@ import AdminActions     from "../../actions/admin";
 import ApplicationStore from "../../stores/application";
 import AccountsStore    from "../../stores/accounts";
 import AdminStore       from "../../stores/admin";
-import EditUserForm     from "./edit_user_form";
-import AdminStore       from "../../stores/admin";
 import Expandable       from "./expandable";
 import Defines          from "../defines";
 import Container        from "./container";

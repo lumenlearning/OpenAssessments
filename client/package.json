@@ -20,6 +20,7 @@
     "babel-runtime": "^5.6.7",
     "fixed-data-table": "^0.3.0",
     "flux": "^2.0.3",
+    "griddle-react": "^0.2.13",
     "lodash": "^3.9.3",
     "material-design-icons": "^2.0.0",
     "material-ui": "^0.9.2",

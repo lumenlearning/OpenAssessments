@@ -1,8 +1,8 @@
 {
   "name": "canvas_starter_app",
   "version": "0.0.1",
-  "npm-shrinkwrap-version": "5.3.0",
-  "node-version": "v0.12.2",
+  "npm-shrinkwrap-version": "5.4.0",
+  "node-version": "v0.12.0",
   "dependencies": {
     "babel": {
       "version": "5.6.7",
@@ -322,10 +322,6 @@
             }
           }
         },
-        "path-is-absolute": {
-          "version": "1.0.0",
-          "resolved": "https://registry.npmjs.org/path-is-absolute/-/path-is-absolute-1.0.0.tgz"
-        },
         "slash": {
           "version": "1.0.0",
           "resolved": "https://registry.npmjs.org/slash/-/slash-1.0.0.tgz"
@@ -379,6 +375,10 @@
     "flux": {
       "version": "2.0.3",
       "resolved": "https://registry.npmjs.org/flux/-/flux-2.0.3.tgz"
+    },
+    "griddle-react": {
+      "version": "0.2.13",
+      "resolved": "https://registry.npmjs.org/griddle-react/-/griddle-react-0.2.13.tgz"
     },
     "less": {
       "version": "2.5.1",
@@ -1083,6 +1083,10 @@
           "resolved": "https://registry.npmjs.org/reduce-component/-/reduce-component-1.0.1.tgz"
         }
       }
+    },
+    "underscore": {
+      "version": "1.8.3",
+      "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.8.3.tgz"
     },
     "uuid": {
       "version": "2.0.1",
