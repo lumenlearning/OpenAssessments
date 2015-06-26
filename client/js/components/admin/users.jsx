@@ -13,10 +13,10 @@ import AdminActions     from "../../actions/admin";
 import ApplicationStore from "../../stores/application";
 import AccountsStore    from "../../stores/accounts";
 import AdminStore       from "../../stores/admin";
-import Expandable       from "./expandable";
 import Defines          from "../defines";
 import Container        from "./container";
 import Griddle          from "griddle-react";
+import UserControls     from "./user_controls";
 import { Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, RaisedButton, Paper, IconButton, Checkbox} from "material-ui";
 
 class Users extends BaseComponent {
@@ -45,14 +45,6 @@ class Users extends BaseComponent {
       this.refs[payload.ref].setChecked(true);
       AdminActions.addToSelectedUsers(payload.user);
     }
-  }
-
-  editButtonClicked(id){
-    this.refs[id+"editForm"].show();
-  }
-
-  deleteButtonClicked(user){
-    AdminActions.deleteUser(user);
   }
 
   getStyles(){
@@ -117,66 +109,31 @@ class Users extends BaseComponent {
     }
   }
 
-  toggle(e, id){
-    var ref = id + "expandable";
-    this.refs[ref].toggle()
-  }
-
   addUser(){
     this.refs.createUserForm.show();
   }
 
+  columnMetadata(){
+    return [
+      {
+        columnName: "controls",
+        displayName: "",
+        locked: true,
+        visible: true,
+        styles: this.getStyles(),
+        accountId: this.props.params.accountId,
+        customComponent: UserControls
+      }
+    ];
+  }
+
   render() {
     var styles = this.getStyles();
-    // var headers = (
-    //     <tr style={styles.row}>
-    //       <th style={styles.id}>ID</th>
-    //       <th style={styles.avatar}>Avatar</th>
-    //       <th style={styles.username}>Username</th>
-    //       <th style={styles.role}>Role</th>
-    //       <th style={styles.sCount}>Sign In Count</th>
-    //       <th style={styles.lastS}>Last Sign In</th>
-    //       <th style={styles.icons}></th>
-    //     </tr>
-    //   )
-    // var users = this.state.users.map((user, index)=>{
-    //   return (
-    //     <tbody key={user.id +"" + index}>
-    //     <tr style={styles.row}>
-    //       <td style={styles.id}>{user.id}</td>
-    //       <td style={styles.avatar}>{user.name}</td>
-    //       <td style={styles.username}>{user.email}</td>
-    //       <td style={styles.role}>{user.role}</td>
-    //       <td style={styles.sCount}>SIGN IN COUNT</td>
-    //       <td style={styles.lastS}>LAST SIGN IN</td>
-    //       <td style={styles.icons}>
-    //         <span style={styles.span}> 
-    //           <div >
-    //             <RaisedButton  label="SHOW DETAILS" onClick={(e)=>{this.toggle(e, user.id)}} />
-    //           </div>
-    //         </span>
-    //         <span style={styles.span}>
-    //           <div style={styles.button}>
-    //             <IconButton iconStyle={styles.iconStyle} iconClassName="material-icons-action-create" onTouchTap={()=>{this.editButtonClicked(user.id)}}/>
-    //           </div>
-    //         </span>
-    //         <span style={styles.span}>
-    //           <div style={styles.button}>
-    //             <IconButton iconStyle={styles.iconStyle} iconClassName="material-icons-action-delete" onTouchTap={()=>{this.deleteButtonClicked(user)}} />
-    //           </div>
-    //         </span>
-    //         <span style={styles.span}>
-    //           <div style={styles.button}>
-    //             <Checkbox />
-    //           </div>
-    //         </span>
-    //       </td>
-    //     </tr>
-    //     <EditUserForm user={user} ref={user.id + "editForm"} />        
-    //     <Expandable ref={user.id + "expandable"}/>
-    //     </tbody>
-    //     )
-    // })
+    var user = _.where(this.state.users, { id: this.props.params.userId });
+    var editing = false;
+    if(_.last(this.context.router.getCurrentRoutes()).name == "userEdit"){
+      editing = true;
+    }
     return (
       <div>
         <Container>
@@ -190,23 +147,28 @@ class Users extends BaseComponent {
             </ToolbarGroup>
           </Toolbar>
           <Paper style={styles.paper}>
-            <Griddle results={this.state.users} tableClassName="table" showFilter={true}
-                showSettings={true} columns={["id", "name", "email", "role", "signInCount", "lastSignIn", "buttons"]}/>
+            <Griddle
+              columnMetadata={this.columnMetadata()}
+              results={this.state.users} 
+              tableClassName="table" 
+              showFilter={true}
+              showSettings={true}
+              columns={["id", "name", "email", "role", "signInCount", "lastSignIn", "controls"]} />
           </Paper>
         </Container>
+        <EditUserForm user={user} editing={editing} accountId={this.props.params.accountId} />
         <CreateUserForm ref="createUserForm" accountId={this.props.params.accountId} />
       </div>
     );
   }
-
 }
-            // <table style={styles.table}>
-            //   {headers}
-            //   {users}
-            // </table>
 
 Users.propTypes = {
   params: React.PropTypes.object.isRequired
+};
+
+Users.contextTypes = {
+  router: React.PropTypes.func.isRequired
 };
 
 module.exports = Users;

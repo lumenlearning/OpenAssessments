@@ -16,10 +16,7 @@ class EditUserForm extends React.Component {
         {payload: 2, text: 'Admin', selectedIndex: 2}
       ]
     };
-  }
-
-  show(){
-    this.refs.information.show(); 
+    this.dismiss = this.dismiss.bind(this);
   }
 
   updateUser(){
@@ -43,30 +40,47 @@ class EditUserForm extends React.Component {
     return toReturn;
   }
 
+  dismiss(){
+    this.context.router.transitionTo("users", { accountId: this.props.accountId });
+  }
+
+  componentDidUpdate(){
+    if(this.props.editing){
+      this.refs.information.show();
+    }
+  }
+
   render(){
 
     var updateActions = [
       { text: 'Cancel' },
-      { text: 'Update', onClick: ()=>{this.updateUser()}, ref: 'submit' }
+      { text: 'Update', onClick: ()=> { this.updateUser() }, ref: 'submit' }
     ];
 
     var title = "Edit Info for " + this.props.user.name;
     
     return(
-        <Dialog ref="information" title={title} actions={updateActions} actionFocus="submit" modal={true} dismissOnClickAway={false}>
-          <div>
-            <h4>Name</h4>
-            <TextField hintText={this.props.user.name} floatingLabelText="Name" ref="name" />
-          </div>
-          <div>
-            <h4>Email</h4>
-            <TextField hintText={this.props.user.email} floatingLabelText="Email" ref="email" />
-          </div>
-          <div>
-            <h4>Role</h4>
-            <DropDownMenu ref="newRole" menuItems={this.state.dropDownItems} />
-          </div>
-        </Dialog>
+      <Dialog ref="information" 
+        title={title} 
+        actions={updateActions} 
+        actionFocus="submit" 
+        modal={true} 
+        dismissOnClickAway={false} 
+        openImmediately={this.props.editing}
+        onDismiss={this.dismiss}>
+        <div>
+          <h4>Name</h4>
+          <TextField hintText={this.props.user.name} floatingLabelText="Name" ref="name" />
+        </div>
+        <div>
+          <h4>Email</h4>
+          <TextField hintText={this.props.user.email} floatingLabelText="Email" ref="email" />
+        </div>
+        <div>
+          <h4>Role</h4>
+          <DropDownMenu ref="newRole" menuItems={this.state.dropDownItems} />
+        </div>
+      </Dialog>
     );
 
   }
@@ -74,8 +88,12 @@ class EditUserForm extends React.Component {
 }
 
 EditUserForm.propTypes = {
-  user:          React.PropTypes.object.isRequired,
+  user: React.PropTypes.object.isRequired,
+  accountId: React.PropTypes.number.isRequired,
 };
 
+EditUserForm.contextTypes = {
+  router: React.PropTypes.func.isRequired
+};
 
 module.exports = EditUserForm;
