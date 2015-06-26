@@ -18,19 +18,17 @@ class EditUserForm extends React.Component {
     };
   }
 
-  editButtonClicked(){
+  show(){
     this.refs.information.show(); 
   }
 
-  updateInfo(){
+  updateUser(){
     //Generate an action to reset the password and email the user to sign in again.
     var name = this.getNewValue(this.props.user.name, this.refs.name.getValue());
     var email = this.getNewValue(this.props.user.email, this.refs.email.getValue());
     var role = this.refs.newRole.state.selectedIndex;
     var payload = {user: {name: name, email: email, role: role}};
     AdminActions.updateUser(this.props.user.account_id, this.props.user.id, payload);
-    AdminActions.loadUsers(this.props.user.account_id, 1);
-    //AdminActions.removeFromSelectedUsers(this.props.user);
     this.refs.information.dismiss();
   }
 
@@ -49,7 +47,7 @@ class EditUserForm extends React.Component {
 
     var updateActions = [
       { text: 'Cancel' },
-      { text: 'Update', onClick: this.updateInfo, ref: 'submit' }
+      { text: 'Update', onClick: ()=>{this.updateUser()}, ref: 'submit' }
     ];
 
     var title = "Edit Info for " + this.props.user.name;
@@ -66,7 +64,7 @@ class EditUserForm extends React.Component {
           </div>
           <div>
             <h4>Role</h4>
-            <DropDownMenu ref="newRole" menuItems={this.state.dropDownItems} selectedIndex={this.props.selectedIndex} />
+            <DropDownMenu ref="newRole" menuItems={this.state.dropDownItems} />
           </div>
         </Dialog>
     );
@@ -77,7 +75,6 @@ class EditUserForm extends React.Component {
 
 EditUserForm.propTypes = {
   user:          React.PropTypes.object.isRequired,
-  selectedIndex: React.PropTypes.number.isRequired
 };
 
 

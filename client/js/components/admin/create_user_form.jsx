@@ -24,15 +24,11 @@ class CreateUserForm extends React.Component {
 
   createUser(){
     //Generate an action to reset the password and email the user to sign in again.
-    // var name = this.getNewValue(this.props.user.name, this.refs.name.getValue());
-    // var email = this.getNewValue(this.props.user.email, this.refs.email.getValue());
-    // var role = this.refs.role.state.selectedIndex;
-    // var payload = {user: {name: name, email: email, role: role}};
-    // AdminActions.updateUser(this.props.user.account_id, this.props.user.id, payload);
-    // AdminActions.loadUsers(this.props.user.account_id, 1);
-    // //AdminActions.removeFromSelectedUsers(this.props.user);
-    // this.refs.information.dismiss();
-    console.log("will create user here");
+    var name = this.refs.name.getValue();
+    var email = this.refs.email.getValue();
+    var role = this.refs.role.state.selectedIndex;
+    var payload = {user:{name: name, email: email, role: role}};
+    AdminActions.createUser(this.props.accountId, payload);
     this.refs.information.dismiss();
   }
 
@@ -53,7 +49,6 @@ class CreateUserForm extends React.Component {
       { text: 'Cancel' },
       { text: 'CREATE USER', onClick: ()=>{this.createUser()}, ref: 'submit' }
     ];
-
     
     return(
         <Dialog ref="information" title="CREATE NEW USER" actions={updateActions} actionFocus="submit" modal={false} dismissOnClickAway={true}>
