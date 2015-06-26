@@ -8,10 +8,15 @@ import UserActions      from "../../actions/user";
 import _                from "lodash";
 import assign           from "object-assign";
 import CreateUserForm   from "./create_user_form";
+import EditUserForm     from "./edit_user_form";
 import AdminActions     from "../../actions/admin";
 import ApplicationStore from "../../stores/application";
 import AccountsStore    from "../../stores/accounts";
+<<<<<<< HEAD
 import EditUserForm     from "./edit_user_form";
+=======
+import AdminStore       from "../../stores/admin";
+>>>>>>> implemented add new user functionality... sortof
 import Expandable       from "./expandable";
 import Defines          from "../defines";
 import Container        from "./container";
@@ -45,14 +50,8 @@ class Users extends BaseComponent {
     }
   }
 
-  editButtonClicked(){
-    this.setState({currentUser: AccountsStore.userById(this.state.selectedUsers[0].id)});
-    this.refs.editForm.editButtonClicked();
-
-    for(var i=0; i<this.state.users.length; i++){
-      var hash = "check-" + this.state.users[i].id;
-      this.refs[hash].setChecked(false);
-    }
+  editButtonClicked(id){
+    this.refs[id+"editForm"].show();
   }
 
   deleteButtonClicked(user){
@@ -148,7 +147,7 @@ class Users extends BaseComponent {
         <tbody key={user.id +"" + index}>
         <tr style={styles.row}>
           <td style={styles.id}>{user.id}</td>
-          <td style={styles.avatar}>{user.avatar}</td>
+          <td style={styles.avatar}>{user.name}</td>
           <td style={styles.username}>{user.email}</td>
           <td style={styles.role}>{user.role}</td>
           <td style={styles.sCount}>SIGN IN COUNT</td>
@@ -161,7 +160,7 @@ class Users extends BaseComponent {
             </span>
             <span style={styles.span}>
               <div style={styles.button}>
-                <IconButton iconStyle={styles.iconStyle} iconClassName="material-icons-action-create" />
+                <IconButton iconStyle={styles.iconStyle} iconClassName="material-icons-action-create" onTouchTap={()=>{this.editButtonClicked(user.id)}}/>
               </div>
             </span>
             <span style={styles.span}>
@@ -175,7 +174,8 @@ class Users extends BaseComponent {
               </div>
             </span>
           </td>
-        </tr>        
+        </tr>
+        <EditUserForm user={user} ref={user.id + "editForm"} />        
         <Expandable ref={user.id + "expandable"}/>
         </tbody>
         )

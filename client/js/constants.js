@@ -43,5 +43,6 @@ export default {
 
   DELETE_USERS: "delete_users",
   DELETING_USERS: "deleting_users",
-  NAV_CHANGED: "nav_changed"
+  NAV_CHANGED: "nav_changed",
+  CREATED_USER: "created_user"
 };

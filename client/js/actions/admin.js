@@ -66,8 +66,8 @@ export default {
     Api.del(Constants.DELETE_USERS, url);
   },
 
-  createUser(){
+  createUser(accountId, payload){
     Dispatcher.dispatch({action: Constants.CREATING_USER});
-    Api.post(Constants.CREATED_USER, '/admin/accounts/:account_id/users')
+    Api.post(Constants.CREATED_USER, '/admin/accounts/'+ accountId +'/users', payload);
   },
 };
