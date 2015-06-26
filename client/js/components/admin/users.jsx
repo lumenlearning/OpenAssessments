@@ -16,6 +16,7 @@ import AdminStore       from "../../stores/admin";
 import Expandable       from "./expandable";
 import Defines          from "../defines";
 import Container        from "./container";
+import Griddle          from "griddle-react";
 import { Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, RaisedButton, Paper, IconButton, Checkbox} from "material-ui";
 
 class Users extends BaseComponent {
@@ -127,55 +128,55 @@ class Users extends BaseComponent {
 
   render() {
     var styles = this.getStyles();
-    var headers = (
-        <tr style={styles.row}>
-          <th style={styles.id}>ID</th>
-          <th style={styles.avatar}>Avatar</th>
-          <th style={styles.username}>Username</th>
-          <th style={styles.role}>Role</th>
-          <th style={styles.sCount}>Sign In Count</th>
-          <th style={styles.lastS}>Last Sign In</th>
-          <th style={styles.icons}></th>
-        </tr>
-      )
-    var users = this.state.users.map((user, index)=>{
-      return (
-        <tbody key={user.id +"" + index}>
-        <tr style={styles.row}>
-          <td style={styles.id}>{user.id}</td>
-          <td style={styles.avatar}>{user.name}</td>
-          <td style={styles.username}>{user.email}</td>
-          <td style={styles.role}>{user.role}</td>
-          <td style={styles.sCount}>SIGN IN COUNT</td>
-          <td style={styles.lastS}>LAST SIGN IN</td>
-          <td style={styles.icons}>
-            <span style={styles.span}> 
-              <div >
-                <RaisedButton  label="SHOW DETAILS" onClick={(e)=>{this.toggle(e, user.id)}} />
-              </div>
-            </span>
-            <span style={styles.span}>
-              <div style={styles.button}>
-                <IconButton iconStyle={styles.iconStyle} iconClassName="material-icons-action-create" onTouchTap={()=>{this.editButtonClicked(user.id)}}/>
-              </div>
-            </span>
-            <span style={styles.span}>
-              <div style={styles.button}>
-                <IconButton iconStyle={styles.iconStyle} iconClassName="material-icons-action-delete" onTouchTap={()=>{this.deleteButtonClicked(user)}} />
-              </div>
-            </span>
-            <span style={styles.span}>
-              <div style={styles.button}>
-                <Checkbox />
-              </div>
-            </span>
-          </td>
-        </tr>
-        <EditUserForm user={user} ref={user.id + "editForm"} />        
-        <Expandable ref={user.id + "expandable"}/>
-        </tbody>
-        )
-    })
+    // var headers = (
+    //     <tr style={styles.row}>
+    //       <th style={styles.id}>ID</th>
+    //       <th style={styles.avatar}>Avatar</th>
+    //       <th style={styles.username}>Username</th>
+    //       <th style={styles.role}>Role</th>
+    //       <th style={styles.sCount}>Sign In Count</th>
+    //       <th style={styles.lastS}>Last Sign In</th>
+    //       <th style={styles.icons}></th>
+    //     </tr>
+    //   )
+    // var users = this.state.users.map((user, index)=>{
+    //   return (
+    //     <tbody key={user.id +"" + index}>
+    //     <tr style={styles.row}>
+    //       <td style={styles.id}>{user.id}</td>
+    //       <td style={styles.avatar}>{user.name}</td>
+    //       <td style={styles.username}>{user.email}</td>
+    //       <td style={styles.role}>{user.role}</td>
+    //       <td style={styles.sCount}>SIGN IN COUNT</td>
+    //       <td style={styles.lastS}>LAST SIGN IN</td>
+    //       <td style={styles.icons}>
+    //         <span style={styles.span}> 
+    //           <div >
+    //             <RaisedButton  label="SHOW DETAILS" onClick={(e)=>{this.toggle(e, user.id)}} />
+    //           </div>
+    //         </span>
+    //         <span style={styles.span}>
+    //           <div style={styles.button}>
+    //             <IconButton iconStyle={styles.iconStyle} iconClassName="material-icons-action-create" onTouchTap={()=>{this.editButtonClicked(user.id)}}/>
+    //           </div>
+    //         </span>
+    //         <span style={styles.span}>
+    //           <div style={styles.button}>
+    //             <IconButton iconStyle={styles.iconStyle} iconClassName="material-icons-action-delete" onTouchTap={()=>{this.deleteButtonClicked(user)}} />
+    //           </div>
+    //         </span>
+    //         <span style={styles.span}>
+    //           <div style={styles.button}>
+    //             <Checkbox />
+    //           </div>
+    //         </span>
+    //       </td>
+    //     </tr>
+    //     <EditUserForm user={user} ref={user.id + "editForm"} />        
+    //     <Expandable ref={user.id + "expandable"}/>
+    //     </tbody>
+    //     )
+    // })
     return (
       <div>
         <Container>
@@ -189,10 +190,8 @@ class Users extends BaseComponent {
             </ToolbarGroup>
           </Toolbar>
           <Paper style={styles.paper}>
-            <table style={styles.table}>
-              {headers}
-              {users}
-            </table>
+            <Griddle results={this.state.users} tableClassName="table" showFilter={true}
+                showSettings={true} columns={["id", "name", "email", "role", "signInCount", "lastSignIn", "buttons"]}/>
           </Paper>
         </Container>
         <CreateUserForm ref="createUserForm" accountId={this.props.params.accountId} />
@@ -201,6 +200,10 @@ class Users extends BaseComponent {
   }
 
 }
+            // <table style={styles.table}>
+            //   {headers}
+            //   {users}
+            // </table>
 
 Users.propTypes = {
   params: React.PropTypes.object.isRequired
