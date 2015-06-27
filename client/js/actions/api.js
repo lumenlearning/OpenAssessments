@@ -33,7 +33,6 @@ function makeUrl(part){
   } else {
     var slash = _.last(SettingsStore.current().apiUrl.split("")) == "/" ? "" :"/";
     return SettingsStore.current().apiUrl + slash + part;
-    }
   }
 }
 
