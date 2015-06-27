@@ -64,11 +64,9 @@ class Expandable extends BaseComponent {
   render(){
     var styles = this.getStyles(this.state.expanded);
     return (
-      <tr ref="expandable" >
-        <td colSpan="7" style={styles.row}><div style={styles.data}>
-          THIS WORKS
-        </div></td>
-      </tr>
+        <div style={styles.data}>
+          {this.props.children}
+        </div>
       );
   }
 }

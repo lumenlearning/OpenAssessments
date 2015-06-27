@@ -17,6 +17,7 @@ import Defines          from "../defines";
 import Container        from "./container";
 import Griddle          from "griddle-react";
 import UserControls     from "./user_controls";
+import CustomGriddleRow from "./custom_griddle_row";
 import { Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, RaisedButton, Paper, IconButton, Checkbox} from "material-ui";
 
 class Users extends BaseComponent {
@@ -68,35 +69,42 @@ class Users extends BaseComponent {
       id: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
         borderRight: "1px solid " + Defines.colors.lightGrey, 
+        display: "table-cell",
         width: "8%",
       },
-      avatar: {
+      name: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
         borderRight: "1px solid " + Defines.colors.lightGrey, 
+        display: "table-cell",
         width: "8%",
       },
-      username: {
+      email: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
         borderRight: "1px solid " + Defines.colors.lightGrey, 
+        display: "table-cell",
         width: "20%",
       },
       role: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
         borderRight: "1px solid " + Defines.colors.lightGrey, 
+        display: "table-cell",
         width: "10%",
       },
-      sCount: {
+      signInCount: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
         borderRight: "1px solid " + Defines.colors.lightGrey, 
+        display: "table-cell",
         width: "14%",
       },
-      lastS: {
+      lastSignIn: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
         borderRight: "1px solid " + Defines.colors.lightGrey, 
+        display: "table-cell",
         width: "16%",
       },
-      icons: {
+      controls: {
         borderBottom: "1px solid " + Defines.colors.lightGrey, 
+        display: "table-cell",
         width: "28%",
       },
       span: {
@@ -114,17 +122,13 @@ class Users extends BaseComponent {
   }
 
   columnMetadata(){
-    return [
-      {
-        columnName: "controls",
-        displayName: "",
-        locked: true,
-        visible: true,
+    return {
+        columnNames: ["id", "name", "email", "role", "signInCount", "lastSignIn", "controls"],
+        displayNames: ["Id", "Name", "Email", "Role", "Sign In Count", "Last Sign In", ""],
         styles: this.getStyles(),
-        accountId: this.props.params.accountId,
-        customComponent: UserControls
-      }
-    ];
+        customComponents: [{colId: 7, component: UserControls }],
+        useExpandable: true
+      };
   }
 
   render() {
@@ -148,11 +152,15 @@ class Users extends BaseComponent {
           </Toolbar>
           <Paper style={styles.paper}>
             <Griddle
-              columnMetadata={this.columnMetadata()}
-              results={this.state.users} 
+              metadataColumns={this.columnMetadata()}
+              results={this.state.users}
+              useCustomRowComponent={true}
+              customRowComponent={CustomGriddleRow}
+              resultsPerPage={10}
               tableClassName="table" 
               showFilter={true}
               showSettings={true}
+              rowHeight={70}
               columns={["id", "name", "email", "role", "signInCount", "lastSignIn", "controls"]} />
           </Paper>
         </Container>
