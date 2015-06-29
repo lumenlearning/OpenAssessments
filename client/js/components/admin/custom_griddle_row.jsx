@@ -42,6 +42,7 @@ class CustomGriddleRow extends React.Component {
   }
 
   checkCustomComponent(index, customComponents){
+    if(!customComponents) return -1;
     for(var i=0; i<customComponents.length; i++){
       if(!customComponents[i].colId){
         console.warn("You must include a valid column id in your customComponent object")
@@ -73,7 +74,6 @@ class CustomGriddleRow extends React.Component {
       var style = useDefaultStyles ? this.getStyles().row : metadata.styles[name];
       var customIndex = this.checkCustomComponent(index, metadata.customComponents)
       if(customIndex >= 0){
-        console.log("true")
         var Content;
         if(typeof metadata.customComponents[customIndex].component === "object"){
           Content = metadata.customComponents[customIndex].component;
@@ -81,9 +81,9 @@ class CustomGriddleRow extends React.Component {
           var Custom = metadata.customComponents[customIndex].component;
           Content = <Custom data={data} toggleExpandable={() => {this.toggleExpandable()}} metadata={metadata} styles={metadata.styles}/>
         }
-        return <span key={name+index} style={style}>{Content}</span>
+        return <div key={name+index} style={{...{display: "inline-block"}, ...style}}>{Content}</div>
       } else {
-        return <span key={name+index} style={style}>{data[name]}</span>
+        return <div key={name+index} style={{...{display: "inline-block"}, ...style}}>{data[name]}</div>
       }
     });
     return tableData;
@@ -94,11 +94,13 @@ class CustomGriddleRow extends React.Component {
     var wrapperStyle = this.getWrapperStyles();
     var data = this.getData(this.props.data, this.props.metadataColumns);
     return (
-      <div style={{width: "100%"}}>
-        <div style={{...wrapperStyle.wrapper, ...styles.row}}>
-        {data}   
-        </div>
-         <div style={{width: "100%"}}><Expandable ref="expandable">Hello World</Expandable></div>
+      <div>
+        <span style={{...wrapperStyle.wrapper, ...styles.row}}>
+          {data}
+        </span>
+        <span>
+          <Expandable ref="expandable">{this.props.metadataColumns[1].expandableContent}</Expandable>
+        </span>
       </div>
       );
   }

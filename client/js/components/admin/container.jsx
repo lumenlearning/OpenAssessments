@@ -19,7 +19,7 @@ export default class Container extends BaseComponent {
   }
 
   getStyles(status){
-    var marginLeft = status ? "256px" : "0px";
+    var marginLeft = status ? "156px" : "0px";
     return {
       div: {
         marginLeft: marginLeft,

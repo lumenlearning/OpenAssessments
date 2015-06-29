@@ -50,6 +50,12 @@ class Users extends BaseComponent {
 
   getStyles(){
     return {
+      body: {
+        margin: "auto 100px"
+      },
+      icons: {
+        width: "100%"
+      },
       toolbarStyle: {
         backgroundColor: Defines.colors.lightGrey
       },
@@ -94,18 +100,18 @@ class Users extends BaseComponent {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
         borderRight: "1px solid " + Defines.colors.lightGrey, 
         display: "table-cell",
-        width: "14%",
+        width: "16%",
       },
       lastSignIn: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
         borderRight: "1px solid " + Defines.colors.lightGrey, 
         display: "table-cell",
-        width: "16%",
+        width: "18%",
       },
       controls: {
         borderBottom: "1px solid " + Defines.colors.lightGrey, 
         display: "table-cell",
-        width: "28%",
+        width: "20%",
       },
       span: {
         display: "table-cell",
@@ -127,7 +133,8 @@ class Users extends BaseComponent {
         displayNames: ["Id", "Name", "Email", "Role", "Sign In Count", "Last Sign In", ""],
         styles: this.getStyles(),
         customComponents: [{colId: 7, component: UserControls }],
-        useExpandable: true
+        useExpandable: true,
+        expandableContent: <div>This is pretty awesome</div>
       };
   }
 
@@ -139,7 +146,7 @@ class Users extends BaseComponent {
       editing = true;
     }
     return (
-      <div>
+      <div style={styles.body}>
         <Container>
           <Toolbar style={styles.toolbarStyle}>
             <ToolbarGroup key={0} float="left">
