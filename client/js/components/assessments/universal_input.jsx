@@ -26,7 +26,30 @@ export default class UniversalInput extends React.Component{
     CommunicationHandler.sendSize();
   }
 
+  getStyles(theme){
+    return {
+      panel: {
+        position: theme.panelPosition,
+        marginBottom: theme.panelMarginBottom,
+        backgroundColor: theme.panelBackgroundColor,
+        border: theme.panelBorder,
+        borderRadius: theme.panelBorderRadius,
+        boxShadow: theme.panelBoxShadow,
+      },
+      panelHeading: {
+        padding: theme.panelHeadingPadding,
+        borderBottom: theme.panelHeadingBorderBottom,
+        borderTopRightRadius: theme.panelHeadingBorderTopRightRadius,
+        borderTopLeftRadius: theme.panelHeadingBorderTopLeftRadius,
+        textAlign: theme.panelHeadingTextAlign,
+      },
+      panelBody: {
+
+      }
+    }
+  }
   render(){
+    var styles = this.getStyles(this.context.theme)
     var item = this.props.item;
     var messages = '';
     var solution = '';
@@ -104,12 +127,12 @@ export default class UniversalInput extends React.Component{
                     }}>
                   </div> )
     }
-    return (<div className="panel-messages-container panel panel-default">
-              <div className="panel-heading text-center">
+    return (<div className="panel-messages-container panel panel-default" style={styles.panel}>
+              <div className="panel-heading text-center" style={styles.panelHeading}>
                 {item.title}
                 {messages}
               </div>
-              <div className="panel-body">
+              <div className="panel-body" style={styles.panelBody}>
                 {material}
                 {items}  
               </div>
@@ -121,4 +144,8 @@ export default class UniversalInput extends React.Component{
 }
 UniversalInput.propTypes = {
   item: React.PropTypes.object.isRequired
+};
+
+UniversalInput.contextTypes = {
+  theme: React.PropTypes.object
 };

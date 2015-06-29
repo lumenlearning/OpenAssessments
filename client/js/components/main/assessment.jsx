@@ -53,8 +53,20 @@ export default class Assessment extends BaseComponent{
   checkProgress(current, total){
     return Math.floor(current/total * 100);
   }
+  getStyles(theme){
+    return {
+      progressBar: {
+        backgroundColor: theme.progressBarColor,
+        height: theme.progressBarHeight,
+      },
+      progressDiv: {
+        height: theme.progressBarHeight
+      }
+    }
+  }
 
   render(){
+    var styles = this.getStyles(this.context.theme)
     console.log(this.state.settings.confidenceLevels)
     var content;
     if(!this.state.isLoaded){
@@ -79,8 +91,8 @@ export default class Assessment extends BaseComponent{
 
 
     return <div className="assessment">
-      <div className="progress">
-        <div className="progress-bar" role="progressbar" aria-valuenow={percentCompleted} aria-valuemin="0" aria-valuemax="100" style={progressStyle}></div>
+      <div className="progress" style={styles.progressDiv}>
+        <div className="progress-bar" role="progressbar" aria-valuenow={percentCompleted} aria-valuemin="0" aria-valuemax="100" style={{...progressStyle, ...styles.progressBar}}></div>
       </div>
       <div className="section_list">
         <div className="section_container">
@@ -94,5 +106,6 @@ export default class Assessment extends BaseComponent{
 }
 
 Assessment.contextTypes = {
-  router: React.PropTypes.func
+  router: React.PropTypes.func,
+  theme: React.PropTypes.object,
 };

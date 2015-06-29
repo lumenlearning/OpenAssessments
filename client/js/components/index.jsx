@@ -5,11 +5,11 @@ import Messages             from "./common/messages";
 import {RouteHandler}       from "react-router";
 import BaseComponent        from "./base_component";
 import SettingsStore        from "../stores/settings";
+import ThemeManager         from "../utils/theme_manager";
+import PonyTheme            from "../themes/pony.theme";
+import LumenTheme           from "../themes/lumen_learning";
 
-var mui          = require('material-ui');
-var Colors       = mui.Styles.Colors;
-var Typography   = mui.Styles.Typography;
-var ThemeManager = new mui.Styles.ThemeManager();
+var StyleManager = new ThemeManager();
 
 class Index extends BaseComponent {
 
@@ -26,8 +26,9 @@ class Index extends BaseComponent {
   }
 
   getChildContext() {
+    StyleManager.mergeTheme(LumenTheme);
     return {
-      muiTheme: ThemeManager.getCurrentTheme()
+      theme: StyleManager.current()
     }
   }
 
@@ -55,11 +56,12 @@ class Index extends BaseComponent {
 
   componentDidMount(){  
     super.componentDidMount();
-    var style = this.state.settings.style;
-    if(style && style.indexOf('.css') < 0){
-      style = '/assets/themes/' + style + '.css?body=1';
-      $('head').append('<link href="' + style + '" media="all" rel="stylesheet">');
-    }
+    
+    // var style = this.state.settings.style;
+    // if(style && style.indexOf('.css') < 0){
+    //   style = '/assets/themes/' + style + '.css?body=1';
+    //   $('head').append('<link href="' + style + '" media="all" rel="stylesheet">');
+    // }
   }
 
   render(){
@@ -76,7 +78,7 @@ Index.contextTypes = {
 };
 
 Index.childContextTypes = {
-  muiTheme: React.PropTypes.object
+  theme: React.PropTypes.object
 };
 
 module.exports = Index;

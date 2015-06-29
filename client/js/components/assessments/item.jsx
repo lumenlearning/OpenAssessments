@@ -26,8 +26,25 @@ export default class Item extends BaseComponent{
     AssessmentActions.selectConfidenceLevel(e.target.value);
   }
 
-  getStyles(){
-    return { 
+  getStyles(theme){
+    return {
+      header: {
+        backgroundColor: theme.headerBackgroundColor
+      },
+      fullQuestion:{
+        backgroundColor: theme.fullQuestionBackgroundColor
+      },
+      questionText: {
+        fontSize: theme.questionTextFontSize,
+        fontWeight: theme.questionTextFontWeight,
+        padding: theme.questionTextPadding,
+      },
+      nextButton: {
+        backgroundColor: theme.nextButtonBackgroundColor
+      },
+      previousButton: {
+        backgroundColor: theme.previousButtonBackgroundColor
+      }, 
       margin: {
        marginLeft: "5px"
       }
@@ -69,8 +86,7 @@ export default class Item extends BaseComponent{
   }
 
   render() {
-    console.log(this.props.question.confidenceLevel)
-    var styles = this.getStyles()
+    var styles = this.getStyles(this.context.theme);
     var result = this.getResult(this.props.messageIndex);
     var buttons = this.getButtons(this.props.confidenceLevels, styles);
     var prevButtonClassName = "btn btn-prev-item " + ((this.props.currentIndex > 0) ? "" : "disabled");
@@ -82,14 +98,13 @@ export default class Item extends BaseComponent{
     
     if (this.props.confidenceLevels && this.props.question.confidenceLevel){
       level = <div className="check_answer_result"><p>{'You chose "' + this.props.question.confidenceLevel + '" as your confidence level'}</p></div>;
-      nextButton =(<button className={nextButtonClassName} onClick={() => { this.nextButtonClicked() }}>
+      nextButton =(<button className={nextButtonClassName} style={styles.nextButton} onClick={() => { this.nextButtonClicked() }}>
                     <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
-                  </button>)
+                  </button>);
     } else if(!this.props.confidenceLevels){
-      nextButton =(<button className={nextButtonClassName} onClick={() => { this.nextButtonClicked() }}>
+      nextButton =(<button className={nextButtonClassName} style={styles.nextButton} onClick={() => { this.nextButtonClicked() }}>
                     <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
-                  </button>)
-      console.log(!this.props.confidencelevels)
+                  </button>);
       level = "";
     }
     return (
@@ -100,9 +115,9 @@ export default class Item extends BaseComponent{
             <p>{this.props.question.title}</p>
           </div>
           <form className="edit_item">
-            <div className="full_question">
+            <div className="full_question" style={styles.fullQuestion}>
               <div className="inner_question">
-                <div className="question_text">
+                <div className="question_text" style={styles.questionText}>
                   <div
                     dangerouslySetInnerHTML={{
                   __html: this.props.question.material
@@ -117,7 +132,7 @@ export default class Item extends BaseComponent{
             </div>
           </form>
           <div className="nav_buttons">
-            <button className={prevButtonClassName} onClick={() => { this.previousButtonClicked() }}>
+            <button className={prevButtonClassName} style={styles.previousButton} onClick={() => { this.previousButtonClicked() }}>
               <i className="glyphicon glyphicon-chevron-left"></i> <span>Previous</span>
             </button>
             {nextButton}
@@ -136,3 +151,7 @@ Item.propTypes = {
   messageIndex     : React.PropTypes.number.isRequired,
   confidenceLevels : React.PropTypes.bool.isRequired
 };
+
+Item.contextTypes = {
+  theme: React.PropTypes.object
+}
