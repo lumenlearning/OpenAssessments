@@ -9,7 +9,7 @@ import UniversalInput     from "./universal_input";
 export default class Item extends BaseComponent{
   constructor(){
     super();
-    this._bind("getButtons", "confidenceLevelClicked");
+    this._bind("getConfidenceLevels", "confidenceLevelClicked", "getPreviousButton", "getNextButton");
   }
 
   nextButtonClicked(){
@@ -22,12 +22,15 @@ export default class Item extends BaseComponent{
 
   confidenceLevelClicked(e){
     e.preventDefault()
-    console.log(e.target.value)
     AssessmentActions.selectConfidenceLevel(e.target.value);
+    AssessmentActions.nextQuestion(); 
   }
 
   getStyles(theme){
     return {
+      assessmentContainer:{
+        boxShadow: theme.assessmentContainerBoxShadow
+      },
       header: {
         backgroundColor: theme.headerBackgroundColor
       },
@@ -44,24 +47,80 @@ export default class Item extends BaseComponent{
       },
       previousButton: {
         backgroundColor: theme.previousButtonBackgroundColor
-      }, 
+      },
+      maybeButton: {
+        width: theme.maybeWidth,
+        backgroundColor: theme.maybeBackgroundColor,
+        color: theme.maybeColor,
+      },
+      probablyButton: {
+        width: theme.probablyWidth,
+        backgroundColor: theme.probablyBackgroundColor,
+        color: theme.probablyColor,
+      },
+      definitelyButton: {
+        width: theme.definitelyWidth,
+        backgroundColor: theme.definitelyBackgroundColor,
+        color: theme.definitelyColor,
+      },
+      confidenceWrapper: {
+        border: theme.confidenceWrapperBorder,
+        borderRadius: theme.confidenceWrapperBorderRadius,
+        width: theme.confidenceWrapperWidth,
+        height: theme.confidenceWrapperHeight,
+        padding: theme.confidenceWrapperPadding,
+        margin: theme.confidenceWrapperMargin,
+        backgroundColor: theme.confidenceWrapperBackgroundColor,
+      },
       margin: {
        marginLeft: "5px"
+      },
+      navButtons: {
+        position: "relative",
+        float: "right"
       }
     }
   }
 
-  getButtons(level, styles, confidence){
+  getConfidenceLevels(level, styles){
     if(level){
-      return    (<div className="lower_level"><input type="button" className="btn btn-check-answer" value="Maybe?" onClick={(e) => { this.confidenceLevelClicked(e) }}/>
-                <input type="button" style={styles.margin} className="btn btn-check-answer" value="Probably." onClick={(e) => { this.confidenceLevelClicked(e) }}/>
-                <input type="button" style={styles.margin} className="btn btn-check-answer" value="Definitely!" onClick={(e) => { this.confidenceLevelClicked(e) }}/>
+      var levelMessage = <div style={{marginBottom: "10px"}}><b>Choose your confidence level to go to the next question.</b></div>;
+      return    (<div className="confidence_wrapper" style={styles.confidenceWrapper}>
+                  {levelMessage}
+                  <input type="button" style={styles.maybeButton}className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e) }}/>
+                  <input type="button" style={{...styles.margin, ...styles.probablyButton}} className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e) }}/>
+                  <input type="button" style={{...styles.margin, ...styles.definitelyButton}} className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e) }}/>
                 </div>
                 );
     } else {
       return <div className="lower_level"><input type="button" className="btn btn-check-answer" value="Check Answer" onClick={() => { AssessmentActions.checkAnswer()}}/></div>
     }
   }
+
+  getNextButton(styles){
+    var nextButton = "";
+    var nextButtonClassName = "btn btn-next-item " + ((this.props.currentIndex < this.props.questionCount - 1) ? "" : "disabled");
+    if(!this.context.theme.shouldShowNextPrevious){
+      return nextButton;
+    }
+    nextButton =(<button className={nextButtonClassName} style={styles.nextButton} onClick={() => { this.nextButtonClicked() }}>
+                    <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
+                  </button>);
+    return nextButton;
+  }
+
+  getPreviousButton(styles){
+    var previousButton = "";
+    var prevButtonClassName = "btn btn-prev-item " + ((this.props.currentIndex > 0) ? "" : "disabled");
+    if(!this.context.theme.shouldShowNextPrevious){
+      return previousButton;
+    }
+    previousButton =(<button className={prevButtonClassName} style={styles.previousButton} onClick={() => { this.previousButtonClicked() }}>
+                    <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span> 
+                  </button>);
+    return previousButton;
+  }
+
 
   getResult(index){
     var result;
@@ -85,33 +144,31 @@ export default class Item extends BaseComponent{
     return result;
   }
 
+
   render() {
     var styles = this.getStyles(this.context.theme);
     var result = this.getResult(this.props.messageIndex);
-    var buttons = this.getButtons(this.props.confidenceLevels, styles);
-    var prevButtonClassName = "btn btn-prev-item " + ((this.props.currentIndex > 0) ? "" : "disabled");
-    var nextButtonClassName = "btn btn-next-item " + ((this.props.currentIndex < this.props.questionCount - 1) ? "" : "disabled");
+    var buttons = this.getConfidenceLevels(this.props.confidenceLevels, styles);
+    
+    
     
     // Get the confidence Level
-    var level = <div className="check_answer_result"><p>{"Select a confidence level to continue."}</p></div>;
-    var nextButton = "";
     
-    if (this.props.confidenceLevels && this.props.question.confidenceLevel){
-      level = <div className="check_answer_result"><p>{'You chose "' + this.props.question.confidenceLevel + '" as your confidence level'}</p></div>;
-      nextButton =(<button className={nextButtonClassName} style={styles.nextButton} onClick={() => { this.nextButtonClicked() }}>
-                    <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
-                  </button>);
-    } else if(!this.props.confidenceLevels){
-      nextButton =(<button className={nextButtonClassName} style={styles.nextButton} onClick={() => { this.nextButtonClicked() }}>
-                    <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
-                  </button>);
-      level = "";
+    var nextButton = this.getNextButton(styles);
+    var previousButton = this.getPreviousButton(styles);
+
+    //Check if we need to display the counter in the top right
+    var counter = "";
+
+    if(this.context.theme.shouldShowCounter){
+      counter = <span className="counter">{this.props.currentIndex + 1} of {this.props.questionCount}</span>
     }
+
     return (
-      <div className="assessment_container">
+      <div className="assessment_container" style={styles.assessmentContainer}>
         <div className="question">
-          <div className="header">
-            <span className="counter">{this.props.currentIndex + 1} of {this.props.questionCount}</span>
+          <div className="header" style={styles.header}>
+            {counter}
             <p>{this.props.question.title}</p>
           </div>
           <form className="edit_item">
@@ -127,14 +184,11 @@ export default class Item extends BaseComponent{
                 <UniversalInput item={this.props.question} />
               </div>
               {result}
-              {level}
               {buttons}
             </div>
           </form>
           <div className="nav_buttons">
-            <button className={prevButtonClassName} style={styles.previousButton} onClick={() => { this.previousButtonClicked() }}>
-              <i className="glyphicon glyphicon-chevron-left"></i> <span>Previous</span>
-            </button>
+            {previousButton}
             {nextButton}
           </div>
         </div>

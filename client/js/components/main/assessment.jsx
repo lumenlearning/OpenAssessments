@@ -61,13 +61,15 @@ export default class Assessment extends BaseComponent{
       },
       progressDiv: {
         height: theme.progressBarHeight
+      },
+      assessment: {
+        padding: theme.assessmentPadding,
       }
     }
   }
 
   render(){
     var styles = this.getStyles(this.context.theme)
-    console.log(this.state.settings.confidenceLevels)
     var content;
     if(!this.state.isLoaded){
       content = <Loading />;  
@@ -89,8 +91,14 @@ export default class Assessment extends BaseComponent{
     var percentCompleted = this.checkProgress(this.state.currentIndex, this.state.questionCount);
     var progressStyle = {width:percentCompleted+"%"};
 
+    var progressText = "";
+    
+    if(this.state.assessment){
+      progressText = this.context.theme.shouldShowProgressText ? <div><b>{this.state.assessment.title + " Progress"}</b>{" - You are on question " + (this.state.currentIndex + 1) + " of " + this.state.questionCount}</div> : ""; 
+    }
 
-    return <div className="assessment">
+    return <div className="assessment" style={styles.assessment}>
+      {progressText}
       <div className="progress" style={styles.progressDiv}>
         <div className="progress-bar" role="progressbar" aria-valuenow={percentCompleted} aria-valuemin="0" aria-valuemax="100" style={{...progressStyle, ...styles.progressBar}}></div>
       </div>

@@ -8,14 +8,23 @@ export default class Option extends React.Component{
   answerSelected(){
     //AssessmentActions.answerSelected(this.props.item.id);
   }
-  render(){
 
+  getStyles(theme){
+    return {
+
+    }
+  }
+
+  render(){
+    var styles = this.getStyles(this.context.theme)
+    
     var materialItems = this.props.item.material.map((mat) =>{
           return <option value={mat} name={this.props.name}>{mat}</option>;
     });
+
     return(
       <div>
-		<select onChange={()=>{this.answerSelected()}}>
+		    <select onChange={()=>{this.answerSelected()}}>
           {materialItems}
         </select>
       </div>

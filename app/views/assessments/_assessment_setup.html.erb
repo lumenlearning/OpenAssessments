@@ -9,7 +9,7 @@
   window.DEFAULT_SETTINGS = {
     apiUrl: '<%= application_base_url %>',
     srcUrl: '<%= @src_url %>',
-    style: '<%= params[:style] %>',
+    style: '<%= @style %>',
     assessmentId: <%= @assessment_id %>,
     <% if @external_user_id %>
     externalUserId: '<%= @external_user_id  %>',

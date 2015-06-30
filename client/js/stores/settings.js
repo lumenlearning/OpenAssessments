@@ -30,11 +30,9 @@ function srcData(){
 }
 
 function loadSettings(defaultSettings){
-
   _errors = {};
 
   defaultSettings = defaultSettings || {};
-
   var bestValue = function(settings_prop, params_prop, default_prop){
     return defaultSettings[settings_prop] || QueryString.params()[params_prop] || default_prop;
   };
@@ -52,7 +50,7 @@ function loadSettings(defaultSettings){
   _settings = {
     apiUrl           : bestValue('apiUrl', 'api_url', '/'),
     srcUrl           : bestValue('srcUrl', 'src_url'),
-    srcData          : srcData(),
+    srcData          : srcData(), 
     offline          : bestValue('offline', 'offline', false),
     assessmentId     : bestValue('assessmentId', 'assessment_id'),
     eId              : bestValue('eId', 'eid'),
@@ -65,6 +63,7 @@ function loadSettings(defaultSettings){
     style            : bestValue('style', 'style', null),
     csrfToken        : defaultSettings.csrfToken || null
   };
+  console.log(_settings.style)
   if(!_settings.srcUrl && !_settings.offline){
     _errors.srcUrl = "No src_url specified: specify a src_url in the url query params.";
   }

@@ -1,4 +1,5 @@
 "use strict";
+import defines from "./defines";
 
 export default {
   // QUESTION TEXT
@@ -6,8 +7,13 @@ export default {
   questionTextFontWeight: "bold",
   questionTextPadding: "0 0 14px 4px",
   
+  // ASSESSMENT
+  assessmentPadding: "0px",
+
+  //ASSESSMENT CONTAINER
+  assessmentContainerBoxShadow: null,
   // HEADER
-  headerBackgroundColor: "3299bb",
+  headerBackgroundColor: defines.blue,
 
   // PROGRESS BAR
   progressBarColor: "#337ab7",
@@ -19,10 +25,10 @@ export default {
   previousButtonBackgroundColor: "#3299bb !important", 
   checkAnswerButtonBackgroundColor: "buttonface",
   
-  responseTextColor: "#555555",
+  responseTextColor: defines.textColor,
 
   // FULL QUESTION
-  fullQuestionBackgroundColor: "#e9e9e9",
+  fullQuestionBackgroundColor: defines.lightgray,
   
   // PANEL
   //panelBorderColor: "#dddddd",
@@ -32,13 +38,70 @@ export default {
   panelBorder: "1px solid transparent",
   panelBorderRadius: "4px",
   panelBoxShadow: "0 1px 1px rgba(0,0,0,0.5)",
+  panelBorderColor: "#dddddd",
 
   // PANEL HEADING
   panelHeadingPadding: "10px 15px",
   panelHeadingBorderBottom: "1px solid transparent",
   panelHeadingBorderTopRightRadius: "3px",
   panelHeadingBorderTopLeftRadius: "3px",
-  panelHeadingTextAlign: "center"
+  panelHeadingTextAlign: "center",
+  panelHeadingBackgoundColor: defines.lightgray,
 
+  //PANEL BODY
+  panelBodyPadding: "15px",
+
+  //BUTTON QUESTION
+  btnQuestionWhiteSpace: "normal",
+  btnQuestionBackground: defines.white,
+  btnQuestionColor: defines.black,
+  btnQuestionTextAlign: "left",
+  btnQuestionPadding: "0",
+  btnQuestionMarginBottom: "5px",
+  btnQuestionDisplay: "block",
+  btnQuestionWidth: "100%",
+  btnQuestionVerticalAlign: "middle",
+  btnQuestionFontWeight: "normal",
+  btnQuestionTouchAction: "manipulation",
+  btnQuestionCursor: "pointer",
+  btnQuestionBorder: "1px solid transparent",
+  btnQuestionFontSize: "14px",
+  btnQuestionLineHeight: "1.42857143",
+  btnQuestionBorderRadius: "4px",
+  
+  // RADIO BUTTON TEXT
+  radioTextMarginLeft: "5px",
+  radioTextFontWeight: "bold",
+  radioTextColor: defines.black,
+
+  // CONFIDENCE WRAPPER
+  confidenceWrapperBorder: "1px solid transparent",
+  confidenceWrapperBorderRadius: "5px",
+  confidenceWrapperWidth: "510px",
+  confidenceWrapperHeight: "auto",
+  confidenceWrapperPadding: "20px",
+  confidenceWrapperMargin: "20px",
+  confidenceWrapperBackgroundColor: null,
+
+  //MAYBE BUTTON
+  maybeWidth: "150px",
+  maybeBackgroundColor: defines.buttonFace + " !important",
+  maybeColor: defines.textGrey,
+
+  //PROBABLY BUTTON
+  probablyWidth: "150px",
+  probablyBackgroundColor: defines.buttonFace + " !important",
+  probablyColor: defines.textGrey,
+
+  // DEFINITELY BUTTON
+  definitelyWidth: "150px",
+  definitelyBackgroundColor: defines.buttonFace + " !important",
+  definitelyColor: defines.textGrey,
+
+  // NOT STYLES BUT VARIABLES
+  shouldShowProgressText: false,
+  shouldShowCounter: true,
+  shouldShowNextPrevious: true,
+  
 
 }

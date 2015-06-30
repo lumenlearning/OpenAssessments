@@ -26,7 +26,9 @@ class Index extends BaseComponent {
   }
 
   getChildContext() {
-    StyleManager.mergeTheme(LumenTheme);
+    var themeName = this.state.settings.style;
+    if(themeName == "lumen_learning")
+      StyleManager.mergeTheme(LumenTheme);
     return {
       theme: StyleManager.current()
     }

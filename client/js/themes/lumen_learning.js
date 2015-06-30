@@ -1,6 +1,29 @@
 "use strict";
+import defines from "./defines";
 
 export default {
-  progressBarColor: "green",
-  progressBarHeight: "15px"
+  progressBarColor: defines.lumenSeafoam,
+  progressBarHeight: "10px",
+  assessmentContainerBoxShadow: "1px 4px 4px 4px rgba(0,0,0,0.5)",
+  headerBackgroundColor: defines.white,
+  confidenceWrapperBorder: "1px solid rgba(0,0,0,0.2)",
+  shouldShowProgressText: true,
+  shouldShowCounter: false,
+  shouldShowNextPrevious: false,
+  fullQuestionBackgroundColor: defines.white,
+  panelHeadingBackgroundColor: defines.white,
+  panelBoxShadow: "0 0 0 rgba(0,0,0,0.0)",
+  panelBorder: null,
+  panelBorderRadius: null,
+  panelBorderColor: "transparent",
+  panelMarginBottom: "-30px",
+  maybeBackgroundColor: defines.lumenRed + " !important",
+  maybeColor: defines.white,
+  probablyBackgroundColor: defines.lumenSeafoam + " !important",
+  probablyColor: defines.white,
+  definitelyBackgroundColor: defines.lumenBlue + " !important",
+  definitelyColor: defines.white,
+  confidenceWrapperBackgroundColor: defines.lightergray,
+
+  assessmentPadding: "20px",
 }
