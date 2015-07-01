@@ -28,5 +28,6 @@ export default {
   confidenceWrapperBackgroundColor: defines.lightergray,
 
   assessmentPadding: "20px",
-  assessmentBackground: defines.white
+  assessmentBackground: defines.white,
+  shouldShowAttempts: true,
 }

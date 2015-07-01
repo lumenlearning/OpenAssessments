@@ -107,6 +107,7 @@ export default {
   shouldShowProgressText: false,
   shouldShowCounter: true,
   shouldShowNextPrevious: true,
+  shouldShowAttempts: false,
   
 
 }
