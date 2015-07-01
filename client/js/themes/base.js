@@ -10,6 +10,9 @@ export default {
   // ASSESSMENT
   assessmentPadding: "0px",
 
+  // TITLE BAR
+  titleBarBackgroundColor: "transparent",
+
   //ASSESSMENT CONTAINER
   assessmentContainerBoxShadow: null,
   // HEADER

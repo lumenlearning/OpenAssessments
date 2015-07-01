@@ -64,6 +64,16 @@ export default class Assessment extends BaseComponent{
       },
       assessment: {
         padding: theme.assessmentPadding,
+        backgroundColor: theme.assessmentBackground,
+      },
+      titleBar: {
+        position: "absolute",
+        left: "0px",
+        top: "0px",
+        width: "100%",
+        backgroundColor: theme.titleBarBackgroundColor,
+        paddingLeft: theme.assessmentPadding,
+        paddingRight: theme.assessmentPadding
       }
     }
   }
@@ -98,9 +108,11 @@ export default class Assessment extends BaseComponent{
     }
 
     return <div className="assessment" style={styles.assessment}>
+      <div style={styles.titleBar}>
       {progressText}
       <div className="progress" style={styles.progressDiv}>
         <div className="progress-bar" role="progressbar" aria-valuenow={percentCompleted} aria-valuemin="0" aria-valuemax="100" style={{...progressStyle, ...styles.progressBar}}></div>
+      </div>
       </div>
       <div className="section_list">
         <div className="section_container">

@@ -2,6 +2,7 @@
 import defines from "./defines";
 
 export default {
+  titleBarBackgroundColor: defines.lightgray,
   progressBarColor: defines.lumenSeafoam,
   progressBarHeight: "10px",
   assessmentContainerBoxShadow: "1px 4px 4px 4px rgba(0,0,0,0.5)",
@@ -26,4 +27,5 @@ export default {
   confidenceWrapperBackgroundColor: defines.lightergray,
 
   assessmentPadding: "20px",
+  assessmentBackground: defines.white
 }

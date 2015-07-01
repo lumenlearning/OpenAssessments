@@ -29,6 +29,7 @@ export default class Item extends BaseComponent{
   getStyles(theme){
     return {
       assessmentContainer:{
+        marginTop: "70px",
         boxShadow: theme.assessmentContainerBoxShadow
       },
       header: {
@@ -100,7 +101,7 @@ export default class Item extends BaseComponent{
   getNextButton(styles){
     var nextButton = "";
     var nextButtonClassName = "btn btn-next-item " + ((this.props.currentIndex < this.props.questionCount - 1) ? "" : "disabled");
-    if(!this.context.theme.shouldShowNextPrevious){
+    if(!this.context.theme.shouldShowNextPrevious && this.props.confidenceLevels){
       return nextButton;
     }
     nextButton =(<button className={nextButtonClassName} style={styles.nextButton} onClick={() => { this.nextButtonClicked() }}>
@@ -112,7 +113,7 @@ export default class Item extends BaseComponent{
   getPreviousButton(styles){
     var previousButton = "";
     var prevButtonClassName = "btn btn-prev-item " + ((this.props.currentIndex > 0) ? "" : "disabled");
-    if(!this.context.theme.shouldShowNextPrevious){
+    if(!this.context.theme.shouldShowNextPrevious  && this.props.confidenceLevels){
       return previousButton;
     }
     previousButton =(<button className={prevButtonClassName} style={styles.previousButton} onClick={() => { this.previousButtonClicked() }}>
