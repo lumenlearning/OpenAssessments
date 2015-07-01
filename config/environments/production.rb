@@ -1,8 +1,8 @@
-Rails.application.configure do
+fRails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.webpack[:use_manifest] = true
-  
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 
@@ -74,13 +74,13 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
 
   config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
-    domain: Rails.application.secrets.domain_name,
-    authentication: "plain",
-    enable_starttls_auto: true,
-    user_name: Rails.application.secrets.email_provider_username,
-    password: Rails.application.secrets.email_provider_password
+    :user_name => Rails.application.secrets.email_provider_username,
+    :password => Rails.application.secrets.email_provider_password,
+    :domain => Rails.application.secrets.domain_name,
+    :address => Rails.application.secrets.email_provider_address,
+    :port => 587,
+    :authentication => :plain,
+    :enable_starttls_auto => true
   }
 
   # ActionMailer Config
