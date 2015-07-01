@@ -8,6 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/favicon.ico">
     <title><%= content_for?(:title) ? yield(:title) : Rails.application.secrets.application_name %></title>
+    <%= stylesheet_link_tag 'admin', media: 'all' %>
     <%= csrf_meta_tags %> 
    </head>
   <body>
