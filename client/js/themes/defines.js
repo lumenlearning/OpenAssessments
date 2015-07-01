@@ -27,7 +27,7 @@ export default {
 
   // Kate Colors
   kateDarkOrange:     "rgb(25,153,0)",
-  kateOrange:          "rgb(255,153,0)",
+  kateOrange:         "rgb(255,153,0)",
   kateLightOrange:    "rgb(255,173,51)",
   kateLightBlue:      "#A6F2FF",
 

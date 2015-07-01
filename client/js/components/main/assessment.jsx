@@ -14,6 +14,7 @@ export default class Assessment extends BaseComponent{
   constructor(props, context){
     super(props, context);
     this.stores = [AssessmentStore, SettingsStore];
+    this._bind["checkCompletion"];
     this.state = this.getState(context);
     this.context = context;    
   }
@@ -24,17 +25,17 @@ export default class Assessment extends BaseComponent{
       context.router.transitionTo("assessment-result");
     }
     return {
-      assessment       : AssessmentStore.current(),
-      isLoaded         : AssessmentStore.isLoaded(),
-      question         : AssessmentStore.currentQuestion(),
-      currentIndex     : AssessmentStore.currentIndex(),
-      questionCount    : AssessmentStore.questionCount(),
-      assessmentResult : AssessmentStore.assessmentResult(),
-      showStart        : showStart,
-      settings         : SettingsStore.current(),
-      messageIndex     : AssessmentStore.answerMessageIndex(),
-      studentAnswers   : AssessmentStore.allStudentAnswers(),
-      allQuestions     : AssessmentStore.allQuestions(), 
+      assessment           : AssessmentStore.current(),
+      isLoaded             : AssessmentStore.isLoaded(),
+      question             : AssessmentStore.currentQuestion(),
+      currentIndex         : AssessmentStore.currentIndex(),
+      questionCount        : AssessmentStore.questionCount(),
+      assessmentResult     : AssessmentStore.assessmentResult(),
+      showStart            : showStart,
+      settings             : SettingsStore.current(),
+      messageIndex         : AssessmentStore.answerMessageIndex(),
+      studentAnswers       : AssessmentStore.allStudentAnswers(),
+      allQuestions         : AssessmentStore.allQuestions(),
     }
   }
 
@@ -46,13 +47,11 @@ export default class Assessment extends BaseComponent{
     }
   }
 
-  submitButtonClicked(){
-    AssessmentActions.submitAssessment(this.state.assessment.id, this.state.assessment.assessmentId, this.state.allQuestions, this.state.studentAnswers, this.state.settings);
-  }
 
   checkProgress(current, total){
     return Math.floor(current/total * 100);
   }
+
   getStyles(theme){
     return {
       progressBar: {
@@ -88,16 +87,19 @@ export default class Assessment extends BaseComponent{
     } else {
       content = <Item 
         question         = {this.state.question}
+        assessment       = {this.state.assessment}
         currentIndex     = {this.state.currentIndex}
         settings         = {this.state.settings}
         questionCount    = {this.state.questionCount}
         assessmentResult = {this.state.assessmentResult}
-        messageIndex     = {this.state.messageIndex} 
+        messageIndex     = {this.state.messageIndex}
+        allQuestions     = {this.state.allQuestions}
+        studentAnswers   = {this.state.studentAnswers} 
         confidenceLevels = {this.state.settings.confidenceLevels}/>;
       // TODO figure out when to mark an item as viewed. assessmentResult must be valid before this call is made.
       // AssessmentActions.itemViewed(this.state.settings, this.state.assessment, this.state.assessmentResult);
     }
-    var submitButton = (this.state.currentIndex == this.state.questionCount - 1) ? <button className="btn btn-submit" onClick={()=>{this.submitButtonClicked()}}><span>Submit</span></button> : "";
+    
     var percentCompleted = this.checkProgress(this.state.currentIndex, this.state.questionCount);
     var progressStyle = {width:percentCompleted+"%"};
 
@@ -118,7 +120,6 @@ export default class Assessment extends BaseComponent{
         <div className="section_container">
           {content}
         </div>
-        {submitButton}
       </div>
     </div>;
   }

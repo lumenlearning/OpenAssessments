@@ -280,14 +280,14 @@ Dispatcher.register(function(payload) {
       break;
     case Constants.LEVEL_SELECTED:
       _items[_itemIndex].confidenceLevel = payload.level;
-      if(SettingsStore.current().kind == "formative"){
-        var answer = checkAnswer();
-        if(answer != null && answer.correct)
-          _answerMessageIndex = 1;
-        else if (answer != null && !answer.correct)
-          _answerMessageIndex = 0;
+      // if(SettingsStore.current().kind == "formative"){
+      //   var answer = checkAnswer();
+      //   if(answer != null && answer.correct)
+      //     _answerMessageIndex = 1;
+      //   else if (answer != null && !answer.correct)
+      //     _answerMessageIndex = 0;
       
-      }
+      // }
       break;
     default:
       return true;

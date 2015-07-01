@@ -9,6 +9,7 @@ import UniversalInput     from "./universal_input";
 export default class Item extends BaseComponent{
   constructor(){
     super();
+    //this.state = this.getState();
     this._bind("getConfidenceLevels", "confidenceLevelClicked", "getPreviousButton", "getNextButton", "getStyles");
   }
 
@@ -24,6 +25,37 @@ export default class Item extends BaseComponent{
     e.preventDefault()
     AssessmentActions.selectConfidenceLevel(e.target.value);
     AssessmentActions.nextQuestion(); 
+  }
+
+  // getState(){
+  //   return {
+  //     unAnsweredQuestions: []
+  //   }
+  // }
+
+  submitButtonClicked(e){
+    e.preventDefault()
+
+    var complete = this.checkCompletion();
+    if(complete === true){
+      AssessmentActions.submitAssessment(this.props.assessment.id, this.props.assessment.assessmentId, this.props.allQuestions, this.props.studentAnswers, this.props.settings);
+    }
+    else {
+      this.setState({unAnsweredQuestions: complete});
+    }
+  }
+
+  checkCompletion(){
+    var questionsNotAnswered = [];
+    for (var i = 0; i < this.props.studentAnswers.length; i++) {
+      if(this.props.studentAnswers[i] == null || this.props.studentAnswers[i].length == 0){
+        questionsNotAnswered.push(i+1);
+      }
+    };
+    if(questionsNotAnswered.length > 0){
+      return questionsNotAnswered;
+    }
+    return true;
   }
 
   getStyles(theme){
@@ -83,8 +115,26 @@ export default class Item extends BaseComponent{
       },
       navButtons: {
         margin: navMargin
+      },
+      submitButtonDiv: {
+        marginLeft: theme.confidenceWrapperMargin
+      },
+      warning: {
+        margin: theme.confidenceWrapperMargin,
+        border: "1px solid transparent",
+        borderRadius: "4px",
+        backgroundColor: theme.maybeBackgroundColor,
+        color: theme.maybeColor,
       }
     }
+  }
+
+  getWarning(state, questionCount, questionIndex, styles){
+    if(state && state.unAnsweredQuestions && state.unAnsweredQuestions.length > 0 && questionIndex + 1 == questionCount){
+      return <div style={styles.warning}>You left questions ({state.unAnsweredQuestions.join()}) blank. Please answer all questions then come back and submit.</div>
+    }
+
+    return "";
   }
 
   getConfidenceLevels(level, styles){
@@ -151,10 +201,12 @@ export default class Item extends BaseComponent{
 
 
   render() {
+    
     var styles = this.getStyles(this.context.theme);
+    var unAnsweredWarning = this.getWarning(this.state,  this.props.questionCount, this.props.currentIndex, styles);
     var result = this.getResult(this.props.messageIndex);
     var buttons = this.getConfidenceLevels(this.props.confidenceLevels, styles);
-    
+    var submitButton = (this.props.currentIndex == this.props.questionCount - 1) ? <button className="btn btn-check-answer" style={styles.definitelyButton}  onClick={(e)=>{this.submitButtonClicked(e)}}>Submit</button> : "";
     
     
     // Get the confidence Level
@@ -190,6 +242,10 @@ export default class Item extends BaseComponent{
               </div>
               {result}
               {buttons}
+              {unAnsweredWarning}
+              <div style={styles.submitButtonDiv}>
+                {submitButton}
+              </div>
             </div>
           </form>
           <div className="nav_buttons" style={styles.navButtons}>
