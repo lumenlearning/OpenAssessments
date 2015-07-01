@@ -9,7 +9,7 @@ import UniversalInput     from "./universal_input";
 export default class Item extends BaseComponent{
   constructor(){
     super();
-    this._bind("getConfidenceLevels", "confidenceLevelClicked", "getPreviousButton", "getNextButton");
+    this._bind("getConfidenceLevels", "confidenceLevelClicked", "getPreviousButton", "getNextButton", "getStyles");
   }
 
   nextButtonClicked(){
@@ -27,10 +27,14 @@ export default class Item extends BaseComponent{
   }
 
   getStyles(theme){
+    var navMargin = "-50px 20px 0 0";
+    if(this.props.settings.confidenceLevels)
+      navMargin = "-75px 20px 0 0";
     return {
       assessmentContainer:{
         marginTop: "70px",
-        boxShadow: theme.assessmentContainerBoxShadow
+        boxShadow: theme.assessmentContainerBoxShadow, 
+        borderRadius: theme.assessmentContainerBorderRadius
       },
       header: {
         backgroundColor: theme.headerBackgroundColor
@@ -65,6 +69,7 @@ export default class Item extends BaseComponent{
         color: theme.definitelyColor,
       },
       confidenceWrapper: {
+
         border: theme.confidenceWrapperBorder,
         borderRadius: theme.confidenceWrapperBorderRadius,
         width: theme.confidenceWrapperWidth,
@@ -77,8 +82,7 @@ export default class Item extends BaseComponent{
        marginLeft: "5px"
       },
       navButtons: {
-        position: "relative",
-        float: "right"
+        margin: navMargin
       }
     }
   }
@@ -188,7 +192,7 @@ export default class Item extends BaseComponent{
               {buttons}
             </div>
           </form>
-          <div className="nav_buttons">
+          <div className="nav_buttons" style={styles.navButtons}>
             {previousButton}
             {nextButton}
           </div>

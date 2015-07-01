@@ -193,8 +193,8 @@ Dispatcher.register(function(payload) {
             setUpStudentAnswers(_items.length)
           }
           _assessmentState = LOADED;
-          if(!_startedAt){
-
+          if(!_startedAt && !SettingsStore.current().enableStart){
+            console.log("started")
             // set the start time for the assessment and the first question (only qti)
             if(_items[0])
             _items[0].startTime = Utils.currentTime()
@@ -214,7 +214,7 @@ Dispatcher.register(function(payload) {
 
     case Constants.ASSESSMENT_START:
       if(!_startedAt){
-            
+        console.log("started")
         // set the start time for the assessment and the first question
         _items[0].startTime = Utils.currentTime()
         _startedAt = Utils.currentTime();

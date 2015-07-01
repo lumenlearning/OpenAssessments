@@ -9,12 +9,14 @@ export default {
   
   // ASSESSMENT
   assessmentPadding: "0px",
+  assessmentBackground: "transparent",
 
   // TITLE BAR
   titleBarBackgroundColor: "transparent",
 
   //ASSESSMENT CONTAINER
   assessmentContainerBoxShadow: null,
+  assessmentContainerBorderRadius: null,
   // HEADER
   headerBackgroundColor: defines.blue,
 
