@@ -54,7 +54,7 @@ export default {
 
   // Lumen Learing
   lumenSeafoam: "#71B889",
-  lumenBlue: '#7D96CC',
+  lumenBlue: '#3299BB',
   lumenRed: "#CF0000",
 
   // Twitter bootstrap overrides
