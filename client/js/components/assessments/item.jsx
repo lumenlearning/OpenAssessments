@@ -13,10 +13,12 @@ export default class Item extends BaseComponent{
   }
 
   nextButtonClicked(){
+    this.setState({unAnsweredQuestions: null})
     AssessmentActions.nextQuestion();
   }
 
   previousButtonClicked(){
+    this.setState({unAnsweredQuestions: null})
     AssessmentActions.previousQuestion();
   }
 
@@ -119,8 +121,45 @@ export default class Item extends BaseComponent{
         backgroundColor: theme.maybeBackgroundColor,
         color: theme.maybeColor,
         padding: "8px 8px !important"
+      },
+      footer: {
+        borderTop: "1px solid gray",
+        borderBottom: "5px solid " + theme.footerBackgroundColor,
+        position: "absolute",
+        left: "0px",
+        bottom: "1px",
+        marginTop: "20px",
+        width: "100%",
+        height: theme.footerHeight,
+        backgroundColor: theme.footerBackgroundColor,
+      },
+      footerPrev: {
+        height: theme.footerHeight,
+        width: "100px",
+        float: "left",
+      },
+      footerNext: {
+        height: theme.footerHeight,
+        width: "100px",
+        float: "right"
       }
     }
+  }
+  getFooterNav(theme, styles){
+    if(theme.shouldShowFooter){
+      return  <div style={styles.footer}>
+                <button style={styles.footerPrev} onClick={()=>{this.previousButtonClicked()}}>
+                <i className="glyphicon glyphicon-chevron-left"></i>
+                Previous
+                </button>
+                <button style={styles.footerNext} onClick={()=>{this.nextButtonClicked()}}>
+                Next
+                <i className="glyphicon glyphicon-chevron-right"></i>
+                </button>
+              </div>
+    }
+
+    return "";
   }
 
   getWarning(state, questionCount, questionIndex, styles){
@@ -201,7 +240,7 @@ export default class Item extends BaseComponent{
     var result = this.getResult(this.props.messageIndex);
     var buttons = this.getConfidenceLevels(this.props.confidenceLevels, styles);
     var submitButton = (this.props.currentIndex == this.props.questionCount - 1) ? <button className="btn btn-check-answer" style={styles.definitelyButton}  onClick={(e)=>{this.submitButtonClicked(e)}}>Submit</button> : "";
-    
+    var footer = this.getFooterNav(this.context.theme, styles);
     
     // Get the confidence Level
     
@@ -247,6 +286,7 @@ export default class Item extends BaseComponent{
             {nextButton}
           </div>
         </div>
+        {footer}
       </div>
     );
   }

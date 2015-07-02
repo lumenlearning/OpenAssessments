@@ -103,6 +103,10 @@ export default {
   definitelyBackgroundColor: defines.buttonFace + " !important",
   definitelyColor: defines.textGrey,
 
+  // FOOTER
+  footerHeight: "60px",
+  footerBackgroundColor: defines.lightgray,
+
   // NOT STYLES BUT VARIABLES
   shouldShowProgressText: false,
   shouldShowCounter: true,

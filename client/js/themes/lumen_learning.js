@@ -9,9 +9,7 @@ export default {
   assessmentContainerBorderRadius: "4px",
   headerBackgroundColor: defines.white,
   confidenceWrapperBorder: "1px solid rgba(0,0,0,0.2)",
-  shouldShowProgressText: true,
-  shouldShowCounter: false,
-  shouldShowNextPrevious: false,
+
   fullQuestionBackgroundColor: defines.white,
   panelHeadingBackgroundColor: defines.white,
   panelBoxShadow: "0 0 0 rgba(0,0,0,0.0)",
@@ -29,5 +27,10 @@ export default {
 
   assessmentPadding: "20px",
   assessmentBackground: defines.white,
+
   shouldShowAttempts: true,
+  shouldShowProgressText: true,
+  shouldShowCounter: false,
+  shouldShowNextPrevious: false,
+  shouldShowFooter: true,
 }

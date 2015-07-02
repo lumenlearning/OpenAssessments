@@ -67,9 +67,9 @@ class ApplicationController < ActionController::Base
       url << "&offline=true" if offline
       url << "&style=" + style if style.present?
       if assessment
-        height = assessment.recommended_height || 400
+        height = assessment.recommended_height || 575
       else
-        height = 400
+        height = 575
       end
       CGI.unescapeHTML(%Q{<iframe id="openassessments_container" src="//#{url}" frameborder="0" style="border:none;width:100%;height:100%;min-height:#{height}px;"></iframe>})
     end    
