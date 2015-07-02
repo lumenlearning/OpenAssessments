@@ -9,7 +9,6 @@ import UniversalInput     from "./universal_input";
 export default class Item extends BaseComponent{
   constructor(){
     super();
-    //this.state = this.getState();
     this._bind("getConfidenceLevels", "confidenceLevelClicked", "getPreviousButton", "getNextButton", "getStyles");
   }
 
@@ -26,12 +25,6 @@ export default class Item extends BaseComponent{
     AssessmentActions.selectConfidenceLevel(e.target.value);
     AssessmentActions.nextQuestion(); 
   }
-
-  // getState(){
-  //   return {
-  //     unAnsweredQuestions: []
-  //   }
-  // }
 
   submitButtonClicked(e){
     e.preventDefault()
@@ -125,6 +118,7 @@ export default class Item extends BaseComponent{
         borderRadius: "4px",
         backgroundColor: theme.maybeBackgroundColor,
         color: theme.maybeColor,
+        padding: "8px 8px !important"
       }
     }
   }

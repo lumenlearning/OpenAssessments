@@ -108,6 +108,7 @@ export default {
   shouldShowCounter: true,
   shouldShowNextPrevious: true,
   shouldShowAttempts: false,
+  shouldShowFooter: false,
   
 
 }
