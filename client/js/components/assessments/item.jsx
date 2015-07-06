@@ -234,12 +234,12 @@ export default class Item extends BaseComponent{
 
 
   render() {
-    
+    console.log(this.props)
     var styles = this.getStyles(this.context.theme);
     var unAnsweredWarning = this.getWarning(this.state,  this.props.questionCount, this.props.currentIndex, styles);
     var result = this.getResult(this.props.messageIndex);
     var buttons = this.getConfidenceLevels(this.props.confidenceLevels, styles);
-    var submitButton = (this.props.currentIndex == this.props.questionCount - 1) ? <button className="btn btn-check-answer" style={styles.definitelyButton}  onClick={(e)=>{this.submitButtonClicked(e)}}>Submit</button> : "";
+    var submitButton = (this.props.currentIndex == this.props.questionCount - 1 && this.props.question.confidenceLevel) ? <button className="btn btn-check-answer" style={styles.definitelyButton}  onClick={(e)=>{this.submitButtonClicked(e)}}>Submit</button> : "";
     var footer = this.getFooterNav(this.context.theme, styles);
     
     // Get the confidence Level

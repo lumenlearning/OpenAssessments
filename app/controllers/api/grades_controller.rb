@@ -6,7 +6,6 @@ class Api::GradesController < ApplicationController
   def create
 
     # store lis stuff in session
-  
     answered_correctly = 0;
     body = JSON.parse(request.body.read);
     item_to_grade = body["itemToGrade"]
@@ -21,7 +20,9 @@ class Api::GradesController < ApplicationController
     xml_questions = doc.xpath("//item")
     result = assessment.assessment_results.build
     result.save!
+
     questions.each_with_index do |question, index|
+      
       # make sure we are looking at the right question
       if question["id"] == xml_questions[index].attributes["ident"].value
 
