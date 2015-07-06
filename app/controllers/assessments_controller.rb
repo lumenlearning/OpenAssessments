@@ -59,6 +59,8 @@ class AssessmentsController < ApplicationController
     end
     @assessment_id = @assessment ? @assessment.id : params[:assessment_id] || 'null'
     
+    @assessment_settings = AssessmentSetting.find(params[:asid])
+
     if params[:offline].present? && @src_url.present?
       @src_data = open(@src_url).read
       xml = EdxSequentialParser.parse(@src_data)

@@ -26,8 +26,10 @@
     offline: <%= @src_data.present? %>,
     lis_outcome_service_url: '<%= params[:lis_outcome_service_url] %>',
     <% if @kind %>
-
-    kind: '<%= @kind %>'
+    kind: '<%= @kind %>',
     <% end %>
+    <% if @assessment_settings %>
+    allowed_attempts: @assessment_settings.allowed_attempts
+    <% end -%>
   };
 </script>
