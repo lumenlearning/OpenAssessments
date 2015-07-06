@@ -7,7 +7,7 @@ import BaseComponent  from "../base_component";
 export default class Message extends BaseComponent {
   constructor(props, context) {
     super(props, context);
-    this._bind('removeMessage', 'removeMessageFade', 'mouseOut', 'hoverMessage');
+    this._bind('removeMessage', 'removeMessageFade', 'mouseOut', 'mouseOver');
     this.state = {
       opacity: 1,
       cancel: false,
@@ -72,7 +72,7 @@ export default class Message extends BaseComponent {
 }
 
 Message.propTypes = { children: React.PropTypes.string };
-Message.defaultProps = { 
+Message.defaultProps = {
   displayTime: 4000,
   fadeTime: 1600
 };

@@ -9,7 +9,7 @@ var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
 
 export default (Component, props, stubs) => {
-  
+
   function RouterStub(){ }
 
   assign(RouterStub, {
@@ -29,7 +29,7 @@ export default (Component, props, stubs) => {
   }, stubs);
 
   class Stubber extends React.Component {
-    
+
     getChildContext(){
       return {
         router: RouterStub,

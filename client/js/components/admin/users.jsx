@@ -74,42 +74,42 @@ class Users extends BaseComponent {
       },
       id: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
-        borderRight: "1px solid " + Defines.colors.lightGrey, 
+        borderRight: "1px solid " + Defines.colors.lightGrey,
         display: "table-cell",
         width: "8%",
       },
       name: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
-        borderRight: "1px solid " + Defines.colors.lightGrey, 
+        borderRight: "1px solid " + Defines.colors.lightGrey,
         display: "table-cell",
         width: "8%",
       },
       email: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
-        borderRight: "1px solid " + Defines.colors.lightGrey, 
+        borderRight: "1px solid " + Defines.colors.lightGrey,
         display: "table-cell",
         width: "20%",
       },
       role: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
-        borderRight: "1px solid " + Defines.colors.lightGrey, 
+        borderRight: "1px solid " + Defines.colors.lightGrey,
         display: "table-cell",
         width: "10%",
       },
       signInCount: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
-        borderRight: "1px solid " + Defines.colors.lightGrey, 
+        borderRight: "1px solid " + Defines.colors.lightGrey,
         display: "table-cell",
         width: "16%",
       },
       lastSignIn: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
-        borderRight: "1px solid " + Defines.colors.lightGrey, 
+        borderRight: "1px solid " + Defines.colors.lightGrey,
         display: "table-cell",
         width: "18%",
       },
       controls: {
-        borderBottom: "1px solid " + Defines.colors.lightGrey, 
+        borderBottom: "1px solid " + Defines.colors.lightGrey,
         display: "table-cell",
         width: "20%",
       },
@@ -164,7 +164,7 @@ class Users extends BaseComponent {
               useCustomRowComponent={true}
               customRowComponent={CustomGriddleRow}
               resultsPerPage={10}
-              tableClassName="table" 
+              tableClassName="table"
               showFilter={true}
               showSettings={true}
               rowHeight={70}

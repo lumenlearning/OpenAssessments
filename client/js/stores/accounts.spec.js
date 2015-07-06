@@ -28,7 +28,7 @@ describe('AccountsStore', () => {
     jasmine.Ajax.uninstall();
   });
 
-  xit('Does Something',()=>{
+  it('Does Something',()=>{
 
   });
 });

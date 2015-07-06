@@ -13,11 +13,14 @@ describe('MessagesStore', () => {
   afterEach(() => {
     jasmine.clock().uninstall();
   });
-  
+
   describe("No messages", () => {
-    
+
     beforeEach(() => {
       // Ensure the store is empty
+
+      //////NEED TO PUT SPOOF PROPS IN HERE FOR componentWillUnmount //////////
+
       MessageActions.clearMessages();
       jasmine.clock().tick(); // Advance the clock to the next tick
     });
@@ -29,16 +32,16 @@ describe('MessagesStore', () => {
         done();
       });
     });
-    
+
     describe("hasMessages", () => {
       it("returns false", (done) => {
         expect(MessagesStore.hasMessages()).toBe(false);
-        done(); 
+        done();
       });
     });
 
   });
-  
+
   describe("Has messages", () => {
 
     var message = "A message to test has messages in the message spec store.";
@@ -57,8 +60,8 @@ describe('MessagesStore', () => {
         expect(storedMessage).toEqual(message);
         done();
       });
-    }); 
-    
+    });
+
     describe("hasMessages", () => {
       it("returns true", (done) => {
         expect(MessagesStore.hasMessages()).toBe(true);

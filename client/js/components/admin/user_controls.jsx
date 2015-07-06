@@ -23,9 +23,8 @@ export default class UserControls extends React.Component {
   render(){
     var styles = this.props.styles;
     var user = this.props.data;
-
     return <div style={styles.icons}>
-      <span style={styles.span}> 
+      <span style={styles.span}>
         <div >
           <RaisedButton  label="SHOW DETAILS" onClick={()=>{this.props.toggleExpandable()}} />
         </div>

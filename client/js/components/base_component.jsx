@@ -1,10 +1,10 @@
 import React                                                                            from "react";
 
-// Note: If you override componentDidMount or componentWillUnmount you will need to 
+// Note: If you override componentDidMount or componentWillUnmount you will need to
 // call super.componentDidMount() or super.componentWillUnmount() or call
 // watchStores() and unWatchStores() directly.
 export default class BaseComponent extends React.Component {
-  
+
   constructor(props, context) {
     super(props, context);
     this._bind("storeChanged");
@@ -26,7 +26,7 @@ export default class BaseComponent extends React.Component {
   componentWillUnmount(){
     this.unWatchStores();
   }
-  
+
   // Listen for changes in the stores
   watchStores(){
     _.each(this.stores, function(store){
