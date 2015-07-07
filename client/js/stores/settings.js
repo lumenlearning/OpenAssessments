@@ -48,22 +48,26 @@ function loadSettings(defaultSettings){
     enableStart = (enableStart == true || enableStart == 'true');
 
   _settings = {
-    apiUrl           : bestValue('apiUrl', 'api_url', '/'),
-    srcUrl           : bestValue('srcUrl', 'src_url'),
-    srcData          : srcData(), 
-    offline          : bestValue('offline', 'offline', false),
-    assessmentId     : bestValue('assessmentId', 'assessment_id'),
-    eId              : bestValue('eId', 'eid'),
-    kind             : bestValue('kind', 'kind', 'formative'),
-    externalUserId   : bestValue('externalUserId', 'external_user_id'),
-    keywords         : bestValue('keywords', 'keywords'),
-    resultsEndPoint  : bestValue('resultsEndPoint', 'results_end_point', 'http://localhost:4200/api'),
-    confidenceLevels : bestValue('confidenceLevels', 'confidence_levels', false),
-    enableStart      : enableStart,
-    style            : bestValue('style', 'style', null),
-    csrfToken        : defaultSettings.csrfToken || null
+    apiUrl             : bestValue('apiUrl', 'api_url', '/'),
+    srcUrl             : bestValue('srcUrl', 'src_url'),
+    srcData            : srcData(), 
+    offline            : bestValue('offline', 'offline', false),
+    assessmentId       : bestValue('assessmentId', 'assessment_id'),
+    eId                : bestValue('eId', 'eid'),
+    kind               : bestValue('kind', 'kind', 'formative'),
+    externalUserId     : bestValue('externalUserId', 'external_user_id'),
+    keywords           : bestValue('keywords', 'keywords'),
+    resultsEndPoint    : bestValue('resultsEndPoint', 'results_end_point', 'http  ://localhost  :4200/api'),
+    confidenceLevels   : bestValue('confidenceLevels', 'confidence_levels', false),
+    enableStart        : enableStart,
+    style              : bestValue('style', 'style', null),
+    csrfToken          : defaultSettings.csrfToken || null,
+    allowedAttempts    : defaultSettings.allowed_attempts,
+    lisUserId          : defaultSettings.lis_user_id,
+    lisResultSourceDid : defaultSettings.lis_result_source_did,
+    lisOutcomeServiceUrl: defaultSettings.lis_outcome_service_url
   };
-  console.log(_settings.style)
+  console.log(defaultSettings)
   if(!_settings.srcUrl && !_settings.offline){
     _errors.srcUrl = "No src_url specified: specify a src_url in the url query params.";
   }

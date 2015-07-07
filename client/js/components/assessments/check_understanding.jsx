@@ -54,7 +54,7 @@ export default class CheckUnderstanding extends React.Component{
       <div style={styles.attempts}>
         <h4>Attempt</h4>
         <h1>1</h1>
-        <h3>of 2</h3>
+        <h3>of {this.props.maxAttempts}</h3>
         <p>This is your 1st attempt for this outcome</p>
       </div>
     </div>)

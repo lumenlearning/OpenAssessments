@@ -10,9 +10,6 @@ class Api::GradesController < ApplicationController
     body = JSON.parse(request.body.read);
     item_to_grade = body["itemToGrade"]
     questions = item_to_grade["questions"]
-    settings = item_to_grade["settings"]
-    correct_list = []
-    answers = item_to_grade["answers"]
     assessment_id = item_to_grade["assessmentId"]
     assessment = Assessment.find(assessment_id)
     doc = Nokogiri::XML(assessment.assessment_xmls.first.xml)
@@ -21,6 +18,10 @@ class Api::GradesController < ApplicationController
     result = assessment.assessment_results.build
     result.save!
 
+    settings = item_to_grade["settings"]
+    correct_list = []
+    answers = item_to_grade["answers"]
+    
     questions.each_with_index do |question, index|
 
       # make sure we are looking at the right question
@@ -99,22 +100,23 @@ class Api::GradesController < ApplicationController
     # TODO Create assessment_result
     score = Float(answered_correctly) / Float(questions.length)
     score *= Float(100)
+    debugger
     graded_assessment = { 
       score: score,
       feedback: "Study Harder",
       correct_list: correct_list
     }
-    
+
     params = {
-      lis_result_sourcedid: session[:lis_result_sourcedid] || params[:lis_result_sourcedid],
-      lis_outcome_service_url: session[:lis_outcome_service_url],
-      user_id: session[:lis_user_id]
+      lis_result_sourcedid: session[:lis_result_sourcedid] || settings[:lisResultSourceDid],
+      lis_outcome_service_url: session[:lis_outcome_service_url]  || settings[:lisOutcomeSourceUrl],
+      user_id: session[:lis_user_id] || settings[:lisUserId]
     }
     provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
 
     # post the given score to the TC
-    score = (params['score'] != '' ? params['score'] : nil)
-    res = provider.post_replace_result!(params['score'])
+    score = (score != '' ? score.to_s : nil)
+    res = provider.post_replace_result!(score)
 
     # Need to figure out error handling - these will need to be passed to the client
     # or we can also post scores async using activejob in which case we'll want to

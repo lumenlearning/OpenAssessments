@@ -29,7 +29,10 @@
     kind: '<%= @kind %>',
     <% end %>
     <% if @assessment_settings %>
-    allowed_attempts: @assessment_settings.allowed_attempts
+    allowed_attempts: <%= @assessment_settings.allowed_attempts %>,
     <% end -%>
+    lis_result_sourcedid: '<%= params[:lis_result_sourcedid] %>',
+    lis_outcome_service_url: '<%= params[:lis_outcome_service_url] %>',
+    lis_user_id: '<%=  params[:lis_user_id] || params[:user_id]%>'
   };
 </script>

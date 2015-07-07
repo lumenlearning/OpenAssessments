@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
       api_assessment_url(assessment, format: 'xml')
     end
 
-    def embed_code(assessment, confidence_levels=true, eid=nil, enable_start=false, offline=false, src_url=nil, style=nil)
+    def embed_code(assessment, confidence_levels=true, eid=nil, enable_start=false, offline=false, src_url=nil, style=nil, asid=nil)
       if assessment
         url = "#{request.host_with_port}#{assessment_path('load')}?src_url=#{embed_url(assessment)}"
       elsif src_url
@@ -66,6 +66,7 @@ class ApplicationController < ActionController::Base
       url << "&enable_start=#{enable_start}" if enable_start.present?
       url << "&offline=true" if offline
       url << "&style=" + style if style.present?
+      url << "&asid=" + asid if asid.present?
       if assessment
         height = assessment.recommended_height || 575
       else
@@ -217,8 +218,10 @@ class ApplicationController < ActionController::Base
           name = params[:roles] if name.blank? # If the name is blank then use their
 
           # If there isn't an email then we have to make one up. We use the user_id and instance guid
-          email = params[:lis_person_contact_email_primary] || "#{params[:user_id]}@#{params["custom_canvas_api_domain"]}"
-
+          
+          # MAKE SURE THAT WE REMOVE THIS because the test user doesnt have an email.
+          email = params[:lis_person_contact_email_primary] || "#{params[:user_id]}@#{params["custom_canvas_api_domain"]}" || "test@test.test"
+          # email = "test@test.test"
           @user = User.new(email: email, name: name)
           @user.password             = ::SecureRandom::hex(15)
           @user.password_confirmation = @user.password
