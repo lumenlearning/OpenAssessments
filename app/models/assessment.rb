@@ -12,6 +12,7 @@ class Assessment < ActiveRecord::Base
   has_many :outcomes, through: :assessment_outcomes
 
   has_many :assessment_settings
+  has_many :user_assessments
 
   scope :by_newest, -> { order(created_at: :desc) }
   scope :by_oldest, -> { order(start_date: :asc) }

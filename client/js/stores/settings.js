@@ -63,6 +63,7 @@ function loadSettings(defaultSettings){
     style              : bestValue('style', 'style', null),
     csrfToken          : defaultSettings.csrfToken || null,
     allowedAttempts    : defaultSettings.allowed_attempts,
+    userAttempts       : defaultSettings.user_attempts,
     lisUserId          : defaultSettings.lis_user_id,
     lisResultSourceDid : defaultSettings.lis_result_source_did,
     lisOutcomeServiceUrl: defaultSettings.lis_outcome_service_url

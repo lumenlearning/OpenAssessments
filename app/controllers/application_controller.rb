@@ -220,14 +220,16 @@ class ApplicationController < ActionController::Base
           # If there isn't an email then we have to make one up. We use the user_id and instance guid
           
           # MAKE SURE THAT WE REMOVE THIS because the test user doesnt have an email.
-          email = params[:lis_person_contact_email_primary] || "#{params[:user_id]}@#{params["custom_canvas_api_domain"]}" || "test@test.test"
+          email = params[:lis_person_contact_email_primary] || "#{params[:user_id]}@#{params["custom_canvas_api_domain"]}"
           # email = "test@test.test"
+          if email.nil? || email == ""
+            email = ::SecureRandom::hex(15)+"@test.test"
+          end
           @user = User.new(email: email, name: name)
           @user.password             = ::SecureRandom::hex(15)
           @user.password_confirmation = @user.password
           @user.account = current_account
           @user.skip_confirmation!
-
           begin
             @user.save!
           rescue ActiveRecord::RecordInvalid => ex

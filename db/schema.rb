@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150609233431) do
+ActiveRecord::Schema.define(version: 20150707210829) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,13 @@ ActiveRecord::Schema.define(version: 20150609233431) do
   add_index "assessment_results", ["assessment_id"], name: "index_assessment_results_on_assessment_id", using: :btree
   add_index "assessment_results", ["referer"], name: "index_assessment_results_on_referer", using: :btree
   add_index "assessment_results", ["user_id"], name: "index_assessment_results_on_user_id", using: :btree
+
+  create_table "assessment_settings", force: :cascade do |t|
+    t.integer  "assessment_id"
+    t.integer  "allowed_attempts"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
 
   create_table "assessment_xmls", force: :cascade do |t|
     t.text     "xml"
@@ -265,6 +272,17 @@ ActiveRecord::Schema.define(version: 20150609233431) do
   end
 
   add_index "user_accounts", ["user_id", "account_id"], name: "index_user_accounts_on_user_id_and_account_id", using: :btree
+
+  create_table "user_assessments", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "assessment_id"
+    t.integer  "attempts"
+    t.datetime "first_attempt_at"
+    t.datetime "most_recent_attempt_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "eid"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",        null: false

@@ -40,6 +40,18 @@ class AssessmentsController < ApplicationController
     end
     if params[:id].present? && !['load', 'offline'].include?(params[:id])
       @assessment = Assessment.find(params[:id])
+      if params[:user_id].present?
+        @user_assessment = UserAssessment.where(eid: params[:user_id]).first
+        if !@user_assessment.nil?
+          @user_attempts = @user_assessment.attempts
+        else
+          @user_assessment = @assessment.user_assessments.create({
+            :eid => params[:user_id],
+            :attempts => 0
+            })
+          @user_attempts = @user_assessment.attempts
+        end
+      end 
       @eid ||= @assessment.identifier
       if @embedded
         # Just show the assessment. This is here to support old style embed with id=# and embed=true
@@ -58,9 +70,7 @@ class AssessmentsController < ApplicationController
 
     end
     @assessment_id = @assessment ? @assessment.id : params[:assessment_id] || 'null'
-    
     @assessment_settings = params[:asid] ? AssessmentSetting.find(params[:asid]) : nil;
-
     if params[:offline].present? && @src_url.present?
       @src_data = open(@src_url).read
       xml = EdxSequentialParser.parse(@src_data)
