@@ -42,7 +42,7 @@ class AssessmentsController < ApplicationController
     if params[:id].present? && !['load', 'offline'].include?(params[:id])
       @assessment = Assessment.find(params[:id])
       if params[:user_id].present?
-        @user_assessment = UserAssessment.where(eid: params[:user_id]).first
+        @user_assessment = @assessment.user_assessments.where(eid: params[:user_id]).first
         if !@user_assessment.nil?
           @user_attempts = @user_assessment.attempts
         else

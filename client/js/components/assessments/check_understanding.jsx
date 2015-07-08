@@ -5,8 +5,8 @@ import AssessmentActions  from "../../actions/assessment";
 
 export default class CheckUnderstanding extends React.Component{
 
-  start(eid){
-    AssessmentActions.start(eid);
+  start(eid, assessmentId){
+    AssessmentActions.start(eid, assessmentId);
   }
 
   getStyles(theme){
@@ -60,7 +60,7 @@ export default class CheckUnderstanding extends React.Component{
         <div style={styles.attemptsContainer}> 
           <div style={{...styles.attempts, ...{border: null}}}>
           <h1>Oops!</h1>
-          <h3>You have already take this quiz the maximum number of times</h3>  
+          <h3>You have already taken this quiz the maximum number of times</h3>  
         </div>
         <h4><u>TIPS:</u></h4>
         <div style={styles.tips}>
@@ -89,7 +89,7 @@ export default class CheckUnderstanding extends React.Component{
     var attempts = this.getAttempts(this.context.theme, styles, this.props);
     var startButton = (
       <div style={styles.buttonWrapper}>
-        <button style={styles.startButton} className="btn btn-info" onClick={()=>{this.start(this.props.eid)}}>Start Quiz</button>
+        <button style={styles.startButton} className="btn btn-info" onClick={()=>{this.start(this.props.eid, this.props.assessmentId)}}>Start Quiz</button>
       </div>)
     if (this.props.userAttempts == this.props.maxAttempts){
       startButton = "";

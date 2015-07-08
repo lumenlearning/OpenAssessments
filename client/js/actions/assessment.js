@@ -26,9 +26,9 @@ export default {
     Api.get(Constants.ASSESSMENT_LOADED, settings.srcUrl);
   },
 
-  start(eid){
+  start(eid, assessmentId){
     Dispatcher.dispatch({action: Constants.ASSESSMENT_START})
-    Api.put(Constants.ASSESSMENT_START, "/api/user_assessments/"+eid)
+    Api.put(Constants.ASSESSMENT_START, "/api/user_assessments/"+eid, {assessmentId: assessmentId})
   },
 
   edXLoadSection(section){

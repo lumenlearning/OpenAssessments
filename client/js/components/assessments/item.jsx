@@ -234,7 +234,6 @@ export default class Item extends BaseComponent{
 
 
   render() {
-    console.log(this.props)
     var styles = this.getStyles(this.context.theme);
     var unAnsweredWarning = this.getWarning(this.state,  this.props.questionCount, this.props.currentIndex, styles);
     var result = this.getResult(this.props.messageIndex);
