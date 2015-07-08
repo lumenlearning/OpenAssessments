@@ -61,6 +61,7 @@ function loadSettings(defaultSettings){
     confidenceLevels   : bestValue('confidenceLevels', 'confidence_levels', false),
     enableStart        : enableStart,
     style              : bestValue('style', 'style', null),
+    perSec             : parseInt(defaultSettings.per_sec),
     csrfToken          : defaultSettings.csrfToken || null,
     allowedAttempts    : defaultSettings.allowed_attempts,
     userAttempts       : defaultSettings.user_attempts,
@@ -68,7 +69,7 @@ function loadSettings(defaultSettings){
     lisResultSourceDid : defaultSettings.lis_result_source_did,
     lisOutcomeServiceUrl: defaultSettings.lis_outcome_service_url
   };
-  console.log(defaultSettings)
+
   if(!_settings.srcUrl && !_settings.offline){
     _errors.srcUrl = "No src_url specified: specify a src_url in the url query params.";
   }

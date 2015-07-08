@@ -8,6 +8,7 @@ import assign         from "object-assign";
 import Assessment     from "../models/assessment";
 import SettingsStore  from "./settings";
 import EdX            from "../models/edx";
+import _              from "lodash";
 const INVALID = -1;
 const NOT_LOADED = 0;
 const LOADING = 1;
@@ -43,7 +44,6 @@ function checkAnswer(){
 
 function selectAnswer(item){
   if(_items[_itemIndex].question_type == "multiple_choice_question"){
-    // do something
     _selectedAnswerIds = item.id;
   } else if (_items[_itemIndex].question_type == "multiple_answers_question"){
     if(_selectedAnswerIds.indexOf(item.id) > -1){
@@ -52,7 +52,6 @@ function selectAnswer(item){
     _selectedAnswerIds.push(item.id);
     }
   } else if (_items[_itemIndex].question_type == "matching_question"){
-    // do something
     updateMatchingAnswer(item);
   } 
 }
@@ -94,6 +93,21 @@ function clearStore(){
 function calculateTime(start, end){
   return end - start;
 };
+
+function getItems(sections, perSec){
+  var items = []
+  if(!perSec || perSec <= 0){
+    return sections[0].items
+  } 
+
+  for(var i=1; i<sections.length; i++){
+    var count = perSec > sections[i].items.length ? sections[i].items.length : perSec;
+    for(var j=0; j < count; j++){
+      items.push(_.sample(sections[i].items));
+    }
+  }
+  return items;
+}
 
 // Extend User Store with EventEmitter to add eventing capabilities
 var AssessmentStore = assign({}, StoreCommon, {
@@ -188,13 +202,15 @@ Dispatcher.register(function(payload) {
               _assessment.sections && 
               _assessment.sections[_sectionIndex] &&
               _assessment.sections[_sectionIndex].items){
-            _items = _assessment.sections[_sectionIndex].items;
-
+            if(_assessment.standard == "qti"){
+              _items = getItems(_assessment.sections, SettingsStore.current().perSec);
+            } else {
+              _items = _assessment.sections[_sectionIndex].items
+            }
             setUpStudentAnswers(_items.length)
           }
           _assessmentState = LOADED;
           if(!_startedAt && !SettingsStore.current().enableStart){
-            console.log("started")
             // set the start time for the assessment and the first question (only qti)
             if(_items[0])
             _items[0].startTime = Utils.currentTime()
