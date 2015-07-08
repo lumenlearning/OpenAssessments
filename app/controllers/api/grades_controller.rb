@@ -25,27 +25,26 @@ class Api::GradesController < ApplicationController
     questions.each_with_index do |question, index|
 
       # make sure we are looking at the right question
-      if question["id"] == xml_questions[index].attributes["ident"].value
+      xml_index = get_xml_index(question["id"], xml_questions)
+      if question["id"] == xml_questions[xml_index].attributes["ident"].value
 
         correct = false;
-        type = xml_questions[index].children.xpath("qtimetadata").children.xpath("fieldentry").children.text
+        type = xml_questions[xml_index].children.xpath("qtimetadata").children.xpath("fieldentry").children.text
         
         # grade the question based off of question type
         if type == "multiple_choice_question"
-          correct = grade_multiple_choice(xml_questions[index], answers[index])  
+          correct = grade_multiple_choice(xml_questions[xml_index], answers[index])  
         elsif type == "multiple_answers_question"
-          correct = grade_multiple_answers(xml_questions[index], answers[index])
+          correct = grade_multiple_answers(xml_questions[xml_index], answers[index])
         elsif type == "matching_question"
-          correct = grade_matching(xml_questions[index], answers[index])
+          correct = grade_matching(xml_questions[xml_index], answers[index])
         end
         if correct
           answered_correctly += 1
         end
         correct_list[index] = correct
-        # TODO create item result
 
         if item = assessment.items.find_by(identifier: question["id"])
-        # create the item result
 
           rendered_time, referer, user = tracking_info
           item.item_results.create(
@@ -63,8 +62,6 @@ class Api::GradesController < ApplicationController
             rendered_datestamp: rendered_time,
             confidence_level: question["confidenceLevel"],
             score: question["score"]
-            # TODO confidence level
-            # TODO score
           )
         else
           rendered_time, referer, user = tracking_info
@@ -87,8 +84,6 @@ class Api::GradesController < ApplicationController
               rendered_datestamp: rendered_time,
               confidence_level: question["confidenceLevel"],
               score: question["score"]
-            # TODO confidence levels
-            # TODO score
             )
           end
         end
@@ -97,10 +92,10 @@ class Api::GradesController < ApplicationController
       # if the Id isn't found then there has been an error and return the error
     
     end
-    # TODO Create assessment_result
+
     score = Float(answered_correctly) / Float(questions.length)
+    canvas_score = score
     score *= Float(100)
-    debugger
     graded_assessment = { 
       score: score,
       feedback: "Study Harder",
@@ -108,15 +103,17 @@ class Api::GradesController < ApplicationController
     }
 
     params = {
-      lis_result_sourcedid: session[:lis_result_sourcedid] || settings[:lisResultSourceDid],
-      lis_outcome_service_url: session[:lis_outcome_service_url]  || settings[:lisOutcomeSourceUrl],
-      user_id: session[:lis_user_id] || settings[:lisUserId]
+      'lis_result_sourcedid'    => session[:lis_result_sourcedid]    || settings[:lisResultSourceDid],
+      'lis_outcome_service_url' => session[:lis_outcome_service_url] || settings[:lisOutcomeSourceUrl],
+      'user_id'                 => session[:lis_user_id]             || settings[:lisUserId]
     }
+
     provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
 
     # post the given score to the TC
-    score = (score != '' ? score.to_s : nil)
-    res = provider.post_replace_result!(score)
+    canvas_score = (canvas_score != '' ? canvas_score.to_s : nil)
+
+    res = provider.post_replace_result!(canvas_score)
 
     # Need to figure out error handling - these will need to be passed to the client
     # or we can also post scores async using activejob in which case we'll want to
@@ -131,7 +128,14 @@ class Api::GradesController < ApplicationController
   end
 
   private
-
+  def get_xml_index(id, xml_questions)
+    xml_questions.each_with_index do |question, index|
+      if question.attributes["ident"].value == id
+        return index
+      end
+    end
+    return -1
+  end
   def grade_multiple_choice(question, answer) 
     correct = false;
     choices = question.children.xpath("respcondition")
