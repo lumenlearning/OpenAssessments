@@ -59,7 +59,7 @@ function selectAnswer(item){
 function updateMatchingAnswer(item){
   for (var i = 0; i < _selectedAnswerIds.length; i++){
     if(_selectedAnswerIds[i] && _selectedAnswerIds[i].answerNumber == item.answerNumber){
-      _selectedAnswerIds[i].selectedAnswer = item.selectedAnswer;
+      _selectedAnswerIds[i] = item;
       return;
     }
   }
@@ -230,7 +230,6 @@ Dispatcher.register(function(payload) {
 
     case Constants.ASSESSMENT_START:
       if(!_startedAt){
-        console.log("started")
         // set the start time for the assessment and the first question
         _items[0].startTime = Utils.currentTime()
         _startedAt = Utils.currentTime();
