@@ -34,6 +34,9 @@
     <% if @user_attempts %>
     user_attempts: <%= @user_attempts %>,
     <% end -%>
+    <% if @per_sec %>
+    per_sec: '<%= @per_sec %>',
+    <% end -%>
     lis_result_sourcedid: '<%= params[:lis_result_sourcedid] %>',
     lis_outcome_service_url: '<%= params[:lis_outcome_service_url] %>',
     lis_user_id: '<%=  params[:lis_user_id] || params[:user_id]%>'

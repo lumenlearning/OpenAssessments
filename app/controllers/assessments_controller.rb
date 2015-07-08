@@ -33,6 +33,7 @@ class AssessmentsController < ApplicationController
     @external_user_id = params[:external_user_id] if params[:external_user_id]
     @results_end_point = ensure_scheme(params[:results_end_point]) if params[:results_end_point].present?
     @style = params[:style] ? params[:style] :  ""
+    @per_sec = params[:per_sec] ? params[:per_sec] : nil
     if @is_writeback # For now all LTI requests with grade writeback will produce summative assessments. All others will be formative.
       @kind = "summative"
     else
@@ -58,14 +59,14 @@ class AssessmentsController < ApplicationController
         @src_url = embed_url(@assessment)
       else
         # Show the full page with analtyics and embed code buttons
-        @embed_code = embed_code(@assessment, @confidence_levels, @eid, @enable_start, params[:offline].present?, nil, @style, params[:asid])
+        @embed_code = embed_code(@assessment, @confidence_levels, @eid, @enable_start, params[:offline].present?, nil, @style, params[:asid], params[:per_sec])
       end
     else
       # Get the remote url where we can download the qti
       @src_url = ensure_scheme(URI.decode(params[:src_url])) if params[:src_url].present?
       if params[:load_ui] == 'true'
         # Build an embed code and stats page for an assessment loaded via a url
-        @embed_code = embed_code(nil, @confidence_levels, @eid, @enable_start, params[:offline].present?, params[:src_url], @style, params[:asid])
+        @embed_code = embed_code(nil, @confidence_levels, @eid, @enable_start, params[:offline].present?, params[:src_url], @style, params[:asid], params[:per_sec])
       end
 
     end
