@@ -83,24 +83,26 @@ function dispatch(key, response) {
     action: key,
     data: response
   });
+  return true;
 }
 
 // Dispatch a response based on the server response
 function dispatchResponse(key) {
   return (err, response) => {
     if(err && err.timeout === TIMEOUT) {
-      dispatch(Constants.TIMEOUT, response);
+      return dispatch(Constants.TIMEOUT, response);
     } else if(response.status === 401) {
-      dispatch(Constants.NOT_AUTHORIZED, response);
+      return dispatch(Constants.NOT_AUTHORIZED, response);
     } else if(response.status === 400) {
-      dispatch(Constants.ERROR, response);
+      return dispatch(Constants.ERROR, response);
     } else if(response.status === 302) {
       window.location = response.body.url;
     } else if(!response.ok) {
-      dispatch(Constants.ERROR, response);
+      return dispatch(Constants.ERROR, response);
     } else if(key) {
-      dispatch(key, response);
+      return dispatch(key, response);
     }
+    return false;
   };
 }
 
@@ -109,8 +111,8 @@ function doRequest(key, url, requestMethod){
   var request = _pendingRequests[url] = requestMethod(makeUrl(url));
   return new Promise((resolve, reject) => {
     request.end((error, res) => {
-      dispatchResponse(key)(error, res);
-      if (error) {
+      var handled = dispatchResponse(key)(error, res);
+      if(error && !handled){
         reject(error);
       } else {
         resolve(res);
