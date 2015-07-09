@@ -75,8 +75,9 @@ function clearMessages(){
   _messages = {};
 }
 
-function addServerMessage(message){
-  var messageId = addMessage(JSON.parse(message.text).message);
+function addServerMessage(data){
+  var parsed = JSON.parse(data.text);
+  var messageId = addMessage(parsed.message || parsed.error);
   setTimeout(function(){
     removeMessage(messageId);
   }, MessageTimeout);
