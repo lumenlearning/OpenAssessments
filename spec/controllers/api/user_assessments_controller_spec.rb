@@ -4,14 +4,18 @@ describe Api::UserAssessmentsController do
 
   describe "PUT update" do
     before do
-      @user_assessment = UserAssessment.create({
+      @assessment = Assessment.create(FactoryGirl.attributes_for(:assessment));
+      @user_assessment = @assessment.user_assessments.create({
         :eid => "abcdefg",
         :attempts => 0
         })
     end
 
     it "increments the users attempts upon update" do
-      put :update, id: "abcdefg", format: :json
+      params = {
+        :accountId => @assessment.id
+      }
+      put :update, id: "abcdefg", assessmentId: @assessment.id, format: :json
       expect(UserAssessment.first.attempts).to eq(1)
     end
   end
