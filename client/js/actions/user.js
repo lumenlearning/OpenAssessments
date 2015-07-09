@@ -19,6 +19,6 @@ export default {
   logout(){
     Dispatcher.dispatch({ action: Constants.LOGOUT_PENDING });
     Api.del(Constants.LOGOUT, "sign_out");
-  },
+  }
 
 };
