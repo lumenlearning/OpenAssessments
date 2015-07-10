@@ -1,7 +1,9 @@
 class Api::GradesController < ApplicationController
-  skip_before_filter :verify_authenticity_token
-  before_filter :skip_trackable
+  
   respond_to :json
+
+  before_action :validate_token
+  before_action :skip_trackable
 
   def create
 

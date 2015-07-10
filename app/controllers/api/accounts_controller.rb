@@ -1,7 +1,10 @@
 class Api::AccountsController < ApplicationController
 
+  respond_to :json
+
   before_action :validate_token
-  
+  before_action :skip_trackable
+
   load_and_authorize_resource
 
   def index
@@ -9,7 +12,6 @@ class Api::AccountsController < ApplicationController
       format.json { render json: @accounts }
     end
   end
-
 
   def create
     if @account.save

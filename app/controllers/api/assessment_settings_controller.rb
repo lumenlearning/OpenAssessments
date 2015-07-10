@@ -1,25 +1,26 @@
 class Api::AssessmentSettingsController < ApplicationController
+
+  respond_to :json
+
+  before_action :validate_token
+  before_action :skip_trackable
+  
   before_action :set_assessment_setting, only: [:show, :edit, :update, :destroy]
 
-  # GET /assessment_settings
   def index
     @assessment_settings = AssessmentSetting.all
   end
 
-  # GET /assessment_settings/1
   def show
   end
 
-  # GET /assessment_settings/new
   def new
     @assessment_setting = AssessmentSetting.new
   end
 
-  # GET /assessment_settings/1/edit
   def edit
   end
 
-  # POST /assessment_settings
   def create
     @assessment_setting = AssessmentSetting.new(assessment_setting_params)
 
@@ -30,7 +31,6 @@ class Api::AssessmentSettingsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /assessment_settings/1
   def update
     if @assessment_setting.update(assessment_setting_params)
       redirect_to @assessment_setting, notice: 'Assessment setting was successfully updated.'
@@ -39,7 +39,6 @@ class Api::AssessmentSettingsController < ApplicationController
     end
   end
 
-  # DELETE /assessment_settings/1
   def destroy
     @assessment_setting.destroy
     redirect_to assessment_settings_url, notice: 'Assessment setting was successfully destroyed.'

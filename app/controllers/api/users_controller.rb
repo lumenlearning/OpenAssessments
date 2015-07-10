@@ -1,10 +1,11 @@
 class Api::UsersController < ApplicationController
   
-  before_action :validate_token
-  
   respond_to :json
 
-  before_filter :setup_will_paginate, only: [:index]
+  before_action :validate_token
+  before_action :skip_trackable
+
+  before_action :setup_will_paginate, only: [:index]
 
   load_and_authorize_resource :account
   load_and_authorize_resource :user, through: :account
