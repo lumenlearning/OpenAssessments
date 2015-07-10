@@ -34,8 +34,9 @@ class ApplicationController < ActionController::Base
         decoded_token = AuthToken.valid?(token)
 
         raise InvalidTokenError if Rails.application.secrets.auth0_client_id != decoded_token[0]["aud"]
-
-        @user = decoded_token
+        
+        @user = User.find(decoded_token[0]['user_id'])
+        sign_in(@user, :event => :authentication)
       rescue JWT::DecodeError, InvalidTokenError
         render :json => { :error => "Unauthorized: Invalid token." }, status: :unauthorized
       end
