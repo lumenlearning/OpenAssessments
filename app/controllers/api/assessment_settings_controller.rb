@@ -9,6 +9,7 @@ class Api::AssessmentSettingsController < ApplicationController
 
   def index
     @assessment_settings = AssessmentSetting.all
+    respond_with(:api, @assessment_settings)
   end
 
   def show
