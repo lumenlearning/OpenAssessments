@@ -29,7 +29,7 @@ export default {
   assessmentBackground: defines.white,
 
   shouldShowAttempts: true,
-  shouldShowProgressText: true,
+  shouldShowProgressText: false,
   shouldShowCounter: false,
   shouldShowNextPrevious: false,
   shouldShowFooter: true,

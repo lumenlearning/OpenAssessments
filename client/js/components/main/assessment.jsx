@@ -8,6 +8,7 @@ import AssessmentActions  from "../../actions/assessment";
 import Loading            from "../assessments/loading";
 import CheckUnderstanding from "../assessments/check_understanding";
 import Item               from "../assessments/item";
+import ProgressDropdown   from "../common/progress_dropdown";
 
 export default class Assessment extends BaseComponent{
  
@@ -66,14 +67,13 @@ export default class Assessment extends BaseComponent{
         backgroundColor: theme.assessmentBackground,
       },
       titleBar: {
+        padding: "10px 20px 10px 20px",
         position: "absolute",
         left: "0px",
         top: "0px",
         width: "100%",
         backgroundColor: theme.titleBarBackgroundColor,
-        paddingLeft: theme.assessmentPadding,
-        paddingRight: theme.assessmentPadding
-      }
+      },
     }
   }
 
@@ -118,9 +118,8 @@ export default class Assessment extends BaseComponent{
     return <div className="assessment" style={styles.assessment}>
       <div style={styles.titleBar}>
       {progressText}
-      <div className="progress" style={styles.progressDiv}>
-        <div className="progress-bar" role="progressbar" aria-valuenow={percentCompleted} aria-valuemin="0" aria-valuemax="100" style={{...progressStyle, ...styles.progressBar}}></div>
-      </div>
+        
+        <ProgressDropdown questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
       </div>
       <div className="section_list">
         <div className="section_container">
