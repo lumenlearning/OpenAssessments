@@ -7,16 +7,18 @@ import Validator        from "validator";
 import UserActions      from "../../actions/user";
 import _                from "lodash";
 import assign           from "object-assign";
-//import Checkbox         from "./checkbox";
+import CreateUserForm   from "./create_user_form";
+import EditUserForm     from "./edit_user_form";
 import AdminActions     from "../../actions/admin";
 import ApplicationStore from "../../stores/application";
 import AccountsStore    from "../../stores/accounts";
 import AdminStore       from "../../stores/admin";
-import EditUserForm     from "./edit_user_form";
-import Expandable       from "./expandable";
-import { Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, RaisedButton, Paper, IconButton, Checkbox} from "material-ui";
 import Defines          from "../defines";
-// import { Table, Column }        from "fixed-data-table";
+import Container        from "./container";
+import Griddle          from "griddle-react";
+import UserControls     from "./user_controls";
+import CustomGriddleRow from "./custom_griddle_row";
+import { Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, RaisedButton, Paper, IconButton, Checkbox} from "material-ui";
 
 class Users extends BaseComponent {
 
@@ -24,7 +26,7 @@ class Users extends BaseComponent {
     super(props);
     this.state = this.getState(props.params.accountId);
     this.state.currentUser = {name: "", email: "", role: ""};
-    this.stores = [AccountsStore, ApplicationStore, AdminStore];
+    this.stores = [AccountsStore, ApplicationStore];
     AdminActions.loadUsers(props.params.accountId);
   }
 
@@ -32,8 +34,7 @@ class Users extends BaseComponent {
     return {
       users          : AccountsStore.currentUsers(),
       currentAccount : AccountsStore.accountById(accountId),
-      selectedUsers  : AccountsStore.getSelectedUsers(),
-      navStatus      : AdminStore.navStatus()
+      selectedUsers  : AccountsStore.getSelectedUsers()
     };
   }
 
@@ -47,36 +48,19 @@ class Users extends BaseComponent {
     }
   }
 
-  editButtonClicked(){
-    this.setState({currentUser: AccountsStore.userById(this.state.selectedUsers[0].id)});
-    this.refs.editForm.editButtonClicked();
-
-    for(var i=0; i<this.state.users.length; i++){
-      var hash = "check-" + this.state.users[i].id;
-      this.refs[hash].setChecked(false);
-    }
-  }
-
-  deleteButtonClicked(){
-    AdminActions.deleteUsers(this.state.selectedUsers);
-    for(var i=0; i<this.state.users.length; i++){
-      var hash = "check-" + this.state.users[i].id;
-      this.refs[hash].setChecked(false);
-    }
-  }
-
-  getStyles(status){
-    var marginLeft = status ? "256px" : "0px";
+  getStyles(){
     return {
+      body: {
+        margin: "auto 100px"
+      },
+      icons: {
+        width: "100%"
+      },
       toolbarStyle: {
         backgroundColor: Defines.colors.lightGrey
       },
       titleStyle:{
         color: Defines.colors.black
-      },
-      div: {
-        marginLeft: marginLeft,
-        transition: "margin .3s"
       },
       table: {
         width: "100%"
@@ -90,37 +74,44 @@ class Users extends BaseComponent {
       },
       id: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
-        borderRight: "1px solid " + Defines.colors.lightGrey, 
+        borderRight: "1px solid " + Defines.colors.lightGrey,
+        display: "table-cell",
         width: "8%",
       },
-      avatar: {
+      name: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
-        borderRight: "1px solid " + Defines.colors.lightGrey, 
+        borderRight: "1px solid " + Defines.colors.lightGrey,
+        display: "table-cell",
         width: "8%",
       },
-      username: {
+      email: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
-        borderRight: "1px solid " + Defines.colors.lightGrey, 
+        borderRight: "1px solid " + Defines.colors.lightGrey,
+        display: "table-cell",
         width: "20%",
       },
       role: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
-        borderRight: "1px solid " + Defines.colors.lightGrey, 
+        borderRight: "1px solid " + Defines.colors.lightGrey,
+        display: "table-cell",
         width: "10%",
       },
-      sCount: {
+      signInCount: {
         borderBottom: "1px solid " + Defines.colors.lightGrey,
-        borderRight: "1px solid " + Defines.colors.lightGrey, 
-        width: "14%",
-      },
-      lastS: {
-        borderBottom: "1px solid " + Defines.colors.lightGrey,
-        borderRight: "1px solid " + Defines.colors.lightGrey, 
+        borderRight: "1px solid " + Defines.colors.lightGrey,
+        display: "table-cell",
         width: "16%",
       },
-      icons: {
-        borderBottom: "1px solid " + Defines.colors.lightGrey, 
-        width: "28%",
+      lastSignIn: {
+        borderBottom: "1px solid " + Defines.colors.lightGrey,
+        borderRight: "1px solid " + Defines.colors.lightGrey,
+        display: "table-cell",
+        width: "18%",
+      },
+      controls: {
+        borderBottom: "1px solid " + Defines.colors.lightGrey,
+        display: "table-cell",
+        width: "20%",
       },
       span: {
         display: "table-cell",
@@ -132,92 +123,67 @@ class Users extends BaseComponent {
     }
   }
 
-  toggle(e, id){
-    var ref = id + "expandable";
-    this.refs[ref].toggle()
+  addUser(){
+    this.refs.createUserForm.show();
   }
 
-  addUser(){
-    AdminActions.createUser()
+  columnMetadata(){
+    return {
+        columnNames: ["id", "name", "email", "role", "signInCount", "lastSignIn", "controls"],
+        displayNames: ["Id", "Name", "Email", "Role", "Sign In Count", "Last Sign In", ""],
+        styles: this.getStyles(),
+        customComponents: [{colId: 7, component: UserControls }],
+        useExpandable: true,
+        expandableContent: <div>This is pretty awesome</div>
+      };
   }
 
   render() {
-    var styles = this.getStyles(this.state.navStatus);
-    var headers = (
-        <tr style={styles.row}>
-          <th style={styles.id}>ID</th>
-          <th style={styles.avatar}>Avatar</th>
-          <th style={styles.username}>Username</th>
-          <th style={styles.role}>Role</th>
-          <th style={styles.sCount}>Sign In Count</th>
-          <th style={styles.lastS}>Last Sign In</th>
-          <th style={styles.icons}></th>
-        </tr>
-      )
-    var users = this.state.users.map((user, index)=>{
-      return (
-        <div>
-        <tr key={index + user.role} style={styles.row}>
-          <td style={styles.id}>{user.id}</td>
-          <td style={styles.avatar}>{user.avatar}</td>
-          <td style={styles.username}>{user.email}</td>
-          <td style={styles.role}>{user.role}</td>
-          <td style={styles.sCount}>SIGN IN COUNT</td>
-          <td style={styles.lastS}>LAST SIGN IN</td>
-          <td style={styles.icons}>
-            <span style={styles.span}> 
-              <div >
-                <RaisedButton  label="SHOW DETAILS" onClick={(e)=>{this.toggle(e, user.id)}} />
-              </div>
-            </span>
-            <span style={styles.span}>
-              <div style={styles.button}>
-                <IconButton iconStyle={styles.iconStyle} iconClassName="material-icons-action-create" />
-              </div>
-            </span>
-            <span style={styles.span}>
-              <div style={styles.button}>
-                <IconButton iconStyle={styles.iconStyle} iconClassName="material-icons-action-delete" />
-              </div>
-            </span>
-            <span style={styles.span}>
-              <div style={styles.button}>
-                <Checkbox />
-              </div>
-            </span>
-          </td>
-        </tr>        
-        <Expandable ref={user.id + "expandable"}/>
-        </div>
-        )
-    })
+    var styles = this.getStyles();
+    var user = _.where(this.state.users, { id: this.props.params.userId });
+    var editing = false;
+    if(this.context.router.isActive("userEdit")){
+      editing = true;
+    }
     return (
-      <div>
-        <div style={styles.div}>
-        <Toolbar style={styles.toolbarStyle}>
-          <ToolbarGroup key={0} float="left">
-            <ToolbarTitle style={styles.titleStyle} text="Users" />
-          </ToolbarGroup>
-          <ToolbarGroup key={1} float="right">
-            <FontIcon className="material-icons-action-search" />
-            <RaisedButton label="Create New User" onClick={()=>{addUser()}} primary={true} />
-          </ToolbarGroup>
-        </Toolbar>
-        <Paper style={styles.paper}>
-          <table style={styles.table}>
-            {headers}
-            {users}
-          </table>
-        </Paper>
-        </div>
+      <div style={styles.body}>
+        <Container>
+          <Toolbar style={styles.toolbarStyle}>
+            <ToolbarGroup key={0} float="left">
+              <ToolbarTitle style={styles.titleStyle} text="Users" />
+            </ToolbarGroup>
+            <ToolbarGroup key={1} float="right">
+              <FontIcon className="material-icons-action-search" />
+              <RaisedButton label="Create New User" onClick={()=>{this.addUser()}} primary={true} />
+            </ToolbarGroup>
+          </Toolbar>
+          <Paper style={styles.paper}>
+            <Griddle
+              metadataColumns={this.columnMetadata()}
+              results={this.state.users}
+              useCustomRowComponent={true}
+              customRowComponent={CustomGriddleRow}
+              resultsPerPage={10}
+              tableClassName="table"
+              showFilter={true}
+              showSettings={true}
+              rowHeight={70}
+              columns={["id", "name", "email", "role", "signInCount", "lastSignIn", "controls"]} />
+          </Paper>
+        </Container>
+        <EditUserForm user={user} editing={editing} accountId={this.props.params.accountId} />
+        <CreateUserForm ref="createUserForm" accountId={this.props.params.accountId} />
       </div>
     );
   }
-
 }
 
 Users.propTypes = {
   params: React.PropTypes.object.isRequired
+};
+
+Users.contextTypes = {
+  router: React.PropTypes.func.isRequired
 };
 
 module.exports = Users;

@@ -166,7 +166,7 @@ class User < ActiveRecord::Base
   # Add the user to a new role
   def add_to_role(name)
     @role_names = nil
-    role = Role.find_or_create_by_name(name)
+    role = Role.find_or_create_by(name: name)
     self.roles << role if !self.roles.include?(role) # Make sure that the user can only be put into a role once
   end
 

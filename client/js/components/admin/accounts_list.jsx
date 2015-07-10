@@ -83,7 +83,7 @@ class AccountsList extends BaseComponent {
         var param = {accountId: account.id};
         var ref = "linkTo" + account.id;
         return <li style={styles.listItem}>
-            <Link ref={ref} style={styles.listItemLink} to="account" params={param}>{account.name}</Link>
+            <Link ref={ref} style={styles.listItemLink} to="account" params={param}>{account.id + " | " + account.name  }</Link>
           </li>;
       });
 

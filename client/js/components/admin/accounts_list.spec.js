@@ -3,7 +3,7 @@
 import React              from 'react';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import AccountsList       from './accounts_list';
-import StubContext        from '../../../specs_support/stub_context'; 
+import StubContext        from '../../../specs_support/stub_context';
 
 xdescribe('accounts_list', function() {
   var accounts;
@@ -15,7 +15,7 @@ xdescribe('accounts_list', function() {
     Subject = StubContext(AccountsList, { menuItems: accounts });
     result = TestUtils.renderIntoDocument(<Subject />);
   });
-  
+
   it('renders the Accounts List', function() {
     expect(React.findDOMNode(result).textContent).toContain("TestName");
   });

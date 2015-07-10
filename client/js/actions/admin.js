@@ -52,17 +52,22 @@ export default {
     Dispatcher.dispatch({action: Constants.REMOVE_USER, payload: payload});
   },
 
-  deleteUsers(payload){
-    for(var i=0; i<payload.length; i++){
-      var url = "admin/accounts/" + payload[i].account_id + "/users/" + payload[i].id;
-      Dispatcher.dispatch({action: Constants.DELETING_USERS});
-      Api.del(Constants.DELETE_USERS, url);
-    }
-    this.loadUsers(payload[0].account_id, 1);
+  // deleteUsers(payload){
+  //   for(var i=0; i<payload.length; i++){
+  //     var url = "admin/accounts/" + payload[i].account_id + "/users/" + payload[i].id;
+  //     Dispatcher.dispatch({action: Constants.DELETING_USERS});
+  //     Api.del(Constants.DELETE_USERS, url);
+  //   }
+  //   this.loadUsers(payload[0].account_id, 1);
+  // },
+  deleteUser(user){
+    var url = "admin/accounts/" + user.account_id + "/users/" + user.id;
+    Dispatcher.dispatch({action: Constants.DELETING_USERS});
+    Api.del(Constants.DELETE_USERS, url);
   },
 
-  createUser(){
+  createUser(accountId, payload){
     Dispatcher.dispatch({action: Constants.CREATING_USER});
-    Api.post(Constants.CREATED_USER, '/admin/accounts/:account_id/users')
+    Api.post(Constants.CREATED_USER, '/admin/accounts/'+ accountId +'/users', payload);
   },
 };

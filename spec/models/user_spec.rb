@@ -238,6 +238,25 @@ describe User do
     end
   end
 
+  describe "roles" do
+    describe "add_to_role" do
+      it "adds the user to given role" do
+        user = FactoryGirl.create(:user)
+        user.add_to_role('thefoo')
+        expect(user.role?('thefoo')).to be true
+      end
+    end
+    describe "any_role?" do
+      it "checks to see if the user is any of the specified roles" do
+        user = FactoryGirl.create(:user)
+        user.add_to_role('thefoo')
+        user.add_to_role('thewall')
+        expect(user.any_role?('thewall', 'brick')).to be true
+        expect(user.any_role?('brick', 'foo')).to be false 
+      end
+    end
+  end
+
   describe 'after account creation' do
     it 'should set the current user to account_administrator' do
       @user = FactoryGirl.create(:user)

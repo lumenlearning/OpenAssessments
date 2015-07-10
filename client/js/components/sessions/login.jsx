@@ -1,13 +1,13 @@
 "use strict";
 
 import React         from "react";
-import {             Link }                     from "react-router";
 import Validator     from "validator";
 import UserActions   from "../../actions/user";
 import _             from "lodash";
 import assign        from "object-assign";
 import UserStore     from "../../stores/user";
 import BaseComponent from "../base_component";
+import { Link }      from "react-router";
 import { Paper, TextField, FlatButton, RaisedButton, FontIcon } from "material-ui";
 
 class Login extends BaseComponent {
@@ -35,8 +35,10 @@ class Login extends BaseComponent {
     e.preventDefault();
     if(this.validateAll()){
       UserActions.login({
-        email: this.refs.email.getValue(),
-        password: this.refs.password.getValue()
+        user: {
+          email: this.refs.email.getValue(),
+          password: this.refs.password.getValue()
+        }
       });
     }
   }

@@ -6,7 +6,6 @@ import BaseComponent    from "../base_component";
 import AdminActions     from "../../actions/admin";
 import { DropDownMenu } from "material-ui";
 import Defines          from "../defines";
-import Transitions     from "../../../node_modules/material-ui/src/styles/transitions";
 
 class Expandable extends BaseComponent {
    constructor(props, context){
@@ -21,13 +20,16 @@ class Expandable extends BaseComponent {
     var border = expanded ? "1px solid " + Defines.colors.lightGrey : ""
     return {
       row: {
-        borderBottom: border
+        borderBottom: border,
+        display: "table-row",
+        overflow: 'hidden',
       },
       data: {
        //Transitions.easeOut(),
         overflow: 'hidden',
         height: height,
         transition: "height .5s",
+        
       },
 
     };
@@ -64,11 +66,9 @@ class Expandable extends BaseComponent {
   render(){
     var styles = this.getStyles(this.state.expanded);
     return (
-      <tr ref="expandable" >
-        <td colSpan="7" style={styles.row}><div style={styles.data}>
-          THIS WORKS
-        </div></td>
-      </tr>
+        <div style={styles.data}>
+          <div>{this.props.children}</div>
+        </div>
       );
   }
 }

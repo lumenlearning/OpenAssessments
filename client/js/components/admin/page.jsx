@@ -86,18 +86,28 @@ class Page extends BaseComponent {
 
     var styles = this.getStyles(this.state.navStatus);
     var title = "Admin";
+    var leftNav;
+    var showMenuIconButton = false;
+    var leftIcon;
     
-    var leftIcon = <span style={styles.span}><IconButton iconStyle={styles.iconStyle} iconClassName="material-icons-action-dehaze" onTouchTap={()=>{this._onMenuIconButtonTouchTap()}}/></span>
-    //var leftIcon = <span style={styles.span}><i style={styles.iconStyle} className="material-icons" onClick={()=>{this._onMenuIconButtonTouchTap()}}>dehaze</i></span>
+    var currentRoute = _.last(this.context.router.getCurrentRoutes()).name;
+    var noNavRoutes = ["login", "logout"];
+
+    if(!_.contains(noNavRoutes, currentRoute)){
+      showMenuIconButton = true;
+      leftNav = <LeftNav ref="leftNav" docked={false} isInitiallyOpen={false} />;
+      leftIcon = <span style={styles.span}><IconButton iconStyle={styles.iconStyle} iconClassName="material-icons-action-dehaze" onTouchTap={()=>{this._onMenuIconButtonTouchTap()}}/></span>;
+    }
+
     return <AppCanvas predefinedLayout={1}>
         <AppBar
           onLeftIconButtonTouchTap={(e) => this._onMenuIconButtonTouchTap(e)}
           title={title}
           zDepth={0}
           style={styles.appBar}
-          iconElementLeft={leftIcon} />
-
-        <LeftNav ref="leftNav" />
+          iconElementLeft={leftIcon}
+          showMenuIconButton = {showMenuIconButton} />
+        {leftNav}
         <div style={styles.root}>
           <Messages />
           <div style={styles.content}>

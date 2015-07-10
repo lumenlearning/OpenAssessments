@@ -62,6 +62,6 @@ export default {
   NAV_CHANGED: "nav_changed",
 
   CLEAR_STORE: "clear_store",
-
-  LEVEL_SELECTED: "level_selected" 
+  LEVEL_SELECTED: "level_selected", 
+  CREATED_USER: "created_user"
 };

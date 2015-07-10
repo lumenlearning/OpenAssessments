@@ -18,6 +18,7 @@ class AccountDashboard extends BaseComponent {
     if(props.params.accountId){
       AdminActions.loadUsers(props.params.accountId);
     }
+
   }
 
   willTransitionTo(transition, params, query, callback) {

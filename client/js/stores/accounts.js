@@ -18,10 +18,23 @@ function loadAccounts(data){
 function loadUsers(data){
   _users = JSON.parse(data);
 }
+function addUser(data){
+  _users.push(JSON.parse(data));
+}
 
 function addToSelectedUsers(payload){
   if(checkUniquness(payload))
     _selectedUsers.push(payload);
+}
+
+function updateUsers(data){
+  var user = JSON.parse(data);
+  for(var i=0; i<_users.length; i++){
+    if(_users[i].id == user.id){
+      _users[i] = user;
+      break;
+    }
+  }
 }
 
 function removeFromSelectedUsers(payload){
@@ -88,13 +101,17 @@ Dispatcher.register(function(payload) {
       loadAccounts(payload.data.text);
 
       break;
+    case Constants.CREATED_USER:
+      addUser(payload.data.text);
+
+      break;
     case Constants.USERS_LOADED:
       loadUsers(payload.data.text);
 
       break;
     case Constants.USER_UPDATED:
       // UPDATE THE USERS LIST AND SUCH
-      _selectedUsers = [];
+      updateUsers(payload.data.text)
       break;
     case Constants.RESET_USERS:
       // reset the users list to prepare for a different account
@@ -110,7 +127,13 @@ Dispatcher.register(function(payload) {
 
     case Constants.DELETE_USERS:
       _selectedUsers = [];
+      var userToRemove = JSON.parse(payload.data.text);
+      _.remove(_users,(user)=>{
+        return user.id == userToRemove.id;
+      })
+      //_users.find(payload.data.user)
       break;
+      
     case Constants.USERS_LOADING:
 
       _currentAccountId = payload.payload;
