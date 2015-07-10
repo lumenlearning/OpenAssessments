@@ -1,8 +1,22 @@
 require 'rails_helper'
 
 describe Api::ItemResultsController do
+
+  before do
+    @account = FactoryGirl.create(:account)
+    @user = FactoryGirl.create(:user, account: @account)
+    @user.confirm!
+    
+    @admin = CreateAdminService.new.call
+    @admin.make_account_admin({account_id: @account.id})
+
+    @user_token = AuthToken.issue_token({ user_id: @user.id })
+    @admin_token = AuthToken.issue_token({ user_id: @admin.id })
+  end
+
   describe "GET 'index'" do
     before do
+      request.headers['Authorization'] = @admin_token
       @item = FactoryGirl.create(:item)
       @result1 = FactoryGirl.create(:item_result, item: @item)
       @result2 = FactoryGirl.create(:item_result, item: @item, referer: 'www.example.com')
@@ -51,6 +65,9 @@ describe Api::ItemResultsController do
   end
 
   describe "POST create" do
+    before do
+      request.headers['Authorization'] = @admin_token
+    end
     it "creates an item" do
       item_result = FactoryGirl.build(:item_result)
       post :create, id: item_result.id, confidence_level: "Maybe?", format: :json
