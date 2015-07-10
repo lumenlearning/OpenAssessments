@@ -3,7 +3,6 @@ class Admin::AccountsController < Admin::AdminController
   load_and_authorize_resource
 
   def index
-    @accounts = Account.all
     respond_to do |format|
       format.json { render json: @accounts }
     end
