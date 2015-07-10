@@ -1,5 +1,7 @@
-class Admin::AccountsController < Admin::AdminController
+class Api::AccountsController < ApplicationController
 
+  before_action :validate_token
+  
   load_and_authorize_resource
 
   def index

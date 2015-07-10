@@ -10,7 +10,10 @@ class ApplicationController < ActionController::Base
   protected
 
     rescue_from CanCan::AccessDenied do |exception|
-      redirect_to root_url, :alert => exception.message
+      respond_to do |format|
+        format.html { redirect_to root_url, alert: exception.message }
+        format.json { render json: { error: exception.message }, status: :unauthorized }
+      end
     end
 
     def configure_permitted_parameters
@@ -39,6 +42,19 @@ class ApplicationController < ActionController::Base
         sign_in(@user, :event => :authentication)
       rescue JWT::DecodeError, InvalidTokenError
         render :json => { :error => "Unauthorized: Invalid token." }, status: :unauthorized
+      end
+    end
+
+    # **********************************************
+    # Admin methods
+    #
+    def check_admin
+      if !current_user.admin?
+        respond_to do |format|
+          format.json {
+            render json: { error: "Unauthorized: User not allowed to access requested resource." }, status: :unauthorized  
+          }
+        end
       end
     end
 

@@ -1,4 +1,6 @@
-class Admin::UsersController < Admin::AdminController
+class Api::UsersController < ApplicationController
+  
+  before_action :validate_token
   
   respond_to :json
 
