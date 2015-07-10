@@ -10,7 +10,10 @@ describe('page', function() {
   var result;
 
   beforeEach(()=>{
-    Subject = StubContext(Page, {});
+    var getCurrentRoutes = () => {
+      return [{ name: 'home' }];
+    };
+    Subject = new StubContext(Page, {}, { getCurrentRoutes });
     result = TestUtils.renderIntoDocument(<Subject />);
   });
 
@@ -19,6 +22,6 @@ describe('page', function() {
   });
 
   afterEach(()=>{
-    React.unmountComponentAtNode(React.findDOMNode(result).parentNode)
+    React.unmountComponentAtNode(React.findDOMNode(result).parentNode);
   });
 });

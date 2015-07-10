@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Admin::UsersController, type: :controller do
+RSpec.describe Api::UsersController, type: :controller do
   
   before do
     

@@ -9,6 +9,7 @@ class Ability
     else
       can :read, :all
       can :manage, Assessment, :user_id => user.id
+      cannot :read, Account
       can :manage, User, :id => user.id
     end
 

@@ -9,6 +9,7 @@ import Defines              from "../defines";
 import BaseComponent        from "../base_component";
 import AdminStore           from "../../stores/admin";
 import AdminActions         from "../../actions/admin";
+import _                    from "lodash";
 
 
 var mui = require('material-ui');
@@ -23,7 +24,7 @@ class Page extends BaseComponent {
 
   constructor() {
     super();
-    this.state = this.getState()
+    this.state = this.getState();
     ThemeManager.setTheme(AdminTheme);
     this._onMenuIconButtonTouchTap = this._onMenuIconButtonTouchTap.bind(this);
     this.stores = [AdminStore];
@@ -36,14 +37,14 @@ class Page extends BaseComponent {
   }
 
   _onMenuIconButtonTouchTap() {
-    AdminActions.changeNav()
+    AdminActions.changeNav();
     this.refs.leftNav.toggle();
   }
 
   getState(){
     return {
       navStatus: AdminStore.navStatus()
-    }
+    };
   }
 
   getStyles(status){
@@ -89,14 +90,21 @@ class Page extends BaseComponent {
     var leftNav;
     var showMenuIconButton = false;
     var leftIcon;
-    
+
     var currentRoute = _.last(this.context.router.getCurrentRoutes()).name;
     var noNavRoutes = ["login", "logout"];
 
     if(!_.contains(noNavRoutes, currentRoute)){
       showMenuIconButton = true;
       leftNav = <LeftNav ref="leftNav" docked={false} isInitiallyOpen={false} />;
-      leftIcon = <span style={styles.span}><IconButton iconStyle={styles.iconStyle} iconClassName="material-icons-action-dehaze" onTouchTap={()=>{this._onMenuIconButtonTouchTap()}}/></span>;
+      leftIcon = (
+        <span style={styles.span}>
+          <IconButton
+            iconStyle={styles.iconStyle}
+            iconClassName="material-icons-action-dehaze"
+            onTouchTap={(e) => this._onMenuIconButtonTouchTap(e)}/>
+        </span>
+      );
     }
 
     return <AppCanvas predefinedLayout={1}>
