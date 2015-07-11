@@ -83,36 +83,46 @@ RSpec.describe Api::AssessmentsController, type: :controller do
       @user = FactoryGirl.create(:user)
     end
 
-    context "xml" do
+    # context "xml" do
 
-      it "denies unauthenticated requests" do
-        request.headers['Authorization'] = ""
-        request.env['RAW_POST_DATA'] = @xml
-        post :create, format: :xml
-        expect(response.status).to eq(401)
-      end
+      # it "denies unauthenticated requests" do
+      #   request.headers['Authorization'] = ""
+      #   request.env['RAW_POST_DATA'] = @xml
+      #   post :create, format: :xml
+      #   expect(response.status).to eq(401)
+      # end
       
-      it "creates an assessment xml" do
-        request.headers['Authorization'] = @admin_token
-        request.env['RAW_POST_DATA'] = @xml
-        post :create, auth_token: @user.authentication_token, format: :xml
-        expect(response).to have_http_status(201)
-      end
+      # it "creates an assessment xml" do
+      #   request.headers['Authorization'] = @admin_token
+      #   request.env['RAW_POST_DATA'] = @xml
+      #   post :create, auth_token: @user.authentication_token, format: :xml
+      #   expect(response).to have_http_status(201)
+      # end
 
-    end
+    # end
 
 
     context "json" do
       
       it "creates an assessment json" do
-        request.env['RAW_POST_DATA'] = @xml
-        post :create, auth_token: @user.authentication_token, format: :json
+        xml_file = Rack::Test::UploadedFile.new File.join(Rails.root, 'spec', 'fixtures', 'assessment.xml')
+        params = FactoryGirl.attributes_for(:assessment)
+        params[:title] = 'Test'
+        params[:description] = 'Test description'
+        params[:xml_file] = xml_file
+        params[:license] = 'test'
+        post :create, assessment: params, format: :json
         expect(response).to have_http_status(201)
       end
 
       it "should create two assessment xml objects" do
-        request.env['RAW_POST_DATA'] = @xml
-        post :create, auth_token: @user.authentication_token, format: :json
+        xml_file = Rack::Test::UploadedFile.new File.join(Rails.root, 'spec', 'fixtures', 'assessment.xml')
+        params = FactoryGirl.attributes_for(:assessment)
+        params[:title] = 'Test'
+        params[:description] = 'Test description'
+        params[:xml_file] = xml_file
+        params[:license] = 'test'
+        post :create, assessment: params, format: :json
         assessment_result = JSON.parse(response.body)
         assessment = Assessment.find(assessment_result['id'])
         expect(assessment.assessment_xmls.length).to eq(2)

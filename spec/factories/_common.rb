@@ -36,6 +36,14 @@ FactoryGirl.define do
     "a#{n}"
   end
 
+  sequence :height do |n|
+    n + 600
+  end
+
+  sequence :keywords do |n|
+    "a#{n}, b#{n}"
+  end
+
   sequence :uri do |n|
     "n#{n}.example.com"
   end
