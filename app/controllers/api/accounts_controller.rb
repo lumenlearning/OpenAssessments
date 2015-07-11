@@ -1,9 +1,4 @@
-class Api::AccountsController < ApplicationController
-
-  respond_to :json
-
-  before_action :validate_token
-  before_action :skip_trackable
+class Api::AccountsController < Api::ApiController
 
   load_and_authorize_resource
 

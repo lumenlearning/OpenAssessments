@@ -1,7 +1,4 @@
-class Api::AssessmentsController < ApplicationController
-  
-  before_action :validate_token
-  before_action :skip_trackable
+class Api::AssessmentsController < Api::ApiController
   
   respond_to :xml, :json
 

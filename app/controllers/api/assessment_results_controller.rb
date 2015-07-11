@@ -1,9 +1,4 @@
-class Api::AssessmentResultsController < ApplicationController
-
-  respond_to :json
-  
-  before_action :validate_token
-  before_action :skip_trackable
+class Api::AssessmentResultsController < Api::ApiController
 
   # TODO Might have to cheat and make this a index or show so we can use a GET request to record the data. This will avoid cross origin issues.
   def create

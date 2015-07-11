@@ -1,10 +1,5 @@
-class Api::AssessmentSettingsController < ApplicationController
+class Api::AssessmentSettingsController < Api::ApiController
 
-  respond_to :json
-
-  before_action :validate_token
-  before_action :skip_trackable
-  
   before_action :set_assessment_setting, only: [:show, :edit, :update, :destroy]
 
   def index

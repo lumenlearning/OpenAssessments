@@ -1,9 +1,6 @@
-class Api::ItemResultsController < ApplicationController
+class Api::ItemResultsController < Api::ApiController
   respond_to :json, :csv, :xml
 
-  before_action :validate_token
-  before_action :skip_trackable
-  
   def index
     scope_url = params[:url]
     scope_url = get_domain(scope_url) if params[:scope] == 'domain'

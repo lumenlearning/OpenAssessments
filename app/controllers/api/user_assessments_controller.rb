@@ -1,9 +1,4 @@
-class Api::UserAssessmentsController < ApplicationController
-  
-  respond_to :json
-
-  before_action :validate_token
-  before_action :skip_trackable
+class Api::UserAssessmentsController < Api::ApiController
   
   def update
     assessment = Assessment.find(params[:assessmentId])

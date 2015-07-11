@@ -1,10 +1,5 @@
-class Api::GradesController < ApplicationController
+class Api::GradesController < Api::ApiController
   
-  respond_to :json
-
-  before_action :validate_token
-  before_action :skip_trackable
-
   def create
 
     # store lis stuff in session
