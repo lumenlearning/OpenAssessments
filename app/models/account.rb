@@ -5,10 +5,11 @@ class Account < ActiveRecord::Base
   validates :code, uniqueness: true
   validates :code, presence: true
   validates :lti_secret, uniqueness: true
-
+  
   before_save :clean_domain
 
   has_many :users
+  has_many :assessments
 
   def clean_domain
     self.domain = "http://#{self.domain}" unless self.domain.include?("http://") || self.domain.include?("https://")

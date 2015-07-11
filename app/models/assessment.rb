@@ -10,6 +10,7 @@ class Assessment < ActiveRecord::Base
   has_many :assessment_xmls, dependent: :destroy
   has_many :assessment_outcomes
   has_many :outcomes, through: :assessment_outcomes
+  belongs_to :account
 
   has_many :assessment_settings
   has_many :user_assessments

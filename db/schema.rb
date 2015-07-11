@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150707210829) do
+ActiveRecord::Schema.define(version: 20150710233624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,8 +89,10 @@ ActiveRecord::Schema.define(version: 20150707210829) do
     t.integer  "recommended_height"
     t.string   "license"
     t.string   "keywords"
+    t.integer  "account_id"
   end
 
+  add_index "assessments", ["account_id"], name: "index_assessments_on_account_id", using: :btree
   add_index "assessments", ["identifier", "user_id"], name: "index_assessments_on_identifier_and_user_id", using: :btree
   add_index "assessments", ["src_url", "user_id"], name: "index_assessments_on_src_url_and_user_id", using: :btree
 
@@ -283,6 +285,8 @@ ActiveRecord::Schema.define(version: 20150707210829) do
     t.datetime "updated_at",             null: false
     t.string   "eid"
   end
+
+  add_index "user_assessments", ["eid"], name: "index_user_assessments_on_eid", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",        null: false
