@@ -51,13 +51,24 @@ class Api::AssessmentsController < Api::ApiController
     assessment.keyword_list.add(assessment_params[:keywords], parse: true) if assessment_params[:keywords].present?
     assessment.recommended_height = assessment_params[:recommended_height] if assessment_params[:recommended_height].present?
     assessment.src_url = assessment_params[:src_url] if assessment_params[:src_url].present?
+    if assessment_params[:account_id].present?
+      account = Account.find(assessment_params[:account_id])
+      if current_user.account_admin?(account)
+        assessment.account_id = account.id
+      else
+        render :json => { :error => "Unauthorized: Can't create assessment in this account." }, status: :unauthorized
+        return
+      end
+    end
     assessment.save!
     respond_with(:api, assessment)
   end
   private
 
   def assessment_params
-    params.require(:assessment).permit(:title, :description, :xml_file, :license, :src_url, :recommended_height, :keywords)
+    params.require(:assessment).permit(:title, :description, :xml_file, :license,
+                                       :src_url, :recommended_height, :keywords,
+                                       :account_id)
   end
 
 end
