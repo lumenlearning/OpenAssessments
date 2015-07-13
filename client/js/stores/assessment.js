@@ -211,6 +211,7 @@ Dispatcher.register(function(payload) {
           }
           _assessmentState = LOADED;
           if(!_startedAt && !SettingsStore.current().enableStart){
+            _assessmentState = STARTED;
             // set the start time for the assessment and the first question (only qti)
             if(_items[0])
             _items[0].startTime = Utils.currentTime()
@@ -303,6 +304,14 @@ Dispatcher.register(function(payload) {
       //     _answerMessageIndex = 0;
       
       // }
+      break;
+    case Constants.QUESTION_SELECTED:
+        _items[_itemIndex].timeSpent += calculateTime(_items[_itemIndex].startTime, Utils.currentTime()); 
+        _studentAnswers[_itemIndex] = _selectedAnswerIds;
+        _itemIndex = payload.index;
+        _items[_itemIndex].startTime = Utils.currentTime();
+        _selectedAnswerIds = _studentAnswers[_itemIndex];
+        _answerMessageIndex = -1;
       break;
     default:
       return true;

@@ -25,6 +25,7 @@ export default {
   EDX_LOAD_SECTION: "edx_load_section",
   EDX_LOAD_ITEM: "edx_load_item",
   EDX_LOAD_ASSESSMENT: "edx_load_assessment",
+  QUESTION_SELECTED: "question_selected",
 
   ADD_MESSAGE: "add_message",
   REMOVE_MESSAGE: "remove_message",

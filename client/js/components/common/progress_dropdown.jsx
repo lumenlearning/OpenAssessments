@@ -4,6 +4,8 @@ import React              from 'react';
 import AssessmentActions  from "../../actions/assessment";
 import AssessmentStore    from "../../stores/assessment";
 import BaseComponent      from "../base_component";
+import ProgressListItem   from "./progress_list_item";
+
 export default class ProgressDropdown extends BaseComponent{
   
   constructor(props, context){
@@ -26,6 +28,7 @@ export default class ProgressDropdown extends BaseComponent{
   }
 
   mouseOver(e){
+    e.preventDefault()
     console.log(e)
     e.target.style.backgroundColor = "grey";
     e.target.style.color = "white";
@@ -78,6 +81,10 @@ export default class ProgressDropdown extends BaseComponent{
         padding: "10px",
         cursor: "pointer",
         zIndex: "10"
+      },
+      h5: {
+        backgroundColor: "transparent",
+        color: "inherit"
       }
 
     }
@@ -86,16 +93,12 @@ export default class ProgressDropdown extends BaseComponent{
     var expanded = (this.state && this.state.expanded);
     var styles = this.getStyles(this.context.theme, expanded);
     var questions = this.props.questions.map((question, index)=>{
-      return(  
-              <div style={styles.li} key={"li" + index} onClick={(e)=>{this.selectQuestion(e,index)}} >
-                <h5>Question {index + 1}</h5>
-                <span>{question.material}</span>
-              </div>)
+      return <ProgressListItem question={question} index={index} toggle={this.navButtonClicked}/>
     })
     return (
       <span >
         <img style={styles.icon}src={require("../../../../app/assets/fonts/ProgressIcon.svg")} />
-        <button style={styles.dropdownButton} className="btn" type="button" aria-haspopup="true" aria-expanded="true" onClick={()=>{this.navButtonClicked()}} >
+        <button style={styles.dropdownButton} className="btn" type="button" aria-haspopup="true" aria-expanded="true" onClick={()=>{this.navButtonClicked()}}>
           <div>Progress</div>
           <span><b>You are on question {this.props.currentQuestion} of {this.props.questionCount}</b></span>
           <span style={styles.caret} className="caret"></span>

@@ -51,6 +51,10 @@ export default {
     Dispatcher.dispatch({action: Constants.ANSWER_SELECTED, item: item});
   },
 
+  selectQuestion(index){
+    Dispatcher.dispatch({action: Constants.QUESTION_SELECTED, index: index});
+  },
+
   checkAnswer(){
     Dispatcher.dispatch({ action: Constants.ASSESSMENT_CHECK_ANSWER });
   },
