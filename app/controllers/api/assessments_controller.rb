@@ -64,9 +64,45 @@ class Api::AssessmentsController < Api::ApiController
     assessment.save!
     respond_with(:api, assessment)
   end
+  
+  def update
+    assessment = Assessment.find(params[:id])
+    input_xml = update_params[:xml_file].present? ? update_params[:xml_file].read : ""
+    assessment.title = update_params[:title] if update_params[:title].present?
+    assessment.description = update_params[:description] if update_params[:description].present?
+    assessment.license = update_params[:license] if update_params[:license].present?
+    assessment.keyword_list.add(update_params[:keywords], parse: true) if update_params[:keywords].present?
+    assessment.recommended_height = update_params[:recommended_height] if update_params[:recommended_height].present?
+    assessment.src_url = update_params[:src_url] if update_params[:src_url].present?
+    if input_xml.length > 0
+      assessment.assessment_xmls.destroy_all()
+      assessment.assessment_xmls.create!(
+        xml: input_xml,
+        kind: "formative"
+      )
+      # Create a summative xml entry (no answers in xml)
+      sumative_xml = input_xml
+      sumative_xml.gsub! /<conditionvar>(.*?)<\/conditionvar>/m, ''
+      assessment.assessment_xmls.create!(
+        xml: sumative_xml,
+        kind: "summative"
+      )
+    end
+    assessment.save!
+    respond_with(:api, assessment)
+  end 
+
   private
 
+
+
   def assessment_params
+    params.require(:assessment).permit(:title, :description, :xml_file, :license,
+                                       :src_url, :recommended_height, :keywords,
+                                       :account_id)
+  end
+
+  def update_params
     params.require(:assessment).permit(:title, :description, :xml_file, :license,
                                        :src_url, :recommended_height, :keywords,
                                        :account_id)
