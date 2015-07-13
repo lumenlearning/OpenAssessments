@@ -1,11 +1,5 @@
-<<<<<<< Updated upstream
+
 class Api::AssessmentsController < Api::ApiController
-=======
-class Api::AssessmentsController < ApplicationController
-  skip_before_filter :verify_authenticity_token
-  # before_action :validate_token
-  before_action :skip_trackable
->>>>>>> Stashed changes
   
   respond_to :xml, :json
 
