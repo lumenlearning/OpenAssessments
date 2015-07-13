@@ -41,10 +41,18 @@ class AssessmentsController < ApplicationController
     end
     if params[:id].present? && !['load', 'offline'].include?(params[:id])
       @assessment = Assessment.find(params[:id])
+      @assessment_id = @assessment ? @assessment.id : params[:assessment_id] || 'null'
+      @assessment_settings = params[:asid] ? AssessmentSetting.find(params[:asid]) : nil;
+      if @assessment_settings.present?
+        @style = @style != "" ? @style : @assessment_settings[:style] || ""
+        @enable_start = params[:enable_start] ?  @enable_start : @assessment_settings[:enable_start] || false
+        @confidence_levels = params[:confidence_levels] ?  @confidence_levels : @assessment_settings[:confidence_levels] || false
+        @per_sec = @per_sec ? @per_sec : @assessment_settings[:per_sec] || ""
+      end
       if params[:user_id].present?
         @user_assessment = @assessment.user_assessments.where(eid: params[:user_id]).first
         if !@user_assessment.nil?
-          @user_attempts = @user_assessment.attempts
+          @user_attempts = @user_assessment.attempts || 0
         else
           @user_assessment = @assessment.user_assessments.create({
             :eid => params[:user_id],
@@ -59,7 +67,7 @@ class AssessmentsController < ApplicationController
         @src_url = embed_url(@assessment)
       else
         # Show the full page with analtyics and embed code buttons
-        @embed_code = embed_code(@assessment, @confidence_levels, @eid, @enable_start, params[:offline].present?, nil, @style, params[:asid], params[:per_sec])
+        @embed_code = embed_code(@assessment, @confidence_levels, @eid, @enable_start, params[:offline].present?, nil, @style, params[:asid], @per_sec)
       end
     else
       # Get the remote url where we can download the qti
@@ -70,8 +78,8 @@ class AssessmentsController < ApplicationController
       end
 
     end
-    @assessment_id = @assessment ? @assessment.id : params[:assessment_id] || 'null'
-    @assessment_settings = params[:asid] ? AssessmentSetting.find(params[:asid]) : nil;
+
+
     if params[:offline].present? && @src_url.present?
       @src_data = open(@src_url).read
       xml = EdxSequentialParser.parse(@src_data)
