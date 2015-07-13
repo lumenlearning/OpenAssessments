@@ -176,13 +176,6 @@ class ApplicationController < ActionController::Base
 
     end
 
-    def find_external_identifier(url)
-      return nil unless url.present?
-      @provider = UrlHelper.host(url)
-      @identifier = params[:user_id]
-      ExternalIdentifier.find_by(provider: @provider, identifier: @identifier)
-    end
-
     # **********************************************
     #
     # Account related functionality:
