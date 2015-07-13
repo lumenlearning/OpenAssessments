@@ -28,6 +28,8 @@ export default {
   assessmentPadding: "20px",
   assessmentBackground: defines.white,
 
+  progressDropdownBoxShadow: "0px 0px 20px 0px rgba(0,0,0,0.2)",
+
   shouldShowAttempts: true,
   shouldShowProgressText: false,
   shouldShowCounter: false,

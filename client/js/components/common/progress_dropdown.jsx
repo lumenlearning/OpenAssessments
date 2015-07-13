@@ -12,10 +12,6 @@ export default class ProgressDropdown extends BaseComponent{
 
   }
 
-  answerSelected(){
-    AssessmentActions.answerSelected(this.props.item);
-  }
-
   navButtonClicked(){
     if(this.state && this.state.expanded){
       this.setState({expanded: !this.state.expanded})
@@ -25,29 +21,46 @@ export default class ProgressDropdown extends BaseComponent{
     
   }
 
+  selectQuestion(e,index){
+    console.log(index);
+  }
+
+  mouseOver(e){
+    console.log(e)
+    e.target.style.backgroundColor = "grey";
+    e.target.style.color = "white";
+  }
+
+  mouseOut(e){
+    console.log(e)
+    e.target.style.backgroundColor = "white";
+    e.target.style.color = "black";
+  }
+
   getStyles(theme, expanded){
     return {
       dropdownStyle: {
-        overflow: "hidden",
-        height: expanded ? "200px" : "0px",
+        overflow: expanded ? "scroll" : "hidden",
+        height: expanded ? "228px" : "0px",
         backgroundColor: "white",
         transition: "all 0.4s",
-        borderRadius: "4px",
-        boxShadow: expanded ? theme.assessmentContainerBoxShadow : "",
+        boxShadow: expanded ? theme.progressDropdownBoxShadow : "",
         position: "absolute",
-        top: "65px",
+        top: "63px",
         left: "82px",
-        width: "calc(100% - 103px)",
+        width: "calc(100% - 102px)",
         zIndex: "10",
         listStyleType: "none"
       },
       dropdownButton: {
         width: "calc(100% - 62px)",
         textAlign: "start",
-        hover: "none !important",
         padding: "5px",
         dislpay: "inline-block",
-        marginLeft: "10px"
+        marginLeft: "10px",
+        backgroundColor: "white !important",
+        borderRadius: "0px",
+        boxShadow: theme.progressDropdownBoxShadow,
       },
       caret: {
         float: "right"
@@ -61,7 +74,10 @@ export default class ProgressDropdown extends BaseComponent{
         dislay: "inline-block"
       },
       li: {
-        borderBottom: "1px solid grey"
+        borderBottom: "1px solid grey",
+        padding: "10px",
+        cursor: "pointer",
+        zIndex: "10"
       }
 
     }
@@ -71,22 +87,22 @@ export default class ProgressDropdown extends BaseComponent{
     var styles = this.getStyles(this.context.theme, expanded);
     var questions = this.props.questions.map((question, index)=>{
       return(  
-              <li style={styles.li} key={"li" + index}>
+              <div style={styles.li} key={"li" + index} onClick={(e)=>{this.selectQuestion(e,index)}} >
                 <h5>Question {index + 1}</h5>
-                <a href="#">{question.material}</a>
-              </li>)
+                <span>{question.material}</span>
+              </div>)
     })
     return (
       <span >
         <img style={styles.icon}src={require("../../../../app/assets/fonts/ProgressIcon.svg")} />
-        <button style={styles.dropdownButton} className="btn btn-default dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="true" onClick={()=>{this.navButtonClicked()}}>
+        <button style={styles.dropdownButton} className="btn" type="button" aria-haspopup="true" aria-expanded="true" onClick={()=>{this.navButtonClicked()}} >
           <div>Progress</div>
           <span><b>You are on question {this.props.currentQuestion} of {this.props.questionCount}</b></span>
           <span style={styles.caret} className="caret"></span>
         </button>
-        <ul style={styles.dropdownStyle}aria-labelledby="dropdownMenu1">
+        <div style={styles.dropdownStyle} aria-labelledby="dropdownMenu1">
           {questions}
-        </ul>
+        </div>
       </span>
     );
   }

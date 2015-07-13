@@ -1,4 +1,11 @@
+<<<<<<< Updated upstream
 class Api::AssessmentsController < Api::ApiController
+=======
+class Api::AssessmentsController < ApplicationController
+  skip_before_filter :verify_authenticity_token
+  # before_action :validate_token
+  before_action :skip_trackable
+>>>>>>> Stashed changes
   
   respond_to :xml, :json
 
@@ -33,7 +40,7 @@ class Api::AssessmentsController < Api::ApiController
   # => set to "lumen_learning" to use the lumen learning theme. Leave out for default style
   # asid
   # => give it an id to load an assessment setting which determines how many attempts a studen has to take the quiz. Right now there is no
-  #    way to create one of these so if you need one you can find the assessment you want in the database and create one by doing .assessment_settings.create({attempts: n})
+  #    way to create one of these so if you need one you can find the assessment you want in the database and create one by doing .assessment_settings.create({allowed_attempts: n})
   # per_sec
   # => give it the number of random questions from each section you want.
   # confidence_levels
