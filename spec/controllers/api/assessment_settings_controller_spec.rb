@@ -17,6 +17,7 @@ describe Api::AssessmentSettingsController do
   describe "GET index" do
     before do
       request.headers['Authorization'] = @user_token
+      @assessment = Assessment.create(FactoryGirl.attributes_for(:assessment))
       @assessment_setting = AssessmentSetting.create({allowed_attempts: 10})
     end
 
@@ -26,7 +27,23 @@ describe Api::AssessmentSettingsController do
     end
   end
   describe "POST create" do
-    
+    before do
+      request.headers['Authorization'] = @user_token
+      @assessment = Assessment.create(FactoryGirl.attributes_for(:assessment))
+    end
+    it "should create a valid assessement setting" do
+      params = {
+        allowed_attempts: 10,
+        per_sec: 2,
+        confidence_levels: true,
+        enable_start: true,
+        style: "lumen_learning",
+        assessment_id: @assessment.id
+      }
+      post :create, assessment_setting: params, format: :json
+      expect(response).to have_http_status(:success)
+    end
+
   end
 
 end

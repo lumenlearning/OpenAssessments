@@ -19,12 +19,8 @@ class Api::AssessmentSettingsController < Api::ApiController
 
   def create
     @assessment_setting = AssessmentSetting.new(assessment_setting_params)
-
-    if @assessment_setting.save
-      redirect_to @assessment_setting, notice: 'Assessment setting was successfully created.'
-    else
-      render :new
-    end
+    @assessment_setting.save!
+    respond_with(:api, @assessment_setting)
   end
 
   def update
@@ -48,6 +44,6 @@ class Api::AssessmentSettingsController < Api::ApiController
 
     # Only allow a trusted parameter "white list" through.
     def assessment_setting_params
-      params[:assessment_setting]
+      params[:assessment_setting].permit(:per_sec, :allowed_attempts, :style, :assessment_id, :enable_start, :confidence_levels)
     end
 end
