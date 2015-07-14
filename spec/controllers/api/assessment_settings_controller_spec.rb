@@ -46,4 +46,37 @@ describe Api::AssessmentSettingsController do
 
   end
 
+  describe "PUT 'update'" do
+    before do
+      request.headers['Authorization'] = @user_token
+      @assessment = Assessment.create(FactoryGirl.attributes_for(:assessment))
+      params = {
+        allowed_attempts: 10,
+        per_sec: 2,
+        confidence_levels: true,
+        enable_start: true,
+        style: "lumen_learning",
+        assessment_id: @assessment.id
+      }
+      @assessment_setting = AssessmentSetting.create(params)
+    end
+    it "should update the assessment settings" do
+      params = {
+        allowed_attempts: 11,
+        per_sec: 3,
+        confidence_levels: false,
+        enable_start: false,
+        style: "oea",
+        assessment_id: @assessment.id
+      }
+      put :update, id: @assessment_setting.id, assessment_setting: params, format: :json
+      assessment_setting = AssessmentSetting.find(@assessment_setting.id)
+      expect(assessment_setting.allowed_attempts).to eq(11)
+      expect(assessment_setting.per_sec).to eq("3")
+      expect(assessment_setting.confidence_levels).to eq(false)
+      expect(assessment_setting.enable_start).to eq(false)
+      expect(assessment_setting.style).to eq("oea")
+    end
+  end
+
 end
