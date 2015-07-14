@@ -32,7 +32,9 @@
             </li>
           <% else %>
             <li class="<%= 'active' if current_page?('/users/sign_in') %>" ><%= link_to "SIGN IN", new_user_session_path %></li>
-            <li class="<%= 'active' if current_page?('/users/sign_up') %>" ><%= link_to "SIGN UP", new_user_registration_path %></li>
+            <% if !current_account.restrict_signup %>
+              <li class="<%= 'active' if current_page?('/users/sign_up') %>" ><%= link_to "SIGN UP", new_user_registration_path %></li>
+            <% end -%>
           <% end %>
         </ul>
       </div><!--/.nav-collapse -->
