@@ -118,7 +118,6 @@ class Api::GradesController < Api::ApiController
     success = res.success?
       
     # Ping analytics server
-
     respond_to do |format|
       format.json { render json: graded_assessment }
     end
