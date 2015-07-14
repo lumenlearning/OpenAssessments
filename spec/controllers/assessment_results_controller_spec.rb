@@ -3,7 +3,7 @@ require 'rails_helper'
 describe AssessmentResultsController do
 
   describe "GET show" do
-    let(:assessment){ make_assessment }
+    let(:assessment){ create_assessment }
 
     it "returns http success" do
       get :show, :id => assessment.id

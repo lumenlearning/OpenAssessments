@@ -8,7 +8,7 @@ class AssessmentsController < ApplicationController
   before_filter :authenticate_user!, only: [:new, :create, :destroy]
   before_filter :check_lti, only: [:show]
 
-  load_and_authorize_resource except: [:index, :show, :create]
+  load_and_authorize_resource except: [:index, :show]
 
   respond_to :html
 
@@ -107,12 +107,8 @@ class AssessmentsController < ApplicationController
   end
 
   def create
-    xml = assessment_params[:xml_file].read
-    @assessment = Assessment.from_xml(xml, current_user)
-    @assessment.title = assessment_params[:title] if assessment_params[:title].present?
-    @assessment.description = assessment_params[:description] if assessment_params[:description].present?
-    @assessment.license = assessment_params[:license] if assessment_params[:license].present?
-    @assessment.keyword_list.add(assessment_params[:keywords], parse: true) if assessment_params[:keywords].present?
+    @assessment.user = current_user
+    @assessment.account = current_account
     @assessment.save!
     respond_with(@assessment)
   end

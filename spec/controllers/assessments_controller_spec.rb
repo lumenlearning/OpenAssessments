@@ -4,7 +4,7 @@ RSpec.describe AssessmentsController, type: :controller do
   
   before do
     @account = setup_lti_account
-    @assessment = make_assessment
+    @assessment = create_assessment
 
     allow(controller).to receive(:current_account).and_return(@account)
     allow(Account).to receive(:find_by).with(:lti_key).and_return(@account)
@@ -12,6 +12,8 @@ RSpec.describe AssessmentsController, type: :controller do
     @user = FactoryGirl.create(:user, account: @account)
     @external_identifier = FactoryGirl.create(:external_identifier, user: @user, identifier: "292832126") # identifier is from lti_params in support/lti.rb
     @lti_url = 'school.edu'
+
+    allow(controller).to receive(:current_account).and_return(@account)
   end
 
   describe "GET index" do

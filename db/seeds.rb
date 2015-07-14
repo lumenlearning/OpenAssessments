@@ -35,7 +35,18 @@ Dir.glob("db/qti/*") do |f|
   puts "Adding QTI file #{f}"
   puts "****************************************************************"
   xml_file = File.open(f, "rb").read
-  Assessment.from_xml(xml_file, admin, nil, nil, f)
+  if assessment = Assessment.find_by(title: f)
+    assessment.title = f
+    assessment.xml_file = xml_file
+    assessment.user = admin
+    assessment.save!
+  else
+    Assessment.create!(
+      title: f,
+      xml_file: xml_file,
+      user: admin
+    )
+  end
 end
 
 if assessment = Assessment.find_by(title: 'drupal.xml')

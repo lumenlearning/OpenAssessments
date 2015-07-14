@@ -3,6 +3,8 @@ class Api::AssessmentsController < Api::ApiController
   
   respond_to :xml, :json
 
+  load_and_authorize_resource
+
   def index
     page = (params[:page] || 1).to_i
     per_page = 100
@@ -44,68 +46,29 @@ class Api::AssessmentsController < Api::ApiController
   # ********************************************************************
 
   def create
-    xml = assessment_params[:xml_file].read
-    assessment = Assessment.from_xml(xml, current_user)
-    assessment.title = assessment_params[:title] if assessment_params[:title].present?
-    assessment.description = assessment_params[:description] if assessment_params[:description].present?
-    assessment.license = assessment_params[:license] if assessment_params[:license].present?
-    assessment.keyword_list.add(assessment_params[:keywords], parse: true) if assessment_params[:keywords].present?
-    assessment.recommended_height = assessment_params[:recommended_height] if assessment_params[:recommended_height].present?
-    assessment.src_url = assessment_params[:src_url] if assessment_params[:src_url].present?
-    if assessment_params[:account_id].present?
-      account = Account.find(assessment_params[:account_id])
-      if current_user.account_admin?(account)
-        assessment.account_id = account.id
-      else
-        render :json => { :error => "Unauthorized: Can't create assessment in this account." }, status: :unauthorized
-        return
-      end
-    end
-    assessment.save!
-    respond_with(:api, assessment)
+    @assessment.user = current_user
+    @assessment.account = current_account
+    @assessment.save!
+    respond_with(:api, @assessment)
   end
   
   def update
-    assessment = Assessment.find(params[:id])
-    input_xml = update_params[:xml_file].present? ? update_params[:xml_file].read : ""
-    assessment.title = update_params[:title] if update_params[:title].present?
-    assessment.description = update_params[:description] if update_params[:description].present?
-    assessment.license = update_params[:license] if update_params[:license].present?
-    assessment.keyword_list.add(update_params[:keywords], parse: true) if update_params[:keywords].present?
-    assessment.recommended_height = update_params[:recommended_height] if update_params[:recommended_height].present?
-    assessment.src_url = update_params[:src_url] if update_params[:src_url].present?
-    if input_xml.length > 0
-      assessment.assessment_xmls.destroy_all()
-      assessment.assessment_xmls.create!(
-        xml: input_xml,
-        kind: "formative"
-      )
-      # Create a summative xml entry (no answers in xml)
-      sumative_xml = input_xml
-      sumative_xml.gsub! /<conditionvar>(.*?)<\/conditionvar>/m, ''
-      assessment.assessment_xmls.create!(
-        xml: sumative_xml,
-        kind: "summative"
-      )
-    end
-    assessment.save!
-    respond_with(:api, assessment)
+    @assessment.save!
+    respond_with(:api, @assessment)
   end 
 
   private
 
+    def create_params
+      params.require(:assessment).permit(:title, :description, :license, :xml_file,
+                                         :src_url, :recommended_height, :keywords,
+                                         :account_id)
+    end
 
-
-  def assessment_params
-    params.require(:assessment).permit(:title, :description, :xml_file, :license,
-                                       :src_url, :recommended_height, :keywords,
-                                       :account_id)
-  end
-
-  def update_params
-    params.require(:assessment).permit(:title, :description, :xml_file, :license,
-                                       :src_url, :recommended_height, :keywords,
-                                       :account_id)
+    def update_params
+      params.require(:assessment).permit(:title, :description, :license, :xml_file,
+                                         :src_url, :recommended_height, :keywords,
+                                         :account_id)
   end
 
 end

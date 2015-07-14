@@ -12,6 +12,8 @@ RSpec.describe Api::AccountsController, type: :controller do
 
     @user_token = AuthToken.issue_token({ user_id: @user.id })
     @admin_token = AuthToken.issue_token({ user_id: @admin.id })
+
+    allow(controller).to receive(:current_account).and_return(@account)
   end
 
   context "as user" do

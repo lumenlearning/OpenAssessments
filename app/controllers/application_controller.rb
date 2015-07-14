@@ -282,6 +282,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+    def current_ability
+      @current_ability ||= Ability.new(current_user, current_account)
+    end
+
     def user_not_authorized
       render :file => "public/401.html", :status => :unauthorized
     end
