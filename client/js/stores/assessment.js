@@ -283,7 +283,6 @@ Dispatcher.register(function(payload) {
       break;
 
     case Constants.ASSESSMENT_GRADED:
-      
       parseAssessmentResult(payload.data.text);
       break;
     case Constants.ASSESSMENT_SUBMITTED:
@@ -296,6 +295,9 @@ Dispatcher.register(function(payload) {
       break;
     case Constants.LEVEL_SELECTED:
       _items[_itemIndex].confidenceLevel = payload.level;
+      if(payload.index ==  _items.length - 1){
+        _studentAnswers[_itemIndex] = _selectedAnswerIds;
+      }
       // if(SettingsStore.current().kind == "formative"){
       //   var answer = checkAnswer();
       //   if(answer != null && answer.correct)

@@ -4,6 +4,7 @@ import React              from 'react';
 import BaseComponent      from "../base_component";
 import AssessmentActions  from "../../actions/assessment";
 import UniversalInput     from "./universal_input";
+import AssessmentStore    from "../../stores/assessment";
 
 
 export default class Item extends BaseComponent{
@@ -22,9 +23,9 @@ export default class Item extends BaseComponent{
     AssessmentActions.previousQuestion();
   }
 
-  confidenceLevelClicked(e){
+  confidenceLevelClicked(e, currentIndex){
     e.preventDefault()
-    AssessmentActions.selectConfidenceLevel(e.target.value);
+    AssessmentActions.selectConfidenceLevel(e.target.value, currentIndex);
     AssessmentActions.nextQuestion(); 
   }
 
@@ -44,6 +45,7 @@ export default class Item extends BaseComponent{
     var questionsNotAnswered = [];
     for (var i = 0; i < this.props.studentAnswers.length; i++) {
       if(this.props.studentAnswers[i] == null || this.props.studentAnswers[i].length == 0){
+        
         questionsNotAnswered.push(i+1);
       }
     };
@@ -176,8 +178,8 @@ export default class Item extends BaseComponent{
       return    (<div className="confidence_wrapper" style={styles.confidenceWrapper}>
                   {levelMessage}
                   <input type="button" style={styles.maybeButton}className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e) }}/>
-                  <input type="button" style={{...styles.margin, ...styles.probablyButton}} className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e) }}/>
-                  <input type="button" style={{...styles.margin, ...styles.definitelyButton}} className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e) }}/>
+                  <input type="button" style={{...styles.margin, ...styles.probablyButton}} className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentIndex) }}/>
+                  <input type="button" style={{...styles.margin, ...styles.definitelyButton}} className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentIndex) }}/>
                 </div>
                 );
     } else {

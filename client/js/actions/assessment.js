@@ -61,8 +61,8 @@ export default {
     Dispatcher.dispatch({ action: Constants.ASSESSMENT_CHECK_ANSWER });
   },
 
-  selectConfidenceLevel(level){
-    Dispatcher.dispatch({action: Constants.LEVEL_SELECTED, level: level});
+  selectConfidenceLevel(level, index){
+    Dispatcher.dispatch({action: Constants.LEVEL_SELECTED, level: level, index: index});
   },
   
   submitAssessment(identifier, assessmentId, questions, studentAnswers, settings){
@@ -76,7 +76,7 @@ export default {
         settings     : settings
       }
     }
-    Api.post(Constants.ASSESSMENT_GRADED,'/api/grades', body);
+    Api.post(Constants.ASSESSMENT_GRADED,'api/grades', body);
   },
 
   nextQuestion(){
