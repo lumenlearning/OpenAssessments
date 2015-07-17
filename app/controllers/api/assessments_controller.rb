@@ -53,7 +53,7 @@ class Api::AssessmentsController < Api::ApiController
   end
   
   def update
-    @assessment.save!
+    @assessment.update(update_params)
     respond_with(:api, @assessment)
   end 
 
@@ -61,13 +61,13 @@ class Api::AssessmentsController < Api::ApiController
 
     def create_params
       params.require(:assessment).permit(:title, :description, :license, :xml_file,
-                                         :src_url, :recommended_height, :keywords,
+                                         :src_url, :recommended_height, :keyword_list,
                                          :account_id)
     end
 
     def update_params
       params.require(:assessment).permit(:title, :description, :license, :xml_file,
-                                         :src_url, :recommended_height, :keywords,
+                                         :src_url, :recommended_height, :keyword_list,
                                          :account_id)
   end
 

@@ -7,7 +7,6 @@ class AssessmentsController < ApplicationController
   before_filter :skip_trackable
   before_filter :authenticate_user!, only: [:new, :create, :destroy]
   before_filter :check_lti, only: [:show]
-
   load_and_authorize_resource except: [:index, :show]
 
   respond_to :html
@@ -130,7 +129,7 @@ class AssessmentsController < ApplicationController
     end
 
     def assessment_params
-      params.require(:assessment).permit(:title, :description, :xml_file, :license, :keywords)
+      params.require(:assessment).permit(:title, :description, :xml_file, :license, :keyword_list)
     end
 
     def check_lti
