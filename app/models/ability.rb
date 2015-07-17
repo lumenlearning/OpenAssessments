@@ -31,14 +31,18 @@ class Ability
 
     user ||= User.new # guest user (not logged in)
 
-    can :manage, :all if user.admin?
     basic(user, account)
+    admin(user, account) if user.admin?
     account_admin(user, account) if account.present? && user.account_admin?(account)
 
   end
 
   def basic(user, account)
     can :manage, User, id: user.id
+  end
+
+  def admin(user, account)
+    can :manage, :all
   end
 
   def account_admin(user, account)
