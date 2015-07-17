@@ -1,5 +1,7 @@
 class Api::AccountsController < Api::ApiController
 
+  before_action :validate_token
+
   load_and_authorize_resource
 
   def index
