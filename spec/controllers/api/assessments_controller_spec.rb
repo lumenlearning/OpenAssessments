@@ -6,6 +6,8 @@ RSpec.describe Api::AssessmentsController, type: :controller do
     @xml = open(file).read
 
     @account = FactoryGirl.create(:account)
+    @account.restrict_assessment_create = false
+    @account.save!
     @user = FactoryGirl.create(:user, account: @account)
     @user.confirm!
     

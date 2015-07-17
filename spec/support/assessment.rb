@@ -2,7 +2,7 @@ def create_assessment(assessment_options = {})
   assessment = FactoryGirl.create(:assessment, assessment_params(assessment_options))
 end
 
-def build_assessment(assessment_options)
+def build_assessment(assessment_options = {})
   assessment = FactoryGirl.build(:assessment, assessment_params(assessment_options))
 end
 

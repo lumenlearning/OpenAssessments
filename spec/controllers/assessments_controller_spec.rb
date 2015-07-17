@@ -13,6 +13,12 @@ RSpec.describe AssessmentsController, type: :controller do
     @external_identifier = FactoryGirl.create(:external_identifier, user: @user, identifier: "292832126") # identifier is from lti_params in support/lti.rb
     @lti_url = 'school.edu'
 
+    @admin = CreateAdminService.new.call
+    @admin.make_account_admin({account_id: @account.id})
+
+    @user_token = AuthToken.issue_token({ user_id: @user.id })
+    @admin_token = AuthToken.issue_token({ user_id: @admin.id })
+
     allow(controller).to receive(:current_account).and_return(@account)
   end
 
@@ -74,7 +80,9 @@ RSpec.describe AssessmentsController, type: :controller do
     login_user
 
     describe "CREATE - Valid Params" do
-      
+      before do
+        request.headers['Authorization'] = @admin_token
+      end
       it "should return a valid assessment" do
         xml_file = Rack::Test::UploadedFile.new File.join(Rails.root, 'spec', 'fixtures', 'assessment.xml')
         params = FactoryGirl.attributes_for(:assessment)
@@ -87,18 +95,24 @@ RSpec.describe AssessmentsController, type: :controller do
       end  
 
       it "sets a license and keywords" do
+        @account.restrict_signup = false
+        @account.restrict_assessment_create = false
         xml_file = Rack::Test::UploadedFile.new File.join(Rails.root, 'spec', 'fixtures', 'assessment.xml')
-        assessment = FactoryGirl.attributes_for(:assessment).merge({xml_file: xml_file, license: "foo license", keywords: "foo keywords"} )
+        assessment = FactoryGirl.attributes_for(:assessment).merge({title: "test", xml_file: xml_file, license: "foo license", keyword_list: "foo, keywords"} )
         post :create, assessment: assessment
-        expect(assigns(:assessment).license).to eq("foo license")
-        expect(assigns(:assessment).keyword_list).to eq(["foo keywords"])
+        result = Assessment.where({title: "test"}).first
+        expect(result.license).to eq("foo license")
+        expect(result.keyword_list).to eq(["keywords","foo"])
       end
 
       it "sets creates two assessment xmls" do
+        @account.restrict_signup = false
+        @account.restrict_assessment_create = false
         xml_file = Rack::Test::UploadedFile.new File.join(Rails.root, 'spec', 'fixtures', 'assessment.xml')
-        assessment = FactoryGirl.attributes_for(:assessment).merge({xml_file: xml_file, license: "foo license", keywords: "foo keywords"} )
+        assessment = FactoryGirl.attributes_for(:assessment).merge({title: "test", xml_file: xml_file, license: "foo license", keyword_list: "foo keywords"} )
         post :create, assessment: assessment
-        expect(assigns(:assessment).assessment_xmls.length).to eq(2)
+        assessment = Assessment.where({title: "test"}).first
+        expect(assessment.assessment_xmls.length).to eq(2)
       end
     end
 

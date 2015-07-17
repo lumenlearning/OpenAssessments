@@ -57,7 +57,7 @@ describe Assessment do
     it 'should add keywords to assessment' do
       keyword = FactoryGirl.generate(:name)
       @assessment.keyword_list.add(keyword, parse: true)
-      @assessment.save
+      @assessment.save!
       expect(Assessment.tagged_with(keyword).first).to eq(@assessment)
     end
   end
