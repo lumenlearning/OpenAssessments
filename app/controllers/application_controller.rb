@@ -101,13 +101,6 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def find_external_identifier(url)
-      return nil unless url.present?
-      @provider = UrlHelper.host(url)
-      @identifier = params[:custom_canvas_user_id] || params[:user_id]
-      ExternalIdentifier.find_by(provider: @provider, identifier: @identifier)
-    end
-
     def create_external_identifier_with_url(auth, user)
       json = Yajl::Parser.parse(auth['json_response'])
       key = UrlHelper.host(json['info']['url'])
@@ -118,15 +111,23 @@ class ApplicationController < ActionController::Base
     #
     # LTI related functionality:
     #
+    def lti_provider
+      params[:tool_consumer_instance_guid] ||
+      UrlHelper.safe_host(request.referer) ||
+      UrlHelper.safe_host(params["launch_presentation_return_url"]) ||
+      UrlHelper.safe_host(params["custom_canvas_api_domain"])
+    end
 
     def do_lti
 
       provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
 
       if provider.valid_request?(request)
-        @external_identifier = find_external_identifier(request.referer) ||
-             find_external_identifier(params["launch_presentation_return_url"]) ||
-             find_external_identifier(params["custom_canvas_api_domain"])
+
+        @lti_provider = lti_provider
+        @identifier = params[:user_id]
+
+        @external_identifier = ExternalIdentifier.find_by(provider: @lti_provider, identifier: @identifier)
 
         @user = @external_identifier.user if @external_identifier
 
@@ -151,17 +152,13 @@ class ApplicationController < ActionController::Base
           @user.account = current_account
           @user.skip_confirmation!
 
-          begin
-            @user.save!
-          rescue ActiveRecord::RecordInvalid => ex
-            if ex.to_s == "Validation failed: Email has already been taken"
-              @user.email = "#{params[:user_id]}@#{params["custom_canvas_api_domain"]}"
-              @user.save!
-            else
-              raise ex
-            end
+          count = 0
+          while !safe_save_email(@user) && count < 10 do
+            # Email was taken. Generate a fake email and save again
+            @user.email = "#{params[:user_id]}_#{count}_#{params[:tool_consumer_instance_guid]}@example.com"
+            count = count + 1
           end
-
+          
           @external_identifier = @user.external_identifiers.create(
             identifier: params[:user_id],
             provider: @provider,
@@ -176,6 +173,18 @@ class ApplicationController < ActionController::Base
 
     end
 
+    def safe_save_email(user)
+      begin
+        user.save!
+      rescue ActiveRecord::RecordInvalid => ex
+        if ex.to_s == "Validation failed: Email has already been taken"
+          false
+        else
+          raise ex
+        end
+      end
+    end
+    
     # **********************************************
     #
     # Account related functionality:
