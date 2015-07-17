@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
 
   has_many :permissions
   has_many :roles, :through => :permissions
-  
+
   has_many :user_accounts
   has_many :accounts, through: :user_accounts
   belongs_to :account
@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   has_one :profile, :dependent => :destroy
 
   after_create {|user| user.create_profile unless user.profile }
-  
+
   def display_name
     self.name || self.email
   end
@@ -150,7 +150,7 @@ class User < ActiveRecord::Base
     if user_account = self.user_accounts.find_by(account_id: options[:account_id])
       user_account.update_attribute(:role, 'account_administrator')
     else
-      self.user_accounts.create!(:account_id => options[:account_id], :role => 'account_administrator')
+      self.user_accounts.create!(account_id: options[:account_id], role: 'account_administrator')
     end
   end
 
@@ -161,12 +161,12 @@ class User < ActiveRecord::Base
   def account_admin?(account)
     return true if self.role?('administrator')
     account = Account.find_by(code: account) unless account.instance_of?(Account)
-    return true if account && self.user_accounts.where('role' => 'account_administrator', 'account_id' => account.id).size > 0
+    return true if account && self.user_accounts.where(role: 'account_administrator', account_id: account.id).any?
   end
 
   def can_edit?(user)
     return false if user.nil?
     self.id == user.id || user.admin?
   end
-  
+
 end
