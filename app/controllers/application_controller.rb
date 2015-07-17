@@ -249,7 +249,7 @@ class ApplicationController < ActionController::Base
           @user.skip_confirmation!
 
           count = 0
-          while !safe_save_email(@user) do
+          while !safe_save_email(@user) && count < 10 do
             # Email was taken. Generate a fake email and save again
             user.email = "#{params[:user_id]}_#{count}_#{params[:tool_consumer_instance_guid]}@example.com"
             count = count + 1
