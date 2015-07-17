@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe ItemResultsController do
+
   before do
 
     @identifier = '32477sdfhaf'
@@ -71,6 +72,8 @@ describe ItemResultsController do
         }
       }])
 
+    @account = FactoryGirl.create(:account)
+    allow(controller).to receive(:current_account).and_return(@account)
   end
 
   describe "GET 'index'" do

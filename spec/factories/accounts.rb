@@ -7,6 +7,7 @@ FactoryGirl.define do
     lti_key { FactoryGirl.generate(:lti_key) }
     domain { FactoryGirl.generate(:domain) }
     canvas_uri { FactoryGirl.generate(:domain) }
+    restrict_public false
 
   end
 end

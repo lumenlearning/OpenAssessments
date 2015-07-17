@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  before_action :protect_account
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   helper_method :current_account
@@ -246,15 +247,12 @@ class ApplicationController < ActionController::Base
           @user.password_confirmation = @user.password
           @user.account = current_account
           @user.skip_confirmation!
-          begin
-            @user.save!
-          rescue ActiveRecord::RecordInvalid => ex
-            if ex.to_s == "Validation failed: Email has already been taken"
-              @user.email = "#{params[:user_id]}@#{params["custom_canvas_api_domain"]}"
-              @user.save!
-            else
-              raise ex
-            end
+
+          count = 0
+          while !safe_save_email(@user) do
+            # Email was taken. Generate a fake email and save again
+            user.email = "#{params[:user_id]}_#{count}_#{params[:tool_consumer_instance_guid]}@example.com"
+            count = count + 1
           end
 
           @external_identifier = @user.external_identifiers.create(
@@ -271,6 +269,18 @@ class ApplicationController < ActionController::Base
 
     end
 
+    def safe_save_email(user)
+      begin
+        user.save!
+      rescue ActiveRecord::RecordInvalid => ex
+        if ex.to_s == "Validation failed: Email has already been taken"
+          false
+        else
+          raise ex
+        end
+      end
+    end
+
     # **********************************************
     #
     # Account related functionality:
@@ -278,6 +288,11 @@ class ApplicationController < ActionController::Base
 
     def current_account
       @current_account ||= Account.find_by(code: request.subdomains.first) || Account.find_by(domain: request.host) || Account.main
+    end
+
+    def protect_account
+      return if ['default', 'sessions', 'devise/passwords', 'devise/confirmations', 'devise/unlocks'].include?(params[:controller])
+      user_not_authorized if current_account.restrict_public && !user_signed_in?
     end
 
   private

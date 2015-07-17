@@ -2,6 +2,11 @@ require 'rails_helper'
 
 describe AssessmentLoadersController do
 
+  before do
+    @account = FactoryGirl.create(:account)
+    allow(controller).to receive(:current_account).and_return(@account)
+  end
+  
   describe "POST create" do
     it "should redirect to the assessment load path" do
       src_url = "http://www.example.com"
