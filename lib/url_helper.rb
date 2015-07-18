@@ -1,5 +1,10 @@
 class UrlHelper
 
+  def self.safe_host(url)
+    return nil if url.blank?
+    UrlHelper.host(url)
+  end
+
   def self.ensure_scheme(url)
     return nil unless url.present?
     url = "http://#{url}" unless url.include?("http")

@@ -11,6 +11,8 @@ describe Api::UserAssessmentsController do
 
     @user_token = AuthToken.issue_token({ user_id: @user.id })
     @admin_token = AuthToken.issue_token({ user_id: @admin.id })
+
+    allow(controller).to receive(:current_account).and_return(@account)
   end
   describe "PUT update" do
     before do

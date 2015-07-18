@@ -2,6 +2,11 @@ require "rails_helper"
 
 RSpec.describe CanvasAuthenticationsController, :type => :controller do
   
+  before do
+    @account = FactoryGirl.create(:account)
+    allow(controller).to receive(:current_account).and_return(@account)
+  end
+
   describe "GET new" do
     it "displays a form for the user to enter their Canvas url" do
       get :new
