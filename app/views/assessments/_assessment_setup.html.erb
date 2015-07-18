@@ -29,7 +29,7 @@
     kind: '<%= @kind %>',
     <% end %>
     <% if @assessment_settings %>
-    allowed_attempts: <%= @assessment_settings.allowed_attempts %>,
+    allowed_attempts: '<%= @assessment_settings.allowed_attempts %>',
     <% end -%>
     <% if @user_attempts %>
     user_attempts: <%= @user_attempts %>,
