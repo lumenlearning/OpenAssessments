@@ -160,8 +160,8 @@ class ApplicationController < ActionController::Base
           end
           
           @external_identifier = @user.external_identifiers.create(
-            identifier: params[:user_id],
-            provider: @provider,
+            identifier: @identifier,
+            provider: @lti_provider,
             custom_canvas_user_id: params[:custom_canvas_user_id]
           )
 
@@ -184,7 +184,7 @@ class ApplicationController < ActionController::Base
         end
       end
     end
-    
+
     # **********************************************
     #
     # Account related functionality:
