@@ -3,18 +3,6 @@ class Ability
 
   def initialize(user, account)
 
-    user ||= User.new # guest user (not logged in)
-    if user.admin?
-      can :manage, :all
-    else
-      can :read, :all
-      cannot :read, Account
-      can :manage, User, :id => user.id
-      if !account.restrict_assessment_create
-        can :manage, Assessment, :user_id => user.id
-      end
-    end
-
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)
@@ -52,6 +40,11 @@ class Ability
 
   def basic(user, account)
     can :manage, User, id: user.id
+    can :read, :all # TODO we don't really want read :all. Be more specific
+    cannot :read, Account
+    if !account.restrict_assessment_create
+      can :manage, Assessment, :user_id => user.id
+    end
   end
 
   def admin(user, account)
