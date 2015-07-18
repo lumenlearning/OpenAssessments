@@ -256,9 +256,9 @@ class ApplicationController < ActionController::Base
             count = count + 1
           end
           
-          @external_identifier = @user.external_identifiers.create(
-            identifier: params[:user_id],
-            provider: @provider,
+          @external_identifier = @user.external_identifiers.create!(
+            identifier: @identifier,
+            provider: @lti_provider,
             custom_canvas_user_id: params[:custom_canvas_user_id]
           )
 
