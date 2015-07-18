@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  #before_action :protect_account
+  before_action :protect_account
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   helper_method :current_account
@@ -293,6 +293,7 @@ class ApplicationController < ActionController::Base
 
     def protect_account
       return if ['default', 'sessions', 'devise/passwords', 'devise/confirmations', 'devise/unlocks'].include?(params[:controller])
+      return if request.post? && params['lti_message_type'].present?
       user_not_authorized if current_account.restrict_public && !user_signed_in?
     end
 
