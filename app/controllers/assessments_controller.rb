@@ -42,6 +42,7 @@ class AssessmentsController < ApplicationController
       @assessment = Assessment.find(params[:id])
       @assessment_id = @assessment ? @assessment.id : params[:assessment_id] || 'null'
       @assessment_settings = params[:asid] ? AssessmentSetting.find(params[:asid]) : @assessment.default_settings;
+      @style = @assessment.default_style if @assessment.default_style
       if @assessment_settings.present?
         @style = @style != "" ? @style : @assessment_settings[:style] || ""
         @enable_start = params[:enable_start] ?  @enable_start : @assessment_settings[:enable_start] || false

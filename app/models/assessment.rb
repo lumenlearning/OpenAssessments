@@ -64,6 +64,10 @@ class Assessment < ActiveRecord::Base
     self.assessment_settings.any? ? self.assessment_settings.first : nil
   end
 
+  def default_style
+    self.account ? self.account.default_style : nil
+  end
+
   # TODO Decide if we still want to break the QTI into separate objects
   def create_subitems
     if parsed_xml && parsed_xml.respond_to?(:sections)
