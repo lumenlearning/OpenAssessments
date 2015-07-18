@@ -11,9 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20150716233504) do
-
+ActiveRecord::Schema.define(version: 20150717172113) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +27,7 @@ ActiveRecord::Schema.define(version: 20150716233504) do
     t.string   "code"
     t.boolean  "restrict_signup",                         default: true
     t.boolean  "restrict_assessment_create",              default: true
-    t.boolean  "restrict_public"
+    t.boolean  "restrict_public",                         default: true
   end
 
   add_index "accounts", ["code"], name: "index_accounts_on_code", using: :btree
