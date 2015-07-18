@@ -11,7 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 20150716233504) do
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +99,7 @@ ActiveRecord::Schema.define(version: 20150716233504) do
     t.string   "license"
     t.string   "keywords"
     t.integer  "account_id"
+    t.string   "kind"
   end
 
   add_index "assessments", ["account_id"], name: "index_assessments_on_account_id", using: :btree
