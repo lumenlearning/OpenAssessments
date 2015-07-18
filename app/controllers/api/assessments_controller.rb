@@ -62,13 +62,13 @@ class Api::AssessmentsController < Api::ApiController
     def create_params
       params.require(:assessment).permit(:title, :description, :license, :xml_file,
                                          :src_url, :recommended_height, :keyword_list,
-                                         :account_id)
+                                         :account_id, :kind)
     end
 
     def update_params
       params.require(:assessment).permit(:title, :description, :license, :xml_file,
                                          :src_url, :recommended_height, :keyword_list,
-                                         :account_id)
+                                         :account_id, :kind)
   end
 
 end
