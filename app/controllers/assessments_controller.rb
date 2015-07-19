@@ -6,7 +6,7 @@ class AssessmentsController < ApplicationController
   
   before_filter :skip_trackable
   before_filter :authenticate_user!, only: [:new, :create, :destroy]
-  before_filter :check_lti, only: [:show]
+  before_filter :check_lti, only: [:show, :lti]
   load_and_authorize_resource except: [:index, :show]
 
   respond_to :html
@@ -38,8 +38,11 @@ class AssessmentsController < ApplicationController
     else
       @kind = "formative"
     end
-    if params[:id].present? && !['load', 'offline'].include?(params[:id])
-      @assessment = Assessment.find(params[:id])
+
+    id = params[:custom_assessment_id] || params[:id]
+    if id.present? && !['load', 'offline'].include?(id)
+      #todo restrict find to current account and then public quizzes
+      @assessment = Assessment.find(id)
       @assessment_id = @assessment ? @assessment.id : params[:assessment_id] || 'null'
       @assessment_settings = params[:asid] ? AssessmentSetting.find(params[:asid]) : @assessment.default_settings;
       @style = @assessment.default_style if @assessment.default_style
@@ -118,6 +121,10 @@ class AssessmentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(user_assessments_url(current_user)) }
     end
+  end
+
+  def lti
+    show
   end
 
   private

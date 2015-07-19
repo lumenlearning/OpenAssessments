@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   resources :assessments do
     member do
       post :show
+      post :lti
     end
   end
 
