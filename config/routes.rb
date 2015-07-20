@@ -40,10 +40,10 @@ Rails.application.routes.draw do
     end
   end
 
+  post 'assessments/lti', to: 'assessments#lti', as: 'lti'
   resources :assessments do
     member do
       post :show
-      post :lti
     end
   end
 
