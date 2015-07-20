@@ -7,15 +7,13 @@ class AssessmentsController < ApplicationController
   before_filter :skip_trackable
   before_filter :authenticate_user!, only: [:new, :create, :destroy]
   before_filter :check_lti, only: [:show, :lti]
-  load_and_authorize_resource except: [:index, :show]
+  load_and_authorize_resource except: [:show, :lti]
 
   respond_to :html
 
   def index
-    if params[:user_id].present?
-      @assessments = User.find(params[:user_id]).assessments
-    else
-      @assessments = Assessment.all
+    if current_user
+      @assessments = @assessments.where(account: current_user.account)
     end
   end
 

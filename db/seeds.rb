@@ -39,6 +39,7 @@ Dir.glob("db/qti/*") do |f|
     assessment.title = f
     assessment.xml_file = xml_file
     assessment.user = admin
+    assessment.account_id = Account.first.id
     assessment.save!
   else
     Assessment.create!(

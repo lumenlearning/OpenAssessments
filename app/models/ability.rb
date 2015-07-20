@@ -33,21 +33,23 @@ class Ability
     user ||= User.new # guest user (not logged in)
 
     basic(user, account)
-    admin(user, account) if user.admin?
+    admin(user, account) if user.role == "admin"
     account_admin(user, account) if account.present? && user.account_admin?(account)
 
   end
 
   def basic(user, account)
     can :manage, User, id: user.id
-    can :read, :all # TODO we don't really want read :all. Be more specific
+    can :read, Assessment, kind: "formative"
+    can :read, Assessment, user_id: user.id
     cannot :read, Account
     if !account.restrict_assessment_create
-      can :manage, Assessment, :user_id => user.id
+      can :manage, Assessment, user_id: user.id
     end
   end
 
   def admin(user, account)
+    can :read, :all
     can :manage, :all
   end
 

@@ -3,7 +3,7 @@ class Api::AssessmentsController < Api::ApiController
   
   respond_to :xml, :json
 
-  load_and_authorize_resource
+  load_and_authorize_resource except: [:show]
 
   def index
     page = (params[:page] || 1).to_i
