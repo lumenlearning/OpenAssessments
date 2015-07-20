@@ -7,7 +7,7 @@ class AssessmentsController < ApplicationController
   before_filter :skip_trackable
   before_filter :authenticate_user!, only: [:new, :create, :destroy]
   before_filter :check_lti, only: [:show, :lti]
-  load_and_authorize_resource except: [:index, :show]
+  load_and_authorize_resource except: [:index, :show, :lti]
 
   respond_to :html
 
@@ -38,11 +38,9 @@ class AssessmentsController < ApplicationController
     else
       @kind = "formative"
     end
-
-    id = params[:custom_assessment_id] || params[:id]
-    if id.present? && !['load', 'offline'].include?(id)
+    if params[:id].present? && !['load', 'offline'].include?(params[:id])
       #todo restrict find to current account and then public quizzes
-      @assessment = Assessment.find(id)
+      @assessment = Assessment.find(params[:id])
       @assessment_id = @assessment ? @assessment.id : params[:assessment_id] || 'null'
       @assessment_settings = params[:asid] ? AssessmentSetting.find(params[:asid]) : @assessment.default_settings;
       @style = @assessment.default_style if @assessment.default_style
@@ -63,7 +61,7 @@ class AssessmentsController < ApplicationController
             })
           @user_attempts = @user_assessment.attempts
         end
-      end 
+      end
       @eid ||= @assessment.identifier
       if @embedded
         # Just show the assessment. This is here to support old style embed with id=# and embed=true
@@ -102,7 +100,7 @@ class AssessmentsController < ApplicationController
     @external_user_id ||= params[:user_id]
 
     respond_to do |format|
-      format.html { render layout: @embedded ? 'assessment' : 'application' }
+      format.html { render :show, layout: @embedded ? 'assessment' : 'application' }
     end
   end
 
@@ -124,6 +122,8 @@ class AssessmentsController < ApplicationController
   end
 
   def lti
+    raise "Custom parameter custom_assessment_id require for this style of lti launch" unless params[:custom_assessment_id].present?
+    params[:id] = params[:custom_assessment_id]
     show
   end
 
