@@ -10,7 +10,7 @@ export default class ProgressDropdown extends BaseComponent{
   
   constructor(props, context){
     super(props, context);
-    this._bind("navButtonClicked");
+    this._bind("navButtonClicked", "getStyles");
 
   }
 
@@ -41,10 +41,11 @@ export default class ProgressDropdown extends BaseComponent{
   }
 
   getStyles(theme, expanded){
+    var expHeight = this.props.questions.length < 3 ? "" + (this.props.questions.length * (228 / 3)) + "px" : "228px"
     return {
       dropdownStyle: {
         overflow: expanded ? "scroll" : "hidden",
-        height: expanded ? "228px" : "0px",
+        height: expanded ? expHeight : "0px",
         backgroundColor: "white",
         transition: "all 0.4s",
         boxShadow: expanded ? theme.progressDropdownBoxShadow : "",
