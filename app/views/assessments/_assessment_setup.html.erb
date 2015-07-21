@@ -15,6 +15,7 @@
     externalUserId: '<%= @external_user_id  %>',
     <% end %>
     <% if @keywords %>
+
     keywords: '<%= @keywords %>',
     <% end %>
     resultsEndPoint: '<%= @results_end_point || "http://#{request.host_with_port}/api" %>',

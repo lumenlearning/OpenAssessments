@@ -54,8 +54,8 @@ export default class CheckUnderstanding extends React.Component{
     if(!theme.shouldShowAttempts){
       return "";
     } 
-
-    if (props.userAttempts == props.maxAttempts){
+    
+    if (props.userAttempts >= props.maxAttempts){
       return (
         <div style={styles.attemptsContainer}> 
           <div style={{...styles.attempts, ...{border: null}}}>
