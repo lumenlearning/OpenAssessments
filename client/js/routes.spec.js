@@ -32,5 +32,3 @@ import routes             from './routes';
       });
     });
   });
-
-});
