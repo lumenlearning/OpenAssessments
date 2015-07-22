@@ -10,12 +10,12 @@
     apiUrl: '<%= application_base_url %>',
     srcUrl: '<%= @src_url %>',
     style: '<%= @style %>',
+    isLti: <%= @is_lti %>,
     assessmentId: '<%= @assessment_id %>',
     <% if @external_user_id %>
     externalUserId: '<%= @external_user_id  %>',
     <% end %>
     <% if @keywords %>
-
     keywords: '<%= @keywords %>',
     <% end %>
     resultsEndPoint: '<%= @results_end_point || "http://#{request.host_with_port}/api" %>',

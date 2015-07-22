@@ -104,19 +104,20 @@ class Api::GradesController < Api::ApiController
       'lis_outcome_service_url' => session[:lis_outcome_service_url] || settings[:lisOutcomeSourceUrl],
       'user_id'                 => session[:lis_user_id]             || settings[:lisUserId]
     }
+    
+    if settings["isLti"]
+      provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
 
-    provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
+      # post the given score to the TC
+      canvas_score = (canvas_score != '' ? canvas_score.to_s : nil)
 
-    # post the given score to the TC
-    canvas_score = (canvas_score != '' ? canvas_score.to_s : nil)
+      res = provider.post_replace_result!(canvas_score)
 
-    res = provider.post_replace_result!(canvas_score)
-
-    # Need to figure out error handling - these will need to be passed to the client
-    # or we can also post scores async using activejob in which case we'll want to
-    # log any errors and make them visible in the admin ui
-    success = res.success?
-      
+      # Need to figure out error handling - these will need to be passed to the client
+      # or we can also post scores async using activejob in which case we'll want to
+      # log any errors and make them visible in the admin ui
+      success = res.success?
+    end
     # Ping analytics server
     respond_to do |format|
       format.json { render json: graded_assessment }

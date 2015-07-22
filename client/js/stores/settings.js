@@ -67,7 +67,8 @@ function loadSettings(defaultSettings){
     userAttempts       : bestValue("user_attempts","userAttempts", 0),
     lisUserId          : defaultSettings.lis_user_id,
     lisResultSourceDid : defaultSettings.lis_result_source_did,
-    lisOutcomeServiceUrl: defaultSettings.lis_outcome_service_url
+    lisOutcomeServiceUrl: defaultSettings.lis_outcome_service_url,
+    isLti              : defaultSettings.isLti
   };
 
   if(!_settings.srcUrl && !_settings.offline){
