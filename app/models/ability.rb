@@ -33,9 +33,8 @@ class Ability
     user ||= User.new # guest user (not logged in)
 
     basic(user, account)
-    admin(user, account) if user.role == "admin"
     account_admin(user, account) if account.present? && user.account_admin?(account)
-
+    admin(user, account) if user.admin?
   end
 
   def basic(user, account)
