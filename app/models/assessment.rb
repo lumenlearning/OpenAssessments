@@ -49,8 +49,8 @@ class Assessment < ActiveRecord::Base
 
     # set values from xml
     if parsed_xml(xml)
-      self.identifier ||= parsed_xml.ident
-      self.title ||= parsed_xml.title
+      self.identifier ||= @parsed_xml.ident
+      self.title ||= @parsed_xml.title
     end
 
   end

@@ -10,6 +10,7 @@ class Account < ActiveRecord::Base
 
   has_many :users
   has_many :assessments
+  has_many :assessment_settings
 
   def clean_domain
     self.domain = "http://#{self.domain}" unless self.domain.include?("http://") || self.domain.include?("https://")
@@ -19,4 +20,9 @@ class Account < ActiveRecord::Base
   def self.main
     Account.find_by(code: Rails.application.secrets.application_code)
   end
+
+  def default_settings
+    self.assessment_settings.any? ? self.assessment_settings.first : nil
+  end
+
 end
