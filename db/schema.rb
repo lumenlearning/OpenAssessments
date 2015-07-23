@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150722161316) do
+ActiveRecord::Schema.define(version: 20150723150919) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20150722161316) do
     t.boolean  "enable_start"
     t.boolean  "is_default"
     t.integer  "account_id"
+    t.string   "mode"
   end
 
   create_table "assessment_xmls", force: :cascade do |t|
