@@ -93,7 +93,7 @@ class AssessmentsController < ApplicationController
         end
       end
     end
-
+    @is_lti ||= false
     # extract LTI values
     @external_user_id ||= params[:user_id]
 
