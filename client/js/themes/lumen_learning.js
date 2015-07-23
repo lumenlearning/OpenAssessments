@@ -34,5 +34,5 @@ export default {
   shouldShowProgressText: false,
   shouldShowCounter: false,
   shouldShowNextPrevious: false,
-  shouldShowFooter: true,
+  shouldShowFooter: false,
 }
