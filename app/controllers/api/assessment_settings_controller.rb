@@ -41,6 +41,6 @@ class Api::AssessmentSettingsController < Api::ApiController
 
     # Only allow a trusted parameter "white list" through.
     def assessment_setting_params
-      params.require(:assessment_setting).permit(:per_sec, :allowed_attempts, :style, :assessment_id, :enable_start, :confidence_levels)
+      params.require(:assessment_setting).permit(:per_sec, :allowed_attempts, :style, :assessment_id, :enable_start, :confidence_levels, :mode, :is_default)
     end
 end
