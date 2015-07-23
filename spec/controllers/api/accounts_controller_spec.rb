@@ -98,8 +98,8 @@ RSpec.describe Api::AccountsController, type: :controller do
   context "as account admin" do
     before do
       request.headers['Authorization'] = @account_admin_token
-      byebug
       allow(controller.request).to receive(:host).and_return(@account2.domain)
+      allow(controller).to receive(:current_account).and_return(@account2)
     end
 
     describe "GET index" do
