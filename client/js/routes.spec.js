@@ -25,9 +25,12 @@ import routes             from './routes';
 
   describe('default route', function () {
     it('renders home', function (done) {
-      Router.run(routes, '/', function (Handler, state){
+      var rootSlashLocation = new Router.TestLocation(['/']);
+      Router.run(routes, rootSlashLocation, function (Handler, state){
         var html = React.renderToString(<Handler params={state.params} />);
-        expect(html).toMatch(/Home/);
+        expect(html).toContain("Canvas Starter App");
+        expect(html).toContain("Login");
+        expect(html).toContain("Atomic Jolt");
         done();
       });
     });
