@@ -19,10 +19,11 @@ const STARTED = 4;
 var _assessment = null;
 var _assessmentXml = null;
 var _items = [];
+var _outcomes = [];
 var _assessmentResult = null;
 var _assessmentState = NOT_LOADED;
 var _startedAt;
-var _finishedAt
+var _finishedAt;
 var _selectedConfidenceLevel = 0;
 var _selectedAnswerIds = [];
 var _answerMessageIndex = -1;
@@ -54,6 +55,16 @@ function selectAnswer(item){
   } else if (_items[_itemIndex].question_type == "matching_question"){
     updateMatchingAnswer(item);
   } 
+}
+
+function loadOutcomes(assessment){
+  var outcomes = assessment.sections.map((section)=>{
+    if(section.outcome != "root section"){
+      return section.outcome;
+    }
+  });
+  outcomes = _.drop(outcomes);
+  return outcomes;
 }
 
 function updateMatchingAnswer(item){
@@ -167,7 +178,9 @@ var AssessmentStore = assign({}, StoreCommon, {
   allQuestions(){
     return _items;
   },
-
+  outcomes(){
+    return _outcomes;
+  },
   timeSpent(){
     var time = _finishedAt - _startedAt;
     var minutes = Math.floor(time/1000/60);
@@ -207,6 +220,7 @@ Dispatcher.register(function(payload) {
             } else {
               _items = _assessment.sections[_sectionIndex].items
             }
+            _outcomes = loadOutcomes(_assessment);
             setUpStudentAnswers(_items.length)
           }
           _assessmentState = LOADED;

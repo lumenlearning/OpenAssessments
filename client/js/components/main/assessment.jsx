@@ -37,6 +37,7 @@ export default class Assessment extends BaseComponent{
       messageIndex         : AssessmentStore.answerMessageIndex(),
       studentAnswers       : AssessmentStore.allStudentAnswers(),
       allQuestions         : AssessmentStore.allQuestions(),
+      outcomes             : AssessmentStore.outcomes()
     }
   }
 
@@ -101,7 +102,8 @@ export default class Assessment extends BaseComponent{
         messageIndex     = {this.state.messageIndex}
         allQuestions     = {this.state.allQuestions}
         studentAnswers   = {this.state.studentAnswers} 
-        confidenceLevels = {this.state.settings.confidenceLevels}/>;
+        confidenceLevels = {this.state.settings.confidenceLevels}
+        outcomes         = {this.state.outcomes}/>;
       // TODO figure out when to mark an item as viewed. assessmentResult must be valid before this call is made.
       // AssessmentActions.itemViewed(this.state.settings, this.state.assessment, this.state.assessmentResult);
     }

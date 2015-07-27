@@ -34,7 +34,7 @@ export default class Item extends BaseComponent{
 
     var complete = this.checkCompletion();
     if(complete === true){
-      AssessmentActions.submitAssessment(this.props.assessment.id, this.props.assessment.assessmentId, this.props.allQuestions, this.props.studentAnswers, this.props.settings);
+      AssessmentActions.submitAssessment(this.props.assessment.id, this.props.assessment.assessmentId, this.props.allQuestions, this.props.studentAnswers, this.props.settings, this.props.outcomes);
     }
     else {
       this.setState({unAnsweredQuestions: complete});
@@ -299,7 +299,8 @@ Item.propTypes = {
   currentIndex     : React.PropTypes.number.isRequired,
   questionCount    : React.PropTypes.number.isRequired,
   messageIndex     : React.PropTypes.number.isRequired,
-  confidenceLevels : React.PropTypes.bool.isRequired
+  confidenceLevels : React.PropTypes.bool.isRequired,
+  outcomes         : React.PropTypes.object
 };
 
 Item.contextTypes = {

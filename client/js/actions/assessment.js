@@ -65,7 +65,7 @@ export default {
     Dispatcher.dispatch({action: Constants.LEVEL_SELECTED, level: level, index: index});
   },
   
-  submitAssessment(identifier, assessmentId, questions, studentAnswers, settings){
+  submitAssessment(identifier, assessmentId, questions, studentAnswers, settings, outcomes){
     Dispatcher.dispatch({action: Constants.ASSESSMENT_SUBMITTED})
     var body = {
       itemToGrade: {
@@ -73,7 +73,8 @@ export default {
         answers      : studentAnswers,
         assessmentId : assessmentId,
         identifier   : identifier,
-        settings     : settings
+        settings     : settings,
+        outcomes     : outcomes
       }
     }
     Api.post(Constants.ASSESSMENT_GRADED,'api/grades', body);
