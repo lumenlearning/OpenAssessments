@@ -10,11 +10,11 @@ export default class CheckBox extends React.Component{
     AssessmentActions.answerSelected(this.props.item);
   }
   
-  getStyles(theme){
+  getStyles(props, theme){
     return {
       btnQuestion:{
         whiteSpace: theme.btnQuestionWhiteSpace,
-        background: theme.btnQuestionBackground,
+        background: props.isDisabled? "transparent" : theme.btnQuestionBackground,
         color: theme.btnQuestionColor,
         textAlign: theme.btnQuestionTextAlign,
         padding: theme.btnQuestionPadding,
@@ -34,12 +34,14 @@ export default class CheckBox extends React.Component{
   }
 
   render(){
-    var styles = this.getStyles(this.context.theme)
+    var styles = this.getStyles(this.props, this.context.theme)
     var checked = (AssessmentStore.studentAnswers() && AssessmentStore.studentAnswers().indexOf(this.props.item.id) > -1) ? "true" : null;
+    console.log(this.props.isDisabled)
+    var checkBox = !this.props.isDisabled ? <input type="checkbox" defaultChecked={checked} name={this.props.name} onClick={()=>{ this.answerSelected() }}/> : <input type="checkbox" disabled="true" defaultChecked={checked} name={this.props.name} onClick={()=>{ this.answerSelected() }}/>;
     return (
       <div className="btn btn-block btn-question" style={styles.btnQuestion}>
         <label>
-          <input type="checkbox" defaultChecked={checked} name={this.props.name} onClick={()=>{ this.answerSelected() }}/>
+          {checkBox}
           {this.props.item.material}
         </label>
       </div>

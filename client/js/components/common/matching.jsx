@@ -65,12 +65,16 @@ export default class Matching extends React.Component{
         }
         return <option key={Utils.makeId()} value={answer.material.trim()} id={answer.id}>{answer.material.trim()}</option>
       });
+      var select = !this.props.isDisabled ? <select key={ref} name={name} value={selectedAnswer} onChange={(e, key) => {this.answerSelected(e, key)}}>
+                                              <option key={"default-option-key" + Utils.makeId()} selected={null} id="0000">[Select Answer]</option>
+                                              { options }
+                                            </select> : <select disabled="true" key={ref} name={name} onChange={(e, key) => {this.answerSelected(e, key)}}>
+                                                          <option key={"default-option-key" + Utils.makeId()} selected={null} id="0000"></option>
+                                                          <option key={"default-option-key" + Utils.makeId()} selected={null} id="0000">--------------------------------------</option>
+                                                        </select>;
       return <div>
         {materialNames[index]}
-        <select key={ref} name={name} value={selectedAnswer} onChange={(e, key) => {this.answerSelected(e, key)}}>
-          <option key={"default-option-key" + Utils.makeId()} selected={null} id="0000">[Select Answer]</option>
-          { options }
-        </select>
+        {select}
       </div>;
     });
 

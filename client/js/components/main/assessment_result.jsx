@@ -4,24 +4,31 @@ import React              from 'react';
 import AssessmentStore    from "../../stores/assessment";
 import BaseComponent      from "../base_component";
 import AssessmentActions  from "../../actions/assessment";
+import ItemResult         from "./item_result";
 
 export default class AssessmentResult extends BaseComponent{
  
-  constructor(){
-    super();
+  constructor(props, context){
+    super(props, context);
+    this._bind("getItemResults", "getStyles");
     this.stores = [AssessmentStore];
     this.state = this.getState();
   }
 
-  getState(props, context){
+  getState(){
     return {
       assessmentResult : AssessmentStore.assessmentResult(),
-      timeSpent        : AssessmentStore.timeSpent()   
+      timeSpent        : AssessmentStore.timeSpent(),
+      questions        : AssessmentStore.allQuestions()   
     }
   }
 
-  getStyles(){
+  getStyles(theme){
     return {
+      assessment: {
+        padding: theme.assessmentPadding,
+        backgroundColor: theme.assessmentBackground,
+      },
       progressStyle: {
         width:"100%"
       },
@@ -30,7 +37,7 @@ export default class AssessmentResult extends BaseComponent{
         position: "relative"
       },
       yourScoreStyle: {
-        backgroundColor: "#f19b2c",
+        backgroundColor: theme.definitelyBackgroundColor,
         color: "#fff",
         borderRadius: "25px",
         textAlign: "center",
@@ -46,48 +53,67 @@ export default class AssessmentResult extends BaseComponent{
       alignRight: {
         float: 'right',
         color: "#458B00"
+      },
+      assessmentContainer:{
+        marginTop: "70px",
+        boxShadow: theme.assessmentContainerBoxShadow, 
+        borderRadius: theme.assessmentContainerBorderRadius,
+        padding: "20px"
+      },
+      resultsStyle: {
+        padding: "20px"
       }
     }
   }
 
+  getItemResults(){
+    return this.state.questions.map((question, index)=>{
+      return <ItemResult question={question} isCorrect={this.state.assessmentResult.correct_list[index]} confidence={this.state.assessmentResult.confidence_level_list[index]}/>
+    })
+  }
+
   render(){
-    var styles = this.getStyles(); 
+    var styles = this.getStyles(this.context.theme); 
+    var itemResults = this.getItemResults();
     return( 
-    <div>
-      <div className="progress">
-        <div className="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style={styles.progressStyle}></div>
-      </div>
+    <div style={styles.assessment}>
+      <div style={styles.assessmentContainer}>
+        <div className="row" style={styles.wrapperStyle}>
 
-      <div style={styles.wrapperStyle}>
-
-        <div className="col-md-4" >
-          <h3><strong>Your Quiz Results</strong></h3>
-          <div style={styles.yourScoreStyle}>
-            <h5 style={styles.center}>Your Score</h5>
-            <h1 style={styles.center}>Score: {Math.trunc(this.state.assessmentResult.score)}</h1>
-            <h6 style={styles.center}><a>See Overall Score</a></h6>
+          <div className="col-md-4" >
+            <h3><strong>Your Quiz Results</strong></h3>
+            <div style={styles.yourScoreStyle}>
+              <h5 style={styles.center}>Your Score</h5>
+              <h1 style={styles.center}>{Math.trunc(this.state.assessmentResult.score)}%</h1>
+            </div>
+            Time Spent: {this.state.timeSpent.minutes} mins {this.state.timeSpent.seconds} sec
+            <br />
+            Attempts
           </div>
-          Time Spent: {this.state.timeSpent.minutes} mins {this.state.timeSpent.seconds} sec
-          <br />
-          Target Time:
-        </div>
 
-        <div className="col-md-4" >
-          <h3><strong>Good Work On These Concepts</strong></h3>
-          <p>You answered questions that covered these concepts correctly.</p>
-          <p style={styles.alignLeft}>Put Green ul here</p><i className="glyphicon glyphicon-ok" style={styles.alignRight}></i>
-          <div style={{clear: 'both'}}></div>
-        </div>
+          <div className="col-md-4" >
+            <h3><strong>Good Work On These Concepts</strong></h3>
+            <p>You answered questions that covered these concepts correctly.</p>
+            <p style={styles.alignLeft}>Put Green ul here</p><i className="glyphicon glyphicon-ok" style={styles.alignRight}></i>
+            <div style={{clear: 'both'}}></div>
+          </div>
 
-        <div className="col-md-4" >
-          <h3 style={styles.improveScoreStyle}><strong>How To Improve your Score <i className="glyphicon glyphicon-warning-sign" ></i></strong></h3>
-          <p>You can retake this quiz in 1 hour - plenty of time to review these sections!</p>
-          <h5>{this.state.assessmentResult.feedback}</h5>
-          <a className="btn btn-default" href="#" role="button">See Questions</a>
-        </div>
+          <div className="col-md-4" >
+            <h3 style={styles.improveScoreStyle}><strong>There is still more to learn<i styleclassName="glyphicon glyphicon-warning-sign" ></i></strong></h3>
+            <p>You can retake this quiz in 1 hour - plenty of time to review these sections!</p>
+            <h5>{this.state.assessmentResult.feedback}</h5>
+          </div>
 
+        </div>
+        <hr />
+        <div style={styles.resultsStyle}>
+          {itemResults}
+        </div>
       </div>
     </div>);
   }
+}
 
+AssessmentResult.contextTypes = {
+  theme: React.PropTypes.object,
 }

@@ -272,7 +272,7 @@ export default class Item extends BaseComponent{
                   }}>
                   </div>
                 </div>
-                <UniversalInput item={this.props.question} />
+                <UniversalInput item={this.props.question} isResult={false}/>
               </div>
               {result}
               {buttons}

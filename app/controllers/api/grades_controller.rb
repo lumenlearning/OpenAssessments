@@ -17,6 +17,7 @@ class Api::GradesController < Api::ApiController
 
     settings = item_to_grade["settings"]
     correct_list = []
+    confidence_level_list = []
     answers = item_to_grade["answers"]
     
     questions.each_with_index do |question, index|
@@ -40,6 +41,7 @@ class Api::GradesController < Api::ApiController
           answered_correctly += 1
         end
         correct_list[index] = correct
+        confidence_level_list[index] = question["confidenceLevel"]
 
         if item = assessment.items.find_by(identifier: question["id"])
 
@@ -96,7 +98,8 @@ class Api::GradesController < Api::ApiController
     graded_assessment = { 
       score: score,
       feedback: "Study Harder",
-      correct_list: correct_list
+      correct_list: correct_list,
+      confidence_level_list: confidence_level_list
     }
 
     params = {

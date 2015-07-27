@@ -26,12 +26,12 @@ export default class UniversalInput extends React.Component{
     CommunicationHandler.sendSize();
   }
 
-  getStyles(theme){
+  getStyles(props, theme){
     return {
       panel: {
         position: theme.panelPosition,
         marginBottom: theme.panelMarginBottom,
-        backgroundColor: theme.panelBackgroundColor,
+        backgroundColor: props.isResult ? "transparent" : theme.panelBackgroundColor,
         border: theme.panelBorder,
         borderRadius: theme.panelBorderRadius,
         boxShadow: theme.panelBoxShadow,
@@ -43,7 +43,7 @@ export default class UniversalInput extends React.Component{
         borderTopRightRadius: theme.panelHeadingBorderTopRightRadius,
         borderTopLeftRadius: theme.panelHeadingBorderTopLeftRadius,
         textAlign: theme.panelHeadingTextAlign,
-        backgroundColor: theme.panelHeadingBackgroundColor,
+        backgroundColor: props.isResult ? "transparent" : theme.panelHeadingBackgroundColor,
       },
       panelBody: {
         padding: theme.panelBodyPadding
@@ -51,7 +51,7 @@ export default class UniversalInput extends React.Component{
     }
   }
   render(){
-    var styles = this.getStyles(this.context.theme)
+    var styles = this.getStyles(this.props, this.context.theme)
     var item = this.props.item;
     var messages = '';
     var solution = '';
@@ -83,21 +83,21 @@ export default class UniversalInput extends React.Component{
       case "multiple_choice_question":
       case "true_false_question":
         items = item.answers.map((answer) => {
-          return <RadioButton key={item.id + "_" + answer.id} item={answer} name="answer-radio"/>;
+          return <RadioButton isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-radio"/>;
         });
         break;
       case "edx_dropdown":
         items = item.answers.map((answer) => {
-          return <Option key={item.id + "_" + answer.id} item={answer} name="answer-option"/>;
+          return <Option isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-option"/>;
         });
         break;
       case "matching_question":
-        items = <Matching item={item} name="answer-option"/>;
+        items = <Matching isDisabled={this.props.isResult}  item={item} name="answer-option"/>;
         break;
       case "edx_numerical_input":
       case "edx_text_input":
         items = item.answers.map((answer) => {
-          return <TextField key={item.id + "_" + answer.id} item={answer} name="answer-text"/>;
+          return <TextField isDisabled={this.props.isResult}  key={item.id + "_" + answer.id} item={answer} name="answer-text"/>;
         });
         break;
       case "text_only_question":
@@ -105,7 +105,7 @@ export default class UniversalInput extends React.Component{
         break;
       case "multiple_answers_question":
         items = item.answers.map((answer) => {
-          return <CheckBox key={item.id + "_" + answer.id} item={answer} name="answer-check"/>;
+          return <CheckBox isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-check"/>;
         });
         break;
       case "edx_image_mapped_input":
@@ -145,7 +145,8 @@ export default class UniversalInput extends React.Component{
   }
 }
 UniversalInput.propTypes = {
-  item: React.PropTypes.object.isRequired
+  item: React.PropTypes.object.isRequired,
+  isResult: React.PropTypes.bool
 };
 
 UniversalInput.contextTypes = {

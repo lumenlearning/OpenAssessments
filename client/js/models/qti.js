@@ -11,6 +11,7 @@ export default class Qti{
         id       : xml.attr('ident'),
         standard : 'qti',
         xml      : xml,
+        outcome  : this.parseOutcome(xml),
         items    : this.parseItems(xml)
       };
     };
@@ -27,6 +28,32 @@ export default class Qti{
 
     return this.listFromXml(xml, 'section', fromXml, buildDefault);
 
+  }
+
+  static parseOutcome(xml){
+    xml = $(xml);
+    if(xml.attr("ident") == "root_section"){
+      return "root section";
+    }
+    var item = xml.find("item")[0];
+    var fields = $(item).find("qtimetadatafield");
+    var outcome = {
+      shortOutcome: "",
+      longOutcome: "",
+      outcomeGuid: "",
+    }
+    for (var i = fields.length - 1; i >= 0; i--) {
+      if($(fields[i]).find("fieldlabel").text() == "outcome_guid"){
+        outcome.outcomeGuid = $(fields[i]).find("fieldentry").text()
+      }
+      if($(fields[i]).find("fieldlabel").text() == "outcome_long_title"){
+        outcome.longOutcome = $(fields[i]).find("fieldentry").text()
+      }
+      if($(fields[i]).find("fieldlabel").text() == "outcome_short_title"){
+        outcome.shortOutcome = $(fields[i]).find("fieldentry").text()
+      }
+    };
+    return outcome;
   }
 
   static parseItems(xml){
