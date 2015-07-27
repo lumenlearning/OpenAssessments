@@ -8,18 +8,21 @@ class Api::GradesController < Api::ApiController
     item_to_grade = body["itemToGrade"]
     questions = item_to_grade["questions"]
     assessment_id = item_to_grade["assessmentId"]
+    outcomes = item_to_grade["outcomes"]
     assessment = Assessment.find(assessment_id)
     doc = Nokogiri::XML(assessment.assessment_xmls.first.xml)
     doc.remove_namespaces!
     xml_questions = doc.xpath("//item")
+
     result = assessment.assessment_results.build
     result.save!
-
     settings = item_to_grade["settings"]
     correct_list = []
     confidence_level_list = []
+    positive_outcome_list = []
+    negative_outcome_list = []
     answers = item_to_grade["answers"]
-    
+
     questions.each_with_index do |question, index|
 
       # make sure we are looking at the right question
@@ -27,8 +30,15 @@ class Api::GradesController < Api::ApiController
       if question["id"] == xml_questions[xml_index].attributes["ident"].value
 
         correct = false;
+        # find the question type
         type = xml_questions[xml_index].children.xpath("qtimetadata").children.xpath("fieldentry").children.text
         
+        # if the question type gets some wierd stuff if means that the assessment has outcomes so we need
+        # to get the question data a little differently
+        if type != "multiple_choice_question" && type != "multiple_answers_question" && type != "matching_question"
+          type = xml_questions[xml_index].children.xpath("qtimetadata").children.xpath("fieldentry").children.first.text
+        end
+
         # grade the question based off of question type
         if type == "multiple_choice_question"
           correct = grade_multiple_choice(xml_questions[xml_index], answers[index])  
@@ -128,6 +138,7 @@ class Api::GradesController < Api::ApiController
   end
 
   private
+
   def get_xml_index(id, xml_questions)
     xml_questions.each_with_index do |question, index|
       if question.attributes["ident"].value == id
@@ -155,6 +166,7 @@ class Api::GradesController < Api::ApiController
     correct_count = 0
     total_correct = choices.length
     # if the answers to many or to few then return false
+    
     if answers.length != total_correct
       return correct
     end 
