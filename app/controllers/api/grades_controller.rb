@@ -22,7 +22,6 @@ class Api::GradesController < Api::ApiController
     positive_outcome_list = []
     negative_outcome_list = []
     answers = item_to_grade["answers"]
-
     questions.each_with_index do |question, index|
 
       # make sure we are looking at the right question
@@ -166,7 +165,7 @@ class Api::GradesController < Api::ApiController
     correct_count = 0
     total_correct = choices.length
     # if the answers to many or to few then return false
-    
+
     if answers.length != total_correct
       return correct
     end 

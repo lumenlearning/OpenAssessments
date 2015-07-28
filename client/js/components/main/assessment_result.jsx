@@ -2,6 +2,7 @@
 
 import React              from 'react';
 import AssessmentStore    from "../../stores/assessment";
+import SettingsStore      from "../../stores/settings";
 import BaseComponent      from "../base_component";
 import AssessmentActions  from "../../actions/assessment";
 import ItemResult         from "./item_result";
@@ -10,8 +11,8 @@ export default class AssessmentResult extends BaseComponent{
  
   constructor(props, context){
     super(props, context);
-    this._bind("getItemResults", "getStyles");
-    this.stores = [AssessmentStore];
+    this._bind("getItemResults", "getStyles", "getOutcomeLists");
+    this.stores = [AssessmentStore, SettingsStore];
     this.state = this.getState();
   }
 
@@ -19,7 +20,10 @@ export default class AssessmentResult extends BaseComponent{
     return {
       assessmentResult : AssessmentStore.assessmentResult(),
       timeSpent        : AssessmentStore.timeSpent(),
-      questions        : AssessmentStore.allQuestions()   
+      questions        : AssessmentStore.allQuestions(),
+      outcomes         : AssessmentStore.outcomes(),
+      settings         : SettingsStore.current(),
+      assessment       : AssessmentStore.current()   
     }
   }
 
@@ -46,12 +50,7 @@ export default class AssessmentResult extends BaseComponent{
       improveScoreStyle:{
         color: "#f00"
       },
-      alignLeft: {
-        float: 'left',
-        color: "#458B00"
-      },
-      alignRight: {
-        float: 'right',
+      green: {
         color: "#458B00"
       },
       assessmentContainer:{
@@ -68,13 +67,62 @@ export default class AssessmentResult extends BaseComponent{
 
   getItemResults(){
     return this.state.questions.map((question, index)=>{
-      return <ItemResult question={question} isCorrect={this.state.assessmentResult.correct_list[index]} confidence={this.state.assessmentResult.confidence_level_list[index]}/>
+      return <ItemResult question={question} isCorrect={this.state.assessmentResult.correct_list[index]} confidence={this.state.assessmentResult.confidence_level_list[index]}/>;
     })
+  }
+
+  getOutcomeLists(styles){
+    var lists = {
+      positiveList: [],
+      negativeList: [],
+    };
+    var sectionIndex = 0;
+    var perSecCount = 0;
+    var correctCount = 0;
+    var correctList = this.state.assessmentResult.correct_list;
+    for(var i = 0; i < correctList.length; i++){
+      //make sure to check to see if the amount of questions per section is less the ammount chosen per section
+      var correct = correctList[i]
+      perSecCount++;
+
+      if(!correct || correct == "partial"){
+        lists.negativeList.push(this.state.outcomes[sectionIndex]);
+        i += (this.state.settings.perSec - perSecCount);
+        sectionIndex++;
+        perSecCount = 0;
+        continue;
+      } else {
+        correctCount++;
+        if(correctCount == this.state.settings.perSec || correctCount == this.state.assessment.sections[sectionIndex + 1].items.length){
+          lists.positiveList.push(this.state.outcomes[sectionIndex]);
+          correctCount = 0;
+        }
+      }
+
+      if(perSecCount == this.state.settings.perSec || perSecCount == this.state.assessment.sections[sectionIndex + 1].items.length){
+        sectionIndex++;
+        correctCount = 0;
+        perSecCount = 0;
+      }
+    }
+
+    var positiveList = lists.positiveList.map((item, index)=>{
+      return <div key={"positive " + index}><p style={styles.green}><i className="glyphicon glyphicon-ok" style={styles.green}></i>{item.shortOutcome}</p></div>;
+    });
+
+    var negativeList = lists.negativeList.map((item, index)=>{
+      return <div key={"negative " + index}><p>{item.shortOutcome}</p></div>;
+    });
+    return {
+      positiveList: positiveList,
+      negativeList: negativeList
+    };
   }
 
   render(){
     var styles = this.getStyles(this.context.theme); 
     var itemResults = this.getItemResults();
+    var outcomeLists = this.getOutcomeLists(styles);
     return( 
     <div style={styles.assessment}>
       <div style={styles.assessmentContainer}>
@@ -94,14 +142,14 @@ export default class AssessmentResult extends BaseComponent{
           <div className="col-md-4" >
             <h3><strong>Good Work On These Concepts</strong></h3>
             <p>You answered questions that covered these concepts correctly.</p>
-            <p style={styles.alignLeft}>Put Green ul here</p><i className="glyphicon glyphicon-ok" style={styles.alignRight}></i>
+            {outcomeLists.positiveList}
             <div style={{clear: 'both'}}></div>
           </div>
 
           <div className="col-md-4" >
             <h3 style={styles.improveScoreStyle}><strong>There is still more to learn<i styleclassName="glyphicon glyphicon-warning-sign" ></i></strong></h3>
             <p>You can retake this quiz in 1 hour - plenty of time to review these sections!</p>
-            <h5>{this.state.assessmentResult.feedback}</h5>
+            {outcomeLists.negativeList}
           </div>
 
         </div>
