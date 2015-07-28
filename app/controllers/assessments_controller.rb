@@ -34,15 +34,17 @@ class AssessmentsController < ApplicationController
 
     if params[:id].present? && !['load', 'offline'].include?(params[:id])
       #todo restrict find to current account and then public quizzes
-      @assessment = Assessment.find(params[:id])
+      @assessment = Assessment.find(params[:id]) 
       @assessment_id = @assessment ? @assessment.id : params[:assessment_id] || 'null'
       @assessment_settings = params[:asid] ?  AssessmentSetting.find(params[:asid]) : @assessment.default_settings || current_account.default_settings || AssessmentSetting.where(is_default: true).first
       @style ||= @assessment.default_style if @assessment.default_style
+      
       if @assessment_settings.present?
         @style = @style != "" ? @style : @assessment_settings[:style] || ""
         @enable_start = params[:enable_start] ?  @enable_start : @assessment_settings[:enable_start] || false
         @confidence_levels = params[:confidence_levels] ?  @confidence_levels : @assessment_settings[:confidence_levels] || false
         @per_sec = @per_sec ? @per_sec : @assessment_settings[:per_sec] || ""
+        @assessment_kind = @assessment.kind
       end
       if params[:user_id].present?
         @user_assessment = @assessment.user_assessments.where(eid: params[:user_id]).first
@@ -62,18 +64,17 @@ class AssessmentsController < ApplicationController
         @src_url = embed_url(@assessment)
       else
         # Show the full page with analtyics and embed code buttons
-        @embed_code = embed_code(@assessment, @confidence_levels, @eid, @enable_start, params[:offline].present?, nil, @style, params[:asid], @per_sec)
+        @embed_code = embed_code(@assessment, @confidence_levels, @eid, @enable_start, params[:offline].present?, nil, @style, params[:asid], @per_sec, @assessment_kind)
       end
     else
       # Get the remote url where we can download the qti
       @src_url = ensure_scheme(URI.decode(params[:src_url])) if params[:src_url].present?
       if params[:load_ui] == 'true'
         # Build an embed code and stats page for an assessment loaded via a url
-        @embed_code = embed_code(nil, @confidence_levels, @eid, @enable_start, params[:offline].present?, params[:src_url], @style, params[:asid], params[:per_sec])
+        @embed_code = embed_code(nil, @confidence_levels, @eid, @enable_start, params[:offline].present?, params[:src_url], @style, params[:asid], params[:per_sec], @assessment_kind)
       end
 
     end
-
 
     if params[:offline].present? && @src_url.present?
       @src_data = open(@src_url).read

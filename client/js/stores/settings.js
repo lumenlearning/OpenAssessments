@@ -68,7 +68,8 @@ function loadSettings(defaultSettings){
     lisUserId          : defaultSettings.lis_user_id,
     lisResultSourceDid : defaultSettings.lis_result_source_did,
     lisOutcomeServiceUrl: defaultSettings.lis_outcome_service_url,
-    isLti              : defaultSettings.isLti
+    isLti              : defaultSettings.isLti,
+    assessmentKind     : defaultSettings.assessmentKind
   };
 
   if(!_settings.srcUrl && !_settings.offline){
