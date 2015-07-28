@@ -86,21 +86,6 @@ function setUpStudentAnswers(numOfQuestions){
   }
 }
 
-function clearStore(){
-  _assessment = null;
-  _assessmentXml = null;
-  _items = [];
-  _assessmentResult = null;
-  _assessmentState = NO_LOADED;
-  _startedAt;
-  _selectedConfidenceLevel = 0;
-  _selectedAnswerIds = [];
-  _answerMessageIndex = -1;
-  _sectionIndex = 0;
-  _itemIndex = 0;
-  _studentAnswers = [];
-}
-
 function calculateTime(start, end){
   return end - start;
 };
@@ -303,10 +288,7 @@ Dispatcher.register(function(payload) {
       _items[_itemIndex].timeSpent += calculateTime(_items[_itemIndex].startTime, Utils.currentTime());
       _finishedAt = Utils.currentTime(); 
       break;
-
-    case Constants.CLEAR_STORE:
-      clearStore();
-      break;
+      
     case Constants.LEVEL_SELECTED:
       _items[_itemIndex].confidenceLevel = payload.level;
       if(payload.index ==  _items.length - 1){
