@@ -89,7 +89,8 @@ export default class Assessment extends BaseComponent{
         maxAttempts={this.state.settings.allowedAttempts} 
         userAttempts={this.state.settings.userAttempts} 
         eid={this.state.settings.lisUserId}
-        assessmentId={this.state.assessment.assessmentId}/>;
+        assessmentId={this.state.assessment.assessmentId}
+        assessmentKind={this.state.settings.assessmentKind} />;
         
     } else {
       content = <Item 
