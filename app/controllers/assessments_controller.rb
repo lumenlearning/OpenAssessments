@@ -31,11 +31,7 @@ class AssessmentsController < ApplicationController
     @results_end_point = ensure_scheme(params[:results_end_point]) if params[:results_end_point].present?
     @style = params[:style] ? params[:style] :  ""
     @per_sec = params[:per_sec] ? params[:per_sec] : nil
-    if @is_writeback # For now all LTI requests with grade writeback will produce summative assessments. All others will be formative.
-      @kind = "summative"
-    else
-      @kind = "formative"
-    end
+
     if params[:id].present? && !['load', 'offline'].include?(params[:id])
       #todo restrict find to current account and then public quizzes
       @assessment = Assessment.find(params[:id])
