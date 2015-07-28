@@ -2,12 +2,13 @@
 
 import React          from "react";
 import assign         from "object-assign";
+import StyleManager   from "../js/utils/theme_manager";
 
 var { func } = React.PropTypes;
 
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
-
+var Theme = new StyleManager();
 export default (Component, props, stubs) => {
 
   function RouterStub(){ }
@@ -34,7 +35,8 @@ export default (Component, props, stubs) => {
       return {
         router: RouterStub,
         routeDepth: 0,
-        muiTheme: ThemeManager.getCurrentTheme()
+        muiTheme: ThemeManager.getCurrentTheme(),
+        theme: Theme.current()
       };
     }
 
@@ -51,7 +53,8 @@ export default (Component, props, stubs) => {
   Stubber.childContextTypes = {
     router: React.PropTypes.func,
     routeDepth: React.PropTypes.number,
-    muiTheme: React.PropTypes.object
+    muiTheme: React.PropTypes.object,
+    theme: React.PropTypes.object
   };
 
   return Stubber;
