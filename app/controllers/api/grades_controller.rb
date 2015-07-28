@@ -117,7 +117,7 @@ class Api::GradesController < Api::ApiController
       'user_id'                 => settings[:lisUserId]
     }
     
-    if settings["isLti"]
+    if settings["isLti"] && settings["assessmentKind"].upcase == "SUMMATIVE"
       provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
 
       # post the given score to the TC
