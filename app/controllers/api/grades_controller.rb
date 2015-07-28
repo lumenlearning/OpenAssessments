@@ -112,9 +112,9 @@ class Api::GradesController < Api::ApiController
     }
 
     params = {
-      'lis_result_sourcedid'    => session[:lis_result_sourcedid]    || settings[:lisResultSourceDid],
-      'lis_outcome_service_url' => session[:lis_outcome_service_url] || settings[:lisOutcomeSourceUrl],
-      'user_id'                 => session[:lis_user_id]             || settings[:lisUserId]
+      'lis_result_sourcedid'    => settings[:lisResultSourceDid],
+      'lis_outcome_service_url' => settings[:lisOutcomeSourceUrl],
+      'user_id'                 => settings[:lisUserId]
     }
     
     if settings["isLti"]
