@@ -12,9 +12,7 @@ class AssessmentsController < ApplicationController
   respond_to :html
 
   def index
-    if current_user
-      @assessments = @assessments.where(account: current_user.account)
-    end
+    @assessments = @assessments.where(account: current_account, kind: ['formative', 'show_what_you_know'])
   end
 
   def show
@@ -33,8 +31,7 @@ class AssessmentsController < ApplicationController
     @per_sec = params[:per_sec] ? params[:per_sec] : nil
 
     if params[:id].present? && !['load', 'offline'].include?(params[:id])
-      #todo restrict find to current account and then public quizzes
-      @assessment = Assessment.find(params[:id]) 
+      @assessment = Assessment.where(id: params[:id], account: current_account, kind: ['formative', 'show_what_you_know']).first
       @assessment_id = @assessment ? @assessment.id : params[:assessment_id] || 'null'
       @assessment_settings = params[:asid] ?  AssessmentSetting.find(params[:asid]) : @assessment.default_settings || current_account.default_settings || AssessmentSetting.where(is_default: true).first
       @style ||= @assessment.default_style if @assessment.default_style
