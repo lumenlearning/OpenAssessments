@@ -24,10 +24,11 @@ accounts.each do |account|
   if a = Account.find_by(code: account[:code])
     a.update_attributes!(account)
   else
-    Account.create!(account)
+    a = Account.create!(account)
   end
 end
 
+account = Account.find_by(code: ENV["APP_SUBDOMAIN"])
 
 # Load QTI files
 Dir.glob("db/qti/*") do |f|
@@ -39,13 +40,16 @@ Dir.glob("db/qti/*") do |f|
     assessment.title = f
     assessment.xml_file = xml_file
     assessment.user = admin
-    assessment.account_id = Account.first.id
+    assessment.account_id = account.id
+    assessment.kind = "formative"
     assessment.save!
   else
     Assessment.create!(
       title: f,
       xml_file: xml_file,
-      user: admin
+      user: admin,
+      kind: "formative",
+      account_id: account.id
     )
   end
 end
@@ -54,4 +58,5 @@ if assessment = Assessment.find_by(title: 'drupal.xml')
   assessment.recommended_height = 960
   assessment.save!
 end
+
 
