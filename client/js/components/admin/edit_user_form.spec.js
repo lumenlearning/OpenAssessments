@@ -10,18 +10,21 @@ describe('edit_user_form', function() {
   helpStubAjax(SettingsActions);
 
   var Subject;
+  var user, accountId; 
   var result;
 
   beforeEach(()=>{
-    var name = "Joseph";
-    var email = "test@test.com";
-    var id = 1;
-    Subject = StubContext(EditUserForm, { user: {name: name, id: id, email: email }, selectedIndex: 0 });
+    user = {
+      name: "Joseph",
+      email: "test@test.com"
+    }
+    accountId = "1";
+    Subject = StubContext(EditUserForm, { user: user, accountId: accountId, selectedIndex: 0 });
     result = TestUtils.renderIntoDocument(<Subject />);
+    result.refs.originalComponent.refs.information.show();
   });
 
   it("renders the form to edit the users", function() {
-
     expect(React.findDOMNode(result).textContent).toContain(name);
   });
 

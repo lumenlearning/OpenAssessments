@@ -15,10 +15,10 @@ describe('create_user_form', function() {
   beforeEach(()=>{
     Subject = StubContext(CreateUserForm, { accountId: "1"});
     result = TestUtils.renderIntoDocument(<Subject />);
+    result.refs.originalComponent.refs.information.show();
   });
 
   it("renders the form to edit the users", ()=>{
-
     expect(React.findDOMNode(result).textContent).toContain("CREATE NEW USER");
   });
 

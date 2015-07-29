@@ -140,7 +140,7 @@ class Users extends BaseComponent {
 
   render() {
     var styles = this.getStyles();
-    var user = _.where(this.state.users, { id: this.props.params.userId });
+    var user = _.findWhere(this.state.users, { id: this.props.params.userId }) || {};
     var editing = false;
     if(this.context.router.isActive("userEdit")){
       editing = true;

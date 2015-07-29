@@ -41,7 +41,7 @@ function helpStubAjax(SettingsActions){
     }]);
 
     jasmine.Ajax.stubRequest(
-        /.*\/api\/admin\/accounts\//
+        RegExp('.*/api/accounts/')
       ).andReturn({
       "status": 200,
       "contentType": "json",

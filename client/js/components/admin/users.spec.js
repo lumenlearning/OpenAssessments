@@ -15,7 +15,7 @@ describe('users_list', function() {
   var params;
 
   beforeEach(()=>{
-    params = { accountId: 1};
+    params = {accountId: "1"};
 
     styles = {
       body: {},

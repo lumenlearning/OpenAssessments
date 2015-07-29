@@ -89,7 +89,7 @@ class EditUserForm extends React.Component {
 
 EditUserForm.propTypes = {
   user: React.PropTypes.object.isRequired,
-  accountId: React.PropTypes.number.isRequired,
+  accountId: React.PropTypes.string.isRequired,
 };
 
 EditUserForm.contextTypes = {
