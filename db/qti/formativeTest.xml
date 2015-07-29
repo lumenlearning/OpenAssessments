@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+  <assessment title="Check Your Understanding: Health of the Economy" ident="i077cfd8a58ec4dd581daa3c2325042ad">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>qmd_timelimit</fieldlabel>
+        <fieldentry/>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry/>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <section title="Health of the Economy" ident="622">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>1</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item title="" ident="5342">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>077cfd8a-58ec-4dd5-81da-a3c2325042ad</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Health of the Economy</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Describe the methods economists use to evaluate the health of an economy, such as GDP, unemployment rate, CPI</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">The market value of all goods and services produced by the economy in a given year is known as:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="9476">
+                  <material>
+                    <mattext texttype="text/html">inflation</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9182">
+                  <material>
+                    <mattext texttype="text/html">Consumer Price Index (CPI)</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3091">
+                  <material>
+                    <mattext texttype="text/html">Gross Domestic Product (GDP)</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">9476</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">9182</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">3091</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+      </section>
+    </section>
+  </assessment>
+</questestinterop>

@@ -64,18 +64,29 @@ export default class Qti{
       var objectives = xml.find('objectives matref').map((index, item) => { 
         return $(item).attr('linkrefid'); 
       });
-
+      var outcomes = {
+        shortOutcome: "",
+        longOutcome: ""
+      }
+      xml.find("fieldentry").map((index, outcome)=>{
+        if(index == 2){
+          outcomes.shortOutcome = outcome.textContent
+        }
+        if(index == 3){
+          outcomes.longOutcome = outcome.textContent
+        }
+      });
       var item = {
         id         : xml.attr('ident'),
         title      : xml.attr('title'),
         objectives : objectives,
+        outcomes   : outcomes,
         xml        : xml,
         material   : this.material(xml),
         answers    : this.parseAnswers(xml),
         correct    : this.parseCorrect(xml),
         timeSpent  : 0
       };
-
       $.each(xml.find('itemmetadata > qtimetadata > qtimetadatafield'), function(i, x){
         item[$(x).find('fieldlabel').text()] = $(x).find('fieldentry').text();
       });

@@ -84,13 +84,14 @@ export default class Assessment extends BaseComponent{
     if(!this.state.isLoaded){
       content = <Loading />;  
     } else if(this.state.showStart){
-      content = <CheckUnderstanding 
-        name={this.state.question.name}
-        maxAttempts={this.state.settings.allowedAttempts} 
-        userAttempts={this.state.settings.userAttempts} 
-        eid={this.state.settings.lisUserId}
-        assessmentId={this.state.assessment.assessmentId}
-        assessmentKind={this.state.settings.assessmentKind} />;
+        content         = <CheckUnderstanding 
+        name            = {this.state.question.name}
+        maxAttempts     = {this.state.settings.allowedAttempts} 
+        userAttempts    = {this.state.settings.userAttempts} 
+        eid             = {this.state.settings.lisUserId}
+        assessmentId    = {this.state.assessment.assessmentId}
+        assessmentKind  = {this.state.settings.assessmentKind} 
+        primaryOutcome  = {this.state.outcomes[0]}/>;
         
     } else {
       content = <Item 

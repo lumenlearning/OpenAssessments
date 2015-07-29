@@ -20,9 +20,12 @@ export default class CheckUnderstanding extends React.Component{
         backgroundColor: theme.headerBackgroundColor
       },
       startButton: {
-        margin: "",
+        margin: "3px 5px 0px -5px",
         width: theme.definitelyWidth,
         backgroundColor: theme.definitelyBackgroundColor
+      },
+      checkUnderstandingButton: {
+        backgroundColor: theme.maybeBackgroundColor
       },
       fullQuestion:{
         backgroundColor: theme.fullQuestionBackgroundColor,
@@ -53,6 +56,28 @@ export default class CheckUnderstanding extends React.Component{
         // left: "20px"
         marginBottom: "25px",
         marginTop: "-25px"
+      },
+      icon: {
+        height: "62px",
+        width: "62px",
+        fontColor: theme.probablyBackgroundColor
+      },
+      formative: {
+        padding: "0px 30px 20px 30px",
+        marginTop: "-20px"
+      },
+      data: {
+        marginTop: "-5px"
+      },
+      checkDiv: {
+        backgroundColor: theme.probablyBackgroundColor,
+        margin: "20px 0px 0px 0px"
+      },
+      selfCheck: {
+        fontSize: "140%"
+      },
+      h4: {
+        color: "white"
       }
 
     }
@@ -101,7 +126,31 @@ export default class CheckUnderstanding extends React.Component{
   }
 
   getFormative(styles){
-    return <div />
+    return <div style={styles.formative}>
+            <div className="row">
+              <div className="col-md-1"><img style={styles.icon}src={require("../../../../app/assets/fonts/ProgressIcon.svg")} /></div>
+              <div className="col-md-10" style={styles.data}>
+                <div>PRIMARY OUTCOME TITLE</div>
+                <div style={styles.selfCheck}><b>Self-Check</b></div>
+                <div>{this.props.primaryOutcome.longOutcome}</div>
+              </div>
+            </div>
+            <hr />
+            <div className="row">
+              <div className="col-md-12">
+                <h5>INTRODUCTION</h5>
+                <div>Click "Check Your Understanding" to start</div>
+              </div>
+            </div>
+            <div className="row" style={styles.checkDiv}>
+              <div className="col-md-10">
+                <h4 style={styles.h4}>2.1 Self-Check: Introduction to Economics</h4>
+              </div>
+              <div className="col-md-2">
+                <button style={{...styles.startButton, ...styles.checkUnderstandingButton}} className="btn btn-info" onClick={()=>{this.start(this.props.eid, this.props.assessmentId)}}>Start Quiz</button>
+              </div>
+            </div>
+           </div>
   }
 
   render() {
@@ -113,13 +162,16 @@ export default class CheckUnderstanding extends React.Component{
     } else if(this.props.assessmentKind.toUpperCase() == "SHOW_WHAT_YOU_KNOW"){
       content = this.getSWYK(styles);
     } else if(this.props.assessmentKind.toUpperCase() == "FORMATIVE"){
-      content = getFormative(styles);
+      content = this.getFormative(styles);
     }
     var startButton = (
       <div style={styles.buttonWrapper}>
         <button style={styles.startButton} className="btn btn-info" onClick={()=>{this.start(this.props.eid, this.props.assessmentId)}}>Start Quiz</button>
       </div>)
     if (this.props.userAttempts == this.props.maxAttempts && this.props.assessmentKind.toUpperCase() == "SUMMATIVE"){
+      startButton = "";
+    }
+    if (this.props.assessmentKind.toUpperCase() == "FORMATIVE"){
       startButton = "";
     }
     return (
