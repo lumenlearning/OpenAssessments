@@ -4,7 +4,7 @@ RSpec.describe AssessmentsController, type: :controller do
   
   before do
     @account = setup_lti_account
-    @assessment = create_assessment
+    @assessment = create_assessment(account: @account, kind: "formative")
 
     allow(controller).to receive(:current_account).and_return(@account)
     allow(Account).to receive(:find_by).with(:lti_key).and_return(@account)
