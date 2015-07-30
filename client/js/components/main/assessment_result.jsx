@@ -185,8 +185,8 @@ export default class AssessmentResult extends BaseComponent{
       negativeList: negativeList
     };
   }
-
-  getContent(styles, itemResults, OutcomeLists){
+  // for sumative and swyk assessments
+  getContent(styles, itemResults, outcomeLists){
     return (<div style={styles.assessment}>
       <div style={styles.assessmentContainer}>
         <div className="row" style={styles.wrapperStyle}>
@@ -224,6 +224,8 @@ export default class AssessmentResult extends BaseComponent{
       </div>
     </div>)
   }
+
+  // this will be used only when the assessment kind is formative
   getFormativeContent(styles, OutcomeLists){
     var score = Math.trunc(this.state.assessmentResult.score);
     var image = "";
@@ -240,13 +242,17 @@ export default class AssessmentResult extends BaseComponent{
     } else {
       head = <h4>{"Needs Work!"}</h4>
       feedback = "You can learn more if you review before moving on.";
-      <img style={styles.outcomeIcon} src={this.state.settings.images.PersonWithBook_svg} />;
+      image = <img style={styles.outcomeIcon} src={this.state.settings.images.PersonWithBook_svg} />;
     }
 
     var results = this.state.questions.map((question, index)=>{
       var color = this.state.assessmentResult.correct_list[index] ? this.context.theme.probablyBackgroundColor : this.context.theme.maybeBackgroundColor;
       var message = this.state.assessmentResult.correct_list[index] ? "Correct" : "Incorrect";
       var confidenceColor;
+      if(this.state.assessmentResult.correct_list[index] == "partial"){
+        color = this.context.theme.partialColor;
+        message = "Partially Correct"
+      }
       if (this.state.assessmentResult.confidence_level_list[index] == "Just A Guess"){
         confidenceColor = this.context.theme.maybeBackgroundColor;
       } else if (this.state.assessmentResult.confidence_level_list[index] == "Pretty Sure"){
@@ -256,7 +262,7 @@ export default class AssessmentResult extends BaseComponent{
       }
       return <div key={"result-"+index}>            
               <div style={styles.resultList}>
-                <div><div style={{color: color, float: "left", overflow: "auto"}}>Question {index+1} -- {message}</div><div style={{color: confidenceColor, float: "right", overflow: "auto"}}>{this.state.assessmentResult.confidence_level_list[index]}</div></div>
+                <div><div style={{color: color, float: "left"}}>Question {index+1} -- {message}</div><div style={{color: confidenceColor, float: "right"}}>{this.state.assessmentResult.confidence_level_list[index]}</div></div>
               </div>
               <div style={{...styles.resultList, ...styles.resultOutcome}}>       
                 <div style={{width: "70%"}}>{this.state.questions[index].outcomes.longOutcome}</div>
@@ -285,7 +291,6 @@ export default class AssessmentResult extends BaseComponent{
                   <div>{results}</div>
                   <div style={styles.buttonsDiv}>
                     <button className="btn btn-check-answer" style={styles.retakeButton}  onClick={(e)=>{this.retake()}}>Retake</button>
-                    <button className="btn btn-check-answer" style={styles.exitButton}  onClick={(e)=>{this.retake()}}>Exit</button>
                   </div>
                 </div>
               </div>
@@ -297,9 +302,13 @@ export default class AssessmentResult extends BaseComponent{
 
   render(){
     var styles = this.getStyles(this.context.theme); 
+    if(this.state.assessmentResult == null){
+      return <div />
+    }    
     var itemResults = this.getItemResults();
     var outcomeLists = this.getOutcomeLists(styles);
     var content = <div />;
+
     if(this.state.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
       content = this.getFormativeContent(styles, outcomeLists);
     } else {

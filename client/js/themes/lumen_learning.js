@@ -40,4 +40,7 @@ export default {
   incorrectBackgroundColor: "rgba(207, 0, 0, 0.2)",
   correctBorder: "1px solid rgb(113, 184, 137)",
   incorrectBorder: "1px solid rgb(207, 0, 0)",
+  partialBorder: "1px solid rgb(255, 255, 0)",
+  partialBackgroundColor: "rgba(255, 255, 0, 0.2)",
+  partialColor: "rgb(255, 255, 0)"
 }
