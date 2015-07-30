@@ -4,6 +4,7 @@ class Api::AssessmentsController < Api::ApiController
   respond_to :xml, :json
 
   load_and_authorize_resource except: [:show]
+  skip_before_action :validate_token, only: [:show]
 
   def index
     page = (params[:page] || 1).to_i
@@ -20,7 +21,9 @@ class Api::AssessmentsController < Api::ApiController
   end
 
   def show
-    assessment = Assessment.find(params[:id])
+    assessment = Assessment.where(id: params[:id], account: current_account).first
+    validate_token unless assessment.kind == 'formative'
+
     respond_to do |format|
       format.json { render :json => assessment }
       format.xml { render :text => assessment.assessment_xmls.by_newest.first.xml }
