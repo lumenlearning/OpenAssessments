@@ -29,6 +29,9 @@ export default class CheckBox extends React.Component{
         fontSize: theme.btnQuestionFontSize,
         lineHeight: theme.btnQuestionLineHeight,
         borderRadius: theme.btnQuestionBorderRadius
+      },
+      span: {
+        marginLeft: "5px"
       }
     }
   }
@@ -42,7 +45,7 @@ export default class CheckBox extends React.Component{
       <div className="btn btn-block btn-question" style={styles.btnQuestion}>
         <label>
           {checkBox}
-          {this.props.item.material}
+          <span style={styles.span}>{this.props.item.material}</span>
         </label>
       </div>
     );
