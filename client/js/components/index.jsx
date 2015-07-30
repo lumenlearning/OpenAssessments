@@ -6,7 +6,7 @@ import {RouteHandler}       from "react-router";
 import BaseComponent        from "./base_component";
 import SettingsStore        from "../stores/settings";
 import ThemeManager         from "../utils/theme_manager";
-import PonyTheme            from "../themes/pony.theme";
+import PonyTheme            from "../themes/pony";
 import LumenTheme           from "../themes/lumen_learning";
 
 var StyleManager = new ThemeManager();

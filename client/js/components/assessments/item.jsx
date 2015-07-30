@@ -61,7 +61,7 @@ export default class Item extends BaseComponent{
       navMargin = "-75px 20px 0 0";
     return {
       assessmentContainer:{
-        marginTop: "70px",
+        marginTop: this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ?  "20px" : "70px",
         boxShadow: theme.assessmentContainerBoxShadow, 
         borderRadius: theme.assessmentContainerBorderRadius
       },

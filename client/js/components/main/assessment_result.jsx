@@ -11,7 +11,7 @@ export default class AssessmentResult extends BaseComponent{
  
   constructor(props, context){
     super(props, context);
-    this._bind("getItemResults", "getStyles", "getOutcomeLists");
+    this._bind("getItemResults", "getStyles", "getOutcomeLists", "getContent");
     this.stores = [AssessmentStore, SettingsStore];
     this.state = this.getState();
   }
@@ -23,7 +23,7 @@ export default class AssessmentResult extends BaseComponent{
       questions        : AssessmentStore.allQuestions(),
       outcomes         : AssessmentStore.outcomes(),
       settings         : SettingsStore.current(),
-      assessment       : AssessmentStore.current()   
+      assessment       : AssessmentStore.current(),  
     }
   }
 
@@ -61,7 +61,21 @@ export default class AssessmentResult extends BaseComponent{
       },
       resultsStyle: {
         padding: "20px"
-      }
+      },
+      formative: {
+        padding: "0px 30px 20px 30px",
+        marginTop: "0px"
+      },
+      icon: {
+        height: "62px",
+        width: "62px",
+      },
+      data: {
+        marginTop: "-5px"
+      },
+      selfCheck: {
+        fontSize: "140%"
+      },
     }
   }
 
@@ -119,12 +133,8 @@ export default class AssessmentResult extends BaseComponent{
     };
   }
 
-  render(){
-    var styles = this.getStyles(this.context.theme); 
-    var itemResults = this.getItemResults();
-    var outcomeLists = this.getOutcomeLists(styles);
-    return( 
-    <div style={styles.assessment}>
+  getContent(styles, itemResults, OutcomeLists){
+    return (<div style={styles.assessment}>
       <div style={styles.assessmentContainer}>
         <div className="row" style={styles.wrapperStyle}>
 
@@ -158,7 +168,40 @@ export default class AssessmentResult extends BaseComponent{
           {itemResults}
         </div>
       </div>
-    </div>);
+    </div>)
+  }
+  getFormativeContent(styles, OutcomeLists){
+    return <div style={styles.assessment}>
+        <div style={styles.assessmentContainer}>
+          <div style={styles.formative}>
+            <div className="row">
+              <div className="col-md-1"><img style={styles.icon} src={require("../../../../app/assets/fonts/ProgressIcon.svg")} /></div>
+              <div className="col-md-10" style={styles.data}>
+                <div>PRIMARY OUTCOME TITLE</div>
+                <div style={styles.selfCheck}><b>Self-Check</b></div>
+                <div>{this.state.outcomes[0].longOutcome}</div>
+              </div>
+            </div>
+            <hr />
+            <div className="row">
+            </div>
+          </div>
+        </div>
+      </div>
+  }
+
+  render(){
+    var styles = this.getStyles(this.context.theme); 
+    var itemResults = this.getItemResults();
+    var outcomeLists = this.getOutcomeLists(styles);
+    var content = <div />;
+    if(this.state.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
+      content = this.getFormativeContent(styles, outcomeLists);
+    } else {
+      content = this.getContent(styles, itemResults, outcomeLists);
+    }
+    return content;
+
   }
 }
 

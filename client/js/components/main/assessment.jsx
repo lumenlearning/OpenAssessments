@@ -118,13 +118,12 @@ export default class Assessment extends BaseComponent{
     if(this.state.assessment){
       progressText = this.context.theme.shouldShowProgressText ? <div><b>{this.state.assessment.title + " Progress"}</b>{" - You are on question " + (this.state.currentIndex + 1) + " of " + this.state.questionCount}</div> : ""; 
     }
-
+    var progressBar = this.state.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? "" : <div style={styles.titleBar}>
+                                                                                              {progressText}                                                                                                        
+                                                                                              <ProgressDropdown questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
+                                                                                             </div>;
     return <div className="assessment" style={styles.assessment}>
-      <div style={styles.titleBar}>
-      {progressText}
-        
-        <ProgressDropdown questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
-      </div>
+      {progressBar}
       <div className="section_list">
         <div className="section_container">
           {content}

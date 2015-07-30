@@ -12,7 +12,7 @@ export default class CheckUnderstanding extends React.Component{
   getStyles(props, theme){
     return {
       assessmentContainer:{
-        marginTop: "70px",
+        marginTop: props.assessmentKind.toUpperCase() == "FORMATIVE" ? "20px" : "70px",
         boxShadow: theme.assessmentContainerBoxShadow, 
         borderRadius: theme.assessmentContainerBorderRadius
       },
@@ -78,8 +78,10 @@ export default class CheckUnderstanding extends React.Component{
       },
       h4: {
         color: "white"
+      },
+      images: {
+        greenQuizIcon: "greenQuizIcon",
       }
-
     }
   }
 
@@ -126,9 +128,12 @@ export default class CheckUnderstanding extends React.Component{
   }
 
   getFormative(styles){
+
+    "greenQuizIcon"
+
     return <div style={styles.formative}>
             <div className="row">
-              <div className="col-md-1"><img style={styles.icon}src={require("../../../../app/assets/fonts/ProgressIcon.svg")} /></div>
+              <div className="col-md-1"><div className={styles.images.greenQuizIcon}></div> <img style={styles.icon} src={require("../../../../app/assets/fonts/ProgressIcon.svg")} /></div>
               <div className="col-md-10" style={styles.data}>
                 <div>PRIMARY OUTCOME TITLE</div>
                 <div style={styles.selfCheck}><b>Self-Check</b></div>
