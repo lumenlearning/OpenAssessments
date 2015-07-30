@@ -11,12 +11,13 @@ export default class AssessmentResult extends BaseComponent{
  
   constructor(props, context){
     super(props, context);
-    this._bind("getItemResults", "getStyles", "getOutcomeLists", "getContent");
+    this._bind("getItemResults", "getStyles", "getOutcomeLists", "getContent", "getFormativeContent", "retake");
     this.stores = [AssessmentStore, SettingsStore];
     this.state = this.getState();
   }
 
-  getState(){
+  getState(props, context){
+    
     return {
       assessmentResult : AssessmentStore.assessmentResult(),
       timeSpent        : AssessmentStore.timeSpent(),
@@ -25,6 +26,11 @@ export default class AssessmentResult extends BaseComponent{
       settings         : SettingsStore.current(),
       assessment       : AssessmentStore.current(),  
     }
+  }
+
+  retake(){
+    AssessmentActions.retakeAssessment();
+    this.context.router.transitionTo("assessment");
   }
 
   getStyles(theme){
@@ -76,6 +82,53 @@ export default class AssessmentResult extends BaseComponent{
       selfCheck: {
         fontSize: "140%"
       },
+      outcomes: {
+        backgroundColor: "rgba(204, 204, 204, .2)", 
+      },
+      row: {
+        padding: "15px"
+      },
+      outcomeContainer: {
+        textAlign: "center",
+        marginTop: "70px"
+      },
+      outcomeIcon: {
+        width: "100px",
+        height: "100px"
+      },
+      header: {
+        padding: "15px",
+        backgroundColor: theme.probablyBackgroundColor,
+        position: "absolute",
+        top: "0px",
+        left: "0px",
+        fontSize: "140%",
+        color: "white",
+        width: "100%"
+      },
+      resultList: {
+        width: "50%",
+        margin: "auto",
+        overflow: "auto"
+      },
+      resultOutcome: {
+        textAlign: "left"
+      },
+      retakeButton: {
+        width: theme.definitelyWidth,
+        backgroundColor: theme.definitelyBackgroundColor,
+        color: theme.definitelyColor,
+      },      
+        exitButton: {
+        width: theme.definitelyWidth,
+        backgroundColor: theme.probablyBackgroundColor,
+        color: theme.definitelyColor,
+        marginLeft: "15px"
+      },
+      buttonsDiv: {
+        marginTop: "20px",
+        marginBottom: "50px"
+      }
     }
   }
 
@@ -167,10 +220,49 @@ export default class AssessmentResult extends BaseComponent{
         <div style={styles.resultsStyle}>
           {itemResults}
         </div>
+
       </div>
     </div>)
   }
   getFormativeContent(styles, OutcomeLists){
+    var score = Math.trunc(this.state.assessmentResult.score);
+    var image = "";
+    var feedback = "";
+    var head = "";
+    if(score == 100){
+      head = <h4 style={{color: this.context.theme.probablyBackgroundColor}}>{"Looks like you're getting it!"}</h4>
+      feedback = "You're ready to move on to the next section.";
+      image = <img style={styles.outcomeIcon} src={this.state.settings.images.CheckMark_svg} />
+    } else if (score > 75){
+      head = <h4 >{"You're making progress!"}</h4>
+      feedback = "You can learn more if you review before moving on.";
+      image = <img style={styles.outcomeIcon} src={this.state.settings.images.Books_svg} />;
+    } else {
+      head = <h4>{"Needs Work!"}</h4>
+      feedback = "You can learn more if you review before moving on.";
+      <img style={styles.outcomeIcon} src={this.state.settings.images.PersonWithBook_svg} />;
+    }
+
+    var results = this.state.questions.map((question, index)=>{
+      var color = this.state.assessmentResult.correct_list[index] ? this.context.theme.probablyBackgroundColor : this.context.theme.maybeBackgroundColor;
+      var message = this.state.assessmentResult.correct_list[index] ? "Correct" : "Incorrect";
+      var confidenceColor;
+      if (this.state.assessmentResult.confidence_level_list[index] == "Just A Guess"){
+        confidenceColor = this.context.theme.maybeBackgroundColor;
+      } else if (this.state.assessmentResult.confidence_level_list[index] == "Pretty Sure"){
+        confidenceColor = this.context.theme.probablyBackgroundColor;
+      } else {
+        confidenceColor = this.context.theme.definitelyBackgroundColor;
+      }
+      return <div key={"result-"+index}>            
+              <div style={styles.resultList}>
+                <div><div style={{color: color, float: "left", overflow: "auto"}}>Question {index+1} -- {message}</div><div style={{color: confidenceColor, float: "right", overflow: "auto"}}>{this.state.assessmentResult.confidence_level_list[index]}</div></div>
+              </div>
+              <div style={{...styles.resultList, ...styles.resultOutcome}}>       
+                <div style={{width: "70%"}}>{this.state.questions[index].outcomes.longOutcome}</div>
+              </div>
+            </div>
+    })
     return <div style={styles.assessment}>
         <div style={styles.assessmentContainer}>
           <div style={styles.formative}>
@@ -183,7 +275,20 @@ export default class AssessmentResult extends BaseComponent{
               </div>
             </div>
             <hr />
-            <div className="row">
+            <div className="row" style={styles.row}>
+              <div className="col-md-12" style={styles.outcomes}>
+                <div style={styles.header}>2.1 Excersize 2</div>
+                <div style={styles.outcomeContainer}>
+                  {image}
+                  {head}
+                  <div>{feedback}</div>
+                  <div>{results}</div>
+                  <div style={styles.buttonsDiv}>
+                    <button className="btn btn-check-answer" style={styles.retakeButton}  onClick={(e)=>{this.retake()}}>Retake</button>
+                    <button className="btn btn-check-answer" style={styles.exitButton}  onClick={(e)=>{this.retake()}}>Exit</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -207,4 +312,5 @@ export default class AssessmentResult extends BaseComponent{
 
 AssessmentResult.contextTypes = {
   theme: React.PropTypes.object,
+  router: React.PropTypes.func
 }
