@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20150730045024) do
     t.string   "code"
     t.boolean  "restrict_signup",                         default: true
     t.boolean  "restrict_assessment_create",              default: true
-    t.boolean  "restrict_public"
+    t.boolean  "restrict_public",                         default: true
     t.string   "default_style"
   end
 

@@ -175,7 +175,7 @@ export default class AssessmentResult extends BaseComponent{
         <div style={styles.assessmentContainer}>
           <div style={styles.formative}>
             <div className="row">
-              <div className="col-md-1"><img style={styles.icon} src={require("../../../../app/assets/fonts/ProgressIcon.svg")} /></div>
+              <div className="col-md-1"><img style={styles.icon} src={this.state.settings.images.QuizIcon_svg} /></div>
               <div className="col-md-10" style={styles.data}>
                 <div>PRIMARY OUTCOME TITLE</div>
                 <div style={styles.selfCheck}><b>Self-Check</b></div>

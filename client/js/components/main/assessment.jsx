@@ -91,7 +91,8 @@ export default class Assessment extends BaseComponent{
         eid             = {this.state.settings.lisUserId}
         assessmentId    = {this.state.assessment.assessmentId}
         assessmentKind  = {this.state.settings.assessmentKind} 
-        primaryOutcome  = {this.state.outcomes[0]}/>;
+        primaryOutcome  = {this.state.outcomes[0]}
+        icon            = {this.state.settings.images.QuizIcon_svg}/>;
         
     } else {
       content = <Item 

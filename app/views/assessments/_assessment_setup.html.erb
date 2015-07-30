@@ -43,6 +43,7 @@
     lis_outcome_service_url: '<%= params[:lis_outcome_service_url] %>',
     lis_user_id: '<%=  params[:lis_user_id] || params[:user_id]%>',
     csrfToken: '<%= form_authenticity_token %>',
-    jwt: '<%= jwt_token %>'
+    jwt: '<%= jwt_token %>',
+    images: <%=client_images("Books.svg", "PersonWithBook.svg", "ProgressIcon.svg", "QuizIcon.svg")%>
   };
 </script>

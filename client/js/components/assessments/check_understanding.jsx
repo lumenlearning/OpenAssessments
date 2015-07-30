@@ -133,7 +133,7 @@ export default class CheckUnderstanding extends React.Component{
 
     return <div style={styles.formative}>
             <div className="row">
-              <div className="col-md-1"><div className={styles.images.greenQuizIcon}></div> <img style={styles.icon} src={require("../../../../app/assets/fonts/ProgressIcon.svg")} /></div>
+              <div className="col-md-1"><img style={styles.icon} src={this.props.icon} /></div>
               <div className="col-md-10" style={styles.data}>
                 <div>PRIMARY OUTCOME TITLE</div>
                 <div style={styles.selfCheck}><b>Self-Check</b></div>
