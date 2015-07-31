@@ -317,6 +317,9 @@ Dispatcher.register(function(payload) {
       _itemIndex = 0;
       _sectionIndex = 0;
       _selectedAnswerIds = [];
+      for(var i=0; i<_items.length; i++){
+        _items[i].confidenceLevel = null;
+      }
       break;
     default:
       return true;
