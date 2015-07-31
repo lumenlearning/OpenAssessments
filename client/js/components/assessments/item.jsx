@@ -16,17 +16,24 @@ export default class Item extends BaseComponent{
   nextButtonClicked(){
     this.setState({unAnsweredQuestions: null})
     AssessmentActions.nextQuestion();
+    this.setState({showMessage: false});
   }
 
   previousButtonClicked(){
     this.setState({unAnsweredQuestions: null})
     AssessmentActions.previousQuestion();
+    this.setState({showMessage: false});
   }
 
   confidenceLevelClicked(e, currentIndex){
     e.preventDefault()
-    AssessmentActions.selectConfidenceLevel(e.target.value, currentIndex);
-    AssessmentActions.nextQuestion(); 
+    if(AssessmentStore.selectedAnswerId() && AssessmentStore.selectedAnswerId().length > 0){
+      AssessmentActions.selectConfidenceLevel(e.target.value, currentIndex);
+      AssessmentActions.nextQuestion();
+      this.setState({showMessage: false});
+    } else {
+      this.setState({showMessage: true});
+    }
   }
 
   submitButtonClicked(e){
@@ -239,6 +246,7 @@ export default class Item extends BaseComponent{
     var styles = this.getStyles(this.context.theme);
     var unAnsweredWarning = this.getWarning(this.state,  this.props.questionCount, this.props.currentIndex, styles);
     var result = this.getResult(this.props.messageIndex);
+    var message = this.state && this.state.showMessage ? <div style={styles.warning}>You must select an answer before continuing.</div> : "";
     var buttons = this.getConfidenceLevels(this.props.confidenceLevels, styles);
     var submitButton = (this.props.currentIndex == this.props.questionCount - 1 && this.props.question.confidenceLevel) ? <button className="btn btn-check-answer" style={styles.definitelyButton}  onClick={(e)=>{this.submitButtonClicked(e)}}>Submit</button> : "";
     var footer = this.getFooterNav(this.context.theme, styles);
@@ -277,6 +285,7 @@ export default class Item extends BaseComponent{
               {result}
               {buttons}
               {unAnsweredWarning}
+              {message}
               <div style={styles.submitButtonDiv}>
                 {submitButton}
               </div>
