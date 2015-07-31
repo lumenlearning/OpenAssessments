@@ -12,7 +12,7 @@ export default class CheckUnderstanding extends React.Component{
   getStyles(props, theme){
     return {
       assessmentContainer:{
-        marginTop: "20px",
+        marginTop: "30px",
         boxShadow: theme.assessmentContainerBoxShadow, 
         borderRadius: theme.assessmentContainerBorderRadius
       },
@@ -129,8 +129,6 @@ export default class CheckUnderstanding extends React.Component{
 
   getFormative(styles){
 
-    "greenQuizIcon"
-
     return <div style={styles.formative}>
             <div className="row">
               <div className="col-md-1"><img style={styles.icon} src={this.props.icon} /></div>
@@ -143,13 +141,13 @@ export default class CheckUnderstanding extends React.Component{
             <hr />
             <div className="row">
               <div className="col-md-12">
-                <h5>INTRODUCTION</h5>
+                <h5 style={{color: this.context.theme.definitelyBackgroundColor}}>INTRODUCTION</h5>
                 <div>Click "Check Your Understanding" to start</div>
               </div>
             </div>
             <div className="row" style={styles.checkDiv}>
               <div className="col-md-10">
-                <h4 style={styles.h4}>2.1 Self-Check: Introduction to Economics</h4>
+                <h4 style={styles.h4}>{this.props.title}</h4>
               </div>
               <div className="col-md-2">
                 <button style={{...styles.startButton, ...styles.checkUnderstandingButton}} className="btn btn-info" onClick={()=>{this.start(this.props.eid, this.props.assessmentId)}}>Start Quiz</button>

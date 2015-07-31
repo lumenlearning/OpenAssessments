@@ -128,6 +128,17 @@ export default class AssessmentResult extends BaseComponent{
       buttonsDiv: {
         marginTop: "20px",
         marginBottom: "50px"
+      },
+      titleBar: {
+        position: "absolute",
+        top: "0px",
+        left: "0px",
+        width: "100%",
+        padding: "10px 20px 10px 20px",
+        backgroundColor: theme.probablyBackgroundColor,
+        color: "white",
+        fontSize: "130%",
+        //fontWeight: "bold"
       }
     }
   }
@@ -189,6 +200,7 @@ export default class AssessmentResult extends BaseComponent{
   getContent(styles, itemResults, outcomeLists){
     return (<div style={styles.assessment}>
       <div style={styles.assessmentContainer}>
+        <div style={styles.titleBar}>{this.state.assessment ? this.state.assessment.title : ""}</div>
         <div className="row" style={styles.wrapperStyle}>
 
           <div className="col-md-4" >

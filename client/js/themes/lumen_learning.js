@@ -42,5 +42,6 @@ export default {
   incorrectBorder: "1px solid rgb(207, 0, 0)",
   partialBorder: "1px solid rgb(255, 255, 0)",
   partialBackgroundColor: "rgba(255, 255, 0, 0.2)",
-  partialColor: "rgb(255, 255, 0)"
+  partialColor: "rgb(255, 255, 0)",
+  outcomesBackgroundColor: "rgba(204, 204, 204, .2)",
 }

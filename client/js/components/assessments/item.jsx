@@ -68,7 +68,7 @@ export default class Item extends BaseComponent{
       navMargin = "-75px 20px 0 0";
     return {
       assessmentContainer:{
-        marginTop: this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ?  "20px" : "70px",
+        marginTop: this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ?  "20px" : "100px",
         boxShadow: theme.assessmentContainerBoxShadow, 
         borderRadius: theme.assessmentContainerBorderRadius
       },
@@ -76,7 +76,8 @@ export default class Item extends BaseComponent{
         backgroundColor: theme.headerBackgroundColor
       },
       fullQuestion:{
-        backgroundColor: theme.fullQuestionBackgroundColor
+        backgroundColor: this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? theme.outcomesBackgroundColor : theme.fullQuestionBackgroundColor,
+        paddingBottom: "20px",
       },
       questionText: {
         fontSize: theme.questionTextFontSize,
@@ -151,7 +152,25 @@ export default class Item extends BaseComponent{
         height: theme.footerHeight,
         width: "100px",
         float: "right"
-      }
+      },
+      icon: {
+        height: "62px",
+        width: "62px",
+        fontColor: theme.probablyBackgroundColor
+      },
+      data: {
+        marginTop: "-5px"
+      },
+      selfCheck: {
+        fontSize: "140%"
+      },
+      checkDiv: {
+        backgroundColor: theme.probablyBackgroundColor,
+        margin: "20px 0px 0px 0px"
+      },
+      h4: {
+        color: "white"
+      },
     }
   }
   getFooterNav(theme, styles){
@@ -262,7 +281,35 @@ export default class Item extends BaseComponent{
     if(this.context.theme.shouldShowCounter){
       counter = <span className="counter">{this.props.currentIndex + 1} of {this.props.questionCount}</span>
     }
-
+    var formativeHeader = ""
+    if(this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
+      formativeHeader =             
+          <div>
+            <div className="row">
+              <div className="col-md-1"><img style={styles.icon} src={this.props.settings.images.QuizIcon_svg} /></div>
+              <div className="col-md-10" style={styles.data}>
+                <div>PRIMARY OUTCOME TITLE</div>
+                <div style={styles.selfCheck}><b>Self-Check</b></div>
+                <div>{"this.props.primaryOutcome.longOutcome"}</div>
+              </div>
+            </div>
+            <hr />
+            <div className="row">
+              <div className="col-md-12">
+                <h5 style={{color: this.context.theme.definitelyBackgroundColor}}>INTRODUCTION</h5>
+                <div>Click "Check Your Understanding" to start</div>
+              </div>
+            </div>
+            <div className="row" style={styles.checkDiv}>
+              <div className="col-md-10">
+                <h4 style={styles.h4}>{this.props.assessment.title}</h4>
+              </div>
+              <div className="col-md-2">
+              </div>
+            </div>
+          </div>
+    }
+    var formativeStyle = this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? {padding: "20px"} : {};
     return (
       <div className="assessment_container" style={styles.assessmentContainer}>
         <div className="question">
@@ -270,33 +317,36 @@ export default class Item extends BaseComponent{
             {counter}
             <p>{this.props.question.title}</p>
           </div>
-          <form className="edit_item">
-            <div className="full_question" style={styles.fullQuestion}>
-              <div className="inner_question">
-                <div className="question_text" style={styles.questionText}>
-                  <div
-                    dangerouslySetInnerHTML={{
-                  __html: this.props.question.material
-                  }}>
+          <div style={formativeStyle}>
+            {formativeHeader}
+            <form className="edit_item">
+              <div className="full_question" style={styles.fullQuestion}>
+                <div className="inner_question">
+                  <div className="question_text" style={styles.questionText}>
+                    <div
+                      dangerouslySetInnerHTML={{
+                    __html: this.props.question.material
+                    }}>
+                    </div>
                   </div>
+                  <UniversalInput item={this.props.question} isResult={false}/>
                 </div>
-                <UniversalInput item={this.props.question} isResult={false}/>
+                {result}
+                {buttons}
+                {unAnsweredWarning}
+                {message}
+                <div style={styles.submitButtonDiv}>
+                  {submitButton}
+                </div>
               </div>
-              {result}
-              {buttons}
-              {unAnsweredWarning}
-              {message}
-              <div style={styles.submitButtonDiv}>
-                {submitButton}
-              </div>
+            </form>
+            <div className="nav_buttons" style={styles.navButtons}>
+              {previousButton}
+              {nextButton}
             </div>
-          </form>
-          <div className="nav_buttons" style={styles.navButtons}>
-            {previousButton}
-            {nextButton}
           </div>
+          {footer}
         </div>
-        {footer}
       </div>
     );
   }

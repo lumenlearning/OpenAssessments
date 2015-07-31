@@ -14,7 +14,7 @@ export default class RadioButton extends React.Component{
     return {
       btnQuestion:{
         whiteSpace: theme.btnQuestionWhiteSpace,
-        background: props.isDisabled? "transparent" : theme.btnQuestionBackground,
+        background: "transparent",//props.isDisabled? "transparent" : theme.btnQuestionBackground,
         color: theme.btnQuestionColor,
         textAlign: theme.btnQuestionTextAlign,
         padding: theme.btnQuestionPadding,
