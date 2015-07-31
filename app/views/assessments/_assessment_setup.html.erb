@@ -18,7 +18,7 @@
     <% if @keywords %>
     keywords: '<%= @keywords %>',
     <% end %>
-    assessmentKind: '<%= params[:assessment_kind]%>',
+    assessmentKind: '<%= @assessment_kind%>',
     resultsEndPoint: '<%= @results_end_point || "http://#{request.host_with_port}/api" %>',
     confidenceLevels: <%= @confidence_levels %>,
     enableStart: <%= @enable_start %>,

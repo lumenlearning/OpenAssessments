@@ -22,6 +22,7 @@ class Api::GradesController < Api::ApiController
     positive_outcome_list = []
     negative_outcome_list = []
     answers = item_to_grade["answers"]
+
     questions.each_with_index do |question, index|
 
       # make sure we are looking at the right question
@@ -116,11 +117,11 @@ class Api::GradesController < Api::ApiController
     }
 
     params = {
-      'lis_result_sourcedid'    => settings[:lisResultSourceDid],
-      'lis_outcome_service_url' => settings[:lisOutcomeSourceUrl],
-      'user_id'                 => settings[:lisUserId]
+      'lis_result_sourcedid'    => settings["lisResultSourceDid"],
+      'lis_outcome_service_url' => settings["lisOutcomeServiceUrl"],
+      'user_id'                 => settings["lisUserId"]
     }
-    
+
     if settings["isLti"] && settings["assessmentKind"].upcase == "SUMMATIVE"
       provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
 

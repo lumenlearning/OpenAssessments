@@ -40,9 +40,9 @@ class AssessmentsController < ApplicationController
         @style = @style != "" ? @style : @assessment_settings[:style] || ""
         @enable_start = params[:enable_start] ?  @enable_start : @assessment_settings[:enable_start] || false
         @confidence_levels = params[:confidence_levels] ?  @confidence_levels : @assessment_settings[:confidence_levels] || false
-        @per_sec = @per_sec ? @per_sec : @assessment_settings[:per_sec] || ""
-        @assessment_kind = @assessment.kind
+        @per_sec = @per_sec ? @per_sec : @assessment_settings[:per_sec] || ""  
       end
+      @assessment_kind = @assessment.kind
       if params[:user_id].present?
         @user_assessment = @assessment.user_assessments.where(eid: params[:user_id]).first
         if !@user_assessment.nil?
@@ -88,6 +88,7 @@ class AssessmentsController < ApplicationController
       end
     end
     @is_lti ||= false
+    @assessment_kind ||= params[:assessment_kind]
     # extract LTI values
     @external_user_id ||= params[:user_id]
 
