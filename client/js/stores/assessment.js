@@ -91,7 +91,8 @@ function calculateTime(start, end){
 };
 
 function getItems(sections, perSec){
-  var items = []
+
+  var items = [];
   if(!perSec || perSec <= 0){
     return sections[0].items
   } 
@@ -99,6 +100,11 @@ function getItems(sections, perSec){
   for(var i=1; i<sections.length; i++){
     var count = perSec > sections[i].items.length ? sections[i].items.length : perSec;
     for(var j=0; j < count; j++){
+      var item = _.sample(sections[i].items);
+      if(_.indexOf(items,item) > -1){
+        j--; 
+        continue;
+      }
       items.push(_.sample(sections[i].items));
     }
   }
