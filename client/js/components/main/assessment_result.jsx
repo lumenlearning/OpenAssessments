@@ -222,7 +222,7 @@ export default class AssessmentResult extends BaseComponent{
           </div>
 
           <div className="col-md-4" >
-            <h3 style={styles.improveScoreStyle}><strong>There is still more to learn<i styleclassName="glyphicon glyphicon-warning-sign" ></i></strong></h3>
+            <h3 style={styles.improveScoreStyle}><strong>There Is Still More To Learn<i styleclassName="glyphicon glyphicon-warning-sign" ></i></strong></h3>
             <p>You can retake this quiz in 1 hour - plenty of time to review these sections!</p>
             {outcomeLists.negativeList}
           </div>
