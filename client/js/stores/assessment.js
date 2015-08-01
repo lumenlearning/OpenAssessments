@@ -96,16 +96,21 @@ function getItems(sections, perSec){
   if(!perSec || perSec <= 0){
     return sections[0].items
   } 
-
   for(var i=1; i<sections.length; i++){
     var count = perSec > sections[i].items.length ? sections[i].items.length : perSec;
+    debugger
     for(var j=0; j < count; j++){
       var item = _.sample(sections[i].items);
-      if(_.indexOf(items,item) > -1){
-        j--; 
-        continue;
+      for(var k=0; k<items.length; k++){
+        if(item.id == items[k].id){
+          j--; 
+          item=-1;
+          break;
+        }
       }
-      items.push(_.sample(sections[i].items));
+      if(item == -1) continue;
+
+      items.push(item);
     }
   }
   return items;
@@ -196,6 +201,7 @@ Dispatcher.register(function(payload) {
       break;
 
     case Constants.ASSESSMENT_LOADED:
+
       _assessmentState = INVALID;
       if(payload.data.text){
         var text = payload.data.text.trim();

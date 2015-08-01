@@ -1,0 +1,2903 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+  <assessment title="Financial Markets and System" ident="i0886cfce85384de6a5b5394edca8282f_summative">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>qmd_timelimit</fieldlabel>
+        <fieldentry/>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry/>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <section title="Money" ident="9695">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>2</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item title="" ident="3567">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>e674d7cf-2292-4159-a2e8-159b62b19b9d</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Money</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Explain the types, characteristics and functions of money</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">For money to function as a medium of exchange it must be:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="4137">
+                  <material>
+                    <mattext texttype="text/html">difficult to counterfeit</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9834">
+                  <material>
+                    <mattext texttype="text/html">durable</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9751">
+                  <material>
+                    <mattext texttype="text/html">colorful</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">4137</varequal>
+                  <varequal respident="response1">9834</varequal>
+                  <not>
+                    <varequal respident="response1">9751</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="4617">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>e674d7cf-2292-4159-a2e8-159b62b19b9d</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Money</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Explain the types, characteristics and functions of money</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">An individual walks to a local sandwich shop and uses a $10 bill to pay for a $6 sandwich, receiving $4 as change for this transaction. This illustrates that as a medium of exchange this $10 bill is:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="9326">
+                  <material>
+                    <mattext texttype="text/html">portable</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9843">
+                  <material>
+                    <mattext texttype="text/html">divisible</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6374">
+                  <material>
+                    <mattext texttype="text/html">bartered</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">9326</varequal>
+                  <varequal respident="response1">9843</varequal>
+                  <not>
+                    <varequal respident="response1">6374</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="5219">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>e674d7cf-2292-4159-a2e8-159b62b19b9d</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Money</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Explain the types, characteristics and functions of money</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">An individual walks to a local sandwich shop and uses a $10 bill to pay for a $6 sandwich, receiving $4 as change for this transaction. This illustrates that the $6 sandwich as a measure of value:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="9758">
+                  <material>
+                    <mattext texttype="text/html">has been clearly established</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="4830">
+                  <material>
+                    <mattext texttype="text/html">is open for interpretation</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9745">
+                  <material>
+                    <mattext texttype="text/html">has been bartered</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">9758</varequal>
+                  <not>
+                    <varequal respident="response1">4830</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">9745</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="2801">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>e674d7cf-2292-4159-a2e8-159b62b19b9d</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Money</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Explain the types, characteristics and functions of money</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">A neighbor has apple trees to harvest but no time to do it. The Peterson family has time to harvest and would like apples. They work out an agreement where the Peterson family helps with the harvest and receives five boxes of apples for every 10 boxes they pick. The kind of a system they are using is ________ system.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="9295">
+                  <material>
+                    <mattext texttype="text/html">bartering</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="4492">
+                  <material>
+                    <mattext texttype="text/html">monetary</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7373">
+                  <material>
+                    <mattext texttype="text/html">rotating</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">9295</varequal>
+                  <not>
+                    <varequal respident="response1">4492</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">7373</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="1940">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>e674d7cf-2292-4159-a2e8-159b62b19b9d</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Money</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Explain the types, characteristics and functions of money</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Money serves these basic functions:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="786">
+                  <material>
+                    <mattext texttype="text/html">stores value</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6076">
+                  <material>
+                    <mattext texttype="text/html">used as a medium of exchange</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8738">
+                  <material>
+                    <mattext texttype="text/html">measures value</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">786</varequal>
+                  <varequal respident="response1">6076</varequal>
+                  <varequal respident="response1">8738</varequal>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="6584">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>e674d7cf-2292-4159-a2e8-159b62b19b9d</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Money</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Explain the types, characteristics and functions of money</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">What government entity is responsible for the U.S. monetary system?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="6646">
+                  <material>
+                    <mattext texttype="text/html">Federal Reserve</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5548">
+                  <material>
+                    <mattext texttype="text/html">Federal Trade Commission</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5521">
+                  <material>
+                    <mattext texttype="text/html">Federal Labor Relations Authority</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">6646</varequal>
+                  <not>
+                    <varequal respident="response1">5548</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">5521</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="4380">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>e674d7cf-2292-4159-a2e8-159b62b19b9d</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Money</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Explain the types, characteristics and functions of money</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">In order to know the amount of money in the system, the federal government uses measures to track the U.S. money supply. These measures include:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="3983">
+                  <material>
+                    <mattext texttype="text/html">the most liquid forms of money (cash, checking accounts)</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8561">
+                  <material>
+                    <mattext texttype="text/html">the near cash-items in short-term investments (savings, time deposits below $100,000)</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3471">
+                  <material>
+                    <mattext texttype="text/html">the most long term investments (stocks, bonds)</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">3983</varequal>
+                  <varequal respident="response1">8561</varequal>
+                  <not>
+                    <varequal respident="response1">3471</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+      </section>
+      <section title="Federal Reserve System" ident="6739">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>2</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item title="" ident="3809">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>01bbc30e-f1e0-4956-a0fe-f818e85f8c2b</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Federal Reserve System</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Describe the purpose of the Federal Reserve System and its role in controlling the money supply and influencing interest rates</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">The Federal Reserve relies on what other tool(s) to conduct monetary policy besides the discount rate?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="8984">
+                  <material>
+                    <mattext texttype="text/html">reserve requirements</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6490">
+                  <material>
+                    <mattext texttype="text/html">open market operations</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7707">
+                  <material>
+                    <mattext texttype="text/html">banking fees</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">8984</varequal>
+                  <varequal respident="response1">6490</varequal>
+                  <not>
+                    <varequal respident="response1">7707</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="6436">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>01bbc30e-f1e0-4956-a0fe-f818e85f8c2b</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Federal Reserve System</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Describe the purpose of the Federal Reserve System and its role in controlling the money supply and influencing interest rates</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">The Federal Reserve uses a variety of monetary policy tools to achieve which of the following goal(s)?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="9889">
+                  <material>
+                    <mattext texttype="text/html">full employment</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6101">
+                  <material>
+                    <mattext texttype="text/html">price stability</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="4741">
+                  <material>
+                    <mattext texttype="text/html">sustainable economic growth</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">9889</varequal>
+                  <varequal respident="response1">6101</varequal>
+                  <varequal respident="response1">4741</varequal>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="421">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>01bbc30e-f1e0-4956-a0fe-f818e85f8c2b</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Federal Reserve System</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Describe the purpose of the Federal Reserve System and its role in controlling the money supply and influencing interest rates</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">The Federal Reserve raises the reserve requirement from 7 percent to 8 percent. Consequently banks must set aside more money and have less money to lend, so they raise interest rates. These conditions make it harder and more expensive for people and businesses to borrow money. Because they can’t borrow as much, they can’t spend as much. If people aren’t spending as much, prices don’t go up. With this actions, the Fed has lessened the likelihood of ________.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="7471">
+                  <material>
+                    <mattext texttype="text/html">inflation</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="4636">
+                  <material>
+                    <mattext texttype="text/html">recession</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9005">
+                  <material>
+                    <mattext texttype="text/html">free market</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">7471</varequal>
+                  <not>
+                    <varequal respident="response1">4636</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">9005</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="2057">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>01bbc30e-f1e0-4956-a0fe-f818e85f8c2b</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Federal Reserve System</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Describe the purpose of the Federal Reserve System and its role in controlling the money supply and influencing interest rates</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">The Federal Reserve lowers the reserve requirement from 7 percent to 6 percent. Consequently banks must set aside less money to meet the reserve requirement. They have more money to lend out, and so they lower their interest rates. These conditions make it easier and less expensive for people and businesses to borrow money. Because they can borrow more, they can spend more. If people are spending more, prices go up. With this action, the Fed has lessened the likelihood of ________.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="7634">
+                  <material>
+                    <mattext texttype="text/html">recession</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9369">
+                  <material>
+                    <mattext texttype="text/html">inflation</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9819">
+                  <material>
+                    <mattext texttype="text/html">free market</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">7634</varequal>
+                  <not>
+                    <varequal respident="response1">9369</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">9819</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="2888">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>01bbc30e-f1e0-4956-a0fe-f818e85f8c2b</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Federal Reserve System</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Describe the purpose of the Federal Reserve System and its role in controlling the money supply and influencing interest rates</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Hometown Bank has lent borrowers a considerable amount of money in the past 12 months. The Federal Reserve reviews Hometown Bank’s books and sees the bank is now below the required reserve amount. The Federal Reserve requires Hometown Bank to borrow the amount necessary to bring its reserves up to the required level. A member bank, City Bank, has excess reserves which Hometown Bank borrows. The rate for this kind of borrowing is the ________.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="5912">
+                  <material>
+                    <mattext texttype="text/html">federal funds rate</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7851">
+                  <material>
+                    <mattext texttype="text/html">bank to bank rate</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="4471">
+                  <material>
+                    <mattext texttype="text/html">institutional rate</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">5912</varequal>
+                  <not>
+                    <varequal respident="response1">7851</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">4471</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="1101">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>01bbc30e-f1e0-4956-a0fe-f818e85f8c2b</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Federal Reserve System</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Describe the purpose of the Federal Reserve System and its role in controlling the money supply and influencing interest rates</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">The Fed sees that the economy has a shortage of access to money for lending, borrowing and investment. It wants to increase the amount of money in the system. The Federal Reserve uses its open market policy and takes action to ________ bonds. This increases the reserves of the banks and consequently the banks will begin to loan out more money.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="8530">
+                  <material>
+                    <mattext texttype="text/html">buy</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6210">
+                  <material>
+                    <mattext texttype="text/html">sell</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9738">
+                  <material>
+                    <mattext texttype="text/html">hold</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">8530</varequal>
+                  <not>
+                    <varequal respident="response1">6210</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">9738</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+      </section>
+      <section title="Financial Institutions" ident="1131">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>2</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item title="" ident="7152">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>6d1f15ba-3957-4357-b951-60766a652f3f</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Financial Institutions</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Distinguish the differences between the types of financial institutions including banks, credit unions, finance companies, securities markets</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">A brokerage company is a nondepository institution. What are other nondepository institutions?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="9485">
+                  <material>
+                    <mattext texttype="text/html">finance companies</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7073">
+                  <material>
+                    <mattext texttype="text/html">insurance companies</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6999">
+                  <material>
+                    <mattext texttype="text/html">commercial banks</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">9485</varequal>
+                  <not>
+                    <varequal respident="response1">7073</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">6999</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="859">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>6d1f15ba-3957-4357-b951-60766a652f3f</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Financial Institutions</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Distinguish the differences between the types of financial institutions including banks, credit unions, finance companies, securities markets</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Institutions that accept deposits are called depository institutions. These institutions include:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="583">
+                  <material>
+                    <mattext texttype="text/html">savings banks</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="2004">
+                  <material>
+                    <mattext texttype="text/html">commercial banks</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9397">
+                  <material>
+                    <mattext texttype="text/html">credit unions</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">583</varequal>
+                  <varequal respident="response1">2004</varequal>
+                  <varequal respident="response1">9397</varequal>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="3205">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>6d1f15ba-3957-4357-b951-60766a652f3f</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Financial Institutions</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Distinguish the differences between the types of financial institutions including banks, credit unions, finance companies, securities markets</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">The most common financial institutions in the United States that offer loans and other services such as check processing are called  ________.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="5700">
+                  <material>
+                    <mattext texttype="text/html">commercial banks</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7044">
+                  <material>
+                    <mattext texttype="text/html">credit unions</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3834">
+                  <material>
+                    <mattext texttype="text/html">savings banks</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">5700</varequal>
+                  <varequal respident="response1">7044</varequal>
+                  <not>
+                    <varequal respident="response1">3834</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="4944">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>6d1f15ba-3957-4357-b951-60766a652f3f</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Financial Institutions</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Distinguish the differences between the types of financial institutions including banks, credit unions, finance companies, securities markets</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Sheila has $10,000 she wants to invest in individual company stocks she picked out after doing extensive research. What type of financial institution would best suit her needs?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="2345">
+                  <material>
+                    <mattext texttype="text/html">brokerage firm</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="2963">
+                  <material>
+                    <mattext texttype="text/html">insurance company</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="316">
+                  <material>
+                    <mattext texttype="text/html">credit union</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">2345</varequal>
+                  <not>
+                    <varequal respident="response1">2963</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">316</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="4815">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>6d1f15ba-3957-4357-b951-60766a652f3f</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Financial Institutions</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Distinguish the differences between the types of financial institutions including banks, credit unions, finance companies, securities markets</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Rupert lives in the small town of Berwyn, PA and his bank is NOVA Bank. In September he had $200,000 in his bank account. One day at the end of October, Rupert went to withdraw $200 from the bank's ATM and discovered that the Pennsylvania Department of Banking and Securities had closed NOVA Bank. The FDIC took over and could not find an institution to take over the failed bank. What will happen next?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="8337">
+                  <material>
+                    <mattext texttype="text/html">The FDIC has insured Rupert’s $200,000 and will send him a check for the full amount.</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9293">
+                  <material>
+                    <mattext texttype="text/html">The FDIC will not honor Rupert’s $200,000 because it is over the insurable limit.</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8496">
+                  <material>
+                    <mattext texttype="text/html">The Pennsylvania Department of Banking and Securities has insured Rupert’s money and will send him a check for the full amount.</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">8337</varequal>
+                  <not>
+                    <varequal respident="response1">9293</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">8496</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+      </section>
+      <section title="Technology and Money" ident="8205">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>2</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item title="" ident="9419">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>fe7c7241-b887-418c-949e-cac2b04e57e3</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Technology and Money</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Explain how technology is affecting the traditional monetary system and the definition of "money"</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">One technology gaining popularity is the mobile payment. It is sometimes known as tap-and-go or near field communications (NFC). This technology is:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="4162">
+                  <material>
+                    <mattext texttype="text/html">a method of wireless data transfer</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5931">
+                  <material>
+                    <mattext texttype="text/html">detects and then enables technology in close proximity to communicate</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6339">
+                  <material>
+                    <mattext texttype="text/html">requires an extended amount of time before the process has finished</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">4162</varequal>
+                  <varequal respident="response1">5931</varequal>
+                  <not>
+                    <varequal respident="response1">6339</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="7802">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>fe7c7241-b887-418c-949e-cac2b04e57e3</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Technology and Money</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Explain how technology is affecting the traditional monetary system and the definition of "money"</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Legal issues arise with digital or virtual currency technology (such as Bitcoin). Laws which are affected by this technology  include:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="802">
+                  <material>
+                    <mattext texttype="text/html">federal tax laws</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1529">
+                  <material>
+                    <mattext texttype="text/html">federal anti-money laundering laws</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="4806">
+                  <material>
+                    <mattext texttype="text/html">counterfeiting criminal statutes</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">802</varequal>
+                  <varequal respident="response1">1529</varequal>
+                  <varequal respident="response1">4806</varequal>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="890">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>fe7c7241-b887-418c-949e-cac2b04e57e3</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Technology and Money</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Explain how technology is affecting the traditional monetary system and the definition of "money"</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Issues that digital money raises include:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="152">
+                  <material>
+                    <mattext texttype="text/html">the IRS has done little to address the tax implications of virtual money</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9646">
+                  <material>
+                    <mattext texttype="text/html">current monetary laws do not include the regulation of digital money</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5035">
+                  <material>
+                    <mattext texttype="text/html">suspicious and illegal transactions cannot be tracked by traditional financial institutions</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">152</varequal>
+                  <varequal respident="response1">9646</varequal>
+                  <varequal respident="response1">5035</varequal>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="4526">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>fe7c7241-b887-418c-949e-cac2b04e57e3</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Technology and Money</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Explain how technology is affecting the traditional monetary system and the definition of "money"</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Mobile payment is also known as:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="2700">
+                  <material>
+                    <mattext texttype="text/html">mobile wallet</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8853">
+                  <material>
+                    <mattext texttype="text/html">mobile money transfer</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1585">
+                  <material>
+                    <mattext texttype="text/html">mobile computing</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">2700</varequal>
+                  <varequal respident="response1">8853</varequal>
+                  <not>
+                    <varequal respident="response1">1585</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+      </section>
+      <section title="Securities Exchanges" ident="4965">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>2</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item title="" ident="9100">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>71bd77cf-a05d-45f3-8e34-d57b291dd3bf</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Securities Exchanges</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the securities exchanges (NYSE, OTC, NASDAQ) and the types of transactions that occur at each exchange</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">NASDAQ stands for:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="300">
+                  <material>
+                    <mattext texttype="text/html">National Association of Securities Dealers Automated Quotations</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8719">
+                  <material>
+                    <mattext texttype="text/html">National Association of Securities and Debt Aggregation Qualifiers</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8309">
+                  <material>
+                    <mattext texttype="text/html">New Association of Securities Dealers and Automatic Quantities</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">300</varequal>
+                  <not>
+                    <varequal respident="response1">8719</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">8309</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="6960">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>71bd77cf-a05d-45f3-8e34-d57b291dd3bf</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Securities Exchanges</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the securities exchanges (NYSE, OTC, NASDAQ) and the types of transactions that occur at each exchange</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">OTC (over-the-counter) can be used to refer to:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="8813">
+                  <material>
+                    <mattext texttype="text/html">a security traded by means other than a formal exchange</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1628">
+                  <material>
+                    <mattext texttype="text/html">stocks that trade via a dealer network</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3762">
+                  <material>
+                    <mattext texttype="text/html">NASDAQ</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9345">
+                  <material>
+                    <mattext texttype="text/html">securities sold on the NYSE</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6325">
+                  <material>
+                    <mattext texttype="text/html">FanTec, Inc. is a small start-up tech company that has been successful selling games in the last three years. FanTec now needs funds to expand so it is offering shares to the public. FanTec will most likely be listed on the:</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1303">
+                  <material>
+                    <mattext texttype="text/html">NYSE</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="962">
+                  <material>
+                    <mattext texttype="text/html">S&amp;P 500</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">8813</varequal>
+                  <varequal respident="response1">1628</varequal>
+                  <varequal respident="response1">3762</varequal>
+                  <not>
+                    <varequal respident="response1">9345</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">6325</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">1303</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">962</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="2096">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>71bd77cf-a05d-45f3-8e34-d57b291dd3bf</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Securities Exchanges</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the securities exchanges (NYSE, OTC, NASDAQ) and the types of transactions that occur at each exchange</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Bonds and stocks in the U.S. are traded on these exchanges:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="6715">
+                  <material>
+                    <mattext texttype="text/html">NYSE</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9570">
+                  <material>
+                    <mattext texttype="text/html">NIKKEI</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3360">
+                  <material>
+                    <mattext texttype="text/html">DAX</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">6715</varequal>
+                  <not>
+                    <varequal respident="response1">9570</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">3360</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="5940">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>71bd77cf-a05d-45f3-8e34-d57b291dd3bf</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Securities Exchanges</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the securities exchanges (NYSE, OTC, NASDAQ) and the types of transactions that occur at each exchange</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">The Dow Jones Industrial Average is an index of ________ stocks of major industrial corporations.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="6204">
+                  <material>
+                    <mattext texttype="text/html">30</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5439">
+                  <material>
+                    <mattext texttype="text/html">100</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="4728">
+                  <material>
+                    <mattext texttype="text/html">75</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">6204</varequal>
+                  <not>
+                    <varequal respident="response1">5439</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">4728</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="6910">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>71bd77cf-a05d-45f3-8e34-d57b291dd3bf</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Securities Exchanges</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the securities exchanges (NYSE, OTC, NASDAQ) and the types of transactions that occur at each exchange</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Historically many methods and markets were used to raise capital, but the primary methods that have evolved in modern times are the:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="5348">
+                  <material>
+                    <mattext texttype="text/html">Bond markets</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1469">
+                  <material>
+                    <mattext texttype="text/html">Stock markets</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="2128">
+                  <material>
+                    <mattext texttype="text/html">Land markets</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">5348</varequal>
+                  <varequal respident="response1">1469</varequal>
+                  <not>
+                    <varequal respident="response1">2128</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="9265">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>71bd77cf-a05d-45f3-8e34-d57b291dd3bf</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Securities Exchanges</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the securities exchanges (NYSE, OTC, NASDAQ) and the types of transactions that occur at each exchange</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Stocks or equity securities are:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="3305">
+                  <material>
+                    <mattext texttype="text/html">shares of ownership</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="2027">
+                  <material>
+                    <mattext texttype="text/html">financial instruments that may include share of a company's future profits</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="972">
+                  <material>
+                    <mattext texttype="text/html">traded on stock exchanges through member brokers</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">3305</varequal>
+                  <varequal respident="response1">2027</varequal>
+                  <varequal respident="response1">972</varequal>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="390">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>71bd77cf-a05d-45f3-8e34-d57b291dd3bf</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Securities Exchanges</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the securities exchanges (NYSE, OTC, NASDAQ) and the types of transactions that occur at each exchange</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">An index is:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="1465">
+                  <material>
+                    <mattext texttype="text/html">a collection of stocks or bonds whose performance is tracked as an indicator of the performance of an entire class or type of security</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3177">
+                  <material>
+                    <mattext texttype="text/html">a collection of individual stocks and bonds</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7686">
+                  <material>
+                    <mattext texttype="text/html">a collection of stocks or bonds whose performance not tracked as an indicator</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">1465</varequal>
+                  <not>
+                    <varequal respident="response1">3177</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">7686</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="133">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>71bd77cf-a05d-45f3-8e34-d57b291dd3bf</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Securities Exchanges</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the securities exchanges (NYSE, OTC, NASDAQ) and the types of transactions that occur at each exchange</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">A university professor’s retirement portfolio is invested in a variety of mutual funds through Success Nation mutual fund company. The S&amp;P 500 index has been climbing at a steady pace and she would like a way to mimic that index and grow her retirement account. She decides to invest money into a(n):</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="3038">
+                  <material>
+                    <mattext texttype="text/html">index fund</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="512">
+                  <material>
+                    <mattext texttype="text/html">individual company stock</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="2930">
+                  <material>
+                    <mattext texttype="text/html">bond fund</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">3038</varequal>
+                  <not>
+                    <varequal respident="response1">512</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">2930</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="6187">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>71bd77cf-a05d-45f3-8e34-d57b291dd3bf</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Securities Exchanges</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the securities exchanges (NYSE, OTC, NASDAQ) and the types of transactions that occur at each exchange</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Bonds are:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="4655">
+                  <material>
+                    <mattext texttype="text/html">debt</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="2086">
+                  <material>
+                    <mattext texttype="text/html">a formal contract to repay borrowed money with interest at fixed intervals</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9713">
+                  <material>
+                    <mattext texttype="text/html">a way to raise capital through borrowing (used by corporations and governments)</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">4655</varequal>
+                  <varequal respident="response1">2086</varequal>
+                  <varequal respident="response1">9713</varequal>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="6985">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>71bd77cf-a05d-45f3-8e34-d57b291dd3bf</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Securities Exchanges</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the securities exchanges (NYSE, OTC, NASDAQ) and the types of transactions that occur at each exchange</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">To trade any kind of bond, besides a Treasury Bond, you have to go through a broker. These brokers provide what services?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="6752">
+                  <material>
+                    <mattext texttype="text/html">acts as a principal or dealer, buying from or selling to investors</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8520">
+                  <material>
+                    <mattext texttype="text/html">acts as an agent for another buyer or seller</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="4886">
+                  <material>
+                    <mattext texttype="text/html">is an issuer of a bond</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">6752</varequal>
+                  <varequal respident="response1">8520</varequal>
+                  <not>
+                    <varequal respident="response1">4886</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="617">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>71bd77cf-a05d-45f3-8e34-d57b291dd3bf</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Securities Exchanges</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the securities exchanges (NYSE, OTC, NASDAQ) and the types of transactions that occur at each exchange</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Stocks or equity securities are:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="8196">
+                  <material>
+                    <mattext texttype="text/html">shares of ownership</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="398">
+                  <material>
+                    <mattext texttype="text/html">financial instruments that may include share of a company's future profits</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3913">
+                  <material>
+                    <mattext texttype="text/html">traded on stock exchanges through member brokers</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">8196</varequal>
+                  <varequal respident="response1">398</varequal>
+                  <varequal respident="response1">3913</varequal>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="9435">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>71bd77cf-a05d-45f3-8e34-d57b291dd3bf</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Securities Exchanges</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the securities exchanges (NYSE, OTC, NASDAQ) and the types of transactions that occur at each exchange</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Commodities, resources or raw materials (such as energy resources) including the following:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="4232">
+                  <material>
+                    <mattext texttype="text/html">precious metals</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="2398">
+                  <material>
+                    <mattext texttype="text/html">currencies</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7626">
+                  <material>
+                    <mattext texttype="text/html">agricultural products</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">4232</varequal>
+                  <varequal respident="response1">2398</varequal>
+                  <varequal respident="response1">7626</varequal>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="9928">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>71bd77cf-a05d-45f3-8e34-d57b291dd3bf</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Securities Exchanges</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the securities exchanges (NYSE, OTC, NASDAQ) and the types of transactions that occur at each exchange</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">A mutual fund is an investment portfolio consisting of:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="7478">
+                  <material>
+                    <mattext texttype="text/html">diverse investments with minimal transaction costs</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="7958">
+                  <material>
+                    <mattext texttype="text/html">individual stocks from one corporation</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8675">
+                  <material>
+                    <mattext texttype="text/html">only available for retirement accounts</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">7478</varequal>
+                  <not>
+                    <varequal respident="response1">7958</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">8675</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="4994">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>71bd77cf-a05d-45f3-8e34-d57b291dd3bf</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Securities Exchanges</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the securities exchanges (NYSE, OTC, NASDAQ) and the types of transactions that occur at each exchange</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">A mutual fund is:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="4576">
+                  <material>
+                    <mattext texttype="text/html">a large component of individual retirement accounts and of defined contribution plans</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="8827">
+                  <material>
+                    <mattext texttype="text/html">created and managed by mutual fund companies , brokerages or even banks</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6067">
+                  <material>
+                    <mattext texttype="text/html">can be purchased without having an account with a mutual fund company, brokerage or bank</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">4576</varequal>
+                  <varequal respident="response1">8827</varequal>
+                  <not>
+                    <varequal respident="response1">6067</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="2081">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>71bd77cf-a05d-45f3-8e34-d57b291dd3bf</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Securities Exchanges</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the securities exchanges (NYSE, OTC, NASDAQ) and the types of transactions that occur at each exchange</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">An exchange-traded fund (ETF) is:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="3337">
+                  <material>
+                    <mattext texttype="text/html">a mutual fund that trades like a share of stock</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="2356">
+                  <material>
+                    <mattext texttype="text/html">valued continuously throughout the day</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="2594">
+                  <material>
+                    <mattext texttype="text/html">executed at the market price</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">3337</varequal>
+                  <varequal respident="response1">2356</varequal>
+                  <varequal respident="response1">2594</varequal>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="254">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>71bd77cf-a05d-45f3-8e34-d57b291dd3bf</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Securities Exchanges</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the securities exchanges (NYSE, OTC, NASDAQ) and the types of transactions that occur at each exchange</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">An index fund:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="9658">
+                  <material>
+                    <mattext texttype="text/html">requires minimal management</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3809">
+                  <material>
+                    <mattext texttype="text/html">is a mutual fund designed to mimic the performance of an index</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9961">
+                  <material>
+                    <mattext texttype="text/html">fully consists of commodities</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">9658</varequal>
+                  <varequal respident="response1">3809</varequal>
+                  <not>
+                    <varequal respident="response1">9961</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="1717">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>71bd77cf-a05d-45f3-8e34-d57b291dd3bf</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Securities Exchanges</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the securities exchanges (NYSE, OTC, NASDAQ) and the types of transactions that occur at each exchange</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">A local university professor’s retirement portfolio is invested in a variety of mutual funds through Success Nation mutual fund company. She now has seven more years until retirement and wants more of her retirement in less risky funds. She decides to invest money into a(n):</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="7786">
+                  <material>
+                    <mattext texttype="text/html">bond fund</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6398">
+                  <material>
+                    <mattext texttype="text/html">individual company stock</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3067">
+                  <material>
+                    <mattext texttype="text/html">index fund</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">7786</varequal>
+                  <not>
+                    <varequal respident="response1">6398</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">3067</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+      </section>
+      <section title="Risks and Rewards" ident="8146">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>2</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item title="" ident="7357">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>b569995d-6ed3-4569-b0ae-d4bbf3516980</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Risks and Rewards</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the potential risks and rewards to businesses and individuals associated with the issuance, purchase and sale of securities</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Investing comes at a cost. The main costs are:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="4712">
+                  <material>
+                    <mattext texttype="text/html">the risk you take—the risk that you won’t get it all back</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5217">
+                  <material>
+                    <mattext texttype="text/html">the opportunity cost of using the cash and forgoing all uses of that cash until it is returned</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="172">
+                  <material>
+                    <mattext texttype="text/html">predictions on future performance</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">4712</varequal>
+                  <varequal respident="response1">5217</varequal>
+                  <not>
+                    <varequal respident="response1">172</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="932">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>b569995d-6ed3-4569-b0ae-d4bbf3516980</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Risks and Rewards</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the potential risks and rewards to businesses and individuals associated with the issuance, purchase and sale of securities</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">A return is:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="8945">
+                  <material>
+                    <mattext texttype="text/html">calculated as annual rates of return</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3104">
+                  <material>
+                    <mattext texttype="text/html">the percentage of return created for each unit (dollar) of original value</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="3008">
+                  <material>
+                    <mattext texttype="text/html">only exists for investments that pay dividends</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">8945</varequal>
+                  <varequal respident="response1">3104</varequal>
+                  <not>
+                    <varequal respident="response1">3008</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="2844">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>b569995d-6ed3-4569-b0ae-d4bbf3516980</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Risks and Rewards</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the potential risks and rewards to businesses and individuals associated with the issuance, purchase and sale of securities</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Returns are created when:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="5929">
+                  <material>
+                    <mattext texttype="text/html">the investment creates income</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="5990">
+                  <material>
+                    <mattext texttype="text/html">the investment gains (or loses) value</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="859">
+                  <material>
+                    <mattext texttype="text/html">the investment is originally made</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">5929</varequal>
+                  <varequal respident="response1">5990</varequal>
+                  <not>
+                    <varequal respident="response1">859</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="8771">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>b569995d-6ed3-4569-b0ae-d4bbf3516980</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Risks and Rewards</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the potential risks and rewards to businesses and individuals associated with the issuance, purchase and sale of securities</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">One year ago you invested $10,000 in a stock (you bought 1,000 shares at $10 per share). The investment is now worth $11,000 (each share is worth $11). Your investment's return is:</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="3829">
+                  <material>
+                    <mattext texttype="text/html">10%</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="245">
+                  <material>
+                    <mattext texttype="text/html">12%</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1293">
+                  <material>
+                    <mattext texttype="text/html">1%</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">3829</varequal>
+                  <not>
+                    <varequal respident="response1">245</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">1293</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+        <item title="" ident="589">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>b569995d-6ed3-4569-b0ae-d4bbf3516980</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Risks and Rewards</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Identify the potential risks and rewards to businesses and individuals associated with the issuance, purchase and sale of securities</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">In June 2006 the Fed increased the discount rate to 6.25%. Which industry was hardest hit because of the interest rate increase?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="8759">
+                  <material>
+                    <mattext texttype="text/html">real estate</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6000">
+                  <material>
+                    <mattext texttype="text/html">corporate stocks or equities</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="9294">
+                  <material>
+                    <mattext texttype="text/html">commodities</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">8759</varequal>
+                  <not>
+                    <varequal respident="response1">6000</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">9294</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+      </section>
+    </section>
+  </assessment>
+</questestinterop>
