@@ -23,10 +23,12 @@ class Api::GradesController < Api::ApiController
     negative_outcome_list = []
     answers = item_to_grade["answers"]
     ungraded_questions = []
+    xml_indexes = []
     questions.each_with_index do |question, index|
 
       # make sure we are looking at the right question
       xml_index = get_xml_index(question["id"], xml_questions)
+      xml_index_list.push(xml_index)
       if question["id"] == xml_questions[xml_index].attributes["ident"].value
 
         correct = false;
@@ -119,6 +121,8 @@ class Api::GradesController < Api::ApiController
       ungraded_questions: ungraded_questions,
       item_to_grade:item_to_grade,
       xml_questions: xml_questions,
+      xml_index_list: xml_index_list,
+      doc: doc
     }
 
     params = {
