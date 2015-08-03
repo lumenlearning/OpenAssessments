@@ -10,7 +10,7 @@ class Api::GradesController < Api::ApiController
     assessment_id = item_to_grade["assessmentId"]
     outcomes = item_to_grade["outcomes"]
     assessment = Assessment.find(assessment_id)
-    doc = Nokogiri::XML(assessment.assessment_xmls.first.xml)
+    doc = Nokogiri::XML(assessment.assessment_xmls.where(kind: "formative").last.xml)
     doc.remove_namespaces!
     xml_questions = doc.xpath("//item")
 
