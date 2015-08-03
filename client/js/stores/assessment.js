@@ -98,7 +98,6 @@ function getItems(sections, perSec){
   } 
   for(var i=1; i<sections.length; i++){
     var count = perSec > sections[i].items.length ? sections[i].items.length : perSec;
-    debugger
     for(var j=0; j < count; j++){
       var item = _.sample(sections[i].items);
       for(var k=0; k<items.length; k++){

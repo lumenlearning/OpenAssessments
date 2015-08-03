@@ -22,7 +22,7 @@ class Api::GradesController < Api::ApiController
     positive_outcome_list = []
     negative_outcome_list = []
     answers = item_to_grade["answers"]
-
+    ungraded_questions = []
     questions.each_with_index do |question, index|
 
       # make sure we are looking at the right question
@@ -101,6 +101,8 @@ class Api::GradesController < Api::ApiController
             )
           end
         end
+      else
+        ungraded_questions.push(question)
       end
       # TODO if the question id's dont match then check the rest of the id's
       # if the Id isn't found then there has been an error and return the error
@@ -113,7 +115,10 @@ class Api::GradesController < Api::ApiController
       score: score,
       feedback: "Study Harder",
       correct_list: correct_list,
-      confidence_level_list: confidence_level_list
+      confidence_level_list: confidence_level_list,
+      ungraded_questions: ungraded_questions,
+      item_to_grade:item_to_grade,
+      xml_questions: xml_questions,
     }
 
     params = {
