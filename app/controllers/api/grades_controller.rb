@@ -122,6 +122,7 @@ class Api::GradesController < Api::ApiController
       item_to_grade:item_to_grade,
       xml_questions: xml_questions,
       xml_index_list: xml_index_list,
+      questions: questions
       doc: doc
     }
 
