@@ -23,7 +23,7 @@ class Api::GradesController < Api::ApiController
     negative_outcome_list = []
     answers = item_to_grade["answers"]
     ungraded_questions = []
-    xml_indexes = []
+    xml_index_list = []
     questions.each_with_index do |question, index|
 
       # make sure we are looking at the right question
