@@ -16,6 +16,7 @@ class Api::GradesController < Api::ApiController
     errors = []
     result = assessment.assessment_results.build
     result.save!
+    result.user = current_user
     settings = item_to_grade["settings"]
     correct_list = []
     confidence_level_list = []
@@ -137,6 +138,7 @@ class Api::GradesController < Api::ApiController
         errors.push(e.message)
       end
     end
+
     graded_assessment = { 
       score: score,
       feedback: "Study Harder",
