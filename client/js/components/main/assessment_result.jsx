@@ -33,7 +33,7 @@ export default class AssessmentResult extends BaseComponent{
     this.context.router.transitionTo("assessment");
   }
 
-  getStyles(state, theme){
+  getStyles(theme){
     return {
       assessment: {
         padding: theme.assessmentPadding,
@@ -51,7 +51,7 @@ export default class AssessmentResult extends BaseComponent{
         color: "#fff",
         borderRadius: "25px",
         textAlign: "center",
-        padding: "2%"
+        padding: "10px 20px 20px 20px"
       },
       improveScoreStyle:{
         color: "#f00"
@@ -205,14 +205,12 @@ export default class AssessmentResult extends BaseComponent{
         <div className="row" style={styles.wrapperStyle}>
 
           <div className="col-md-4" >
-            <h3><strong>Your Quiz Results</strong></h3>
+            <h3><strong>Your Score</strong></h3>
             <div style={styles.yourScoreStyle}>
-              <h5 style={styles.center}>Your Score</h5>
               <h1 style={styles.center}>{Math.trunc(this.state.assessmentResult.score)}%</h1>
             </div>
             Time Spent: {this.state.timeSpent.minutes} mins {this.state.timeSpent.seconds} sec
             <br />
-            Attempts
           </div>
 
           <div className="col-md-4" >
@@ -305,34 +303,21 @@ export default class AssessmentResult extends BaseComponent{
   }
 
   render(){
-    var styles = this.getStyles(this.state, this.context.theme);
-    var contentData={};
+    var styles = this.getStyles(this.context.theme);
     var content = "There has been an error, contact your system administrator.";
-
-    switch(this.state.settings.assessmentKind.toUpperCase()){
-
-      case "SUMMATIVE" : {
-        content = this.getAttempts(this.context.theme, styles, this.state);
-      }
-      case "SHOW_WHAT_YOU_KNOW" : {
-        //content = this.getSWYK(styles);
-        contentData = {
-          goodWork: "What You Already Know",
-          moreToLearn: "What You Need to Learn",
-          focusStudy: "Focus enough study time on these concepts to learn them well."
+    var contentData = {
+          goodWork:"Good Work on These Concepts",
+          moreToLearn:"There is Still More to Learn",
+          focusStudy:"You can retake this quiz in 1 hour - plenty of time to review these sections!"
         }
-      }
-      case "FORMATIVE" : {
-       //content = this.getFormative(styles);
-     }
-     default :{
+
+    if(this.state.settings.assessmentKind.toUpperCase() == "SHOW_WHAT_YOU_KNOW"){
       contentData = {
-        goodWork:"Good Work on These Concepts",
-        moreToLearn:"There is Still More to Learn",
-        focusStudy:"You can retake this quiz in 1 hour - plenty of time to review these sections!"
+        goodWork: "What You Already Know",
+        moreToLearn: "What You Need to Learn",
+        focusStudy: "Focus enough study time on these concepts to learn them well."
       }
     }
-  }
 
     if(this.state.assessmentResult == null){
       return <div />
