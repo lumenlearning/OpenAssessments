@@ -8,7 +8,7 @@ import AssessmentActions  from "../../actions/assessment";
 import ItemResult         from "./item_result";
 
 export default class AssessmentResult extends BaseComponent{
- 
+
   constructor(props, context){
     super(props, context);
     this._bind("getItemResults", "getStyles", "getOutcomeLists", "getContent", "getFormativeContent", "retake");
@@ -17,14 +17,14 @@ export default class AssessmentResult extends BaseComponent{
   }
 
   getState(props, context){
-    
+
     return {
       assessmentResult : AssessmentStore.assessmentResult(),
       timeSpent        : AssessmentStore.timeSpent(),
       questions        : AssessmentStore.allQuestions(),
       outcomes         : AssessmentStore.outcomes(),
       settings         : SettingsStore.current(),
-      assessment       : AssessmentStore.current(),  
+      assessment       : AssessmentStore.current(),
     }
   }
 
@@ -33,7 +33,7 @@ export default class AssessmentResult extends BaseComponent{
     this.context.router.transitionTo("assessment");
   }
 
-  getStyles(theme){
+  getStyles(state, theme){
     return {
       assessment: {
         padding: theme.assessmentPadding,
@@ -61,7 +61,7 @@ export default class AssessmentResult extends BaseComponent{
       },
       assessmentContainer:{
         marginTop: "70px",
-        boxShadow: theme.assessmentContainerBoxShadow, 
+        boxShadow: theme.assessmentContainerBoxShadow,
         borderRadius: theme.assessmentContainerBorderRadius,
         padding: "20px"
       },
@@ -83,7 +83,7 @@ export default class AssessmentResult extends BaseComponent{
         fontSize: "140%"
       },
       outcomes: {
-        backgroundColor: "rgba(204, 204, 204, .2)", 
+        backgroundColor: "rgba(204, 204, 204, .2)",
       },
       row: {
         padding: "15px"
@@ -118,7 +118,7 @@ export default class AssessmentResult extends BaseComponent{
         width: theme.definitelyWidth,
         backgroundColor: theme.definitelyBackgroundColor,
         color: theme.definitelyColor,
-      },      
+      },
         exitButton: {
         width: theme.definitelyWidth,
         backgroundColor: theme.probablyBackgroundColor,
@@ -197,7 +197,8 @@ export default class AssessmentResult extends BaseComponent{
     };
   }
   // for sumative and swyk assessments
-  getContent(styles, itemResults, outcomeLists){
+  getContent(styles, itemResults, outcomeLists, contentData){
+debugger;
     return (<div style={styles.assessment}>
       <div style={styles.assessmentContainer}>
         <div style={styles.titleBar}>{this.state.assessment ? this.state.assessment.title : ""}</div>
@@ -215,15 +216,15 @@ export default class AssessmentResult extends BaseComponent{
           </div>
 
           <div className="col-md-4" >
-            <h3><strong>Good Work On These Concepts</strong></h3>
+            <h3><strong>{contentData.goodWork}</strong></h3>
             <p>You answered questions that covered these concepts correctly.</p>
             {outcomeLists.positiveList}
             <div style={{clear: 'both'}}></div>
           </div>
 
           <div className="col-md-4" >
-            <h3 style={styles.improveScoreStyle}><strong>There Is Still More To Learn<i styleclassName="glyphicon glyphicon-warning-sign" ></i></strong></h3>
-            <p>You can retake this quiz in 1 hour - plenty of time to review these sections!</p>
+            <h3 style={styles.improveScoreStyle}><strong>{contentData.moreToLearn}<i styleclassName="glyphicon glyphicon-warning-sign" ></i></strong></h3>
+            <p>{contentData.focusStudy}</p>
             {outcomeLists.negativeList}
           </div>
 
@@ -272,11 +273,11 @@ export default class AssessmentResult extends BaseComponent{
       } else {
         confidenceColor = this.context.theme.definitelyBackgroundColor;
       }
-      return <div key={"result-"+index}>            
+      return <div key={"result-"+index}>
               <div style={styles.resultList}>
                 <div><div style={{color: color, float: "left"}}>Question {index+1} -- {message}</div><div style={{color: confidenceColor, float: "right"}}>{this.state.assessmentResult.confidence_level_list[index]}</div></div>
               </div>
-              <div style={{...styles.resultList, ...styles.resultOutcome}}>       
+              <div style={{...styles.resultList, ...styles.resultOutcome}}>
                 <div style={{width: "70%"}}>{this.state.questions[index].outcomes.longOutcome}</div>
               </div>
             </div>
@@ -287,7 +288,7 @@ export default class AssessmentResult extends BaseComponent{
             <div className="row">
               <div className="col-md-1"><img style={styles.icon} src={this.state.settings.images.QuizIcon_svg} /></div>
               <div className="col-md-10" style={styles.data}>
-                <div>PRIMARY OUTCOME TITLE</div>
+                <div>Quiz: [PRIMARY OUTCOME TITLE]</div>
                 <div style={styles.selfCheck}><b>Self-Check</b></div>
                 <div>{this.state.outcomes[0].longOutcome}</div>
               </div>
@@ -313,21 +314,48 @@ export default class AssessmentResult extends BaseComponent{
   }
 
   render(){
-    var styles = this.getStyles(this.context.theme); 
+    var styles = this.getStyles(this.state, this.context.theme);
+    var contentData={};
+    var content = "There has been an error, contact your system administrator.";
+
+    switch(this.state.settings.assessmentKind.toUpperCase()){
+
+      case "SUMMATIVE" : {
+        content = this.getAttempts(this.context.theme, styles, this.state);
+      }
+      case "SHOW_WHAT_YOU_KNOW" : {
+        //content = this.getSWYK(styles);
+        contentData = {
+          goodWork: "What You Already Know",
+          moreToLearn: "What You Need to Learn",
+          focusStudy: "Focus enough study time on these concepts to learn them well."
+        }
+      }
+      case "FORMATIVE" : {
+       //content = this.getFormative(styles);
+     }
+     default :{
+      contentData = {
+        goodWork:"Good Work on These Concepts",
+        moreToLearn:"There is Still More to Learn",
+        focusStudy:"You can retake this quiz in 1 hour - plenty of time to review these sections!"
+      }
+    }
+  }
+
     if(this.state.assessmentResult == null){
       return <div />
-    }    
+    }
     var itemResults = this.getItemResults();
     var outcomeLists = this.getOutcomeLists(styles);
-    var content = <div />;
+    var content = <div/>;
 
     if(this.state.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
       content = this.getFormativeContent(styles, outcomeLists);
     } else {
-      content = this.getContent(styles, itemResults, outcomeLists);
+      content = this.getContent(styles, itemResults, outcomeLists, contentData);
     }
     return content;
-
   }
 }
 
@@ -335,3 +363,4 @@ AssessmentResult.contextTypes = {
   theme: React.PropTypes.object,
   router: React.PropTypes.func
 }
+
