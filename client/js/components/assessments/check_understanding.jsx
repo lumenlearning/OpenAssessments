@@ -12,7 +12,7 @@ export default class CheckUnderstanding extends React.Component{
   getStyles(props, theme){
     return {
       assessmentContainer:{
-        marginTop: "30px",
+        marginTop: props.assessmentKind.toUpperCase() == "FORMATIVE" ? "30px":"100px",
         boxShadow: theme.assessmentContainerBoxShadow,
         borderRadius: theme.assessmentContainerBorderRadius
       },
@@ -180,6 +180,7 @@ export default class CheckUnderstanding extends React.Component{
     }
     return (
       <div className="assessment_container" style={styles.assessmentContainer}>
+
         <div className="question">
           <div className="header" style={styles.header}>
             <p>{this.props.name}</p>

@@ -99,7 +99,7 @@ export default class ProgressDropdown extends BaseComponent{
     return (
       <span >
         <img style={styles.icon}src={require("../../../../app/assets/fonts/ProgressIcon.svg")} />
-        <button style={styles.dropdownButton} className="btn" type="button" aria-haspopup="true" aria-expanded="true" onClick={()=>{this.navButtonClicked()}}>
+        <button style={styles.dropdownButton} className="btn" type="button" aria-haspopup="true" aria-expanded="true" onClick={()=>{if(!this.props.disabled)this.navButtonClicked()}}>
           <div>Progress</div>
           <span><b>You are on question {this.props.currentQuestion} of {this.props.questionCount}</b></span>
           <span style={styles.caret} className="caret"></span>

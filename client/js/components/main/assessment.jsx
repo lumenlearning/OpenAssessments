@@ -107,7 +107,10 @@ export default class Assessment extends BaseComponent{
         assessmentKind  = {this.state.settings.assessmentKind} 
         primaryOutcome  = {this.state.outcomes[0]}
         icon            = {this.state.settings.images.QuizIcon_svg}/>;
-        progressBar = "";
+        progressBar     = <div style={styles.progressContainer}>
+                            {progressText}                                                                                                        
+                            <ProgressDropdown disabled={true} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
+                          </div>;
         
     } else {
       content = <Item 
@@ -122,10 +125,10 @@ export default class Assessment extends BaseComponent{
         studentAnswers   = {this.state.studentAnswers} 
         confidenceLevels = {this.state.settings.confidenceLevels}
         outcomes         = {this.state.outcomes}/>;
-        progressBar = <div style={styles.progressContainer}>
-                        {progressText}                                                                                                        
-                        <ProgressDropdown questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
-                      </div>;
+        progressBar      =  <div style={styles.progressContainer}>
+                              {progressText}                                                                                                        
+                              <ProgressDropdown questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
+                            </div>;
       // TODO figure out when to mark an item as viewed. assessmentResult must be valid before this call is made.
       // AssessmentActions.itemViewed(this.state.settings, this.state.assessment, this.state.assessmentResult);
     }
