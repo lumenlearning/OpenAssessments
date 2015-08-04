@@ -31,6 +31,7 @@ export default class CheckBox extends React.Component{
         borderRadius: theme.btnQuestionBorderRadius
       },
       span: {
+        fontWeight: "normal !important",
         marginLeft: "5px"
       }
     }

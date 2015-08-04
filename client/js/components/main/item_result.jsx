@@ -8,15 +8,19 @@ export default class ItemResult extends React.Component{
   getStyles(props, theme){
     var color;
     var border;
+    var labelColor;
     if(props.isCorrect == "partial"){
       color = theme.partialBackgroundColor;
       border = theme.partialBorder;
+      labelColor = theme.partialColor;
     } else if (props.isCorrect == false){
       border = theme.correctBorder;
       color = theme.incorrectBackgroundColor;
+      labelColor = theme.incorrectColor;
     } else if (props.isCorrect){
       color = theme.correctBackgroundColor;
-      border = theme.correctBorder
+      border = theme.correctBorder;
+      labelColor = theme.correctColor;
     }
     return {
       resultContainer: {
@@ -29,20 +33,40 @@ export default class ItemResult extends React.Component{
         width: theme.confidenceWrapperWidth,
         height: theme.confidenceWrapperHeight,
         padding: theme.confidenceWrapperPadding,
-        marginTop: "50px",
+        marginTop: "10px",
         backgroundColor: theme.confidenceWrapperBackgroundColor,
       },
+      correctLabel: {
+        backgroundColor: labelColor,
+        textAlign: "center",
+        padding: "10px",
+        color: "white",
+        fontWeight: "bold"
+      }
     };
   }
   render() {
-    console.log(this.props.isCorrect)
-    var styles = this.getStyles(this.props, this.context.theme)
+    var styles = this.getStyles(this.props, this.context.theme);
+    var correctMessage = "You were incorrect."; 
+    if(this.props.isCorrect == "partial"){
+      correctMessage = "You were partially correct."
+    } else if(this.props.isCorrect === true){
+      correctMessage = "You were Correct.";
+    }
     return (
       <div>
         <div className="row">
           <div className="col-md-9" style={styles.resultContainer}>
-            <div>
-              {this.props.question.material}
+            <div className="row">
+              <div className="col-md-9">
+              <div
+                dangerouslySetInnerHTML={{
+              __html: this.props.question.material
+              }}></div>
+              </div>
+              <div className="col-md-3">
+                <div style={styles.correctLabel}>{correctMessage}</div>
+              </div>
             </div>
             <div>
               <UniversalInput item={this.props.question} isResult={true}/>
@@ -54,7 +78,6 @@ export default class ItemResult extends React.Component{
           <div className="col-md-3"></div>
         </div> 
         <div className="row">
-          
         </div>
         <hr />
       </div>

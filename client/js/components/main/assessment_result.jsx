@@ -308,7 +308,7 @@ export default class AssessmentResult extends BaseComponent{
     var contentData = {
           goodWork:"Good Work on These Concepts",
           moreToLearn:"There is Still More to Learn",
-          focusStudy:"You can retake this quiz in 1 hour - plenty of time to review these sections!"
+          focusStudy:"Review these concepts before your last quiz attempt or to prepare for your next performance assessment."
         }
 
     if(this.state.settings.assessmentKind.toUpperCase() == "SHOW_WHAT_YOU_KNOW"){
