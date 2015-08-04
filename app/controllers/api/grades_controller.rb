@@ -15,8 +15,8 @@ class Api::GradesController < Api::ApiController
     xml_questions = doc.xpath("//item")
     errors = []
     result = assessment.assessment_results.build
-    result.save!
     result.user = current_user
+    result.save!
     settings = item_to_grade["settings"]
     correct_list = []
     confidence_level_list = []
@@ -115,6 +115,10 @@ class Api::GradesController < Api::ApiController
     canvas_score = score
     score *= Float(100)
 
+    #save the assessment result incase lti writeback failed.
+    result.score = score
+    result.external_user_id = params["external_user_id"]
+    result.save!
     params = {
       'lis_result_sourcedid'    => settings["lisResultSourceDid"],
       'lis_outcome_service_url' => settings["lisOutcomeServiceUrl"],
