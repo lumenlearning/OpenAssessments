@@ -13,7 +13,7 @@ class Api::GradesController < Api::ApiController
     doc = Nokogiri::XML(assessment.assessment_xmls.where(kind: "formative").last.xml)
     doc.remove_namespaces!
     xml_questions = doc.xpath("//item")
-
+    errors = []
     result = assessment.assessment_results.build
     result.save!
     settings = item_to_grade["settings"]
@@ -113,18 +113,6 @@ class Api::GradesController < Api::ApiController
     score = Float(answered_correctly) / Float(questions.length)
     canvas_score = score
     score *= Float(100)
-    graded_assessment = { 
-      score: score,
-      feedback: "Study Harder",
-      correct_list: correct_list,
-      confidence_level_list: confidence_level_list,
-      ungraded_questions: ungraded_questions,
-      item_to_grade:item_to_grade,
-      xml_questions: xml_questions,
-      xml_index_list: xml_index_list,
-      questions: questions,
-      doc: doc
-    }
 
     params = {
       'lis_result_sourcedid'    => settings["lisResultSourceDid"],
@@ -133,6 +121,7 @@ class Api::GradesController < Api::ApiController
     }
 
     if settings["isLti"] && settings["assessmentKind"].upcase == "SUMMATIVE"
+      begin
       provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
 
       # post the given score to the TC
@@ -144,7 +133,24 @@ class Api::GradesController < Api::ApiController
       # or we can also post scores async using activejob in which case we'll want to
       # log any errors and make them visible in the admin ui
       success = res.success?
+      rescue Exception => e
+        errors.push(e.message)
+      end
     end
+    graded_assessment = { 
+      score: score,
+      feedback: "Study Harder",
+      correct_list: correct_list,
+      confidence_level_list: confidence_level_list,
+      ungraded_questions: ungraded_questions,
+      item_to_grade:item_to_grade,
+      xml_questions: xml_questions,
+      xml_index_list: xml_index_list,
+      questions: questions,
+      doc: doc,
+      lti_params: params,
+      errors: errors
+    }
     # Ping analytics server
     respond_to do |format|
       format.json { render json: graded_assessment }
