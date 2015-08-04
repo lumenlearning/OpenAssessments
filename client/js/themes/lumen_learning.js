@@ -37,6 +37,7 @@ export default {
   shouldShowFooter: false,
 
   correctBackgroundColor: "rgba(113, 184, 137, 0.2)",
+  submitBackgroundColor: "#9B59B6",
   incorrectBackgroundColor: "rgba(207, 0, 0, 0.2)",
   correctBorder: "1px solid rgb(113, 184, 137)",
   correctColor:  "rgb(113, 184, 137)",

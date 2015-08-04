@@ -104,6 +104,12 @@ export default class Item extends BaseComponent{
         backgroundColor: theme.definitelyBackgroundColor,
         color: theme.definitelyColor,
       },
+      submitButton: {
+        width: theme.definitelyWidth,
+        backgroundColor: theme.submitBackgroundColor,
+        color: theme.definitelyColor,
+
+      },
       confidenceWrapper: {
 
         border: theme.confidenceWrapperBorder,
@@ -121,7 +127,7 @@ export default class Item extends BaseComponent{
         margin: navMargin
       },
       submitButtonDiv: {
-        marginLeft: theme.confidenceWrapperMargin
+        marginLeft: theme.confidenceWrapperMargin,
       },
       warning: {
         margin: theme.confidenceWrapperMargin,
@@ -271,7 +277,7 @@ export default class Item extends BaseComponent{
     var result = this.getResult(this.props.messageIndex);
     var message = this.state && this.state.showMessage ? <div style={styles.warning}>You must select an answer before continuing.</div> : "";
     var buttons = this.getConfidenceLevels(this.props.confidenceLevels, styles);
-    var submitButton = (this.props.currentIndex == this.props.questionCount - 1 && this.props.question.confidenceLevel) ? <button className="btn btn-check-answer" style={styles.definitelyButton}  onClick={(e)=>{this.submitButtonClicked(e)}}>Submit</button> : "";
+    var submitButton = (this.props.currentIndex == this.props.questionCount - 1 && this.props.question.confidenceLevel) ? <button className="btn btn-check-answer" style={styles.submitButton}  onClick={(e)=>{this.submitButtonClicked(e)}}>Submit</button> : "";
     var footer = this.getFooterNav(this.context.theme, styles);
 
     // Get the confidence Level

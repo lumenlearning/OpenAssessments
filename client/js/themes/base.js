@@ -6,7 +6,7 @@ export default {
   questionTextFontSize: "18px",
   questionTextFontWeight: "bold",
   questionTextPadding: "0 0 14px 4px",
-  
+
   // ASSESSMENT
   assessmentPadding: "0px",
   assessmentBackground: "transparent",
@@ -27,14 +27,14 @@ export default {
 
   // BUTTONS (background must have important)
   nextButtonBackgroundColor: "#3299bb !important",
-  previousButtonBackgroundColor: "#3299bb !important", 
+  previousButtonBackgroundColor: "#3299bb !important",
   checkAnswerButtonBackgroundColor: "buttonface",
-  
+
   responseTextColor: defines.textColor,
 
   // FULL QUESTION
   fullQuestionBackgroundColor: defines.lightgray,
-  
+
   // PANEL
   //panelBorderColor: "#dddddd",
   panelPosition: "relative",
@@ -73,7 +73,7 @@ export default {
   btnQuestionFontSize: "14px",
   btnQuestionLineHeight: "1.42857143",
   btnQuestionBorderRadius: "4px",
-  
+
   // RADIO BUTTON TEXT
   radioTextMarginLeft: "5px",
   radioTextFontWeight: "bold",
@@ -103,6 +103,9 @@ export default {
   definitelyBackgroundColor: defines.buttonFace + " !important",
   definitelyColor: defines.textGrey,
 
+  //SUBMIT BUTTON
+  submitBackgroundColor: defines.buttonFace + " !important",
+
   // FOOTER
   footerHeight: "60px",
   footerBackgroundColor: defines.lightgray,
@@ -113,6 +116,6 @@ export default {
   shouldShowNextPrevious: true,
   shouldShowAttempts: false,
   shouldShowFooter: false,
-  
+
 
 }

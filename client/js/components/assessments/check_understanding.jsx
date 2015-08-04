@@ -171,7 +171,6 @@ export default class CheckUnderstanding extends React.Component{
     } else if(this.props.assessmentKind.toUpperCase() == "FORMATIVE"){
       content = this.getFormative(styles);
     }
-              debugger;
 
     var startButton = (
       <div style={styles.buttonWrapper}>
