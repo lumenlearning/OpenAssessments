@@ -170,6 +170,11 @@ export default class Item extends BaseComponent{
       h4: {
         color: "white"
       },
+      chooseText: {
+        color: "grey",
+        fontSize: "90%",
+        paddingBottom: "20px"
+      }
     }
   }
   getFooterNav(theme, styles){
@@ -309,6 +314,7 @@ export default class Item extends BaseComponent{
               <div className="full_question" style={styles.fullQuestion}>
                 <div className="inner_question">
                   <div className="question_text" style={styles.questionText}>
+                    <div style={styles.chooseText}>Choose <b>ALL</b> that apply.</div>
                     <div
                       dangerouslySetInnerHTML={{
                     __html: this.props.question.material
