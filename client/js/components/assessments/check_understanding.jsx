@@ -13,7 +13,7 @@ export default class CheckUnderstanding extends React.Component{
     return {
       assessmentContainer:{
         marginTop: "30px",
-        boxShadow: theme.assessmentContainerBoxShadow, 
+        boxShadow: theme.assessmentContainerBoxShadow,
         borderRadius: theme.assessmentContainerBorderRadius
       },
       header: {
@@ -88,14 +88,14 @@ export default class CheckUnderstanding extends React.Component{
   getAttempts(theme, styles, props){
     if(!theme.shouldShowAttempts){
       return "";
-    } 
-    
+    }
+
     if (props.userAttempts >= props.maxAttempts){
       return (
-        <div style={styles.attemptsContainer}> 
+        <div style={styles.attemptsContainer}>
           <div style={{...styles.attempts, ...{border: null}}}>
           <h1>Oops!</h1>
-          <h3>You have already taken this quiz the maximum number of times</h3>  
+          <h3>You have already taken this quiz the maximum number of times</h3>
         </div>
         <h4><u>TIPS:</u></h4>
         <div style={styles.tips}>
@@ -107,9 +107,9 @@ export default class CheckUnderstanding extends React.Component{
       </div>
         )
     }
-    
+
     return(
-      <div style={styles.attemptsContainer}> 
+      <div style={styles.attemptsContainer}>
         <div style={styles.attempts}>
           <h4>Attempt</h4>
           <h1>{this.props.userAttempts + 1}</h1>
@@ -122,8 +122,9 @@ export default class CheckUnderstanding extends React.Component{
   getSWYK(styles){
     return  <div style={styles.swyk}>
               <h2>Show What You Know</h2>
-              <div>This pre-test can help you decide where to focus your studying and is purely for your< /div>
-              <div>information. You will not receive a grade.</div>
+              <div>Take this pre-test to see what you already know about the concepts in this section.</div>
+              <div>The pre-test does not count toward your grade, but will help you plan where to focus</div>
+              <div>your time and effort as you study. The pre-test is optional.</div>
             </div>
   }
 
@@ -133,7 +134,7 @@ export default class CheckUnderstanding extends React.Component{
             <div className="row">
               <div className="col-md-1"><img style={styles.icon} src={this.props.icon} /></div>
               <div className="col-md-10" style={styles.data}>
-                <div>PRIMARY OUTCOME TITLE</div>
+                <div>Quiz: [PRIMARY OUTCOME TITLE]</div>
                 <div style={styles.selfCheck}><b>Self-Check</b></div>
                 <div>{this.props.primaryOutcome.longOutcome}</div>
               </div>
@@ -158,18 +159,21 @@ export default class CheckUnderstanding extends React.Component{
 
   render() {
     var styles = this.getStyles(this.props, this.context.theme);
+    var buttonText = "Start Quiz";
 
     var content = "There has been an error, contact your system administrator.";
     if(this.props.assessmentKind.toUpperCase() == "SUMMATIVE"){
       content = this.getAttempts(this.context.theme, styles, this.props);
     } else if(this.props.assessmentKind.toUpperCase() == "SHOW_WHAT_YOU_KNOW"){
       content = this.getSWYK(styles);
+      buttonText = "Start Pre-test";
     } else if(this.props.assessmentKind.toUpperCase() == "FORMATIVE"){
       content = this.getFormative(styles);
     }
+
     var startButton = (
       <div style={styles.buttonWrapper}>
-        <button style={styles.startButton} className="btn btn-info" onClick={()=>{this.start(this.props.eid, this.props.assessmentId)}}>Start Quiz</button>
+        <button style={styles.startButton} className="btn btn-info" onClick={()=>{this.start(this.props.eid, this.props.assessmentId)}}>{buttonText}</button>
       </div>)
     if (this.props.userAttempts == this.props.maxAttempts && this.props.assessmentKind.toUpperCase() == "SUMMATIVE"){
       startButton = "";

@@ -51,7 +51,7 @@ export default class Item extends BaseComponent{
     var questionsNotAnswered = [];
     for (var i = 0; i < this.props.studentAnswers.length; i++) {
       if(this.props.studentAnswers[i] == null || this.props.studentAnswers[i].length == 0){
-        
+
         questionsNotAnswered.push(i+1);
       }
     };
@@ -68,7 +68,7 @@ export default class Item extends BaseComponent{
     return {
       assessmentContainer:{
         marginTop: this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ?  "20px" : "100px",
-        boxShadow: theme.assessmentContainerBoxShadow, 
+        boxShadow: theme.assessmentContainerBoxShadow,
         borderRadius: theme.assessmentContainerBorderRadius
       },
       header: {
@@ -231,7 +231,7 @@ export default class Item extends BaseComponent{
       return previousButton;
     }
     previousButton =(<button className={prevButtonClassName} style={styles.previousButton} onClick={() => { this.previousButtonClicked() }}>
-                    <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span> 
+                    <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span>
                   </button>);
     return previousButton;
   }
@@ -268,9 +268,9 @@ export default class Item extends BaseComponent{
     var buttons = this.getConfidenceLevels(this.props.confidenceLevels, styles);
     var submitButton = (this.props.currentIndex == this.props.questionCount - 1 && this.props.question.confidenceLevel) ? <button className="btn btn-check-answer" style={styles.definitelyButton}  onClick={(e)=>{this.submitButtonClicked(e)}}>Submit</button> : "";
     var footer = this.getFooterNav(this.context.theme, styles);
-    
+
     // Get the confidence Level
-    
+
     var nextButton = this.getNextButton(styles);
     var previousButton = this.getPreviousButton(styles);
 
@@ -282,12 +282,12 @@ export default class Item extends BaseComponent{
     }
     var formativeHeader = ""
     if(this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
-      formativeHeader =             
+      formativeHeader =
           <div>
             <div className="row">
               <div className="col-md-1"><img style={styles.icon} src={this.props.settings.images.QuizIcon_svg} /></div>
               <div className="col-md-10" style={styles.data}>
-                <div>PRIMARY OUTCOME TITLE</div>
+                <div>Quiz: [PRIMARY OUTCOME TITLE]</div>
                 <div style={styles.selfCheck}><b>Self-Check</b></div>
                 <div>{"this.props.primaryOutcome.longOutcome"}</div>
               </div>
@@ -352,7 +352,7 @@ export default class Item extends BaseComponent{
 
 }
 
-Item.propTypes = { 
+Item.propTypes = {
   question         : React.PropTypes.object.isRequired,
   currentIndex     : React.PropTypes.number.isRequired,
   questionCount    : React.PropTypes.number.isRequired,
