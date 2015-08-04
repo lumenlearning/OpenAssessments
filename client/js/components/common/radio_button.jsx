@@ -42,7 +42,7 @@ export default class RadioButton extends React.Component{
     var styles = this.getStyles(this.props, this.context.theme)
     var checked = (this.props.item.id == AssessmentStore.studentAnswers()) ? "true" : null;
     console.log(this.props.isDisabled);
-    var radio = !this.props.isDisabled ? <input type="radio" defaultChecked={checked} name={this.props.name} onClick={()=>{ this.answerSelected() }}/> : <input type="radio" disabled="true" defaultChecked={checked} name={this.props.name} onClick={()=>{ this.answerSelected() }}/>;
+    var radio = !this.props.isDisabled ? <input type="radio" defaultChecked={checked} name={this.props.name} onClick={()=>{ this.answerSelected() }}/> : <input type="radio" disabled="true" name={this.props.name} onClick={()=>{ this.answerSelected() }}/>;
     return (
       
       <div className="btn btn-block btn-question" style={styles.btnQuestion}>

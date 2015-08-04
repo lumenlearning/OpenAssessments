@@ -40,8 +40,7 @@ export default class CheckBox extends React.Component{
   render(){
     var styles = this.getStyles(this.props, this.context.theme)
     var checked = (AssessmentStore.studentAnswers() && AssessmentStore.studentAnswers().indexOf(this.props.item.id) > -1) ? "true" : null;
-    console.log(this.props.isDisabled)
-    var checkBox = !this.props.isDisabled ? <input type="checkbox" defaultChecked={checked} name={this.props.name} onClick={()=>{ this.answerSelected() }}/> : <input type="checkbox" disabled="true" defaultChecked={checked} name={this.props.name} onClick={()=>{ this.answerSelected() }}/>;
+    var checkBox = !this.props.isDisabled ? <input type="checkbox" defaultChecked={checked} name={this.props.name} onClick={()=>{ this.answerSelected() }}/> : <input type="checkbox" disabled="true" name={this.props.name} onClick={()=>{ this.answerSelected() }}/>;
     return (
       <div className="btn btn-block btn-question" style={styles.btnQuestion}>
         <label>
