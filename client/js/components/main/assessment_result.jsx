@@ -198,7 +198,7 @@ export default class AssessmentResult extends BaseComponent{
   }
   // for sumative and swyk assessments
   getContent(styles, itemResults, outcomeLists, contentData){
-debugger;
+
     return (<div style={styles.assessment}>
       <div style={styles.assessmentContainer}>
         <div style={styles.titleBar}>{this.state.assessment ? this.state.assessment.title : ""}</div>
@@ -283,34 +283,25 @@ debugger;
             </div>
     })
     return <div style={styles.assessment}>
-        <div style={styles.assessmentContainer}>
-          <div style={styles.formative}>
-            <div className="row">
-              <div className="col-md-1"><img style={styles.icon} src={this.state.settings.images.QuizIcon_svg} /></div>
-              <div className="col-md-10" style={styles.data}>
-                <div>Quiz: [PRIMARY OUTCOME TITLE]</div>
-                <div style={styles.selfCheck}><b>Self-Check</b></div>
-                <div>{this.state.outcomes[0].longOutcome}</div>
-              </div>
-            </div>
-            <hr />
-            <div className="row" style={styles.row}>
-              <div className="col-md-12" style={styles.outcomes}>
-                <div style={styles.header}>2.1 Excersize 2</div>
-                <div style={styles.outcomeContainer}>
-                  {image}
-                  {head}
-                  <div>{feedback}</div>
-                  <div>{results}</div>
-                  <div style={styles.buttonsDiv}>
-                    <button className="btn btn-check-answer" style={styles.retakeButton}  onClick={(e)=>{this.retake()}}>Retake</button>
+            <div style={styles.assessmentContainer}>
+              <div style={styles.formative}>
+                <div className="row" style={styles.row}>
+                  <div className="col-md-12" style={styles.outcomes}>
+                    <div style={styles.header}>2.1 Excersize 2</div>
+                    <div style={styles.outcomeContainer}>
+                      {image}
+                      {head}
+                      <div>{feedback}</div>
+                      <div>{results}</div>
+                      <div style={styles.buttonsDiv}>
+                        <button className="btn btn-check-answer" style={styles.retakeButton}  onClick={(e)=>{this.retake()}}>Retake</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
   }
 
   render(){

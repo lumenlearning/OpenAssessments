@@ -285,19 +285,6 @@ export default class Item extends BaseComponent{
       formativeHeader =
           <div>
             <div className="row">
-              <div className="col-md-1"><img style={styles.icon} src={this.props.settings.images.QuizIcon_svg} /></div>
-              <div className="col-md-10" style={styles.data}>
-                <div>Quiz: [PRIMARY OUTCOME TITLE]</div>
-                <div style={styles.selfCheck}><b>Self-Check</b></div>
-                <div>{"this.props.primaryOutcome.longOutcome"}</div>
-              </div>
-            </div>
-            <hr />
-            <div className="row">
-              <div className="col-md-12">
-                <h5 style={{color: this.context.theme.definitelyBackgroundColor}}>INTRODUCTION</h5>
-                <div>Click "Check Your Understanding" to start</div>
-              </div>
             </div>
             <div className="row" style={styles.checkDiv}>
               <div className="col-md-10">
@@ -308,7 +295,7 @@ export default class Item extends BaseComponent{
             </div>
           </div>
     }
-    var formativeStyle = this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? {padding: "20px"} : {};
+    var formativeStyle = this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? {padding: "0px 20px 20px 20px"} : {};
     return (
       <div className="assessment_container" style={styles.assessmentContainer}>
         <div className="question">

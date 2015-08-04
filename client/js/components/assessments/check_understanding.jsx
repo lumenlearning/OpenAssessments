@@ -129,31 +129,28 @@ export default class CheckUnderstanding extends React.Component{
   }
 
   getFormative(styles){
+    // THIS IS THE FRAME FOR CANDELLA SO ITS NOT BEING USED BUT ITS GOOD CODE 
+    // THAT WE MIGHT REUSE LATER
 
-    return <div style={styles.formative}>
-            <div className="row">
-              <div className="col-md-1"><img style={styles.icon} src={this.props.icon} /></div>
-              <div className="col-md-10" style={styles.data}>
-                <div>Quiz: [PRIMARY OUTCOME TITLE]</div>
-                <div style={styles.selfCheck}><b>Self-Check</b></div>
-                <div>{this.props.primaryOutcome.longOutcome}</div>
+    // <div className="col-md-1"><img style={styles.icon} src={this.props.icon} /></div>
+    //           <div className="col-md-10" style={styles.data}>
+    //             <div>Quiz: [PRIMARY OUTCOME TITLE]</div>
+    //             <div style={styles.selfCheck}><b>Self-Check</b></div>
+    //             <div>{this.props.primaryOutcome.longOutcome}</div>
+    //           </div>
+    //         </div>
+    //         <hr />
+    return <div style={styles.formative}>         
+              <div className="row">
               </div>
-            </div>
-            <hr />
-            <div className="row">
-              <div className="col-md-12">
-                <h5 style={{color: this.context.theme.definitelyBackgroundColor}}>INTRODUCTION</h5>
-                <div>Click "Check Your Understanding" to start</div>
+              <div className="row" style={styles.checkDiv}>
+                <div className="col-md-10">
+                  <h4 style={styles.h4}>{this.props.title}</h4>
+                </div>
+                <div className="col-md-2">
+                  <button style={{...styles.startButton, ...styles.checkUnderstandingButton}} className="btn btn-info" onClick={()=>{this.start(this.props.eid, this.props.assessmentId)}}>Start Quiz</button>
+                </div>
               </div>
-            </div>
-            <div className="row" style={styles.checkDiv}>
-              <div className="col-md-10">
-                <h4 style={styles.h4}>{this.props.title}</h4>
-              </div>
-              <div className="col-md-2">
-                <button style={{...styles.startButton, ...styles.checkUnderstandingButton}} className="btn btn-info" onClick={()=>{this.start(this.props.eid, this.props.assessmentId)}}>Start Quiz</button>
-              </div>
-            </div>
            </div>
   }
 
