@@ -109,12 +109,15 @@ export default class CheckUnderstanding extends React.Component{
     }
 
     return(
+
       <div style={styles.attemptsContainer}>
+      <div> You can take this quiz twice. Your highest score will count as your grade. Don't wait until the last minute to take the quiz - take the quiz early so you'll have plenty of time to study and improve your grade on your second attempt.</div>
+
         <div style={styles.attempts}>
           <h4>Attempt</h4>
           <h1>{this.props.userAttempts + 1}</h1>
           <h3>of {this.props.maxAttempts}</h3>
-          <p>This is your 1st attempt for this outcome</p>
+          <p>This is your 1st attempt for this quiz</p>
         </div>
       </div>)
   }
@@ -129,7 +132,7 @@ export default class CheckUnderstanding extends React.Component{
   }
 
   getFormative(styles){
-    // THIS IS THE FRAME FOR CANDELLA SO ITS NOT BEING USED BUT ITS GOOD CODE 
+    // THIS IS THE FRAME FOR CANDELLA SO ITS NOT BEING USED BUT ITS GOOD CODE
     // THAT WE MIGHT REUSE LATER
 
     // <div className="col-md-1"><img style={styles.icon} src={this.props.icon} /></div>
@@ -140,7 +143,7 @@ export default class CheckUnderstanding extends React.Component{
     //           </div>
     //         </div>
     //         <hr />
-    return <div style={styles.formative}>         
+    return <div style={styles.formative}>
               <div className="row">
               </div>
               <div className="row" style={styles.checkDiv}>
@@ -158,7 +161,8 @@ export default class CheckUnderstanding extends React.Component{
     var styles = this.getStyles(this.props, this.context.theme);
     var buttonText = "Start Quiz";
 
-    var content = "There has been an error, contact your system administrator.";
+    var content = "There was an error, contact you administrator.";
+
     if(this.props.assessmentKind.toUpperCase() == "SUMMATIVE"){
       content = this.getAttempts(this.context.theme, styles, this.props);
     } else if(this.props.assessmentKind.toUpperCase() == "SHOW_WHAT_YOU_KNOW"){
@@ -167,6 +171,7 @@ export default class CheckUnderstanding extends React.Component{
     } else if(this.props.assessmentKind.toUpperCase() == "FORMATIVE"){
       content = this.getFormative(styles);
     }
+              debugger;
 
     var startButton = (
       <div style={styles.buttonWrapper}>
@@ -178,6 +183,8 @@ export default class CheckUnderstanding extends React.Component{
     if (this.props.assessmentKind.toUpperCase() == "FORMATIVE"){
       startButton = "";
     }
+
+
     return (
       <div className="assessment_container" style={styles.assessmentContainer}>
 
