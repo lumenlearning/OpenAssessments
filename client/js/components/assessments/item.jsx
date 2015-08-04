@@ -204,7 +204,7 @@ export default class Item extends BaseComponent{
 
   getConfidenceLevels(level, styles){
     if(level){
-      var levelMessage = <div style={{marginBottom: "10px"}}><b>Choose your confidence level to go to the next question.</b></div>;
+      var levelMessage = <div style={{marginBottom: "10px"}}><b>How sure are you of your answer? Click below to move forward.</b></div>;
       return    (<div className="confidence_wrapper" style={styles.confidenceWrapper}>
                   {levelMessage}
                   <input type="button" style={styles.maybeButton}className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentIndex) }}/>
