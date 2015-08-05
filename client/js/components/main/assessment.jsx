@@ -103,6 +103,7 @@ export default class Assessment extends BaseComponent{
         maxAttempts     = {this.state.settings.allowedAttempts} 
         userAttempts    = {this.state.settings.userAttempts} 
         eid             = {this.state.settings.lisUserId}
+        isLti           = {this.state.settings.isLti}
         assessmentId    = {this.state.assessment.assessmentId}
         assessmentKind  = {this.state.settings.assessmentKind} 
         primaryOutcome  = {this.state.outcomes[0]}

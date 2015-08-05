@@ -114,19 +114,20 @@ export default class CheckUnderstanding extends React.Component{
       case 2: attempt = "2nd"; break;
       default: "1st";
     }
-
-    return(
-
-      <div style={styles.attemptsContainer}>
-      <div> You can take this quiz twice. Your highest score will count as your grade. Don't wait until the last minute to take the quiz - take the quiz early so you'll have plenty of time to study and improve your grade on your second attempt.</div>
-
-        <div style={styles.attempts}>
+    var attemptStructure =       <div style={styles.attemptsContainer}>
+        <div> You can take this quiz twice. Your highest score will count as your grade. Don't wait until the last minute to take the quiz - take the quiz early so you'll have plenty of time to study and improve your grade on your second attempt.</div>
+          <div style={styles.attempts}>
           <h4>Attempt</h4>
           <h1>{this.props.userAttempts + 1}</h1>
           <h3>of {this.props.maxAttempts}</h3>
           <p>This is your {attempt} attempt for this quiz</p>
-        </div>
-      </div>)
+        </div>       
+      </div> 
+    if(!this.props.isLti){
+      attemptStructure = ""
+    }
+    return attemptStructure;
+
   }
 
   getSWYK(styles){
