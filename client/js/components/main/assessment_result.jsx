@@ -139,6 +139,16 @@ export default class AssessmentResult extends BaseComponent{
         color: "white",
         fontSize: "130%",
         //fontWeight: "bold"
+      },
+      warningStyle: {
+        width: "100%",
+        padding:  "20px",
+        backgroundColor: theme.maybeBackgroundColor,
+        borderRadius: "4px",
+        marginTop: "30px",
+        color: "white",
+        fontWeight: "bold",
+        fontSize: "130%"
       }
     }
   }
@@ -199,9 +209,22 @@ export default class AssessmentResult extends BaseComponent{
   // for sumative and swyk assessments
   getContent(styles, itemResults, outcomeLists, contentData){
 
+    var errors = "";
+
+    if(this.state.assessmentResult.errors && this.state.assessmentResult.errors.length > 0){
+      errors =  <div className="row">
+                  <div className="col-md-12">
+                    <div style={styles.warningStyle}>
+                      This quiz was not setup correctly. Contact your instructor.
+                    </div>
+                  </div>
+                </div>
+    }
+               
     return (<div style={styles.assessment}>
       <div style={styles.assessmentContainer}>
         <div style={styles.titleBar}>{this.state.assessment ? this.state.assessment.title : ""}</div>
+        {errors}
         <div className="row" style={styles.wrapperStyle}>
 
           <div className="col-md-4" >
@@ -279,7 +302,8 @@ export default class AssessmentResult extends BaseComponent{
                 <div style={{width: "70%"}}>{this.state.questions[index].outcomes.longOutcome}</div>
               </div>
             </div>
-    })
+    });
+
     return <div style={styles.assessment}>
             <div style={styles.assessmentContainer}>
               <div style={styles.formative}>
@@ -322,6 +346,7 @@ export default class AssessmentResult extends BaseComponent{
     if(this.state.assessmentResult == null){
       return <div />
     }
+
     var itemResults = this.getItemResults();
     var outcomeLists = this.getOutcomeLists(styles);
     var content = <div/>;
@@ -331,7 +356,9 @@ export default class AssessmentResult extends BaseComponent{
     } else {
       content = this.getContent(styles, itemResults, outcomeLists, contentData);
     }
-    return content;
+    return  <div>
+              {content}
+            </div>
   }
 }
 

@@ -124,7 +124,7 @@ class Api::GradesController < Api::ApiController
       'lis_outcome_service_url' => settings["lisOutcomeServiceUrl"],
       'user_id'                 => settings["lisUserId"]
     }
-
+    success = false;
     if settings["isLti"] && settings["assessmentKind"].upcase == "SUMMATIVE"
       begin
       provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
@@ -139,9 +139,29 @@ class Api::GradesController < Api::ApiController
       # log any errors and make them visible in the admin ui
       success = res.success?
       rescue Exception => e
-        errors.push(e.message)
+        begin
+        provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
+
+        # post the given score to the TC
+        canvas_score = (canvas_score != '' ? canvas_score.to_s : nil)
+
+        res = provider.post_replace_result!(canvas_score)
+
+        # Need to figure out error handling - these will need to be passed to the client
+        # or we can also post scores async using activejob in which case we'll want to
+        # log any errors and make them visible in the admin ui
+        success = res.success?
+        rescue Exception => e
+          
+          errors.push(e.message)
+        end
+      end
+
+      if !success
+        errors.push("Grade writeback failed.")
       end
     end
+
 
     graded_assessment = { 
       score: score,

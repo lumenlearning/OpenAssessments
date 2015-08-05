@@ -6,7 +6,7 @@ import UniversalInput from '../assessments/universal_input';
 export default class ResultConfidence extends React.Component{
   
   getStyles(props, theme){
-    console.log(props.level)
+
     return {
       maybe: {
         marginRight: "5px",
@@ -39,7 +39,7 @@ export default class ResultConfidence extends React.Component{
   }
   render() {
     var styles = this.getStyles(this.props, this.context.theme)
-    console.log(styles)
+
     return (
       <div>
         <h5 style={styles.h5}>Your confidence level</h5>
