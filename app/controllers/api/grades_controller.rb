@@ -1,5 +1,7 @@
 class Api::GradesController < Api::ApiController
   
+  skip_before_action :validate_token, only: [:create]
+  
   def create
 
     # store lis stuff in session
@@ -11,7 +13,7 @@ class Api::GradesController < Api::ApiController
     outcomes = item_to_grade["outcomes"]
     assessment = Assessment.find(assessment_id)
     doc = Nokogiri::XML(assessment.assessment_xmls.where(kind: "formative").last.xml)
-    previous_result = current_user.assessment_results.where(assessment_id: assessment.id).first
+    previous_result = current_user.present? ? current_user.assessment_results.where(assessment_id: assessment.id).first : nil
     doc.remove_namespaces!
     xml_questions = doc.xpath("//item")
     errors = []

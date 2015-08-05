@@ -107,6 +107,13 @@ export default class CheckUnderstanding extends React.Component{
       </div>
         )
     }
+    var attempt = ""
+    // right now only 2 attempts are allowed or other things will break
+    switch(props.userAttempts+1){
+      case 1: attempt = "1st"; break;
+      case 2: attempt = "2nd"; break;
+      default: "1st";
+    }
 
     return(
 
@@ -117,7 +124,7 @@ export default class CheckUnderstanding extends React.Component{
           <h4>Attempt</h4>
           <h1>{this.props.userAttempts + 1}</h1>
           <h3>of {this.props.maxAttempts}</h3>
-          <p>This is your 1st attempt for this quiz</p>
+          <p>This is your {attempt} attempt for this quiz</p>
         </div>
       </div>)
   }
@@ -161,7 +168,7 @@ export default class CheckUnderstanding extends React.Component{
     var styles = this.getStyles(this.props, this.context.theme);
     var buttonText = "Start Quiz";
 
-    var content = "There was an error, contact you administrator.";
+    var content = "There was an error, contact your teacher.";
 
     if(this.props.assessmentKind.toUpperCase() == "SUMMATIVE"){
       content = this.getAttempts(this.context.theme, styles, this.props);
