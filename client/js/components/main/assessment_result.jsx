@@ -6,6 +6,7 @@ import SettingsStore      from "../../stores/settings";
 import BaseComponent      from "../base_component";
 import AssessmentActions  from "../../actions/assessment";
 import ItemResult         from "./item_result";
+import $                  from "jquery";
 
 export default class AssessmentResult extends BaseComponent{
 
@@ -31,6 +32,13 @@ export default class AssessmentResult extends BaseComponent{
   retake(){
     AssessmentActions.retakeAssessment();
     this.context.router.transitionTo("assessment");
+  }
+
+  jump(e){
+    e.preventDefault();
+    $('iframe, html, body').animate({
+    scrollTop: $(document.getElementById("questionsStart")).offset().top
+    }, 500);
   }
 
   getStyles(theme){
@@ -117,6 +125,12 @@ export default class AssessmentResult extends BaseComponent{
       retakeButton: {
         width: theme.definitelyWidth,
         backgroundColor: theme.definitelyBackgroundColor,
+        color: theme.definitelyColor,
+      },
+      jumpButton: {
+        marginTop: "10px",
+        width: theme.definitelyWidth,
+        backgroundColor: theme.submitBackgroundColor,
         color: theme.definitelyColor,
       },
         exitButton: {
@@ -220,7 +234,7 @@ export default class AssessmentResult extends BaseComponent{
                   </div>
                 </div>
     }
-               
+
     return (<div style={styles.assessment}>
       <div style={styles.assessmentContainer}>
         <div style={styles.titleBar}>{this.state.assessment ? this.state.assessment.title : ""}</div>
@@ -234,6 +248,7 @@ export default class AssessmentResult extends BaseComponent{
             </div>
             Time Spent: {this.state.timeSpent.minutes} mins {this.state.timeSpent.seconds} sec
             <br />
+            <button className="btn btn-check-answer" style={styles.jumpButton}  onClick={(e)=>{this.jump(e)}}>Jump To Questions</button>
           </div>
 
           <div className="col-md-4" >
@@ -251,7 +266,7 @@ export default class AssessmentResult extends BaseComponent{
 
         </div>
         <hr />
-        <div style={styles.resultsStyle}>
+        <div id="questionsStart" style={styles.resultsStyle}>
           {itemResults}
         </div>
 
