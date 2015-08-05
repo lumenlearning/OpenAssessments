@@ -11,6 +11,7 @@ class Api::GradesController < Api::ApiController
     outcomes = item_to_grade["outcomes"]
     assessment = Assessment.find(assessment_id)
     doc = Nokogiri::XML(assessment.assessment_xmls.where(kind: "formative").last.xml)
+    previous_result = current_user.assessment_results.where(assessment_id: assessment.id).first
     doc.remove_namespaces!
     xml_questions = doc.xpath("//item")
     errors = []
@@ -25,6 +26,7 @@ class Api::GradesController < Api::ApiController
     answers = item_to_grade["answers"]
     ungraded_questions = []
     xml_index_list = []
+    
     questions.each_with_index do |question, index|
 
       # make sure we are looking at the right question
@@ -124,8 +126,16 @@ class Api::GradesController < Api::ApiController
       'lis_outcome_service_url' => settings["lisOutcomeServiceUrl"],
       'user_id'                 => settings["lisUserId"]
     }
+
     success = false;
-    if settings["isLti"] && settings["assessmentKind"].upcase == "SUMMATIVE"
+
+    higher_grade = true
+
+    if previous_result.present? && previous_result.score > score
+      higher_grade = false
+    end
+    # TODO find out a better way to do this. This will work just fine as long as there is a max of 2 attempts.
+    if settings["isLti"] && settings["assessmentKind"].upcase == "SUMMATIVE" && higher_grade
       begin
       provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
 
