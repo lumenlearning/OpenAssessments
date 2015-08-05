@@ -127,7 +127,8 @@ export default class Item extends BaseComponent{
         margin: navMargin
       },
       submitButtonDiv: {
-        marginLeft: theme.confidenceWrapperMargin,
+        marginLeft: "40px",
+        marginTop: "86px"
       },
       warning: {
         margin: theme.confidenceWrapperMargin,
@@ -329,12 +330,18 @@ export default class Item extends BaseComponent{
                   </div>
                   <UniversalInput item={this.props.question} isResult={false}/>
                 </div>
-                {result}
-                {buttons}
-                {unAnsweredWarning}
-                {message}
-                <div style={styles.submitButtonDiv}>
-                  {submitButton}
+                <div className="row">
+                  <div className="col-md-6">
+                    {result}
+                    {buttons}
+                    {unAnsweredWarning}
+                    {message}
+                  </div>
+                  <div className="col-md-6">
+                    <div style={styles.submitButtonDiv}>
+                      {submitButton}
+                    </div>
+                  </div>
                 </div>
               </div>
             </form>
