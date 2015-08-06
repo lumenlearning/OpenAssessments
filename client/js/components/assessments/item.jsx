@@ -312,7 +312,7 @@ export default class Item extends BaseComponent{
           </div>
     }
 
-    var formativeStyle = this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? {padding: "5px"} : {};
+    var formativeStyle = this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? {padding: "20px"} : {};
     var submitButtonDiv =  <div style={styles.submitButtonDiv}>
                           {submitButton}
                         </div>;

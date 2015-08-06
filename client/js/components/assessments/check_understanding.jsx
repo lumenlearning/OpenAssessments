@@ -12,7 +12,7 @@ export default class CheckUnderstanding extends React.Component{
   getStyles(props, theme){
     return {
       assessmentContainer:{
-        marginTop: props.assessmentKind.toUpperCase() == "FORMATIVE" ? "30px":"100px",
+        marginTop: props.assessmentKind.toUpperCase() == "FORMATIVE" ? "0px":"100px",
         boxShadow: props.assessmentKind.toUpperCase() == "FORMATIVE" ?  "" : theme.assessmentContainerBoxShadow,
         borderRadius: theme.assessmentContainerBorderRadius
       },
