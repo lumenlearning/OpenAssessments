@@ -41,7 +41,12 @@ export default class AssessmentResult extends BaseComponent{
     }, 500);
   }
 
+  onResize(){
+    console.log(this.state)
+  }
+
   getStyles(theme){
+
     return {
       assessment: {
         padding: theme.assessmentPadding,
@@ -78,7 +83,8 @@ export default class AssessmentResult extends BaseComponent{
       },
       formative: {
         padding: "0px 30px 20px 30px",
-        marginTop: "0px"
+        marginTop: "0px",
+
       },
       icon: {
         height: "62px",
@@ -92,9 +98,11 @@ export default class AssessmentResult extends BaseComponent{
       },
       outcomes: {
         backgroundColor: "rgba(204, 204, 204, .2)",
+
       },
       row: {
-        padding: "15px"
+        padding: "15px",
+
       },
       outcomeContainer: {
         textAlign: "center",
@@ -102,7 +110,8 @@ export default class AssessmentResult extends BaseComponent{
       },
       outcomeIcon: {
         width: "100px",
-        height: "100px"
+        height: "100px",
+        marginTop: "80px"
       },
       header: {
         padding: "15px",
@@ -117,7 +126,7 @@ export default class AssessmentResult extends BaseComponent{
       resultList: {
         width: "50%",
         margin: "auto",
-        overflow: "auto"
+        overflowY: "hidden",
       },
       resultOutcome: {
         textAlign: "left"
@@ -126,6 +135,7 @@ export default class AssessmentResult extends BaseComponent{
         width: theme.definitelyWidth,
         backgroundColor: theme.definitelyBackgroundColor,
         color: theme.definitelyColor,
+        marginBottom: "10px"
       },
       jumpButton: {
         marginTop: "10px",
@@ -323,7 +333,7 @@ export default class AssessmentResult extends BaseComponent{
             <div style={styles.assessmentContainer}>
               <div style={styles.formative}>
                 <div className="row" style={styles.row}>
-                  <div className="col-md-12" style={styles.outcomes}>
+                  <div className="col-md-12 col-lg-12" style={styles.outcomes}>
                     <div style={styles.header}>2.1 Excersize 2</div>
                     <div style={styles.outcomeContainer}>
                       {image}

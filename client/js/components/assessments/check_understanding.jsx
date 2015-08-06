@@ -20,7 +20,7 @@ export default class CheckUnderstanding extends React.Component{
         backgroundColor: theme.headerBackgroundColor
       },
       startButton: {
-        margin: "3px 5px 0px -5px",
+        margin: "5px 5px 5px -5px",
         width: theme.definitelyWidth,
         backgroundColor: theme.definitelyBackgroundColor
       },
