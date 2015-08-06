@@ -334,7 +334,7 @@ export default class AssessmentResult extends BaseComponent{
               <div style={styles.formative}>
                 <div className="row" style={styles.row}>
                   <div className="col-md-12 col-lg-12" style={styles.outcomes}>
-                    <div style={styles.header}>2.1 Excersize 2</div>
+                    <div style={styles.header}>Quiz : {this.state.assessment ? this.state.assessment.title : ""}</div>
                     <div style={styles.outcomeContainer}>
                       {image}
                       {head}
