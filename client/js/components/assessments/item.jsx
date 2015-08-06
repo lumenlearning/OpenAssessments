@@ -72,7 +72,7 @@ export default class Item extends BaseComponent{
     return {
       assessmentContainer:{
         marginTop: this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ?  "0px" : "100px",
-        boxShadow: theme.assessmentContainerBoxShadow,
+        boxShadow: this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ?  "" : theme.assessmentContainerBoxShadow,
         borderRadius: theme.assessmentContainerBorderRadius
       },
       header: {
