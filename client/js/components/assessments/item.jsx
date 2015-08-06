@@ -29,15 +29,19 @@ export default class Item extends BaseComponent{
     e.preventDefault()
     if(AssessmentStore.selectedAnswerId() && AssessmentStore.selectedAnswerId().length > 0){
       AssessmentActions.selectConfidenceLevel(e.target.value, currentIndex);
-      AssessmentActions.nextQuestion();
-      this.setState({showMessage: false});
+      if(this.props.currentIndex == this.props.questionCount - 1 && this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
+        this.submitButtonClicked();
+      } else {
+        AssessmentActions.nextQuestion();
+        this.setState({showMessage: false});
+      }
     } else {
       this.setState({showMessage: true});
     }
   }
 
   submitButtonClicked(e){
-    e.preventDefault()
+    e && e.preventDefault()
     var complete = this.checkCompletion();
     if(complete === true){
       AssessmentActions.submitAssessment(this.props.assessment.id, this.props.assessment.assessmentId, this.props.allQuestions, this.props.studentAnswers, this.props.settings, this.props.outcomes);
@@ -67,7 +71,7 @@ export default class Item extends BaseComponent{
       navMargin = "-75px 20px 0 0";
     return {
       assessmentContainer:{
-        marginTop: this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ?  "20px" : "100px",
+        marginTop: this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ?  "0px" : "100px",
         boxShadow: theme.assessmentContainerBoxShadow,
         borderRadius: theme.assessmentContainerBorderRadius
       },
@@ -307,7 +311,15 @@ export default class Item extends BaseComponent{
             </div>
           </div>
     }
-    var formativeStyle = this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? {padding: "0px 20px 20px 20px"} : {};
+
+    var formativeStyle = this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? {padding: "5px"} : {};
+    var submitButtonDiv =  <div style={styles.submitButtonDiv}>
+                          {submitButton}
+                        </div>;
+
+    if(this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
+      submitButtonDiv = ""
+    }
     return (
       <div className="assessment_container" style={styles.assessmentContainer}>
         <div className="question">
@@ -338,9 +350,7 @@ export default class Item extends BaseComponent{
                     {message}
                   </div>
                   <div className="col-md-6 col-sm-5 ">
-                    <div style={styles.submitButtonDiv}>
-                      {submitButton}
-                    </div>
+                    {submitButtonDiv}
                   </div>
                 </div>
               </div>

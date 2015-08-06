@@ -49,7 +49,7 @@ export default class AssessmentResult extends BaseComponent{
 
     return {
       assessment: {
-        padding: theme.assessmentPadding,
+        padding: this.state.settings.assessmentKind.toUpperCase()  == "FORMATIVE" ? "" : theme.assessmentPadding,
         backgroundColor: theme.assessmentBackground,
       },
       progressStyle: {
@@ -82,7 +82,7 @@ export default class AssessmentResult extends BaseComponent{
         padding: "20px"
       },
       formative: {
-        padding: "0px 30px 20px 30px",
+        padding: "5",
         marginTop: "0px",
 
       },

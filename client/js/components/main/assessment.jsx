@@ -64,7 +64,7 @@ export default class Assessment extends BaseComponent{
         height: theme.progressBarHeight
       },
       assessment: {
-        padding: theme.assessmentPadding,
+        padding: this.state.settings.assessmentKind.toUpperCase()  == "FORMATIVE" ? "" : theme.assessmentPadding,
         backgroundColor: theme.assessmentBackground,
       },
       progressContainer: {
