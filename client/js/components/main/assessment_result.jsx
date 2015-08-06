@@ -74,7 +74,7 @@ export default class AssessmentResult extends BaseComponent{
       },
       assessmentContainer:{
         marginTop: "70px",
-        boxShadow: theme.assessmentContainerBoxShadow,
+        boxShadow: this.state.settings.assessmentKind.toUpperCase()  == "FORMATIVE" ? "" : theme.assessmentContainerBoxShadow,
         borderRadius: theme.assessmentContainerBorderRadius,
         padding: "20px"
       },
