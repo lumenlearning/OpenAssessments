@@ -312,7 +312,7 @@ export default class Item extends BaseComponent{
       <div className="assessment_container" style={styles.assessmentContainer}>
         <div className="question">
           <div className="header" style={styles.header}>
-            {counter}
+                {counter}
             <p>{this.props.question.title}</p>
           </div>
           <div style={formativeStyle}>

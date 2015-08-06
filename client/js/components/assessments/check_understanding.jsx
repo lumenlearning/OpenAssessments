@@ -121,8 +121,8 @@ export default class CheckUnderstanding extends React.Component{
           <h1>{this.props.userAttempts + 1}</h1>
           <h3>of {this.props.maxAttempts}</h3>
           <p>This is your {attempt} attempt for this quiz</p>
-        </div>       
-      </div> 
+        </div>
+      </div>
     if(!this.props.isLti){
       attemptStructure = ""
     }
@@ -168,7 +168,6 @@ export default class CheckUnderstanding extends React.Component{
   render() {
     var styles = this.getStyles(this.props, this.context.theme);
     var buttonText = "Start Quiz";
-
     var content = "There was an error, contact your teacher.";
 
     if(this.props.assessmentKind.toUpperCase() == "SUMMATIVE"){

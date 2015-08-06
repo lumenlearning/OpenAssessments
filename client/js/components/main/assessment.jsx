@@ -11,13 +11,13 @@ import Item               from "../assessments/item";
 import ProgressDropdown   from "../common/progress_dropdown";
 
 export default class Assessment extends BaseComponent{
- 
+
   constructor(props, context){
     super(props, context);
     this.stores = [AssessmentStore, SettingsStore];
     this._bind["checkCompletion"];
     this.state = this.getState(context);
-    this.context = context;    
+    this.context = context;
   }
 
   getState(props, context){
@@ -45,7 +45,7 @@ export default class Assessment extends BaseComponent{
     super.componentDidMount();
     if(this.state.isLoaded){
       // Trigger action to indicate the assessment was viewed
-      AssessmentActions.assessmentViewed(this.state.settings, this.state.assessment);  
+      AssessmentActions.assessmentViewed(this.state.settings, this.state.assessment);
     }
   }
 
@@ -95,26 +95,26 @@ export default class Assessment extends BaseComponent{
     var progressBar;
     var titleBar;
     if(!this.state.isLoaded){
-      content = <Loading />;  
+      content = <Loading />;
     } else if(this.state.showStart){
         content         = <CheckUnderstanding
-        title           = {this.state.assessment.title} 
+        title           = {this.state.assessment.title}
         name            = {this.state.question.name}
-        maxAttempts     = {this.state.settings.allowedAttempts} 
-        userAttempts    = {this.state.settings.userAttempts} 
+        maxAttempts     = {this.state.settings.allowedAttempts}
+        userAttempts    = {this.state.settings.userAttempts}
         eid             = {this.state.settings.lisUserId}
         isLti           = {this.state.settings.isLti}
         assessmentId    = {this.state.assessment.assessmentId}
-        assessmentKind  = {this.state.settings.assessmentKind} 
+        assessmentKind  = {this.state.settings.assessmentKind}
         primaryOutcome  = {this.state.outcomes[0]}
         icon            = {this.state.settings.images.QuizIcon_svg}/>;
         progressBar     = <div style={styles.progressContainer}>
-                            {progressText}                                                                                                        
+                            {progressText}
                             <ProgressDropdown disabled={true} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
                           </div>;
-        
+
     } else {
-      content = <Item 
+      content = <Item
         question         = {this.state.question}
         assessment       = {this.state.assessment}
         currentIndex     = {this.state.currentIndex}
@@ -123,23 +123,23 @@ export default class Assessment extends BaseComponent{
         assessmentResult = {this.state.assessmentResult}
         messageIndex     = {this.state.messageIndex}
         allQuestions     = {this.state.allQuestions}
-        studentAnswers   = {this.state.studentAnswers} 
+        studentAnswers   = {this.state.studentAnswers}
         confidenceLevels = {this.state.settings.confidenceLevels}
         outcomes         = {this.state.outcomes}/>;
         progressBar      =  <div style={styles.progressContainer}>
-                              {progressText}                                                                                                        
+                              {progressText}
                               <ProgressDropdown questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
                             </div>;
       // TODO figure out when to mark an item as viewed. assessmentResult must be valid before this call is made.
       // AssessmentActions.itemViewed(this.state.settings, this.state.assessment, this.state.assessmentResult);
     }
-    
+
     var percentCompleted = this.checkProgress(this.state.currentIndex, this.state.questionCount);
     var progressStyle = {width:percentCompleted+"%"};
     var progressText = "";
-    var titleBar = this.state.settings.assessmentKind.toUpperCase() === "FORMATIVE" ?  "" : <div style={styles.titleBar}>{this.state.assessment ? this.state.assessment.title : ""}</div>;
+    var titleBar = this.state.settings.assessmentKind.toUpperCase() === "FORMATIVE" ?  "" : <div style={styles.titleBar}>Quiz : {this.state.assessment ? this.state.assessment.title : ""}</div>;
     if(this.state.assessment){
-      progressText = this.context.theme.shouldShowProgressText ? <div><b>{this.state.assessment.title + " Progress"}</b>{" - You are on question " + (this.state.currentIndex + 1) + " of " + this.state.questionCount}</div> : ""; 
+      progressText = this.context.theme.shouldShowProgressText ? <div><b>{this.state.assessment.title + " Progress"}</b>{" - You are on question " + (this.state.currentIndex + 1) + " of " + this.state.questionCount}</div> : "";
     }
     progressBar = this.state.settings.assessmentKind.toUpperCase() === "FORMATIVE" ? "" : progressBar;
     return <div className="assessment" style={styles.assessment}>

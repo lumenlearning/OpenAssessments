@@ -247,7 +247,7 @@ export default class AssessmentResult extends BaseComponent{
 
     return (<div style={styles.assessment}>
       <div style={styles.assessmentContainer}>
-        <div style={styles.titleBar}>{this.state.assessment ? this.state.assessment.title : ""}</div>
+        <div style={styles.titleBar}>Quiz : {this.state.assessment ? this.state.assessment.title : ""}</div>
         {errors}
         <div className="row" style={styles.wrapperStyle}>
 
