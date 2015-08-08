@@ -114,7 +114,7 @@ export default class AssessmentResult extends BaseComponent{
         width: "100%"
       },
       resultList: {
-        width: "50%",
+        width: "90%",
         margin: "auto",
         overflowY: "hidden",
       },
