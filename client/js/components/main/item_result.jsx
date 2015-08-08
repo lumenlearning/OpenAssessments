@@ -59,15 +59,15 @@ export default class ItemResult extends React.Component{
     return (
       <div>
         <div className="row">
-          <div className="col-md-9 col-sm-9" style={styles.resultContainer}>
+          <div className="col-md-9 col-sm-9 col-xs-9" style={styles.resultContainer}>
             <div className="row">
-              <div className="col-md-9 col-sm-9">
+              <div className="col-md-9 col-sm-9 col-xs-9">
               <div
                 dangerouslySetInnerHTML={{
               __html: this.props.question.material
               }}></div>
               </div>
-              <div className="col-md-3 col-sm-3">
+              <div className="col-md-3 col-sm-3 col-xs-3">
                 <div style={styles.correctLabel}>{correctMessage}</div>
               </div>
             </div>
@@ -78,7 +78,7 @@ export default class ItemResult extends React.Component{
               <ResultConfidence level={this.props.confidence} />
             </div>
           </div>
-          <div className="col-md-3 col-sm-3">
+          <div className="col-md-3 col-sm-3 col-xs-3">
             <ResultOutcome outcomes={this.props.question.outcomes} correct={this.props.isCorrect}/>
           </div>
         </div> 

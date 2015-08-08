@@ -243,7 +243,7 @@ export default class AssessmentResult extends BaseComponent{
         {errors}
         <div className="row" style={styles.wrapperStyle}>
 
-          <div className="col-md-4 col-sm-4" >
+          <div className="col-md-4 col-sm-4 col-xs-4" >
             <h3><strong>Your Score</strong></h3>
             <div style={styles.yourScoreStyle}>
               <h1 style={styles.center}>{Math.trunc(this.state.assessmentResult.score)}%</h1>
@@ -252,14 +252,14 @@ export default class AssessmentResult extends BaseComponent{
             <br />
           </div>
 
-          <div className="col-md-4 col-sm-4" >
+          <div className="col-md-4 col-sm-4 col-xs-4" >
             <h3><strong>{contentData.goodWork}</strong></h3>
             <p>You answered questions that covered these concepts correctly.</p>
             {outcomeLists.positiveList}
             <div style={{clear: 'both'}}></div>
           </div>
 
-          <div className="col-md-4 col-sm-4" >
+          <div className="col-md-4 col-sm-4 col-xs-4" >
             <h3 style={styles.improveScoreStyle}><strong>{contentData.moreToLearn}<i styleclassName="glyphicon glyphicon-warning-sign" ></i></strong></h3>
             <p>{contentData.focusStudy}</p>
             {outcomeLists.negativeList}
