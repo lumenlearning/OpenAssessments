@@ -15,6 +15,8 @@ const LOADING = 1;
 const LOADED = 2;
 const READY = 3;
 const STARTED = 4;
+const SUBMITTED = 5;
+
 
 var _assessment = null;
 var _assessmentXml = null;
@@ -133,7 +135,9 @@ var AssessmentStore = assign({}, StoreCommon, {
   isLoaded(){
     return _assessmentState >= LOADED;
   },
-
+  isSubmitted(){
+    return _assessmentState >= SUBMITTED;
+  },
   isStarted(){
     return _assessmentState >= STARTED;
   },
@@ -230,7 +234,9 @@ Dispatcher.register(function(payload) {
         }
       }
       break;
-
+    case Constants.ASSESSMENT_SUBMITTED:
+      _assessmentState = SUBMITTED;
+      break;
     case Constants.ASSESSMENT_CHECK_ANSWER:
       var answer = checkAnswer();
       if(answer != null && answer.correct)

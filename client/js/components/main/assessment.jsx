@@ -28,6 +28,7 @@ export default class Assessment extends BaseComponent{
     return {
       assessment           : AssessmentStore.current(),
       isLoaded             : AssessmentStore.isLoaded(),
+      isSubmitted          : AssessmentStore.isSubmitted(),
       question             : AssessmentStore.currentQuestion(),
       currentIndex         : AssessmentStore.currentIndex(),
       questionCount        : AssessmentStore.questionCount(),
@@ -94,7 +95,7 @@ export default class Assessment extends BaseComponent{
     var content;
     var progressBar;
     var titleBar;
-    if(!this.state.isLoaded){
+    if(!this.state.isLoaded || this.state.isSubmitted){
       content = <Loading />;
     } else if(this.state.showStart){
         content         = <CheckUnderstanding

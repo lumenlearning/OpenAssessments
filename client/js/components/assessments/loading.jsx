@@ -10,7 +10,7 @@ export default class Loading extends React.Component{
         <div className="page-header">
           <div className="panel panel-default">
             <div className="panel-body">
-              <p className="alert alert-info">Loading Assessment.</p>
+              <p className="alert alert-info">Loading.</p>
             </div>
           </div>
         </div>
