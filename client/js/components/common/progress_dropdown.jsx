@@ -96,12 +96,13 @@ export default class ProgressDropdown extends BaseComponent{
     var questions = this.props.questions.map((question, index)=>{
       return <ProgressListItem question={question} index={index} toggle={this.navButtonClicked}/>
     })
+    var text = this.props.disabled ? <b>There are {this.props.questionCount} questions</b> : <b>You are on question {this.props.currentQuestion} of {this.props.questionCount}</b>
     return (
       <span >
         <img style={styles.icon}src={require("../../../../app/assets/fonts/ProgressIcon.svg")} />
         <button style={styles.dropdownButton} className="btn" type="button" aria-haspopup="true" aria-expanded="true" onClick={()=>{if(!this.props.disabled)this.navButtonClicked()}}>
           <div>Progress</div>
-          <span><b>You are on question {this.props.currentQuestion} of {this.props.questionCount}</b></span>
+          <span>{text}</span>
           <span style={styles.caret} className="caret"></span>
         </button>
         <div style={styles.dropdownStyle} aria-labelledby="dropdownMenu1">
