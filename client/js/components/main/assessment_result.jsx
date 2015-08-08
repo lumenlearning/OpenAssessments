@@ -6,7 +6,6 @@ import SettingsStore      from "../../stores/settings";
 import BaseComponent      from "../base_component";
 import AssessmentActions  from "../../actions/assessment";
 import ItemResult         from "./item_result";
-import $                  from "jquery";
 
 export default class AssessmentResult extends BaseComponent{
 
@@ -34,13 +33,6 @@ export default class AssessmentResult extends BaseComponent{
     this.context.router.transitionTo("assessment");
   }
 
-  jump(e){
-    e.preventDefault();
-    $('iframe, html, body').animate({
-    scrollTop: $(document.getElementById("questionsStart")).offset().top
-    }, 500);
-  }
-
   getStyles(theme){
 
     return {
@@ -53,7 +45,9 @@ export default class AssessmentResult extends BaseComponent{
       },
       wrapperStyle:{
         width: "100%",
-        position: "relative"
+        position: "relative",
+        maxHeight: "300px",
+        overflowY: "auto"
       },
       yourScoreStyle: {
         backgroundColor: theme.definitelyBackgroundColor,
@@ -245,7 +239,7 @@ export default class AssessmentResult extends BaseComponent{
 
     return (<div style={styles.assessment}>
       <div style={styles.assessmentContainer}>
-        <div style={styles.titleBar}>{quizType} : {this.state.assessment ? this.state.assessment.title : ""}</div>
+        <div style={styles.titleBar}>{quizType}: {this.state.assessment ? this.state.assessment.title : ""}</div>
         {errors}
         <div className="row" style={styles.wrapperStyle}>
 
@@ -256,7 +250,6 @@ export default class AssessmentResult extends BaseComponent{
             </div>
             Time Spent: {this.state.timeSpent.minutes} mins {this.state.timeSpent.seconds} sec
             <br />
-            <button className="btn btn-check-answer" style={styles.jumpButton}  onClick={(e)=>{this.jump(e)}}>Jump To Questions</button>
           </div>
 
           <div className="col-md-4" >

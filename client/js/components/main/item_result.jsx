@@ -43,7 +43,8 @@ export default class ItemResult extends React.Component{
         textAlign: "center",
         padding: "10px",
         color: "white",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        borderRadius: "4px"
       }
     };
   }
