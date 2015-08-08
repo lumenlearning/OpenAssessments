@@ -108,6 +108,7 @@ export default class Assessment extends BaseComponent{
         assessmentId    = {this.state.assessment.assessmentId}
         assessmentKind  = {this.state.settings.assessmentKind}
         primaryOutcome  = {this.state.outcomes[0]}
+        ltiRole         = {this.state.settings.ltiRole}
         icon            = {this.state.settings.images.QuizIcon_svg}/>;
         progressBar     = <div style={styles.progressContainer}>
                             {progressText}

@@ -90,7 +90,7 @@ export default class CheckUnderstanding extends React.Component{
       return "";
     }
 
-    if (props.userAttempts >= props.maxAttempts){
+    if (props.userAttempts >= props.maxAttempts && props.ltiRole != "admin"){
       return (
         <div style={styles.attemptsContainer}>
           <div style={{...styles.attempts, ...{border: null}}}>
