@@ -19,8 +19,7 @@ export default class ProgressDropdown extends BaseComponent{
       this.setState({expanded: !this.state.expanded})
     } else {
       this.setState({expanded: true});
-    }
-    
+    } 
   }
 
   selectQuestion(e,index){

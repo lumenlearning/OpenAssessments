@@ -63,7 +63,7 @@ export default class AssessmentResult extends BaseComponent{
         color: "#458B00"
       },
       assessmentContainer:{
-        marginTop: "70px",
+        marginTop: this.state.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? "0px" : "70px",
         boxShadow: this.state.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? "" : theme.assessmentContainerBoxShadow,
         borderRadius: theme.assessmentContainerBorderRadius,
         padding: "20px"
@@ -325,7 +325,7 @@ export default class AssessmentResult extends BaseComponent{
               <div style={styles.formative}>
                 <div className="row" style={styles.row}>
                   <div className="col-md-12 col-lg-12" style={styles.outcomes}>
-                    <div style={styles.header}>Quiz : {this.state.assessment ? this.state.assessment.title : ""}</div>
+                    <div style={styles.header}>Check Your Understanding: {this.state.assessment ? this.state.assessment.title : ""}</div>
                     <div style={styles.outcomeContainer}>
                       {image}
                       {head}
