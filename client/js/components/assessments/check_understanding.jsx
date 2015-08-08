@@ -63,7 +63,7 @@ export default class CheckUnderstanding extends React.Component{
         fontColor: theme.probablyBackgroundColor
       },
       formative: {
-        padding: "0px 30px 20px 30px",
+        padding: "0px",
         marginTop: "-20px"
       },
       data: {
