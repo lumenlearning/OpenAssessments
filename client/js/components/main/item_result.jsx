@@ -54,7 +54,7 @@ export default class ItemResult extends React.Component{
     if(this.props.isCorrect == "partial"){
       correctMessage = "You were partially correct."
     } else if(this.props.isCorrect === true){
-      correctMessage = "You were Correct.";
+      correctMessage = "You were correct.";
     }
     return (
       <div>

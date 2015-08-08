@@ -52,7 +52,7 @@ export default class AssessmentResult extends BaseComponent{
       yourScoreStyle: {
         backgroundColor: theme.definitelyBackgroundColor,
         color: "#fff",
-        borderRadius: "25px",
+        borderRadius: "4px",
         textAlign: "center",
         padding: "10px 20px 20px 20px"
       },
