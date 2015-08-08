@@ -137,7 +137,8 @@ class Api::GradesController < Api::ApiController
       higher_grade = false
     end
     # TODO find out a better way to do this. This will work just fine as long as there is a max of 2 attempts.
-    if settings["isLti"] && settings["assessmentKind"].upcase == "SUMMATIVE" && higher_grade
+
+    if settings["isLti"] && settings["assessmentKind"].upcase == "SUMMATIVE" && settings["ltiRole"] != "admin" && higher_grade 
       begin
       provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
 

@@ -70,7 +70,8 @@ function loadSettings(defaultSettings){
     lisOutcomeServiceUrl: defaultSettings.lis_outcome_service_url,
     isLti              : defaultSettings.isLti,
     assessmentKind     : defaultSettings.assessmentKind,
-    images             : defaultSettings.images
+    images             : defaultSettings.images,
+    ltiRole            : defaultSettings.lti_role          
   };
 
   if(!_settings.srcUrl && !_settings.offline){

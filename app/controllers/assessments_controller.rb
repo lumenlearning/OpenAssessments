@@ -87,6 +87,8 @@ class AssessmentsController < ApplicationController
         end
       end
     end
+
+    @lti_role = params["roles"].include?("Administrator") ? "admin" : "student"
     @is_lti ||= false
     @assessment_kind ||= params[:assessment_kind]
     # extract LTI values
