@@ -67,6 +67,7 @@ export default class Assessment extends BaseComponent{
       assessment: {
         padding: this.state.settings.assessmentKind.toUpperCase()  == "FORMATIVE" ? "" : theme.assessmentPadding,
         backgroundColor: theme.assessmentBackground,
+        minWidth: "635px"
       },
       progressContainer: {
         padding: "10px 20px 10px 20px",
@@ -74,6 +75,7 @@ export default class Assessment extends BaseComponent{
         left: "0px",
         top: "44px",
         width: "100%",
+        minWidth: "635px",
         backgroundColor: theme.titleBarBackgroundColor,
       },
       titleBar: {
@@ -85,6 +87,7 @@ export default class Assessment extends BaseComponent{
         backgroundColor: theme.probablyBackgroundColor,
         color: "white",
         fontSize: "130%",
+        minWidth: "635px",
         //fontWeight: "bold"
       }
     }

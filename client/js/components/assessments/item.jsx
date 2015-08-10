@@ -343,13 +343,13 @@ export default class Item extends BaseComponent{
                   <UniversalInput item={this.props.question} isResult={false}/>
                 </div>
                 <div className="row">
-                  <div className="col-md-6 col-sm-7" >
+                  <div className="col-md-5 col-sm-6 col-xs-8" >
                     {result}
                     {buttons}
                     {unAnsweredWarning}
                     {message}
                   </div>
-                  <div className="col-md-6 col-sm-5 ">
+                  <div className="col-md-7 col-sm-6 col-xs-4">
                     {submitButtonDiv}
                   </div>
                 </div>

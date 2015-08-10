@@ -82,24 +82,24 @@ export default {
   // CONFIDENCE WRAPPER
   confidenceWrapperBorder: "1px solid transparent",
   confidenceWrapperBorderRadius: "5px",
-  confidenceWrapperWidth: "510px",
+  confidenceWrapperWidth: "390px",
   confidenceWrapperHeight: "auto",
   confidenceWrapperPadding: "20px",
   confidenceWrapperMargin: "20px",
   confidenceWrapperBackgroundColor: null,
 
   //MAYBE BUTTON
-  maybeWidth: "150px",
+  maybeWidth: "110px",
   maybeBackgroundColor: defines.buttonFace + " !important",
   maybeColor: defines.textGrey,
 
   //PROBABLY BUTTON
-  probablyWidth: "150px",
+  probablyWidth: "110px",
   probablyBackgroundColor: defines.buttonFace + " !important",
   probablyColor: defines.textGrey,
 
   // DEFINITELY BUTTON
-  definitelyWidth: "150px",
+  definitelyWidth: "110px",
   definitelyBackgroundColor: defines.buttonFace + " !important",
   definitelyColor: defines.textGrey,
 

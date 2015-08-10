@@ -155,10 +155,10 @@ export default class CheckUnderstanding extends React.Component{
               <div className="row">
               </div>
               <div className="row" style={styles.checkDiv}>
-                <div className="col-md-10">
+                <div className="col-md-10 col-sm-9 col-xs-8">
                   <h4 style={styles.h4}>{this.props.title}</h4>
                 </div>
-                <div className="col-md-2">
+                <div className="col-md-2 col-sm-3 col-xs-4">
                   <button style={{...styles.startButton, ...styles.checkUnderstandingButton}} className="btn btn-info" onClick={()=>{this.start(this.props.eid, this.props.assessmentId)}}>Start Quiz</button>
                 </div>
               </div>
