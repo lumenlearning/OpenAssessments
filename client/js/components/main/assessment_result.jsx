@@ -14,6 +14,7 @@ export default class AssessmentResult extends BaseComponent{
     this._bind("getItemResults", "getStyles", "getOutcomeLists", "getContent", "getFormativeContent", "retake");
     this.stores = [AssessmentStore, SettingsStore];
     this.state = this.getState();
+    this.sendAnalytics();
   }
 
   getState(props, context){
@@ -26,6 +27,10 @@ export default class AssessmentResult extends BaseComponent{
       settings         : SettingsStore.current(),
       assessment       : AssessmentStore.current(),
     }
+  }
+
+  sendAnalytics(){
+    AssessmentActions.assessmentPostAnalytics(this.state.assessmentResult.assessment_results_id);
   }
 
   retake(){
