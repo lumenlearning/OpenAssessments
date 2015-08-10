@@ -47,9 +47,12 @@ class Api::AssessmentResultsController < Api::ApiController
       }
     end
 
-    #todo POST to configured analytics server
-
-    render json: message
+    if AnalyticsHelper.enabled?
+      message = AnalyticsHelper.send_result(message)
+      render json: {message: message}
+    else
+      render json: {message: "not configured"}
+    end
   end
 
 end
