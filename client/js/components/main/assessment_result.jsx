@@ -6,6 +6,7 @@ import SettingsStore      from "../../stores/settings";
 import BaseComponent      from "../base_component";
 import AssessmentActions  from "../../actions/assessment";
 import ItemResult         from "./item_result";
+import IframeHelper       from '../../iframeHelper';
 
 export default class AssessmentResult extends BaseComponent{
 
@@ -31,6 +32,10 @@ export default class AssessmentResult extends BaseComponent{
 
   sendAnalytics(){
     AssessmentActions.assessmentPostAnalytics(this.state.assessmentResult.assessment_results_id);
+  }
+
+  componentDidMount(){
+    IframeHelper.setHeight();
   }
 
   retake(){
