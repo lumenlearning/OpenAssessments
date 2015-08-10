@@ -20,4 +20,36 @@ class Api::AssessmentResultsController < Api::ApiController
     respond_with(:api, assessment_result)
   end
 
+  def send_result_to_analytics
+    res = @current_user.assessment_results.find(params[:assessment_result_id])
+    assessment = res.assessment
+    ei = @current_user.external_identifiers.first
+    user_assessment = assessment.user_assessments.where(eid: ei.identifier).first
+
+    message = {
+            assessment_result_id: res.id,
+            lti_user_id: ei.identifier,
+            lti_context_id: user_assessment.lti_context_id,
+            tc_lti_guid: ei.provider,
+            quiz_id: res.assessment_id,
+            quiz_qti_ident: res.identifier,
+            score: res.score,
+            quiz_type: assessment.kind,
+            attempt: res.attempt
+    }
+
+    message[:question_responses] = res.item_results.map do |ir|
+      {
+              ident: ir.identifier,
+              responses_chosen: ir.answers_chosen.split(","),
+              outcome_guid: ir.outcome_guid,
+              score: ir.score
+      }
+    end
+
+    #todo POST to configured analytics server
+
+    render json: message
+  end
+
 end
