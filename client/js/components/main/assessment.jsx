@@ -15,7 +15,7 @@ export default class Assessment extends BaseComponent{
   constructor(props, context){
     super(props, context);
     this.stores = [AssessmentStore, SettingsStore];
-    this._bind["checkCompletion"];
+    this._bind["checkCompletion", "getStyles"];
     this.state = this.getState(context);
     this.context = context;
   }
@@ -56,6 +56,7 @@ export default class Assessment extends BaseComponent{
   }
 
   getStyles(theme){
+    var minWidth = this.state.settings.assessmentKind.toUpperCase()  == "FORMATIVE" ? "480px" : "635px";
     return {
       progressBar: {
         backgroundColor: theme.progressBarColor,
@@ -67,7 +68,7 @@ export default class Assessment extends BaseComponent{
       assessment: {
         padding: this.state.settings.assessmentKind.toUpperCase()  == "FORMATIVE" ? "" : theme.assessmentPadding,
         backgroundColor: theme.assessmentBackground,
-        minWidth: "635px"
+        minWidth: minWidth
       },
       progressContainer: {
         padding: "10px 20px 10px 20px",
@@ -75,7 +76,7 @@ export default class Assessment extends BaseComponent{
         left: "0px",
         top: "44px",
         width: "100%",
-        minWidth: "635px",
+        minWidth: minWidth,
         backgroundColor: theme.titleBarBackgroundColor,
       },
       titleBar: {
@@ -87,7 +88,7 @@ export default class Assessment extends BaseComponent{
         backgroundColor: theme.probablyBackgroundColor,
         color: "white",
         fontSize: "130%",
-        minWidth: "635px",
+        minWidth: minWidth,
         //fontWeight: "bold"
       }
     }
