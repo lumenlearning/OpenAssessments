@@ -50,6 +50,10 @@ export default class Assessment extends BaseComponent{
     }
   }
 
+  popup(){
+    return "Don’t leave! If you leave this page now your quiz won't be scored, but it will still count as an attempt.";
+  }
+
 
   checkProgress(current, total){
     return Math.floor(current/total * 100);
@@ -95,6 +99,10 @@ export default class Assessment extends BaseComponent{
   }
 
   render(){
+    window.onbeforeunload = this.popup;
+    if(AssessmentStore.assessmentResult() != null || this.state.settings.assessmentKind.toUpperCase() != "SUMMATIVE"){
+      window.onbeforeunload = null;
+    }
     var styles = this.getStyles(this.context.theme)
     var content;
     var progressBar;

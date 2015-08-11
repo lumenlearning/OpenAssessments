@@ -44,6 +44,8 @@ export default class Item extends BaseComponent{
     e && e.preventDefault()
     var complete = this.checkCompletion();
     if(complete === true){
+      debugger
+      window.onbeforeunload = null;
       AssessmentActions.submitAssessment(this.props.assessment.id, this.props.assessment.assessmentId, this.props.allQuestions, this.props.studentAnswers, this.props.settings, this.props.outcomes);
     }
     else {

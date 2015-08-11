@@ -315,7 +315,7 @@ export default class AssessmentResult extends BaseComponent{
                 <div><div style={{color: color, float: "left"}}>Question {index+1} -- {message}</div><div style={{color: confidenceColor, float: "right"}}>{this.state.assessmentResult.confidence_level_list[index]}</div></div>
               </div>
               <div style={{...styles.resultList, ...styles.resultOutcome}}>
-                <div style={{width: "70%"}}>{this.state.questions[index].outcomes.longOutcome}</div>
+                <div style={{width: "70%"}}>{this.state.questions[index].material}</div>
               </div>
             </div>
     });
@@ -325,7 +325,7 @@ export default class AssessmentResult extends BaseComponent{
               <div style={styles.formative}>
                 <div className="row" style={styles.row}>
                   <div className="col-md-12 col-lg-12" style={styles.outcomes}>
-                    <div style={styles.header}>Check Your Understanding: {this.state.assessment ? this.state.assessment.title : ""}</div>
+                    <div style={styles.header}>{this.state.assessment ? this.state.assessment.title : ""}</div>
                     <div style={styles.outcomeContainer}>
                       {image}
                       {head}
