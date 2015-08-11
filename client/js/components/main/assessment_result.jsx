@@ -291,7 +291,7 @@ export default class AssessmentResult extends BaseComponent{
       image = <img style={styles.outcomeIcon} src={this.state.settings.images.Books_svg} />;
     } else {
       head = <h4>{"Needs Work!"}</h4>
-      feedback = "You can learn more if you review before moving on.";
+      feedback = "Make sure to review and learn the material before moving on.";
       image = <img style={styles.outcomeIcon} src={this.state.settings.images.PersonWithBook_svg} />;
     }
 
