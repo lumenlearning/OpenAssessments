@@ -6,6 +6,7 @@ import SettingsStore      from "../../stores/settings";
 import BaseComponent      from "../base_component";
 import AssessmentActions  from "../../actions/assessment";
 import ItemResult         from "./item_result";
+import IframeHelper       from '../../iframeHelper';
 
 export default class AssessmentResult extends BaseComponent{
 
@@ -14,6 +15,7 @@ export default class AssessmentResult extends BaseComponent{
     this._bind("getItemResults", "getStyles", "getOutcomeLists", "getContent", "getFormativeContent", "retake");
     this.stores = [AssessmentStore, SettingsStore];
     this.state = this.getState();
+    this.sendAnalytics();
   }
 
   getState(props, context){
@@ -26,6 +28,14 @@ export default class AssessmentResult extends BaseComponent{
       settings         : SettingsStore.current(),
       assessment       : AssessmentStore.current(),
     }
+  }
+
+  sendAnalytics(){
+    AssessmentActions.assessmentPostAnalytics(this.state.assessmentResult.assessment_results_id);
+  }
+
+  componentDidMount(){
+    IframeHelper.setHeight();
   }
 
   retake(){

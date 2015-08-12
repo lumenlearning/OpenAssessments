@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150804155730) do
+ActiveRecord::Schema.define(version: 20150810013340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20150804155730) do
     t.string   "external_user_id"
     t.string   "objectives",         limit: 1024
     t.float    "score"
+    t.integer  "attempt"
   end
 
   add_index "assessment_results", ["assessment_id"], name: "index_assessment_results_on_assessment_id", using: :btree
@@ -169,6 +170,8 @@ ActiveRecord::Schema.define(version: 20150804155730) do
     t.string   "objectives",           limit: 1024
     t.boolean  "correct"
     t.float    "score"
+    t.string   "outcome_guid"
+    t.string   "answers_chosen"
   end
 
   add_index "item_results", ["assessment_result_id"], name: "index_item_results_on_assessment_result_id", using: :btree
@@ -297,6 +300,7 @@ ActiveRecord::Schema.define(version: 20150804155730) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.string   "eid"
+    t.string   "lti_context_id"
   end
 
   add_index "user_assessments", ["eid"], name: "index_user_assessments_on_eid", using: :btree

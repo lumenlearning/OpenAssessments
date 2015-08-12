@@ -61,7 +61,9 @@ Rails.application.routes.draw do
   namespace :api do
     resources :user_assessments
     resources :assessments
-    resources :assessment_results
+    resources :assessment_results do
+      post 'send', to: 'assessment_results#send_result_to_analytics'
+    end
     resources :item_results
     resources :grades
     resources :assessment_settings
