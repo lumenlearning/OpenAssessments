@@ -102,7 +102,7 @@ RSpec.describe AssessmentsController, type: :controller do
         post :create, assessment: assessment
         result = Assessment.where({title: "test"}).first
         expect(result.license).to eq("foo license")
-        expect(result.keyword_list).to eq(["keywords","foo"])
+        expect(result.keyword_list.sort).to eq(["foo", "keywords"])
       end
 
       it "sets creates two assessment xmls" do
