@@ -51,7 +51,7 @@ export default class Assessment extends BaseComponent{
   }
 
   popup(){
-    return "Don’t leave! If you leave this page now your quiz won't be scored, but it will still count as an attempt.";
+    return "Don’t leave!\n If you leave this page now your quiz won't be scored, but it will still count as an attempt.\n\n If you want to skip a question or return to a previous question, stay on this page and then use the \"Progress\" drop-down menu";
   }
 
 
@@ -152,7 +152,7 @@ export default class Assessment extends BaseComponent{
     var progressStyle = {width:percentCompleted+"%"};
     var progressText = "";
     var quizType = this.state.settings.assessmentKind.toUpperCase() === "SUMMATIVE" ? "Quiz" : "Show What You Know";
-    var titleBar = this.state.settings.assessmentKind.toUpperCase() === "FORMATIVE" ?  "" : <div style={styles.titleBar}>{quizType}: {this.state.assessment ? this.state.assessment.title : ""}</div>;
+    var titleBar = this.state.settings.assessmentKind.toUpperCase() === "FORMATIVE" ?  "" : <div style={styles.titleBar}>{this.state.assessment ? this.state.assessment.title : ""}</div>;
     if(this.state.assessment){
       progressText = this.context.theme.shouldShowProgressText ? <div><b>{this.state.assessment.title + " Progress"}</b>{" - You are on question " + (this.state.currentIndex + 1) + " of " + this.state.questionCount}</div> : "";
     }
