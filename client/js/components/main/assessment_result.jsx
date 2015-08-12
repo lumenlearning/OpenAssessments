@@ -209,7 +209,7 @@ export default class AssessmentResult extends BaseComponent{
     }
 
     var positiveList = lists.positiveList.map((item, index)=>{
-      return <div key={"positive " + index}><p style={styles.green}><i className="glyphicon glyphicon-ok" style={styles.green}></i>{item.shortOutcome}</p></div>;
+      return <div key={"positive " + index} title={item.longOutcome}><p style={styles.green}><i className="glyphicon glyphicon-ok" style={styles.green}></i>{" " + item.shortOutcome + " "}<i className="glyphicon glyphicon-info-sign"></i></p></div>;
     });
 
     var negativeList = lists.negativeList.map((item, index)=>{
