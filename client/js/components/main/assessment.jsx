@@ -144,7 +144,7 @@ export default class Assessment extends BaseComponent{
                               {progressText}
                               <ProgressDropdown questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
                             </div>;
-      // TODO figure out when to mark an item as viewed. assessmentResult must be valid before this call is made.
+    // TODO figure out when to mark an item as viewed. assessmentResult must be valid before this call is made.
       // AssessmentActions.itemViewed(this.state.settings, this.state.assessment, this.state.assessmentResult);
     }
 

@@ -234,9 +234,6 @@ Dispatcher.register(function(payload) {
         }
       }
       break;
-    case Constants.ASSESSMENT_SUBMITTED:
-      _assessmentState = SUBMITTED;
-      break;
     case Constants.ASSESSMENT_CHECK_ANSWER:
       var answer = checkAnswer();
       if(answer != null && answer.correct)
@@ -303,6 +300,7 @@ Dispatcher.register(function(payload) {
       break;
     case Constants.ASSESSMENT_SUBMITTED:
       _items[_itemIndex].timeSpent += calculateTime(_items[_itemIndex].startTime, Utils.currentTime());
+      _assessmentState = SUBMITTED;
       _finishedAt = Utils.currentTime(); 
       break;
       
