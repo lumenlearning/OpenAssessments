@@ -21,7 +21,7 @@ class Api::AssessmentResultsController < Api::ApiController
   end
 
   def send_result_to_analytics
-    if @current_user
+    if @current_user = current_user
       res = @current_user.assessment_results.find(params[:assessment_result_id])
       assessment = res.assessment
     else
