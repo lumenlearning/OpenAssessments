@@ -31,7 +31,7 @@ export default class AssessmentResult extends BaseComponent{
   }
 
   sendAnalytics(){
-    AssessmentActions.assessmentPostAnalytics(this.state.assessmentResult.assessment_results_id);
+    AssessmentActions.assessmentPostAnalytics(this.state.assessmentResult.assessment_results_id, this.state.settings.externalUserId, this.state.settings.externalContextId);
   }
 
   componentDidMount(){

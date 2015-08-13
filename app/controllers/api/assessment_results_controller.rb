@@ -21,16 +21,40 @@ class Api::AssessmentResultsController < Api::ApiController
   end
 
   def send_result_to_analytics
-    res = @current_user.assessment_results.find(params[:assessment_result_id])
-    assessment = res.assessment
-    ei = @current_user.external_identifiers.first
-    user_assessment = assessment.user_assessments.where(eid: ei.identifier).first
+    if @current_user
+      res = @current_user.assessment_results.find(params[:assessment_result_id])
+      assessment = res.assessment
+    else
+      res = AssessmentResults.find(params[:assessment_result_id])
+      assessment = res.assessment
+      if assessment.kind == 'summative'
+        render json: {message: "nope"}, status: :forbidden
+        return
+      end
+    end
+
+    if @current_user && ei = @current_user.external_identifiers.first
+      user_id = ei.identifier
+      tc_guid = ei.provider
+
+      user_assessment = assessment.user_assessments.where(eid: ei.identifier).first
+      context_id = user_assessment ? user_assessment.lti_context_id : nil
+    end
+
+    user_id ||= params[:external_user_id]
+    context_id ||= params[:external_context_id]
+    tc_guid ||= params[:external_account_id]
+
+    unless user_id.present?
+      render json: {message: "no user"}
+      return
+    end
 
     message = {
             assessment_result_id: res.id,
-            lti_user_id: ei.identifier,
-            lti_context_id: user_assessment.lti_context_id,
-            tc_lti_guid: ei.provider,
+            lti_user_id: user_id,
+            lti_context_id: context_id,
+            tc_lti_guid: tc_guid,
             quiz_id: res.assessment_id,
             quiz_qti_ident: res.identifier,
             score: res.score,

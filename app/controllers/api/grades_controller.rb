@@ -72,7 +72,6 @@ class Api::GradesController < Api::ApiController
         end
         confidence_level_list[index] = question["confidenceLevel"]
 
-        #todo add outcome_id to item_result   —  question["outcome_guid"]   —   answers[index]
         if item = assessment.items.find_by(identifier: question["id"])
 
           rendered_time, referer, user = tracking_info
@@ -93,7 +92,7 @@ class Api::GradesController < Api::ApiController
             score: question["score"],
             outcome_guid: question["outcome_guid"],
             sequence_index: index,
-            answers_chosen: answers[index].join(",")
+            answers_chosen: answers[index].is_a?(Array) ? answers[index].join(",") : answers
           )
         else
           rendered_time, referer, user = tracking_info
@@ -118,7 +117,7 @@ class Api::GradesController < Api::ApiController
               score: question["score"],
               outcome_guid: question["outcome_guid"],
               sequence_index: index,
-              answers_chosen: answers[index].join(",")
+              answers_chosen: answers[index].is_a?(Array) ? answers[index].join(",") : answers
             )
           end
         end
