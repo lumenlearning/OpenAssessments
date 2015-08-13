@@ -2,11 +2,14 @@
 
 import React              from 'react';
 import AssessmentActions  from "../../actions/assessment";
+import $                  from "jquery";
 
 export default class CheckUnderstanding extends React.Component{
 
-  start(eid, assessmentId){
-    AssessmentActions.start(eid, assessmentId);
+  start(eid, assessmentId, context){
+    AssessmentActions.start(eid, assessmentId)
+    AssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, $('#srcData').text());
+    context.router.transitionTo("assessment");
   }
 
   getStyles(props, theme){
@@ -159,7 +162,7 @@ export default class CheckUnderstanding extends React.Component{
                   <h4 style={styles.h4}>{this.props.title}</h4>
                 </div>
                 <div className="col-md-2 col-sm-3">
-                  <button style={{...styles.startButton, ...styles.checkUnderstandingButton}} className="btn btn-info" onClick={()=>{this.start(this.props.eid, this.props.assessmentId)}}>Start Quiz</button>
+                  <button style={{...styles.startButton, ...styles.checkUnderstandingButton}} className="btn btn-info" onClick={()=>{this.start(this.props.eid, this.props.assessmentId, this.context)}}>Start Quiz</button>
                 </div>
               </div>
            </div>
@@ -181,7 +184,7 @@ export default class CheckUnderstanding extends React.Component{
 
     var startButton = (
       <div style={styles.buttonWrapper}>
-        <button style={styles.startButton} className="btn btn-info" onClick={()=>{this.start(this.props.eid, this.props.assessmentId)}}>{buttonText}</button>
+        <button style={styles.startButton} className="btn btn-info" onClick={()=>{this.start(this.props.eid, this.props.assessmentId, this.context)}}>{buttonText}</button>
       </div>)
     if (this.props.userAttempts == this.props.maxAttempts && this.props.assessmentKind.toUpperCase() == "SUMMATIVE" && this.props.ltiRole != "admin"){
       startButton = "";
@@ -214,5 +217,6 @@ CheckUnderstanding.propTypes = {
 };
 
 CheckUnderstanding.contextTypes = {
-  theme: React.PropTypes.object
+  theme: React.PropTypes.object,
+  router: React.PropTypes.func,
 };

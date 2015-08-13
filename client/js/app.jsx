@@ -29,7 +29,7 @@ if (window.matchMedia("(max-width: 639px)").matches){
 
 // Initialize store singletons
 SettingsActions.load(window.DEFAULT_SETTINGS);
-AssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, $('#srcData').text());
+//AssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, $('#srcData').text());
 
 Router.run(Routes, (Handler, state) => {
   var params = state.params;

@@ -109,25 +109,26 @@ export default class Assessment extends BaseComponent{
     var titleBar;
     if(!this.state.isLoaded || this.state.isSubmitted){
       content = <Loading />;
-    } else if(this.state.showStart){
-        content         = <CheckUnderstanding
-        title           = {this.state.assessment.title}
-        name            = {this.state.question.name}
-        maxAttempts     = {this.state.settings.allowedAttempts}
-        userAttempts    = {this.state.settings.userAttempts}
-        eid             = {this.state.settings.lisUserId}
-        isLti           = {this.state.settings.isLti}
-        assessmentId    = {this.state.assessment.assessmentId}
-        assessmentKind  = {this.state.settings.assessmentKind}
-        primaryOutcome  = {this.state.outcomes[0]}
-        ltiRole         = {this.state.settings.ltiRole}
-        icon            = {this.state.settings.images.QuizIcon_svg}/>;
-        progressBar     = <div style={styles.progressContainer}>
-                            {progressText}
-                            <ProgressDropdown disabled={true} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
-                          </div>;
+    // } else if(this.state.showStart){
+    //     content         = <CheckUnderstanding
+    //     title           = {this.state.assessment.title}
+    //     name            = {this.state.question.name}
+    //     maxAttempts     = {this.state.settings.allowedAttempts}
+    //     userAttempts    = {this.state.settings.userAttempts}
+    //     eid             = {this.state.settings.lisUserId}
+    //     isLti           = {this.state.settings.isLti}
+    //     assessmentId    = {this.state.assessment.assessmentId}
+    //     assessmentKind  = {this.state.settings.assessmentKind}
+    //     primaryOutcome  = {this.state.outcomes[0]}
+    //     ltiRole         = {this.state.settings.ltiRole}
+    //     icon            = {this.state.settings.images.QuizIcon_svg}/>;
+    //     progressBar     = <div style={styles.progressContainer}>
+    //                         {progressText}
+    //                         <ProgressDropdown disabled={true} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
+    //                       </div>;
 
-    } else {
+    // } 
+     }else {
       content = <Item
         question         = {this.state.question}
         assessment       = {this.state.assessment}

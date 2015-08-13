@@ -4,6 +4,7 @@ import React              from 'react';
 import Router             from 'react-router';
 import Index              from './components/index';
 import Assessment         from './components/main/assessment';
+import Start              from './components/main/start';
 import AssessmentResult   from './components/main/assessment_result';
 import Login              from './components/sessions/login';
 import Logout             from './components/sessions/logout';
@@ -18,7 +19,8 @@ var Redirect      = Router.Redirect;
 
 var routes = (
   <Route handler={Index}>
-    <DefaultRoute name="assessment" handler={Assessment}/>
+    <DefaultRoute name="start" handler={Start} />
+    <Route name="assessment" handler={Assessment}/>
     <Route name="assessment-result" handler={AssessmentResult}/>
     <Route name="login" handler={Login}/>
     <Route name="register" handler={Register}/>

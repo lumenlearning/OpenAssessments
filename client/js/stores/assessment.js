@@ -224,11 +224,11 @@ Dispatcher.register(function(payload) {
             setUpStudentAnswers(_items.length)
           }
           _assessmentState = LOADED;
-          if(!_startedAt && !SettingsStore.current().enableStart){
+          if(!_startedAt){
             _assessmentState = STARTED;
             // set the start time for the assessment and the first question (only qti)
             if(_items[0])
-            _items[0].startTime = Utils.currentTime()
+              _items[0].startTime = Utils.currentTime()
             _startedAt = Utils.currentTime();
           }
         }
@@ -243,11 +243,6 @@ Dispatcher.register(function(payload) {
       break;
 
     case Constants.ASSESSMENT_START:
-      if(!_startedAt){
-        // set the start time for the assessment and the first question
-        _items[0].startTime = Utils.currentTime()
-        _startedAt = Utils.currentTime();
-      }
       _assessmentState = STARTED;
       break;
 

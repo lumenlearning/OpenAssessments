@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
       api_assessment_url(assessment, format: 'xml')
     end
 
-    def embed_code(assessment, confidence_levels=true, eid=nil, enable_start=false, offline=false, src_url=nil, style=nil, asid=nil, per_sec=nil, assessment_kind = nil)
+    def embed_code(assessment, confidence_levels=true, eid=nil, enable_start=false, offline=false, src_url=nil, style=nil, asid=nil, per_sec=nil, assessment_kind = nil, assessment_title = nil)
       if assessment
         url = "#{request.host_with_port}#{assessment_path('load')}?src_url=#{embed_url(assessment)}"
       elsif src_url
@@ -73,6 +73,7 @@ class ApplicationController < ActionController::Base
       url << "&asid=" + asid if asid.present?
       url << "&per_sec=" + per_sec if per_sec.present?
       url << "&assessment_kind=" + assessment_kind if assessment_kind.present?
+      url << "&assessment_title=" + assessment_title if assessment_title.present? 
       if assessment
         height = assessment.recommended_height || 575
       else

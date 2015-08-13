@@ -22,6 +22,7 @@
     resultsEndPoint: '<%= @results_end_point || "http://#{request.host_with_port}/api" %>',
     confidenceLevels: <%= @confidence_levels %>,
     enableStart: <%= @enable_start %>,
+    assessmentTitle: '<%= @assessment_title %>',
     <% if @eid %>
     eId: '<%= @eid %>',
     <% end %>

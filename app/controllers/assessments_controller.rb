@@ -35,7 +35,7 @@ class AssessmentsController < ApplicationController
       @assessment_id = @assessment ? @assessment.id : params[:assessment_id] || 'null'
       @assessment_settings = params[:asid] ?  AssessmentSetting.find(params[:asid]) : @assessment.default_settings || current_account.default_settings || AssessmentSetting.where(is_default: true).first
       @style ||= @assessment.default_style if @assessment.default_style
-      
+      @assessment_title = @assessment.title
       if @assessment_settings.present?
         @style = @style != "" ? @style : @assessment_settings[:style] || ""
         @enable_start = params[:enable_start] ?  @enable_start : @assessment_settings[:enable_start] || false
@@ -61,14 +61,14 @@ class AssessmentsController < ApplicationController
         @src_url = embed_url(@assessment)
       else
         # Show the full page with analtyics and embed code buttons
-        @embed_code = embed_code(@assessment, @confidence_levels, @eid, @enable_start, params[:offline].present?, nil, @style, params[:asid], @per_sec, @assessment_kind)
+        @embed_code = embed_code(@assessment, @confidence_levels, @eid, @enable_start, params[:offline].present?, nil, @style, params[:asid], @per_sec, @assessment_kind, @assessment_title)
       end
     else
       # Get the remote url where we can download the qti
       @src_url = ensure_scheme(URI.decode(params[:src_url])) if params[:src_url].present?
       if params[:load_ui] == 'true'
         # Build an embed code and stats page for an assessment loaded via a url
-        @embed_code = embed_code(nil, @confidence_levels, @eid, @enable_start, params[:offline].present?, params[:src_url], @style, params[:asid], params[:per_sec], @assessment_kind)
+        @embed_code = embed_code(nil, @confidence_levels, @eid, @enable_start, params[:offline].present?, params[:src_url], @style, params[:asid], params[:per_sec], @assessment_kind, @assessment_title)
       end
 
     end
@@ -91,8 +91,10 @@ class AssessmentsController < ApplicationController
     @lti_role = params["roles"].present? && params["roles"].include?("Administrator") ? "admin" : "student"
     @is_lti ||= false
     @assessment_kind ||= params[:assessment_kind]
+    @assessment_title ||= params[:assessment_title]
     # extract LTI values
     @external_user_id ||= params[:user_id]
+
 
     respond_to do |format|
       format.html { render :show, layout: @embedded ? 'assessment' : 'application' }

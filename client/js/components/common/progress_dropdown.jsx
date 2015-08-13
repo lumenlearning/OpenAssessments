@@ -40,7 +40,7 @@ export default class ProgressDropdown extends BaseComponent{
   }
 
   getStyles(theme, expanded){
-    var expHeight = this.props.questions.length < 3 ? "" + (this.props.questions.length * (228 / 3)) + "px" : "228px"
+    var expHeight = this.props.questions && this.props.questions.length < 3 ? "" + (this.props.questions.length * (228 / 3)) + "px" : "228px"
     return {
       dropdownStyle: {
         overflow: expanded ? "scroll" : "hidden",
@@ -92,7 +92,7 @@ export default class ProgressDropdown extends BaseComponent{
   render(){
     var expanded = (this.state && this.state.expanded);
     var styles = this.getStyles(this.context.theme, expanded);
-    var questions = this.props.questions.map((question, index)=>{
+    var questions = this.props.questions && this.props.questions.map((question, index)=>{
       return <ProgressListItem question={question} index={index} toggle={this.navButtonClicked}/>
     })
     var text = this.props.disabled ? <b>There are {this.props.questionCount} questions</b> : <b>You are on question {this.props.currentQuestion} of {this.props.questionCount}</b>

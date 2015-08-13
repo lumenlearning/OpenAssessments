@@ -71,7 +71,8 @@ function loadSettings(defaultSettings){
     isLti              : defaultSettings.isLti,
     assessmentKind     : defaultSettings.assessmentKind,
     images             : defaultSettings.images,
-    ltiRole            : defaultSettings.lti_role          
+    ltiRole            : defaultSettings.lti_role,
+    assessmentTitle    : defaultSettings.assessmentTitle          
   };
 
   if(!_settings.srcUrl && !_settings.offline){
