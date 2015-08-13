@@ -30,6 +30,7 @@ export default class Start extends BaseComponent{
     }
     return {
       showStart            : showStart,
+      questionCount        : AssessmentStore.questionCount(),
       settings             : SettingsStore.current(),
     }
   }

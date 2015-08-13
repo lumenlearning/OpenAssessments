@@ -73,7 +73,8 @@ function loadSettings(defaultSettings){
     assessmentKind     : defaultSettings.assessmentKind,
     images             : defaultSettings.images,
     ltiRole            : defaultSettings.lti_role,
-    assessmentTitle    : defaultSettings.assessmentTitle          
+    assessmentTitle    : defaultSettings.assessmentTitle,
+    sectionCount       : parseInt(defaultSettings.sectionCount)
   };
 
   if(!_settings.srcUrl && !_settings.offline){

@@ -154,8 +154,9 @@ var AssessmentStore = assign({}, StoreCommon, {
     return _itemIndex;
   },
 
-  questionCount(){
-    return _items.length;
+  questionCount(){ 
+    if(_items && _items.length > 0)return _items.length;
+    return SettingsStore.current().sectionCount * SettingsStore.current().perSec;
   },
 
   selectedAnswerId(){
