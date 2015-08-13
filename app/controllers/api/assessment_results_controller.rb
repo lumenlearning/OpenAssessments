@@ -1,4 +1,5 @@
 class Api::AssessmentResultsController < Api::ApiController
+  before_action :validate_token, except: :send_result_to_analytics
 
   # TODO Might have to cheat and make this a index or show so we can use a GET request to record the data. This will avoid cross origin issues.
   def create
@@ -21,6 +22,11 @@ class Api::AssessmentResultsController < Api::ApiController
   end
 
   def send_result_to_analytics
+    if request.headers["Authorization"].present? &&
+            request.headers["Authorization"] != "Bearer null"
+      return unless validate_token
+    end
+
     if @current_user = current_user
       res = @current_user.assessment_results.find(params[:assessment_result_id])
       assessment = res.assessment

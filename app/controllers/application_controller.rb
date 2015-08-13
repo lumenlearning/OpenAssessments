@@ -130,8 +130,10 @@ class ApplicationController < ActionController::Base
         
         @user = User.find(decoded_token[0]['user_id'])
         sign_in(@user, :event => :authentication)
+        true
       rescue JWT::DecodeError, InvalidTokenError
         render :json => { :error => "Unauthorized: Invalid token." }, status: :unauthorized
+        false
       end
     end
 
