@@ -25,7 +25,7 @@ class Api::AssessmentResultsController < Api::ApiController
       res = @current_user.assessment_results.find(params[:assessment_result_id])
       assessment = res.assessment
     else
-      res = AssessmentResults.find(params[:assessment_result_id])
+      res = AssessmentResult.find(params[:assessment_result_id])
       assessment = res.assessment
       if assessment.kind == 'summative'
         render json: {message: "nope"}, status: :forbidden
