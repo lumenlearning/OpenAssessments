@@ -100,6 +100,7 @@ class AssessmentsController < ApplicationController
     @section_count    ||= params[:section_count]
     # extract LTI values
     @external_user_id ||= params[:user_id]
+    @external_context_id ||= params[:context_id]
 
 
     respond_to do |format|
