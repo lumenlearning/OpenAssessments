@@ -78,6 +78,21 @@ RSpec.describe Api::AssessmentsController, type: :controller do
         get 'show', format: :xml, id: @assessment.id
         expect(response).to have_http_status(200)
       end
+
+      it "should use the per_sec value on the settings" do
+        @assessment_xml.xml = open('./spec/fixtures/sections_assessment.xml').read
+        @assessment_xml.save!
+
+        @assessment.assessment_settings.create({per_sec: 1})
+
+        get :show, format: :xml, id: @assessment.id
+
+        node = Nokogiri::XML(response.body)
+        node.css('section section').each do |s|
+          expect(s.css('item').count).to eq 1
+        end
+      end
+
     end
   end
 

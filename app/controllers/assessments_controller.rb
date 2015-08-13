@@ -50,6 +50,7 @@ class AssessmentsController < ApplicationController
         else
           @user_assessment = @assessment.user_assessments.create({
             :eid => params[:user_id],
+            :lti_context_id => params[:context_id],
             :attempts => 0
             })
           @user_attempts = @user_assessment.attempts

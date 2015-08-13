@@ -109,6 +109,10 @@ export default {
     Api.post(Constants.ASSESSMENT_VIEWED, '/api/assessment_results', body);
   },
 
+  assessmentPostAnalytics(results_id){
+    Api.post(Constants.ASSESSMENT_POST_ANALYTICS, 'api/assessment_results/' + results_id + '/send');
+  },
+
   itemViewed(settings, assessment, assessment_result){
     var body = {
       item_result : {

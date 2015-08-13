@@ -1,6 +1,6 @@
 class Api::GradesController < Api::ApiController
   
-  skip_before_action :validate_token, only: [:create]
+  skip_before_action :validate_token, only: [:create, :send_result_to_analytics]
   
   def create
 
@@ -17,10 +17,13 @@ class Api::GradesController < Api::ApiController
     doc.remove_namespaces!
     xml_questions = doc.xpath("//item")
     errors = []
+    settings = item_to_grade["settings"]
     result = assessment.assessment_results.build
+    result.identifier = item_to_grade["identifier"]
+    result.external_user_id = settings["externalUserId"]
+    result.attempt = settings["userAttempts"]
     result.user = current_user
     result.save!
-    settings = item_to_grade["settings"]
     correct_list = []
     confidence_level_list = []
     positive_outcome_list = []
@@ -57,14 +60,19 @@ class Api::GradesController < Api::ApiController
         if correct == true
           answered_correctly += 1
           correct_list[index] = correct
+          question["score"] = 1
         elsif correct == false
           correct_list[index] = correct
+          question["score"] = 0
         elsif correct[:name]== "partial"
-          answered_correctly = Float(answered_correctly) + (Float(correct[:correct]) / Float(correct[:total]))
+          p_score = (Float(correct[:correct]) / Float(correct[:total]))
+          answered_correctly = Float(answered_correctly) + p_score
+          question["score"] = p_score
           correct_list[index] = correct[:name]
         end
         confidence_level_list[index] = question["confidenceLevel"]
 
+        #todo add outcome_id to item_result   —  question["outcome_guid"]   —   answers[index]
         if item = assessment.items.find_by(identifier: question["id"])
 
           rendered_time, referer, user = tracking_info
@@ -82,7 +90,10 @@ class Api::GradesController < Api::ApiController
             referer: referer,
             rendered_datestamp: rendered_time,
             confidence_level: question["confidenceLevel"],
-            score: question["score"]
+            score: question["score"],
+            outcome_guid: question["outcome_guid"],
+            sequence_index: index,
+            answers_chosen: answers[index].join(",")
           )
         else
           rendered_time, referer, user = tracking_info
@@ -104,7 +115,10 @@ class Api::GradesController < Api::ApiController
               referer: referer,
               rendered_datestamp: rendered_time,
               confidence_level: question["confidenceLevel"],
-              score: question["score"]
+              score: question["score"],
+              outcome_guid: question["outcome_guid"],
+              sequence_index: index,
+              answers_chosen: answers[index].join(",")
             )
           end
         end
@@ -133,7 +147,7 @@ class Api::GradesController < Api::ApiController
 
     higher_grade = true
 
-    if previous_result.present? && previous_result.score > score
+    if previous_result.present? && previous_result.score && previous_result.score > score
       higher_grade = false
     end
     # TODO find out a better way to do this. This will work just fine as long as there is a max of 2 attempts.
@@ -188,6 +202,7 @@ class Api::GradesController < Api::ApiController
       questions: questions,
       doc: doc,
       lti_params: params,
+      assessment_results_id: result.id,
       errors: errors
     }
     # Ping analytics server

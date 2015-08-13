@@ -24,9 +24,18 @@ class Api::AssessmentsController < Api::ApiController
     assessment = Assessment.where(id: params[:id], account: current_account).first
     validate_token unless assessment.kind == 'formative'
 
+    #todo mark as an attempt for the user since the assessment was fetched
+
     respond_to do |format|
       format.json { render :json => assessment }
-      format.xml { render :text => assessment.assessment_xmls.by_newest.first.xml }
+      format.xml do
+        assessment_settings = params[:asid] ?  assessment.assessment_settings.find(params[:asid]) : assessment.default_settings || current_account.default_settings || AssessmentSetting.where(is_default: true).first
+        if assessment_settings && assessment_settings.per_sec
+          render :text => assessment.assessment_xmls.by_newest.first.xml_with_limited_questions(assessment_settings.per_sec.to_i)
+        else
+          render :text => assessment.assessment_xmls.by_newest.first.xml
+        end
+      end
     end
   end
 
