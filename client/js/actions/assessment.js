@@ -100,6 +100,7 @@ export default {
         identifier       : assessment.id,
         eId              : settings.eId,
         external_user_id : settings.externalUserId,
+        external_context_id : settings.externalContextId,
         resultsEndPoint  : settings.resultsEndPoint,
         keywords         : settings.keywords,
         objectives       : assessment.objectives,
@@ -109,8 +110,8 @@ export default {
     Api.post(Constants.ASSESSMENT_VIEWED, '/api/assessment_results', body);
   },
 
-  assessmentPostAnalytics(results_id){
-    Api.post(Constants.ASSESSMENT_POST_ANALYTICS, 'api/assessment_results/' + results_id + '/send');
+  assessmentPostAnalytics(results_id, user_id='', context_id=''){
+    Api.post(Constants.ASSESSMENT_POST_ANALYTICS, 'api/assessment_results/' + results_id + '/send?external_user_id=' + user_id + '&external_context_id=' + context_id);
   },
 
   itemViewed(settings, assessment, assessment_result){
