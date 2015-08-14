@@ -1,12 +1,12 @@
 "use strict";
 
-import React              from 'react';
-import AssessmentStore    from "../../stores/assessment";
-import SettingsStore      from "../../stores/settings";
-import BaseComponent      from "../base_component";
-import AssessmentActions  from "../../actions/assessment";
-import ItemResult         from "./item_result";
-import IframeHelper       from '../../iframeHelper';
+import React                from 'react';
+import AssessmentStore      from "../../stores/assessment";
+import SettingsStore        from "../../stores/settings";
+import BaseComponent        from "../base_component";
+import AssessmentActions    from "../../actions/assessment";
+import ItemResult           from "./item_result";
+import CommunicationHandler from "../../utils/communication_handler";
 
 export default class AssessmentResult extends BaseComponent{
 
@@ -35,7 +35,7 @@ export default class AssessmentResult extends BaseComponent{
   }
 
   componentDidMount(){
-    IframeHelper.setHeight();
+    CommunicationHandler.sendSize();
   }
 
   retake(){
