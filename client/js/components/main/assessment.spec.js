@@ -10,20 +10,19 @@ describe('assessment', function() {
   beforeEach(() => {
     jasmine.clock().install();
     jasmine.Ajax.install();
-    AssessmentActions.submitAssessment("100", 0, "questions", "answers");
-    jasmine.Ajax.requests.mostRecent().respondWith({
-      "status"        : 200,
-      "contentType"     : "text/plain",
-      "responseText" : "{}"     
-    });
+    // AssessmentActions.submitAssessment("100", 0, "questions", "answers");
+    // jasmine.Ajax.requests.mostRecent().respondWith({
+    //   "status"        : 200,
+    //   "contentType"     : "text/plain",
+    //   "responseText" : "{}"     
+    // });
     jasmine.clock().tick();
     var subject = StubContext(<Assessment />, null, null);
     result = TestUtils.renderIntoDocument(<subject />);
   });
   
   afterEach(() => {
-    // becuase if the component stays mounted and the store changes it rerenders and fails other tests
-    React.unmountComponentAtNode(React.findDOMNode(result).parentNode)
+
     jasmine.clock().uninstall();
     jasmine.Ajax.uninstall();
   });

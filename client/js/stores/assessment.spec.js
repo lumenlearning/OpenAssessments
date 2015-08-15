@@ -13,6 +13,7 @@ describe('AssessmentsStore', () => {
     jasmine.getFixtures().fixturesPath = "base/fixtures/";
     srcData = readFixtures("text.xml");
     settings = {
+      srcUrl: "asdf"
     };
   });
 

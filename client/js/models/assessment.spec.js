@@ -53,21 +53,19 @@ describe('assessment', () => {
   describe('parseQti', () => {
     
     it('parses assessment xml from QTI into an object', () => {
-      var data          = readFixtures("biology.xml");
+      var data          = readFixtures("text.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
-    
-      var assessment = Assessment.parseQti(assessmentXml, xml);
+      var assessment = Assessment.parseQti(1, assessmentXml, xml);
 
       expect(assessment).toBeDefined();
-      expect(assessment.id).toEqual("ch01");
-      expect(assessment.title).toEqual("ch01");
+      expect(assessment.id).toEqual("i0886cfce85384de6a5b5394edca8282f_summative");
+      expect(assessment.title).toEqual("Financial Markets and System");
       expect(assessment.standard).toEqual("qti");
-      expect(assessment.sections.length).toEqual(1);
-      expect(assessment.sections[0].items.length).toEqual(4);
+      expect(assessment.sections.length).toEqual(7);
+      expect(assessment.sections[0].items.length).toEqual(44);
       var item = assessment.sections[0].items[0];
-      expect(item.id).toEqual("ch01sec1q0");
-      expect(item.title).toEqual("1.1 Exercise 2.");
+      expect(item.id).toEqual("3567");
     });
   });
 
