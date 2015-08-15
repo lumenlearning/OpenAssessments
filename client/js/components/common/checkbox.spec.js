@@ -1,6 +1,7 @@
 import React              from 'react';
 import TestUtils          from '../../../node_modules/react/lib/ReactTestUtils';
 import Checkbox           from './checkbox';
+import StubContext        from '../../../specs_support/stub_context';
 
 describe('checkbox', function() {
 
@@ -8,7 +9,8 @@ describe('checkbox', function() {
     id: 1,
     material: "checkbox label"
   };
-  var result = TestUtils.renderIntoDocument(<Checkbox item={item} name="answer-radio" />);
+  var Content = StubContext(Checkbox, {item: item, name: "answer-radio"});
+  var result = TestUtils.renderIntoDocument(<Content />);
 
   it('renders the checkbox label', function() {
     expect(React.findDOMNode(result).textContent).toContain(item.material);
@@ -19,10 +21,10 @@ describe('checkbox', function() {
   });
 
   it('calls the answerSelected function when clicked', () => {
-    spyOn(result, "answerSelected");
+    spyOn(result.originalComponent(), "answerSelected");
     var checkbox = TestUtils.findRenderedDOMComponentWithTag(result, 'input');
     TestUtils.Simulate.click(checkbox);
-    expect(result.answerSelected).toHaveBeenCalled();
+    expect(result.originalComponent().answerSelected).toHaveBeenCalled();
   });
 
 });

@@ -143,7 +143,7 @@ export default class Assessment extends BaseComponent{
         outcomes         = {this.state.outcomes}/>;
         progressBar      =  <div style={styles.progressContainer}>
                               {progressText}
-                              <ProgressDropdown questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
+                              <ProgressDropdown settings={this.state.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
                             </div>;
     // TODO figure out when to mark an item as viewed. assessmentResult must be valid before this call is made.
       // AssessmentActions.itemViewed(this.state.settings, this.state.assessment, this.state.assessmentResult);

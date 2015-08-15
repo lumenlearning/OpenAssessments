@@ -11,7 +11,7 @@ describe('AssessmentsStore', () => {
 
   beforeAll(function(){
     jasmine.getFixtures().fixturesPath = "base/fixtures/";
-    srcData = readFixtures("assessment.xml");
+    srcData = readFixtures("text.xml");
     settings = {
     };
   });
@@ -35,7 +35,7 @@ describe('AssessmentsStore', () => {
       it("returns current the current assessment", (done) => {
         var assessment = AssessmentsStore.current();
         expect(assessment).toBeDefined();
-        expect(assessment.id).toEqual("ib8d9c142765b2287684aad0b5387e45b");
+        expect(assessment.id).toEqual("i0886cfce85384de6a5b5394edca8282f_summative");
         done();
       });
     });

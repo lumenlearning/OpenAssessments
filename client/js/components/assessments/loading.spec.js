@@ -9,7 +9,7 @@ describe('loading', function() {
   var result = TestUtils.renderIntoDocument(<Subject />);
 
   it('renders a loading assessment message', function() {
-    expect(React.findDOMNode(result).textContent).toContain("Loading Assessment");
+    expect(React.findDOMNode(result).textContent).toContain("Loading.");
   });
   
 });
