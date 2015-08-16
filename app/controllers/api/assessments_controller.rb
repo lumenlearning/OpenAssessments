@@ -24,12 +24,32 @@ class Api::AssessmentsController < Api::ApiController
     assessment = Assessment.where(id: params[:id], account: current_account).first
     validate_token unless assessment.kind == 'formative'
 
-    #todo mark as an attempt for the user since the assessment was fetched
+    user_assessment = nil
+    if user = current_user
+      user_assessment = assessment.user_assessments.where(user_id: user.id).first
+    end
 
     respond_to do |format|
       format.json { render :json => assessment }
       format.xml do
         assessment_settings = params[:asid] ?  assessment.assessment_settings.find(params[:asid]) : assessment.default_settings || current_account.default_settings || AssessmentSetting.where(is_default: true).first
+
+        # If it's a summative quiz the attempts are incremented here instead of UserAttemptsController#update
+        # todo: refactor so that all attempts are incremented via the xml fetch? Maybe not because externally hosted xml files.
+        if assessment.kind == 'summative'
+          if user_assessment
+            if user_assessment.attempts >= assessment_settings.allowed_attempts
+              render :json => {:error => "Too many attempts."}, status: :unauthorized
+              return
+            end
+
+            user_assessment.increment_attempts!
+          else
+            render :json => {:error => "Can't validate user_assessment for summative assessment."}, status: :unauthorized
+            return
+          end
+        end
+
         if assessment_settings && assessment_settings.per_sec
           render :text => assessment.assessment_xmls.by_newest.first.xml_with_limited_questions(assessment_settings.per_sec.to_i)
         else
