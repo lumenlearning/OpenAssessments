@@ -3,16 +3,16 @@
 import React              from 'react';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import UniversalInput      from './universal_input';
+import StubContext        from "../../../specs_support/stub_context";
 
 describe('Assessment Questions', ()=> {
   var result;
   var item;
-
+  var Content;
   beforeEach(()=>{
     item = {
       id       : 0,
       question_type: "multiple_choice_question",
-      answers  : ["Hello", "You", "Check"],
       url      : "www.iamcool.com",
       title    : "title",
       xml      : null,
@@ -23,8 +23,8 @@ describe('Assessment Questions', ()=> {
       messages : ["My Message1", "My Message2"],
       solution : "<p>solution text</p>"
     };
-
-    result = TestUtils.renderIntoDocument(<UniversalInput item={item} />);
+    Content = StubContext(UniversalInput, {item: item})
+    result = TestUtils.renderIntoDocument(<Content />);
   });
 
   it('It Renders the page', ()=>{
@@ -55,7 +55,8 @@ describe('Assessment Questions', ()=> {
         img: 'http://www.bealecorner.com/trv900/respat/eia1956-small.jpg'
       }];
       item.question_type = 'edx_drag_and_drop';
-      result = TestUtils.renderIntoDocument(<UniversalInput item={item} />);
+      Content = StubContext(UniversalInput, {item: item})
+      result = TestUtils.renderIntoDocument(<Content />);
     });
 
     it('Renders the components', ()=>{
@@ -67,7 +68,8 @@ describe('Assessment Questions', ()=> {
 
     beforeEach(()=>{
       item.question_type = 'multiple_choice_question';
-      result = TestUtils.renderIntoDocument(<UniversalInput item={item} />);
+      Content = StubContext(UniversalInput, {item: item})
+      result = TestUtils.renderIntoDocument(<Content />);
     });
 
     it('It Renders the radio buttons', ()=>{
@@ -84,7 +86,8 @@ describe('Assessment Questions', ()=> {
 
     beforeEach(()=>{
       item.question_type = 'edx_numerical_input';
-      result = TestUtils.renderIntoDocument(<UniversalInput item={item} />);
+      Content = StubContext(UniversalInput, {item: item})
+      result = TestUtils.renderIntoDocument(<Content />);
     });
 
     it('Renders the sub-question text', ()=>{
@@ -100,7 +103,8 @@ describe('Assessment Questions', ()=> {
   describe('Text Input', ()=>{
     beforeEach(()=>{
       item.question_type = 'edx_numerical_input';
-      result = TestUtils.renderIntoDocument(<UniversalInput item={item} />);
+      Content = StubContext(UniversalInput, {item: item})
+      result = TestUtils.renderIntoDocument(<Content />);
     });
 
     it('Renders the sub-question text', ()=>{
@@ -118,7 +122,8 @@ describe('Assessment Questions', ()=> {
     beforeEach(()=>{
       item.question_type = 'edx_dropdown';
       item.answers = [{ id: 0, material: ['option1', 'option2', 'option3']}];
-      result = TestUtils.renderIntoDocument(<UniversalInput item={item} />);
+      Content = StubContext(UniversalInput, {item: item})
+      result = TestUtils.renderIntoDocument(<Content />);
     });
 
     it('Renders the drop down element', ()=>{
@@ -139,7 +144,8 @@ describe('Assessment Questions', ()=> {
     beforeEach(()=>{
       item.question_type = 'edx_image_mapped_input';
       item.answers = [{ id: 0, material:['100','100','100','100'], coordinates: ['200','200','200','200'], height: 100, width: 100}];
-      result = TestUtils.renderIntoDocument(<UniversalInput item={item} />);
+      Content = StubContext(UniversalInput, {item: item})
+      result = TestUtils.renderIntoDocument(<Content />);
     });
     it('Renders the image to the page', ()=>{
       expect(TestUtils.scryRenderedDOMComponentsWithTag(result, 'img')).toBeDefined();
@@ -153,7 +159,8 @@ describe('Assessment Questions', ()=> {
 
     beforeEach(()=>{
       item.question_type = 'multiple_answers_question';
-      result = TestUtils.renderIntoDocument(<UniversalInput item={item} />);
+      Content = StubContext(UniversalInput, {item: item})
+      result = TestUtils.renderIntoDocument(<Content />);
     });
 
     it('Renders the checkboxes', ()=>{
