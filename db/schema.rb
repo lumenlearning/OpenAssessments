@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150810013340) do
+ActiveRecord::Schema.define(version: 20150817212224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20150810013340) do
     t.string   "code"
     t.boolean  "restrict_signup",                         default: true
     t.boolean  "restrict_assessment_create",              default: true
-    t.boolean  "restrict_public"
+    t.boolean  "restrict_public",                         default: true
     t.string   "default_style"
   end
 
@@ -301,6 +301,7 @@ ActiveRecord::Schema.define(version: 20150810013340) do
     t.datetime "updated_at",             null: false
     t.string   "eid"
     t.string   "lti_context_id"
+    t.string   "lti_role"
   end
 
   add_index "user_assessments", ["eid"], name: "index_user_assessments_on_eid", using: :btree
