@@ -103,7 +103,7 @@ export default class Start extends BaseComponent{
         ltiRole         = {this.state.settings.ltiRole}
         icon            = {this.state.settings.images.QuizIcon_svg}/>;
         progressBar     = <div style={styles.progressContainer}>
-                            <ProgressDropdown disabled={true} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
+                            <ProgressDropdown disabled={true} settings={this.state.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
                           </div>;
 
     }
