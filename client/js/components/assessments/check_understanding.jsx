@@ -186,7 +186,7 @@ export default class CheckUnderstanding extends React.Component{
       <div style={styles.buttonWrapper}>
         <button style={styles.startButton} className="btn btn-info" onClick={()=>{this.start(this.props.eid, this.props.assessmentId, this.context)}}>{buttonText}</button>
       </div>)
-    if (this.props.userAttempts == this.props.maxAttempts && this.props.assessmentKind.toUpperCase() == "SUMMATIVE" && this.props.ltiRole != "admin"){
+    if (this.props.userAttempts >= this.props.maxAttempts && this.props.assessmentKind.toUpperCase() == "SUMMATIVE" && this.props.ltiRole != "admin"){
       startButton = "";
     }
     if (this.props.assessmentKind.toUpperCase() == "FORMATIVE"){
