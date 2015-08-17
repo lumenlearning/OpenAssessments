@@ -48,14 +48,20 @@ class AssessmentsController < ApplicationController
       end
       @assessment_kind = @assessment.kind
       if params[:user_id].present?
+        oea_user_id = @user ? @user.id : nil
         @user_assessment = @assessment.user_assessments.where(eid: params[:user_id]).first
         if !@user_assessment.nil?
           @user_attempts = @user_assessment.attempts || 0
+          if oea_user_id && @user_assessment.user_id != oea_user_id
+            @user_assessment.user_id = oea_user_id
+            @user_assessment.save
+          end
         else
           @user_assessment = @assessment.user_assessments.create({
             :eid => params[:user_id],
             :lti_context_id => params[:context_id],
-            :attempts => 0
+            :attempts => 0,
+            :user_id => oea_user_id
             })
           @user_attempts = @user_assessment.attempts
         end
