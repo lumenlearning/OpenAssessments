@@ -9,7 +9,7 @@ export default class ResultConfidence extends React.Component{
     return {
       maybe: {
         marginRight: "5px",
-        width: theme.maybeWidth,
+        display: "inline-block",
         backgroundColor: props.level == "Just A Guess" ? theme.maybeBackgroundColor : "transparent",
         color: props.level == "Just A Guess" ? "white" : "black",
         border: props.isCorrect ? "none" : "1px solid rgba(0,0,0,0.2)",
@@ -17,8 +17,8 @@ export default class ResultConfidence extends React.Component{
         padding: "5px 30px 5px 30px",
       },
       probably:{
+        display: "inline-block",
         marginRight: "5px",
-        width: theme.probablyWidth,
         backgroundColor: props.level == "Pretty Sure" ? theme.probablyBackgroundColor : "transparent",
         color: props.level == "Pretty Sure" ? "white" : "black",
         border: props.isCorrect ? "none" : "1px solid rgba(0,0,0,0.2)",
@@ -26,8 +26,8 @@ export default class ResultConfidence extends React.Component{
         padding: "5px 30px 5px 30px",
       },
       definitely: {
+        display: "inline-block",
         marginRight: "5px",
-        width: theme.definitelyWidth,
         backgroundColor: props.level == "Very Sure" ? theme.definitelyBackgroundColor : "transparent",
         color: props.level == "Very Sure" ? "white" : "black",
         border: props.isCorrect ? "none" : "1px solid rgba(0,0,0,0.2)",
@@ -45,10 +45,10 @@ export default class ResultConfidence extends React.Component{
     return (
       <div>
         <h5 style={styles.h5}>Your confidence level</h5>
-        <div className="confidence_wrapper" style={styles.confidenceWrapper}>
-          <span style={styles.maybe}>Just A Guess</span>
-          <span style={styles.probably}>Pretty Sure</span>
-          <span style={styles.definitely}>Very Sure</span>
+        <div>
+          <div style={styles.maybe}>Just A Guess</div>
+          <div style={styles.probably}>Pretty Sure</div>
+          <div style={styles.definitely}>Very Sure</div>
         </div>
       </div>
 

@@ -33,7 +33,7 @@ export default class ItemResult extends React.Component{
         overflow: "auto"
       },
       confidenceWrapper: {
-        width: theme.confidenceWrapperWidth,
+        width: "440px",
         height: theme.confidenceWrapperHeight,
         padding: theme.confidenceWrapperPadding,
         marginTop: "10px",
