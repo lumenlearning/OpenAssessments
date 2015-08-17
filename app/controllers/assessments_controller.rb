@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'lti_role_helper'
 
 class AssessmentsController < ApplicationController
 
@@ -30,7 +31,7 @@ class AssessmentsController < ApplicationController
     @results_end_point = ensure_scheme(params[:results_end_point]) if params[:results_end_point].present?
     @style = params[:style] ? params[:style] :  ""
     @per_sec = params[:per_sec] ? params[:per_sec] : nil
-
+    set_lti_role
 
     if params[:id].present? && !['load', 'offline'].include?(params[:id])
       @assessment = Assessment.where(id: params[:id], account: current_account).first
@@ -56,12 +57,17 @@ class AssessmentsController < ApplicationController
             @user_assessment.user_id = oea_user_id
             @user_assessment.save
           end
+          if @lti_role && @user_assessment.lti_role != @lti_role
+            @user_assessment.lti_role = @lti_role
+            @user_assessment.save
+          end
         else
           @user_assessment = @assessment.user_assessments.create({
             :eid => params[:user_id],
             :lti_context_id => params[:context_id],
             :attempts => 0,
-            :user_id => oea_user_id
+            :user_id => oea_user_id,
+            :lti_role => @lti_role
             })
           @user_attempts = @user_assessment.attempts
         end
@@ -99,7 +105,6 @@ class AssessmentsController < ApplicationController
       end
     end
 
-    @lti_role = params["roles"].present? && params["roles"].include?("Administrator") ? "admin" : "student"
     @is_lti ||= false
     @assessment_kind  ||= params[:assessment_kind]
     @assessment_title ||= params[:assessment_title]
@@ -111,6 +116,18 @@ class AssessmentsController < ApplicationController
 
     respond_to do |format|
       format.html { render :show, layout: @embedded ? 'assessment' : 'application' }
+    end
+  end
+
+  def set_lti_role
+    role_param = params["ext_roles"] || params["roles"]
+    return "student" unless role_param.present?
+
+    roles = LtiRoleHelper.new(role_param)
+    if roles.context_admin? || roles.context_instructor? || roles.institution_admin?
+      @lti_role = "admin"
+    else
+      @lti_role = "student"
     end
   end
 

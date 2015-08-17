@@ -56,6 +56,11 @@ class Api::AssessmentResultsController < Api::ApiController
       return
     end
 
+    if user_assessment && user_assessment.lti_role == "admin"
+      render json: {message: "only reporting for student"}
+      return
+    end
+
     message = {
             assessment_result_id: res.id,
             lti_user_id: user_id,
