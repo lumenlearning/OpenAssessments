@@ -9,6 +9,7 @@ export default class ResultConfidence extends React.Component{
     return {
       maybe: {
         marginRight: "5px",
+        width: theme.maybeWidth,
         backgroundColor: props.level == "Just A Guess" ? theme.maybeBackgroundColor : "transparent",
         color: props.level == "Just A Guess" ? "white" : "black",
         border: props.isCorrect ? "none" : "1px solid rgba(0,0,0,0.2)",
@@ -17,6 +18,7 @@ export default class ResultConfidence extends React.Component{
       },
       probably:{
         marginRight: "5px",
+        width: theme.probablyWidth,
         backgroundColor: props.level == "Pretty Sure" ? theme.probablyBackgroundColor : "transparent",
         color: props.level == "Pretty Sure" ? "white" : "black",
         border: props.isCorrect ? "none" : "1px solid rgba(0,0,0,0.2)",
@@ -25,6 +27,7 @@ export default class ResultConfidence extends React.Component{
       },
       definitely: {
         marginRight: "5px",
+        width: theme.definitelyWidth,
         backgroundColor: props.level == "Very Sure" ? theme.definitelyBackgroundColor : "transparent",
         color: props.level == "Very Sure" ? "white" : "black",
         border: props.isCorrect ? "none" : "1px solid rgba(0,0,0,0.2)",
