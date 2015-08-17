@@ -18,7 +18,7 @@ describe('item', function() {
   var result = TestUtils.renderIntoDocument(<Content />);
 
   it('renders an item', function() {
-    expect(React.findDOMNode(result).textContent).toContain("1 of 10");
+    expect(React.findDOMNode(result).textContent).toContain("Choose ALL that apply");
   });
   
 });

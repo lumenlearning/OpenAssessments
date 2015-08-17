@@ -3,12 +3,13 @@
 import React          from "react";
 import assign         from "object-assign";
 import StyleManager   from "../js/utils/theme_manager";
+import Lumen          from "../js/themes/lumen_learning";
 
 var { func } = React.PropTypes;
 
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
-var Theme = new StyleManager();
+var Theme = new StyleManager(Lumen);
 export default (Component, props, stubs) => {
 
   function RouterStub(){ }
