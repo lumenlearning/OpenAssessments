@@ -40,7 +40,7 @@ export default class AssessmentResult extends BaseComponent{
 
   retake(){
     AssessmentActions.retakeAssessment();
-    this.context.router.transitionTo("assessment");
+    this.context.router.transitionTo("start");
   }
 
   getStyles(theme){

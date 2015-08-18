@@ -324,10 +324,12 @@ Dispatcher.register(function(payload) {
       break;
     case Constants.RETAKE_ASSESSMENT:
       _assessmentResult = null;
+      _assessmentState = NOT_LOADED;
       _studentAnswers = [];
       _itemIndex = 0;
       _sectionIndex = 0;
       _selectedAnswerIds = [];
+
       for(var i=0; i<_items.length; i++){
         _items[i].confidenceLevel = null;
       }

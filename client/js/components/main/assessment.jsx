@@ -46,7 +46,7 @@ export default class Assessment extends BaseComponent{
     super.componentDidMount();
     if(this.state.isLoaded){
       // Trigger action to indicate the assessment was viewed
-      AssessmentActions.assessmentViewed(this.state.settings, this.state.assessment);
+      //AssessmentActions.assessmentViewed(this.state.settings, this.state.assessment);
     }
   }
 
