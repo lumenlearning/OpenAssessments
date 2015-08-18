@@ -215,7 +215,7 @@ class ApplicationController < ActionController::Base
       provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
 
       if provider.valid_request?(request)
-
+        @isLtiLaunch = true
         @lti_provider = lti_provider
         @identifier = params[:user_id]
 
@@ -248,6 +248,7 @@ class ApplicationController < ActionController::Base
           @user.password_confirmation = @user.password
           @user.account = current_account
           @user.skip_confirmation!
+          @user.skip_confirmation_notification!
 
           count = 0
           while !safe_save_email(@user) && count < 10 do
