@@ -58,8 +58,8 @@ export default class ItemResult extends React.Component{
       correctMessage = "You were correct.";
     }
     return (
-      <div>
-        <div className="row">
+      <div tabIndex="0" aria-label={"Question " + (this.props.index+1)}>
+        <div className="row" tabIndex="0">
           <div className="col-md-9 col-sm-9 col-xs-9" style={styles.resultContainer}>
             <div className="row">
               <div className="col-md-9 col-sm-9 col-xs-9">
@@ -68,7 +68,7 @@ export default class ItemResult extends React.Component{
               __html: this.props.question.material
               }}></div>
               </div>
-              <div className="col-md-3 col-sm-3 col-xs-3">
+              <div className="col-md-3 col-sm-3 col-xs-3" tabIndex="0">
                 <div style={styles.correctLabel}>{correctMessage}</div>
               </div>
             </div>

@@ -43,8 +43,8 @@ export default class ResultConfidence extends React.Component{
     var styles = this.getStyles(this.props, this.context.theme)
 
     return (
-      <div>
-        <h5 style={styles.h5}>Your confidence level</h5>
+      <div >
+        <h5 style={styles.h5} tabIndex="0" aria-label={"Your confidence level was " + this.props.level}>Your confidence level</h5>
         <div>
           <div style={styles.maybe}>Just A Guess</div>
           <div style={styles.probably}>Pretty Sure</div>

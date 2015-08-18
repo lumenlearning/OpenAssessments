@@ -40,7 +40,7 @@ export default class ResultOutcome extends React.Component{
     var styles = this.getStyles(this.props, this.context.theme)
     var text = this.props.correct === true ? "Covers this concept:" : "Review this concept:";
     return (
-      <div>
+      <div tabIndex="0">
         <div style={styles.resultOutcome}>
           <div>{text}</div>
           <h5><b>{this.props.outcomes.shortOutcome}</b></h5>

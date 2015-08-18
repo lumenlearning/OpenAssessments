@@ -93,13 +93,13 @@ export default class ProgressDropdown extends BaseComponent{
     var expanded = (this.state && this.state.expanded);
     var styles = this.getStyles(this.context.theme, expanded);
     var questions = this.props.questions && this.props.questions.map((question, index)=>{
-      return <ProgressListItem question={question} expanded={this.state.expanded} index={index} toggle={this.navButtonClicked}/>
+      return <ProgressListItem key={"list-item"+index} question={question} expanded={this.state && this.state.expanded} index={index} toggle={this.navButtonClicked}/>
     });
     var text = this.props.disabled ? <b>There are {this.props.questionCount} questions</b> : <b>You are on question {this.props.currentQuestion} of {this.props.questionCount}</b>
     return (
-      <span >
+      <span>
         <img style={styles.icon}src={this.props.settings.images.ProgressIcon_svg} />
-        <button style={styles.dropdownButton} className="btn" type="button" aria-haspopup="true" aria-expanded="true" onClick={()=>{if(!this.props.disabled)this.navButtonClicked()}}>
+        <button id="focus" style={styles.dropdownButton} className="btn" type="button" aria-haspopup="true" aria-expanded="true" onClick={()=>{if(!this.props.disabled)this.navButtonClicked()}}>
           <div>Progress</div>
           <span>{text}</span>
           <span style={styles.caret} className="caret"></span>

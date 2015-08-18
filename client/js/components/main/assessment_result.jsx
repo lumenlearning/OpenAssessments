@@ -179,7 +179,7 @@ export default class AssessmentResult extends BaseComponent{
 
   getItemResults(){
     return this.state.questions.map((question, index)=>{
-      return <ItemResult question={question} isCorrect={this.state.assessmentResult.correct_list[index]} confidence={this.state.assessmentResult.confidence_level_list[index]}/>;
+      return <ItemResult question={question} isCorrect={this.state.assessmentResult.correct_list[index]} index={index} confidence={this.state.assessmentResult.confidence_level_list[index]}/>;
     })
   }
 
@@ -251,7 +251,7 @@ export default class AssessmentResult extends BaseComponent{
       <div style={styles.assessmentContainer}>
         <div style={styles.titleBar}>{quizType}: {this.state.assessment ? this.state.assessment.title : ""}</div>
         {errors}
-        <div className="row" style={styles.wrapperStyle}>
+        <div className="row" tabIndex="0" style={styles.wrapperStyle}>
 
           <div className="col-md-4 col-sm-4 col-xs-4" >
             <h3><strong>Your Score</strong></h3>

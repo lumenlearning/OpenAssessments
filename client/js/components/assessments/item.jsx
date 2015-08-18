@@ -27,6 +27,7 @@ export default class Item extends BaseComponent{
 
   confidenceLevelClicked(e, currentIndex){
     e.preventDefault()
+
     if(AssessmentStore.selectedAnswerId() && AssessmentStore.selectedAnswerId().length > 0){
       AssessmentActions.selectConfidenceLevel(e.target.value, currentIndex);
       if(this.props.currentIndex == this.props.questionCount - 1 && this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
@@ -38,6 +39,7 @@ export default class Item extends BaseComponent{
     } else {
       this.setState({showMessage: true});
     }
+    document.getElementById("focus").focus();
   }
 
   submitButtonClicked(e){
@@ -331,7 +333,7 @@ export default class Item extends BaseComponent{
           <div style={formativeStyle}>
             {formativeHeader}
             <form className="edit_item">
-              <div className="full_question" style={styles.fullQuestion}>
+              <div className="full_question" tabIndex="0" style={styles.fullQuestion}>
                 <div className="inner_question">
                   <div className="question_text" style={styles.questionText}>
                     <div style={styles.chooseText}>Choose <b>ALL</b> that apply.</div>
