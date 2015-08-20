@@ -17,6 +17,12 @@ class ItemResult < ActiveRecord::Base
 
   STATUS_VALUES = [STATUS_INITIAL, STATUS_PENDING_SUBMISSION, STATUS_PENDING_RESPONSE_PROCESSING, STATUS_FINAL]
 
+  CONFIDENCE_MAP = {
+          "Just A Guess" => 0,
+          "Pretty Sure" => 1,
+          "Very Sure" => 2,
+  }
+
   def validate_session_status
     if !STATUS_VALUES.include?(self.session_status)
       raise "Not a valid session status."

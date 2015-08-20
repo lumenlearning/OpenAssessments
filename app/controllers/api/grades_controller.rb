@@ -71,6 +71,7 @@ class Api::GradesController < Api::ApiController
           correct_list[index] = correct[:name]
         end
         confidence_level_list[index] = question["confidenceLevel"]
+        confidence_level_int = ItemResult::CONFIDENCE_MAP[question["confidenceLevel"]]
 
         if item = assessment.items.find_by(identifier: question["id"])
 
@@ -88,7 +89,7 @@ class Api::GradesController < Api::ApiController
             ip_address: request.ip,
             referer: referer,
             rendered_datestamp: rendered_time,
-            confidence_level: question["confidenceLevel"],
+            confidence_level: confidence_level_int,
             score: question["score"],
             outcome_guid: question["outcome_guid"],
             sequence_index: index,
@@ -113,7 +114,7 @@ class Api::GradesController < Api::ApiController
               ip_address: request.ip,
               referer: referer,
               rendered_datestamp: rendered_time,
-              confidence_level: question["confidenceLevel"],
+              confidence_level: confidence_level_int,
               score: question["score"],
               outcome_guid: question["outcome_guid"],
               sequence_index: index,

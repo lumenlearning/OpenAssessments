@@ -238,8 +238,6 @@ class ApplicationController < ActionController::Base
           name = params[:roles] if name.blank? # If the name is blank then use their
 
           # If there isn't an email then we have to make one up. We use the user_id and instance guid
-          
-          debugger
           email = params[:lis_person_contact_email_primary] || "#{params[:user_id]}@#{params["custom_canvas_api_domain"]}"
           email = "#{params[:user_id]}_#{params[:tool_consumer_instance_guid]}@example.com" if email.blank?
           
