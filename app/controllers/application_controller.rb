@@ -239,7 +239,7 @@ class ApplicationController < ActionController::Base
 
           # If there isn't an email then we have to make one up. We use the user_id and instance guid
           
-          # MAKE SURE THAT WE REMOVE THIS because the test user doesnt have an email.
+          debugger
           email = params[:lis_person_contact_email_primary] || "#{params[:user_id]}@#{params["custom_canvas_api_domain"]}"
           email = "#{params[:user_id]}_#{params[:tool_consumer_instance_guid]}@example.com" if email.blank?
           
@@ -276,6 +276,8 @@ class ApplicationController < ActionController::Base
         user.save!
       rescue ActiveRecord::RecordInvalid => ex
         if ex.to_s == "Validation failed: Email has already been taken"
+          false
+        elsif ex.to_s == "Validation failed: Email is invalid"
           false
         else
           raise ex
