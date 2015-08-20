@@ -78,7 +78,8 @@ class Api::AssessmentResultsController < Api::ApiController
               ident: ir.identifier,
               responses_chosen: ir.answers_chosen.split(","),
               outcome_guid: ir.outcome_guid,
-              score: ir.score
+              score: ir.score,
+              confidence_level: ir.confidence_level
       }
     end
 
