@@ -239,8 +239,7 @@ class ApplicationController < ActionController::Base
 
           # If there isn't an email then we have to make one up. We use the user_id and instance guid
           email = params[:lis_person_contact_email_primary] || "#{params[:user_id]}@#{params["custom_canvas_api_domain"]}"
-          email = "#{params[:user_id]}_#{params[:tool_consumer_instance_guid]}@example.com" if email.blank?
-          
+          email = "#{params[:user_id]}_#{params[:tool_consumer_instance_guid].try(:strip)}@example.com" if email.blank?
           @user = User.new(email: email, name: name)
           @user.password              = ::SecureRandom::hex(15)
           @user.password_confirmation = @user.password
@@ -251,7 +250,7 @@ class ApplicationController < ActionController::Base
           count = 0
           while !safe_save_email(@user) && count < 10 do
             # Email was taken. Generate a fake email and save again
-            @user.email = "#{params[:user_id]}_#{count}_#{params[:tool_consumer_instance_guid]}@example.com"
+            @user.email = "#{params[:user_id]}_#{count}_#{params[:tool_consumer_instance_guid].try(:strip)}@example.com"
             count = count + 1
           end
           
