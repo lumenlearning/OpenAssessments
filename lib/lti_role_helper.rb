@@ -28,7 +28,8 @@ class LtiRoleHelper
   end
 
   def context_student?
-    has_exact_role?('Learner') || has_exact_role?('urn:lti:role:ims/lis/Learner')
+    # `Student` isn't in the LTI docs as a standard context role, but some TCs send it.
+    has_exact_role?('Learner') || has_exact_role?('urn:lti:role:ims/lis/Learner') || has_exact_role?('Student')
   end
 
   def context_instructor?
