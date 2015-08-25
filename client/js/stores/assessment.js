@@ -111,6 +111,8 @@ function getItems(sections, perSec){
       }
       if(item == -1) continue;
 
+      //todo: do this based on assessment setting
+      item.answers = _.shuffle(item.answers);
       items.push(item);
     }
   }
