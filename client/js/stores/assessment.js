@@ -96,25 +96,34 @@ function getItems(sections, perSec){
 
   var items = [];
   if(!perSec || perSec <= 0){
-    return sections[0].items
-  } 
-  for(var i=1; i<sections.length; i++){
-    var count = perSec > sections[i].items.length ? sections[i].items.length : perSec;
-    for(var j=0; j < count; j++){
-      var item = _.sample(sections[i].items);
-      for(var k=0; k<items.length; k++){
-        if(item.id == items[k].id){
-          j--; 
-          item=-1;
-          break;
-        }
-      }
-      if(item == -1) continue;
+     for (var i = 1; i < sections.length; i++) {
+          for (var j = 0; j < sections[i].items.length; j++) {
+              var item = sections[i].items[j];
 
-      //todo: do this based on assessment setting
-      item.answers = _.shuffle(item.answers);
-      items.push(item);
-    }
+              //todo: do this based on assessment setting
+              item.answers = _.shuffle(item.answers);
+              items.push(item);
+          }
+      }
+  } else {
+      for (var i = 1; i < sections.length; i++) {
+          var count = perSec > sections[i].items.length ? sections[i].items.length : perSec;
+          for (var j = 0; j < count; j++) {
+              var item = _.sample(sections[i].items);
+              for (var k = 0; k < items.length; k++) {
+                  if (item.id == items[k].id) {
+                      j--;
+                      item = -1;
+                      break;
+                  }
+              }
+              if (item == -1) continue;
+
+              //todo: do this based on assessment setting
+              item.answers = _.shuffle(item.answers);
+              items.push(item);
+          }
+      }
   }
   return items;
 }
