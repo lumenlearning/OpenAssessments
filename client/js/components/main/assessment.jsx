@@ -51,7 +51,7 @@ export default class Assessment extends BaseComponent{
   }
 
   popup(){
-    return "Don’t leave!\n If you leave this page now your quiz won't be scored, but it will still count as an attempt.\n\n If you want to skip a question or return to a previous question, stay on this page and then use the \"Progress\" drop-down menu";
+    return "Don’t leave!\n If you leave now your quiz won't be scored, but it will still count as an attempt.\n\n If you want to skip a question or return to a previous question, stay on this quiz and then use the \"Progress\" drop-down menu";
   }
 
 
