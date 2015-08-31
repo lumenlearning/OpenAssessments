@@ -11,6 +11,8 @@ import Logout             from './components/sessions/logout';
 import Register           from './components/users/register';
 import NotFound           from './components/not_found';
 import About              from './components/main/about';
+// For IE Promise support
+require('es6-promise').polyfill();
 
 var Route         = Router.Route;
 var NotFoundRoute = Router.NotFoundRoute;

@@ -8,6 +8,11 @@ import AssessmentActions    from "../../actions/assessment";
 import ItemResult           from "./item_result";
 import CommunicationHandler from "../../utils/communication_handler";
 
+//polyfill trunc
+Math.trunc = Math.trunc || function(x) {
+  return x < 0 ? Math.ceil(x) : Math.floor(x);
+};
+
 export default class AssessmentResult extends BaseComponent{
 
   constructor(props, context){
