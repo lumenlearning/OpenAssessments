@@ -63,7 +63,7 @@ export default class CheckUnderstanding extends React.Component{
       icon: {
         height: "62px",
         width: "62px",
-        fontColor: theme.probablyBackgroundColor
+        fontColor: theme.primaryBackgroundColor
       },
       formative: {
         padding: "0px",
@@ -73,7 +73,7 @@ export default class CheckUnderstanding extends React.Component{
         marginTop: "-5px"
       },
       checkDiv: {
-        backgroundColor: theme.probablyBackgroundColor,
+        backgroundColor: theme.primaryBackgroundColor,
         margin: "20px 0px 0px 0px"
       },
       selfCheck: {

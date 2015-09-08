@@ -120,7 +120,7 @@ export default class AssessmentResult extends BaseComponent{
       },
       header: {
         padding: "15px",
-        backgroundColor: theme.probablyBackgroundColor,
+        backgroundColor: theme.primaryBackgroundColor,
         position: "absolute",
         top: "0px",
         left: "0px",
@@ -150,7 +150,7 @@ export default class AssessmentResult extends BaseComponent{
       },
         exitButton: {
         width: theme.definitelyWidth,
-        backgroundColor: theme.probablyBackgroundColor,
+        backgroundColor: theme.primaryBackgroundColor,
         color: theme.definitelyColor,
         marginLeft: "15px"
       },
@@ -164,7 +164,7 @@ export default class AssessmentResult extends BaseComponent{
         left: "0px",
         width: "100%",
         padding: "10px 20px 10px 20px",
-        backgroundColor: theme.probablyBackgroundColor,
+        backgroundColor: theme.primaryBackgroundColor,
         color: "white",
         fontSize: "130%",
         //fontWeight: "bold"
@@ -297,7 +297,7 @@ export default class AssessmentResult extends BaseComponent{
     var feedback = "";
     var head = "";
     if(score == 100){
-      head = <h4 style={{color: this.context.theme.probablyBackgroundColor}}>{"Looks like you're getting it!"}</h4>
+      head = <h4 style={{color: this.context.theme.definitelyBackgroundColor}}>{"Looks like you're getting it!"}</h4>
       feedback = "You're ready to move on to the next section.";
       image = <img style={styles.outcomeIcon} src={this.state.settings.images.CheckMark_svg} />
     } else if (score > 75){
@@ -311,7 +311,7 @@ export default class AssessmentResult extends BaseComponent{
     }
 
     var results = this.state.questions.map((question, index)=>{
-      var color = this.state.assessmentResult.correct_list[index] ? this.context.theme.probablyBackgroundColor : this.context.theme.maybeBackgroundColor;
+      var color = this.state.assessmentResult.correct_list[index] ? this.context.theme.definitelyBackgroundColor : this.context.theme.maybeBackgroundColor;
       var message = this.state.assessmentResult.correct_list[index] ? "Correct" : "Incorrect";
       var confidenceColor;
       if(this.state.assessmentResult.correct_list[index] == "partial"){

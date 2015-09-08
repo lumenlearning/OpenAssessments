@@ -2,6 +2,7 @@
 import defines from "./defines";
 
 export default {
+  primaryBackgroundColor: defines.lumenSeafoam,
   titleBarBackgroundColor: defines.lightgray,
   progressBarColor: defines.lumenSeafoam,
   progressBarHeight: "10px",
@@ -19,9 +20,9 @@ export default {
   panelMarginBottom: "-30px",
   maybeBackgroundColor: defines.lumenRed + " !important",
   maybeColor: defines.white,
-  probablyBackgroundColor: defines.lumenSeafoam + " !important",
+  probablyBackgroundColor: defines.lumenBlue + " !important",
   probablyColor: defines.white,
-  definitelyBackgroundColor: defines.lumenBlue + " !important",
+  definitelyBackgroundColor: defines.lumenSeafoam + " !important",
   definitelyColor: defines.white,
   confidenceWrapperBackgroundColor: defines.lightergray,
 

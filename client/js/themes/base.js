@@ -2,6 +2,9 @@
 import defines from "./defines";
 
 export default {
+  // FOR THINGS LIKE THE BAR ACROSS THE TOP
+  primaryBackgroundColor: defines.buttonFace + " !important",
+
   // QUESTION TEXT
   questionTextFontSize: "18px",
   questionTextFontWeight: "bold",

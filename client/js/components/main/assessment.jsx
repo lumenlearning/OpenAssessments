@@ -89,7 +89,7 @@ export default class Assessment extends BaseComponent{
         left: "0px",
         width: "100%",
         padding: "10px 20px 10px 20px",
-        backgroundColor: theme.probablyBackgroundColor,
+        backgroundColor: theme.primaryBackgroundColor,
         color: "white",
         fontSize: "130%",
         minWidth: minWidth,

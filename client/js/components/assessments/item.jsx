@@ -169,7 +169,7 @@ export default class Item extends BaseComponent{
       icon: {
         height: "62px",
         width: "62px",
-        fontColor: theme.probablyBackgroundColor
+        fontColor: theme.primaryBackgroundColor
       },
       data: {
         marginTop: "-5px"
@@ -178,7 +178,7 @@ export default class Item extends BaseComponent{
         fontSize: "140%"
       },
       checkDiv: {
-        backgroundColor: theme.probablyBackgroundColor,
+        backgroundColor: theme.primaryBackgroundColor,
         margin: "20px 0px 0px 0px"
       },
       h4: {
