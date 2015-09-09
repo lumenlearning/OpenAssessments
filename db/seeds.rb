@@ -58,5 +58,3 @@ if assessment = Assessment.find_by(title: 'drupal.xml')
   assessment.recommended_height = 960
   assessment.save!
 end
-
-

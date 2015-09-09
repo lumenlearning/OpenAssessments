@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: 5
+  host: localhost
+
+development:
+  <<: *default
+  database: openassessments_development
+
+test:
+  <<: *default
+  database: openassessments_test
+
+production:
+  <<: *default
+  database: openassessments_production
+  username: openassessments
