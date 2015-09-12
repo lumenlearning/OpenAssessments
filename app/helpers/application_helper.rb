@@ -18,7 +18,12 @@ module ApplicationHelper
 
   def jwt_token
     return unless signed_in?
-    AuthToken.issue_token({ user_id: current_user.id })
+
+    payload = { user_id: current_user.id }
+    if @lti_role == 'admin' && @external_context_id
+      payload[AuthToken::ADMIN_SCOPES] = [@external_context_id]
+    end
+    AuthToken.issue_token(payload)
   end
 
   def client_images(*images)

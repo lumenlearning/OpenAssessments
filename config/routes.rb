@@ -59,7 +59,9 @@ Rails.application.routes.draw do
   match 'oembed' => 'oembed#endpoint', :via => [:get, :post]
 
   namespace :api do
-    resources :user_assessments
+    resources :user_assessments do
+      put '/update_attempts', to: "user_assessments#update_attempts"
+    end
     resources :assessments
     resources :assessment_results do
       post 'send', to: 'assessment_results#send_result_to_analytics'

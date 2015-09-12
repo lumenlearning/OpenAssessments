@@ -1,6 +1,7 @@
 require 'jwt'
 
 module AuthToken
+  ADMIN_SCOPES = 'admin_scopes'
 
   # More information on jwt available at
   # http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#rfc.section.4.1.6

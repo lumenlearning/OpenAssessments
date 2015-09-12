@@ -14,7 +14,8 @@ class User < ActiveRecord::Base
 
   has_many :permissions
   has_many :roles, :through => :permissions
-  
+
+  has_many :user_assessments
   has_many :assessment_results
   has_many :item_results
   has_many :assessments

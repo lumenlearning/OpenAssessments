@@ -10,4 +10,8 @@ class UserAssessment < ActiveRecord::Base
     self.most_recent_attempt_at = Time.now
     self.save!
   end
+
+  def assessment_results
+    AssessmentResult.where(user_id: self.user_id).where(assessment_id: self.assessment_id)
+  end
 end

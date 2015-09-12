@@ -31,6 +31,7 @@ class AssessmentsController < ApplicationController
     @results_end_point = ensure_scheme(params[:results_end_point]) if params[:results_end_point].present?
     @style = params[:style] ? params[:style] :  ""
     @per_sec = params[:per_sec] ? params[:per_sec] : nil
+    @account_id = current_account.id
     set_lti_role
 
     if params[:id].present? && !['load', 'offline'].include?(params[:id])

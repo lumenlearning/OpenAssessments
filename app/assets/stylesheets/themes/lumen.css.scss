@@ -1,0 +1,44 @@
+#attempts_table {
+    min-width: 600px;
+}
+#attempts_table tr {
+    border: 1px solid #D2D2D2;
+}
+#attempts_table th.reactable-header-sortable,
+#attempts_table th.reactable-header-sort-asc,
+#attempts_table th.reactable-header-sort-desc {
+    cursor: pointer;
+}
+#attempts_table th.reactable-header-sortable::after {
+    content: '\25BD';
+    font-size: 8px;
+    padding-left: 5px;
+}
+#attempts_table th.reactable-header-sort-asc::after {
+    content: '\25BC';
+    font-size: 8px;
+    padding-left: 5px;
+}
+#attempts_table th.reactable-header-sort-desc::after {
+    content: '\25B2';
+    font-size: 9px;
+    padding-left: 5px;
+}
+#attempts_table th,
+#attempts_table tr td {
+    text-align: center;
+}
+#attempts_table .reactable-filterer td {
+    text-align: left;
+}
+#attempts_table .reactable-filterer input {
+  width: 30em;
+  height: 3em;
+}
+#attempts_table tr:nth-of-type(even){
+  background:#F9F9F9
+}
+#attempts_table button{
+  margin-bottom: 4px;
+  margin-top: 4px;
+}

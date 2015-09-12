@@ -124,17 +124,24 @@ class ApplicationController < ActionController::Base
         raise InvalidTokenError if authorization.nil?
 
         token = request.headers['Authorization'].split(' ').last
-        decoded_token = AuthToken.valid?(token)
+        @jwt_payload, @jwt_header = AuthToken.valid?(token)
 
-        raise InvalidTokenError if Rails.application.secrets.auth0_client_id != decoded_token[0]["aud"]
-        
-        @user = User.find(decoded_token[0]['user_id'])
+        raise InvalidTokenError if Rails.application.secrets.auth0_client_id != @jwt_payload["aud"]
+
+        @user = User.find(@jwt_payload['user_id'])
         sign_in(@user, :event => :authentication)
         true
       rescue JWT::DecodeError, InvalidTokenError
         render :json => { :error => "Unauthorized: Invalid token." }, status: :unauthorized
         false
       end
+    end
+
+    # When a teacher/admin launches into a quiz the JWT they're issued lists the current
+    # lti context_id so that they can do administrative tasks in the scope of the
+    # course.
+    def token_has_admin_scope(context_id)
+      @jwt_payload && @jwt_payload[AuthToken::ADMIN_SCOPES] && @jwt_payload[AuthToken::ADMIN_SCOPES].member?(context_id)
     end
 
     # **********************************************

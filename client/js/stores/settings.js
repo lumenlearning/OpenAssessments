@@ -57,6 +57,7 @@ function loadSettings(defaultSettings){
     kind               : bestValue('kind', 'kind', 'formative'),
     externalUserId     : bestValue('externalUserId', 'external_user_id'),
     externalContextId  : bestValue('externalContextId', 'external_context_id'),
+    accountId          : bestValue('accountId', 'account_id'),
     keywords           : bestValue('keywords', 'keywords'),
     resultsEndPoint    : bestValue('resultsEndPoint', 'results_end_point', 'http  ://localhost  :4200/api'),
     confidenceLevels   : bestValue('confidenceLevels', 'confidence_levels', false),

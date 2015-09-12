@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150817212224) do
+ActiveRecord::Schema.define(version: 20150912234530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -304,7 +304,9 @@ ActiveRecord::Schema.define(version: 20150817212224) do
     t.string   "lti_role"
   end
 
+  add_index "user_assessments", ["assessment_id"], name: "index_user_assessments_on_assessment_id", using: :btree
   add_index "user_assessments", ["eid"], name: "index_user_assessments_on_eid", using: :btree
+  add_index "user_assessments", ["lti_context_id"], name: "index_user_assessments_on_lti_context_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",        null: false

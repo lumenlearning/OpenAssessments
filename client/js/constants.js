@@ -67,5 +67,11 @@ export default {
 
   CLEAR_STORE: "clear_store",
   LEVEL_SELECTED: "level_selected", 
-  CREATED_USER: "created_user"
+  CREATED_USER: "created_user",
+
+  // UserAssessments
+  USER_ASSESSMENTS_LOADING: "user_assessments_loading",
+  USER_ASSESSMENTS_LOADED: "user_assessments_loaded",
+  USER_ASSESSMENTS_UPDATING: "user_assessments_updating",
+  USER_ASSESSMENTS_UPDATED: "user_assessments_updated"
 };

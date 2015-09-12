@@ -5,6 +5,7 @@ import Router             from 'react-router';
 import Index              from './components/index';
 import Assessment         from './components/main/assessment';
 import Start              from './components/main/start';
+import Attempts           from './components/main/attempts';
 import AssessmentResult   from './components/main/assessment_result';
 import Login              from './components/sessions/login';
 import Logout             from './components/sessions/logout';
@@ -28,6 +29,7 @@ var routes = (
     <Route name="register" handler={Register}/>
     <Route name="logout" handler={Logout}/>
     <Route name="about" handler={About}/>
+    <Route name="attempts" handler={Attempts} path="attempts/:assessmentId/:contextId" />
     <NotFoundRoute handler={NotFound}/>
   </Route>
 );

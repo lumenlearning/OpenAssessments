@@ -12,6 +12,10 @@ export default class CheckUnderstanding extends React.Component{
     context.router.transitionTo("assessment");
   }
 
+  manageAttempts(){
+    this.context.router.transitionTo("attempts", {contextId: this.props.externalContextId, assessmentId: this.props.assessmentId});
+  }
+
   getStyles(props, theme){
     return {
       assessmentContainer:{
@@ -142,6 +146,10 @@ export default class CheckUnderstanding extends React.Component{
             </div>
   }
 
+  canManage(){
+    return this.props.assessmentKind.toUpperCase() == "SUMMATIVE" && this.props.ltiRole == "admin" && this.props.isLti;
+  }
+
   getFormative(styles){
     // THIS IS THE FRAME FOR CANDELLA SO ITS NOT BEING USED BUT ITS GOOD CODE
     // THAT WE MIGHT REUSE LATER
@@ -193,6 +201,14 @@ export default class CheckUnderstanding extends React.Component{
       startButton = "";
     }
 
+    var manageButton = null;
+    if(this.canManage()){
+        manageButton = <div style={styles.buttonWrapper}>
+                         <hr/>
+                         <button className="btn btn-info" onClick={()=>{this.manageAttempts()}}>Manage Quiz Attempts</button>
+                       </div>
+    }
+
 
     return (
       <div className="assessment_container" style={styles.assessmentContainer}>
@@ -204,6 +220,7 @@ export default class CheckUnderstanding extends React.Component{
           <div className="full_question" style={styles.fullQuestion}>
             {content}
             {startButton}
+            {manageButton}
           </div>
         </div>
       </div>

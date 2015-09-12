@@ -16,4 +16,8 @@ class AssessmentResult < ActiveRecord::Base
 
   STATUS_VALUES = [STATUS_INITIAL, STATUS_PENDING_SUBMISSION, STATUS_PENDING_RESPONSE_PROCESSING, STATUS_FINAL]
 
+  def user_assessment
+    UserAssessment.find_by_assessment_id_and_user_id(self.assessment_id, self.user_id)
+  end
+
 end
