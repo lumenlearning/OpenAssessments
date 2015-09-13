@@ -136,6 +136,10 @@ export default {
     Api.post(Constants.ASSESSMENT_POST_ANALYTICS, 'api/assessment_results/' + results_id + '/send?external_user_id=' + user_id + '&external_context_id=' + context_id);
   },
 
+  assessmentPostLtiOutcome(results_id){
+    Api.post(Constants.ASSESSMENT_POST_LTI_OUTCOME, 'api/assessment_results/' + results_id + '/lti_outcome');
+  },
+
   itemViewed(settings, assessment, assessment_result){
     var body = {
       item_result : {

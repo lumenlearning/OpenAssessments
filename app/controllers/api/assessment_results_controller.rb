@@ -21,6 +21,18 @@ class Api::AssessmentResultsController < Api::ApiController
     respond_with(:api, assessment_result)
   end
 
+  def send_lti_outcome
+    raise "no api user" unless current_user
+    result = @current_user.assessment_results.find(params[:assessment_result_id])
+
+    if result.post_lti_outcome!
+      render json: {message: "OK"}
+    else
+      Rails.logger.error("Failed sending lti grade: AssessmentResult #{result.id} Errors: #{result.outcome_error_message}")
+      render json: {message: "Failed to send grade for AssessmentResult #{result.id}"}, status: :internal_server_error
+    end
+  end
+
   def send_result_to_analytics
     if request.headers["Authorization"].present? &&
             request.headers["Authorization"] != "Bearer null"

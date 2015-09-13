@@ -65,6 +65,7 @@ Rails.application.routes.draw do
     resources :assessments
     resources :assessment_results do
       post 'send', to: 'assessment_results#send_result_to_analytics'
+      post 'lti_outcome', to: 'assessment_results#send_lti_outcome'
     end
     resources :item_results
     resources :grades

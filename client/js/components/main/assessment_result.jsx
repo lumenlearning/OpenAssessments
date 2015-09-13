@@ -20,6 +20,7 @@ export default class AssessmentResult extends BaseComponent{
     this._bind("getItemResults", "getStyles", "getOutcomeLists", "getContent", "getFormativeContent", "retake");
     this.stores = [AssessmentStore, SettingsStore];
     this.state = this.getState();
+    this.sendLtiOutcome();
     this.sendAnalytics();
   }
 
@@ -31,12 +32,17 @@ export default class AssessmentResult extends BaseComponent{
       questions        : AssessmentStore.allQuestions(),
       outcomes         : AssessmentStore.outcomes(),
       settings         : SettingsStore.current(),
-      assessment       : AssessmentStore.current(),
+      assessment       : AssessmentStore.current()
     }
   }
 
   sendAnalytics(){
     AssessmentActions.assessmentPostAnalytics(this.state.assessmentResult.assessment_results_id, this.state.settings.externalUserId, this.state.settings.externalContextId);
+  }
+  sendLtiOutcome(){
+    if(this.isSummative() && this.state.assessmentResult.assessment_results_id){
+      AssessmentActions.assessmentPostLtiOutcome(this.state.assessmentResult.assessment_results_id);
+    }
   }
 
   componentDidMount(){
@@ -46,6 +52,10 @@ export default class AssessmentResult extends BaseComponent{
   retake(){
     AssessmentActions.retakeAssessment();
     this.context.router.transitionTo("start");
+  }
+
+  isSummative(){
+    return this.state.settings.assessmentKind.toUpperCase() == "SUMMATIVE";
   }
 
   getStyles(theme){
@@ -250,7 +260,7 @@ export default class AssessmentResult extends BaseComponent{
                 </div>
     }
 
-    var quizType = this.state.settings.assessmentKind.toUpperCase() == "SUMMATIVE" ? "Quiz" : "Show What You Know";
+    var quizType = this.isSummative() ? "Quiz" : "Show What You Know";
 
     return (<div style={styles.assessment}>
       <div style={styles.assessmentContainer}>

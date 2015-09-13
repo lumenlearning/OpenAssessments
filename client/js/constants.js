@@ -20,6 +20,7 @@ export default {
   ASSESSMENT_CHECK_ANSWER: "assessment_check_answer",
   ASSESSMENT_VIEWED: "assessment_viewed",
   ASSESSMENT_POST_ANALYTICS: "assessment_post_analytics",
+  ASSESSMENT_POST_LTI_OUTCOME: "assessment_post_lti_outcome",
   ASSESSMENT_SUBMITTED: "assessment_submitted",
   ANSWER_SELECTED: "answer_selected",
   ASSESSMENT_GRADED: "assessment_graded",

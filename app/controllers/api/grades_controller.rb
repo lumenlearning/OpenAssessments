@@ -18,7 +18,6 @@ class Api::GradesController < Api::ApiController
     doc = Nokogiri::XML(assessment.assessment_xmls.where(kind: "formative").last.xml)
     doc.remove_namespaces!
     xml_questions = doc.xpath("//item")
-    errors = []
     settings = item_to_grade["settings"]
     result = assessment.assessment_results.build
     result.identifier = item_to_grade["identifier"]
@@ -135,10 +134,6 @@ class Api::GradesController < Api::ApiController
     end
 
 
-    score = Float(answered_correctly) / Float(questions.length)
-    score *= Float(100)
-    result.score = score
-
     # if it needs an lti grade write-back save the info
     if settings["isLti"] && assessment.summative?
       result.external_user_id = settings["externalUserId"]
@@ -151,22 +146,19 @@ class Api::GradesController < Api::ApiController
       result.session_status = AssessmentResult::STATUS_FINAL
     end
 
+    score = (Float(answered_correctly) / Float(questions.length)) * Float(100)
+    result.score = score
     result.save!
 
-    unless result.post_lti_outcome!
-      errors << result.outcome_error_message
-    end
-
-    graded_assessment = { 
+    graded_assessment = {
       score: score,
       feedback: "Study Harder",
       correct_list: correct_list,
       confidence_level_list: confidence_level_list,
       lti_params: params,
       assessment_results_id: result.id,
-      errors: errors
     }
-    # Ping analytics server
+
     respond_to do |format|
       format.json { render json: graded_assessment }
     end
