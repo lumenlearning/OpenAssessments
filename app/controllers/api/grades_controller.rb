@@ -1,8 +1,12 @@
 class Api::GradesController < Api::ApiController
   
-  skip_before_action :validate_token, only: [:create, :send_result_to_analytics]
+  skip_before_action :validate_token, only: [:create]
   
   def create
+    if request.headers["Authorization"].present? &&
+            request.headers["Authorization"] != "Bearer null"
+      return unless validate_token
+    end
 
     # store lis stuff in session
     answered_correctly = 0;
@@ -66,19 +70,21 @@ class Api::GradesController < Api::ApiController
           answered_correctly = Float(answered_correctly) + p_score
           question["score"] = p_score
           correct_list[index] = correct[:name]
+          correct = false
         end
         confidence_level_list[index] = question["confidenceLevel"]
         confidence_level_int = ItemResult::CONFIDENCE_MAP[question["confidenceLevel"]]
 
         if item = assessment.items.find_by(identifier: question["id"])
 
-          rendered_time, referer, user = tracking_info
+          rendered_time = Time.now
+          referer = request.env['HTTP_REFERER']
           item.item_results.create(
             identifier: question["id"],
             item_id: item.id,
             eid: item.id,
             correct: correct,
-            external_user_id: params["external_user_id"],
+            external_user_id: settings["externalUserId"],
             time_elapsed: question["timeSpent"],
             src_url: settings["srcUrl"],
             assessment_result_id: result.id,
@@ -93,7 +99,8 @@ class Api::GradesController < Api::ApiController
             answers_chosen: answers[index].is_a?(Array) ? answers[index].join(",") : answers
           )
         else
-          rendered_time, referer, user = tracking_info
+          rendered_time = Time.now
+          referer = request.env['HTTP_REFERER']
           item = assessment.items.build
           item.identifier = question["id"]
           item.question_text = question["material"]
@@ -103,7 +110,7 @@ class Api::GradesController < Api::ApiController
               item_id: item.id,
               eid: item.id,
               correct: correct,
-              external_user_id: params["external_user_id"],
+              external_user_id: settings["externalUserId"],
               time_elapsed: question["timeSpent"],
               src_url: settings["srcUrl"],
               assessment_result_id: result.id,
@@ -132,7 +139,7 @@ class Api::GradesController < Api::ApiController
 
     #save the assessment result incase lti writeback failed.
     result.score = score
-    result.external_user_id = params["external_user_id"]
+    result.external_user_id = settings["externalUserId"]
     result.save!
     params = {
       'lis_result_sourcedid'    => settings["lisResultSourceDid"],
