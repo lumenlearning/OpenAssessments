@@ -87,7 +87,8 @@ export default {
       lisUserId: settings.lisUserId,
       isLti: settings.isLti,
       ltiRole: settings.ltiRole,
-      assessmentKind: settings.assessmentKind
+      assessmentKind: settings.assessmentKind,
+      accountId: settings.accountId
     };
     var body = {
       itemToGrade: {
@@ -97,7 +98,7 @@ export default {
         identifier   : identifier,
         settings     : settings
       }
-    }
+    };
     Api.post(Constants.ASSESSMENT_GRADED,'api/grades', body);
   },
 
