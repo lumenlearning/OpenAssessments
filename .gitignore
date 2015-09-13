@@ -18,6 +18,7 @@ secrets.js
 # TODO Comment out these rules if you are OK with secrets being uploaded to the repo
 config/secrets.yml
 config/database.yml
+config/newrelic.yml
 bin/deploy
 
 ## Environment normalisation:
