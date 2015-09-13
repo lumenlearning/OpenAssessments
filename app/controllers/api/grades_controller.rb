@@ -16,7 +16,6 @@ class Api::GradesController < Api::ApiController
     assessment_id = item_to_grade["assessmentId"]
     assessment = Assessment.find(assessment_id)
     doc = Nokogiri::XML(assessment.assessment_xmls.where(kind: "formative").last.xml)
-    previous_result = current_user.present? ? current_user.assessment_results.where(assessment_id: assessment.id).first : nil
     doc.remove_namespaces!
     xml_questions = doc.xpath("//item")
     errors = []
@@ -26,6 +25,7 @@ class Api::GradesController < Api::ApiController
     result.external_user_id = settings["externalUserId"]
     result.attempt = settings["userAttempts"]
     result.user = current_user
+    result.session_status = AssessmentResult::STATUS_PENDING_RESPONSE_PROCESSING
     result.save!
     correct_list = []
     confidence_level_list = []
@@ -133,66 +133,29 @@ class Api::GradesController < Api::ApiController
       # if the Id isn't found then there has been an error and return the error
     
     end
+
+
     score = Float(answered_correctly) / Float(questions.length)
-    canvas_score = score
     score *= Float(100)
-
-    #save the assessment result incase lti writeback failed.
     result.score = score
-    result.external_user_id = settings["externalUserId"]
+
+    # if it needs an lti grade write-back save the info
+    if settings["isLti"] && assessment.summative?
+      result.external_user_id = settings["externalUserId"]
+      result.lis_result_sourcedid = settings["lisResultSourceDid"]
+      result.lis_outcome_service_url = settings["lisOutcomeServiceUrl"]
+      result.lis_user_id = settings["lisUserId"]
+      result.lti_role = settings["ltiRole"]
+      result.session_status = AssessmentResult::STATUS_PENDING_LTI_OUTCOME
+    else
+      result.session_status = AssessmentResult::STATUS_FINAL
+    end
+
     result.save!
-    params = {
-      'lis_result_sourcedid'    => settings["lisResultSourceDid"],
-      'lis_outcome_service_url' => settings["lisOutcomeServiceUrl"],
-      'user_id'                 => settings["lisUserId"]
-    }
 
-    success = false;
-
-    higher_grade = true
-
-    if previous_result.present? && previous_result.score && previous_result.score > score
-      higher_grade = false
+    unless result.post_lti_outcome!
+      errors << result.outcome_error_message
     end
-    # TODO find out a better way to do this. This will work just fine as long as there is a max of 2 attempts.
-
-    if settings["isLti"] && settings["assessmentKind"].upcase == "SUMMATIVE" && settings["ltiRole"] != "admin" && higher_grade 
-      begin
-      provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
-
-      # post the given score to the TC
-      canvas_score = (canvas_score != '' ? canvas_score.to_s : nil)
-
-      res = provider.post_replace_result!(canvas_score)
-
-      # Need to figure out error handling - these will need to be passed to the client
-      # or we can also post scores async using activejob in which case we'll want to
-      # log any errors and make them visible in the admin ui
-      success = res.success?
-      rescue Exception => e
-        begin
-        provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
-
-        # post the given score to the TC
-        canvas_score = (canvas_score != '' ? canvas_score.to_s : nil)
-
-        res = provider.post_replace_result!(canvas_score)
-
-        # Need to figure out error handling - these will need to be passed to the client
-        # or we can also post scores async using activejob in which case we'll want to
-        # log any errors and make them visible in the admin ui
-        success = res.success?
-        rescue Exception => e
-          
-          errors.push(e.message)
-        end
-      end
-
-      if !success
-        errors.push("Grade writeback failed.")
-      end
-    end
-
 
     graded_assessment = { 
       score: score,

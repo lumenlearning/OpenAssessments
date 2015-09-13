@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150912234530) do
+ActiveRecord::Schema.define(version: 20150913213529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,10 +62,12 @@ ActiveRecord::Schema.define(version: 20150912234530) do
     t.string   "objectives",         limit: 1024
     t.float    "score"
     t.integer  "attempt"
+    t.jsonb    "lti_outcome_data",                default: {}, null: false
   end
 
   add_index "assessment_results", ["assessment_id"], name: "index_assessment_results_on_assessment_id", using: :btree
   add_index "assessment_results", ["referer"], name: "index_assessment_results_on_referer", using: :btree
+  add_index "assessment_results", ["session_status"], name: "index_assessment_results_on_session_status", using: :btree
   add_index "assessment_results", ["user_id"], name: "index_assessment_results_on_user_id", using: :btree
 
   create_table "assessment_settings", force: :cascade do |t|

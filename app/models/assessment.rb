@@ -104,4 +104,16 @@ class Assessment < ActiveRecord::Base
     end
   end
 
+  def summative?
+    self.kind == 'summative'
+  end
+
+  def formative?
+    self.kind == 'formative'
+  end
+
+  def swyk?
+    self.kind == 'show_what_you_know'
+  end
+
 end
