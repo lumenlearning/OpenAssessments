@@ -39,7 +39,7 @@ export default class Item extends BaseComponent{
     } else {
       this.setState({showMessage: true});
     }
-    document.getElementById("focus").focus();
+    if(document.getElementById("focus")){document.getElementById("focus").focus();}
   }
 
   submitButtonClicked(e){
