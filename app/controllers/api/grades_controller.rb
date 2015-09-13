@@ -10,7 +10,6 @@ class Api::GradesController < Api::ApiController
     item_to_grade = body["itemToGrade"]
     questions = item_to_grade["questions"]
     assessment_id = item_to_grade["assessmentId"]
-    outcomes = item_to_grade["outcomes"]
     assessment = Assessment.find(assessment_id)
     doc = Nokogiri::XML(assessment.assessment_xmls.where(kind: "formative").last.xml)
     previous_result = current_user.present? ? current_user.assessment_results.where(assessment_id: assessment.id).first : nil
@@ -26,8 +25,6 @@ class Api::GradesController < Api::ApiController
     result.save!
     correct_list = []
     confidence_level_list = []
-    positive_outcome_list = []
-    negative_outcome_list = []
     answers = item_to_grade["answers"]
     ungraded_questions = []
     xml_index_list = []
@@ -195,12 +192,6 @@ class Api::GradesController < Api::ApiController
       feedback: "Study Harder",
       correct_list: correct_list,
       confidence_level_list: confidence_level_list,
-      ungraded_questions: ungraded_questions,
-      item_to_grade:item_to_grade,
-      xml_questions: xml_questions,
-      xml_index_list: xml_index_list,
-      questions: questions,
-      doc: doc,
       lti_params: params,
       assessment_results_id: result.id,
       errors: errors
