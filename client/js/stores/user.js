@@ -3,6 +3,7 @@
 import Dispatcher     from "../dispatcher";
 import Constants      from "../constants";
 import StoreCommon    from "./store_common";
+import SessionStore    from "./session";
 import assign         from "object-assign";
 
 var _user = {};
@@ -14,7 +15,7 @@ function login(payload){
   _user.displayName = payload.data.body.displayName;
   // We get a JWT back.
   var jwt = payload.data.body.jwt_token;
-  localStorage.setItem('jwt', jwt);
+  SessionStore.setJwt(jwt);
   logoutState = 1;
 }
 
@@ -30,7 +31,7 @@ function loadUserFromSettings(payload) {
 }
 
 function logout(){
-  localStorage.removeItem('jwt');
+  SessionStore.clearJwt();
   logoutState = 2;
 }
 
@@ -43,11 +44,11 @@ var UserStore = assign({}, StoreCommon, {
   },
 
   loggedIn(){
-    return localStorage.getItem('jwt') !== null;
+    return SessionStore.getJwt() !== null;
   },
 
   jwt(){
-    return localStorage.getItem('jwt');
+    return SessionStore.getJwt();
   },
 
   logoutStatus(){

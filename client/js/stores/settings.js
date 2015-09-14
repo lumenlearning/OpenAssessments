@@ -3,6 +3,7 @@
 import Dispatcher     from "../dispatcher";
 import Constants      from "../constants";
 import StoreCommon    from "./store_common";
+import SessionStore   from "./session";
 import assign         from "object-assign";
 import QueryString    from '../utils/query_string';
 import Utils          from '../utils/utils';
@@ -39,9 +40,9 @@ function loadSettings(defaultSettings){
 
   var jwt = (defaultSettings.jwt && defaultSettings.jwt.length) ? defaultSettings.jwt : null;
   if(jwt!==null) {
-    localStorage.setItem('jwt', jwt);
+    SessionStore.setJwt(jwt);
   } else {
-    localStorage.removeItem('jwt');
+    SessionStore.clearJwt();
   }
 
     var enableStart = bestValue('enableStart', 'enable_start', false);
