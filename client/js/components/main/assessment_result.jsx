@@ -245,7 +245,7 @@ export default class AssessmentResult extends BaseComponent{
       negativeList: negativeList
     };
   }
-  // for sumative and swyk assessments
+  // for summative and swyk assessments
   getContent(styles, itemResults, outcomeLists, contentData){
 
     var errors = "";
