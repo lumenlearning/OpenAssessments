@@ -106,19 +106,15 @@ function getItems(sections, perSec){
           }
       }
   } else {
-      for (var i = 1; i < sections.length; i++) {
+         for (var i = 1; i < sections.length; i++) {
           var count = perSec > sections[i].items.length ? sections[i].items.length : perSec;
           for (var j = 0; j < count; j++) {
-              var item = _.sample(sections[i].items);
+              var item = sections[i].items[j];
               for (var k = 0; k < items.length; k++) {
                   if (item.id == items[k].id) {
-                      j--;
-                      item = -1;
-                      break;
+                    console.error("two items have the same id.");
                   }
               }
-              if (item == -1) continue;
-
               //todo: do this based on assessment setting
               item.answers = _.shuffle(item.answers);
               items.push(item);
