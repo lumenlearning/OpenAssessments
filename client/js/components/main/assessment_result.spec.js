@@ -27,7 +27,7 @@ describe('assessment result', function() {
     SettingsActions.load(settings);
     jasmine.clock().tick();
     jasmine.Ajax.install();
-    AssessmentActions.submitAssessment("100", 0, "questions", "answers");
+    AssessmentActions.submitAssessment("100", 0, [{}], "answers", {});
     jasmine.Ajax.requests.mostRecent().respondWith({
       "status"        : 200,
       "contentType"     : "text/plain",
