@@ -37,7 +37,9 @@ export default class AssessmentResult extends BaseComponent{
   }
 
   sendAnalytics(){
-    AssessmentActions.assessmentPostAnalytics(this.state.assessmentResult.assessment_results_id, this.state.settings.externalUserId, this.state.settings.externalContextId);
+    if(this.state.assessmentResult && this.state.assessmentResult.assessment_results_id) {
+      AssessmentActions.assessmentPostAnalytics(this.state.assessmentResult.assessment_results_id, this.state.settings.externalUserId, this.state.settings.externalContextId);
+    }
   }
   sendLtiOutcome(){
     if(this.isSummative() && this.state.assessmentResult.assessment_results_id){
