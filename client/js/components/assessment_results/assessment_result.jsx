@@ -5,19 +5,15 @@ import AssessmentStore      from "../../stores/assessment";
 import SettingsStore        from "../../stores/settings";
 import BaseComponent        from "../base_component";
 import AssessmentActions    from "../../actions/assessment";
-import ItemResult           from "./item_result";
+import FormativeResult      from "./formative_result.jsx";
+import SummativeResult      from "./summative_result.jsx";
 import CommunicationHandler from "../../utils/communication_handler";
-
-//polyfill trunc
-Math.trunc = Math.trunc || function(x) {
-  return x < 0 ? Math.ceil(x) : Math.floor(x);
-};
 
 export default class AssessmentResult extends BaseComponent{
 
   constructor(props, context){
     super(props, context);
-    this._bind("getItemResults", "getStyles", "getOutcomeLists", "getContent", "getFormativeContent", "retake");
+    this._bind("getStyles");
     this.stores = [AssessmentStore, SettingsStore];
     this.state = this.getState();
     this.sendLtiOutcome();
@@ -51,20 +47,50 @@ export default class AssessmentResult extends BaseComponent{
     CommunicationHandler.sendSize();
   }
 
-  retake(){
-    AssessmentActions.retakeAssessment();
-    this.context.router.transitionTo("start");
-  }
-
   isSummative(){
     return this.state.settings.assessmentKind.toUpperCase() == "SUMMATIVE";
+  }
+
+  isFormative(){
+    return this.state.settings.assessmentKind.toUpperCase()  == "FORMATIVE";
+  }
+
+  render(){
+    var styles = this.getStyles(this.context.theme);
+
+    if(this.state.assessmentResult == null){
+      return <div />
+    }
+
+    var content = <div/>;
+
+    if(this.isFormative()){
+      content = <FormativeResult
+          assessmentResult={this.state.assessmentResult}
+          settings={this.state.settings}
+          questions={this.state.questions}
+          assessment={this.state.assessment}
+          styles={styles}
+          context={this.context}
+          />
+    } else {
+      content = <SummativeResult
+          styles={styles}
+          timeSpent={this.state.timeSpent}
+          context={this.context}
+          isSummative={this.isSummative()}
+        />
+    }
+    return  <div>
+              {content}
+            </div>
   }
 
   getStyles(theme){
 
     return {
       assessment: {
-        padding: this.state.settings.assessmentKind.toUpperCase()  == "FORMATIVE" ? "" : theme.assessmentPadding,
+        padding: this.isFormative() ? "" : theme.assessmentPadding,
         backgroundColor: theme.assessmentBackground,
       },
       progressStyle: {
@@ -90,8 +116,8 @@ export default class AssessmentResult extends BaseComponent{
         color: "#458B00"
       },
       assessmentContainer:{
-        marginTop: this.state.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? "0px" : "70px",
-        boxShadow: this.state.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? "" : theme.assessmentContainerBoxShadow,
+        marginTop: this.isFormative() ? "0px" : "70px",
+        boxShadow: this.isFormative() ? "" : theme.assessmentContainerBoxShadow,
         borderRadius: theme.assessmentContainerBorderRadius,
         padding: "20px"
       },
@@ -193,220 +219,10 @@ export default class AssessmentResult extends BaseComponent{
       }
     }
   }
-
-  getItemResults(){
-    return this.state.questions.map((question, index)=>{
-      return <ItemResult question={question} isCorrect={this.state.assessmentResult.correct_list[index]} index={index} confidence={this.state.assessmentResult.confidence_level_list[index]}/>;
-    })
-  }
-
-  getOutcomeLists(styles){
-    var lists = {
-      positiveList: [],
-      negativeList: [],
-    };
-    var sectionIndex = 0;
-    var perSecCount = 0;
-    var correctCount = 0;
-    var correctList = this.state.assessmentResult.correct_list;
-    for(var i = 0; i < correctList.length; i++){
-      //make sure to check to see if the amount of questions per section is less the ammount chosen per section
-      var correct = correctList[i]
-      perSecCount++;
-
-      if(!correct || correct == "partial"){
-        lists.negativeList.push(this.state.outcomes[sectionIndex]);
-        i += (this.state.settings.perSec - perSecCount);
-        sectionIndex++;
-        perSecCount = 0;
-        continue;
-      } else {
-        correctCount++;
-        if(correctCount == this.state.settings.perSec || correctCount == this.state.assessment.sections[sectionIndex + 1].items.length){
-          lists.positiveList.push(this.state.outcomes[sectionIndex]);
-          correctCount = 0;
-        }
-      }
-
-      if(perSecCount == this.state.settings.perSec || perSecCount == this.state.assessment.sections[sectionIndex + 1].items.length){
-        sectionIndex++;
-        correctCount = 0;
-        perSecCount = 0;
-      }
-    }
-
-    var positiveList = lists.positiveList.map((item, index)=>{
-      return <div key={"positive " + index} title={item.longOutcome}><p style={styles.green}><i className="glyphicon glyphicon-ok" style={styles.green}></i>{" " + item.shortOutcome + " "}<i className="glyphicon glyphicon-info-sign"></i></p></div>;
-    });
-
-    var negativeList = lists.negativeList.map((item, index)=>{
-      return <div key={"negative " + index}><p>{item.shortOutcome}</p></div>;
-    });
-    return {
-      positiveList: positiveList,
-      negativeList: negativeList
-    };
-  }
-  // for summative and swyk assessments
-  getContent(styles, itemResults, outcomeLists, contentData){
-
-    var errors = "";
-
-    if(this.state.assessmentResult.errors && this.state.assessmentResult.errors.length > 0){
-      errors =  <div className="row">
-                  <div className="col-md-12">
-                    <div style={styles.warningStyle}>
-                      This quiz was not setup correctly. Contact your instructor.
-                    </div>
-                  </div>
-                </div>
-    }
-
-    var quizType = this.isSummative() ? "Quiz" : "Show What You Know";
-
-    return (<div style={styles.assessment}>
-      <div style={styles.assessmentContainer}>
-        <div style={styles.titleBar}>{quizType}: {this.state.assessment ? this.state.assessment.title : ""}</div>
-        {errors}
-        <div className="row" tabIndex="0" style={styles.wrapperStyle}>
-
-          <div className="col-md-4 col-sm-4 col-xs-4" >
-            <h3><strong>Your Score</strong></h3>
-            <div style={styles.yourScoreStyle}>
-              <h1 style={styles.center}>{Math.trunc(this.state.assessmentResult.score)}%</h1>
-            </div>
-            Time Spent: {this.state.timeSpent.minutes} mins {this.state.timeSpent.seconds} sec
-            <br />
-          </div>
-
-          <div className="col-md-4 col-sm-4 col-xs-4" >
-            <h3><strong>{contentData.goodWork}</strong></h3>
-            <p>You answered questions that covered these concepts correctly.</p>
-            {outcomeLists.positiveList}
-            <div style={{clear: 'both'}}></div>
-          </div>
-
-          <div className="col-md-4 col-sm-4 col-xs-4" >
-            <h3 style={styles.improveScoreStyle}><strong>{contentData.moreToLearn}<i styleclassName="glyphicon glyphicon-warning-sign" ></i></strong></h3>
-            <p>{contentData.focusStudy}</p>
-            {outcomeLists.negativeList}
-          </div>
-
-        </div>
-        <hr />
-        <div id="questionsStart" style={styles.resultsStyle}>
-          {itemResults}
-        </div>
-
-      </div>
-    </div>)
-  }
-
-  // this will be used only when the assessment kind is formative
-  getFormativeContent(styles, OutcomeLists){
-    var score = Math.trunc(this.state.assessmentResult.score);
-    var image = "";
-    var feedback = "";
-    var head = "";
-    if(score == 100){
-      head = <h4 style={{color: this.context.theme.definitelyBackgroundColor}}>{"Looks like you're getting it!"}</h4>
-      feedback = "You're ready to move on to the next section.";
-      image = <img style={styles.outcomeIcon} src={this.state.settings.images.CheckMark_svg} />
-    } else if (score > 75){
-      head = <h4 >{"You're making progress!"}</h4>
-      feedback = "You can learn more if you review before moving on.";
-      image = <img style={styles.outcomeIcon} src={this.state.settings.images.Books_svg} />;
-    } else {
-      head = <h4>{"Needs Work!"}</h4>
-      feedback = "Make sure to review and learn the material before moving on.";
-      image = <img style={styles.outcomeIcon} src={this.state.settings.images.PersonWithBook_svg} />;
-    }
-
-    var results = this.state.questions.map((question, index)=>{
-      var color = this.state.assessmentResult.correct_list[index] ? this.context.theme.definitelyBackgroundColor : this.context.theme.maybeBackgroundColor;
-      var message = this.state.assessmentResult.correct_list[index] ? "Correct" : "Incorrect";
-      var confidenceColor;
-      if(this.state.assessmentResult.correct_list[index] == "partial"){
-        color = this.context.theme.partialColor;
-        message = "Partially Correct"
-      }
-      if (this.state.assessmentResult.confidence_level_list[index] == "Just A Guess"){
-        confidenceColor = this.context.theme.maybeBackgroundColor;
-      } else if (this.state.assessmentResult.confidence_level_list[index] == "Pretty Sure"){
-        confidenceColor = this.context.theme.probablyBackgroundColor;
-      } else {
-        confidenceColor = this.context.theme.definitelyBackgroundColor;
-      }
-      return <div key={"result-"+index}>
-              <div style={styles.resultList}>
-                <div><div style={{color: color, float: "left"}}>Question {index+1} -- {message}</div><div style={{color: confidenceColor, float: "right"}}>{this.state.assessmentResult.confidence_level_list[index]}</div></div>
-              </div>
-              <div style={{...styles.resultList, ...styles.resultOutcome}}>
-                <div style={{width: "70%"}}>{this.state.questions[index].material}</div>
-              </div>
-            </div>
-    });
-
-    return <div style={styles.assessment}>
-            <div style={styles.assessmentContainer}>
-              <div style={styles.formative}>
-                <div className="row" style={styles.row}>
-                  <div className="col-md-12 col-lg-12" style={styles.outcomes}>
-                    <div style={styles.header}>{this.state.assessment ? this.state.assessment.title : ""}</div>
-                    <div style={styles.outcomeContainer}>
-                      {image}
-                      {head}
-                      <div>{feedback}</div>
-                      <div>{results}</div>
-                      <div style={styles.buttonsDiv}>
-                        <button className="btn btn-check-answer" style={styles.retakeButton}  onClick={(e)=>{this.retake()}}>Retake</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-  }
-
-  render(){
-    var styles = this.getStyles(this.context.theme);
-    var content = "There has been an error, contact your system administrator.";
-    var contentData = {
-          goodWork:"Good Work on These Concepts",
-          moreToLearn:"There is Still More to Learn",
-          focusStudy:"Review these concepts before your last quiz attempt or to prepare for your next performance assessment."
-        }
-
-    if(this.state.settings.assessmentKind.toUpperCase() == "SHOW_WHAT_YOU_KNOW"){
-      contentData = {
-        goodWork: "What You Already Know",
-        moreToLearn: "What You Need to Learn",
-        focusStudy: "Focus enough study time on these concepts to learn them well."
-      }
-    }
-
-    if(this.state.assessmentResult == null){
-      return <div />
-    }
-
-    var itemResults = this.getItemResults();
-    var outcomeLists = this.getOutcomeLists(styles);
-    var content = <div/>;
-
-    if(this.state.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
-      content = this.getFormativeContent(styles, outcomeLists);
-    } else {
-      content = this.getContent(styles, itemResults, outcomeLists, contentData);
-    }
-    return  <div>
-              {content}
-            </div>
-  }
 }
 
 AssessmentResult.contextTypes = {
   theme: React.PropTypes.object,
   router: React.PropTypes.func
-}
+};
 
