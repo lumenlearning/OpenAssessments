@@ -6,7 +6,7 @@ import Index              from './components/index';
 import Assessment         from './components/main/assessment';
 import Start              from './components/main/start';
 import Attempts           from './components/main/attempts';
-import AssessmentResult   from './components/main/assessment_result';
+import AssessmentResult   from './components/assessment_results/assessment_result';
 import Login              from './components/sessions/login';
 import Logout             from './components/sessions/logout';
 import Register           from './components/users/register';
