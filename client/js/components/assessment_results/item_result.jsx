@@ -2,8 +2,8 @@
 
 import React            from 'react';
 import UniversalInput   from '../assessments/universal_input';
-import ResultConfidence from '../common/result_confidence';
-import ResultOutcome    from "../common/result_outcome";
+import ResultConfidence from './result_confidence';
+import ResultOutcome    from "./result_outcome";
 
 export default class ItemResult extends React.Component{
   
@@ -80,7 +80,7 @@ export default class ItemResult extends React.Component{
             </div>
           </div>
           <div className="col-md-3 col-sm-3 col-xs-3">
-            <ResultOutcome outcomes={this.props.question.outcomes} correct={this.props.isCorrect}/>
+            <ResultOutcome outcomes={this.props.question.outcomes} correct={this.props.isCorrect} level={this.props.confidence}/>
           </div>
         </div> 
         <div className="row">
@@ -99,5 +99,7 @@ ItemResult.contextTypes = {
 ItemResult.propTypes = {
   question: React.PropTypes.object.isRequired,
   confidence: React.PropTypes.string.isRequired,
-  isCorrect: React.PropTypes.bool.isRequired, 
+  isCorrect: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.bool]).isRequired
 }

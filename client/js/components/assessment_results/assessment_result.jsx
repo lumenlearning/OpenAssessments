@@ -62,10 +62,8 @@ export default class AssessmentResult extends BaseComponent{
       return <div />
     }
 
-    var content = <div/>;
-
     if(this.isFormative()){
-      content = <FormativeResult
+      return <FormativeResult
           assessmentResult={this.state.assessmentResult}
           settings={this.state.settings}
           questions={this.state.questions}
@@ -74,16 +72,13 @@ export default class AssessmentResult extends BaseComponent{
           context={this.context}
           />
     } else {
-      content = <SummativeResult
+      return <SummativeResult
           styles={styles}
           timeSpent={this.state.timeSpent}
           context={this.context}
           isSummative={this.isSummative()}
         />
     }
-    return  <div>
-              {content}
-            </div>
   }
 
   getStyles(theme){

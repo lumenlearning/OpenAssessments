@@ -2,20 +2,22 @@
 
 import React          from 'react';
 
-export default class ResultOutcome extends React.Component{
+export default class ResultConfidence extends React.Component{
   
   getStyles(props, theme){
 
     return {
-      resultOutcome: {
+      maybe: {
         marginRight: "5px",
-        backgroundColor: "whitesmoke",
+        display: "inline-block",
+        backgroundColor: props.level == "Just A Guess" ? theme.maybeBackgroundColor : "transparent",
         color: props.level == "Just A Guess" ? "white" : "black",
         border: props.isCorrect ? "none" : "1px solid rgba(0,0,0,0.2)",
         borderRadius : "4px",
-        padding: "5px 15px 5px 15px",
+        padding: "5px 30px 5px 30px",
       },
       probably:{
+        display: "inline-block",
         marginRight: "5px",
         backgroundColor: props.level == "Pretty Sure" ? theme.probablyBackgroundColor : "transparent",
         color: props.level == "Pretty Sure" ? "white" : "black",
@@ -24,12 +26,13 @@ export default class ResultOutcome extends React.Component{
         padding: "5px 30px 5px 30px",
       },
       definitely: {
+        display: "inline-block",
         marginRight: "5px",
         backgroundColor: props.level == "Very Sure" ? theme.definitelyBackgroundColor : "transparent",
         color: props.level == "Very Sure" ? "white" : "black",
         border: props.isCorrect ? "none" : "1px solid rgba(0,0,0,0.2)",
         borderRadius : "4px",
-        padding: "20px",
+        padding: "5px 30px 5px 30px",
       },
       h5: {
         marginBottom: "25px"
@@ -37,14 +40,15 @@ export default class ResultOutcome extends React.Component{
     };
   }
   render() {
-    var styles = this.getStyles(this.props, this.context.theme)
-    var text = this.props.correct === true ? "Covers this concept:" : "Review this concept:";
+    var styles = this.getStyles(this.props, this.context.theme);
+
     return (
-      <div tabIndex="0">
-        <div style={styles.resultOutcome}>
-          <div>{text}</div>
-          <h5><b>{this.props.outcomes.shortOutcome}</b></h5>
-          <div>{this.props.outcomes.longOutcome}</div>
+      <div >
+        <h5 style={styles.h5} tabIndex="0" aria-label={"Your confidence level was " + this.props.level}>Your confidence level</h5>
+        <div>
+          <div style={styles.maybe}>Just A Guess</div>
+          <div style={styles.probably}>Pretty Sure</div>
+          <div style={styles.definitely}>Very Sure</div>
         </div>
       </div>
 
@@ -53,10 +57,10 @@ export default class ResultOutcome extends React.Component{
 
 }
 
-ResultOutcome.contextTypes = {
+ResultConfidence.contextTypes = {
   theme: React.PropTypes.object
 }
 
-ResultOutcome.propTypes = {
+ResultConfidence.propTypes = {
   level: React.PropTypes.string.isRequired
 }

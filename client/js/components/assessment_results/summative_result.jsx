@@ -26,7 +26,7 @@ export default class SummativeResult extends React.Component{
 
   getItemResults(){
     return this.state.questions.map((question, index)=>{
-      return <ItemResult question={question} isCorrect={this.state.assessmentResult.correct_list[index]} index={index} confidence={this.state.assessmentResult.confidence_level_list[index]}/>;
+      return <ItemResult key={index} question={question} isCorrect={this.state.assessmentResult.correct_list[index]} index={index} confidence={this.state.assessmentResult.confidence_level_list[index]}/>;
     })
   }
 
