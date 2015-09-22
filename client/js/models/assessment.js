@@ -69,6 +69,48 @@ export default class Assessment{
     return assessment;
   }
 
+  static getItems(sections, perSec) {
+
+    var items = [];
+    if (!perSec || perSec <= 0) {
+      for (var i = 1; i < sections.length; i++) {
+        for (var j = 0; j < sections[i].items.length; j++) {
+          var item = sections[i].items[j];
+
+          //todo: do this based on assessment setting
+          item.answers = _.shuffle(item.answers);
+          items.push(item);
+        }
+      }
+    } else {
+      for (var i = 1; i < sections.length; i++) {
+        var count = perSec > sections[i].items.length ? sections[i].items.length : perSec;
+        for (var j = 0; j < count; j++) {
+          var item = sections[i].items[j];
+          for (var k = 0; k < items.length; k++) {
+            if (item.id == items[k].id) {
+              console.error("two items have the same id.");
+            }
+          }
+          //todo: do this based on assessment setting
+          item.answers = _.shuffle(item.answers);
+          items.push(item);
+        }
+      }
+    }
+    return items;
+  }
+
+  static loadOutcomes(assessment) {
+    var outcomes = assessment.sections.map((section)=> {
+      if (section.outcome != "root section") {
+        return section.outcome;
+      }
+    });
+    outcomes = _.drop(outcomes);
+    return outcomes;
+  }
+
   static checkAnswer(item, selectedAnswers){
     // TODO implement checkAnswer, checkMultipleChoiceAnswer, and all other answer related methods.
     // There's still quite a bit of the ember code left. We'll need to pass values to this 

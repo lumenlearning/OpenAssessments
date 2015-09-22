@@ -31,6 +31,14 @@ export default {
   QUESTION_SELECTED: "question_selected",
   RETAKE_ASSESSMENT: "retake_assessment",
 
+  // Review Assessments
+  REVIEW_ASSESSMENT_LOAD: "review_assessment_load",
+  REVIEW_ASSESSMENT_LOAD_PENDING: "review_assessment_load_pending",
+  REVIEW_ASSESSMENT_LOADED: "review_assessment_loaded",
+  REVIEW_RESULT_LOAD: "review_result_load",
+  REVIEW_RESULT_LOAD_PENDING: "review_result_load_pending",
+  REVIEW_RESULT_LOADED: "review_result_loaded",
+
   ADD_MESSAGE: "add_message",
   REMOVE_MESSAGE: "remove_message",
   CLEAR_MESSAGES: "clear_messages",

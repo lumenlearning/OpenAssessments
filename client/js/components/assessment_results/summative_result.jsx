@@ -3,6 +3,7 @@
 import React            from 'react';
 import AssessmentActions    from "../../actions/assessment";
 import AssessmentStore      from "../../stores/assessment";
+import ReviewAssessmentStore from "../../stores/review_assessment";
 import SettingsStore        from "../../stores/settings";
 import ItemResult           from "./item_result";
 import ResultSummary        from "./result_summary.jsx";
@@ -17,17 +18,30 @@ export default class SummativeResult extends React.Component{
 
   getState(props, context){
     return {
-      assessmentResult : AssessmentStore.assessmentResult(),
-      questions        : AssessmentStore.allQuestions(),
+      assessmentResult : this.props.assessmentResult || AssessmentStore.assessmentResult(),
+      questions        : this.props.questions || AssessmentStore.allQuestions(),
       settings         : SettingsStore.current(),
-      assessment       : AssessmentStore.current()
+      assessment       : this.props.assessment || AssessmentStore.current()
     }
   }
 
   getItemResults(){
-    return this.state.questions.map((question, index)=>{
-      return <ItemResult key={index} question={question} isCorrect={this.state.assessmentResult.correct_list[index]} index={index} confidence={this.state.assessmentResult.confidence_level_list[index]}/>;
-    })
+    if(this.props.question_responses){
+      return this.props.question_responses.map((qr, index)=>{
+        let question = ReviewAssessmentStore.itemByIdent(qr.ident);
+        if(question === undefined){
+          return <p>Question with ident {qr.ident} not found. :(</p>
+        } else {
+          return <ItemResult key={index} question={question} isCorrect={qr.correct} index={index} confidence={qr.confidence_level}/>;
+        }
+      });
+
+    } else {
+      return this.state.questions.map((question, index)=>{
+        return <ItemResult key={index} question={question} isCorrect={this.state.assessmentResult.correct_list[index]} index={index} confidence={this.state.assessmentResult.confidence_level_list[index]}/>;
+      })
+
+    }
   }
 
   render() {
@@ -53,7 +67,12 @@ export default class SummativeResult extends React.Component{
         <div style={styles.titleBar}>{quizType}: {this.state.assessment ? this.state.assessment.title : ""}</div>
         {errors}
 
-        <ResultSummary styles={styles} timeSpent={this.props.timeSpent}/>
+        <ResultSummary
+            styles={styles}
+            timeSpent={this.props.timeSpent}
+            assessmentResult={this.state.assessmentResult}
+            assessment={this.state.assessment}
+            outcomes={this.props.outcomes}/>
 
         <hr />
 

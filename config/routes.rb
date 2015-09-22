@@ -62,7 +62,9 @@ Rails.application.routes.draw do
     resources :user_assessments do
       put '/update_attempts', to: "user_assessments#update_attempts"
     end
-    resources :assessments
+    resources :assessments do
+      get 'results/:result_id', to: 'assessment_results#show'
+    end
     resources :assessment_results do
       post 'send', to: 'assessment_results#send_result_to_analytics'
       post 'lti_outcome', to: 'assessment_results#send_lti_outcome'

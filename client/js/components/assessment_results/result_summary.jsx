@@ -21,10 +21,10 @@ export default class ResultSummary extends React.Component{
 
   getState(props, context){
     return {
-      assessmentResult : AssessmentStore.assessmentResult(),
-      outcomes         : AssessmentStore.outcomes(),
+      assessmentResult : this.props.assessmentResult || AssessmentStore.assessmentResult(),
+      outcomes         : this.props.outcomes || AssessmentStore.outcomes(),
       settings         : SettingsStore.current(),
-      assessment       : AssessmentStore.current()
+      assessment       : this.props.assessment || AssessmentStore.current()
     }
   }
 

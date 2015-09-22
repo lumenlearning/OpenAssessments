@@ -21,6 +21,54 @@ class Api::AssessmentResultsController < Api::ApiController
     respond_with(:api, assessment_result)
   end
 
+
+  def show
+    assessment = Assessment.find(params[:assessment_id])
+    ar = assessment.assessment_results.find(params[:result_id])
+    ua = ar.user_assessment
+
+    unless ua && ua.lti_context_id
+      render json: {message: "can't connect user to a course"}, status: :forbidden
+      return
+    end
+
+    unless token_has_admin_scope(ua.lti_context_id)
+      # The JWT token must specify this user is admin in this context
+      render :json => { :error => "Unauthorized" }, status: :unauthorized
+      return
+    end
+
+    message = {
+            assessment_results_id: ar.id,
+            score: ar.score,
+            attempt: ar.attempt
+    }
+
+    confidence_map = {0 => "Just A Guess", 1 => "Pretty Sure", 2 => "Very Sure"}
+    correct_map = ->(score){
+      case score
+        when 0
+          false
+        when 1
+          true
+        else
+          'partial'
+      end
+    }
+    message[:question_responses] = ar.item_results.order(:sequence_index).map do |ir|
+      {
+              ident: ir.identifier,
+              responses_chosen: ir.answers_chosen.split(","),
+              score: ir.score,
+              correct: correct_map.call(ir.score),
+              confidence_level: confidence_map[ir.confidence_level]
+      }
+    end
+    message[:correct_list] = message[:question_responses].map{|ir| ir[:correct]}
+
+    render json: message
+  end
+
   def send_lti_outcome
     raise "no api user" unless current_user
     result = @current_user.assessment_results.find(params[:assessment_result_id])

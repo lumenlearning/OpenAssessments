@@ -59,16 +59,6 @@ function selectAnswer(item){
   } 
 }
 
-function loadOutcomes(assessment){
-  var outcomes = assessment.sections.map((section)=>{
-    if(section.outcome != "root section"){
-      return section.outcome;
-    }
-  });
-  outcomes = _.drop(outcomes);
-  return outcomes;
-}
-
 function updateMatchingAnswer(item){
   for (var i = 0; i < _selectedAnswerIds.length; i++){
     if(_selectedAnswerIds[i] && _selectedAnswerIds[i].answerNumber == item.answerNumber){
@@ -91,38 +81,6 @@ function setUpStudentAnswers(numOfQuestions){
 function calculateTime(start, end){
   return end - start;
 };
-
-function getItems(sections, perSec){
-
-  var items = [];
-  if(!perSec || perSec <= 0){
-     for (var i = 1; i < sections.length; i++) {
-          for (var j = 0; j < sections[i].items.length; j++) {
-              var item = sections[i].items[j];
-
-              //todo: do this based on assessment setting
-              item.answers = _.shuffle(item.answers);
-              items.push(item);
-          }
-      }
-  } else {
-         for (var i = 1; i < sections.length; i++) {
-          var count = perSec > sections[i].items.length ? sections[i].items.length : perSec;
-          for (var j = 0; j < count; j++) {
-              var item = sections[i].items[j];
-              for (var k = 0; k < items.length; k++) {
-                  if (item.id == items[k].id) {
-                    console.error("two items have the same id.");
-                  }
-              }
-              //todo: do this based on assessment setting
-              item.answers = _.shuffle(item.answers);
-              items.push(item);
-          }
-      }
-  }
-  return items;
-}
 
 // Extend User Store with EventEmitter to add eventing capabilities
 var AssessmentStore = assign({}, StoreCommon, {
@@ -224,11 +182,11 @@ Dispatcher.register(function(payload) {
               _assessment.sections[_sectionIndex] &&
               _assessment.sections[_sectionIndex].items){
             if(_assessment.standard == "qti"){
-              _items = getItems(_assessment.sections, SettingsStore.current().perSec);
+              _items = Assessment.getItems(_assessment.sections, SettingsStore.current().perSec);
             } else {
               _items = _assessment.sections[_sectionIndex].items
             }
-            _outcomes = loadOutcomes(_assessment);
+            _outcomes = Assessment.loadOutcomes(_assessment);
             setUpStudentAnswers(_items.length)
           }
           _assessmentState = LOADED;

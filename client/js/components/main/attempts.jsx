@@ -1,11 +1,14 @@
 "use strict";
 
 import React from 'react';
-import BaseComponent      from "../base_component";
-import UserAssessmentsStore      from "../../stores/user_assessment";
-import UserAssessmentActions      from "../../actions/user_assessments";
-import {Table, Tr, Td} from 'reactable';
-import moment from 'moment';
+import BaseComponent            from "../base_component";
+import UserAssessmentsStore     from "../../stores/user_assessment";
+import UserAssessmentActions    from "../../actions/user_assessments";
+import ReviewAssessmentActions  from "../../actions/review_assessment";
+import ReviewAssessmentStore    from "../../stores/review_assessment";
+import AssessmentActions        from "../../actions/assessment";
+import {Table, Tr, Td}          from 'reactable';
+import moment                   from 'moment';
 
 export default class Attempts extends BaseComponent{
   constructor(props, context){
@@ -14,6 +17,9 @@ export default class Attempts extends BaseComponent{
     this.context = context;
     this.state = this.getState();
     UserAssessmentActions.loadUserAssessments(props.params.contextId, props.params.assessmentId);
+    if(!ReviewAssessmentStore.isLoaded() && !ReviewAssessmentStore.isLoading()){
+      ReviewAssessmentActions.loadAssessment(window.DEFAULT_SETTINGS);
+    }
   }
 
   getState() {
@@ -26,7 +32,12 @@ export default class Attempts extends BaseComponent{
     UserAssessmentActions.updateUserAssessment(id, {attempts: count, context_id: this.props.params.contextId});
   }
 
+  reviewAttempt(id){
+    this.context.router.transitionTo("teacher-review", {contextId: this.props.params.externalContextId, assessmentId: this.props.params.assessmentId, attempdId: id});
+  }
+
   attemptsStuff(ua){
+    var that = this;
     return <div>
       {ua.attempts.map(function(attempt){
         var score = 'none',
@@ -36,7 +47,7 @@ export default class Attempts extends BaseComponent{
         if(attempt.score){
           score = Math.round(attempt.score) + "%";
         }
-      return <p title={date_sent}>Score: {score}</p>
+      return <p title={date_sent} onClick={()=>{that.reviewAttempt(attempt.id)}}>Score: {score}</p>
     })}
       </div>
   }
@@ -100,4 +111,10 @@ export default class Attempts extends BaseComponent{
   }
 
 };
+
+Attempts.contextTypes = {
+  theme: React.PropTypes.object,
+  router: React.PropTypes.func,
+};
+
 module.export = Attempts;

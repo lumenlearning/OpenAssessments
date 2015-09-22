@@ -31,16 +31,20 @@ class Api::AssessmentsController < Api::ApiController
 
     assessment_settings = params[:asid] ?  assessment.assessment_settings.find(params[:asid]) : assessment.default_settings || current_account.default_settings || AssessmentSetting.where(is_default: true).first
 
+    for_review = false
+
     # If it's a summative quiz the attempts are incremented here instead of UserAttemptsController#update
     # todo: refactor so that all attempts are incremented via the xml fetch? Maybe not because externally hosted xml files.
     if assessment.kind == 'summative'
       if user_assessment
+        for_review = user_assessment.lti_role == 'admin' && params[:for_review]
+
         if user_assessment.lti_role == 'student' && user_assessment.attempts >= assessment_settings.allowed_attempts
           render :json => {:error => "Too many attempts."}, status: :unauthorized
           return
         end
 
-        user_assessment.increment_attempts!
+        user_assessment.increment_attempts! unless for_review
       else
         render :json => {:error => "Can't validate user_assessment for summative assessment."}, status: :unauthorized
         return
@@ -50,7 +54,9 @@ class Api::AssessmentsController < Api::ApiController
     respond_to do |format|
       format.json { render :json => assessment }
       format.xml do
-        if assessment_settings && assessment_settings.per_sec
+        if for_review
+          render :text => assessment.assessment_xmls.by_newest.first.xml
+        elsif assessment_settings && assessment_settings.per_sec
           render :text => assessment.assessment_xmls.by_newest.first.xml_with_limited_questions(assessment_settings.per_sec.to_i)
         else
           render :text => assessment.assessment_xmls.by_newest.first.xml
