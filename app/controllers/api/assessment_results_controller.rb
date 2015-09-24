@@ -41,7 +41,12 @@ class Api::AssessmentResultsController < Api::ApiController
     message = {
             assessment_results_id: ar.id,
             score: ar.score,
-            attempt: ar.attempt
+            attempt: ar.attempt,
+            user: {
+                      id: ua.user.try(:id),
+                      name: ua.user.try(:name),
+                      email: ua.user.try(:email)
+              }
     }
 
     confidence_map = {0 => "Just A Guess", 1 => "Pretty Sure", 2 => "Very Sure"}

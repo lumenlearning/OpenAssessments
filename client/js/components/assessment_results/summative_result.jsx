@@ -72,7 +72,8 @@ export default class SummativeResult extends React.Component{
             timeSpent={this.props.timeSpent}
             assessmentResult={this.state.assessmentResult}
             assessment={this.state.assessment}
-            outcomes={this.props.outcomes}/>
+            outcomes={this.props.outcomes}
+            user={this.props.user}/>
 
         <hr />
 

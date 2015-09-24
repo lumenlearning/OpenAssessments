@@ -55,6 +55,7 @@ export default class TeacherReview extends BaseComponent{
         assessment={this.state.assessment}
         outcomes={this.state.outcomes}
         question_responses={this.state.assessmentResult.question_responses}
+        user={this.state.assessmentResult.user}
         />
   }
 }

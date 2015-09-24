@@ -6,11 +6,6 @@ import AssessmentStore      from "../../stores/assessment";
 import SettingsStore        from "../../stores/settings";
 import ItemResult           from "./item_result";
 
-//polyfill trunc
-Math.trunc = Math.trunc || function(x) {
-  return x < 0 ? Math.ceil(x) : Math.floor(x);
-};
-
 export default class ResultSummary extends React.Component{
 
   constructor(props, context){
@@ -79,6 +74,10 @@ export default class ResultSummary extends React.Component{
   render() {
     var styles = this.props.styles;
     var outcomeLists = this.getOutcomeLists(styles);
+    var name = "Your Score";
+    if( this.props.user && this.props.user.name ){
+      name = "Score for " + this.props.user.name;
+    }
     var contentData = {
           goodWork:"Good Work on These Concepts",
           moreToLearn:"There is Still More to Learn",
@@ -96,9 +95,9 @@ export default class ResultSummary extends React.Component{
     return (<div className="row" tabIndex="0" style={styles.wrapperStyle}>
 
           <div className="col-md-4 col-sm-4 col-xs-4" >
-            <h3><strong>Your Score</strong></h3>
+            <h3><strong>{name}</strong></h3>
             <div style={styles.yourScoreStyle}>
-              <h1 style={styles.center}>{Math.trunc(this.state.assessmentResult.score)}%</h1>
+              <h1 style={styles.center}>{Math.floor(this.state.assessmentResult.score)}%</h1>
             </div>
             Time Spent: {this.props.timeSpent.minutes} mins {this.props.timeSpent.seconds} sec
             <br />
