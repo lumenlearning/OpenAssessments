@@ -30,9 +30,9 @@ export default class SummativeResult extends React.Component{
       return this.props.question_responses.map((qr, index)=>{
         let question = ReviewAssessmentStore.itemByIdent(qr.ident);
         if(question === undefined){
-          return <p>Question with ident {qr.ident} not found. :(</p>
+          return <p>Question was removed.</p>
         } else {
-          return <ItemResult key={index} question={question} isCorrect={qr.correct} index={index} confidence={qr.confidence_level}/>;
+          return <ItemResult key={index} question={question} isCorrect={qr.correct} index={index} confidence={qr.confidence_level} chosen={qr.responses_chosen}/>;
         }
       });
 
