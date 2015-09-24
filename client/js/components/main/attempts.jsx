@@ -47,7 +47,7 @@ export default class Attempts extends BaseComponent{
         if(attempt.score){
           score = Math.floor(attempt.score) + "%";
         }
-      return <p title={date_sent} onClick={()=>{that.reviewAttempt(attempt.id)}}>Score: {score}</p>
+      return <p title={date_sent} onClick={()=>{that.reviewAttempt(attempt.id)}} style={{textDecoration:"underline", cursor: "pointer"}}>Score: {score}</p>
     })}
       </div>
   }
