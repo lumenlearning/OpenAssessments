@@ -78,6 +78,10 @@ export default class ResultSummary extends React.Component{
     if( this.props.user && this.props.user.name ){
       name = "Score for " + this.props.user.name;
     }
+    var timeSpent = null;
+    if( this.props.timeSpent ){
+      timeSpent= "Time Spent: " + this.props.timeSpent.minutes + " mins " + this.props.timeSpent.seconds + " secs"
+    }
     var contentData = {
           goodWork:"Good Work on These Concepts",
           moreToLearn:"There is Still More to Learn",
@@ -99,7 +103,7 @@ export default class ResultSummary extends React.Component{
             <div style={styles.yourScoreStyle}>
               <h1 style={styles.center}>{Math.floor(this.state.assessmentResult.score)}%</h1>
             </div>
-            Time Spent: {this.props.timeSpent.minutes} mins {this.props.timeSpent.seconds} sec
+            {timeSpent}
             <br />
           </div>
 

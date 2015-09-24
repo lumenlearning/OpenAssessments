@@ -48,7 +48,6 @@ export default class TeacherReview extends BaseComponent{
 
     return <SummativeResult
         styles={this.getStyles(this.context.theme)}
-        timeSpent={this.state.timeSpent}
         context={this.context}
         isSummative={this.isSummative()}
         assessmentResult={this.state.assessmentResult}
