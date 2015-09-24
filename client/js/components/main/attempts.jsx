@@ -45,7 +45,7 @@ export default class Attempts extends BaseComponent{
             date_sent = m.format('ddd, MMM Do, h:mm a [GMT] ZZ'),
             relative_time = m.fromNow();
         if(attempt.score){
-          score = Math.round(attempt.score) + "%";
+          score = Math.floor(attempt.score) + "%";
         }
       return <p title={date_sent} onClick={()=>{that.reviewAttempt(attempt.id)}}>Score: {score}</p>
     })}
