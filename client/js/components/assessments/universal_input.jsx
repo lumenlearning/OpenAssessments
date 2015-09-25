@@ -66,7 +66,7 @@ export default class UniversalInput extends React.Component{
     var messages = '';
     var solution = '';
     var items = '';
-    
+
     if(item.messages){
       var renderedMessages = item.messages.map(function(message){
        return (<li>{message}</li>);
@@ -146,7 +146,7 @@ export default class UniversalInput extends React.Component{
               </div>
               <div className="panel-body" style={styles.panelBody}>
                 {material}
-                {items}  
+                {items}
               </div>
               {solution}
             </div>
