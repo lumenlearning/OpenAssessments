@@ -32,7 +32,13 @@ export default class SummativeResult extends React.Component{
         if(question === undefined){
           return <p>Question was removed.</p>
         } else {
-          return <ItemResult key={index} question={question} isCorrect={qr.correct} index={index} confidence={qr.confidence_level} chosen={qr.responses_chosen}/>;
+          return <ItemResult key={index}
+                             question={question}
+                             isCorrect={qr.correct}
+                             index={index}
+                             confidence={qr.confidence_level}
+                             chosen={qr.responses_chosen}
+                             correctAnswers={question.correct}/>;
         }
       });
 

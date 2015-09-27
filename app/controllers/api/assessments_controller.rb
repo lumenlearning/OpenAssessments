@@ -55,7 +55,7 @@ class Api::AssessmentsController < Api::ApiController
       format.json { render :json => assessment }
       format.xml do
         if for_review
-          render :text => assessment.assessment_xmls.by_newest.first.xml
+          render :text => assessment.assessment_xmls.formative.by_newest.first.xml
         elsif assessment_settings && assessment_settings.per_sec
           render :text => assessment.assessment_xmls.by_newest.first.xml_with_limited_questions(assessment_settings.per_sec.to_i)
         else

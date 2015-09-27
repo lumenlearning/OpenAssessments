@@ -2,6 +2,8 @@ class AssessmentXml < ActiveRecord::Base
   belongs_to :assessment
 
   scope :by_newest, -> { order(created_at: :desc) }
+  scope :summative, -> { where(kind: 'summative') }
+  scope :formative, -> { where(kind: 'formative') }
 
   def self.by_kind(kind)
     where(kind: kind)

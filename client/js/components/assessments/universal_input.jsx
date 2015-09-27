@@ -60,6 +60,14 @@ export default class UniversalInput extends React.Component{
     }
   }
 
+  showAsCorrect(id){
+    if( this.props.correctAnswers && this.props.correctAnswers[0] && this.props.correctAnswers[0].id){
+      return this.props.correctAnswers[0].id.indexOf(id) > -1
+    }else{
+      return null;
+    }
+  }
+
   render(){
     var styles = this.getStyles(this.props, this.context.theme)
     var item = this.props.item;
@@ -93,7 +101,7 @@ export default class UniversalInput extends React.Component{
       case "multiple_choice_question":
       case "true_false_question":
         items = item.answers.map((answer) => {
-          return <RadioButton isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-radio" checked={this.wasChosen(answer.id)}/>;
+          return <RadioButton isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-radio" checked={this.wasChosen(answer.id)}  showAsCorrect={this.showAsCorrect(answer.id)}/>;
         });
         break;
       case "edx_dropdown":
@@ -115,7 +123,7 @@ export default class UniversalInput extends React.Component{
         break;
       case "multiple_answers_question":
         items = item.answers.map((answer) => {
-          return <CheckBox isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-check" checked={this.wasChosen(answer.id)}/>;
+          return <CheckBox isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-check" checked={this.wasChosen(answer.id)} showAsCorrect={this.showAsCorrect(answer.id)}/>;
         });
         break;
       case "edx_image_mapped_input":
