@@ -45,13 +45,13 @@ export default class ResultSummary extends React.Component{
         continue;
       } else {
         correctCount++;
-        if(correctCount == this.state.settings.perSec || correctCount == this.state.assessment.sections[sectionIndex + 1].items.length){
+        if(correctCount == this.state.settings.perSec || correctCount == this.state.assessment.sections[sectionIndex].items.length){
           lists.positiveList.push(this.state.outcomes[sectionIndex]);
           correctCount = 0;
         }
       }
 
-      if(perSecCount == this.state.settings.perSec || perSecCount == this.state.assessment.sections[sectionIndex + 1].items.length){
+      if(perSecCount == this.state.settings.perSec || perSecCount == this.state.assessment.sections[sectionIndex].items.length){
         sectionIndex++;
         correctCount = 0;
         perSecCount = 0;
