@@ -3,8 +3,10 @@
 import React            from 'react';
 import AssessmentActions    from "../../actions/assessment";
 import AssessmentStore      from "../../stores/assessment";
+import ReviewAssessmentStore from "../../stores/review_assessment";
 import SettingsStore        from "../../stores/settings";
 import ItemResult           from "./item_result";
+import _                    from "lodash";
 
 export default class ResultSummary extends React.Component{
 
@@ -23,7 +25,7 @@ export default class ResultSummary extends React.Component{
     }
   }
 
-  getOutcomeLists(styles){
+  getOutcomeLists(){
     var lists = {
       positiveList: [],
       negativeList: []
@@ -58,22 +60,51 @@ export default class ResultSummary extends React.Component{
       }
     }
 
-    var positiveList = lists.positiveList.map((item, index)=>{
-      return <div key={"positive " + index} title={item.longOutcome}><p style={styles.green}><i className="glyphicon glyphicon-ok" style={styles.green}></i>{" " + item.shortOutcome + " "}<i className="glyphicon glyphicon-info-sign"></i></p></div>;
+    return lists;
+  }
+
+  getReviewOutcomeList() {
+    var positiveList = _.clone(this.state.outcomes);
+    var negativeList = [];
+
+    this.props.questionResponses.map((qr, index)=> {
+      let question = ReviewAssessmentStore.itemByIdent(qr.ident);
+      if (question !== undefined) {
+        if (qr.correct !== true) {
+          negativeList = negativeList.concat(_.filter(positiveList, 'outcomeGuid', question.outcome_guid));
+          positiveList = _.reject(positiveList, 'outcomeGuid', question.outcome_guid);
+        }
+      }
     });
 
-    var negativeList = lists.negativeList.map((item, index)=>{
-      return <div key={"negative " + index}><p>{item.shortOutcome}</p></div>;
-    });
     return {
       positiveList: positiveList,
       negativeList: negativeList
     };
   }
 
+  generateOutcomeLists(styles){
+    var lists;
+    if(this.props.questionResponses){
+      lists = this.getReviewOutcomeList(styles);
+    } else {
+      lists = this.getOutcomeLists(styles);
+    }
+
+    lists.positiveList = lists.positiveList.map((item, index)=>{
+      return <div key={"positive " + index} title={item.longOutcome}><p style={styles.green}><i className="glyphicon glyphicon-ok" style={styles.green}></i>{" " + item.shortOutcome + " "}<i className="glyphicon glyphicon-info-sign"></i></p></div>;
+    });
+
+    lists.negativeList = lists.negativeList.map((item, index)=>{
+      return <div key={"negative " + index} title={item.longOutcome}><p>{item.shortOutcome}</p></div>;
+    });
+
+    return lists;
+  }
+
   render() {
     var styles = this.props.styles;
-    var outcomeLists = this.getOutcomeLists(styles);
+    var outcomeLists = this.generateOutcomeLists(styles);
     var name = "Your Score";
     if( this.props.user && this.props.user.name ){
       name = "Score for " + this.props.user.name;

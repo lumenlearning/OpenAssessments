@@ -26,8 +26,8 @@ export default class SummativeResult extends React.Component{
   }
 
   getItemResults(){
-    if(this.props.question_responses){
-      return this.props.question_responses.map((qr, index)=>{
+    if(this.props.questionResponses){
+      return this.props.questionResponses.map((qr, index)=>{
         let question = ReviewAssessmentStore.itemByIdent(qr.ident);
         if(question === undefined){
           return <p>Question was removed.</p>
@@ -73,7 +73,8 @@ export default class SummativeResult extends React.Component{
             assessmentResult={this.state.assessmentResult}
             assessment={this.state.assessment}
             outcomes={this.props.outcomes}
-            user={this.props.user}/>
+            user={this.props.user}
+            questionResponses={this.props.questionResponses}/>
 
         <hr />
 

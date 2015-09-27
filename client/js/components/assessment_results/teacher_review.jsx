@@ -53,7 +53,7 @@ export default class TeacherReview extends BaseComponent{
         assessmentResult={this.state.assessmentResult}
         assessment={this.state.assessment}
         outcomes={this.state.outcomes}
-        question_responses={this.state.assessmentResult.question_responses}
+        questionResponses={this.state.assessmentResult.question_responses}
         user={this.state.assessmentResult.user}
         />
   }
