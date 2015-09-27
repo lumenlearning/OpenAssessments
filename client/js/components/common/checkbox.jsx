@@ -79,9 +79,11 @@ export default class CheckBox extends React.Component{
     var checkBox = <input type="checkbox" defaultChecked={checked} disabled={this.props.isDisabled} name={this.props.name} onClick={()=>{ this.answerSelected() }}/>;
 
     if(this.props.showAsCorrect){
-      optionFlag = <div className="correctIndicator" style={styles.checkStyleCorrect}>&#10003;</div>;
+      var label = "Correct Answer that was ";
+      label += checked ? "chosen" : "not chosen";
+      optionFlag = <div className="correctIndicator" aria-label={label} style={styles.checkStyleCorrect}>&#10003;</div>;
     } else if (this.props.showAsCorrect === false && checked){
-      optionFlag = <div className="wrongIndicator" style={styles.checkStyleWrong}>&#10008;</div>;
+      optionFlag = <div className="wrongIndicator" aria-label="Wrong answer that was chosen" style={styles.checkStyleWrong}>&#10008;</div>;
     }
 
     return (<div>
