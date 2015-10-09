@@ -8,6 +8,7 @@ import Start              from './components/main/start';
 import Attempts           from './components/main/attempts';
 import AssessmentResult   from './components/assessment_results/assessment_result';
 import TeacherReview      from './components/assessment_results/teacher_review';
+import TeacherPreview      from './components/assessment_results/teacher_preview';
 import Login              from './components/sessions/login';
 import Logout             from './components/sessions/logout';
 import Register           from './components/users/register';
@@ -27,6 +28,7 @@ var routes = (
     <Route name="assessment" handler={Assessment}/>
     <Route name="assessment-result" handler={AssessmentResult}/>
     <Route name="teacher-review" handler={TeacherReview}  path="review/:assessmentId/:attempdId" />
+    <Route name="teacher-preview" handler={TeacherPreview}  path="preview/:assessmentId" />
     <Route name="login" handler={Login}/>
     <Route name="register" handler={Register}/>
     <Route name="logout" handler={Logout}/>
