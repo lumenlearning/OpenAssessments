@@ -2,6 +2,7 @@ class AssessmentResult < ActiveRecord::Base
   has_one :test_result, dependent: :destroy
   belongs_to :assessment
   belongs_to :user
+  belongs_to :user_assessment
   has_many :item_results, dependent: :destroy
 
   acts_as_taggable_on :keywords
@@ -20,11 +21,6 @@ class AssessmentResult < ActiveRecord::Base
   STATUS_FINAL = 'final'
 
   STATUS_VALUES = [STATUS_INITIAL, STATUS_PENDING_SUBMISSION, STATUS_PENDING_RESPONSE_PROCESSING, STATUS_FINAL]
-
-  def user_assessment
-    #todo scope to lti_context_id
-    UserAssessment.find_by_assessment_id_and_user_id(self.assessment_id, self.user_id)
-  end
 
   def lti_outcome_params
     {
@@ -62,7 +58,7 @@ class AssessmentResult < ActiveRecord::Base
   end
 
   def is_max_result?
-    self.assessment.assessment_results.where(user_id: self.user.id).where('score IS NOT NULL').order('score DESC').select(:id, :score).limit(1).first == self
+    self.user_assessment.assessment_results.where('score IS NOT NULL').order('score DESC').select(:id, :score).limit(1).first == self
   end
 
   def should_send_lti_outcome?

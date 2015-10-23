@@ -9,8 +9,8 @@ class Api::GradesController < Api::ApiController
     end
 
     # store lis stuff in session
-    answered_correctly = 0;
-    body = JSON.parse(request.body.read);
+    answered_correctly = 0
+    body = JSON.parse(request.body.read)
     item_to_grade = body["itemToGrade"]
     questions = item_to_grade["questions"]
     assessment_id = item_to_grade["assessmentId"]
@@ -19,7 +19,11 @@ class Api::GradesController < Api::ApiController
     doc.remove_namespaces!
     xml_questions = doc.xpath("//item")
     settings = item_to_grade["settings"]
+    if settings['userAssessmentId']
+      user_assessment = current_user.user_assessments.find_by_id(settings['userAssessmentId'])
+    end
     result = assessment.assessment_results.build
+    result.user_assessment = user_assessment
     result.identifier = item_to_grade["identifier"]
     result.external_user_id = settings["externalUserId"]
     result.attempt = settings["userAttempts"]

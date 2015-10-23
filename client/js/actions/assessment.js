@@ -80,6 +80,8 @@ export default {
     });
     settings = {
       externalUserId: settings.externalUserId,
+      externalContextId: settings.externalContextId,
+      userAssessmentId: settings.userAssessmentId,
       userAttempts: settings.userAttempts,
       srcUrl: settings.srcUrl,
       lisResultSourceDid: settings.lisResultSourceDid,

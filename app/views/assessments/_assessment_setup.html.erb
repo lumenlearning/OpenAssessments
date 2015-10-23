@@ -45,6 +45,9 @@
     <% if @per_sec %>
     per_sec: '<%= @per_sec %>',
     <% end -%>
+    <% if @user_assessment %>
+    user_assessment_id: '<%= @user_assessment.id %>',
+    <% end -%>
     lti_role: "<%= @lti_role %>",
     lis_result_sourcedid: '<%= params[:lis_result_sourcedid] %>',
     lis_outcome_service_url: '<%= params[:lis_outcome_service_url] %>',

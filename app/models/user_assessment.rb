@@ -1,6 +1,7 @@
 class UserAssessment < ActiveRecord::Base
   belongs_to :user
   belongs_to :assessment
+  has_many :assessment_results
 
   def increment_attempts!
     self.attempts += 1
@@ -11,8 +12,4 @@ class UserAssessment < ActiveRecord::Base
     self.save!
   end
 
-  def assessment_results
-    #todo scope to lti_context_id
-    AssessmentResult.where(user_id: self.user_id).where(assessment_id: self.assessment_id)
-  end
 end

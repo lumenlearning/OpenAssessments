@@ -76,7 +76,8 @@ function loadSettings(defaultSettings){
     images             : defaultSettings.images,
     ltiRole            : defaultSettings.lti_role,
     assessmentTitle    : defaultSettings.assessmentTitle,
-    sectionCount       : parseInt(defaultSettings.sectionCount)
+    sectionCount       : parseInt(defaultSettings.sectionCount),
+    userAssessmentId   : bestValue('user_assessment_id', 'UserAssessmentId')
   };
 
   if(!_settings.srcUrl && !_settings.offline){
