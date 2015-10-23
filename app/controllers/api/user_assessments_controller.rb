@@ -52,12 +52,11 @@ class Api::UserAssessmentsController < Api::ApiController
     allowed = allowed_attempts(assessment)
     user_assessments = user_assessments.to_a
 
-    results = AssessmentResult.where(assessment_id: params[:assessment_id]).
-                    where(user_id: user_assessments.map(&:user_id)).
-                    select(:id, :created_at, :score, :attempt, :user_id,).to_a.
-                    group_by{|r|r.user_id}
+    results = AssessmentResult.where(user_assessment_id: user_assessments.map(&:id)).
+                    select(:id, :created_at, :score, :attempt, :user_id, :user_assessment_id).to_a.
+                    group_by{|r|r.user_assessment_id}
     user_assessments.map do |ua|
-      ua_json(ua, assessment, allowed, results[ua.user_id] || [])
+      ua_json(ua, assessment, allowed, results[ua.id] || [])
     end
   end
 
