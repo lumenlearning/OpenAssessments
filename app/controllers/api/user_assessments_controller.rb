@@ -26,7 +26,11 @@ class Api::UserAssessmentsController < Api::ApiController
   def update
     assessment = Assessment.find(params[:assessmentId])
     if assessment != nil
-      @user_assessment = assessment.user_assessments.where(eid: params[:id]).first
+      if params[:lti_context_id].present?
+        @user_assessment = assessment.user_assessments.where(eid: params[:id], lti_context_id: params[:lti_context_id]).first
+      else
+        @user_assessment = assessment.user_assessments.where(eid: params[:id]).first
+      end
       if !@user_assessment.nil? && assessment.kind != 'summative'
         @user_assessment.increment_attempts!
       end

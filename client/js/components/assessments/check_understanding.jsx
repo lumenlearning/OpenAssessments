@@ -7,7 +7,7 @@ import $                  from "jquery";
 export default class CheckUnderstanding extends React.Component{
 
   start(eid, assessmentId, context){
-    AssessmentActions.start(eid, assessmentId)
+    AssessmentActions.start(eid, assessmentId, this.props.externalContextId);
     AssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, $('#srcData').text());
     context.router.transitionTo("assessment");
   }

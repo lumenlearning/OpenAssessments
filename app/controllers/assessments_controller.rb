@@ -51,7 +51,8 @@ class AssessmentsController < ApplicationController
       @assessment_kind = @assessment.kind
       if params[:user_id].present?
         oea_user_id = @user ? @user.id : nil
-        @user_assessment = @assessment.user_assessments.where(eid: params[:user_id]).first
+        pp params
+        @user_assessment = @assessment.user_assessments.where(eid: params[:user_id], lti_context_id: params[:context_id]).first
         if !@user_assessment.nil?
           @user_attempts = @user_assessment.attempts || 0
           if oea_user_id && @user_assessment.user_id != oea_user_id
@@ -76,7 +77,7 @@ class AssessmentsController < ApplicationController
       @eid ||= @assessment.identifier
       if @embedded
         # Just show the assessment. This is here to support old style embed with id=# and embed=true
-        @src_url = embed_url(@assessment)
+        @src_url = embed_url(@assessment, lti_context_id: params[:context_id])
       else
         # Show the full page with analtyics and embed code buttons
         @embed_code = embed_code(@assessment, @confidence_levels, @eid, @enable_start, params[:offline].present?, nil, @style, params[:asid], @per_sec, @assessment_kind, @assessment_title, @section_count)

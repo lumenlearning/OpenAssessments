@@ -26,7 +26,12 @@ class Api::AssessmentsController < Api::ApiController
 
     user_assessment = nil
     if user = current_user
-      user_assessment = assessment.user_assessments.where(user_id: user.id).first
+      if params[:lti_context_id].present?
+        user_assessment = assessment.user_assessments.where(user_id: user.id, lti_context_id: params[:lti_context_id]).first
+      else
+        #todo don't allow summative without a context
+        user_assessment = assessment.user_assessments.where(user_id: user.id).first
+      end
     end
 
     assessment_settings = params[:asid] ?  assessment.assessment_settings.find(params[:asid]) : assessment.default_settings || current_account.default_settings || AssessmentSetting.where(is_default: true).first

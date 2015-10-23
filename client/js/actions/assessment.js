@@ -26,10 +26,10 @@ export default {
     Api.get(Constants.ASSESSMENT_LOADED, settings.srcUrl);
   },
 
-  start(eid, assessmentId){
+  start(eid, assessmentId, contextId=null){
     //Dispatcher.dispatch({action: Constants.ASSESSMENT_START})
     if(eid && assessmentId){
-      Api.put(Constants.ASSESSMENT_START, "/api/user_assessments/"+eid, {assessmentId: assessmentId})
+      Api.put(Constants.ASSESSMENT_START, "/api/user_assessments/"+eid, {assessmentId: assessmentId, lti_context_id: contextId})
     }
   },
 

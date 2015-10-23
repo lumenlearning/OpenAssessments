@@ -108,7 +108,11 @@ class Api::AssessmentResultsController < Api::ApiController
       user_id = ei.identifier
       tc_guid = ei.provider
 
-      user_assessment = assessment.user_assessments.where(eid: ei.identifier).first
+      if params[:external_context_id].present?
+        user_assessment = assessment.user_assessments.where(eid: ei.identifier, lti_context_id: params[:external_context_id]).first
+      else
+        user_assessment = assessment.user_assessments.where(eid: ei.identifier).first
+      end
       context_id = user_assessment ? user_assessment.lti_context_id : nil
     end
 

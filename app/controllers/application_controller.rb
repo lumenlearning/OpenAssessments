@@ -51,8 +51,9 @@ class ApplicationController < ActionController::Base
     #
     # Embed related functionality:
     #
-    def embed_url(assessment)
-      api_assessment_url(assessment, format: 'xml')
+    def embed_url(assessment, query_params={})
+      query_params[:format] = 'xml'
+      api_assessment_url(assessment, query_params)
     end
 
     def embed_code(assessment, confidence_levels=true, eid=nil, enable_start=false, offline=false, src_url=nil, style=nil, asid=nil, per_sec=nil, assessment_kind = nil, assessment_title=nil, section_count = nil)

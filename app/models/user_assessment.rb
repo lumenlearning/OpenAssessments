@@ -12,6 +12,7 @@ class UserAssessment < ActiveRecord::Base
   end
 
   def assessment_results
+    #todo scope to lti_context_id
     AssessmentResult.where(user_id: self.user_id).where(assessment_id: self.assessment_id)
   end
 end

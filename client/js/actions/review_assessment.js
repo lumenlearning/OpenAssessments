@@ -8,7 +8,7 @@ export default {
 
   loadAssessment(settings){
     Dispatcher.dispatch({ action: Constants.REVIEW_ASSESSMENT_LOAD_PENDING });
-    Api.get(Constants.REVIEW_ASSESSMENT_LOADED, settings.srcUrl + "?for_review=1");
+    Api.get(Constants.REVIEW_ASSESSMENT_LOADED, settings.srcUrl + "&for_review=1");
   },
 
   loadAssessmentResult(assessmentId, resultId){

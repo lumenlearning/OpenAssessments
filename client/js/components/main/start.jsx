@@ -24,7 +24,7 @@ export default class Start extends BaseComponent{
   getState(context){
     var showStart = SettingsStore.current().enableStart && !AssessmentStore.isStarted();
     if(!showStart){
-          AssessmentActions.start(SettingsStore.current().eId, SettingsStore.current().assessmentId);
+          AssessmentActions.start(SettingsStore.current().eId, SettingsStore.current().assessmentId, SettingsStore.current().externalContextId);
           AssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, $('#srcData').text());
           context.router.transitionTo("assessment");
     }
