@@ -51,7 +51,6 @@ class AssessmentsController < ApplicationController
       @assessment_kind = @assessment.kind
       if params[:user_id].present?
         oea_user_id = @user ? @user.id : nil
-        pp params
         @user_assessment = @assessment.user_assessments.where(eid: params[:user_id], lti_context_id: params[:context_id]).first
         if !@user_assessment.nil?
           @user_attempts = @user_assessment.attempts || 0
