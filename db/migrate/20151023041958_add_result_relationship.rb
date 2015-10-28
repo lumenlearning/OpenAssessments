@@ -8,7 +8,7 @@ class AddResultRelationship < ActiveRecord::Migration
   end
 
   def set_result_foreign_ids
-    UserAssessment.all.each do |ua|
+    UserAssessment.all.find_each do |ua|
       AssessmentResult.where(user_id: ua.user_id, assessment_id: ua.assessment_id, user_assessment_id: nil).update_all(user_assessment_id: ua.id)
     end
   end
