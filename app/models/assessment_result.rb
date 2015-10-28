@@ -58,7 +58,11 @@ class AssessmentResult < ActiveRecord::Base
   end
 
   def is_max_result?
-    self.user_assessment.assessment_results.where('score IS NOT NULL').order('score DESC').select(:id, :score).limit(1).first == self
+    if self.user_assessment
+      self.user_assessment.assessment_results.where('score IS NOT NULL').order('score DESC').select(:id, :score).limit(1).first == self
+    else
+      self.assessment.assessment_results.where(user_id: self.user.id).where('score IS NOT NULL').order('score DESC').select(:id, :score).limit(1).first == self
+    end
   end
 
   def should_send_lti_outcome?
