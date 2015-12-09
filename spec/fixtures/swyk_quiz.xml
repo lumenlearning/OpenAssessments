@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+  <assessment title="Show What You Know: Role of Business" ident="ib7b957adb7ce471691e27cf3dd9d37a7_swyk">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>qmd_timelimit</fieldlabel>
+        <fieldentry/>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry/>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <section title="What Is Business?" ident="3991">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>1</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item title="" ident="4965">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>f71c5ce2-46b7-4cce-9531-1680d42faf1b</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>What Is Business?</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Define the concept of business</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Which of the following is/are an example(s) of a service?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="9755">
+                  <material>
+                    <mattext texttype="text/html">a flight from Los Angeles to Dallas</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="4501">
+                  <material>
+                    <mattext texttype="text/html">a couch or sofa</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6570">
+                  <material>
+                    <mattext texttype="text/html">a computer</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">9755</varequal>
+                  <not>
+                    <varequal respident="response1">4501</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">6570</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+      </section>
+      <section title="For-Profit vs. Non-Profit" ident="3310">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>1</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item title="" ident="3790">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>9a82d67b-21ce-4cbf-8298-6bd1109f03b2</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>For-Profit vs. Non-Profit</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Distinguish between for-profit and nonprofit organizations</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Sasha was exceptional at organizing educational events in her community. As friends and professional contacts were asking for more of her time and expertise she decided to start a business with the mission of improving the performance of students in grades K-12 in her community.  After analyzing her options, Sasha decided to create a &lt;strong&gt;FOR-PROFIT BUSINESS&lt;/strong&gt;. Which of the following reason(s) would justify this decision?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="483">
+                  <material>
+                    <mattext texttype="text/html">She could bring in other owners who would invest in and share in her profits and success.</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1708">
+                  <material>
+                    <mattext texttype="text/html">She is committed to using surplus revenues to further the company mission, rather than distributing profits or dividends.</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="6386">
+                  <material>
+                    <mattext texttype="text/html">She could still receive tax-free charitable contributions.</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="1111">
+                  <material>
+                    <mattext texttype="text/html">She could still receive tax-free charitable contributions.</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">483</varequal>
+                  <varequal respident="response1">1708</varequal>
+                  <not>
+                    <varequal respident="response1">6386</varequal>
+                  </not>
+                  <not>
+                    <varequal respident="response1">1111</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+        </item>
+      </section>
+      <section title="Factors of Production" ident="7752">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>1</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item ident="5555" title="Question 2">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>question_type</fieldlabel>
+              <fieldentry>multiple_choice_question</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>f71c5ce2-46b7-4cce-9531-1680d42faf1b</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>What Is Business?</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Define the concept of business</fieldentry>
+              </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;What is one indication that you didn&#8217;t clearly state something?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="6368">
+                <material>
+                  <mattext texttype="text/html">&lt;p&gt;Students raise their hand for clarification.&lt;/p&gt;</mattext>
+                </material>
+              </response_label>
+              <response_label ident="7824">
+                <material>
+                  <mattext texttype="text/html">&lt;p&gt;Students start acting up.&lt;/p&gt;</mattext>
+                </material>
+              </response_label>
+              <response_label ident="8330">
+                <material>
+                  <mattext texttype="text/html">&lt;p&gt;Students start falling asleep.&lt;/p&gt;</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="Yes">
+            <conditionvar>
+              <varequal respident="response1">6368</varequal>
+            </conditionvar>
+            <displayfeedback feedbacktype="Response" linkrefid="6368_fb"/>
+          </respcondition>
+          <respcondition continue="Yes">
+            <conditionvar>
+              <varequal respident="response1">7824</varequal>
+            </conditionvar>
+            <displayfeedback feedbacktype="Response" linkrefid="7824_fb"/>
+          </respcondition>
+          <respcondition continue="Yes">
+            <conditionvar>
+              <varequal respident="response1">8330</varequal>
+            </conditionvar>
+            <displayfeedback feedbacktype="Response" linkrefid="8330_fb"/>
+          </respcondition>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">6368</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+        <itemfeedback ident="6368_fb">
+          <flow_mat>
+            <material>
+              <mattext texttype="text/plain">Correct!</mattext>
+            </material>
+          </flow_mat>
+        </itemfeedback>
+        <itemfeedback ident="7824_fb">
+          <flow_mat>
+            <material>
+              <mattext texttype="text/plain">Incorrect!</mattext>
+            </material>
+          </flow_mat>
+        </itemfeedback>
+        <itemfeedback ident="8330_fb">
+          <flow_mat>
+            <material>
+              <mattext texttype="text/plain">Incorrect!</mattext>
+            </material>
+          </flow_mat>
+        </itemfeedback>
+      </item>
+      </section>
+    </section>
+  </assessment>
+</questestinterop>
