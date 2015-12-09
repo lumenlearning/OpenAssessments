@@ -105,9 +105,9 @@ group :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', require: false
   gem 'webmock'
+  gem 'pry'
 end
 
 group :production do
   gem 'rails_12factor'
 end
-
