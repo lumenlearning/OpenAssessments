@@ -55,6 +55,11 @@ class AssessmentGrader
     end
   end
 
+  def score
+    score = (Float(@answered_correctly) / Float(@questions.length))
+    score
+  end
+  
   def get_xml_index(id, xml_questions)
     xml_questions.each_with_index do |question, index|
       if question.attributes["ident"].value == id
@@ -115,8 +120,4 @@ class AssessmentGrader
     correct
   end
 
-  def score
-    score = (Float(@answered_correctly) / Float(@questions.length))
-    score
-  end
 end
