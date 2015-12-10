@@ -48,17 +48,15 @@ describe 'AssessmentGrader' do
                    "confidenceLevel" => "Pretty Sure",
                    "timeSpent" => 3236,
                    "startTime" => 1449619805490,
-                   "outcome_guid" => "9a82d67b-21ce-4cbf-8298-6bd1109f03b2"}
-                  # {"id" => "5555",
-                  #  "confidenceLevel" => "Very Sure",
-                  #  "timeSpent" => 1593,
-                  #  "startTime" => 1449619808726,
-                  #  "outcome_guid" => "a9fc4312-f9dd-4430-bea7-b551790a4c51"},
+                   "outcome_guid" => "9a82d67b-21ce-4cbf-8298-6bd1109f03b2"},
+                  {"id" => "5555",
+                   "confidenceLevel" => "Very Sure",
+                   "timeSpent" => 1593,
+                   "startTime" => 1449619808726,
+                   "outcome_guid" => "a9fc4312-f9dd-4430-bea7-b551790a4c51"},
                   ]
 
-    @answers = [["9755"], ["483", "1708"]]
-
-    # correct answer for 3790 , ["6368"]
+    @answers = [["9755"], ["483", "1708"], ["6368"]]
 
     file = File.join(__dir__, '../fixtures/swyk_quiz.xml')
     @assessment = Assessment.create!(title: 'testing', xml_file: open(file).read )
@@ -70,40 +68,39 @@ describe 'AssessmentGrader' do
     expect(ag.score).to eq 1
   end
 
-
   describe "multiple answer questions" do
     it 'grades correct for all correctly answered' do
       ag = AssessmentGrader.new(@questions, @answers, @assessment)
       expect(ag.grade_multiple_answers(0, ['9755'])).to be 1
       expect(ag.grade_multiple_answers(1, ['483', '1708'])).to be 1
     end
-    #
-    # it 'grades correct for 1 right 1 wrong' do
-    #   ag = AssessmentGrader.new(@questions, @answers, @assessment)
-    #   score = ag.grade_multiple_answers(0, ['9755', '4501'])
-    #   score = ag.grade_multiple_answers(1, ['483', '6386'])
-    # end
 
-    # it 'grades correct for 1 right 2 wrong' do
-    #   ag = AssessmentGrader.new(@questions, @answers, @assessment)
-    #   score = ag.grade_multiple_answers(0, ['9755', '4501', '6570'])
-    # end
-    #
-    # it 'grades correct for 2 right 1 wrong' do
-    #   ag = AssessmentGrader.new(@questions, @answers, @assessment)
-    #   score = ag.grade_multiple_answers(1, ['483', '1708', '6386'])
-    # end
-    #
-    # it 'grades correct for 2 right 2 wrong' do
-    #   ag = AssessmentGrader.new(@questions, @answers, @assessment)
-    #   score = ag.grade_multiple_answers(1, ['483', '1708', '6386', '1111'])
-    # end
-    #
-    # it 'grades correct when all wrong chosen' do
-    #   ag = AssessmentGrader.new(@questions, @answers, @assessment)
-    #   score = ag.grade_multiple_answers(0, ['6570'])
-    #   score = ag.grade_multiple_answers(1, ['6386', '1111'])
-    # end
+    it 'grades correct for 1 right 1 wrong' do
+      ag = AssessmentGrader.new(@questions, @answers, @assessment)
+      expect(ag.grade_multiple_answers(0, ['9755', '4501'])).to eq 0.667
+      expect(ag.grade_multiple_answers(1, ['483', '6386'])).to eq 0.25
+    end
+
+    it 'grades correct for 1 right 2 wrong' do
+      ag = AssessmentGrader.new(@questions, @answers, @assessment)
+      expect(ag.grade_multiple_answers(0, ['9755', '4501', '6570'])).to eq 0.333
+    end
+
+    it 'grades correct for 2 right 1 wrong' do
+      ag = AssessmentGrader.new(@questions, @answers, @assessment)
+      expect(ag.grade_multiple_answers(1, ['483', '1708', '6386'])).to eq 0.75
+    end
+
+    it 'grades correct for 2 right 2 wrong' do
+      ag = AssessmentGrader.new(@questions, @answers, @assessment)
+      expect(ag.grade_multiple_answers(1, ['483', '1708', '6386', '1111'])).to eq 0.5
+    end
+
+    it 'grades correct when all wrong chosen' do
+      ag = AssessmentGrader.new(@questions, @answers, @assessment)
+      expect(ag.grade_multiple_answers(0, ['6570'])).to eq 0
+      expect(ag.grade_multiple_answers(1, ['6386', '1111'])).to eq 0
+    end
 
     # it 'grades correct for...'
   end
