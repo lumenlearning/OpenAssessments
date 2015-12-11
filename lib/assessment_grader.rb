@@ -1,6 +1,6 @@
 class AssessmentGrader
 
-  attr_accessor :questions, :answers, :assessment
+  attr_reader :questions, :answers, :assessment
 
   def initialize(questions, answers, assessment)
     @questions = questions
@@ -42,13 +42,15 @@ class AssessmentGrader
 
         if 1
           @correct_list[index] = true
+          @answered_correctly += total
         elsif 0
           @correct_list[index] = false
-        elsif total != 1 || 0
+        elsif ! 1 || 0
           @correct_list[index] = "partial"
+          @answered_correctly = (@answered_correctly.to_f) + total
+        # binding.pry
         end
 
-        @answered_correctly += total
         question["score"] = total
         @confidence_level_list[index] = question["confidenceLevel"]
       end
@@ -56,8 +58,7 @@ class AssessmentGrader
   end
 
   def score
-    score = (Float(@answered_correctly) / Float(@questions.length))
-    score
+    ((@answered_correctly.to_f) / (@questions.length.to_f)).round(3)
   end
 
   def get_xml_index(id, xml_questions)
@@ -92,7 +93,13 @@ class AssessmentGrader
       if answers.include?(choice.text) then correct += 1 end
     end
     total =  answers.length - correct
-    total == answers.length ? 0 : ( total == 0 ? 1 : (((answers.length - total)/correct_choices.length.to_f) - (total/all_possible.to_f)).round(3))
+    if total == answers.length
+      0
+    elsif total == 0
+      1
+    else
+      (((answers.length - total)/correct_choices.length.to_f) - (total/all_possible.to_f)).round(3)
+    end
   end
 
   # Not Currently in Use

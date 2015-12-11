@@ -61,63 +61,92 @@ describe 'AssessmentGrader' do
     @assessment = Assessment.create!(title: 'testing', xml_file: open(file).read )
   end
 
-  it "Grades the quiz" do
-    ag = AssessmentGrader.new(@questions, @answers, @assessment)
-    ag.grade!
-    expect(ag.score).to eq 1
+  context "Grades quiz" do
+    it "grades a quiz with all correctly chosen answers" do
+      ag = AssessmentGrader.new(@questions, @answers, @assessment)
+      ag.grade!
+      expect(ag.score).to eq 1
+    end
+
+    it "grades a quiz with all incorrectly chosen answers" do
+      ag = AssessmentGrader.new(@questions, [["4501"], ["6386"], ["7824"]], @assessment)
+      ag.grade!
+      expect(ag.score).to eq 0
+    end
+
+    it "grades a quiz with one wrong answer" do
+      ag = AssessmentGrader.new(@questions, [["4501"], ["483", "1708"], ["6368"]], @assessment)
+      ag.grade!
+      expect(ag.score).to eq 0.667
+    end
+
+    it "grades a quiz with one partially right" do
+      ag = AssessmentGrader.new(@questions, [["9755"], ["483", "6386"], ["6368"]], @assessment)
+      ag.grade!
+      expect(ag.score).to eq 0.75
+    end
   end
 
-  describe "multiple answer questions" do
-    it 'grades correct for all correctly answered' do
+  context "Multiple answer questions" do
+    it 'grades correctly for all correctly answered' do
       ag = AssessmentGrader.new(@questions, @answers, @assessment)
       expect(ag.grade_multiple_answers(0, ['9755'])).to be 1
       expect(ag.grade_multiple_answers(1, ['483', '1708'])).to be 1
     end
 
-    it 'grades correct for 1 right 1 wrong' do
+    it 'grades correctly for 1 right 1 wrong' do
       ag = AssessmentGrader.new(@questions, @answers, @assessment)
       expect(ag.grade_multiple_answers(0, ['9755', '4501'])).to eq 0.667
       expect(ag.grade_multiple_answers(1, ['483', '6386'])).to eq 0.25
     end
 
-    it 'grades correct for 1 right 2 wrong' do
+    it 'grades correctly for 1 right 2 wrong' do
       ag = AssessmentGrader.new(@questions, @answers, @assessment)
       expect(ag.grade_multiple_answers(0, ['9755', '4501', '6570'])).to eq 0.333
     end
 
-    it 'grades correct for 2 right 1 wrong' do
+    it 'grades correctly for 2 right 1 wrong' do
       ag = AssessmentGrader.new(@questions, @answers, @assessment)
       expect(ag.grade_multiple_answers(1, ['483', '1708', '6386'])).to eq 0.75
     end
 
-    it 'grades correct for 2 right 2 wrong' do
+    it 'grades correctly for 2 right 2 wrong' do
       ag = AssessmentGrader.new(@questions, @answers, @assessment)
       expect(ag.grade_multiple_answers(1, ['483', '1708', '6386', '1111'])).to eq 0.5
     end
 
-    it 'grades correct when all wrong chosen' do
+    it 'grades correctly for all wrong' do
       ag = AssessmentGrader.new(@questions, @answers, @assessment)
       expect(ag.grade_multiple_answers(0, ['6570'])).to eq 0
       expect(ag.grade_multiple_answers(1, ['6386', '1111'])).to eq 0
     end
-    # it 'grades correct for...'
+
+    it 'grades correctly when no answers are chosen' do
+      ag = AssessmentGrader.new(@questions, @answers, @assessment)
+      expect(ag.grade_multiple_answers(0, [])).to eq 0
+      expect(ag.grade_multiple_answers(1, [])).to eq 0
+    end
   end
 
-  describe "multiple choice question" do
+  context "Multiple choice question" do
     it 'returns the correct answer id' do
       ag = AssessmentGrader.new(@questions, @answers, @assessment)
       expect(ag.get_correct_mc_answer_id(2)).to eq '6368'
     end
 
-    it 'grades correct for correctly answered' do
+    it 'grades correctly for correctly answered' do
       ag = AssessmentGrader.new(@questions, @answers, @assessment)
       expect(ag.grade_multiple_choice(2, ['6368'])).to eq 1
     end
 
-
-    it 'grades correct for incorrectly answered' do
+    it 'grades correctly for incorrectly answered' do
       ag = AssessmentGrader.new(@questions, @answers, @assessment)
       expect(ag.grade_multiple_choice(2, ['8330'])).to be 0
+    end
+
+    it 'grades correctly when no answer is chosen' do
+      ag = AssessmentGrader.new(@questions, @answers, @assessment)
+      expect(ag.grade_multiple_choice(2, [])).to be 0
     end
   end
 end
