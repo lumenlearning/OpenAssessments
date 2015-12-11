@@ -33,16 +33,16 @@ class AssessmentGrader
 
         # grade the question based off of question type
         if type == "multiple_choice_question"
-          total = grade_multiple_choice(@xml_questions[xml_index], @answers[index])
+          total = grade_multiple_choice(xml_index, @answers[index])
         elsif type == "multiple_answers_question"
           total = grade_multiple_answers(xml_index, @answers[index])
         elsif type == "matching_question"
           total = grade_matching(@xml_questions[xml_index], @answers[index])
         end
 
-        if total == 1
+        if 1
           @correct_list[index] = true
-        elsif total == 0
+        elsif 0
           @correct_list[index] = false
         elsif total != 1 || 0
           @correct_list[index] = "partial"
@@ -62,61 +62,51 @@ class AssessmentGrader
 
   def get_xml_index(id, xml_questions)
     xml_questions.each_with_index do |question, index|
-      if question.attributes["ident"].value == id
-        return index
-      end
+      return index if question.attributes["ident"].value == id
     end
     return -1
   end
 
-  def grade_multiple_choice(question, answer)
-    return 1
-    total = 0
-    choices = question.children.xpath("respcondition")
-    choices.each_with_index do |choice, index|
-      # if the students response id matches the correct response id for the question the answer is correct
-      if choice.xpath("setvar")[0].children.text == "100" && answer == choice.xpath("conditionvar").xpath("varequal").children.text
-        total = 1
-      end
-    end
-    total
-  end
+ def grade_multiple_choice(xml_index, answer)
+   correct_answer_id = get_correct_mc_answer_id(xml_index)
+   answer.first == correct_answer_id ? 1 : 0
+ end
+
+ def get_correct_mc_answer_id(xml_index)
+   question = @xml_questions[xml_index]
+   choices = question.children.xpath("respcondition")
+   choices.each_with_index do |choice, index|
+     # if the students response id matches the correct response id for the question the answer is correct
+     if choice.xpath("setvar")[0].children.text == "100"
+       return choice.xpath("conditionvar").xpath("varequal").children.text
+     end
+   end
+ end
 
   def grade_multiple_answers(xml_index, answers)
     question = @xml_questions[xml_index]
     correct_choices = question.children.xpath("respcondition").children.xpath("and").xpath("varequal")
-    incorrect_choices = question.children.xpath("respcondition").children.xpath("and").xpath("not").xpath("varequal")
-    possible_correct = correct_choices.length
-    all_possible = incorrect_choices.length + possible_correct
+    all_possible = correct_choices.length + (question.children.xpath("respcondition").children.xpath("and").xpath("not").xpath("varequal")).length
     correct = 0
-    incorrect = 0
-    total = 0
-
     correct_choices.each_with_index do |choice, index|
-      if answers.include?(choice.text)
-        correct += 1;
-      end
+      if answers.include?(choice.text) then correct += 1 end
     end
-    incorrect_choices.each_with_index do |incorrect_choice, index|
-      if answers.include?(incorrect_choice.text)
-        incorrect -= 1;
-      end
-    end
-    correct == 0 || total < 0 ? total = 0 : total = ((correct/possible_correct.to_f) + (incorrect/all_possible.to_f)).round(3)
-    total == 1.0 ? total.to_i : total
+    total =  answers.length - correct
+    total == answers.length ? 0 : ( total == 0 ? 1 : (((answers.length - total)/correct_choices.length.to_f) - (total/all_possible.to_f)).round(3))
   end
 
-  def grade_matching(question, answers)
-    total = 0
-    choices = question.children.xpath("respcondition")
-    total_correct = choices.length
-    correct = 0
-    choices.each_with_index do |choice, index|
-      if answers[index] && choice.xpath("conditionvar").xpath("varequal").children.text == answers[index]["answerId"]
-        correct_count += 1
-      end
-    end
-    total = correct
-    total
-  end
+  # Not Currently in Use
+  # def grade_matching(question, answers)
+  #   total = 0
+  #   choices = question.children.xpath("respcondition")
+  #   total_correct = choices.length
+  #   correct = 0
+  #   choices.each_with_index do |choice, index|
+  #     if answers[index] && choice.xpath("conditionvar").xpath("varequal").children.text == answers[index]["answerId"]
+  #       correct_count += 1
+  #     end
+  #   end
+  #   total = correct
+  #   total
+  # end
 end

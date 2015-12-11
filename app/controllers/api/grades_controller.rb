@@ -1,7 +1,7 @@
 class Api::GradesController < Api::ApiController
-  
+
   skip_before_action :validate_token, only: [:create]
-  
+
   def create
     if request.headers["Authorization"].present? &&
             request.headers["Authorization"] != "Bearer null"
@@ -35,7 +35,7 @@ class Api::GradesController < Api::ApiController
     answers = item_to_grade["answers"]
     ungraded_questions = []
     xml_index_list = []
-    
+
     questions.each_with_index do |question, index|
 
       # make sure we are looking at the right question
@@ -46,7 +46,7 @@ class Api::GradesController < Api::ApiController
         correct = false;
         # find the question type
         type = xml_questions[xml_index].children.xpath("qtimetadata").children.xpath("fieldentry").children.text
-        
+
         # if the question type gets some wierd stuff if means that the assessment has outcomes so we need
         # to get the question data a little differently
         if type != "multiple_choice_question" && type != "multiple_answers_question" && type != "matching_question"
@@ -55,7 +55,7 @@ class Api::GradesController < Api::ApiController
 
         # grade the question based off of question type
         if type == "multiple_choice_question"
-          correct = grade_multiple_choice(xml_questions[xml_index], answers[index])  
+          correct = grade_multiple_choice(xml_questions[xml_index], answers[index])
         elsif type == "multiple_answers_question"
           correct = grade_multiple_answers(xml_questions[xml_index], answers[index])
         elsif type == "matching_question"
@@ -134,7 +134,7 @@ class Api::GradesController < Api::ApiController
       end
       # TODO if the question id's dont match then check the rest of the id's
       # if the Id isn't found then there has been an error and return the error
-    
+
     end
 
 
@@ -178,11 +178,11 @@ class Api::GradesController < Api::ApiController
     end
     return -1
   end
-  def grade_multiple_choice(question, answer) 
+  def grade_multiple_choice(question, answer)
     correct = false;
     choices = question.children.xpath("respcondition")
     choices.each_with_index do |choice, index|
-      
+
       # if the students response id matches the correct response id for the question the answer is correct
       if choice.xpath("setvar")[0].children.text == "100" && answer == choice.xpath("conditionvar").xpath("varequal").children.text
         correct = true;
@@ -200,7 +200,7 @@ class Api::GradesController < Api::ApiController
 
     if answers.length > total_correct
       return correct
-    end 
+    end
     choices.each_with_index do |choice, index|
       if answers.include?(choice.text)
         correct_count += 1;
@@ -233,5 +233,5 @@ class Api::GradesController < Api::ApiController
 
     correct
   end
-  
+
 end

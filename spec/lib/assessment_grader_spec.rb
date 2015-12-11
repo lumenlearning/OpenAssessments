@@ -38,8 +38,7 @@ describe 'AssessmentGrader' do
     #                             "assessmentKind" => "show_what_you_know",
     #                             "accountId" => "1"}}}
   before do
-    @questions =
-                 [{"id" => "4965",
+    @questions = [{"id" => "4965",
                    "confidenceLevel" => "Just A Guess",
                    "timeSpent" => 4069,
                    "startTime" => 1449619801421,
@@ -101,7 +100,24 @@ describe 'AssessmentGrader' do
       expect(ag.grade_multiple_answers(0, ['6570'])).to eq 0
       expect(ag.grade_multiple_answers(1, ['6386', '1111'])).to eq 0
     end
-
     # it 'grades correct for...'
+  end
+
+  describe "multiple choice question" do
+    it 'returns the correct answer id' do
+      ag = AssessmentGrader.new(@questions, @answers, @assessment)
+      expect(ag.get_correct_mc_answer_id(2)).to eq '6368'
+    end
+
+    it 'grades correct for correctly answered' do
+      ag = AssessmentGrader.new(@questions, @answers, @assessment)
+      expect(ag.grade_multiple_choice(2, ['6368'])).to eq 1
+    end
+
+
+    it 'grades correct for incorrectly answered' do
+      ag = AssessmentGrader.new(@questions, @answers, @assessment)
+      expect(ag.grade_multiple_choice(2, ['8330'])).to be 0
+    end
   end
 end

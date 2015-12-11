@@ -231,20 +231,16 @@
           </outcomes>
           <respcondition continue="Yes">
             <conditionvar>
-              <varequal respident="response1">6368</varequal>
-            </conditionvar>
-            <displayfeedback feedbacktype="Response" linkrefid="6368_fb"/>
-          </respcondition>
-          <respcondition continue="Yes">
-            <conditionvar>
               <varequal respident="response1">7824</varequal>
             </conditionvar>
+            <setvar action="Set" varname="SCORE">0</setvar>
             <displayfeedback feedbacktype="Response" linkrefid="7824_fb"/>
           </respcondition>
           <respcondition continue="Yes">
             <conditionvar>
               <varequal respident="response1">8330</varequal>
             </conditionvar>
+            <setvar action="Set" varname="SCORE">0</setvar>
             <displayfeedback feedbacktype="Response" linkrefid="8330_fb"/>
           </respcondition>
           <respcondition continue="No">
