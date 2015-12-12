@@ -1,6 +1,6 @@
 class AssessmentGrader
 
-  attr_reader :questions, :answers, :assessment
+  attr_reader :questions, :answers, :assessment, :correct_list, :confidence_level_list
 
   def initialize(questions, answers, assessment)
     @questions = questions
@@ -40,19 +40,13 @@ class AssessmentGrader
           total = grade_matching(@xml_questions[xml_index], @answers[index])
         end
 
-        if 1
-          @correct_list[index] = true
-          @answered_correctly += total
-        elsif 0
-          @correct_list[index] = false
-        elsif ! 1 || 0
-          @correct_list[index] = "partial"
-          @answered_correctly = (@answered_correctly.to_f) + total
-        # binding.pry
-        end
+        if total == 1 then @correct_list[index] = true
+        elsif total == 0 then @correct_list[index] = false
+        elsif total == ! 1 || 0 then @correct_list[index] = "partial" end
 
-        question["score"] = total
+        @answered_correctly += total
         @confidence_level_list[index] = question["confidenceLevel"]
+        question["score"] = total
       end
     end
   end

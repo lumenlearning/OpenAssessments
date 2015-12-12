@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'AssessmentGrader' do
+describe AssessmentGrader do
   # example of what params to GradesController#create looks like
     # params = {"itemToGrade" =>
     #                   {"questions" =>
@@ -66,24 +66,28 @@ describe 'AssessmentGrader' do
       ag = AssessmentGrader.new(@questions, @answers, @assessment)
       ag.grade!
       expect(ag.score).to eq 1
+      expect(ag.correct_list).to eq [true, true, true]
     end
 
     it "grades a quiz with all incorrectly chosen answers" do
       ag = AssessmentGrader.new(@questions, [["4501"], ["6386"], ["7824"]], @assessment)
       ag.grade!
       expect(ag.score).to eq 0
+      expect(ag.correct_list).to eq [false, false, false]
     end
 
     it "grades a quiz with one wrong answer" do
       ag = AssessmentGrader.new(@questions, [["4501"], ["483", "1708"], ["6368"]], @assessment)
       ag.grade!
       expect(ag.score).to eq 0.667
+      expect(ag.correct_list).to eq [false, true, true]
     end
 
     it "grades a quiz with one partially right" do
       ag = AssessmentGrader.new(@questions, [["9755"], ["483", "6386"], ["6368"]], @assessment)
       ag.grade!
       expect(ag.score).to eq 0.75
+      expect(ag.correct_list).to eq [true, "partial", true]
     end
   end
 
