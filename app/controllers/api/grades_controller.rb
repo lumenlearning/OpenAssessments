@@ -44,11 +44,14 @@ class Api::GradesController < Api::ApiController
       result.session_status = AssessmentResult::STATUS_FINAL
     end
 
-    result.score = (ag.score * 100).round
+    score = result.score = (ag.score * 100).round
+
     result.save!
 
+    create_item_results(questions, settings, answers, result, assessment)
+
     graded_assessment = {
-      score: result.score,
+      score: score,
       feedback: "Study Harder",
       correct_list: ag.correct_list,
       confidence_level_list: ag.confidence_level_list,
@@ -58,6 +61,44 @@ class Api::GradesController < Api::ApiController
 
     respond_to do |format|
       format.json { render json: graded_assessment }
+    end
+  end
+
+private
+
+  def create_item_results(questions, settings, answers, result, assessment)
+    questions.each_with_index do |question, index|
+      confidence_level_int = ItemResult::CONFIDENCE_MAP[question["confidenceLevel"]]
+
+      unless item = assessment.items.find_by_identifier(question["id"])
+        item = assessment.items.build
+        item.identifier = question["id"]
+        item.question_text = question["material"]
+        item.save!
+end
+
+        rendered_time = Time.now
+        referer = request.env['HTTP_REFERER']
+        item.item_results.create(
+          identifier: question["id"],
+          item_id: item.id,
+          eid: item.id,
+          correct: question["score"] == 1 ? true : false,
+          external_user_id: settings["externalUserId"],
+          time_elapsed: question["timeSpent"],
+          src_url: settings["srcUrl"],
+          assessment_result_id: result.id,
+          session_status: "final",
+          ip_address: request.ip,
+          referer: referer,
+          rendered_datestamp: rendered_time,
+          confidence_level: confidence_level_int,
+          score: question["score"],
+          outcome_guid: question["outcome_guid"],
+          sequence_index: answers[index],
+          answers_chosen: answers[index].is_a?(Array) ? answers[index].join(",") : answers
+        )
+
     end
   end
 end

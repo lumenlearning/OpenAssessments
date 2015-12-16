@@ -57,6 +57,7 @@ describe Api::GradesController do
     @assessment = Assessment.create!(title: 'testing', kind: "summative", xml_file: open(file).read )
     @params["itemToGrade"]["assessmentId"] = @assessment.id
     @params["itemToGrade"]["settings"]["assessmentKind"] = @assessment.kind
+    @question = @params["itemToGrade"]["questions"][0]
   end
 
   describe "create" do
@@ -91,11 +92,6 @@ describe Api::GradesController do
       expect(result['score']).to eq 33.0
     end
 
-    it "tests that the right values are being returned from the correct_list" do
-      post :create, @params.to_json, format: :json
-      result = pp JSON.parse(response.body)
-      expect(result['correct_list']).to eq [false, false, true]
-    end
 
     it "tests that the right value is being returned from the confidence_level_list" do
       post :create, @params.to_json, format: :json
@@ -118,6 +114,104 @@ describe Api::GradesController do
     it "tests that the session_status is complete when isLti is false" do
       post :create, @params.to_json, format: :json
       expect(@assessment.assessment_results.first.session_status).to eq "final"
+    end
+    it "tests that the right values are being returned from the correct_list" do
+      post :create, @params.to_json, format: :json
+      result = pp JSON.parse(response.body)
+      expect(result['correct_list']).to eq [false, false, true]
+    end
+
+    it "creates item results" do
+      post :create, @params.to_json, format: :json
+      expect(Item.count).to be 3
+    end
+
+    describe "item_results" do
+
+      it "creates item results" do
+        post :create, @params.to_json, format: :json
+        item_result = ItemResult.find_by_identifier("4965")
+        expect(item_result).to_not be nil
+      end
+
+      it "tests that correct is true for right answer in item_result" do
+        post :create, @params.to_json, format: :json
+        item_result = ItemResult.find_by_identifier("5555")
+        expect(item_result.correct).to be true
+      end
+
+      it "tests that correct is false for wrong answer in item_result" do
+        post :create, @params.to_json, format: :json
+        item_result = ItemResult.find_by_identifier("4965")
+        expect(item_result.correct).to be false
+      end
+
+      it "tests that correct is false for partial answer in item_result" do
+        post :create, @params.to_json, format: :json
+        item_result = ItemResult.find_by_identifier("3790")
+        expect(item_result.correct).to be false
+      end
+
+      it "tests that the time spent is correct for item_result" do
+        post :create, @params.to_json, format: :json
+        item_result = ItemResult.find_by_identifier("3790")
+        expect(item_result.time_elapsed).to be 3236
+      end
+
+      it "tests that the answers_chosen are correct" do
+        post :create, @params.to_json, format: :json
+        item_result = ItemResult.find_by_identifier("3790")
+        expect(item_result.answers_chosen).to eq ("6386")
+      end
+
+      it "tests that the answers_chosen are correct" do
+        post :create, @params.to_json, format: :json
+        item_result = ItemResult.find_by_identifier("4965")
+        expect(item_result.answers_chosen).to eq ("4501")
+      end
+
+      it "tests that the answers_chosen are correct" do
+        post :create, @params.to_json, format: :json
+        item_result = ItemResult.find_by_identifier("5555")
+        expect(item_result.answers_chosen).to eq "6368"
+      end
+
+      it "tests that score is zero for incorrectly answered question" do
+        post :create, @params.to_json, format: :json
+        item_result = ItemResult.find_by_identifier("4965")
+        expect(item_result.score).to eq 0
+      end
+
+      it "tests that score is 1 for correctly answered question" do
+        post :create, @params.to_json, format: :json
+        item_result = ItemResult.find_by_identifier("5555")
+        expect(item_result.score).to eq 1
+      end
+
+      it "tests that score is float for partially correct answer" do
+        @params["itemToGrade"]["answers"] = [["4501"], ["483", "1111"], ["6368"]]
+        post :create, @params.to_json, format: :json
+        item_result = ItemResult.find_by_identifier("3790")
+        expect(item_result.score).to eq 0.25
+      end
+
+      it "tests that confidence_level is correct for question" do
+        post :create, @params.to_json, format: :json
+        item_result = ItemResult.find_by_identifier("5555")
+        expect(item_result.confidence_level).to eq 2
+      end
+
+      it "tests that confidence_level is correct for question" do
+        post :create, @params.to_json, format: :json
+        item_result = ItemResult.find_by_identifier("4965")
+        expect(item_result.confidence_level).to eq 0
+      end
+
+      it "tests that confidence_level is correct for question" do
+        post :create, @params.to_json, format: :json
+        item_result = ItemResult.find_by_identifier("3790")
+        expect(item_result.confidence_level).to eq 1
+      end
     end
   end
 end
