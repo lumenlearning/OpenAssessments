@@ -96,7 +96,7 @@ end
           score: question["score"],
           outcome_guid: question["outcome_guid"],
           sequence_index: answers[index],
-          answers_chosen: answers[index].is_a?(Array) ? answers[index].join(",") : answers
+          answers_chosen: answers[index].is_a?(Array) ? answers[index].join(",") : answers[index]
         )
 
     end

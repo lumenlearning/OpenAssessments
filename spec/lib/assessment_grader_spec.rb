@@ -55,7 +55,7 @@ describe AssessmentGrader do
                    "outcome_guid" => "a9fc4312-f9dd-4430-bea7-b551790a4c51"},
                   ]
 
-    @answers = [["9755"], ["483", "1708"], ["6368"]]
+    @answers = [["9755"], ["483", "1708"], "6368"]
 
     file = File.join(__dir__, '../fixtures/swyk_quiz.xml')
     @assessment = Assessment.create!(title: 'testing', xml_file: open(file).read )
@@ -70,21 +70,21 @@ describe AssessmentGrader do
     end
 
     it "grades a quiz with all incorrectly chosen answers" do
-      ag = AssessmentGrader.new(@questions, [["4501"], ["6386"], ["7824"]], @assessment)
+      ag = AssessmentGrader.new(@questions, [["4501"], ["6386"], "7824"], @assessment)
       ag.grade!
       expect(ag.score).to eq 0
       expect(ag.correct_list).to eq [false, false, false]
     end
 
     it "grades a quiz with one wrong answer" do
-      ag = AssessmentGrader.new(@questions, [["4501"], ["483", "1708"], ["6368"]], @assessment)
+      ag = AssessmentGrader.new(@questions, [["4501"], ["483", "1708"], "6368"], @assessment)
       ag.grade!
       expect(ag.score).to eq 0.667
       expect(ag.correct_list).to eq [false, true, true]
     end
 
     it "grades a quiz with one partially right" do
-      ag = AssessmentGrader.new(@questions, [["9755"], ["483", "6386"], ["6368"]], @assessment)
+      ag = AssessmentGrader.new(@questions, [["9755"], ["483", "6386"], "6368"], @assessment)
       ag.grade!
       expect(ag.score).to eq 0.75
       expect(ag.correct_list).to eq [true, "partial", true]
@@ -140,12 +140,12 @@ describe AssessmentGrader do
 
     it 'grades correctly for correctly answered' do
       ag = AssessmentGrader.new(@questions, @answers, @assessment)
-      expect(ag.grade_multiple_choice(2, ['6368'])).to eq 1
+      expect(ag.grade_multiple_choice(2, '6368')).to eq 1
     end
 
     it 'grades correctly for incorrectly answered' do
       ag = AssessmentGrader.new(@questions, @answers, @assessment)
-      expect(ag.grade_multiple_choice(2, ['8330'])).to be 0
+      expect(ag.grade_multiple_choice(2, '8330')).to be 0
     end
 
     it 'grades correctly when no answer is chosen' do

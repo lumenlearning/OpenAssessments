@@ -36,7 +36,7 @@ describe Api::GradesController do
                                  "startTime" => 1449619808726,
                                  "outcome_guid" => "a9fc4312-f9dd-4430-bea7-b551790a4c51"},
                                ],
-                       "answers" => [["4501"], ["6386"], ["6368"]],
+                       "answers" => [["4501"], ["6386"], "6368"],
                        "assessmentId" => nil,
                        "identifier" => "ib7b957adb7ce471691e27cf3dd9d37a7_swyk",
                        "settings" =>

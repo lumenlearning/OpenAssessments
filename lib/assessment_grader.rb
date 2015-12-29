@@ -64,7 +64,7 @@ class AssessmentGrader
 
  def grade_multiple_choice(xml_index, answer)
    correct_answer_id = get_correct_mc_answer_id(xml_index)
-   answer.first == correct_answer_id ? 1 : 0
+   answer == correct_answer_id ? 1 : 0
  end
 
  def get_correct_mc_answer_id(xml_index)
