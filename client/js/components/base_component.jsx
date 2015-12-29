@@ -1,4 +1,4 @@
-import React                                                                            from "react";
+import React from "react";
 
 // Note: If you override componentDidMount or componentWillUnmount you will need to
 // call super.componentDidMount() or super.componentWillUnmount() or call

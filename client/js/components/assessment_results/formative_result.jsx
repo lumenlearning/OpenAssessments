@@ -51,15 +51,25 @@ export default class FormativeResult extends React.Component{
       } else {
         confidenceColor = this.props.context.theme.definitelyBackgroundColor;
       }
+      var material = "";
+      material = ( <div
+                    dangerouslySetInnerHTML={{
+                      __html: this.props.questions[index].material
+                    }}>
+                  </div> )
+                  
       return <div key={"result-"+index}>
               <div style={styles.resultList}>
                 <div><div style={{color: color, float: "left"}}>Question {index+1} -- {message}</div><div style={{color: confidenceColor, float: "right"}}>{this.props.assessmentResult.confidence_level_list[index]}</div></div>
               </div>
               <div style={{...styles.resultList, ...styles.resultOutcome}}>
-                <div style={{width: "70%"}}>{this.props.questions[index].material}</div>
+                <div style={{width: "70%"}}>{material}</div>
               </div>
             </div>
     });
+
+
+
 
     return <div style={styles.assessment}>
             <div style={styles.assessmentContainer}>

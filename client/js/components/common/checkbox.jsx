@@ -5,11 +5,11 @@ import AssessmentActions  from "../../actions/assessment";
 import AssessmentStore    from "../../stores/assessment";
 
 export default class CheckBox extends React.Component{
-  
+
   answerSelected(){
     AssessmentActions.answerSelected(this.props.item);
   }
-  
+
   getStyles(props, theme){
     return {
       btnQuestion:{
@@ -99,7 +99,7 @@ export default class CheckBox extends React.Component{
   }
 }
 
-CheckBox.propTypes = { 
+CheckBox.propTypes = {
   item: React.PropTypes.object.isRequired,
   name: React.PropTypes.string.isRequired
 };
