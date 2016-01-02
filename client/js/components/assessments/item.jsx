@@ -10,7 +10,7 @@ import AssessmentStore    from "../../stores/assessment";
 export default class Item extends BaseComponent{
   constructor(){
     super();
-    this._bind("getConfidenceLevels", "confidenceLevelClicked", "getPreviousButton", "getNextButton", "getStyles");
+    this._bind("getConfidenceLevels", "confidenceLevelClicked", "nextButtonClicked", "previousButtonClicked", "getPreviousButton", "getNextButton", "getStyles");
   }
 
   nextButtonClicked(){
@@ -69,7 +69,7 @@ export default class Item extends BaseComponent{
   }
 
   getStyles(theme){
-    var navMargin = "-50px 20px 0 0";
+    var navMargin = "-35px 650px 0 0";
     if(this.props.settings.confidenceLevels)
       navMargin = "-75px 20px 0 0";
     return {
@@ -91,10 +91,11 @@ export default class Item extends BaseComponent{
         padding: theme.questionTextPadding,
       },
       nextButton: {
-        backgroundColor: theme.nextButtonBackgroundColor
+        backgroundColor: theme.nextButtonBackgroundColor,
       },
       previousButton: {
-        backgroundColor: theme.previousButtonBackgroundColor
+        backgroundColor: theme.previousButtonBackgroundColor,
+        marginRight: "20px",
       },
       maybeButton: {
         width: theme.maybeWidth,
@@ -226,21 +227,29 @@ export default class Item extends BaseComponent{
                   <input type="button" style={{...styles.margin, ...styles.definitelyButton}} className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentIndex) }}/>
                 </div>
                 );
-    } else {
+    } /*else {
       return <div className="lower_level"><input type="button" className="btn btn-check-answer" value="Check Answer" onClick={() => { AssessmentActions.checkAnswer()}}/></div>
-    }
+    }*/
   }
 
-  getNextButton(styles){
+  getNextButton(styles, currentIndex, item){
+
     var nextButton = "";
-    var nextButtonClassName = "btn btn-next-item " + ((this.props.currentIndex < this.props.questionCount - 1) ? "" : "disabled");
-    if(!this.context.theme.shouldShowNextPrevious && this.props.confidenceLevels){
+    var submitButton = "";
+    var nextButtonClassName = "btn btn-next-item ";
+    if (!this.context.theme.shouldShowNextPrevious && this.props.confidenceLevels){
       return nextButton;
     }
-    nextButton =(<button className={nextButtonClassName} style={styles.nextButton} onClick={() => { this.nextButtonClicked() }}>
+    else if(this.props.currentIndex == this.props.questionCount - 1 && this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
+      return submitButton =(<button className={nextButtonClassName} style={styles.submitButton} onClick={(e) => {this.submitButtonClicked(e)}}>
+                      <span>Submit</span> <i className="glyphicon glyphicon-chevron-right"></i>
+                    </button>);
+    }
+    else {
+    return nextButton =(<button className={nextButtonClassName} style={styles.nextButton} onClick={() => { this.nextButtonClicked() }}>
                     <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
                   </button>);
-    return nextButton;
+    }
   }
 
   getPreviousButton(styles){
