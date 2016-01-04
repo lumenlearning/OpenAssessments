@@ -6,6 +6,7 @@ script:
 - bundle exec rake
 before_script:
 - cp config/database.yml.example config/database.yml
+- cp config/secrets.yml.example config/secrets.yml
 - psql -c 'create database openassessments_test' -U postgres
 addons:
   postgresql: 9.4
