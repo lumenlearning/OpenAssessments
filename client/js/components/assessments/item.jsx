@@ -323,6 +323,17 @@ export default class Item extends BaseComponent{
     if(this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
       submitButtonDiv = ""
     }
+
+    var questionDirections = ""
+    if(this.props.question.question_type == "multiple_answers_question"){
+      questionDirections =
+      <div style={styles.chooseText}>Choose <b>ALL</b> that apply.</div>
+    }
+    else {
+      questionDirections =
+      <div style={styles.chooseText}>Choose the <b>BEST</b> answer.</div>
+    }
+
     return (
       <div className="assessment_container" style={styles.assessmentContainer}>
         <div className="question">
@@ -336,7 +347,7 @@ export default class Item extends BaseComponent{
               <div className="full_question" tabIndex="0" style={styles.fullQuestion}>
                 <div className="inner_question">
                   <div className="question_text" style={styles.questionText}>
-                    <div style={styles.chooseText}>Choose <b>ALL</b> that apply.</div>
+                    {questionDirections}
                     <div
                       dangerouslySetInnerHTML={{
                     __html: this.props.question.material

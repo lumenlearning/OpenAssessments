@@ -203,23 +203,23 @@
         </itemmetadata>
         <presentation>
           <material>
-            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;What is one indication that you didn&#8217;t clearly state something?&lt;/p&gt;&lt;/div&gt;</mattext>
+            <mattext texttype="text/html">What is one indication that you didn't clearly state something?</mattext>
           </material>
           <response_lid ident="response1" rcardinality="Single">
             <render_choice>
               <response_label ident="6368">
                 <material>
-                  <mattext texttype="text/html">&lt;p&gt;Students raise their hand for clarification.&lt;/p&gt;</mattext>
+                  <mattext texttype="text/html">Students raise their hand for clarification.</mattext>
                 </material>
               </response_label>
               <response_label ident="7824">
                 <material>
-                  <mattext texttype="text/html">&lt;p&gt;Students start acting up.&lt;/p&gt;</mattext>
+                  <mattext texttype="text/html">Students start acting up.</mattext>
                 </material>
               </response_label>
               <response_label ident="8330">
                 <material>
-                  <mattext texttype="text/html">&lt;p&gt;Students start falling asleep.&lt;/p&gt;</mattext>
+                  <mattext texttype="text/html">Students start falling asleep.</mattext>
                 </material>
               </response_label>
             </render_choice>
@@ -231,20 +231,16 @@
           </outcomes>
           <respcondition continue="Yes">
             <conditionvar>
-              <varequal respident="response1">6368</varequal>
-            </conditionvar>
-            <displayfeedback feedbacktype="Response" linkrefid="6368_fb"/>
-          </respcondition>
-          <respcondition continue="Yes">
-            <conditionvar>
               <varequal respident="response1">7824</varequal>
             </conditionvar>
+            <setvar action="Set" varname="SCORE">0</setvar>
             <displayfeedback feedbacktype="Response" linkrefid="7824_fb"/>
           </respcondition>
           <respcondition continue="Yes">
             <conditionvar>
               <varequal respident="response1">8330</varequal>
             </conditionvar>
+            <setvar action="Set" varname="SCORE">0</setvar>
             <displayfeedback feedbacktype="Response" linkrefid="8330_fb"/>
           </respcondition>
           <respcondition continue="No">

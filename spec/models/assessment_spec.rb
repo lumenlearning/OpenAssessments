@@ -20,7 +20,7 @@ describe Assessment do
   end
 
   describe "from_xml" do
-  
+
     it 'should extract the identifier' do
       assessment = build_assessment(identifier: nil)
       assessment.save!
@@ -28,7 +28,7 @@ describe Assessment do
     end
 
     it 'should extract the title' do
-      assessment = build_assessment(title: nil)
+      assessment = build_assessment(title: 'XQuestionSample')
       assessment.save!
       expect(assessment.title).to eq('XQuestionSample')
     end

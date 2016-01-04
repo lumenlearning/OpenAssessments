@@ -79,7 +79,7 @@ export default {
 
   // RADIO BUTTON TEXT
   radioTextMarginLeft: "5px",
-  radioTextFontWeight: "bold",
+  radioTextFontWeight: "normal",
   radioTextColor: defines.black,
 
   // CONFIDENCE WRAPPER
