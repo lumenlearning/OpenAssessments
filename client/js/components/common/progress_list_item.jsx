@@ -6,7 +6,7 @@ import AssessmentStore    from "../../stores/assessment";
 import BaseComponent      from "../base_component";
 
 export default class ProgressListItem extends BaseComponent{
-  
+
   constructor(props, context){
     super(props, context);
     this._bind("mouseOver", "mouseOut", "selectQuestion");
@@ -43,15 +43,21 @@ export default class ProgressListItem extends BaseComponent{
     var hovered = (this.state && this.state.hovered);
     var styles = this.getStyles(this.context.theme, hovered);
     var tabIndex = this.props.expanded ? "0" : null
+    var material = "";
+      material = (<div
+                  dangerouslySetInnerHTML={{
+                    __html: this.props.question.material
+                  }}>
+                  </div> )
     return (
       <div tabIndex={tabIndex} style={styles.li} key={"li" + this.props.index} onKeyPress={(e)=>{if(e.keyCode = 13) this.selectQuestion()}} onClick={()=>{this.selectQuestion()}} onMouseEnter={()=>{this.mouseOver()}} onMouseLeave={()=>{this.mouseOut()}}>
         <h5>Question {this.props.index + 1}</h5>
-        <span>{this.props.question.material}</span>
+        <span>{material}</span>
       </div>);
   }
 }
 
-ProgressListItem.propTypes = { 
+ProgressListItem.propTypes = {
 
 };
 
