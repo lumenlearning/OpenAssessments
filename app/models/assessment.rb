@@ -28,9 +28,9 @@ class Assessment < ActiveRecord::Base
     return unless xml_file.present?
     if xml_file.is_a?(String)
       xml = xml_file
-    else 
+    else
       xml = xml_file.read
-    end    
+    end
 
     self.assessment_xmls.destroy_all
 
@@ -41,9 +41,9 @@ class Assessment < ActiveRecord::Base
     )
 
     # Create a summative xml entry (no answers in xml)
-    sumative_xml = xml.gsub /<conditionvar>(.*?)<\/conditionvar>/m, ''
+    summative_xml = xml.gsub /<conditionvar>(.*?)<\/conditionvar>/m, ''
     self.assessment_xmls.build(
-      xml: sumative_xml,
+      xml: summative_xml,
       kind: "summative"
     )
 
