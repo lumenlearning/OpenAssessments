@@ -72,7 +72,8 @@ class AssessmentGrader
    choices = question.children.xpath("respcondition")
    choices.each_with_index do |choice, index|
      # if the students response id matches the correct response id for the question the answer is correct
-     if choice.xpath("setvar")[0].children.text == "100"
+     setvar = choice.xpath("setvar")[0]
+     if setvar && setvar.children.text == "100"
        return choice.xpath("conditionvar").xpath("varequal").children.text
      end
    end
