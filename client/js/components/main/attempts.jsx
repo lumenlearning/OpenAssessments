@@ -88,16 +88,24 @@ export default class Attempts extends BaseComponent{
 
   render_header() {
     if( this.state.userAssessments.length != 0){
-      return <h2>Attempts for <span onClick={()=>{this.previewAttempt()}}>{this.quiz_name()}</span></h2>
+      return <h2 style={{display:"inline", marginRight:"55px"}}>Attempts for <span>{this.quiz_name()}</span></h2>
     } else {
-      return <h2 style={{textAlign:"center"}}>There have not been any attempts for this quiz yet.</h2>
+      return <h2 style={{display:"inline", marginRight:"55px"}}>There have not been any attempts for this quiz yet.</h2>
     }
   }
 
   render(){
     var that = this;
     return <div>
-      {this.render_header()}
+      <div style={{textAlign:"center"}}>
+        {this.render_header()} 
+        <div 
+          className="btn" 
+          onClick={()=>{this.previewAttempt()}}
+          style={{marginBottom:"10px", border:"transparent", backgroundColor:"#3299bb", color:"#fff"}}
+          >Answer Key
+        </div>
+      </div>
       <Table
           className="small-12 columns"
           id="attempts_table"
