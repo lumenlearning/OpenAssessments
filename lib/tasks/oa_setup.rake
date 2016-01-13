@@ -35,33 +35,22 @@ task :oa_setup => :environment do
   puts "User created"
 
   # Creates the Formative, Summative, and Show What You Know quizzes
-  formative_assessment = Assessment.create(
-    title: "Formative Quiz Example",
-    description: "Use this to test formative quizzes.",
-    user_id: user.id,
-    account_id: account_id,
-    kind: "formative"
-  )
-  puts "Created Formative Assessment"
+  i = 0
+  quiz_types = ["formative", "summative", "show_what_you_know"]
 
-  summative_assessment = Assessment.create(
-    title: "Summative Quiz Example",
-    description: "Use this to test formative quizzes.",
-    user_id: user.id,
-    account_id: account_id,
-    kind: "summative"
-  )
-  puts "Created Summative Assessment"
+  while i < 3 do
+    Assessment.create(
+      title: "#{quiz_types[i]} quiz example",
+      description: "use this to test #{quiz_types[i]} quizzes.",
+      user_id: user.id,
+      account_id: account_id,
+      kind: "#{quiz_types[i]}"
+    )
+    puts "Created #{quiz_types[i]} assessment"
+    i += 1
+  end
 
-  swyk_assessment = Assessment.create(
-    title: "Show What You Know Quiz Example",
-    description: "Use this to test show what you know quizzes.",
-    user_id: user.id,
-    account_id: account_id,
-    kind: "show_what_you_know"
-  )
-  puts "Created Show What You Know Assessment"
-
+  # Creates a simple 3 question quiz for all three quiz types
   Assessment.all.each do |assessment|
     File.open("spec/fixtures/swyk_quiz.xml") do |file|
       assessment.xml_file = file
@@ -73,14 +62,14 @@ task :oa_setup => :environment do
       account_id: account_id,
       style: "lumen_learning",
       enable_start: true,
-      mode: "formative",
+      mode: assessment.kind,
       confidence_levels: true
     )
   end
 
   # Defines summative-assessment-specific parameters
-  summative_as = AssessmentSetting.find_by assessment_id: summative_assessment.id
-  summative_as.update(
+  as = AssessmentSetting.find_by assessment_id: Assessment.find_by(kind: "summative").id
+  as.update(
     per_sec: 2,
     allowed_attempts: 2
   )
