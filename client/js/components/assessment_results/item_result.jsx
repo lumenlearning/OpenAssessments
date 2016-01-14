@@ -17,7 +17,7 @@ export default class ItemResult extends React.Component{
       border = theme.partialBorder;
       labelColor = theme.partialColor;
     } else if (props.isCorrect == false){
-      border = theme.correctBorder;
+      border = theme.incorrectBorder;
       color = theme.incorrectBackgroundColor;
       labelColor = theme.incorrectColor;
     } else if(props.isCorrect == "teacher_preview"){
