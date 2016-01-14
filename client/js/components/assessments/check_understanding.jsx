@@ -45,9 +45,9 @@ export default class CheckUnderstanding extends React.Component{
       },
       buttonGroup: {
         textAlign: props.assessmentKind.toUpperCase() != "SUMMATIVE" ? "left" : "center",
-        padding: "2px 0",
-        background: "#E9E9E9",
-        borderBottom: "2px solid #e7e7e7"
+        padding: "3px 0",
+        background: "#e9e9e9",
+        borderBottom: "2px solid #e3e3e3"
       },
       buttonWrapper: {
         textAlign: props.assessmentKind.toUpperCase() != "SUMMATIVE" ? "left" : "center"
