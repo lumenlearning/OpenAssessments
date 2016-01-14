@@ -11,7 +11,7 @@ export default class ItemResult extends React.Component{
     var color;
     var border;
     var labelColor;
-    var display = "block"
+    var display = "block";
     if(props.isCorrect == "partial"){
       color = theme.partialBackgroundColor;
       border = theme.partialBorder;
