@@ -223,12 +223,14 @@ export default class CheckUnderstanding extends React.Component{
         manageButton =  <button className="btn btn-sm" onClick={()=>{this.manageAttempts()}} style={styles.teacherButton}>Manage Quiz Attempts</button>
     }
 
-    var teacherPreviewButton = (
-        <button className="btn btn-sm" onClick={()=>{this.previewAttempt()}} style={styles.teacherButton}
-          >Answer Key
-        </button>
-    )
-
+    var teacherPreviewButton = null
+    if(this.canManage()){
+      teacherPreviewButton = (
+          <button className="btn btn-sm" onClick={()=>{this.previewAttempt()}} style={styles.teacherButton}
+            >Answer Key
+          </button>
+      )
+    }
 
     return (
       <div className="assessment_container" style={styles.assessmentContainer}>
