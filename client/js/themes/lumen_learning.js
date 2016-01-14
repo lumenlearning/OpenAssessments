@@ -48,5 +48,5 @@ export default {
   partialBackgroundColor: "rgba(200, 133, 51, .2)",
   partialColor: "rgb(200, 133, 51)",
   outcomesBackgroundColor: "rgba(204, 204, 204, .2)",
-  questionTextFontWeight: 'normal'
+  questionTextFontWeight: 'normal',
 }

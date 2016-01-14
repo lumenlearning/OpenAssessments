@@ -43,9 +43,9 @@ export default class TeacherPreview extends BaseComponent{
     return ReviewAssessmentStore.allQuestions().map((question, index)=>{
         return <ItemResult key={index}
                            question={question}
-                           isCorrect={true}
+                           isCorrect={"teacher_preview"}
                            index={index}
-                           confidence={"Very Sure"}
+                           confidence={"teacher_preview"}
                            chosen={[]}
                            correctAnswers={question.correct}/>;
       });

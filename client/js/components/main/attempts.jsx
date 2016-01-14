@@ -96,7 +96,7 @@ export default class Attempts extends BaseComponent{
 
   render(){
     var that = this;
-    return <div>
+    return <div style={{marginTop:"50px"}}>
       <div style={{textAlign:"center"}}>
         {this.render_header()} 
         <div 

@@ -11,6 +11,7 @@ export default class ItemResult extends React.Component{
     var color;
     var border;
     var labelColor;
+    var display = "block"
     if(props.isCorrect == "partial"){
       color = theme.partialBackgroundColor;
       border = theme.partialBorder;
@@ -19,10 +20,17 @@ export default class ItemResult extends React.Component{
       border = theme.correctBorder;
       color = theme.incorrectBackgroundColor;
       labelColor = theme.incorrectColor;
+    } else if(props.isCorrect == "teacher_preview"){
+      labelColor = "transparent";
+      color = theme.correctBackgroundColor;
+      border = theme.correctBorder;
     } else if (props.isCorrect){
       color = theme.correctBackgroundColor;
       border = theme.correctBorder;
       labelColor = theme.correctColor;
+    }
+    if(props.confidence == "teacher_preview"){
+      display = "none";
     }
     return {
       resultContainer: {
@@ -38,6 +46,7 @@ export default class ItemResult extends React.Component{
         padding: theme.confidenceWrapperPadding,
         marginTop: "10px",
         backgroundColor: theme.confidenceWrapperBackgroundColor,
+        display: display
       },
       correctLabel: {
         backgroundColor: labelColor,
@@ -56,6 +65,8 @@ export default class ItemResult extends React.Component{
       correctMessage = "You were partially correct."
     } else if(this.props.isCorrect === true){
       correctMessage = "You were correct.";
+    } else if(this.props.isCorrect === "teacher_preview"){
+      correctMessage = ""
     }
     return (
       <div tabIndex="0" aria-label={"Question " + (this.props.index+1)}>
