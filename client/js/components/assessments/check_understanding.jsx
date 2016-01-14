@@ -45,19 +45,18 @@ export default class CheckUnderstanding extends React.Component{
       },
       buttonGroup: {
         textAlign: props.assessmentKind.toUpperCase() != "SUMMATIVE" ? "left" : "center",
-        padding: "25px 0",
-        borderBottom: "2px solid #e7e7e7" 
+        padding: "2px 0",
+        background: "#E9E9E9",
+        borderBottom: "2px solid #e7e7e7"
       },
       buttonWrapper: {
         textAlign: props.assessmentKind.toUpperCase() != "SUMMATIVE" ? "left" : "center"
       },
       teacherButton: {
-        marginBottom:"10px", 
-        border:"transparent", 
-        backgroundColor:"#3299bb", 
+        border:"transparent",
+        backgroundColor:"#3299bb",
         color:"#fff",
         minWidth: "150px",
-        height: "40px",
       },
       attempts:{
         margin: "20px auto",
@@ -221,11 +220,11 @@ export default class CheckUnderstanding extends React.Component{
 
     var manageButton = null;
     if(this.canManage()){
-        manageButton =  <button className="btn" onClick={()=>{this.manageAttempts()}} style={styles.teacherButton}>Manage Quiz Attempts</button>
+        manageButton =  <button className="btn btn-sm" onClick={()=>{this.manageAttempts()}} style={styles.teacherButton}>Manage Quiz Attempts</button>
     }
 
     var teacherPreviewButton = (
-        <button className="btn" onClick={()=>{this.previewAttempt()}} style={styles.teacherButton}
+        <button className="btn btn-sm" onClick={()=>{this.previewAttempt()}} style={styles.teacherButton}
           >Answer Key
         </button>
     )
