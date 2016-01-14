@@ -36,10 +36,6 @@ export default class Attempts extends BaseComponent{
     this.context.router.transitionTo("teacher-review", {contextId: this.props.params.externalContextId, assessmentId: this.props.params.assessmentId, attempdId: id});
   }
 
-  previewAttempt(){
-    this.context.router.transitionTo("teacher-preview", {contextId: this.props.params.externalContextId, assessmentId: this.props.params.assessmentId});
-  }
-
   attemptsStuff(ua){
     var that = this;
     return <div>
@@ -86,11 +82,9 @@ export default class Attempts extends BaseComponent{
     return name;
   }
 
-  render_header() {
-    if( this.state.userAssessments.length != 0){
-      return <h2 style={{display:"inline", marginRight:"55px"}}>Attempts for <span>{this.quiz_name()}</span></h2>
-    } else {
-      return <h2 style={{display:"inline", marginRight:"55px"}}>There have not been any attempts for this quiz yet.</h2>
+  no_quizzes(){
+    if(this.state.userAssessments.length == 0){
+      return <p>There have not been any attempts for this quiz yet.</p>
     }
   }
 
@@ -98,13 +92,8 @@ export default class Attempts extends BaseComponent{
     var that = this;
     return <div style={{marginTop:"50px"}}>
       <div style={{textAlign:"center"}}>
-        {this.render_header()} 
-        <div 
-          className="btn" 
-          onClick={()=>{this.previewAttempt()}}
-          style={{marginBottom:"10px", border:"transparent", backgroundColor:"#3299bb", color:"#fff"}}
-          >Answer Key
-        </div>
+        <h2>Attempts for <span>{this.quiz_name()}</span></h2>
+        {this.no_quizzes()}
       </div>
       <Table
           className="small-12 columns"

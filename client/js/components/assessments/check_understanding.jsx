@@ -16,6 +16,10 @@ export default class CheckUnderstanding extends React.Component{
     this.context.router.transitionTo("attempts", {contextId: this.props.externalContextId, assessmentId: this.props.assessmentId});
   }
 
+  previewAttempt(){
+    this.context.router.transitionTo("teacher-preview", {contextId: this.props.externalContextId, assessmentId: this.props.assessmentId});
+  }
+
   getStyles(props, theme){
     return {
       assessmentContainer:{
@@ -29,7 +33,8 @@ export default class CheckUnderstanding extends React.Component{
       startButton: {
         margin: "5px 5px 5px -5px",
         width: theme.definitelyWidth,
-        backgroundColor: theme.definitelyBackgroundColor
+        backgroundColor: theme.definitelyBackgroundColor,
+        border: "transparent"
       },
       checkUnderstandingButton: {
         backgroundColor: theme.maybeBackgroundColor
@@ -38,8 +43,21 @@ export default class CheckUnderstanding extends React.Component{
         backgroundColor: theme.fullQuestionBackgroundColor,
         padding: "20px"
       },
+      buttonGroup: {
+        textAlign: props.assessmentKind.toUpperCase() != "SUMMATIVE" ? "left" : "center",
+        padding: "25px 0",
+        borderBottom: "2px solid #e7e7e7" 
+      },
       buttonWrapper: {
         textAlign: props.assessmentKind.toUpperCase() != "SUMMATIVE" ? "left" : "center"
+      },
+      teacherButton: {
+        marginBottom:"10px", 
+        border:"transparent", 
+        backgroundColor:"#3299bb", 
+        color:"#fff",
+        minWidth: "150px",
+        height: "40px",
       },
       attempts:{
         margin: "20px auto",
@@ -203,16 +221,21 @@ export default class CheckUnderstanding extends React.Component{
 
     var manageButton = null;
     if(this.canManage()){
-        manageButton = <div style={styles.buttonWrapper}>
-                         <hr/>
-                         <button className="btn btn-info" onClick={()=>{this.manageAttempts()}}>Manage Quiz Attempts</button>
-                       </div>
+        manageButton =  <button className="btn" onClick={()=>{this.manageAttempts()}} style={styles.teacherButton}>Manage Quiz Attempts</button>
     }
+
+    var teacherPreviewButton = (
+        <button className="btn" onClick={()=>{this.previewAttempt()}} style={styles.teacherButton}
+          >Answer Key
+        </button>
+    )
 
 
     return (
       <div className="assessment_container" style={styles.assessmentContainer}>
-
+        <div style={styles.buttonGroup}>
+          {manageButton} {teacherPreviewButton}
+        </div>
         <div className="question">
           <div className="header" style={styles.header}>
             <p>{this.props.name}</p>
@@ -220,7 +243,6 @@ export default class CheckUnderstanding extends React.Component{
           <div className="full_question" style={styles.fullQuestion}>
             {content}
             {startButton}
-            {manageButton}
           </div>
         </div>
       </div>
