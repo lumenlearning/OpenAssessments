@@ -36,13 +36,23 @@ export default class ResultOutcome extends React.Component{
       }
     };
   }
+
+  renderText() {
+    if (this.props.correct === true) {
+      return "Covers this concept:"
+    } else if (this.props.correct === "teacher_preview") {
+      return "Learning outcome:"
+    } else {
+      return "Review this concept:"
+    }
+  }
+
   render() {
     var styles = this.getStyles(this.props, this.context.theme)
-    var text = this.props.correct === true ? "Covers this concept:" : "Review this concept:";
     return (
       <div tabIndex="0">
         <div style={styles.resultOutcome}>
-          <div>{text}</div>
+          <div>{this.renderText()}</div>
           <h5><b>{this.props.outcomes.shortOutcome}</b></h5>
           <div>{this.props.outcomes.longOutcome}</div>
         </div>
