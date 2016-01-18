@@ -4,7 +4,7 @@ require 'lti_role_helper'
 class AssessmentsController < ApplicationController
 
   skip_before_filter :verify_authenticity_token
-  
+
   before_filter :skip_trackable
   before_filter :authenticate_user!, only: [:new, :create, :destroy]
   before_filter :check_lti, only: [:show, :lti]
@@ -46,7 +46,7 @@ class AssessmentsController < ApplicationController
         @style = @style != "" ? @style : @assessment_settings[:style] || ""
         @enable_start = params[:enable_start] ?  @enable_start : @assessment_settings[:enable_start] || false
         @confidence_levels = params[:confidence_levels] ?  @confidence_levels : @assessment_settings[:confidence_levels] || false
-        @per_sec = @per_sec ? @per_sec : @assessment_settings[:per_sec] || ""  
+        @per_sec = @per_sec ? @per_sec : @assessment_settings[:per_sec] || ""
       end
       @assessment_kind = @assessment.kind
       if params[:user_id].present?
@@ -106,6 +106,8 @@ class AssessmentsController < ApplicationController
       end
     end
 
+
+
     @is_lti ||= false
     @assessment_kind  ||= params[:assessment_kind]
     @assessment_title ||= params[:assessment_title]
@@ -113,6 +115,22 @@ class AssessmentsController < ApplicationController
     # extract LTI values
     @external_user_id ||= params[:user_id]
     @external_context_id ||= params[:context_id]
+
+    # check if the necessary LTI info is given for a summative quiz
+    @has_necessary_lti_info = true
+    if @assessment_kind == 'summative'
+      puts "\n\nuser_id: #{@external_user_id} and context_id: #{@external_context_id}"
+      if @external_user_id.blank? || @external_context_id.blank?
+        @has_necessary_lti_info = false
+        Rails.logger.warn("Summative quiz without user_id & context_id for instance_guid: #{params[:tool_consumer_instance_guid]} context_id: #{@external_context_id} context_title: #{params[:context_title]}")
+      end
+      if @lti_role == "student"
+        if params[:lis_result_sourcedid].blank? && params[:lis_outcome_service_url].blank?
+          @has_necessary_lti_info = false
+          Rails.logger.warn("Summative quiz without LTI outcome data for instance_guid: #{params[:tool_consumer_instance_guid]} context_id: #{@external_context_id} context_title: #{params[:context_title]}")
+        end
+      end
+    end
 
 
     respond_to do |format|
