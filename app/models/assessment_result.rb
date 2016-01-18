@@ -71,7 +71,6 @@ class AssessmentResult < ActiveRecord::Base
     self.session_status == STATUS_PENDING_LTI_OUTCOME &&
             has_necessary_lti_data? &&
             self.assessment.summative? &&
-            self.lti_role != "admin" &&
             is_max_result?
   end
 
