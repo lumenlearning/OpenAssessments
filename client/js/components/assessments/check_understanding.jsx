@@ -228,9 +228,19 @@ export default class CheckUnderstanding extends React.Component{
       )
     }
 
+    var recentResults = null
+    if(this.props.showRecentResults){
+      recentResults = (
+        <div style={styles.buttonGroup}>
+          <button className="btn btn-sm" style={styles.teacherButton}>View Recent Quiz Results</button>
+        </div>
+      )
+    }
+
     return (
       <div className="assessment_container" style={styles.assessmentContainer}>
         {teacherOptions}
+        {recentResults}
         <div className="question">
           <div className="header" style={styles.header}>
             <p>{this.props.name}</p>
