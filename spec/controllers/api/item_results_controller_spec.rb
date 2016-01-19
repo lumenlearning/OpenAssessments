@@ -40,8 +40,7 @@ describe Api::ItemResultsController do
     it "scopes results" do
       get :index, format: :json, id: @item.id, scope: 'domain', url: 'www.example.com/index'
       result = JSON.parse(response.body)
-      expect(result[0]['id']).to eq @result2.id
-      expect(result[1]['id']).to eq @result3.id
+      expect(result.map{|i|i['id']}.sort).to eq [@result2.id, @result3.id].sort
     end
 
     it "filters by objective" do
