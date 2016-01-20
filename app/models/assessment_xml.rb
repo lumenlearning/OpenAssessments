@@ -21,4 +21,16 @@ class AssessmentXml < ActiveRecord::Base
     node.to_xml
   end
 
+  def xml_with_specific_items(assessment_result)
+   question_ids = assessment_result.answered_question_ids
+
+  node = Nokogiri::XML(self.xml)
+
+   node.css('item').each do |i|
+     if !question_ids.member?(i['ident'])
+       i.remove
+     end
+   end
+   node.to_xml
+ end
 end

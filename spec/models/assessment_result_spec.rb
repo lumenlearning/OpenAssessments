@@ -102,4 +102,11 @@ describe AssessmentResult do
   context 'send_outcome_to_tool_consumer!' do
   end
 
+  it "should return the question ids for questions answered" do
+    @item_result = create(:item_result, identifier: "4965")
+    @item_result2 = create(:item_result, identifier: "3790")
+    @assessment_result_1.update(item_results: [@item_result, @item_result2])
+    expect(@assessment_result_1.answered_question_ids).to eq ["4965", "3790"]
+  end
+
 end

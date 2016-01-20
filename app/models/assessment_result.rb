@@ -91,4 +91,8 @@ class AssessmentResult < ActiveRecord::Base
     true
   end
 
+  def answered_question_ids
+    self.item_results.map(&:identifier)
+  end
+
 end
