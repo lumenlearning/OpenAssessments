@@ -72,12 +72,10 @@ describe Api::GradesController do
     it "tests that JSON is being sent successfully and being parsed" do
       post :create, @params.to_json, format: :json
       expect(response).to have_http_status(:success)
-      pp JSON.parse(response.body)
     end
 
     it "tests that the correct values are being returned in JSON object" do
       post :create, @params.to_json, format: :json
-      pp JSON.parse(response.body)
       expect(response.body.include?('score' &&
                                     'feedback' &&
                                     'correct_list' &&
@@ -88,20 +86,20 @@ describe Api::GradesController do
 
     it "tests that the correct score is being returned in the response body" do
       post :create, @params.to_json, format: :json
-      result = pp JSON.parse(response.body)
+      result = JSON.parse(response.body)
       expect(result['score']).to eq 33.0
     end
 
 
     it "tests that the right value is being returned from the confidence_level_list" do
       post :create, @params.to_json, format: :json
-      result = pp JSON.parse(response.body)
+      result = JSON.parse(response.body)
       expect(result['confidence_level_list']).to eq ["Just A Guess", "Pretty Sure", "Very Sure"]
     end
 
     it "tests that the assessment_results_id is correct" do
       post :create, @params.to_json, format: :json
-      result = pp JSON.parse(response.body)
+      result = JSON.parse(response.body)
       expect(result['assessment_results_id']).to eq @assessment.assessment_results.first.id
     end
 
@@ -117,7 +115,7 @@ describe Api::GradesController do
     end
     it "tests that the right values are being returned from the correct_list" do
       post :create, @params.to_json, format: :json
-      result = pp JSON.parse(response.body)
+      result = JSON.parse(response.body)
       expect(result['correct_list']).to eq [false, false, true]
     end
 
