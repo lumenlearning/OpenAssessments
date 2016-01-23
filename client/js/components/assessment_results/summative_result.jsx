@@ -1,12 +1,12 @@
 "use strict";
 
-import React            from 'react';
-import AssessmentActions    from "../../actions/assessment";
-import AssessmentStore      from "../../stores/assessment";
+import React                 from 'react';
+import AssessmentActions     from "../../actions/assessment";
+import AssessmentStore       from "../../stores/assessment";
 import ReviewAssessmentStore from "../../stores/review_assessment";
-import SettingsStore        from "../../stores/settings";
-import ItemResult           from "./item_result";
-import ResultSummary        from "./result_summary.jsx";
+import SettingsStore         from "../../stores/settings";
+import ItemResult            from "./item_result";
+import ResultSummary         from "./result_summary.jsx";
 
 export default class SummativeResult extends React.Component{
 
@@ -38,20 +38,20 @@ export default class SummativeResult extends React.Component{
                              index={index}
                              confidence={qr.confidence_level}
                              chosen={qr.responses_chosen}
-                             correctAnswers={question.correct}/>;
+                             correctAnswers={question.correct}
+                             {...this.props}/>;
         }
       });
 
     } else {
       return this.state.questions.map((question, index)=>{
-        return <ItemResult key={index} question={question} isCorrect={this.state.assessmentResult.correct_list[index]} index={index} confidence={this.state.assessmentResult.confidence_level_list[index]}/>;
+        return <ItemResult {...this.props} key={index} question={question} isCorrect={this.state.assessmentResult.correct_list[index]} index={index} confidence={this.state.assessmentResult.confidence_level_list[index]}/>;
       })
 
     }
   }
 
   render() {
-
     var errors = "";
     var styles = this.props.styles;
     var itemResults = this.getItemResults();

@@ -38,8 +38,6 @@ export default class TeacherPreview extends BaseComponent{
   }
 
   getItemResults(){
-    //return <p>hi</p>;
-
     return ReviewAssessmentStore.allQuestions().map((question, index)=>{
         return <ItemResult key={index}
                            question={question}

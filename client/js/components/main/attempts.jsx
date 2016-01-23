@@ -33,7 +33,7 @@ export default class Attempts extends BaseComponent{
   }
 
   reviewAttempt(id){
-    this.context.router.transitionTo("teacher-review", {contextId: this.props.params.externalContextId, assessmentId: this.props.params.assessmentId, attempdId: id});
+    this.context.router.transitionTo("teacher-review", {contextId: this.props.params.externalContextId, assessmentId: this.props.params.assessmentId, attemptId: id});
   }
 
   attemptsStuff(ua){

@@ -17,7 +17,7 @@ export default class TeacherReview extends BaseComponent{
     if(!ReviewAssessmentStore.isLoaded() && !ReviewAssessmentStore.isLoading()){
       ReviewAssessmentActions.loadAssessment(window.DEFAULT_SETTINGS);
     }
-    ReviewAssessmentActions.loadAssessmentResult(props.params.assessmentId, props.params.attempdId);
+    ReviewAssessmentActions.loadAssessmentResult(props.params.assessmentId, props.params.attemptId, props.params.contextId);
     this.state = this.getState();
   }
 
@@ -47,6 +47,7 @@ export default class TeacherReview extends BaseComponent{
 
 
     return <SummativeResult
+        {...this.props.params}
         styles={this.getStyles(this.context.theme)}
         context={this.context}
         isSummative={this.isSummative()}

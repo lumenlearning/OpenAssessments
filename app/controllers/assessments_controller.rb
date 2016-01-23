@@ -74,7 +74,7 @@ class AssessmentsController < ApplicationController
         end
       end
 
-      if @user_assessment.assessment_results.by_status_final.any? && @assessment_settings.show_recent_results == true
+      if @user && @user_assessment.assessment_results.by_status_final.any? && @assessment_settings.show_recent_results == true
         @show_recent_results = true
       else
         @show_recent_results = false

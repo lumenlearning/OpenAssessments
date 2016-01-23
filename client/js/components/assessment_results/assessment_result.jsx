@@ -91,4 +91,3 @@ AssessmentResult.contextTypes = {
   theme: React.PropTypes.object,
   router: React.PropTypes.func
 };
-

@@ -17,9 +17,13 @@ export default {
     Api.get(Constants.REVIEW_ASSESSMENT_LOADED, url);
   },
 
-  loadAssessmentResult(assessmentId, resultId){
+  loadAssessmentResult(assessmentId, resultId, contextId=null){
     Dispatcher.dispatch({ action: Constants.REVIEW_RESULT_LOAD_PENDING });
-    Api.get(Constants.REVIEW_RESULT_LOADED, "/api/assessments/" + assessmentId + "/results/" + resultId);
+    if(contextId){
+      Api.get(Constants.REVIEW_RESULT_LOADED, "/api/assessments/" + assessmentId + "/results/" + resultId + "?lti_context_id=" + contextId);
+    }else{
+      Api.get(Constants.REVIEW_RESULT_LOADED, "/api/assessments/" + assessmentId + "/results/" + resultId);
+    }
   }
 
 };
