@@ -58,6 +58,17 @@ export default class ItemResult extends React.Component{
       }
     };
   }
+
+  confidenceResult(styles) {
+    if (this.props.confidence !== null) {
+      return <div style={styles.confidenceWrapper}>
+        <ResultConfidence level={this.props.confidence}/>
+      </div>
+    } else {
+      return '';
+    }
+  }
+
   render() {
     var styles = this.getStyles(this.props, this.context.theme);
     var correctMessage = "You were incorrect."; 
@@ -86,9 +97,7 @@ export default class ItemResult extends React.Component{
             <div>
               <UniversalInput item={this.props.question} isResult={true} chosen={this.props.chosen} correctAnswers={this.props.correctAnswers}/>
             </div>
-            <div style={styles.confidenceWrapper}>
-              <ResultConfidence level={this.props.confidence} />
-            </div>
+            {this.confidenceResult(styles)}
           </div>
           <div className="col-md-3 col-sm-3 col-xs-3">
             <ResultOutcome outcomes={this.props.question.outcomes} correct={this.props.isCorrect} level={this.props.confidence}/>
