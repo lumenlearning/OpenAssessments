@@ -98,6 +98,21 @@ describe AssessmentGrader do
       expect(ag.grade_multiple_answers(1, ['483', '1708'])).to be 1
     end
 
+    it 'grades correctly for 1 correct other correct unanswered' do
+      ag = AssessmentGrader.new(@questions, @answers, @assessment)
+      expect(ag.grade_multiple_answers(1, ['483'])).to be 0.5
+    end
+
+    it 'grades correctly for 1 correct 2 wrong' do
+      ag = AssessmentGrader.new(@questions, @answers, @assessment)
+      expect(ag.grade_multiple_answers(1, ['483', '6386', '1111'])).to be 0.0
+    end
+
+    it 'grades correctly when wrong count would make it a negative score' do
+      ag = AssessmentGrader.new(@questions, @answers, @assessment)
+      expect(ag.grade_multiple_answers(1, ['483', '6386', '1111', '2222', '3333'])).to be 0.0
+    end
+
     it 'grades correctly for 1 right 1 wrong' do
       ag = AssessmentGrader.new(@questions, @answers, @assessment)
       expect(ag.grade_multiple_answers(0, ['9755', '4501'])).to eq 0.667
