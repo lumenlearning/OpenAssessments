@@ -303,7 +303,7 @@ export default class Item extends BaseComponent{
     var styles = this.getStyles(this.context.theme);
     var unAnsweredWarning = this.getWarning(this.state,  this.props.questionCount, this.props.currentIndex, styles);
     var result = this.getResult(this.props.messageIndex);
-    var message = this.state && this.state.showMessage ? <div style={styles.warning}>You must select an answer before continuing.</div> : "";
+    var must_answer_message = this.state && this.state.showMessage ? <div style={styles.warning}>You must select an answer before continuing.</div> : "";
     var confidenceButtons = this.getConfidenceLevels(this.props.confidenceLevels, styles);
     var submitButton = (this.props.currentIndex == this.props.questionCount - 1) ? <button className="btn btn-check-answer" style={styles.submitButton}  onClick={(e)=>{this.submitButtonClicked(e)}}>Submit</button> : "";
     var footer = this.getFooterNav(this.context.theme, styles);
@@ -378,7 +378,7 @@ export default class Item extends BaseComponent{
                     {confidenceButtons}
                     {navigationDiv}
                     {unAnsweredWarning}
-                    {message}
+                    {must_answer_message}
                   </div>
                   <div className="col-md-7 col-sm-6 col-xs-4">
                     {submitButtonDiv}
