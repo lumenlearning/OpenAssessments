@@ -17,10 +17,10 @@ export default class CheckBox extends React.Component{
   checkedStatus(){
     var checked = null;
     var optionFlag = null;
-    if( this.props.checked === true ) {
-      checked = "true";
-    } else if ( this.props.checked === false ){
+    if ( this.props.checked === false || this.props.attemptId === "most_recent" ){
       checked = false;
+    } else if ( this.props.checked === true ){
+      checked = "true";
     } else if ( !this.props.isDisabled ) {
       checked = (AssessmentStore.studentAnswers() && AssessmentStore.studentAnswers().indexOf(this.props.item.id) > -1) ? "true" : null;
     }

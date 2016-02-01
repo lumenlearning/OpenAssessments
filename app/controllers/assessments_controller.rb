@@ -4,7 +4,7 @@ require 'lti_role_helper'
 class AssessmentsController < ApplicationController
 
   skip_before_filter :verify_authenticity_token
-  
+
   before_filter :skip_trackable
   before_filter :authenticate_user!, only: [:new, :create, :destroy]
   before_filter :check_lti, only: [:show, :lti]
@@ -46,7 +46,7 @@ class AssessmentsController < ApplicationController
         @style = @style != "" ? @style : @assessment_settings[:style] || ""
         @enable_start = params[:enable_start] ?  @enable_start : @assessment_settings[:enable_start] || false
         @confidence_levels = params[:confidence_levels] ?  @confidence_levels : @assessment_settings[:confidence_levels] || false
-        @per_sec = @per_sec ? @per_sec : @assessment_settings[:per_sec] || ""  
+        @per_sec = @per_sec ? @per_sec : @assessment_settings[:per_sec] || ""
       end
       @assessment_kind = @assessment.kind
       if params[:user_id].present?
@@ -73,6 +73,13 @@ class AssessmentsController < ApplicationController
           @user_attempts = @user_assessment.attempts
         end
       end
+
+      if @user && @user_assessment.assessment_results.by_status_final.any? && @assessment_settings.show_recent_results == true
+        @show_recent_results = true
+      else
+        @show_recent_results = false
+      end
+
       @eid ||= @assessment.identifier
       if @embedded
         # Just show the assessment. This is here to support old style embed with id=# and embed=true

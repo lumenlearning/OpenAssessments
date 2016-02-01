@@ -89,20 +89,21 @@ export default class Start extends BaseComponent{
     var titleBar;
 
     if(this.state.showStart){
-        content         = <CheckUnderstanding
-        title           = {this.state.settings.assessmentTitle}
-        maxAttempts     = {this.state.settings.allowedAttempts}
-        userAttempts    = {this.state.settings.userAttempts}
-        eid             = {this.state.settings.lisUserId}
-        userId          = {this.state.settings.userId}
-        isLti           = {this.state.settings.isLti}
-        assessmentId    = {this.state.settings.assessmentId}
-        assessmentKind  = {this.state.settings.assessmentKind}
-        ltiRole         = {this.state.settings.ltiRole}
-        externalContextId = {this.state.settings.externalContextId}
-        accountId       = {this.state.settings.accountId}
-        icon            = {this.state.settings.images.QuizIcon_svg}/>;
-        progressBar     = <div style={styles.progressContainer}>
+        content            = <CheckUnderstanding
+        title              = {this.state.settings.assessmentTitle}
+        maxAttempts        = {this.state.settings.allowedAttempts}
+        userAttempts       = {this.state.settings.userAttempts}
+        eid                = {this.state.settings.lisUserId}
+        userId             = {this.state.settings.userId}
+        isLti              = {this.state.settings.isLti}
+        assessmentId       = {this.state.settings.assessmentId}
+        assessmentKind     = {this.state.settings.assessmentKind}
+        showRecentResults  = {this.state.settings.showRecentResults}
+        ltiRole            = {this.state.settings.ltiRole}
+        externalContextId  = {this.state.settings.externalContextId}
+        accountId          = {this.state.settings.accountId}
+        icon               = {this.state.settings.images.QuizIcon_svg}/>;
+        progressBar        = <div style={styles.progressContainer}>
                             <ProgressDropdown disabled={true} settings={this.state.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
                           </div>;
 

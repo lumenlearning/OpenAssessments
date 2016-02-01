@@ -51,7 +51,7 @@ function loadSettings(defaultSettings){
   _settings = {
     apiUrl             : bestValue('apiUrl', 'api_url', '/'),
     srcUrl             : bestValue('srcUrl', 'src_url'),
-    srcData            : srcData(), 
+    srcData            : srcData(),
     offline            : bestValue('offline', 'offline', false),
     assessmentId       : bestValue('assessmentId', 'assessment_id'),
     eId                : bestValue('eId', 'eid'),
@@ -77,7 +77,8 @@ function loadSettings(defaultSettings){
     ltiRole            : defaultSettings.lti_role,
     assessmentTitle    : defaultSettings.assessmentTitle,
     sectionCount       : parseInt(defaultSettings.sectionCount),
-    userAssessmentId   : bestValue('user_assessment_id', 'UserAssessmentId')
+    userAssessmentId   : bestValue('user_assessment_id', 'UserAssessmentId'),
+    showRecentResults  : defaultSettings.show_recent_results
   };
 
   if(!_settings.srcUrl && !_settings.offline){
@@ -122,4 +123,3 @@ Dispatcher.register(function(payload) {
 });
 
 export default SettingsStore;
-

@@ -20,6 +20,11 @@ export default class CheckUnderstanding extends React.Component{
     this.context.router.transitionTo("teacher-preview", {contextId: this.props.externalContextId, assessmentId: this.props.assessmentId});
   }
 
+  reviewRecentAssessment(id){
+    // this.context.router.transitionTo("assessment-result");
+    this.context.router.transitionTo("student-review", {contextId: this.props.externalContextId, assessmentId: this.props.assessmentId, attemptId: 'most_recent'});
+  }
+
   getStyles(props, theme){
     return {
       assessmentContainer:{
@@ -228,9 +233,19 @@ export default class CheckUnderstanding extends React.Component{
       )
     }
 
+    var recentResults = null
+    if(this.props.showRecentResults && this.props.ltiRole == "student"){
+      recentResults = (
+        <div style={styles.buttonGroup}>
+          <button className="btn btn-sm" style={styles.teacherButton} onClick={()=>{this.reviewRecentAssessment()}}>View Recent Quiz Results</button>
+        </div>
+      )
+    }
+
     return (
       <div className="assessment_container" style={styles.assessmentContainer}>
         {teacherOptions}
+        {recentResults}
         <div className="question">
           <div className="header" style={styles.header}>
             <p>{this.props.name}</p>

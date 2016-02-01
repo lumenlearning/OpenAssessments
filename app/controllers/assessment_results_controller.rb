@@ -5,12 +5,12 @@ class AssessmentResultsController < ApplicationController
     if params[:id].present? && params[:id].to_i > 0
       # The assessment lives in OEA
       @assessment = Assessment.find(params[:id])
-      @assessment_results = AssessmentResult.where(assessment_id: @assessment.id) 
+      @assessment_results = AssessmentResult.where(assessment_id: @assessment.id)
     else
       # The assessment does not live in OEA
       @assessment_query = query(:identifier) || query(:eid) || query(:src_url)
       render nothing: true, status: :not_acceptable and return if @assessment_query.blank?
-      @assessment_results = AssessmentResult.where(@assessment_query)  
+      @assessment_results = AssessmentResult.where(@assessment_query)
     end
 
     @item_results = ItemResult.where(assessment_result_id: @assessment_results.map(&:id))

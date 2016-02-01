@@ -23,20 +23,29 @@ class Api::AssessmentResultsController < Api::ApiController
 
 
   def show
+    raise "no api user" unless current_user
     assessment = Assessment.find(params[:assessment_id])
-    ar = assessment.assessment_results.find(params[:result_id])
-    ua = ar.user_assessment
+    assessment_setting = AssessmentSetting.find_by(assessment_id: current_user.user_assessments.last.assessment_id)
+    cua = current_user.user_assessments
+    if cua.last.assessment_results.where(session_status: "final").any? && assessment_setting.show_recent_results = true && params[:result_id] == 'most_recent'
+      ua = cua.where(assessment_id: assessment.id, lti_context_id: params[:lti_context_id]).first
+      ar = ua.assessment_results.order("created_at DESC").first
+    else
+      ar = assessment.assessment_results.find(params[:result_id])
+      ua = ar.user_assessment
+    end
 
     unless ua && ua.lti_context_id
       render json: {message: "can't connect user to a course"}, status: :forbidden
       return
     end
 
-    unless token_has_admin_scope(ua.lti_context_id)
+    #todo allow if the assessment settings say students can see their reviews (and it ble)
+    # unless token_has_admin_scope(ua.lti_context_id)
       # The JWT token must specify this user is admin in this context
-      render :json => { :error => "Unauthorized" }, status: :unauthorized
-      return
-    end
+      # render :json => { :error => "Unauthorized" }, status: :unauthorized
+      # return
+    # end
 
     message = {
             assessment_results_id: ar.id,
