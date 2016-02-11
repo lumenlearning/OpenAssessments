@@ -96,6 +96,7 @@ export default class Start extends BaseComponent{
         eid             = {this.state.settings.lisUserId}
         userId          = {this.state.settings.userId}
         isLti           = {this.state.settings.isLti}
+        hasNecessaryLtiInfo = {this.state.settings.hasNecessaryLtiInfo}
         assessmentId    = {this.state.settings.assessmentId}
         assessmentKind  = {this.state.settings.assessmentKind}
         ltiRole         = {this.state.settings.ltiRole}

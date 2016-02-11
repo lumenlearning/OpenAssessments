@@ -196,15 +196,20 @@ export default class CheckUnderstanding extends React.Component{
   render() {
     var styles = this.getStyles(this.props, this.context.theme);
     var buttonText = "Start Quiz";
-    var content = "There was an error, contact your teacher.";
+    var content = "";
 
-    if(this.props.assessmentKind.toUpperCase() == "SUMMATIVE"){
-      content = this.getAttempts(this.context.theme, styles, this.props);
+
+    if (this.props.hasNecessaryLtiInfo == false && this.props.ltiRole == "student"){
+      content = "We're sorry there is an error with this quiz. Contact your teacher for further assistance.";
+    } else if (this.props.hasNecessaryLtiInfo == false && this.props.ltiRole == "admin"){
+      content = "There is an error with the configuration of Waymaker. Please contact your institutional support or support@lumenlearning.com"
     } else if(this.props.assessmentKind.toUpperCase() == "SHOW_WHAT_YOU_KNOW"){
       content = this.getSWYK(styles);
       buttonText = "Start Pre-test";
     } else if(this.props.assessmentKind.toUpperCase() == "FORMATIVE"){
       content = this.getFormative(styles);
+    } else if(this.props.assessmentKind.toUpperCase() == "SUMMATIVE"){
+      content = this.getAttempts(this.context.theme, styles, this.props);
     }
 
     var startButton = (
@@ -215,6 +220,9 @@ export default class CheckUnderstanding extends React.Component{
       startButton = "";
     }
     if (this.props.assessmentKind.toUpperCase() == "FORMATIVE"){
+      startButton = "";
+    }
+    if (this.props.hasNecessaryLtiInfo == false) {
       startButton = "";
     }
 

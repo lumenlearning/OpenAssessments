@@ -51,7 +51,7 @@ function loadSettings(defaultSettings){
   _settings = {
     apiUrl             : bestValue('apiUrl', 'api_url', '/'),
     srcUrl             : bestValue('srcUrl', 'src_url'),
-    srcData            : srcData(), 
+    srcData            : srcData(),
     offline            : bestValue('offline', 'offline', false),
     assessmentId       : bestValue('assessmentId', 'assessment_id'),
     eId                : bestValue('eId', 'eid'),
@@ -75,6 +75,7 @@ function loadSettings(defaultSettings){
     assessmentKind     : defaultSettings.assessmentKind,
     images             : defaultSettings.images,
     ltiRole            : defaultSettings.lti_role,
+    hasNecessaryLtiInfo : defaultSettings.has_necessary_lti_info,
     assessmentTitle    : defaultSettings.assessmentTitle,
     sectionCount       : parseInt(defaultSettings.sectionCount),
     userAssessmentId   : bestValue('user_assessment_id', 'UserAssessmentId')
@@ -122,4 +123,3 @@ Dispatcher.register(function(payload) {
 });
 
 export default SettingsStore;
-
