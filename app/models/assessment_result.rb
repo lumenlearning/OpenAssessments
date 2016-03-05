@@ -33,6 +33,7 @@ class AssessmentResult < ActiveRecord::Base
   def send_outcome_to_tool_consumer!
     raise "Not enough data to send lti outcome" unless has_necessary_lti_data?
 
+    #todo: update to use the LtiCredential's key/secret
     @tp = IMS::LTI::ToolProvider.new(self.assessment.account.lti_key, self.assessment.account.lti_secret, lti_outcome_params)
 
     if !@tp.outcome_service?

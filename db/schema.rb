@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151023041958) do
+ActiveRecord::Schema.define(version: 20160304234844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,8 +75,8 @@ ActiveRecord::Schema.define(version: 20151023041958) do
   create_table "assessment_settings", force: :cascade do |t|
     t.integer  "assessment_id"
     t.integer  "allowed_attempts"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.string   "style"
     t.string   "per_sec"
     t.boolean  "confidence_levels"
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 20151023041958) do
     t.boolean  "is_default"
     t.integer  "account_id"
     t.string   "mode"
+    t.boolean  "show_recent_results"
   end
 
   create_table "assessment_xmls", force: :cascade do |t|
@@ -199,6 +200,21 @@ ActiveRecord::Schema.define(version: 20151023041958) do
   end
 
   add_index "items", ["identifier", "section_id"], name: "index_items_on_identifier_and_section_id", using: :btree
+
+  create_table "lti_credentials", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "account_id"
+    t.string   "lti_key"
+    t.string   "encrypted_lti_secret"
+    t.string   "encrypted_lti_secret_salt"
+    t.string   "encrypted_lti_secret_iv"
+    t.boolean  "enabled"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "lti_credentials", ["account_id"], name: "index_lti_credentials_on_account_id", using: :btree
+  add_index "lti_credentials", ["lti_key"], name: "index_lti_credentials_on_lti_key", unique: true, using: :btree
 
   create_table "outcomes", force: :cascade do |t|
     t.string   "name"

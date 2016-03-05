@@ -11,6 +11,7 @@ class Account < ActiveRecord::Base
   has_many :users
   has_many :assessments
   has_many :assessment_settings
+  has_many :lti_credentials
 
   def clean_domain
     self.domain = "http://#{self.domain}" unless self.domain.include?("http://") || self.domain.include?("https://")

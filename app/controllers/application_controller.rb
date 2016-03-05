@@ -219,8 +219,13 @@ class ApplicationController < ActionController::Base
     end
 
     def do_lti
-
-      provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
+      if find_lti_credentials
+        provider = @lti_credential.create_tool_provider(params)
+      else
+        #todo next refactor stage: when all credentials are in prod this can be removed
+        # There will be a window where the first branch won't find a cred, this is for backwards compatibility during that window
+        provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
+      end
 
       if provider.valid_request?(request)
         @isLtiLaunch = true
@@ -298,6 +303,21 @@ class ApplicationController < ActionController::Base
     def current_account
       @current_account ||= Account.find_by(code: request.subdomains.first) || Account.find_by(domain: request.host) || Account.main
     end
+
+  # Finds the LtiCredential & Account based on the oauth_consumer_key
+  def find_lti_credentials
+    raise OpenAssessments::NoLtiKey unless params["oauth_consumer_key"].present?
+
+    if @lti_credential = LtiCredential.enabled.where(lti_key: params["oauth_consumer_key"]).first
+      @current_account = @lti_credential.account
+
+      @lti_credential
+    else
+      #todo: next refactor stage: can't raise now for backwards-compatibility
+      # raise Goldilocks::UnknownLtiKey
+      nil
+    end
+  end
 
     def protect_account
       return if ['default', 'sessions', 'devise/passwords', 'devise/confirmations', 'devise/unlocks'].include?(params[:controller])
