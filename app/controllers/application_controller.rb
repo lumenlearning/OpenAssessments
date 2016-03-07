@@ -1,3 +1,5 @@
+require 'open_assessments'
+
 class ApplicationController < ActionController::Base
 
   # Prevent CSRF attacks by raising an exception.
@@ -219,6 +221,8 @@ class ApplicationController < ActionController::Base
     end
 
     def do_lti
+      @lti_launch = LtiLaunch.from_params(params)
+
       if find_lti_credentials
         provider = @lti_credential.create_tool_provider(params)
       else
@@ -227,7 +231,11 @@ class ApplicationController < ActionController::Base
         provider = IMS::LTI::ToolProvider.new(current_account.lti_key, current_account.lti_secret, params)
       end
 
+      @lti_launch.account = current_account
+      @lti_launch.lti_credential = @lti_credential
+
       if provider.valid_request?(request)
+        @lti_launch.was_valid = true
         @isLtiLaunch = true
         @lti_provider = lti_provider
         @identifier = params[:user_id]
@@ -241,6 +249,7 @@ class ApplicationController < ActionController::Base
         if @user
           # If we do LTI and find a different user. Log out the current user and log in the new user.
           # Log the user in
+          @lti_launch.user = @user if @lti_launch
           sign_in(@user, :event => :authentication)
         else
           # Ask them to login or create an account
@@ -273,15 +282,23 @@ class ApplicationController < ActionController::Base
             custom_canvas_user_id: params[:custom_canvas_user_id]
           )
 
+          @lti_launch.user = @user if @lti_launch
           sign_in(@user, :event => :authentication)
         end
       else
+        @lti_launch.launch_error_message = "Invalid LTI request."
         user_not_authorized
       end
 
+    rescue OpenAssessments::LtiError
+      @message = "We don't recognize your account."
+      @lti_launch.launch_error_message = $!.message + @message if @lti_launch
+      user_not_authorized
+    ensure
+      @lti_launch.save if @lti_launch
     end
 
-    def safe_save_email(user)
+  def safe_save_email(user)
       begin
         user.save!
       rescue ActiveRecord::RecordInvalid => ex
@@ -314,7 +331,7 @@ class ApplicationController < ActionController::Base
       @lti_credential
     else
       #todo: next refactor stage: can't raise now for backwards-compatibility
-      # raise Goldilocks::UnknownLtiKey
+      # raise OpenAssessments::UnknownLtiKey
       nil
     end
   end

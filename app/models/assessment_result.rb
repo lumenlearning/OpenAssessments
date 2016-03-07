@@ -3,6 +3,7 @@ class AssessmentResult < ActiveRecord::Base
   belongs_to :assessment
   belongs_to :user
   belongs_to :user_assessment
+  belongs_to :lti_launch
   has_many :item_results, dependent: :destroy
 
   acts_as_taggable_on :keywords

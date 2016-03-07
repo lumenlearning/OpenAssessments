@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
 
   has_many :user_assessments
   has_many :assessment_results
+  has_many :lti_launches
   has_many :item_results
   has_many :assessments
 

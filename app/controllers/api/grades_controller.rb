@@ -18,8 +18,13 @@ class Api::GradesController < Api::ApiController
     if settings['userAssessmentId']
       user_assessment = current_user.user_assessments.find_by_id(settings['userAssessmentId'])
     end
+    if settings['ltiLaunchId']
+      lti_launch = current_user.lti_launches.find_by_id(settings['ltiLaunchId'])
+    end
+
     result = assessment.assessment_results.build
     result.user_assessment = user_assessment
+    result.lti_launch = lti_launch
     result.identifier = item_to_grade["identifier"]
     result.external_user_id = settings["externalUserId"]
     result.attempt = settings["userAttempts"]

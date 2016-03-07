@@ -48,6 +48,9 @@
     <% if @user_assessment %>
     user_assessment_id: '<%= @user_assessment.id %>',
     <% end -%>
+    <% if @lti_launch %>
+    lti_launch_id: '<%= @lti_launch.id %>',
+    <% end -%>
     lti_role: "<%= @lti_role %>",
     lis_result_sourcedid: '<%= params[:lis_result_sourcedid] %>',
     lis_outcome_service_url: '<%= params[:lis_outcome_service_url] %>',

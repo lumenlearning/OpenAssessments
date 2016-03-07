@@ -82,6 +82,7 @@ export default {
       externalUserId: settings.externalUserId,
       externalContextId: settings.externalContextId,
       userAssessmentId: settings.userAssessmentId,
+      ltiLaunchId: settings.ltiLaunchId,
       userAttempts: settings.userAttempts,
       srcUrl: settings.srcUrl,
       lisResultSourceDid: settings.lisResultSourceDid,
