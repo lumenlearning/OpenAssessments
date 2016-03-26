@@ -51,6 +51,7 @@
     <% if @lti_launch %>
     lti_launch_id: '<%= @lti_launch.id %>',
     <% end -%>
+    show_post_message_navigation: <%= !!@show_post_message_navigation %>,
     lti_role: "<%= @lti_role %>",
     lis_result_sourcedid: '<%= params[:lis_result_sourcedid] %>',
     lis_outcome_service_url: '<%= params[:lis_outcome_service_url] %>',

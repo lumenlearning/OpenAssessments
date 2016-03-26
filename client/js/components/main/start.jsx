@@ -10,6 +10,8 @@ import CheckUnderstanding from "../assessments/check_understanding";
 import Item               from "../assessments/item";
 import ProgressDropdown   from "../common/progress_dropdown";
 import $                  from "jquery";
+import CommHandler        from "../../utils/communication_handler";
+import FullPostNav        from "../post_nav/full_post_nav.jsx";
 
 export default class Start extends BaseComponent{
 
@@ -41,6 +43,7 @@ export default class Start extends BaseComponent{
       // Trigger action to indicate the assessment was viewed
       AssessmentActions.assessmentViewed(this.state.settings, this.state.assessment);
     }
+    CommHandler.sendSize();
   }
 
   getStyles(theme){
@@ -110,6 +113,7 @@ export default class Start extends BaseComponent{
     var quizType = this.state.settings.assessmentKind.toUpperCase() === "SUMMATIVE" ? "Quiz" : "Show What You Know";
     var titleBar = this.state.settings.assessmentKind.toUpperCase() === "FORMATIVE" ?  "" : <div style={styles.titleBar}>{this.state.settings ? this.state.settings.assessmentTitle : ""}</div>;
     progressBar = this.state.settings.assessmentKind.toUpperCase() === "FORMATIVE" ? "" : progressBar;
+
     return <div className="assessment" style={styles.assessment}>
       {titleBar}
       {progressBar}
@@ -118,6 +122,7 @@ export default class Start extends BaseComponent{
           {content}
         </div>
       </div>
+      <FullPostNav/>
     </div>;
   }
 

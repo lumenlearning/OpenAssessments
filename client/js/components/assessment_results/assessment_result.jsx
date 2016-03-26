@@ -46,6 +46,7 @@ export default class AssessmentResult extends BaseComponent{
 
   componentDidMount(){
     CommunicationHandler.sendSize();
+    CommunicationHandler.showLMSNavigation();
   }
 
   isSummative(){

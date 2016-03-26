@@ -35,6 +35,48 @@ export default {
     Communicator.broadcastMsg(ltiPayload);
   },
 
+  // get rid of LMS module navigation
+  hideLMSNavigation: function () {
+    Communicator.broadcastMsg({
+      subject: "lti.showModuleNavigation",
+      show: false
+    });
+  },
+
+  // show LMS module navigation
+  showLMSNavigation: function () {
+    Communicator.broadcastMsg({
+      subject: "lti.showModuleNavigation",
+      show: true
+    });
+  },
+
+  // tell the parent iFrame to scroll to top
+  scrollParentToTop: function () {
+    Communicator.broadcastMsg({
+      subject: "lti.scrollToTop"
+    });
+  },
+
+  navigateHome: function(){
+    this.navigate("home");
+  },
+
+  navigateNext: function(){
+    this.navigate("next");
+  },
+
+  navigatePrevious: function(){
+    this.navigate("previous");
+  },
+
+  navigate: function(location){
+    Communicator.broadcastMsg({
+      subject: "lti.navigation",
+      location: location
+    });
+  },
+
   handleComm: function(e){
     switch(e.data.open_assessments_msg){
       case 'open_assessments_size_request':

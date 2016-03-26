@@ -114,6 +114,7 @@ class AssessmentsController < ApplicationController
     @external_user_id ||= params[:user_id]
     @external_context_id ||= params[:context_id]
 
+    @show_post_message_navigation = params[:ext_post_message_navigation]
 
     respond_to do |format|
       format.html { render :show, layout: @embedded ? 'assessment' : 'application' }

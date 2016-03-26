@@ -7,6 +7,7 @@ import ReviewAssessmentStore from "../../stores/review_assessment";
 import SettingsStore        from "../../stores/settings";
 import ItemResult           from "./item_result";
 import ResultSummary        from "./result_summary.jsx";
+import StudyPlanButton      from "../post_nav/study_plan_button.jsx";
 
 export default class SummativeResult extends React.Component{
 
@@ -81,6 +82,8 @@ export default class SummativeResult extends React.Component{
             outcomes={this.props.outcomes}
             user={this.props.user}
             questionResponses={this.props.questionResponses}/>
+
+        <StudyPlanButton/>
 
         <hr />
 

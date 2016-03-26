@@ -19,11 +19,14 @@ export default class UniversalInput extends React.Component{
   }
 
   componentDidMount(){
-    //CommunicationHandler.sendSize();
+    CommunicationHandler.sendSize();
+    CommunicationHandler.scrollParentToTop();
+    CommunicationHandler.hideLMSNavigation();
   }
 
   componentDidUpdate(){
-    //CommunicationHandler.sendSize();
+    CommunicationHandler.sendSize();
+    CommunicationHandler.scrollParentToTop();
   }
 
   getStyles(props, theme){
