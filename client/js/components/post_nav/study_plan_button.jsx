@@ -2,7 +2,7 @@
 
 import React from 'react';
 import BaseComponent      from "../base_component";
-import CommunicationHandler from "../../utils/communication_handler";
+import CommHandler from "../../utils/communication_handler";
 import SettingsStore      from "../../stores/settings";
 
 export default class StudyPlanButton extends BaseComponent {
@@ -20,7 +20,7 @@ export default class StudyPlanButton extends BaseComponent {
     }
 
     return <div style={{marginTop : '10px'}}>
-      <button className="lti-nav-btn" id="study-plan" style={{width : 'initial'}} onClick={()=>{CommunicationHandler.navigateHome()}}>
+      <button className="lti-nav-btn" id="study-plan" style={{width : 'initial'}} onClick={()=>{CommHandler.navigateHome()}}>
         View updated study plan
       </button>
     </div>
