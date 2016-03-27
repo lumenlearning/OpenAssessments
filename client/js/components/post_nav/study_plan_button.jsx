@@ -15,7 +15,7 @@ export default class StudyPlanButton extends BaseComponent {
   }
 
   render() {
-    if (!this.state.display) {
+    if (!this.state.display || self == top) {
       return <div></div>;
     }
 
