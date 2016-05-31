@@ -78,7 +78,7 @@ class Api::AssessmentResultsController < Api::ApiController
     raise "no api user" unless current_user
     result = @current_user.assessment_results.find(params[:assessment_result_id])
 
-    if result.post_lti_outcome!
+    if Lti::AssessmentResultReporter.post_lti_outcome!(result, @lti_launch)
       render json: {message: "OK"}
     else
       Rails.logger.error("Failed sending lti grade: AssessmentResult #{result.id} Errors: #{result.outcome_error_message}")
