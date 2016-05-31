@@ -18,13 +18,14 @@ class Api::GradesController < Api::ApiController
     if settings['userAssessmentId']
       user_assessment = current_user.user_assessments.find_by_id(settings['userAssessmentId'])
     end
-    if settings['ltiLaunchId']
-      lti_launch = current_user.lti_launches.find_by_id(settings['ltiLaunchId'])
+    if @lti_launch.nil? && settings['ltiLaunchId']
+      # todo: remove this after a deploy cycle for backwards-compat
+      @lti_launch = current_user.lti_launches.find_by_id(settings['ltiLaunchId'])
     end
 
     result = assessment.assessment_results.build
     result.user_assessment = user_assessment
-    result.lti_launch = lti_launch
+    result.lti_launch = @lti_launch
     result.identifier = item_to_grade["identifier"]
     result.external_user_id = settings["externalUserId"]
     result.attempt = settings["userAttempts"]
@@ -39,6 +40,7 @@ class Api::GradesController < Api::ApiController
 
     # if it needs an lti grade write-back save the info
     if settings["isLti"] && assessment.summative?
+      #todo all these setter should be removed after LtiLaunch refactor deploy cycle
       result.external_user_id = settings["externalUserId"]
       result.lis_result_sourcedid = settings["lisResultSourceDid"]
       result.lis_outcome_service_url = settings["lisOutcomeServiceUrl"]
