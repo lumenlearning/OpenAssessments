@@ -8,12 +8,6 @@ describe Lti::AssessmentResultReporter do
          :external_user_id => user_assessment.eid,
          :score => score,
          :attempt => attempt,
-         :lti_outcome_data => {
-                 :lti_role => 'admin',
-                 :lis_user_id => user_assessment.eid,
-                 :lis_result_sourcedid => '',
-                 :lis_outcome_service_url => 'https://example.com/api/ltigrade_passback'
-         },
          :user_assessment_id => user_assessment.id,
          :session_status => 'pendingLtiOutcome'
     )
@@ -23,21 +17,35 @@ describe Lti::AssessmentResultReporter do
   before do
     @user_assessment = create(:user_assessment)
     @assessment_result = create_assessment_result(@user_assessment, 67.0, 1)
-    @reporter = Lti::AssessmentResultReporter.new(@assessment_result)
+    @lti_launch = LtiLaunch.from_params({
+                 :roles => 'Learner',
+                 :lis_user_id => @user_assessment.eid,
+                 :lis_result_sourcedid => 'abcdef',
+                 :lis_outcome_service_url => 'https://example.com/api/ltigrade_passback'
+         })
+    @reporter = Lti::AssessmentResultReporter.new(@assessment_result, @lti_launch)
   end
 
   context 'should_send_lti_outcome?' do
-    it 'should return false if any of the required fields are not present' do
+    it 'should be false if no score' do
       @assessment_result.update(:score => nil)
-      expect(@reporter.has_necessary_lti_data?).to eq nil
-      @assessment_result.update(:score => 24.0, :lis_result_sourcedid => nil)
-      expect(@reporter.has_necessary_lti_data?).to eq nil
-      @assessment_result.update(:lis_result_sourcedid => "", :lis_outcome_service_url => nil)
-      expect(@reporter.has_necessary_lti_data?).to eq nil
+      expect(@reporter.has_necessary_lti_data?).to eq false
     end
 
-    it 'should return :lti_secret if all required fields are present' do
-      expect(@reporter.has_necessary_lti_data?).to eq @assessment_result.assessment.try(:account).try(:lti_secret)
+    it "should be false if no lis_result_sourcedid" do
+      #todo belongs in lti_launch_spec
+      @lti_launch.lis_result_sourcedid = nil
+      expect(@reporter.has_necessary_lti_data?).to eq false
+    end
+
+    it "should be false if no lis_outcome_service_url" do
+      #todo belongs in lti_launch_spec
+      @lti_launch.lis_outcome_service_url = nil
+      expect(@reporter.has_necessary_lti_data?).to eq false
+    end
+
+    it 'should be true if all required fields are present' do
+      expect(@reporter.has_necessary_lti_data?).to eq true
     end
   end
 
@@ -51,13 +59,13 @@ describe Lti::AssessmentResultReporter do
       expect(@reporter.should_send_lti_outcome?).to eq false
       @assessment_result.update(:session_status => 'errorLtiOutcome')
       expect(@reporter.should_send_lti_outcome?).to eq false
-      @assessment_result.update(:session_status => 'final')
+      @assessment_result.update(:session_status => AssessmentResult::STATUS_FINAL)
       expect(@reporter.should_send_lti_outcome?).to eq false
     end
 
     it 'should return nil if all necessarry lti data is not present' do
       @assessment_result.update(:score => nil)
-      expect(@reporter.should_send_lti_outcome?).to eq nil
+      expect(@reporter.should_send_lti_outcome?).to eq false
     end
 
     it 'should return false if the assessment result is of the kind "formative"' do
@@ -76,13 +84,33 @@ describe Lti::AssessmentResultReporter do
   end
 
   context 'post_lti_outcome' do
-    it 'should return true and change session_status to final if should_send_lti_outcome returns false or nil' do
+    it 'should return true and change session_status to final if should_send_lti_outcome returns false' do
       @assessment_result.assessment.update(:kind => 'formative')
       expect(Lti::AssessmentResultReporter.post_lti_outcome!(@assessment_result)).to eq true
-      expect(@assessment_result.session_status).to eq 'final'
+      expect(@assessment_result.session_status).to eq AssessmentResult::STATUS_FINAL
     end
   end
 
   context 'send_outcome_to_tool_consumer!' do
+    it 'should set status to final on success' do
+      expect(@lti_launch).to receive(:send_outcome_to_tool_consumer).and_return(true)
+      @reporter.send_outcome_to_tool_consumer!
+      expect(@assessment_result.session_status).to eq AssessmentResult::STATUS_FINAL
+    end
+
+    it 'should raise unless has_necessary_lti_data?' do
+      @assessment_result.score = nil
+      expect{@reporter.send_outcome_to_tool_consumer!}.to raise_error(OpenAssessments::LtiError)
+    end
+
+    it 'should store the error message if sending fails' do
+      @lti_launch.outcome_error_message = 'sadness'
+      expect(@lti_launch).to receive(:send_outcome_to_tool_consumer).and_return(false)
+      @reporter.send_outcome_to_tool_consumer!
+      expect(@assessment_result.session_status).to eq AssessmentResult::STATUS_ERROR_LTI_OUTCOME
+      expect(@assessment_result.outcome_error_message).to eq 'sadness'
+    end
+
   end
+
 end

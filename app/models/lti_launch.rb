@@ -27,7 +27,13 @@ class LtiLaunch < ActiveRecord::Base
     self.lis_outcome_service_url = params[:lis_outcome_service_url]
   end
 
+  def has_outcome_data?
+    !!(self.lis_result_sourcedid && self.lis_outcome_service_url)
+  end
+
   def send_outcome_to_tool_consumer(score=1)
+    raise "Can't send grade with invalid launch!" unless self.was_valid
+
     @tp = lti_credential.create_tool_provider(self.data)
 
     if !@tp.outcome_service?
