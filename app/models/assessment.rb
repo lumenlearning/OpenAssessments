@@ -18,6 +18,9 @@ class Assessment < ActiveRecord::Base
   scope :by_newest, -> { order(created_at: :desc) }
   scope :by_oldest, -> { order(start_date: :asc) }
   scope :by_latest, -> { order(updated_at: :desc) }
+  scope :summative, -> {where kind: 'summative'}
+  scope :swyk, -> {where kind: 'show_what_you_know'}
+  scope :formative, -> {where kind: 'formative'}
 
   attr_accessor :xml_file
 

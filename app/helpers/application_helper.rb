@@ -23,6 +23,9 @@ module ApplicationHelper
     if @lti_role == 'admin' && @external_context_id
       payload[AuthToken::ADMIN_SCOPES] = [@external_context_id]
     end
+    if @lti_launch
+      payload[:lti_launch_id] = @lti_launch.id
+    end
     AuthToken.issue_token(payload)
   end
 
