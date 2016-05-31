@@ -1,4 +1,5 @@
-class LtiRoleHelper
+module Lti
+class RoleHelper
 
   attr_reader :roles
 
@@ -47,4 +48,5 @@ class LtiRoleHelper
   def context_ta?
     has_exact_role?('TeachingAssistant') || has_exact_role?('urn:lti:role:ims/lis/TeachingAssistant')
   end
+end
 end

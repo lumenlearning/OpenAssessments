@@ -1,5 +1,5 @@
 require 'open-uri'
-require 'lti_role_helper'
+require 'lti/role_helper'
 
 class AssessmentsController < LtiBaseController
 
@@ -125,7 +125,7 @@ class AssessmentsController < LtiBaseController
     role_param = params["ext_roles"] || params["roles"]
     return "student" unless role_param.present?
 
-    roles = LtiRoleHelper.new(role_param)
+    roles = Lti::RoleHelper.new(role_param)
     if roles.context_admin? || roles.context_instructor? || roles.institution_admin?
       @lti_role = "admin"
     else
