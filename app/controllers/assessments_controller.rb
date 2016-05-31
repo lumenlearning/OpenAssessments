@@ -1,7 +1,7 @@
 require 'open-uri'
 require 'lti_role_helper'
 
-class AssessmentsController < ApplicationController
+class AssessmentsController < LtiBaseController
 
   skip_before_filter :verify_authenticity_token
   
