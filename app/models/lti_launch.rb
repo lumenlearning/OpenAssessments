@@ -34,16 +34,16 @@ class LtiLaunch < ActiveRecord::Base
   def send_outcome_to_tool_consumer(score=1)
     raise "Can't send grade with invalid launch!" unless self.was_valid
 
-    @tp = lti_credential.create_tool_provider(self.data)
+    tp = tool_provider
 
-    if !@tp.outcome_service?
+    if !tp.outcome_service?
       self.outcome_error_message = "No lis variables set"
       self.save
       return false
     end
 
     # post the given score to the TC
-    res = @tp.post_replace_result!(score)
+    res = tp.post_replace_result!(score)
 
     if res.success?
       true
@@ -54,12 +54,14 @@ class LtiLaunch < ActiveRecord::Base
     end
   end
 
-  def self.valid_nonce?(nonce, valid_minutes=5)
-    now = Time.now.utc.to_i
-    LtiLaunch.where(oauth_nonce: nonce).each do |launch|
-      return false if now - launch.created_at.utc.to_i < valid_minutes * 60
+  def tool_provider
+    if lti_credential
+      lti_credential.create_tool_provider(self.data)
+    else
+      # Use the account's default key and secret
+      #todo - for backwards-compat - in future all launches will have an lti_credential
+      IMS::LTI::ToolProvider.new(self.account.lti_key, self.account.lti_secret, self.data)
     end
-
-    true
   end
+
 end
