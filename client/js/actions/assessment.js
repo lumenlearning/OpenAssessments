@@ -85,11 +85,7 @@ export default {
       ltiLaunchId: settings.ltiLaunchId,
       userAttempts: settings.userAttempts,
       srcUrl: settings.srcUrl,
-      lisResultSourceDid: settings.lisResultSourceDid,
-      lisOutcomeServiceUrl: settings.lisOutcomeServiceUrl,
-      lisUserId: settings.lisUserId,
       isLti: settings.isLti,
-      ltiRole: settings.ltiRole,
       assessmentKind: settings.assessmentKind,
       accountId: settings.accountId
     };
