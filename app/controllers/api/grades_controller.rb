@@ -19,13 +19,24 @@ class Api::GradesController < Api::ApiController
       user_assessment = current_user.user_assessments.find_by_id(settings['userAssessmentId'])
     end
 
-    result = assessment.assessment_results.build
-    result.user_assessment = user_assessment
-    result.lti_launch = @lti_launch
+    if @lti_launch
+      if @lti_launch.assessment_result
+        result = @lti_launch.assessment_result
+      else
+        result = assessment.assessment_results.build
+        result.user_assessment = user_assessment
+        result.lti_launch = @lti_launch
+        result.attempt = settings["userAttempts"]
+        result.user = current_user
+      end
+    else
+      # No LTI launch, likely an embedded self-check
+      result = assessment.assessment_results.build
+      result.user = current_user
+    end
+
     result.identifier = item_to_grade["identifier"]
-    result.external_user_id = settings["externalUserId"]
-    result.attempt = settings["userAttempts"]
-    result.user = current_user
+    result.external_user_id ||= settings["externalUserId"]
     result.session_status = AssessmentResult::STATUS_PENDING_RESPONSE_PROCESSING
     result.save!
 

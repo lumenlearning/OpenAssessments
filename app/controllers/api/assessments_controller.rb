@@ -49,7 +49,18 @@ class Api::AssessmentsController < Api::ApiController
           return
         end
 
-        user_assessment.increment_attempts! unless for_review
+        unless for_review
+          result = assessment.assessment_results.build
+          result.user_assessment = user_assessment
+          result.lti_launch = @lti_launch
+          result.external_user_id = @lti_launch.lti_user_id if @lti_launch
+          result.attempt = user_assessment.attempts || 0
+          result.user = current_user
+          result.session_status = AssessmentResult::STATUS_PENDING_SUBMISSION
+          result.save!
+
+          user_assessment.increment_attempts!
+        end
       else
         render :json => {:error => "Can't validate user_assessment for summative assessment."}, status: :unauthorized
         return

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160305010243) do
+ActiveRecord::Schema.define(version: 20160608210010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20160305010243) do
   end
 
   add_index "assessment_results", ["assessment_id"], name: "index_assessment_results_on_assessment_id", using: :btree
+  add_index "assessment_results", ["lti_launch_id"], name: "index_assessment_results_on_lti_launch_id", using: :btree
   add_index "assessment_results", ["referer"], name: "index_assessment_results_on_referer", using: :btree
   add_index "assessment_results", ["session_status"], name: "index_assessment_results_on_session_status", using: :btree
   add_index "assessment_results", ["user_assessment_id"], name: "index_assessment_results_on_user_assessment_id", using: :btree
