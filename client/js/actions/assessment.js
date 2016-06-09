@@ -3,6 +3,7 @@
 import Constants   from   "../constants";
 import Api         from   "./api";
 import Dispatcher  from   "../dispatcher";
+import AssessmentStore    from "../stores/assessment";
 
 export default {
 
@@ -101,12 +102,20 @@ export default {
     Api.post(Constants.ASSESSMENT_GRADED,'api/grades', body);
   },
 
+  submitProgress(){
+    if(AssessmentStore.isSummative()) {
+      Api.post("oi", 'api/progress', {"answers": AssessmentStore.allStudentAnswers()});
+    }
+  },
+
   nextQuestion(){
     Dispatcher.dispatch({ action: Constants.ASSESSMENT_NEXT_QUESTION });
+    this.submitProgress();
   },
 
   previousQuestion(){
     Dispatcher.dispatch({ action: Constants.ASSESSMENT_PREVIOUS_QUESTION });
+    this.submitProgress();
   },
 
   retakeAssessment(){

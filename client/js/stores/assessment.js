@@ -19,6 +19,7 @@ const SUBMITTED = 5;
 
 
 var _assessment = null;
+var _kind = null;
 var _assessmentXml = null;
 var _items = [];
 var _outcomes = [];
@@ -156,6 +157,12 @@ var AssessmentStore = assign({}, StoreCommon, {
       seconds: seconds
     }
   },
+  kind(){
+    return _kind;
+  },
+  isSummative(){
+    return _kind == "summative";
+  },
 
 });
 
@@ -176,6 +183,7 @@ Dispatcher.register(function(payload) {
         var text = payload.data.text.trim();
         if(text.length > 0){
           _assessment = Assessment.parseAssessment(SettingsStore.current(), text);
+          _kind = SettingsStore.current().assessmentKind.toLowerCase();
           _assessmentXml = text;
           if( _assessment && 
               _assessment.sections && 

@@ -5,6 +5,7 @@ class AssessmentResult < ActiveRecord::Base
   belongs_to :user_assessment
   belongs_to :lti_launch
   has_many :item_results, dependent: :destroy
+  has_one :progress
 
   acts_as_taggable_on :keywords
   acts_as_taggable_on :objectives
@@ -29,6 +30,15 @@ class AssessmentResult < ActiveRecord::Base
     else
       self.assessment.assessment_results.where(user_id: self.user.id).where('score IS NOT NULL').order('score DESC').select(:id, :score).limit(1).first == self
     end
+  end
+
+  # If the quiz is in progress and is summative, log the progress.
+  def add_progress!(array)
+    return unless self.session_status == AssessmentResult::STATUS_PENDING_SUBMISSION
+    return unless Assessment.where(id: self.assessment_id).summative.exists?
+
+    self.progress ||= Progress.new(assessment_result: self)
+    self.progress.add_answers!(array)
   end
 
 end

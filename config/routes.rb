@@ -69,6 +69,7 @@ Rails.application.routes.draw do
       post 'send', to: 'assessment_results#send_result_to_analytics'
       post 'lti_outcome', to: 'assessment_results#send_lti_outcome'
     end
+    post 'progress', to: 'assessment_results#log_progress'
     resources :item_results
     resources :grades
     resources :assessment_settings

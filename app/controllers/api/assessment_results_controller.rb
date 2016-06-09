@@ -74,6 +74,18 @@ class Api::AssessmentResultsController < Api::ApiController
     render json: message
   end
 
+  def log_progress
+    raise "no api user" unless current_user
+
+    if @lti_launch
+      result = @lti_launch.assessment_result
+      result.add_progress!(params[:answers])
+      render json: {message: "OK"}
+    else
+      render json: {message: "No active assessment."}
+    end
+  end
+
   def send_lti_outcome
     raise "no api user" unless current_user
     result = @current_user.assessment_results.find(params[:assessment_result_id])
