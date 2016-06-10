@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160609213113) do
+ActiveRecord::Schema.define(version: 20160609234534) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,8 @@ ActiveRecord::Schema.define(version: 20160609213113) do
     t.jsonb    "lti_outcome_data",                default: {}, null: false
     t.integer  "user_assessment_id"
     t.integer  "lti_launch_id"
+    t.integer  "assessment_xml_id"
+    t.jsonb    "data",                            default: {}, null: false
   end
 
   add_index "assessment_results", ["assessment_id"], name: "index_assessment_results_on_assessment_id", using: :btree

@@ -5,6 +5,8 @@ class AssessmentXml < ActiveRecord::Base
   scope :summative, -> { where(kind: 'summative') }
   scope :formative, -> { where(kind: 'formative') }
 
+  attr_reader :last_selected_item_ids
+
   def self.by_kind(kind)
     where(kind: kind)
   end
@@ -16,6 +18,11 @@ class AssessmentXml < ActiveRecord::Base
       while s.css('item').count > per_section
         s.css('item')[rand(s.css('item').count)].remove
       end
+    end
+
+    @last_selected_item_ids = []
+    node.css('item').each do |item|
+      @last_selected_item_ids << item['ident']
     end
 
     node.to_xml

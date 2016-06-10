@@ -4,14 +4,18 @@ class AssessmentResult < ActiveRecord::Base
   belongs_to :user
   belongs_to :user_assessment
   belongs_to :lti_launch
+  belongs_to :assessment_xml
   has_many :item_results, dependent: :destroy
   has_one :progress
 
   acts_as_taggable_on :keywords
   acts_as_taggable_on :objectives
 
+  # deprecated in favor of lti_launch handling LTI information
   store_accessor :lti_outcome_data, :lis_result_sourcedid, :lis_outcome_service_url,
                  :lis_user_id, :lti_role, :outcome_error_message
+
+  store_accessor :data, :question_ids
 
   scope :by_status_final, -> { where(session_status: 'final') }
 

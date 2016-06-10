@@ -50,14 +50,14 @@ class Api::AssessmentsController < Api::ApiController
         end
 
         unless for_review
-          result = assessment.assessment_results.build
-          result.user_assessment = user_assessment
-          result.lti_launch = @lti_launch
-          result.external_user_id = @lti_launch.lti_user_id if @lti_launch
-          result.attempt = user_assessment.attempts || 0
-          result.user = current_user
-          result.session_status = AssessmentResult::STATUS_PENDING_SUBMISSION
-          result.save!
+          @result = assessment.assessment_results.build
+          @result.user_assessment = user_assessment
+          @result.lti_launch = @lti_launch
+          @result.external_user_id = @lti_launch.lti_user_id if @lti_launch
+          @result.attempt = user_assessment.attempts || 0
+          @result.user = current_user
+          @result.session_status = AssessmentResult::STATUS_PENDING_SUBMISSION
+          @result.save!
 
           user_assessment.increment_attempts!
         end
@@ -73,7 +73,16 @@ class Api::AssessmentsController < Api::ApiController
         if for_review
           render :text => assessment.assessment_xmls.formative.by_newest.first.xml
         elsif assessment_settings && assessment_settings.per_sec
-          render :text => assessment.assessment_xmls.by_newest.first.xml_with_limited_questions(assessment_settings.per_sec.to_i)
+          a_xml = assessment.assessment_xmls.by_newest.first
+          xml = a_xml.xml_with_limited_questions(assessment_settings.per_sec.to_i)
+
+          if @result
+            @result.assessment_xml = a_xml
+            @result.question_ids = a_xml.last_selected_item_ids
+            @result.save!
+          end
+
+          render :text => xml
         else
           render :text => assessment.assessment_xmls.by_newest.first.xml
         end
