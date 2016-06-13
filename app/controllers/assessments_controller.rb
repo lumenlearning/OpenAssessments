@@ -6,9 +6,9 @@ class AssessmentsController < LtiBaseController
   skip_before_filter :verify_authenticity_token
   
   before_filter :skip_trackable
-  before_filter :authenticate_user!, only: [:new, :create, :destroy]
-  before_filter :check_lti, only: [:show, :lti]
-  load_and_authorize_resource except: [:show, :lti]
+  before_filter :authenticate_user!, only: [:new, :edit, :create, :destroy]
+  before_filter :check_lti, only: [:show, :edit, :lti]
+  load_and_authorize_resource except: [:show, :edit, :lti]
 
   respond_to :html
 
@@ -119,6 +119,13 @@ class AssessmentsController < LtiBaseController
     respond_to do |format|
       format.html { render :show, layout: @embedded ? 'assessment' : 'application' }
     end
+  end
+
+  def edit
+    @assessment = Assessment.where(id: params[:id], account: current_account).first
+    @assessment_id = @assessment ? @assessment.id : params[:assessment_id] || 'null'
+
+    render :edit, layout: 'assessment'
   end
 
   def set_lti_role

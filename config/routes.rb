@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   resources :assessments do
     member do
       post :show
+      post :edit
     end
   end
 
