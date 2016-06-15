@@ -91,3 +91,49 @@ a specific module. The API will be able to be broken in peices, but this is the 
                 * **thirdLevelOutcome**: Currently an Unknown property, but once more Information is fleshed out we can determine the object structure.
                             
 ## Components:
+
+### edit.jsx
+This Component is the Entry point Component for the Quiz Editing route
+
+* **State**:
+  * 'module':
+    * `type`: Object
+    * `purpose`: contains the module data returned from the API. 
+* **Props**: N/A (currently)
+
+### outcomeSection.jsx
+This Component
+
+* **State**: N/A (currently)
+* **Props**:
+  * 'title':
+    * `type:` String
+    * `purpose` the value of 'title' determines the title content on the outcome section accordion
+  * 'children'
+    * `type:` Component
+    * `purpose:` the value of 'children' holds the sub-components being passed into the outcome accordion.
+
+### quizType.jsx
+
+* **State**: N/A (currently)
+* **Props**:
+  * 'title'
+    * `type:` String
+    * `purpose:` the value of 'title' will display what quiz type is being used ie. "Show What You Know"
+  * 'children'
+    * `type:` Component
+    * `purpose:` 'children' holds the sub-components being passed into each quiz types. ie iterating through each question and showing the question block.
+
+### questionBlock.jsx
+
+* **State**: N/A (currently)
+    * 'question'
+      * `type:` Object
+      * `purpose:` this holds the question object passed into the component via props.
+* **Props**:
+    * 'question'
+      * `type:` Object
+      * `purpose:` the quiz question object to be passed into the component and stored in state.
+    * 'afterQuestionEdit'
+      * `type:` Function
+      * `purpose:` this function fires after any part of the quiz object has been edited inside the component. it receives the question object as an argument.
