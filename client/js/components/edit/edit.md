@@ -126,7 +126,7 @@ This Component
 
 ### questionBlock.jsx
 
-* **State**: N/A (currently)
+* **State**:
     * 'question'
       * `type:` Object
       * `purpose:` this holds the question object passed into the component via props.
