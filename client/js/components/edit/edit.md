@@ -9,6 +9,8 @@ a specific module. The API will be able to be broken in peices, but this is the 
   moduleName: "Question bank for (Module Name) Module",
   enablingOutcomes:[
     {
+      shortTitle: 'short outcome title',
+      longTitle: 'this is a longer title for the outcome because it has more characters',
       selfCheck:[
         {
           title: "What is a question?",
