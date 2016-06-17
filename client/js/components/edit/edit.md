@@ -62,47 +62,44 @@ a specific module. The API will be able to be broken in peices, but this is the 
         * `type:`  String
         * `purpose:` Holds the full length value of the enabling outcome name
         * `children:` none
-              
-      * **selfCheck**:
-        * `type:`  Array        
-        * `purpose:` Contains a list of of each quiz object related to the selfCheck section for this Enabling Outcome.
+      * **quizTypes**:
+        * `type:` Array
+        * `purpose:` Holds the array of quiz type objects (ie. show what you know, self check, and quiz)
         * `children:` Array of Objects
-          * `Quiz Object:` **SEE Quiz Object Below**
-      * **quiz**:
-        * `type:`  Array
-        * `purpose:` Contains a list of of each quiz object related to the quiz section for this Enabling Outcome.
-        * `children:` Array of Objects
-          * `Quiz Object:` **SEE Quiz Object Below**
-      * **swyk**:
-        * `type:`  Array
-        * `purpose:` Contains a list of of each quiz object related to the Show What you Know section for this Enabling Outcome.
-        * `children:` Array of Objects
-          * `Quiz Object:`
-            * **title**:  
-              * `type:` String
-              * `purpose:`Holds the value of the Quiz question
-              * `children:` none
-            * **hint**:
-              * `type:` String
-              * `purpose:` Holds the value of any Hint that might or might not be available for the question
-              * `children:` none
-            * **answers**:
-              * `type:` Array
-              * `purpose:` Contains a list of each answer object for the related question.
-              * `children:` Array of Objects
-                * **correct**:
-                  * `type:` Boolean
-                  * `purpose:` Determines if this question is counted as a correct answer.
-                  * `children:` none
-                * **option**:
+          * **type**:
+            * `type:` String
+            * `purpose:` Contains the name for the specific quiz type section (ie. "Show What you Know")
+            * `children:` none
+          * **questions**:
+            * `type:`  Array
+            * `purpose:` Contains a list of of each quiz object related to the specific quiz type section for this Enabling Outcome.
+            * `children:` Array of Objects
+              * `Quiz Object:`
+                * **title**:  
                   * `type:` String
-                  * `purpose:` Contains the string value of the answer to that question
+                  * `purpose:`Holds the value of the Quiz question
                   * `children:` none
-                * **feedback**:
+                * **hint**:
                   * `type:` String
-                  * `purpose:` Contains the string to display when the answer is selected.
+                  * `purpose:` Holds the value of any Hint that might or might not be available for the question
                   * `children:` none
-                * **thirdLevelOutcome**: Currently an Unknown property, but once more Information is fleshed out we can determine the object structure.
+                * **answers**:
+                  * `type:` Array
+                  * `purpose:` Contains a list of each answer object for the related question.
+                  * `children:` Array of Objects
+                    * **correct**:
+                      * `type:` Boolean
+                      * `purpose:` Determines if this question is counted as a correct answer.
+                      * `children:` none
+                    * **option**:
+                      * `type:` String
+                      * `purpose:` Contains the string value of the answer to that question
+                      * `children:` none
+                    * **feedback**:
+                      * `type:` String
+                      * `purpose:` Contains the string to display when the answer is selected.
+                      * `children:` none
+                    * **thirdLevelOutcome**: Currently an Unknown property, but once more Information is fleshed out we can determine the object structure.
                             
 ## Components:
 
