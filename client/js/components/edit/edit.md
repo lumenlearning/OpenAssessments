@@ -11,24 +11,35 @@ a specific module. The API will be able to be broken in peices, but this is the 
     {
       shortTitle: 'short outcome title',
       longTitle: 'this is a longer title for the outcome because it has more characters',
-      selfCheck:[
+      quizTypes:[
         {
-          title: "What is a question?",
-          answers:[
+          type: 'Show What You Know',
+          questions: [
             {
-              correct: true,
-              option: "You just asked one.",
-              feedback: "Correct! Well done, it seems you know what a question is"
+              title: "What is a question?",
+              answers:[
+                {
+                  correct: true,
+                  option: "You just asked one.",
+                  feedback: "Correct! Well done, it seems you know what a question is"
+                },
+                //... more answers ...
+              ],
+              hint: "NO HINT FOR YOU",
+              thirdLvlOutcome: {} //... unknown
             },
-            //... more answers ...
-          ],
-          hint: "NO HINT FOR YOU",
-          thirdLvlOutcome: {} //... unknown
+            //... more questions ...
+          ]
         },
-        //... more questions ...
-      ],
-      quiz: [], //Identical to selfCheck,
-      swyk: []  //Identical to selfCheck,
+        {
+          type: "Quiz",
+          questions: []
+        },
+        {
+          type: 'self check',
+          questions: []
+        }
+      ]
     },
     //... more outcomes....
   ]
@@ -51,6 +62,7 @@ a specific module. The API will be able to be broken in peices, but this is the 
         * `type:`  String
         * `purpose:` Holds the full length value of the enabling outcome name
         * `children:` none
+              
       * **selfCheck**:
         * `type:`  Array        
         * `purpose:` Contains a list of of each quiz object related to the selfCheck section for this Enabling Outcome.
