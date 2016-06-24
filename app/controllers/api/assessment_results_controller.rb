@@ -99,73 +99,26 @@ class Api::AssessmentResultsController < Api::ApiController
   end
 
   def send_result_to_analytics
-    if request.headers["Authorization"].present? &&
-            request.headers["Authorization"] != "Bearer null"
+    # If there is a session, validate the auth header,
+    # there won't be one for non-lti embedded quizzes
+    if request.headers["Authorization"].present? && request.headers["Authorization"] != "Bearer null"
       return unless validate_token
     end
 
-    if @current_user = current_user
-      res = @current_user.assessment_results.find(params[:assessment_result_id])
-      assessment = res.assessment
-    else
-      res = AssessmentResult.find(params[:assessment_result_id])
-      assessment = res.assessment
-      if assessment.kind == 'summative'
-        render json: {message: "nope"}, status: :forbidden
-        return
-      end
-    end
-
-    if @current_user && ei = @current_user.external_identifiers.first
-      user_id = ei.identifier
-      tc_guid = ei.provider
-
-      if params[:external_context_id].present?
-        user_assessment = assessment.user_assessments.where(eid: ei.identifier, lti_context_id: params[:external_context_id]).first
-      else
-        user_assessment = assessment.user_assessments.where(eid: ei.identifier).first
-      end
-      context_id = user_assessment ? user_assessment.lti_context_id : nil
-    end
-
-    user_id ||= params[:external_user_id]
-    context_id ||= params[:external_context_id]
-    tc_guid ||= params[:external_account_id]
-
-    unless user_id.present?
-      render json: {message: "no user"}
-      return
-    end
-
-    if user_assessment && user_assessment.lti_role == "admin"
-      render json: {message: "only reporting for student"}
-      return
-    end
-
-    message = {
-            assessment_result_id: res.id,
-            lti_user_id: user_id,
-            lti_context_id: context_id,
-            tc_lti_guid: tc_guid,
-            quiz_id: res.assessment_id,
-            quiz_qti_ident: res.identifier,
-            score: res.score,
-            quiz_type: assessment.kind,
-            attempt: res.attempt
-    }
-
-    message[:question_responses] = res.item_results.map do |ir|
-      {
-              ident: ir.identifier,
-              responses_chosen: ir.answers_chosen.split(","),
-              outcome_guid: ir.outcome_guid,
-              score: ir.score,
-              confidence_level: ir.confidence_level
-      }
-    end
-
     if AnalyticsHelper.enabled?
-      message = AnalyticsHelper.send_result(message)
+      if current_user
+        res = current_user.assessment_results.find(params[:assessment_result_id])
+      else
+        # Probably embedded so no user session
+        res = AssessmentResult.find(params[:assessment_result_id])
+        assessment = res.assessment
+        if assessment.kind == 'summative'
+          render json: {message: "no user for summative"}, status: :forbidden
+          return
+        end
+      end
+
+      message = AnalyticsHelper.send_for_result(res, params)
       render json: {message: message}
     else
       render json: {message: "not configured"}
