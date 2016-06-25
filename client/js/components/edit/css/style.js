@@ -3,6 +3,28 @@ export default new class Style {
 
     this.style = {
       //styles go here
+      heading: {
+        "marginLeft": "10px",
+        "marginBottom": "0",
+        "verticalAlign": "middle",
+        "width": "90%",
+        "color": "white",
+        "fontSize": "18px",
+        "textOverflow": "ellipsis",
+        "whiteSpace": "nowrap",
+        "overflow": "hidden"
+      },
+      deleteButton: {
+        "margin": "5px",
+        "color": "white",
+        "backgroundColor": "#CF0000"
+      },
+      titleBar: {
+        "display": "table",
+        "height": "40px",
+        "width": "100%",
+        "backgroundColor": "#71B889"
+      }
     };
 
   }

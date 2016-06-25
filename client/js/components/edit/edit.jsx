@@ -3,7 +3,7 @@
 import React                         from 'react';
 import Style                         from './css/style';
 import {Accordion, AccordionSection} from './accordion/accordion.js';
-import QuizType                      from './quiz_type/quiz_type.jsx';
+import OutcomeSection                from './outcome_section/outcome_section.jsx';
 
 export default class Edit extends React.Component{
 
@@ -153,19 +153,15 @@ export default class Edit extends React.Component{
         <p>
           {this.state.moduleInstructions}
         </p>
-        <Accordion showAll={false} hTag={'h2'} dividers={false}>
-          {enablingOutcomeSections.map((section, index) => {
-              return (
-                <AccordionSection key={index} title={section.shortTitle}>
-                  <div>
-                    <p>Outcome: {section.longTitle}</p>
-                    <button>Delete Outcome</button>
-                  </div>
-                  <QuizType section={section} />
-                </AccordionSection>
-              )
-            })}
-        </Accordion>
+        <div style={{margin:"0 15px"}}>
+          <Accordion showAll={false} hTag={'h2'} dividers={false}>
+            {enablingOutcomeSections.map((section, index) => {
+                return (
+                  <OutcomeSection section={section} key={index} />
+                )
+              })}
+          </Accordion>
+        </div>
       </div>
     );
   }
