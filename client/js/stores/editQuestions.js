@@ -33,11 +33,11 @@ Dispatcher.register((payload)=>{
   switch (action){
     case Constants.EDIT_ASSESSMENT_LOAD:
       EditStore.setStore(payload.data);
-    break;
+      break;
 
     case Constants.EDIT_ASSESSMENT_DEL_OUTCOME:
       EditStore.delOutcome(payload.data);
-    break;
+      break;
   }
 
   EditStore.emitChange();

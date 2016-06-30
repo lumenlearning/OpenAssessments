@@ -43,6 +43,11 @@ export default {
   REMOVE_MESSAGE: "remove_message",
   CLEAR_MESSAGES: "clear_messages",
 
+  // Edit Assessments
+  EDIT_ASSESSMENT_LOAD: 'edit_assessment_load',
+  EDIT_ASSESSMENT_UPDATE: 'edit_assessment_update',
+  EDIT_ASSESSMENT_DEL_OUTCOME: 'edit assessment_del_outcome',
+
   // settings
   SETTINGS_LOAD: "settings_load",
 

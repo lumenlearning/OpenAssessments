@@ -7,13 +7,12 @@ import Dispatcher  from   "../dispatcher";
 
 export default {
   getQuizQuestions(){
-
+    Api.get(Constants.EDIT_ASSESSMENT_LOAD)
   },
 
-  updateQuizQuestion(){
-
-  },
-
-
+  delOutcome(outcomeGuid){
+    var apiURL = `/outcomes/${outcomeGuid}`;
+    Api.put(Constants.EDIT_ASSESSMENT_DEL_OUTCOME, apiURL);
+  }
 
 }
