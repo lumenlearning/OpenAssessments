@@ -19,11 +19,14 @@ class Api::GradesController < Api::ApiController
       user_assessment = current_user.user_assessments.find_by_id(settings['userAssessmentId'])
     end
 
+    debug_note = "#{request.headers["Authorization"].present?} & #{request.headers["Authorization"] != "Bearer null"}"
     if @lti_launch
       if @lti_launch.assessment_result
         result = @lti_launch.assessment_result
+        result.grade_note = "from lti_launch - #{debug_note}"
       else
         result = assessment.assessment_results.build
+        result.grade_note = "from assessment - #{debug_note}"
         result.user_assessment = user_assessment
         result.lti_launch = @lti_launch
         result.attempt = settings["userAttempts"]
@@ -32,7 +35,9 @@ class Api::GradesController < Api::ApiController
     else
       # No LTI launch, likely an embedded self-check
       result = assessment.assessment_results.build
+      result.grade_note = "no lti_launch - #{debug_note}"
       result.user = current_user
+      result.user_assessment = user_assessment
     end
 
     result.identifier = item_to_grade["identifier"]

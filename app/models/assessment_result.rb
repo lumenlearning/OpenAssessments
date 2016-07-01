@@ -15,7 +15,7 @@ class AssessmentResult < ActiveRecord::Base
   store_accessor :lti_outcome_data, :lis_result_sourcedid, :lis_outcome_service_url,
                  :lis_user_id, :lti_role, :outcome_error_message
 
-  store_accessor :data, :question_ids, :lti_outcome_result
+  store_accessor :data, :question_ids, :lti_outcome_result, :grade_note
 
   scope :by_status_final, -> { where(session_status: 'final') }
 
