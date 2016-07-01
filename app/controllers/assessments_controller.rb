@@ -116,6 +116,10 @@ class AssessmentsController < LtiBaseController
 
     @show_post_message_navigation = params[:ext_post_message_navigation]
 
+    if @assessment_kind != 'summative' && @lti_launch
+      @lti_launch.clear_outcome_data!
+    end
+
     respond_to do |format|
       format.html { render :show, layout: @embedded ? 'assessment' : 'application' }
     end

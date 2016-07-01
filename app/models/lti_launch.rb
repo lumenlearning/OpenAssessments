@@ -27,6 +27,12 @@ class LtiLaunch < ActiveRecord::Base
     self.lis_outcome_service_url = params[:lis_outcome_service_url]
   end
 
+  def clear_outcome_data!
+    self.lis_result_sourcedid = nil
+    self.lis_outcome_service_url = nil
+    self.save
+  end
+
   def has_outcome_data?
     !!(self.lis_result_sourcedid && self.lis_outcome_service_url)
   end
