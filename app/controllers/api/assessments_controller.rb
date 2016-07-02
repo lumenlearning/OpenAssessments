@@ -22,7 +22,9 @@ class Api::AssessmentsController < Api::ApiController
 
   def show
     assessment = Assessment.where(id: params[:id], account: current_account).first
-    validate_token unless assessment.kind == 'formative'
+    unless assessment.kind == 'formative'
+      return unless validate_token
+    end
 
     user_assessment = nil
     if user = current_user
@@ -41,7 +43,7 @@ class Api::AssessmentsController < Api::ApiController
     # If it's a summative quiz the attempts are incremented here instead of UserAttemptsController#update
     # todo: refactor so that all attempts are incremented via the xml fetch? Maybe not because externally hosted xml files.
     if assessment.kind == 'summative'
-      if user_assessment
+      if user_assessment && @lti_launch
         #todo - If not admin return unauthorized error instead of starting quiz?
         for_review = user_assessment.lti_role == 'admin' && params[:for_review]
 
@@ -63,7 +65,7 @@ class Api::AssessmentsController < Api::ApiController
           user_assessment.increment_attempts!
         end
       else
-        render :json => {:error => "Can't validate user_assessment for summative assessment."}, status: :unauthorized
+        render :json => {:error => "Can't take summative without LtiLaunch or UserAssessment."}, status: :unauthorized
         return
       end
     end

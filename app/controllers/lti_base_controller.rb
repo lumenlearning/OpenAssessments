@@ -87,7 +87,7 @@ class LtiBaseController < ApplicationController
     @lti_launch.launch_error_message = $!.message + @message if @lti_launch
     user_not_authorized
   ensure
-    @lti_launch.save if @lti_launch
+    @lti_launch.save! if @lti_launch
   end
 
   def safe_save_email(user)

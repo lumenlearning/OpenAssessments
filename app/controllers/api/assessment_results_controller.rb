@@ -77,9 +77,8 @@ class Api::AssessmentResultsController < Api::ApiController
   def log_progress
     raise "no api user" unless current_user
 
-    if @lti_launch
-      result = @lti_launch.assessment_result
-      result.add_progress!(params[:answers])
+    if @lti_launch && @lti_launch.assessment_result
+      @lti_launch.assessment_result.add_progress!(params[:answers])
       render json: {message: "OK"}
     else
       render json: {message: "No active assessment."}
