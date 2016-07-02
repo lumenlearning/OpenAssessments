@@ -17,7 +17,7 @@ module ApplicationHelper
   end
 
   def jwt_token
-    return unless signed_in?
+    return unless current_user
 
     payload = { user_id: current_user.id }
     if @lti_role == 'admin' && @external_context_id
