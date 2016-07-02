@@ -7,6 +7,7 @@ class Api::GradesController < Api::ApiController
             request.headers["Authorization"] != "Bearer null"
       return unless validate_token
     end
+    debug_note = "launch?: #{!!@lti_launch}"
 
     # store lis stuff in session
     body = JSON.parse(request.body.read)
@@ -18,8 +19,10 @@ class Api::GradesController < Api::ApiController
     if settings['userAssessmentId']
       user_assessment = current_user.user_assessments.find_by_id(settings['userAssessmentId'])
     end
+    if settings['ltiLaunchId']
+      @lti_launch ||= current_user.lti_launches.find_by_id(settings['ltiLaunchId'])
+    end
 
-    debug_note = "#{request.headers["Authorization"].present?} & #{request.headers["Authorization"] != "Bearer null"}"
     if @lti_launch
       if @lti_launch.assessment_result
         result = @lti_launch.assessment_result
