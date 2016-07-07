@@ -40,8 +40,8 @@ export default class Qti{
     var outcome = {
       shortOutcome: "",
       longOutcome: "",
-      outcomeGuid: "",
-    }
+      outcomeGuid: ""
+    };
     for (var i = fields.length - 1; i >= 0; i--) {
       if($(fields[i]).find("fieldlabel").text() == "outcome_guid"){
         outcome.outcomeGuid = $(fields[i]).find("fieldentry").text()
@@ -52,7 +52,7 @@ export default class Qti{
       if($(fields[i]).find("fieldlabel").text() == "outcome_short_title"){
         outcome.shortOutcome = $(fields[i]).find("fieldentry").text()
       }
-    };
+    }
     return outcome;
   }
 
@@ -67,8 +67,9 @@ export default class Qti{
       var outcomes = {
         shortOutcome: "",
         longOutcome: ""
-      }
+      };
       xml.find("fieldentry").map((index, outcome)=>{
+        // todo grabbing by sequence isn't reliable.
         if(index == 2){
           outcomes.shortOutcome = outcome.textContent
         }
@@ -95,6 +96,15 @@ export default class Qti{
         item.question_type = 'multiple_choice_question';
       }
 
+      if(item.question_type == 'mom_embed'){
+        item.momEmbed = {};
+        item.momEmbed.momQuestionId = xml.find("material mat_extension mom_question_id").text();
+        item.momEmbed.momEmbedUrl = xml.find("material mat_extension mom_embed_url").text();
+        item.momEmbed.momJwt = xml.find("material mat_extension mom_jwt").text();
+        item.momEmbed.momDomain = xml.find("material mat_extension mom_domain").text();
+        item.material = "";
+      }
+
       var response_grp = xml.find('response_grp');
       if(response_grp){
         if(response_grp.attr('rcardinality') === 'Multiple'){
@@ -111,14 +121,14 @@ export default class Qti{
 
   static parseCorrect(xml){
     var respconditions = xml.find("respcondition");
-    var correctAnswers = []
+    var correctAnswers = [];
     for (var i=0; i<respconditions.length; i++){
       var condition = $(respconditions[i]);
       if(condition.find('setvar').text() != '0'){
         var answer = {
           id: condition.find('conditionvar > varequal').text(),
           value: condition.find('setvar').text()
-        }
+        };
         if(answer.id == ""){
           answer.id = condition.find('conditionvar > and > varequal').map((index, condition) => {
             condition = $(condition);

@@ -57,7 +57,9 @@ function selectAnswer(item){
     }
   } else if (_items[_itemIndex].question_type == "matching_question"){
     updateMatchingAnswer(item);
-  } 
+  } else if (_items[_itemIndex].question_type == "mom_embed"){
+    _selectedAnswerIds = item;
+  }
 }
 
 function updateMatchingAnswer(item){

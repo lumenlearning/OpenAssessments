@@ -9,6 +9,7 @@ import CheckBox             from "../common/checkbox";
 import MappedImage          from "../common/mapped_image";
 import Matching             from "../common/matching";
 import DragAndDrop          from "../common/drag_and_drop";
+import MomEmbed             from "../common/mom_embed";
 import CommunicationHandler from "../../utils/communication_handler";
 
 export default class UniversalInput extends React.Component{
@@ -138,6 +139,9 @@ export default class UniversalInput extends React.Component{
         items = item.answers.map((answer)=>{
           return <DragAndDrop key={item.id + "_" + answer.id} item={answer} />
         });
+        break;
+      case "mom_embed":
+        items = <MomEmbed item={item} />;
         break;
     }
 
