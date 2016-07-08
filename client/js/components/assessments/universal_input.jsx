@@ -141,7 +141,7 @@ export default class UniversalInput extends React.Component{
         });
         break;
       case "mom_embed":
-        items = <MomEmbed item={item} />;
+        items = <MomEmbed key={item.id} item={item} />;
         break;
     }
 
