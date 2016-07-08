@@ -1,3 +1,5 @@
+require 'jwt'
+
 class AssessmentGrader
 
   attr_reader :questions, :answers, :assessment, :correct_list, :confidence_level_list
@@ -36,8 +38,8 @@ class AssessmentGrader
           total = grade_multiple_choice(xml_index, @answers[index])
         elsif type == "multiple_answers_question"
           total = grade_multiple_answers(xml_index, @answers[index])
-        elsif type == "matching_question"
-          total = grade_matching(@xml_questions[xml_index], @answers[index])
+        elsif type == "mom_embed"
+          total = grade_mom_embed(xml_index, @answers[index])
         end
 
         if total == 1 then @correct_list[index] = true
@@ -104,18 +106,33 @@ class AssessmentGrader
     end
   end
 
-  # Not Currently in Use
-  # def grade_matching(question, answers)
-  #   total = 0
-  #   choices = question.children.xpath("respcondition")
-  #   total_correct = choices.length
-  #   correct = 0
-  #   choices.each_with_index do |choice, index|
-  #     if answers[index] && choice.xpath("conditionvar").xpath("varequal").children.text == answers[index]["answerId"]
-  #       correct_count += 1
-  #     end
-  #   end
-  #   total = correct
-  #   total
-  # end
+  # MOM returns a a JWT signed with the shared secret
+  # This allows us to trust the score even though it goes through the client
+  # If the JWT is invalid we score the answer for 0 points
+  # The JWT's payload looks like:
+  # {
+  #         "id" => 79660,
+  #         "score" => 1,
+  #         "redisplay" => "3766;0;(2,2)",
+  #         "auth" => "secret_lookup_key"
+  # }
+  def grade_mom_embed(xml_index, answer)
+    payload, header = JWT.decode(answer, Rails.application.secrets.mom_secret)
+
+    # Verify that the score is for the designated question
+    if payload["id"] == get_mom_question_id(xml_index)
+      return payload["score"]
+    end
+
+    return 0
+  rescue JWT::DecodeError
+    # The token was invalid
+    return 0
+  end
+
+  def get_mom_question_id(xml_index)
+    question = @xml_questions[xml_index]
+    id = question.children.at_css("material mat_extension mom_question_id").text.strip
+    id.to_i
+  end
 end
