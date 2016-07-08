@@ -46,19 +46,23 @@ function checkAnswer(){
   }
 }
 
-function selectAnswer(item){
-  if(_items[_itemIndex].question_type == "multiple_choice_question"){
-    _selectedAnswerIds = item.id;
-  } else if (_items[_itemIndex].question_type == "multiple_answers_question"){
-    if(_selectedAnswerIds.indexOf(item.id) > -1){
-      _selectedAnswerIds.splice(_selectedAnswerIds.indexOf(item.id), 1);
+function selectAnswer(answer){
+  var item = _items[_itemIndex];
+  if(item.question_type == "multiple_choice_question"){
+    _selectedAnswerIds = answer.id;
+  } else if (item.question_type == "multiple_answers_question"){
+    if(_selectedAnswerIds.indexOf(answer.id) > -1){
+      _selectedAnswerIds.splice(_selectedAnswerIds.indexOf(answer.id), 1);
     } else {
-    _selectedAnswerIds.push(item.id);
+    _selectedAnswerIds.push(answer.id);
     }
-  } else if (_items[_itemIndex].question_type == "matching_question"){
-    updateMatchingAnswer(item);
-  } else if (_items[_itemIndex].question_type == "mom_embed"){
-    _selectedAnswerIds = item;
+  } else if (item.question_type == "matching_question"){
+    updateMatchingAnswer(answer);
+  } else if (item.question_type == "mom_embed"){
+    // Store the chosen seed info and height on the item for redisplay
+    item.momEmbed.jwt = answer.jwt;
+    item.momEmbed.iframeHeight = answer.iframeHeight;
+    _selectedAnswerIds = answer.jwt;
   }
 }
 
@@ -129,6 +133,11 @@ var AssessmentStore = assign({}, StoreCommon, {
 
   selectedAnswerId(){
     return _selectedAnswerIds;
+  },
+
+  hasAnsweredCurrent(){
+    var current = this.selectedAnswerId();
+    return !!(current && current.length > 0);
   },
 
   answerMessageIndex(){

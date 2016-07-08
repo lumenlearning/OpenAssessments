@@ -98,10 +98,11 @@ export default class Qti{
 
       if(item.question_type == 'mom_embed'){
         item.momEmbed = {};
-        item.momEmbed.momQuestionId = xml.find("material mat_extension mom_question_id").text();
-        item.momEmbed.momEmbedUrl = xml.find("material mat_extension mom_embed_url").text();
-        item.momEmbed.momJwt = xml.find("material mat_extension mom_jwt").text();
-        item.momEmbed.momDomain = xml.find("material mat_extension mom_domain").text();
+        item.momEmbed.questionId = xml.find("material mat_extension mom_question_id").text();
+        item.momEmbed.embedUrl = xml.find("material mat_extension mom_embed_url").text();
+        item.momEmbed.jwt = xml.find("material mat_extension mom_jwt").text();
+        item.momEmbed.domain = xml.find("material mat_extension mom_domain").text();
+        item.momEmbed.iframeHeight = null;
         item.material = "";
       }
 

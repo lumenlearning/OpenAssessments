@@ -30,7 +30,7 @@ export default class Item extends BaseComponent{
   confidenceLevelClicked(e, currentIndex){
     e.preventDefault();
 
-    if(AssessmentStore.selectedAnswerId() && AssessmentStore.selectedAnswerId().length > 0){
+    if(AssessmentStore.hasAnsweredCurrent()){
       AssessmentActions.selectConfidenceLevel(e.target.value, currentIndex);
       if(this.props.currentIndex == this.props.questionCount - 1 && this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
         this.submitButtonClicked();

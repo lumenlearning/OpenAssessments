@@ -17,14 +17,21 @@ export default class MomEmbed extends BaseComponent {
   }
 
   render() {
-    var embed = this.state.embedUrl;
-    if(this.state.previousAnswer && this.state.previousAnswer.embedUrl){
-      embed = this.state.previousAnswer.embedUrl;
+    var embedUrl = this.props.item.momEmbed.embedUrl;
+    if(this.props.item.momEmbed.jwt){
+      embedUrl += "&jwt=" + this.props.item.momEmbed.jwt;
+    }
+
+    var height = 150;
+    if(this.props.item.momEmbed.iframeHeight){
+      height = this.props.item.momEmbed.iframeHeight;
+    } else if (this.state.iframeHeight){
+      height = this.state.iframeHeight;
     }
 
     return (
         <div>
-          <iframe ref="momframe" src={embed} height={this.state.iframeHeight} frameborder="0" width="100%" style={{border: 'none'}}></iframe>
+          <iframe ref="momframe" src={embedUrl} height={height} frameborder="0" width="100%" style={{border: 'none'}}></iframe>
           <div onClick={()=>{this.clickyclick()}}>Click</div>
         </div>
     );
@@ -35,16 +42,19 @@ export default class MomEmbed extends BaseComponent {
   }
 
   questionId() {
-    return this.props.item.momEmbed.momQuestionId;
+    return this.props.item.momEmbed.questionId;
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      iframeHeight: null
+    });
   }
 
   componentWillMount() {
     this.setState({
-      embedUrl: this.props.item.momEmbed.momEmbedUrl,
-      previousAnswer: AssessmentStore.studentAnswers(),
-      iframeHeight: 50
+      iframeHeight: null
     });
-
     //update iframe height when getting msg from iframe src.
     window.addEventListener('message', this.messageHandler);//addEventListener
   }
@@ -61,9 +71,9 @@ export default class MomEmbed extends BaseComponent {
   }
 
   messageHandler(e) {
-    //if (!e.origin.match(/https?:\/\/www.myopenmath.com/)) {
-    //  return;
-    //}
+    if (!e.origin.match(/https?:\/\/www.myopenmath.com/)) {
+      return;
+    }
 
     try {
       var message = JSON.parse(e.data);
@@ -73,9 +83,8 @@ export default class MomEmbed extends BaseComponent {
           this.resizeIframe(message.height);
           break;
         case 'lti.ext.mom.updateScore':
-            var newUrl = this.props.item.momEmbed.momEmbedUrl + "&redisplay=" + message.redisplay;
-            var data = {embedUrl: newUrl, score: message.score, jwt: message.jwt};
-            this.setState({previousAnswer: data});
+            // todo check against current this.questionId()?
+            var data = {score: message.score, jwt: message.jwt, iframeHeight: this.state.iframeHeight};
             AssessmentActions.answerSelected(data);
           break;
       }
