@@ -44,9 +44,10 @@ export default {
   CLEAR_MESSAGES: "clear_messages",
 
   // Edit Assessments
-  EDIT_ASSESSMENT_LOAD: 'edit_assessment_load',
-  EDIT_ASSESSMENT_UPDATE: 'edit_assessment_update',
-  EDIT_ASSESSMENT_DEL_OUTCOME: 'edit assessment_del_outcome',
+  ADD_ASSSESSMENT_QUESTION: 'add_assessment_question',
+  UPDATE_ASSESSMENT_QUESTION: 'update_assessment_question',
+  SAVE_ASSESSMENT: 'save_assessment',
+
 
   // settings
   SETTINGS_LOAD: "settings_load",

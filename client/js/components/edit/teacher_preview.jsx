@@ -7,7 +7,7 @@ import ReviewAssessmentActions from "../../actions/review_assessment";
 import ReviewAssessmentStore   from "../../stores/review_assessment";
 import ResultStyles            from "./result_styles.js";
 import CommunicationHandler    from "../../utils/communication_handler";
-import ItemResult           from "./item_result";
+import ItemResult              from "./item_result";
 
 export default class TeacherPreview extends BaseComponent{
 
@@ -55,16 +55,18 @@ export default class TeacherPreview extends BaseComponent{
     var styles = this.getStyles(this.context.theme);
     var itemResults = this.getItemResults();
 
-    return (<div style={styles.assessment}>
-      <div style={styles.assessmentContainer}>
-        <div style={styles.titleBar}>{this.state.assessment ? this.state.assessment.title : ""}</div>
+    console.log("questions",ReviewAssessmentStore.allQuestions());
 
-        <div id="questionsStart" style={styles.resultsStyle}>
-          {itemResults}
+    return (
+      <div style={styles.assessment}>
+        <div style={styles.assessmentContainer}>
+          <div style={styles.titleBar}>{this.state.assessment ? this.state.assessment.title : ""}</div>
+          <div id="questionsStart" style={styles.resultsStyle}>
+            {itemResults}
+          </div>
         </div>
-
       </div>
-    </div>)
+    );
 
     //return <SummativeResult
     //    styles={this.getStyles(this.context.theme)}

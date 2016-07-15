@@ -28,6 +28,29 @@ function parseAssessmentResult(result){
   _assessmentResult = JSON.parse(result);
 }
 
+function loadAssessment(payload){
+  _assessmentState = INVALID;
+  if(payload.data.text){
+    var text = payload.data.text.trim();
+    if(text.length > 0){
+      _assessment = Assessment.parseAssessment(SettingsStore.current(), text);
+      _assessmentXml = text;
+      if( _assessment &&
+        _assessment.sections &&
+        _assessment.sections[0] &&
+        _assessment.sections[0].items){
+        if(_assessment.standard == "qti"){
+          _items = Assessment.getItems(_assessment.sections, -1);
+        } else {
+          _items = _assessment.sections[0].items
+        }
+        _outcomes = Assessment.loadOutcomes(_assessment);
+      }
+      _assessmentState = LOADED;
+    }
+  }
+}
+
 // Extend User Store with EventEmitter to add eventing capabilities
 var ReviewAssessmentStore = assign({}, StoreCommon, {
 
@@ -64,6 +87,7 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
     return _studentAnswers;
   },
   allQuestions(){
+    console.log(_items);
     return _items;
   },
   itemByIdent(ident){
@@ -77,7 +101,7 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
       minutes: 1,
       seconds: 4
     };
-  },
+  }
 
 });
 
@@ -93,26 +117,7 @@ Dispatcher.register(function(payload) {
 
     case Constants.REVIEW_ASSESSMENT_LOADED:
 
-      _assessmentState = INVALID;
-      if(payload.data.text){
-        var text = payload.data.text.trim();
-        if(text.length > 0){
-          _assessment = Assessment.parseAssessment(SettingsStore.current(), text);
-          _assessmentXml = text;
-          if( _assessment && 
-              _assessment.sections && 
-              _assessment.sections[0] &&
-              _assessment.sections[0].items){
-            if(_assessment.standard == "qti"){
-              _items = Assessment.getItems(_assessment.sections, -1);
-            } else {
-              _items = _assessment.sections[0].items
-            }
-            _outcomes = Assessment.loadOutcomes(_assessment);
-          }
-          _assessmentState = LOADED;
-        }
-      }
+      loadAssessment(payload);
       break;
 
     case Constants.REVIEW_RESULT_LOAD_PENDING:
@@ -124,6 +129,27 @@ Dispatcher.register(function(payload) {
       _assessmentResultState = LOADED;
 
       break;
+
+    case Constants.ADD_ASSSESSMENT_QUESTION:
+      var question = payload.data;
+
+      _items.push(question);
+      break;
+
+    case Constants.UPDATE_ASSESSMENT_QUESTION:
+      var question = payload.data;
+
+      _items.forEach((item, index)=>{
+        if(item.id === question.id){
+          _items[index] = question;
+        }
+      });
+
+      break;
+
+    case Constants.SAVE_ASSESSMENT:
+      loadAssessment(payload);
+      break
 
     default:
       return true;
