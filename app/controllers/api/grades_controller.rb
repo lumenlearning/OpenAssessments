@@ -95,6 +95,7 @@ private
         item = assessment.items.build
         item.identifier = question["id"]
         item.question_text = question["material"]
+        item.base_type = question["type"]
         item.save!
 end
 

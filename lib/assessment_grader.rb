@@ -25,20 +25,22 @@ class AssessmentGrader
       @xml_index_list.push(xml_index)
       if question["id"] == @xml_questions[xml_index].attributes["ident"].value
         total = 0
+        
         # find the question type
-        type = @xml_questions[xml_index].children.xpath("qtimetadata").children.xpath("fieldentry").children.text
+        # todo - don't grab type by order of metadata fields
+        question["type"] = @xml_questions[xml_index].children.xpath("qtimetadata").children.xpath("fieldentry").children.text
         # if the question type gets some wierd stuff if means that the assessment has outcomes so we need
         # to get the question data a little differently
-        if type != "multiple_choice_question" && type != "multiple_answers_question" && type != "matching_question"
-          type = @xml_questions[xml_index].children.xpath("qtimetadata").children.xpath("fieldentry").children.first.text
+        if question["type"] != "multiple_choice_question" && question["type"] != "multiple_answers_question" && question["type"] != "matching_question"
+          question["type"] = @xml_questions[xml_index].children.xpath("qtimetadata").children.xpath("fieldentry").children.first.text
         end
 
         # grade the question based off of question type
-        if type == "multiple_choice_question"
+        if question["type"] == "multiple_choice_question"
           total = grade_multiple_choice(xml_index, @answers[index])
-        elsif type == "multiple_answers_question"
+        elsif question["type"] == "multiple_answers_question"
           total = grade_multiple_answers(xml_index, @answers[index])
-        elsif type == "mom_embed"
+        elsif question["type"] == "mom_embed"
           total = grade_mom_embed(xml_index, @answers[index])
         end
 

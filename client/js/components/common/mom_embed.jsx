@@ -18,7 +18,9 @@ export default class MomEmbed extends BaseComponent {
 
   render() {
     var embedUrl = this.props.item.momEmbed.embedUrl;
-    if(this.props.item.momEmbed.jwt){
+    if(this.props.redisplayJWT) {
+      embedUrl += "&jwt=" + this.props.redisplayJWT;
+    } else if(this.props.item.momEmbed.jwt){
       embedUrl += "&jwt=" + this.props.item.momEmbed.jwt;
     }
 

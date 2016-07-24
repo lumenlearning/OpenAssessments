@@ -141,7 +141,7 @@ export default class UniversalInput extends React.Component{
         });
         break;
       case "mom_embed":
-        items = <MomEmbed key={item.id} item={item} />;
+        items = <MomEmbed key={item.id} item={item} redisplayJWT={this.props.chosen ? this.props.chosen[0] : null} />;
         break;
     }
 

@@ -60,10 +60,10 @@ class Api::AssessmentResultsController < Api::ApiController
           'partial'
       end
     }
-    message[:question_responses] = ar.item_results.order(:sequence_index).map do |ir|
+    message[:question_responses] = ar.item_results.order(:sequence_index).includes(:item).map do |ir|
       {
               ident: ir.identifier,
-              responses_chosen: ir.answers_chosen.split(","),
+              responses_chosen: ir.processed_answers_chosen,
               score: ir.score,
               correct: correct_map.call(ir.score),
               confidence_level: confidence_map[ir.confidence_level]
