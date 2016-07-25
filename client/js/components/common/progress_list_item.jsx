@@ -22,8 +22,10 @@ export default class ProgressListItem extends BaseComponent{
 
   selectQuestion(){
     if(AssessmentStore.isStarted()){
-      AssessmentActions.selectQuestion(this.props.index);
-      this.props.toggle();
+      let that = this;
+      this.props.selectQuestion(this.props.index, function(){
+        that.props.toggle();
+      });
     }
   }
 
@@ -58,7 +60,7 @@ export default class ProgressListItem extends BaseComponent{
 }
 
 ProgressListItem.propTypes = {
-
+ selectQuestion   : React.PropTypes.func.isRequired,
 };
 
 ProgressListItem.contextTypes = {

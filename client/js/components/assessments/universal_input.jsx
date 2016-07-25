@@ -141,7 +141,7 @@ export default class UniversalInput extends React.Component{
         });
         break;
       case "mom_embed":
-        items = <MomEmbed key={item.id} item={item} redisplayJWT={this.props.chosen ? this.props.chosen[0] : null} />;
+        items = <MomEmbed key={item.id} item={item} redisplayJWT={this.props.chosen ? this.props.chosen[0] : null} registerGradingCallback={this.props.registerGradingCallback} />;
         break;
     }
 
@@ -171,7 +171,8 @@ export default class UniversalInput extends React.Component{
 }
 UniversalInput.propTypes = {
   item: React.PropTypes.object.isRequired,
-  isResult: React.PropTypes.bool
+  isResult: React.PropTypes.bool,
+  registerGradingCallback: React.PropTypes.func.optional
 };
 
 UniversalInput.contextTypes = {

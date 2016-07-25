@@ -13,7 +13,7 @@ export default class MomEmbed extends BaseComponent {
 
   constructor(props, context) {
     super(props);
-    this._bind("messageHandler", "clickyclick");
+    this._bind("messageHandler", "gradeQuestion");
   }
 
   render() {
@@ -34,12 +34,15 @@ export default class MomEmbed extends BaseComponent {
     return (
         <div>
           <iframe ref="momframe" src={embedUrl} height={height} frameborder="0" width="100%" style={{border: 'none'}}></iframe>
-          <div onClick={()=>{this.clickyclick()}}>Click</div>
         </div>
     );
   }
 
-  clickyclick() {
+  gradeQuestion(callback=null){
+    this.setState({
+      doneGradingCallback: callback
+    });
+
     this.refs.momframe.getDOMNode().contentWindow.postMessage('submit', '*');
   }
 
@@ -47,21 +50,21 @@ export default class MomEmbed extends BaseComponent {
     return this.props.item.momEmbed.questionId;
   }
 
-  componentWillReceiveProps(nextProps){
-    this.setState({
-      iframeHeight: null
-    });
-  }
-
   componentWillMount() {
     this.setState({
-      iframeHeight: null
+      iframeHeight: null,
+      doneGradingCallback: null
     });
+
+    if(this.props.registerGradingCallback){
+      this.props.registerGradingCallback(this.gradeQuestion)
+    }
     //update iframe height when getting msg from iframe src.
     window.addEventListener('message', this.messageHandler);//addEventListener
   }
 
   componentWillUnmount() {
+    super.componentWillUnmount();
     window.removeEventListener('message', this.messageHandler);
   }
 
@@ -90,18 +93,23 @@ export default class MomEmbed extends BaseComponent {
           if (message.id == this.questionId()) {
             var data = {score: message.score, jwt: message.jwt, iframeHeight: this.state.iframeHeight};
             AssessmentActions.answerSelected(data);
+            if(this.state.doneGradingCallback){
+              this.state.doneGradingCallback();
+            }
           }
           break;
       }
 
     } catch (err) {
-      console.log('invalid message received from ', e.origin);
+      console.log('invalid message received from ', e.origin, e.data);
+      console.log(err);
     }
   }
 }
 
 MomEmbed.propTypes = {
   item: React.PropTypes.object.isRequired,
+  registerGradingCallback: React.PropTypes.func.optional
 };
 
 MomEmbed.contextTypes = {

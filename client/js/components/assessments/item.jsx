@@ -10,54 +10,60 @@ import AssessmentStore    from "../../stores/assessment";
 export default class Item extends BaseComponent{
   constructor(){
     super();
-    this._bind("getConfidenceLevels", "confidenceLevelClicked", "nextButtonClicked", "previousButtonClicked", "getPreviousButton", "getNextButton", "getStyles");
+    this._bind("getConfidenceLevels", "confidenceLevelClicked", "nextButtonClicked", "previousButtonClicked", "getPreviousButton", "getNextButton", "getStyles", "clearShowMessage");
   }
 
   nextButtonClicked(e){
     e.preventDefault();
     this.setState({unAnsweredQuestions: null});
-    AssessmentActions.nextQuestion();
-    this.setState({showMessage: false});
+    this.props.nextQuestion(this.clearShowMessage);
   }
 
   previousButtonClicked(e){
     e.preventDefault();
     this.setState({unAnsweredQuestions: null});
-    AssessmentActions.previousQuestion();
+    this.props.previousQuestion(this.clearShowMessage);
+  }
+
+  clearShowMessage(){
     this.setState({showMessage: false});
   }
 
-  confidenceLevelClicked(e, currentIndex){
+  confidenceLevelClicked(e, val, currentIndex){
     e.preventDefault();
 
-    if(AssessmentStore.hasAnsweredCurrent()){
-      AssessmentActions.selectConfidenceLevel(e.target.value, currentIndex);
-      if(this.props.currentIndex == this.props.questionCount - 1 && this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
-        this.submitButtonClicked();
+    let that = this;
+    this.props.selectQuestion(this.props.currentIndex, function(){
+      if(AssessmentStore.hasAnsweredCurrent()){
+        AssessmentActions.selectConfidenceLevel(val, currentIndex);
+        if(that.props.currentIndex == that.props.questionCount - 1 && that.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
+          that.submitButtonClicked();
+        } else {
+          AssessmentActions.nextQuestion();
+        }
       } else {
-        AssessmentActions.nextQuestion();
-        this.setState({showMessage: false});
+        that.setState({showMessage: true});
       }
-    } else {
-      this.setState({showMessage: true});
-    }
-    if(document.getElementById("focus")){document.getElementById("focus").focus();}
+      if(document.getElementById("focus")){document.getElementById("focus").focus();}
+    });
   }
 
   submitButtonClicked(e){
     e && e.preventDefault();
-    AssessmentActions.selectQuestion(this.props.currentIndex);
-    var complete = this.checkCompletion();
-    if(complete === true){
-      window.onbeforeunload = null;
-      AssessmentActions.submitAssessment(this.props.assessment.id, this.props.assessment.assessmentId, this.props.allQuestions, AssessmentStore.allStudentAnswers(), this.props.settings, this.props.outcomes);
-    }
-    else {
-      this.setState({unAnsweredQuestions: complete});
-    }
+    let that = this;
+    this.props.selectQuestion(this.props.currentIndex, function(){
+      var complete = Item.checkCompletion();
+      if(complete === true){
+        window.onbeforeunload = null;
+        AssessmentActions.submitAssessment(that.props.assessment.id, that.props.assessment.assessmentId, that.props.allQuestions, AssessmentStore.allStudentAnswers(), that.props.settings, that.props.outcomes);
+      }
+      else {
+        that.setState({unAnsweredQuestions: complete});
+      }
+    });
   }
 
-  checkCompletion(){
+  static checkCompletion(){
     var questionsNotAnswered = [];
     var answers = AssessmentStore.allStudentAnswers();
     for (var i = 0; i < answers.length; i++) {
@@ -65,7 +71,7 @@ export default class Item extends BaseComponent{
 
         questionsNotAnswered.push(i+1);
       }
-    };
+    }
     if(questionsNotAnswered.length > 0){
       return questionsNotAnswered;
     }
@@ -238,9 +244,9 @@ export default class Item extends BaseComponent{
       var levelMessage = <div style={{marginBottom: "10px"}}><b>How sure are you of your answer? Click below to move forward.</b></div>;
       return    (<div className="confidence_wrapper" style={styles.confidenceWrapper}>
                   {levelMessage}
-                  <input type="button" style={styles.maybeButton}className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentIndex) }}/>
-                  <input type="button" style={{...styles.margin, ...styles.probablyButton}} className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentIndex) }}/>
-                  <input type="button" style={{...styles.margin, ...styles.definitelyButton}} className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentIndex) }}/>
+                  <input type="button" style={styles.maybeButton}className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, "Just A Guess", this.props.currentIndex) }}/>
+                  <input type="button" style={{...styles.margin, ...styles.probablyButton}} className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Pretty Sure", this.props.currentIndex) }}/>
+                  <input type="button" style={{...styles.margin, ...styles.definitelyButton}} className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Very Sure", this.props.currentIndex) }}/>
                 </div>
                 );
     } /*else {
@@ -371,7 +377,7 @@ export default class Item extends BaseComponent{
                     }}>
                     </div>
                   </div>
-                  <UniversalInput item={this.props.question} isResult={false}/>
+                  <UniversalInput item={this.props.question} isResult={false} registerGradingCallback={this.props.registerGradingCallback}/>
                 </div>
                 <div className="row">
                   <div className="col-md-5 col-sm-6 col-xs-8" >
@@ -402,7 +408,11 @@ Item.propTypes = {
   questionCount    : React.PropTypes.number.isRequired,
   messageIndex     : React.PropTypes.number.isRequired,
   confidenceLevels : React.PropTypes.bool.isRequired,
-  outcomes         : React.PropTypes.object
+  outcomes         : React.PropTypes.object,
+  previousQuestion : React.PropTypes.func.isRequired,
+  nextQuestion     : React.PropTypes.func.isRequired,
+  selectQuestion   : React.PropTypes.func.isRequired,
+  registerGradingCallback : React.PropTypes.func.isRequired
 };
 
 Item.contextTypes = {
