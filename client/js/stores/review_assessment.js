@@ -49,6 +49,8 @@ function loadAssessment(payload){
       _assessmentState = LOADED;
     }
   }
+
+  //console.log("ITEMS:", _items, payload.data.text);
 }
 
 // Extend User Store with EventEmitter to add eventing capabilities
@@ -87,7 +89,7 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
     return _studentAnswers;
   },
   allQuestions(){
-    console.log(_items);
+    console.log("ZETAS",_items);
     return _items;
   },
   itemByIdent(ident){
@@ -125,7 +127,7 @@ Dispatcher.register(function(payload) {
       break;
 
     case Constants.REVIEW_RESULT_LOADED:
-        parseAssessmentResult(payload.data.text);
+      parseAssessmentResult(payload.data.text);
       _assessmentResultState = LOADED;
 
       break;

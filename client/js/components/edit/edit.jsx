@@ -1,141 +1,40 @@
 "use strict";
 
-import React                         from 'react';
-import Style                         from './css/style';
-import {Accordion, AccordionSection} from './accordion/accordion.js';
-import OutcomeSection                from './outcome_section/outcome_section.jsx';
+import React                          from 'react';
+import BaseComponent                  from '../base_component.jsx';
+import Style                          from './css/style';
+import {Accordion, AccordionSection}  from './accordion/accordion.js';
+import ReviewAssessmentActions        from "../../actions/review_assessment";
+import ReviewAssessmentStore          from "../../stores/review_assessment";
+import SettingsStore                  from '../../stores/settings.js';
 
-export default class Edit extends React.Component{
+import Question                       from './question/question.jsx';
+import OutcomeSection                 from './outcome_section/outcome_section.jsx';
+import QuestionBlock                  from './question_block/question_block.jsx';
+import QuestionInterface              from './question_interface/question_interface.jsx';
 
-  constructor(props, state) {
-    super(props, state);
+export default class Edit extends BaseComponent{
 
-    this.state = {
-      moduleName: "Macroeconomics",
-      moduleInstructions: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam varius enim ut dapibus congue. Duis ante justo, mollis quis neque ut, tempus mollis diam. Ut commodo quis neque ut sollicitudin. Aenean molestie tristique blandit. Quisque id orci in sem porttitor condimentum. Praesent nulla diam, sodales a sagittis non, malesuada non elit. Duis consectetur varius ligula, vitae dignissim nunc ultrices vitae. Morbi leo tortor, scelerisque in euismod id, scelerisque faucibus nunc. Ut lacinia tincidunt urna id tincidunt. Nulla sapien sem, molestie pulvinar pellentesque in, dignissim sed mi. In eleifend eu nisl id tincidunt. Fusce imperdiet mollis sollicitudin.",
-      enablingOutcomes:[
-        {
-          shortTitle: 'Enabling Outcome1 Short Title',
-          longTitle: 'Enabling Outcome1 Long Title of Longing and Longly Sentences',
-          quizTypes:[
-            {
-              type: 'Show What You Know',
-              questions:[
-                {
-                  title: "What is a question?",
-                  answers:[
-                    {
-                      correct: true,
-                      option: "You just asked one.",
-                      feedback: "Correct! Well done, it seems you know what a question is"
-                    },
+  constructor(props, context) {
+    super(props, context);
+    this.stores = [ReviewAssessmentStore];
+    console.log("DEFAULT SETTINGS:", window.DEFAULT_SETTINGS);
 
-                  ],
-                  hint: "NO HINT FOR YOU",
-                  thirdLvlOutcome: {}
-                },
-              ]
-            },
-            {
-              type: 'Self Check',
-              questions:[
-                {
-                  title: "Why is a raven like a writing desk?",
-                  answers:[
-                    {
-                      correct: true,
-                      option: "You've gone mad.  But it's okay.  We're all mad here...",
-                      feedback: "Correct! Well done, you seem to know stuff!"
-                    },
+    if(!ReviewAssessmentStore.isLoaded() && !ReviewAssessmentStore.isLoading()){
+      console.log("load assessment!");
+      ReviewAssessmentActions.loadAssessment(window.DEFAULT_SETTINGS);
+    }
 
-                  ],
-                  hint: "Ravens aren't like writing desks. Rather, writing desks are like ravens.",
-                  thirdLvlOutcome: {}
-                },
-              ]
-            },
-            {
-              type: 'Quiz',
-              questions:[
-                {
-                  title: "Are you a wizard?",
-                  answers:[
-                    {
-                      correct: true,
-                      option: "Yes.",
-                      feedback: "Correct!  You're a wizard 'arry!"
-                    },
+    this.state = this.getState();
+  }
 
-                  ],
-                  hint: "If you've talked to snakes recently, then yes.",
-                  thirdLvlOutcome: {}
-                },
-              ]
-            },
-          ],
-        },
-        {
-          shortTitle: 'Enabling Outcome2 Short Title',
-          longTitle: 'Enabling Outcome2 Long Title of Longing and Longly Sentences',
-          quizTypes:[
-            {
-              type: 'Show What You Know',
-              questions:[
-                {
-                  title: "What is a question?",
-                  answers:[
-                    {
-                      correct: true,
-                      option: "You just asked one.",
-                      feedback: "Correct! Well done, it seems you know what a question is"
-                    },
-
-                  ],
-                  hint: "NO HINT FOR YOU",
-                  thirdLvlOutcome: {}
-                },
-              ]
-            },
-            {
-              type: 'Self Check',
-              questions:[
-                {
-                  title: "Why is a raven like a writing desk?",
-                  answers:[
-                    {
-                      correct: true,
-                      option: "You've gone mad.  But it's okay.  We're all mad here...",
-                      feedback: "Correct! Well done, you seem to know stuff!"
-                    },
-
-                  ],
-                  hint: "Ravens aren't like writing desks. Rather, writing desks are like ravens.",
-                  thirdLvlOutcome: {}
-                },
-              ]
-            },
-            {
-              type: 'Quiz',
-              questions:[
-                {
-                  title: "Are you a wizard?",
-                  answers:[
-                    {
-                      correct: true,
-                      option: "Yes.",
-                      feedback: "Correct!  You're a wizard 'arry!"
-                    },
-
-                  ],
-                  hint: "If you've talked to snakes recently, then yes.",
-                  thirdLvlOutcome: {}
-                },
-              ]
-            },
-          ],
-        },
-
-      ]
+  getState(){
+    return {
+      questions        : ReviewAssessmentStore.allQuestions(),
+      outcomes         : ReviewAssessmentStore.outcomes(),
+      settings         : SettingsStore.current(),
+      assessment       : ReviewAssessmentStore.current(),
+      newQuestion      : false,
     }
   }
 
@@ -147,26 +46,38 @@ export default class Edit extends React.Component{
     let enablingOutcomeSections = this.state.enablingOutcomes;
     let style = Style.styles();
 
+    console.log("STATE:", this.state);
+    let title = typeof this.state.assessment == 'undefined' || this.state.assessment == null ? '' : this.state.assessment.title;
+
     return (
-      <div style={{padding:"15px"}}>
-        <h1>Question Bank for {this.state.moduleName} Module</h1>
-        <p>
-          {this.state.moduleInstructions}
-        </p>
-        <div style={{margin:"0 15px"}}>
-          <Accordion showAll={false} hTag={'h2'} dividers={false}>
-            {enablingOutcomeSections.map((section, index) => {
-                return (
-                  <OutcomeSection section={section} key={index} />
-                )
-              })}
-          </Accordion>
+      <div className="editQuizWrapper" style={style.editQuizWrapper}>
+        <div className="eqHeader" style={style.eqHeader} >
+          <div className="eqTitle" style={style.eqTitle} >
+            <h2 style={style.eqH2Title} >{title}</h2>
+          </div>
+          <div className="eqNewQuestion" style={style.eqNewQuestion} >
+            <button className='btn btn-sm' onClick={this.handleAddQuestion} style={style.addQuestionBtn} >Add Question</button>
+          </div>
         </div>
+        <ul className="eqContent" style={{listStyleType: 'none', padding:'40px'}}>
+          {this.state.questions.map((question, index)=>{
+
+            return (
+              <Question question={question} />
+            )
+          })
+          }
+        </ul>
       </div>
     );
   }
 
   /*CUSTOM HANDLER FUNCTIONS*/
+  handleAddQuestion(e){
+    this.setState({
+      newQuestion: true
+    });
+  }
 
   /*CUSTOM FUNCTIONS*/
 };

@@ -3,6 +3,32 @@ export default new class Style {
 
     this.style = {
       //styles go here
+      editQuizWrapper:{
+
+      },
+      eqHeader:{
+        backgroundColor:'#71B889',
+        padding: '0px 40px'
+      },
+      eqTitle:{
+        display: 'inline-block'
+      },
+      eqH2Title:{
+        color: 'white'
+      },
+      eqNewQuestion:{
+        display: 'inline-block',
+        float: 'right',
+        margin: '15px 0'
+      },
+      addQuestionBtn:{
+        border:'transparent',
+        backgroundColor:'#3299bb',
+        color:'#fff',
+        minWidth:'150px',
+        margin:'3px 2px',
+      },
+
       heading: {
         "marginLeft": "10px",
         "marginBottom": "0",
