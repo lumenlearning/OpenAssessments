@@ -7,12 +7,13 @@ export default class Qti{
 
     var fromXml = (xml) => {
       xml = $(xml);
+      var items = this.parseItems(xml);
       return {
         id       : xml.attr('ident'),
         standard : 'qti',
         xml      : xml,
-        outcome  : this.parseOutcome(xml),
-        items    : this.parseItems(xml)
+        outcome  : items[0] ? items[0].outcomes : {},
+        items    : items
       };
     };
 
@@ -30,13 +31,9 @@ export default class Qti{
 
   }
 
-  static parseOutcome(xml){
-    xml = $(xml);
-    if(xml.attr("ident") == "root_section"){
-      return "root section";
-    }
-    var item = xml.find("item")[0];
-    var fields = $(item).find("qtimetadatafield");
+  static parseOutcome(item){
+    item = $(item);
+    var fields = item.find("qtimetadatafield");
     var outcome = {
       shortOutcome: "",
       longOutcome: "",
@@ -58,30 +55,18 @@ export default class Qti{
 
   static parseItems(xml){
 
-    var fromXml = (xml) => {
-      xml = $(xml);
+    var fromXml = (xml_raw) => {
+      xml = $(xml_raw);
 
       var objectives = xml.find('objectives matref').map((index, item) => { 
         return $(item).attr('linkrefid'); 
       });
-      var outcomes = {
-        shortOutcome: "",
-        longOutcome: ""
-      };
-      xml.find("fieldentry").map((index, outcome)=>{
-        // todo grabbing by sequence isn't reliable.
-        if(index == 2){
-          outcomes.shortOutcome = outcome.textContent
-        }
-        if(index == 3){
-          outcomes.longOutcome = outcome.textContent
-        }
-      });
+
       var item = {
         id         : xml.attr('ident'),
         title      : xml.attr('title'),
         objectives : objectives,
-        outcomes   : outcomes,
+        outcomes   : this.parseOutcome(xml),
         xml        : xml,
         material   : this.material(xml),
         answers    : this.parseAnswers(xml),

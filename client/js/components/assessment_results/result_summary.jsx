@@ -26,41 +26,23 @@ export default class ResultSummary extends React.Component{
   }
 
   getOutcomeLists(){
-    var lists = {
-      positiveList: [],
-      negativeList: []
-    };
-    var sectionIndex = 0;
-    var perSecCount = 0;
-    var correctCount = 0;
+    var positiveList = _.clone(this.state.outcomes);
+    var negativeList = [];
     var correctList = this.state.assessmentResult.correct_list;
-    for(var i = 0; i < correctList.length; i++){
-      //make sure to check to see if the amount of questions per section is less the ammount chosen per section
-      var correct = correctList[i];
-      perSecCount++;
 
-      if(!correct || correct == "partial"){
-        lists.negativeList.push(this.state.outcomes[sectionIndex]);
-        i += (this.state.settings.perSec - perSecCount);
-        sectionIndex++;
-        perSecCount = 0;
-        continue;
-      } else {
-        correctCount++;
-        if(correctCount == this.state.settings.perSec || correctCount == this.state.assessment.sections[sectionIndex].items.length){
-          lists.positiveList.push(this.state.outcomes[sectionIndex]);
-          correctCount = 0;
+    AssessmentStore.allQuestions().forEach((question, index) => {
+      if (!correctList[index] || correctList[index] == "partial") {
+        if (question.outcomes) {
+          negativeList = negativeList.concat(_.filter(positiveList, 'outcomeGuid', question.outcomes.outcomeGuid));
+          positiveList = _.reject(positiveList, 'outcomeGuid', question.outcomes.outcomeGuid);
         }
       }
+    });
 
-      if(perSecCount == this.state.settings.perSec || perSecCount == this.state.assessment.sections[sectionIndex].items.length){
-        sectionIndex++;
-        correctCount = 0;
-        perSecCount = 0;
-      }
-    }
-
-    return lists;
+    return {
+      positiveList: positiveList,
+      negativeList: negativeList
+    };
   }
 
   getReviewOutcomeList() {
