@@ -58,6 +58,7 @@ export default class Question extends React.Component{
                  onClick={this.handleDuplicate}
                  onMouseIn={}
                  onMouseOut={}
+                 data-hoverType
                  title='Duplicate'
                  alt="Duplicate"
               />
@@ -74,6 +75,7 @@ export default class Question extends React.Component{
                  onClick={this.handleDelete}
                  onMouseIn={}
                  onMouseOut={}
+                 data-hoverType='delete'
                  title='Delete'
                  alt="Delete"
               />
