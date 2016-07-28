@@ -21,8 +21,7 @@ export default class Edit extends BaseComponent{
     console.log("DEFAULT SETTINGS:", window.DEFAULT_SETTINGS);
 
     if(!ReviewAssessmentStore.isLoaded() && !ReviewAssessmentStore.isLoading()){
-      console.log("load assessment!");
-      ReviewAssessmentActions.loadAssessment(window.DEFAULT_SETTINGS);
+      ReviewAssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, this.props.params["assessmentId"]);
     }
 
     this.state = this.getState();

@@ -1,15 +1,15 @@
 <div id="assessment-container"></div>
-<%= webpack_manifest_script %>
-<%= webpack_bundle_tag 'app' %>
 
 <script type="text/javascript">
-  window.location.href = "#/edit/<%= @assessment_id %>";
   window.DEFAULT_SETTINGS = {
     apiUrl: '<%= application_base_url %>',
     csrfToken: '<%= form_authenticity_token %>',
     jwt: '<%= jwt_token %>',
   };
+  window.location.href = "#/edit/<%= @assessment_id %>";
 </script>
 
+<%= webpack_manifest_script %>
+<%= webpack_bundle_tag 'app' %>
 
 <%= javascript_include_tag "open_comm.js" %>

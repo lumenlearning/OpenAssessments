@@ -6,10 +6,18 @@ import Dispatcher  from   "../dispatcher";
 
 export default {
 
-  loadAssessment(settings){
+  loadAssessment(settings, assessmentId=null){
     Dispatcher.dispatch({ action: Constants.REVIEW_ASSESSMENT_LOAD_PENDING });
-    console.log("SRC URL:", settings.srcUrl);
-    var url = settings.srcUrl;
+    var url = null;
+
+    if(settings.srcUrl){
+      url = settings.srcUrl;
+    } else if(assessmentId) {
+      url = settings.apiUrl + "api/assessments/" + assessmentId + ".xml";
+    } else{
+      console.log("DEATH!");
+    }
+
     if(url.indexOf("?") > -1) {
       url = url+ "&for_review=1"
     } else {
