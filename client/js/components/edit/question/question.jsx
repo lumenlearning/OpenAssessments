@@ -23,11 +23,16 @@ export default class Question extends React.Component{
       question: this.props.question || null,
       editMode: false,
       minimize: false,
-    }
+      hover:{
+        "copy": false,
+        "edit": false,
+        "delete": false,
+      }
+    };
 
     //Rebindings
     this.toggleEdit       = this.toggleEdit.bind(this);
-    this.toggleMinimize   = this.toggleMinimize.bind(this);
+    this.handleDuplicate   = this.handleDuplicate.bind(this);
     this.handleDelete     = this.handleDelete.bind(this);
   }//constructor
 
@@ -47,9 +52,31 @@ export default class Question extends React.Component{
       <li style={style.questionItem} >
         <div className="questionHeader" style={style.questionHeader}>
           <div className="questionToolbar" style={style.questionToolbar}>
-            <img className='questionToolBtns' style={style.questionToolBtns} src="/assets/copy-64.png" alt="Duplicate"/>
-            <img className='questionToolBtns' style={style.questionToolBtns} src="/assets/pencil-64.png" alt="Edit"/>
-            <img className='questionToolBtns' style={style.questionToolBtns} src="/assets/trash-64.png" alt="Delete"/>
+            <img className='questionToolBtns'
+                 style={style.questionToolBtns}
+                 src="/assets/copy-64-white.png"
+                 onClick={this.handleDuplicate}
+                 onMouseIn={}
+                 onMouseOut={}
+                 title='Duplicate'
+                 alt="Duplicate"
+              />
+            <img className='questionToolBtns'
+                 style={style.questionToolBtns}
+                 src="/assets/pencil-64-white.png"
+                 onClick={this.toggleEdit}
+                 title='Edit'
+                 alt="Edit"
+              />
+            <img className='questionToolBtns'
+                 style={style.questionToolBtns}
+                 src="/assets/trash-64-white.png"
+                 onClick={this.handleDelete}
+                 onMouseIn={}
+                 onMouseOut={}
+                 title='Delete'
+                 alt="Delete"
+              />
           </div>
         </div>
         <div className="questionContent">
@@ -61,15 +88,18 @@ export default class Question extends React.Component{
 
   /*CUSTOM HANDLER FUNCTIONS*/
   toggleEdit(e){
+
+    if(this.state.editMode){
+      //Save Question to store here.
+    }
+
     this.setState({
       editMode: !this.state.editMode
     });
   }
 
-  toggleMinimize(e){
-    this.setState({
-      minimize: !this.state.minimize
-    });
+  handleDuplicate(e){
+
   }
 
   handleDelete(e){

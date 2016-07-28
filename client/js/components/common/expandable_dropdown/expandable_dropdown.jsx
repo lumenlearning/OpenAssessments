@@ -3,30 +3,38 @@
 import React from "react";
 import Style from "./css/style.js";
 
-export default class QuestionBlock extends React.Component{
+export default class ExpandableDropDown extends React.Component{
 
   constructor(props, state) {
     super(props, state);
 
     this.state = {
-      expanded: this.props.isExpanded || false
-    }
+      expanded: this.props.isExpanded || false,
+      mounted: false
+    };
 
     this.toggleExpand   = this.toggleExpand.bind(this);
     this.findMaxHeight  = this.findMaxHeight.bind(this);
   }
 
-  componentWillMount() {
-
-  }
 
   render() {
+    console.log("IS EXPANDED:", this.state.expanded);
     let style         = Style.styles();
-    let contentStyle  = this.state.expanded ?  _.merge({}, style.expandableContent, {maxHeight: this.findMaxHeight()}) : style.expandableContent;
     let status        = this.state.expanded ? "Minimize" : "Expand";
+    let contentStyle;
 
-    this.state.expanded ? console.log('scroll height:', this.findMaxHeight()) : console.log('nun');
+    if(this.props.isExpanded && !this.state.mounted){
+      contentStyle = style.expandableContent;
+    }
+    else if((this.state.expanded || this.props.isExpanded) && this.state.mounted){
+      contentStyle = _.merge({}, style.expandableContent, {maxHeight: this.findMaxHeight()});
+    }
+    else{
+      contentStyle = style.expandableContent;
+    }
 
+//console.log('EXPANDABLE MAX HEIGHT:', this.findMaxHeight());
     return (
       <div style={style.expandable}>
         <div style={contentStyle} ref={'expandableContent'} >
@@ -38,6 +46,12 @@ export default class QuestionBlock extends React.Component{
       </div>
     )
 
+  }
+
+  componentDidMount(){
+    this.setState({
+      mounted: true
+    });
   }
 
   /*EVENT HANDLERS*/
@@ -58,4 +72,8 @@ export default class QuestionBlock extends React.Component{
     return content.scrollHeight+'px';
   }
 
+}
+
+ExpandableDropDown.propTypes = {
+  isExpanded: React.PropTypes.bool
 }

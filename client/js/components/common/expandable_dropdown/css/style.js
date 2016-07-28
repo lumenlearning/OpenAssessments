@@ -5,7 +5,8 @@ export default new class Style {
       //styles go here
       expandable:{},
       expandableBtn:{
-        cursor: 'pointer'
+        cursor: 'pointer',
+        marginTop: '15px'
       },
       expandableTxt:{
         textAlign: 'center',

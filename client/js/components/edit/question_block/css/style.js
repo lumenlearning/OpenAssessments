@@ -1,6 +1,7 @@
 export default new class Style {
   constructor() {
 
+
     this.style = {
       //styles go here
       qbContent:{},
@@ -8,35 +9,62 @@ export default new class Style {
         padding: "15px"
       },
       qbQuestion:{
-        fontSize: '18px'
+        fontSize: '24px'
       },
       qbAnswerTable:{
-        margin: '0px auto 15px',
+        display: 'table',
         fontSize: '18px',
-        width: '90%'
+        width: '100%',
+        minWidth: '277px' //45px(margins)+32px(smallCell)+(100px(mainCells)*2)
       },
-      qbColHead:{
+      qbTblHead:{
+        display: 'flex',
+        justifyContent: 'center',
         fontWeight: 'bold',
-        paddingBottom: '10px'
       },
-      qbColImg: {
-        width:'2%',
-        minWidth: '32px',
-      },
-      qbColAnswer: {
+      qbHeadItem:{
         width: '40%',
-        //display: 'inline-block'
+        minWidth: '100px',
+        display: 'inline-block',
+        marginLeft: '15px',
+        padding: '0px',
+
       },
-      qbAnswerWrap:{
-        //width: '90%',
+      qbTblContent:{
+
+      },
+      qbTblRow:{
+        width:'100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'stretch',
+        margin: '5px 0px 20px'
+      },
+      qbTblCell:{
+        width: '40%',
+        minWidth: '100px',
+        display: 'inline-block',
+        marginLeft: '15px',
+        padding: '15px',
         border: '1px solid',
-        padding: '10px',
-        marginRight: '15px',
-        minHeight: '75px'
+        borderRadius: '3px',
+      },
+      qbSm:{
+        display: 'flex',
+        alignItems: 'center',
+        width: '32px',
+        minWidth: '32px',
+        margin: '0px',
+        border: 'none',
+        padding: '0px'
+      },
+      checkOrExit:{
+        width:'32px',
+        height: '32px',
+        borderRadius: '100%'
       }
 
     };
-
   }
 
   styles() {

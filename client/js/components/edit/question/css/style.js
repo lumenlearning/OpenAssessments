@@ -10,7 +10,7 @@ export default new class Style {
       },
       questionHeader:{
         backgroundColor: '#3299bb',
-        height: '28px'
+        height: '40px'
       },
       questionToolbar:{
         position: 'absolute',
@@ -19,12 +19,13 @@ export default new class Style {
         cursor: 'pointer'
       },
       questionToolBtns:{
-        width: '18px',
-        height: '18px',
+        width: '32px',
+        height: '32px',
         borderRadius: '50%',
-        backgroundColor: 'white',
-        padding: '2px',
-        margin: '0px 2px'
+        backgroundColor: 'transparent', //'#31708f', //when depressed :*(  #bb5432
+        padding: '4px',
+        margin: '3px 3px',
+        border: "1px solid white",
       },
       questionContent: {}
 
