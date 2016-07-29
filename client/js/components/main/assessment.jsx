@@ -61,9 +61,12 @@ export default class Assessment extends BaseComponent{
   }
 
   registerGradingCallback(callback){
-    this.setState({
-      gradingCallback: callback
-    });
+    if (this.state.gradingCallback) {
+    } else {
+      this.setState({
+        gradingCallback: callback
+      });
+    }
   }
 
   selectQuestion(qid, finishedCallback=null) {

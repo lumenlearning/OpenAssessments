@@ -50,6 +50,12 @@ export default class MomEmbed extends BaseComponent {
     return this.props.item.momEmbed.questionId;
   }
 
+  componentWillReceiveProps(nextProps){
+    if(nextProps.registerGradingCallback){
+      nextProps.registerGradingCallback(this.gradeQuestion)
+    }
+  }
+
   componentWillMount() {
     this.setState({
       iframeHeight: null,
