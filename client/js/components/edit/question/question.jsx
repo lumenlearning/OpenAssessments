@@ -40,6 +40,10 @@ export default class Question extends React.Component{
     //when component will mount, grab data from the editQuiz store
   }
 
+  emptyInside() {
+
+  }
+
   render(){
     let question = this.state.question;
     let style = Style.styles();
@@ -47,6 +51,7 @@ export default class Question extends React.Component{
     let Content = this.state.editMode ? QuestionInterface : QuestionBlock;
 
     console.log("TO BE OR NOT TO BE:", this.state.question);
+    console.log("Edit Mode? ", this.state.editMode);
 
     return (
       <li style={style.questionItem} >
@@ -56,8 +61,8 @@ export default class Question extends React.Component{
                  style={style.questionToolBtns}
                  src="/assets/copy-64-white.png"
                  onClick={this.handleDuplicate}
-                 onMouseIn={}
-                 onMouseOut={}
+                 onMouseIn={this.emptyInside}
+                 onMouseOut={this.emptyInside}
                  data-hoverType
                  title='Duplicate'
                  alt="Duplicate"
@@ -73,8 +78,8 @@ export default class Question extends React.Component{
                  style={style.questionToolBtns}
                  src="/assets/trash-64-white.png"
                  onClick={this.handleDelete}
-                 onMouseIn={}
-                 onMouseOut={}
+                 onMouseIn={this.emptyInside}
+                 onMouseOut={this.emptyInside}
                  data-hoverType='delete'
                  title='Delete'
                  alt="Delete"
@@ -111,4 +116,3 @@ export default class Question extends React.Component{
 
   /*CUSTOM FUNCTIONS*/
 };
-
