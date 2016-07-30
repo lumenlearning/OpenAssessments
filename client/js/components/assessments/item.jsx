@@ -10,7 +10,7 @@ import AssessmentStore    from "../../stores/assessment";
 export default class Item extends BaseComponent{
   constructor(){
     super();
-    this._bind("getConfidenceLevels", "confidenceLevelClicked", "nextButtonClicked", "previousButtonClicked", "getPreviousButton", "getNextButton", "getStyles", "clearShowMessage");
+    this._bind("getConfidenceLevels", "confidenceLevelClicked","submit", "nextButtonClicked", "previousButtonClicked", "getPreviousButton", "getNextButton", "getStyles", "clearShowMessage");
   }
 
   nextButtonClicked(e){
@@ -37,7 +37,7 @@ export default class Item extends BaseComponent{
       if(AssessmentStore.hasAnsweredCurrent()){
         AssessmentActions.selectConfidenceLevel(val, currentIndex);
         if(that.props.currentIndex == that.props.questionCount - 1 && that.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
-          that.submitButtonClicked();
+          that.submit();
         } else {
           AssessmentActions.nextQuestion();
         }
@@ -50,17 +50,18 @@ export default class Item extends BaseComponent{
 
   submitButtonClicked(e){
     e && e.preventDefault();
-    let that = this;
-    this.props.selectQuestion(this.props.currentIndex, function(){
+    this.props.selectQuestion(this.props.currentIndex, this.submit);
+  }
+
+  submit(){
       var complete = Item.checkCompletion();
       if(complete === true){
         window.onbeforeunload = null;
-        AssessmentActions.submitAssessment(that.props.assessment.id, that.props.assessment.assessmentId, that.props.allQuestions, AssessmentStore.allStudentAnswers(), that.props.settings, that.props.outcomes);
+        AssessmentActions.submitAssessment(this.props.assessment.id, this.props.assessment.assessmentId, this.props.allQuestions, AssessmentStore.allStudentAnswers(), this.props.settings, this.props.outcomes);
       }
       else {
-        that.setState({unAnsweredQuestions: complete});
+        this.setState({unAnsweredQuestions: complete});
       }
-    });
   }
 
   static checkCompletion(){

@@ -124,6 +124,8 @@ export default class Assessment extends BaseComponent{
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    if(this.state.currentIndex != nextState.currentIndex) return true;
+
     return !this.state ||
         !((!nextState.gradingCallback && this.state.gradingCallback) ||
         (nextState.gradingCallback && !this.state.gradingCallback));
