@@ -14,12 +14,11 @@
     style: @style,
     isLti: @is_lti,
     assessmentId: @assessment_id.to_s,
-    assessmentKind: @assessment_kind,
+    assessmentKind: 'formative',
     resultsEndPoint: @results_end_point || "http://#{request.host_with_port}/api",
     confidenceLevels: @confidence_levels,
     enableStart: @enable_start,
     assessmentTitle: @assessment_title,
-    sectionCount: @section_count.to_s,
     show_post_message_navigation: !!@show_post_message_navigation,
     lti_role: @lti_role,
     lis_user_id: (params[:lis_user_id] || params[:user_id]).to_s,
@@ -44,6 +43,9 @@
    settings[:lis_outcome_service_url] = params[:lis_outcome_service_url]
    if @assessment.present?
      settings[:kind] = @assessment.kind
+     settings[:assessmentKind] = @assessment.kind
+     settings[:questionCount] = @assessment.question_count
+     settings[:sectionCount] = @assessment.section_count
    end
    if @assessment_settings
      settings[:allowed_attempts] = @assessment_settings.allowed_attempts.to_s

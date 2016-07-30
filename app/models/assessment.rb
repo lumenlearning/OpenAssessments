@@ -64,7 +64,7 @@ class Assessment < ActiveRecord::Base
   end
 
   def default_settings
-    self.assessment_settings.any? ? self.assessment_settings.first : nil
+    @settings ||= self.assessment_settings.any? ? self.assessment_settings.first : nil
   end
 
   def default_style
@@ -117,6 +117,30 @@ class Assessment < ActiveRecord::Base
 
   def swyk?
     self.kind == 'show_what_you_know'
+  end
+
+  def section_count
+    parse_counts
+    @section_count
+  end
+
+  def question_count
+    parse_counts
+    @question_count
+  end
+
+  # parse the QTI and count how any questions there are
+  # todo: do this at create/update time
+  def parse_counts
+    return if @section_count || @question_count
+
+    node = Nokogiri::XML(assessment_xmls.where(kind: "summative").last.xml)
+    @section_count = node.css('section section').count
+    if default_settings && default_settings[:per_sec]
+      @question_count = @section_count * default_settings[:per_sec].to_i
+    else
+      @question_count = node.css('item').count
+    end
   end
 
 end

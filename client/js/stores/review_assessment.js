@@ -54,6 +54,7 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
     return _assessmentResultState == LOADED;
   },
   questionCount(){
+    if(SettingsStore.current().questionCount) return SettingsStore.current().questionCount;
     if(_items && _items.length > 0)return _items.length;
     return SettingsStore.current().sectionCount * SettingsStore.current().perSec;
   },
