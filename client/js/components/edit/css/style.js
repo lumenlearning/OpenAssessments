@@ -28,6 +28,13 @@ export default new class Style {
         minWidth:'150px',
         margin:'3px 2px',
       },
+      saveAssessmentBtn:{
+        border:'transparent',
+        backgroundColor:'#CF0000',
+        color:'#fff',
+        minWidth:'150px',
+        margin:'3px 2px',
+      },
 
       heading: {
         "marginLeft": "10px",

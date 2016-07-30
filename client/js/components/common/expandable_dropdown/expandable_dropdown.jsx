@@ -19,7 +19,6 @@ export default class ExpandableDropDown extends React.Component{
 
 
   render() {
-    console.log("IS EXPANDED:", this.state.expanded);
     let style         = Style.styles();
     let status        = this.state.expanded ? "Minimize" : "Expand";
     let contentStyle;
@@ -65,9 +64,6 @@ export default class ExpandableDropDown extends React.Component{
   /*CUSTOM FUNCTIONS*/
   findMaxHeight(){
     let content = this.refs.expandableContent.getDOMNode();
-
-    console.log("REFS:", this.refs);
-    console.log("CONTENT:", content);
 
     return content.scrollHeight+'px';
   }

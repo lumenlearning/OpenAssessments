@@ -22,7 +22,6 @@ export default class QuestionBlock extends React.Component{
     let question = this.props.question;
     let style    = Style.styles();
 
-console.log('QUESTION:', this.state.question);
     return (
       <div style={style.qbContent}>
         <div style={style.qbContentHead}>

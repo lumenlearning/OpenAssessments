@@ -16,8 +16,6 @@ export default class Question extends React.Component{
 
   constructor(props, context) {
     super(props, context);
-    console.log("DEFAULT SETTINGS:", window.DEFAULT_SETTINGS);
-
 
     this.state = {
       question: this.props.question || null,
@@ -49,9 +47,6 @@ export default class Question extends React.Component{
     let style = Style.styles();
 
     let Content = this.state.editMode ? QuestionInterface : QuestionBlock;
-
-    console.log("TO BE OR NOT TO BE:", this.state.question);
-    console.log("Edit Mode? ", this.state.editMode);
 
     return (
       <li style={style.questionItem} >

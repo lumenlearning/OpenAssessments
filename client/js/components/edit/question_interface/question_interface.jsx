@@ -22,8 +22,6 @@ export default class QuestionInterface extends React.Component{
     let question = this.props.question;
     let style    = Style.styles();
 
-    console.log("WHAT DID YOU SAY?", question);
-
     return (
       <div style={style.qiContent}>
         <div style={style.qiContentBlock}>

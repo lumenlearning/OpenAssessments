@@ -3,10 +3,11 @@
 import Constants   from   "../constants";
 import Api         from   "./api";
 import Dispatcher  from   "../dispatcher";
+import ReviewAssessmentStore    from "../stores/review_assessment";
 
 export default {
 
-  loadAssessment(settings, assessmentId=null){
+  loadAssessment(settings, assessmentId=null, forEdit=false){
     Dispatcher.dispatch({ action: Constants.REVIEW_ASSESSMENT_LOAD_PENDING });
     var url = null;
 
@@ -18,10 +19,11 @@ export default {
       console.log("DEATH!");
     }
 
+    let param = forEdit ? "for_edit" : "for_review";
     if(url.indexOf("?") > -1) {
-      url = url+ "&for_review=1"
+      url = url+ "&" + param + "=1";
     } else {
-      url = url+ "?for_review=1"
+      url = url+ "?" + param + "=1";
     }
     Api.get(Constants.REVIEW_ASSESSMENT_LOADED, url);
   },
@@ -40,8 +42,39 @@ export default {
   },
 
   saveAssessment(assessment){
-    var saveAsessmentUrl = '';
-    Api.put(Constants.SAVE_ASSESSMENT, saveAsessmentUrl, assessment)
+    // Only return the relevant item and answer information.
+    let items = ReviewAssessmentStore.allQuestions().map(function(item){
+      let answers = item.answers.map(function(ans){
+        return {
+          id: ans.id,
+          material: ans.material,
+          // todo: properly grab whether it's correct
+          is_correct: false
+        }
+      });
+      return {
+        id: item.id,
+        title: item.title,
+        question_type: item.question_type,
+        material: item.material,
+        answers: answers,
+        //correct: item.correct,
+        outcome: item.outcomes,
+        mom_embed: item.momEmbed
+      }
+    });
+
+    let updateParams = {
+      assessment: {
+        title: assessment.title,
+        ident: assessment.id,
+        assessmentId: assessment.assessmentId,
+        standard: assessment.standard,
+        items: items
+      }
+    };
+
+    Api.put(Constants.SAVE_ASSESSMENT, 'api/assessments/' + assessment.assessmentId, updateParams);
   }
 
 };

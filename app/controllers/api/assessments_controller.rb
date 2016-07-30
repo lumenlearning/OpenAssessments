@@ -45,7 +45,7 @@ class Api::AssessmentsController < Api::ApiController
     if assessment.kind == 'summative'
       if user_assessment && @lti_launch
         #todo - If not admin return unauthorized error instead of starting quiz?
-        for_review = user_assessment.lti_role == 'admin' && params[:for_review]
+        for_review = user_assessment.lti_role == 'admin' && (params[:for_review] || params[:for_edit])
 
         if user_assessment.lti_role == 'student' && user_assessment.attempts >= assessment_settings.allowed_attempts
           render :json => {:error => "Too many attempts."}, status: :unauthorized
@@ -119,6 +119,7 @@ class Api::AssessmentsController < Api::ApiController
   end
   
   def update
+    # if it's json convert to qti?
     @assessment.update(update_params)
     respond_with(:api, @assessment)
   end 

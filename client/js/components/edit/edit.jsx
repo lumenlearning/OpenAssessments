@@ -18,16 +18,20 @@ export default class Edit extends BaseComponent{
   constructor(props, context) {
     super(props, context);
     this.stores = [ReviewAssessmentStore];
-    console.log("DEFAULT SETTINGS:", window.DEFAULT_SETTINGS);
+    this._bind("handleAddQuestion", "handleSaveAssessment");
 
     if(!ReviewAssessmentStore.isLoaded() && !ReviewAssessmentStore.isLoading()){
-      ReviewAssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, this.props.params["assessmentId"]);
+      ReviewAssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, this.props.params["assessmentId"], true);
     }
 
     this.state = this.getState();
   }
 
   getState(){
+    let assessment = ReviewAssessmentStore.current();
+    if(assessment && !assessment.assessmentId){
+      assessment.assessmentId = this.props.params["assessmentId"];
+    }
     return {
       questions        : ReviewAssessmentStore.allQuestions(),
       outcomes         : ReviewAssessmentStore.outcomes(),
@@ -42,10 +46,8 @@ export default class Edit extends BaseComponent{
   }
 
   render(){
-    let enablingOutcomeSections = this.state.enablingOutcomes;
     let style = Style.styles();
 
-    console.log("STATE:", this.state);
     let title = typeof this.state.assessment == 'undefined' || this.state.assessment == null ? '' : this.state.assessment.title;
 
     return (
@@ -56,6 +58,7 @@ export default class Edit extends BaseComponent{
           </div>
           <div className="eqNewQuestion" style={style.eqNewQuestion} >
             <button className='btn btn-sm' onClick={this.handleAddQuestion} style={style.addQuestionBtn} >Add Question</button>
+            <button className='btn btn-sm' onClick={this.handleSaveAssessment} style={style.saveAssessmentBtn} >Save Quiz</button>
           </div>
         </div>
         <ul className="eqContent" style={{listStyleType: 'none', padding:'40px'}}>
@@ -76,6 +79,10 @@ export default class Edit extends BaseComponent{
     this.setState({
       newQuestion: true
     });
+  }
+
+  handleSaveAssessment(e){
+    ReviewAssessmentActions.saveAssessment(this.state.assessment);
   }
 
   /*CUSTOM FUNCTIONS*/
