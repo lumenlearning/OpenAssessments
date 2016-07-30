@@ -26,15 +26,30 @@ export default class Assessment{
 
   static parseQti(assessmentId, assessmentXml, xml){
     var assessment = {
-      id           : assessmentXml.attr('ident'),
-      title        : assessmentXml.attr('title'),
-      standard     : 'qti',
-      assessmentId : assessmentId,
+      id: assessmentXml.attr('ident'),
+      title: assessmentXml.attr('title'),
+      standard: 'qti',
+      assessmentId: assessmentId,
+      outcomes: []
     };
     assessment.objectives = xml.find('assessment > objectives matref').map((index, item) => {
       return $(item).attr('linkrefid');
     });
     assessment.sections = Qti.parseSections(xml);
+
+    // Get all the unique outcomes from the items
+    var outcome_map = {};
+    for (var i = 1; i < assessment.sections.length; i++) {
+      for (var j = 0; j < assessment.sections[i].items.length; j++) {
+        var item = assessment.sections[i].items[j];
+        if(item.outcomes){
+          outcome_map[item.outcomes.outcomeGuid] = item.outcomes;
+        }
+      }
+    }
+
+    assessment.outcomes = _.values(outcome_map);
+
     return assessment;
   }
 
@@ -102,13 +117,17 @@ export default class Assessment{
   }
 
   static loadOutcomes(assessment) {
-    var outcomes = assessment.sections.map((section)=> {
-      if (section.outcome != "root section") {
-        return section.outcome;
-      }
-    });
-    outcomes = _.drop(outcomes);
-    return outcomes;
+    if(assessment.outcomes){
+      return assessment.outcomes;
+    } else {
+      var outcomes = assessment.sections.map((section)=> {
+        if (section.outcome != "root section") {
+          return section.outcome;
+        }
+      });
+      assessment.outcomes = _.drop(outcomes);
+      return assessment.outcomes;
+    }
   }
 
   static checkAnswer(item, selectedAnswers){

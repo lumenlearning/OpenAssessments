@@ -7,16 +7,15 @@ class Api::ApiController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   # Set the user and LtiLaunch
-  # todo: the Devise sign_in call shouldn't be needed for api calls
   def valid_token_callback(payload, header)
     @admin_scopes = payload[AuthToken::ADMIN_SCOPES] ? payload[AuthToken::ADMIN_SCOPES] : []
     if payload['lti_launch_id']
       @user = User.find(payload['user_id'])
+      @current_user = @user
       @lti_launch = @user.lti_launches.find_by_id(payload['lti_launch_id'])
-      sign_in(@user, :event => :authentication)
     else
       @user = User.find(payload['user_id'])
-      sign_in(@user, :event => :authentication)
+      @current_user = @user
     end
   end
 

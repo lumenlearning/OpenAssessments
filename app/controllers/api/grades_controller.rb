@@ -15,15 +15,26 @@ class Api::GradesController < Api::ApiController
     assessment_id = item_to_grade["assessmentId"]
     assessment = Assessment.find(assessment_id)
     settings = item_to_grade["settings"]
-    if settings['userAssessmentId']
+
+    debug_note = ''
+    if !assessment.formative? && @lti_launch.nil? && current_user.nil?
+      debug_note = "Auth problem? #{request.headers["Authorization"]} - #{request.env['HTTP_USER_AGENT']}"
+    end
+
+    if settings['userAssessmentId'] && current_user
       user_assessment = current_user.user_assessments.find_by_id(settings['userAssessmentId'])
+    end
+    if settings['ltiLaunchId'] && current_user
+      @lti_launch ||= current_user.lti_launches.find_by_id(settings['ltiLaunchId'])
     end
 
     if @lti_launch
       if @lti_launch.assessment_result
         result = @lti_launch.assessment_result
+        result.grade_note = "from lti_launch - #{debug_note}"
       else
         result = assessment.assessment_results.build
+        result.grade_note = "from assessment - #{debug_note}"
         result.user_assessment = user_assessment
         result.lti_launch = @lti_launch
         result.attempt = settings["userAttempts"]
@@ -32,7 +43,9 @@ class Api::GradesController < Api::ApiController
     else
       # No LTI launch, likely an embedded self-check
       result = assessment.assessment_results.build
+      result.grade_note = "no lti_launch - #{debug_note}"
       result.user = current_user
+      result.user_assessment = user_assessment
     end
 
     result.identifier = item_to_grade["identifier"]
@@ -82,6 +95,7 @@ private
         item = assessment.items.build
         item.identifier = question["id"]
         item.question_text = question["material"]
+        item.base_type = question["type"]
         item.save!
 end
 

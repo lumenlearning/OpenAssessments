@@ -53,11 +53,6 @@ RSpec.describe Api::AssessmentsController, type: :controller do
         get 'index', format: :json, q: "shrimp"
         expect(assigns(:assessments)).to include(@assessment)
       end
-      it "should return the assessment from the outcome name" do
-        pending "need to fix search using outcomes - commit 950c16f37c13e39914e4724fc7de0435d8d6b192"
-        get 'index', format: :json, q: @outcome.name
-        expect(assigns(:assessments)).to include(@assessment)
-      end
     end
   end
 

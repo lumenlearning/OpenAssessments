@@ -40,15 +40,12 @@ class AssessmentsController < LtiBaseController
       @assessment_settings = params[:asid] ?  AssessmentSetting.find(params[:asid]) : @assessment.default_settings || current_account.default_settings || AssessmentSetting.where(is_default: true).first
       @style ||= @assessment.default_style if @assessment.default_style
       @assessment_title = @assessment.title
-      node = Nokogiri::XML(@assessment.assessment_xmls.where(kind: "summative").last.xml)
-      @section_count = node.css('section section').count
       if @assessment_settings.present?
         @style = @style != "" ? @style : @assessment_settings[:style] || ""
         @enable_start = params[:enable_start] ?  @enable_start : @assessment_settings[:enable_start] || false
         @confidence_levels = params[:confidence_levels] ?  @confidence_levels : @assessment_settings[:confidence_levels] || false
         @per_sec = @per_sec ? @per_sec : @assessment_settings[:per_sec] || ""  
       end
-      @assessment_kind = @assessment.kind
       if params[:user_id].present?
         oea_user_id = @user ? @user.id : nil
         @user_assessment = @assessment.user_assessments.where(eid: params[:user_id], lti_context_id: params[:context_id]).first
@@ -79,14 +76,14 @@ class AssessmentsController < LtiBaseController
         @src_url = embed_url(@assessment, lti_context_id: params[:context_id])
       else
         # Show the full page with analtyics and embed code buttons
-        @embed_code = embed_code(@assessment, @confidence_levels, @eid, @enable_start, params[:offline].present?, nil, @style, params[:asid], @per_sec, @assessment_kind, @assessment_title, @section_count)
+        @embed_code = embed_code(@assessment, @confidence_levels, @eid, @enable_start, params[:offline].present?, nil, @style, params[:asid], @per_sec, @assessment.kind, @assessment_title)
       end
     else
       # Get the remote url where we can download the qti
       @src_url = ensure_scheme(URI.decode(params[:src_url])) if params[:src_url].present?
       if params[:load_ui] == 'true'
         # Build an embed code and stats page for an assessment loaded via a url
-        @embed_code = embed_code(nil, @confidence_levels, @eid, @enable_start, params[:offline].present?, params[:src_url], @style, params[:asid], params[:per_sec], @assessment_kind, @assessment_title, @section_count)
+        @embed_code = embed_code(nil, @confidence_levels, @eid, @enable_start, params[:offline].present?, params[:src_url], @style, params[:asid], params[:per_sec], @assessment.kind, @assessment_title)
       end
 
     end
@@ -107,14 +104,16 @@ class AssessmentsController < LtiBaseController
     end
 
     @is_lti ||= false
-    @assessment_kind  ||= params[:assessment_kind]
     @assessment_title ||= params[:assessment_title]
-    @section_count    ||= params[:section_count]
     # extract LTI values
     @external_user_id ||= params[:user_id]
     @external_context_id ||= params[:context_id]
 
     @show_post_message_navigation = params[:ext_post_message_navigation]
+
+    if @assessment && @assessment.kind != 'summative' && @lti_launch
+      @lti_launch.clear_outcome_data!
+    end
 
     respond_to do |format|
       format.html { render :show, layout: @embedded ? 'assessment' : 'application' }

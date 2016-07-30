@@ -37,6 +37,37 @@ class ItemResult < ActiveRecord::Base
     JSON.parse(read_attribute(:item_variable)) rescue nil
   end
 
+  def processed_answers_chosen
+    if item && item.base_type == 'mom_embed'
+      process_mom_embed_answer(true)
+    else
+      self.answers_chosen.split(",")
+    end
+  end
+
+  # MOM expects a JWT signed with the shared secret
+  # The JWT's payload looks like:
+  # {
+  #         "id" => 79660,
+  #         "score" => 1,
+  #         "redisplay" => "3766;0;(2,2)",
+  #         "auth" => "secret_lookup_key"
+  # }
+  def process_mom_embed_answer(show_correct=false)
+    if show_correct
+      begin
+        payload, header = JWT.decode(self.answers_chosen, Rails.application.secrets.mom_secret)
+        payload["showscored"] = payload["redisplay"]
+
+        [JWT.encode(payload, Rails.application.secrets.mom_secret, 'HS512')]
+      rescue JWT::DecodeError
+        [self.answers_chosen]
+      end
+    else
+      [self.answers_chosen]
+    end
+  end
+
   def self.raw_results( opts={} )
     results = []
     if opts[:scope_url].present?

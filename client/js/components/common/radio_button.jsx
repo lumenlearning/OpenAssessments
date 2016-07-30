@@ -67,7 +67,7 @@ export default class RadioButton extends React.Component{
         <div className="btn btn-block btn-question" style={styles.btnQuestion}>
           <label>
             <input type="radio" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={()=>{ this.answerSelected() }}/>
-            <span style={styles.span}>{this.props.item.material}</span>
+            <span style={styles.span} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>
           </label>
         </div>
       </div>

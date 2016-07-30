@@ -42,7 +42,7 @@ class LtiBaseController < ApplicationController
         # If we do LTI and find a different user. Log out the current user and log in the new user.
         # Log the user in
         @lti_launch.user = @user if @lti_launch
-        sign_in(@user, :event => :authentication)
+        @current_user = @user
       else
         # Ask them to login or create an account
 
@@ -75,7 +75,7 @@ class LtiBaseController < ApplicationController
         )
 
         @lti_launch.user = @user if @lti_launch
-        sign_in(@user, :event => :authentication)
+        @current_user = @user
       end
     else
       @lti_launch.launch_error_message = "Invalid LTI request."
@@ -87,7 +87,7 @@ class LtiBaseController < ApplicationController
     @lti_launch.launch_error_message = $!.message + @message if @lti_launch
     user_not_authorized
   ensure
-    @lti_launch.save if @lti_launch
+    @lti_launch.save! if @lti_launch
   end
 
   def safe_save_email(user)

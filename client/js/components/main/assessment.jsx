@@ -15,7 +15,7 @@ export default class Assessment extends BaseComponent{
   constructor(props, context){
     super(props, context);
     this.stores = [AssessmentStore, SettingsStore];
-    this._bind["checkCompletion", "getStyles"];
+    this._bind("getStyles", "registerGradingCallback","selectQuestion", "nextQuestion", "previousQuestion");
     this.state = this.getState(context);
     this.context = context;
   }
@@ -38,7 +38,8 @@ export default class Assessment extends BaseComponent{
       messageIndex         : AssessmentStore.answerMessageIndex(),
       studentAnswers       : AssessmentStore.allStudentAnswers(),
       allQuestions         : AssessmentStore.allQuestions(),
-      outcomes             : AssessmentStore.outcomes()
+      outcomes             : AssessmentStore.outcomes(),
+      gradingCallback      : null
     }
   }
 
@@ -57,6 +58,77 @@ export default class Assessment extends BaseComponent{
 
   checkProgress(current, total){
     return Math.floor(current/total * 100);
+  }
+
+  registerGradingCallback(callback){
+    if (this.state.gradingCallback) {
+    } else {
+      this.setState({
+        gradingCallback: callback
+      });
+    }
+  }
+
+  selectQuestion(qid, finishedCallback=null) {
+    if (this.state.gradingCallback) {
+      let callback = this.state.gradingCallback;
+      this.setState({gradingCallback: null});
+      callback(function(){
+        AssessmentActions.selectQuestion(qid);
+        if(finishedCallback){
+          finishedCallback();
+        }
+      });
+    } else {
+      AssessmentActions.selectQuestion(qid);
+      if (finishedCallback) {
+        finishedCallback();
+      }
+    }
+  }
+
+  previousQuestion(finishedCallback=null) {
+    if (this.state.gradingCallback) {
+      let callback = this.state.gradingCallback;
+      this.setState({gradingCallback: null});
+      callback(function(){
+        AssessmentActions.previousQuestion();
+        if (finishedCallback) {
+          finishedCallback();
+        }
+      });
+    } else {
+      AssessmentActions.previousQuestion();
+      if (finishedCallback) {
+        finishedCallback();
+      }
+    }
+  }
+
+  nextQuestion(finishedCallback = null) {
+    if (this.state.gradingCallback) {
+      let callback = this.state.gradingCallback;
+      this.setState({gradingCallback: null});
+      callback(function () {
+        AssessmentActions.nextQuestion();
+        if (finishedCallback) {
+          finishedCallback();
+        }
+      });
+    } else {
+      AssessmentActions.nextQuestion();
+      if (finishedCallback) {
+        finishedCallback();
+      }
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if(this.state.currentIndex != nextState.currentIndex) return true;
+
+    return !this.state ||
+        !((!nextState.gradingCallback && this.state.gradingCallback) ||
+        (nextState.gradingCallback && !this.state.gradingCallback));
   }
 
   getStyles(theme){
@@ -140,10 +212,14 @@ export default class Assessment extends BaseComponent{
         allQuestions     = {this.state.allQuestions}
         studentAnswers   = {this.state.studentAnswers}
         confidenceLevels = {this.state.settings.confidenceLevels}
+        previousQuestion = {this.previousQuestion}
+        nextQuestion     = {this.nextQuestion}
+        selectQuestion   = {this.selectQuestion}
+        registerGradingCallback = {this.registerGradingCallback}
         outcomes         = {this.state.outcomes}/>;
         progressBar      =  <div style={styles.progressContainer}>
                               {progressText}
-                              <ProgressDropdown settings={this.state.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
+                              <ProgressDropdown settings={this.state.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} selectQuestion={this.selectQuestion} />
                             </div>;
     // TODO figure out when to mark an item as viewed. assessmentResult must be valid before this call is made.
       // AssessmentActions.itemViewed(this.state.settings, this.state.assessment, this.state.assessmentResult);
