@@ -1,6 +1,7 @@
 "use strict";
 
 import React from "react";
+import Checkbox from './check_box.jsx';
 import Style from "./css/style.js";
 
 export default class QuestionInterface extends React.Component{
@@ -31,7 +32,7 @@ export default class QuestionInterface extends React.Component{
           <div style={style.qBlock}>
             <div style={style.qLabel}>Question</div>
             <textarea style={style.textArea} name="question" id="question" rows="3">
-              {/*Question goes here*/}
+              {question.material}
             </textarea>
           </div>
 
@@ -51,12 +52,12 @@ export default class QuestionInterface extends React.Component{
               return (
                 <div style={style.answerRow}>
                   <div style={style.emptyCell}>
-                    <input type="checkbox" />
+                    <Checkbox />
                   </div>
                   <div style={style.answerOptionBlock}>
-                    <textarea style={style.textArea} name="answerOption" id="answerOption" rows="3">{/*Answer Goes here*/}</textarea>
+                    <textarea style={style.textArea} name="answerOption" id="answerOption" rows="3">{answer.material}</textarea>
                   </div>
-                  <div style={styleFeedbackBlock}>
+                  <div style={style.feedbackBlock}>
                     <textarea style={style.textArea} name="feedback" id="feedback" rows="3">{/*Feedback goes here*/}</textarea>
                   </div>
                 </div>

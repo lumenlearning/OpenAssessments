@@ -24,7 +24,8 @@ export default new class Style {
       },
       emptyCell: {
         display: "inline-block",
-        width: "4%"
+        width: "4%",
+        verticalAlign: "top"
       },
       optionLabelBlock: {
         display: "inline-block",
@@ -43,7 +44,7 @@ export default new class Style {
       },
       answerRow: {
         display: "block",
-        width: "100%"
+        width: "100%",
       },
       answerOptionBlock: {
         display: "inline-block",
@@ -63,7 +64,8 @@ export default new class Style {
         paddingBottom: "10px"
       },
       hintLabel: {
-        width: "100%"
+        width: "100%",
+        fontWeight: "bold"
       },
       textArea: {
         width: "100%",
@@ -74,6 +76,19 @@ export default new class Style {
       },
       buttonDiv: {
         textAlign: "center"
+      },
+      checkCircle: {
+        width: "32px",
+        height: "32px",
+        margin: "46px auto",
+        border: "2px solid #CCC", //#868686
+        borderRadius: "100%"
+      },
+      checkHover: {
+        width: "28px",
+        height: "28px",
+        marginBottom: "2px",
+        borderRadius: "100%"
       }
     };
 
