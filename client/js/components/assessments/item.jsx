@@ -40,6 +40,7 @@ export default class Item extends BaseComponent{
           that.submit();
         } else {
           AssessmentActions.nextQuestion();
+          that.clearShowMessage();
         }
       } else {
         that.setState({showMessage: true});

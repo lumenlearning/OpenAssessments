@@ -127,8 +127,8 @@ var AssessmentStore = assign({}, StoreCommon, {
   },
 
   questionCount(){
-    if(SettingsStore.current().questionCount) return SettingsStore.current().questionCount;
     if(_items && _items.length > 0)return _items.length;
+    if(SettingsStore.current().questionCount) return SettingsStore.current().questionCount;
     return SettingsStore.current().sectionCount * SettingsStore.current().perSec;
   },
 
