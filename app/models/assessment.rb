@@ -5,12 +5,13 @@ class Assessment < ActiveRecord::Base
 
   has_many :sections, dependent: :destroy
   has_many :items, through: :sections
-  has_many :assessment_results, dependent: :destroy
+  has_many :assessment_results
   belongs_to :user
-  has_many :assessment_xmls, dependent: :destroy
+  has_many :assessment_xmls
   has_many :assessment_outcomes
   has_many :outcomes, through: :assessment_outcomes
   belongs_to :account
+  belongs_to :current_assessment_xml, class_name: AssessmentXml, foreign_key: :current_assessment_xml_id
 
   has_many :assessment_settings
   has_many :user_assessments
@@ -24,8 +25,37 @@ class Assessment < ActiveRecord::Base
 
   attr_accessor :xml_file
 
-  before_save :save_xml
-  after_save  :create_subitems
+  after_save :save_xml
+  after_save :create_subitems
+
+
+  def xml_with_answers(limit_section_count_to = false, selected_item_ids=nil)
+    if self.current_assessment_xml
+      xml = self.current_assessment_xml.xml
+    else
+      xml = assessment_xmls.where(kind: "formative").last.xml
+    end
+
+    if limit_section_count_to
+      AssessmentXml.xml_with_limited_questions(xml, limit_section_count_to, selected_item_ids)
+    else
+      xml
+    end
+  end
+
+  def xml_without_answers(limit_section_count_to = false, selected_item_ids=nil)
+    if self.current_assessment_xml
+      xml = self.current_assessment_xml.no_answer_xml
+    else
+      xml = assessment_xmls.where(kind: "summative").last.xml
+    end
+
+    if limit_section_count_to
+      AssessmentXml.xml_with_limited_questions(xml, limit_section_count_to, selected_item_ids)
+    else
+      xml
+    end
+  end
 
   def save_xml
     return unless xml_file.present?
@@ -35,20 +65,17 @@ class Assessment < ActiveRecord::Base
       xml = xml_file.read
     end
 
-    self.assessment_xmls.destroy_all
-
     # Create a formative xml entry
-    self.assessment_xmls.build(
+    no_answer_xml = xml.gsub /<conditionvar>(.*?)<\/conditionvar>/m, ''
+    ax = self.assessment_xmls.build(
       xml: xml,
-      kind: "formative"
+      no_answer_xml: no_answer_xml,
+      kind: "qti"
     )
 
-    # Create a summative xml entry (no answers in xml)
-    summative_xml = xml.gsub /<conditionvar>(.*?)<\/conditionvar>/m, ''
-    self.assessment_xmls.build(
-      xml: summative_xml,
-      kind: "summative"
-    )
+    ax.save!
+    self.current_assessment_xml = ax
+    self.update_column(:current_assessment_xml_id, ax.id)
 
     # set values from xml
     if parsed_xml(xml)

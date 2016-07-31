@@ -6,20 +6,49 @@ describe Assessment do
     @assessment = create_assessment
   end
 
-  describe "save_xml" do
-
- # TODO
-    it "creates a formative assessment_xml" do
-      #@assessment.save_xml()
+  context "finding assessment xml" do
+    before do
+      @formative = AssessmentXml.create!(kind: 'formative', assessment_id: @assessment.id, xml: '<oi>hoyt</oi>')
+      @summative = AssessmentXml.create!(kind: 'summative', assessment_id: @assessment.id, xml: '<hoyt>oi</hoyt>')
     end
 
-    it "creates a summative assessment_xml" do
-      #@assessment.save_xml()
+    context "#xml_with_answers" do
+      it "should find when no current xml set" do
+        @assessment.current_assessment_xml = nil
+
+        expect(@assessment.xml_with_answers).to eq @formative.xml
+      end
+
+      it "should find when current xml set" do
+        expect(@assessment.xml_with_answers).to eq @assessment.current_assessment_xml.xml
+      end
+
+      it "should limit question count" do
+        node = Nokogiri::XML(@assessment.xml_with_answers(7))
+        expect(node.css('item').count).to eq 7
+      end
     end
 
+    context "#xml_without_answers" do
+      it "should find when no current xml set" do
+        @assessment.current_assessment_xml = nil
+
+        expect(@assessment.xml_without_answers).to eq @summative.xml
+      end
+
+      it "should find when current xml set" do
+        expect(@assessment.xml_without_answers).to eq @assessment.current_assessment_xml.no_answer_xml
+      end
+
+      it "should limit question count" do
+        node = Nokogiri::XML(@assessment.xml_without_answers(5))
+        expect(node.css('item').count).to eq 5
+      end
+    end
   end
 
-  describe "from_xml" do
+
+  describe "save_xml" do
 
     it 'should extract the identifier' do
       assessment = build_assessment(identifier: nil)
@@ -37,18 +66,31 @@ describe Assessment do
       expect(@assessment.sections.count).to eq(1)
     end
 
-    it "should create two files" do
-      expect(@assessment.assessment_xmls.count).to eq(2)
+    it "should create 1 file" do
+      expect(@assessment.assessment_xmls.count).to eq(1)
     end
 
     it "should creative a formative xml file" do
-      formative = @assessment.assessment_xmls.by_kind("formative")
+      formative = @assessment.assessment_xmls.by_kind("qti")
       expect(formative).to exist
     end
 
-    it "should creative a summative xml file" do
-      summative = @assessment.assessment_xmls.by_kind("summative")
-      expect(summative).to exist
+    it "should not creative summative or formative xml files" do
+      expect(@assessment.assessment_xmls.by_kind("summative").count).to eq 0
+      expect(@assessment.assessment_xmls.by_kind("formative").count).to eq 0
+    end
+
+    it "should assign the #current_assessment_xml" do
+      expect(@assessment.current_assessment_xml).to eq @assessment.assessment_xmls.first
+    end
+
+    # This is making sure the #after_save still sets the id on a new assessment
+    it "should create and assign current xml" do
+      assessment = Assessment.create!(title: 'testing', xml_file: File.read(File.join(__dir__, '../fixtures/swyk_quiz.xml')) )
+      assessment.reload
+
+      expect(assessment.current_assessment_xml).to_not eq nil
+      assessment.xml_with_answers
     end
 
   end
