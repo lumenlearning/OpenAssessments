@@ -74,20 +74,24 @@ class Api::AssessmentsController < Api::ApiController
       format.json { render :json => assessment }
       format.xml do
         if for_review
-          render :text => assessment.assessment_xmls.formative.by_newest.first.xml
-        elsif assessment_settings && assessment_settings.per_sec
-          a_xml = assessment.assessment_xmls.by_newest.first
-          xml = a_xml.xml_with_limited_questions(assessment_settings.per_sec.to_i)
+          render :text => assessment.xml_with_answers
+        else
+          selected_items = []
+          if assessment_settings && assessment_settings.per_sec
+            xml = assessment.xml_without_answers(assessment_settings.per_sec.to_i, selected_items)
+          else
+            xml = assessment.xml_without_answers(nil, selected_items)
+          end
+          #todo : once all assessments are updated to have a current this won't be needed
+          asmnt_xml = assessment.current_assessment_xml || assessment.assessment_xmls.where(kind: 'summative').first
 
           if @result
-            @result.assessment_xml = a_xml
-            @result.question_ids = a_xml.last_selected_item_ids
+            @result.assessment_xml = asmnt_xml
+            @result.question_ids = selected_items
             @result.save!
           end
 
           render :text => xml
-        else
-          render :text => assessment.assessment_xmls.by_newest.first.xml
         end
       end
     end

@@ -13,7 +13,7 @@ class AssessmentGrader
     @ungraded_questions = []
     @xml_index_list = []
     @answered_correctly = 0
-    @doc = Nokogiri::XML(@assessment.assessment_xmls.where(kind: "formative").last.xml)
+    @doc = Nokogiri::XML(@assessment.xml_with_answers)
     @doc.remove_namespaces!
     @xml_questions = @doc.xpath("//item")
   end

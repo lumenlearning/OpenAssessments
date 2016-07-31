@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160609234534) do
+ActiveRecord::Schema.define(version: 20160731163908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,11 +92,15 @@ ActiveRecord::Schema.define(version: 20160609234534) do
 
   create_table "assessment_xmls", force: :cascade do |t|
     t.text     "xml"
+    t.text     "no_answer_xml"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "assessment_id"
     t.string   "kind"
+    t.jsonb    "data",          default: {}, null: false
   end
+
+  add_index "assessment_xmls", ["assessment_id"], name: "index_assessment_xmls_on_assessment_id", using: :btree
 
   create_table "assessments", force: :cascade do |t|
     t.string   "identifier"
@@ -111,7 +115,8 @@ ActiveRecord::Schema.define(version: 20160609234534) do
     t.string   "license"
     t.string   "keywords"
     t.integer  "account_id"
-    t.string   "kind",               default: "formative"
+    t.string   "kind",                      default: "formative"
+    t.integer  "current_assessment_xml_id"
   end
 
   add_index "assessments", ["account_id"], name: "index_assessments_on_account_id", using: :btree
