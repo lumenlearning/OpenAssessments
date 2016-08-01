@@ -22,7 +22,7 @@ export default new class Style {
         width: '32px',
         height: '32px',
         borderRadius: '50%',
-        backgroundColor: 'transparent', //'#31708f', //when depressed :*(  #bb5432
+        backgroundColor: 'transparent', //code also uses #31708f & #bb5432 in event handlers
         padding: '4px',
         margin: '3px 3px',
         border: "1px solid white",

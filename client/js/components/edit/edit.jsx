@@ -54,9 +54,13 @@ export default class Edit extends BaseComponent{
           <div className="eqTitle" style={style.eqTitle} >
             <h2 style={style.eqH2Title} >{title}</h2>
           </div>
-          <div className="eqNewQuestion" style={style.eqNewQuestion} >
-            <button className='btn btn-sm' onClick={this.handleAddQuestion} style={style.addQuestionBtn} >Add Question</button>
-          </div>
+        </div>
+        <div className="eqNewQuestion" style={style.eqNewQuestion} >
+          <label for="add_question" style={style.addQuestionLbl}>
+            <button name='add_question' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={this.handleAddQuestion} style={style.addQuestionBtn} ><img style={style.addQuestionImg} src="/assets/plus-52.png" alt="Add Question"/></button>
+            Add Question
+          </label>
+          {/*display question interface here if newQuestion == true*/}
         </div>
         <ul className="eqContent" style={{listStyleType: 'none', padding:'40px'}}>
           {this.state.questions.map((question, index)=>{
@@ -76,6 +80,10 @@ export default class Edit extends BaseComponent{
     this.setState({
       newQuestion: true
     });
+  }
+
+  toggleButtonStyle(e){
+
   }
 
   /*CUSTOM FUNCTIONS*/

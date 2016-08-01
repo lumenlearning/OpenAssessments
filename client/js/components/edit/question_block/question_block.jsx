@@ -22,7 +22,7 @@ export default class QuestionBlock extends React.Component{
     let question = this.props.question;
     let style    = Style.styles();
 
-console.log('QUESTION:', this.state.question);
+//console.log('QUESTION:', this.state.question);
     return (
       <div style={style.qbContent}>
         <div style={style.qbContentHead}>
@@ -67,36 +67,3 @@ console.log('QUESTION:', this.state.question);
   }
 
 }
-
-/*
- <table style={style.qbAnswerTable} >
- <thead>
- <tr>
- <td></td>
- <td style={style.qbColHead} >Answer</td>
- <td style={style.qbColHead} >Feedback</td>
- </tr>
- </thead>
- <tbody>
- <tr>
- <td style={style.qbColImg} >
- {"X"}
- </td>
- <td style={_.merge({}, style.qbColAnswer, {marginRight: '10px'})} >
- <div style={style.qbAnswerWrap} disabled>
- <p >
- {"Aliquam animi autem culpa dicta doloremque ea eius error explicabo inventore ipsam iusto modinemo pariatur perferendis placeat quae quia quibusdam quidem, quos sed sequi similique ullam velveniam voluptatibus?"}
- </p>
- </div>
- </td>
- <td style={style.qbColAnswer} >
- <div style={style.qbAnswerWrap} disabled>
- <p>
- {"Feedback value"}
- </p>
- </div>
- </td>
- </tr>
- </tbody>
- </table>
-*/

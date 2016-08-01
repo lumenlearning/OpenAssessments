@@ -17,18 +17,32 @@ export default new class Style {
         color: 'white'
       },
       eqNewQuestion:{
-        display: 'inline-block',
-        float: 'right',
-        margin: '15px 0'
+        width: '100%',
+        display: 'block',
+        margin: '15px 0',
+        display: 'flex',
+        justifyContent: 'center',
+      },
+      addQuestionLbl:{
+        fontSize: '18px',
+        cursor: 'pointer'
       },
       addQuestionBtn:{
+        width: '48px',
+        height: '48px',
         border:'transparent',
+        borderRadius: '50%',
         backgroundColor:'#3299bb',
         color:'#fff',
-        minWidth:'150px',
-        margin:'3px 2px',
+        padding: '0px',
+        margin:'0px 10px 0px 0px',
+        outline: 'none'
       },
-
+      addQuestionImg:{
+        width: '48px',
+        height: '48px',
+        alignContent: 'center'
+      },
       heading: {
         "marginLeft": "10px",
         "marginBottom": "0",

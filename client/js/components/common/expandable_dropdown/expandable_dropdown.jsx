@@ -2,6 +2,7 @@
 
 import React from "react";
 import Style from "./css/style.js";
+import cb from 'material-ui/lib/checkbox.js';
 
 export default class ExpandableDropDown extends React.Component{
 
@@ -19,22 +20,12 @@ export default class ExpandableDropDown extends React.Component{
 
 
   render() {
-    console.log("IS EXPANDED:", this.state.expanded);
     let style         = Style.styles();
     let status        = this.state.expanded ? "Minimize" : "Expand";
-    let contentStyle;
+    let contentStyle  = this.expansionController();
 
-    if(this.props.isExpanded && !this.state.mounted){
-      contentStyle = style.expandableContent;
-    }
-    else if((this.state.expanded || this.props.isExpanded) && this.state.mounted){
-      contentStyle = _.merge({}, style.expandableContent, {maxHeight: this.findMaxHeight()});
-    }
-    else{
-      contentStyle = style.expandableContent;
-    }
+    //expander controller
 
-//console.log('EXPANDABLE MAX HEIGHT:', this.findMaxHeight());
     return (
       <div style={style.expandable}>
         <div style={contentStyle} ref={'expandableContent'} >
@@ -66,14 +57,28 @@ export default class ExpandableDropDown extends React.Component{
   findMaxHeight(){
     let content = this.refs.expandableContent.getDOMNode();
 
-    console.log("REFS:", this.refs);
-    console.log("CONTENT:", content);
-
     return content.scrollHeight+'px';
   }
+
+  expansionController(){
+    let style         = Style.styles();
+    let expandedProp  = this.props.isExpanded;
+    let expandedState = this.state.expanded;
+    let mounted       = this.state.mounted;
+
+    if(expandedProp && !mounted){
+      return style.expandableContent;
+    }
+    else if((expandedState || expandedProp) && mounted){
+      return _.merge({}, style.expandableContent, {maxHeight: this.findMaxHeight()});
+    }
+    else{
+      return style.expandableContent;
+    }
+  }//expansionController
 
 }
 
 ExpandableDropDown.propTypes = {
   isExpanded: React.PropTypes.bool
-}
+};
