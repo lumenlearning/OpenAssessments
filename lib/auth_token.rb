@@ -2,6 +2,7 @@ require 'jwt'
 
 module AuthToken
   ADMIN_SCOPES = 'admin_scopes'
+  EDIT_ID_SCOPE = 'edit_id_scope'
 
   # More information on jwt available at
   # http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#rfc.section.4.1.6

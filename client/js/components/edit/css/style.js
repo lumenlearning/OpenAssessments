@@ -43,6 +43,14 @@ export default new class Style {
         height: '48px',
         alignContent: 'center'
       },
+      saveAssessmentBtn:{
+        border:'transparent',
+        backgroundColor:'#CF0000',
+        color:'#fff',
+        minWidth:'150px',
+        margin:'3px 2px',
+      },
+
       heading: {
         "marginLeft": "10px",
         "marginBottom": "0",

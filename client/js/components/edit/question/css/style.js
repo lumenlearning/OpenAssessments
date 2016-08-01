@@ -10,7 +10,8 @@ export default new class Style {
       },
       questionHeader:{
         backgroundColor: '#3299bb',
-        height: '40px'
+        height: '40px',
+        borderRadius: '4px 4px 0 0'
       },
       questionToolbar:{
         position: 'absolute',

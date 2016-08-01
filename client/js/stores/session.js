@@ -3,7 +3,8 @@ import StoreCommon    from "./store_common";
 import assign         from "object-assign";
 
 var _jwt = null;
-var _canUseLocal = null;
+// We want different LTI sessions to have separate sessions
+var _canUseLocal = false;
 
 function canUseLocalStorage() {
   if( _canUseLocal !== null ) return _canUseLocal;

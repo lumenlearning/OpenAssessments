@@ -14,6 +14,7 @@ module Lti
       if should_send_lti_outcome?
         return send_outcome_to_tool_consumer!
       elsif @assessment_result.session_status == AssessmentResult::STATUS_PENDING_LTI_OUTCOME
+        @assessment_result.lti_outcome_result = "skipped"
         @assessment_result.session_status = AssessmentResult::STATUS_FINAL
         @assessment_result.save
       end
@@ -25,10 +26,12 @@ module Lti
       raise OpenAssessments::LtiError.new("Not enough data to send lti outcome") unless has_necessary_lti_data?
 
       if @lti_launch.send_outcome_to_tool_consumer(outcome_score)
+        @assessment_result.lti_outcome_result = "success"
         @assessment_result.session_status = AssessmentResult::STATUS_FINAL
         @assessment_result.save
         true
       else
+        @assessment_result.lti_outcome_result = "failed"
         @assessment_result.outcome_error_message = @lti_launch.outcome_error_message
         @assessment_result.session_status = AssessmentResult::STATUS_ERROR_LTI_OUTCOME
         @assessment_result.save

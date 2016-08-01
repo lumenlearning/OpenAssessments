@@ -3,7 +3,8 @@ class Api::AssessmentsController < Api::ApiController
   
   respond_to :xml, :json
 
-  load_and_authorize_resource except: [:show]
+  before_action :ensure_context_admin, only:[:json_update]
+  load_and_authorize_resource except: [:show, :json_update]
   skip_before_action :validate_token, only: [:show]
 
   def index
@@ -22,7 +23,9 @@ class Api::AssessmentsController < Api::ApiController
 
   def show
     assessment = Assessment.where(id: params[:id], account: current_account).first
-    validate_token unless assessment.kind == 'formative'
+    unless assessment.kind == 'formative'
+      return unless validate_token
+    end
 
     user_assessment = nil
     if user = current_user
@@ -41,8 +44,9 @@ class Api::AssessmentsController < Api::ApiController
     # If it's a summative quiz the attempts are incremented here instead of UserAttemptsController#update
     # todo: refactor so that all attempts are incremented via the xml fetch? Maybe not because externally hosted xml files.
     if assessment.kind == 'summative'
-      if user_assessment
-        for_review = user_assessment.lti_role == 'admin' && params[:for_review]
+      if user_assessment && @lti_launch
+        #todo - If not admin return unauthorized error instead of starting quiz?
+        for_review = user_assessment.lti_role == 'admin' && (params[:for_review] || params[:for_edit])
 
         if user_assessment.lti_role == 'student' && user_assessment.attempts >= assessment_settings.allowed_attempts
           render :json => {:error => "Too many attempts."}, status: :unauthorized
@@ -62,7 +66,7 @@ class Api::AssessmentsController < Api::ApiController
           user_assessment.increment_attempts!
         end
       else
-        render :json => {:error => "Can't validate user_assessment for summative assessment."}, status: :unauthorized
+        render :json => {:error => "Can't take summative without LtiLaunch or UserAssessment."}, status: :unauthorized
         return
       end
     end
@@ -71,20 +75,24 @@ class Api::AssessmentsController < Api::ApiController
       format.json { render :json => assessment }
       format.xml do
         if for_review
-          render :text => assessment.assessment_xmls.formative.by_newest.first.xml
-        elsif assessment_settings && assessment_settings.per_sec
-          a_xml = assessment.assessment_xmls.by_newest.first
-          xml = a_xml.xml_with_limited_questions(assessment_settings.per_sec.to_i)
+          render :text => assessment.xml_with_answers
+        else
+          selected_items = []
+          if assessment_settings && assessment_settings.per_sec
+            xml = assessment.xml_without_answers(assessment_settings.per_sec.to_i, selected_items)
+          else
+            xml = assessment.xml_without_answers(nil, selected_items)
+          end
+          #todo : once all assessments are updated to have a current this won't be needed
+          asmnt_xml = assessment.current_assessment_xml || assessment.assessment_xmls.where(kind: 'summative').first
 
           if @result
-            @result.assessment_xml = a_xml
-            @result.question_ids = a_xml.last_selected_item_ids
+            @result.assessment_xml = asmnt_xml
+            @result.question_ids = selected_items
             @result.save!
           end
 
           render :text => xml
-        else
-          render :text => assessment.assessment_xmls.by_newest.first.xml
         end
       end
     end
@@ -118,9 +126,27 @@ class Api::AssessmentsController < Api::ApiController
   def update
     @assessment.update(update_params)
     respond_with(:api, @assessment)
-  end 
+  end
+
+  def json_update
+    assessment = Assessment.where(id: params[:assessment_id], account: current_account).first
+    raise ActiveRecord::RecordNotFound unless assessment
+    return unless ensure_edit_id_scope(assessment.external_edit_id)
+
+    #todo update the assessment with the new data
+
+    # yes, confusing to return XML from JSON update, but that's the format it's saved in
+    render :xml => assessment.xml_with_answers
+  end
 
   private
+
+  # makes sure the JWT token allows admin scope for this LTI context id
+  def ensure_edit_id_scope(edit_id)
+    return true if token_has_edit_id_scope(edit_id)
+    render :json => {:error => "Unauthorized"}, status: :unauthorized
+    false
+  end
 
     def create_params
       params.require(:assessment).permit(:title, :description, :license, :xml_file,

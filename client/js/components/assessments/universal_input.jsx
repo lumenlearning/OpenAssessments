@@ -9,6 +9,7 @@ import CheckBox             from "../common/checkbox";
 import MappedImage          from "../common/mapped_image";
 import Matching             from "../common/matching";
 import DragAndDrop          from "../common/drag_and_drop";
+import MomEmbed             from "../common/mom_embed";
 import CommunicationHandler from "../../utils/communication_handler";
 
 export default class UniversalInput extends React.Component{
@@ -139,6 +140,9 @@ export default class UniversalInput extends React.Component{
           return <DragAndDrop key={item.id + "_" + answer.id} item={answer} />
         });
         break;
+      case "mom_embed":
+        items = <MomEmbed key={item.id} item={item} redisplayJWT={this.props.chosen ? this.props.chosen[0] : null} registerGradingCallback={this.props.registerGradingCallback} />;
+        break;
     }
 
 
@@ -167,7 +171,8 @@ export default class UniversalInput extends React.Component{
 }
 UniversalInput.propTypes = {
   item: React.PropTypes.object.isRequired,
-  isResult: React.PropTypes.bool
+  isResult: React.PropTypes.bool,
+  registerGradingCallback: React.PropTypes.func.optional
 };
 
 UniversalInput.contextTypes = {

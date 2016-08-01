@@ -55,8 +55,6 @@ export default class TeacherPreview extends BaseComponent{
     var styles = this.getStyles(this.context.theme);
     var itemResults = this.getItemResults();
 
-    console.log("questions",ReviewAssessmentStore.allQuestions());
-
     return (
       <div style={styles.assessment}>
         <div style={styles.assessmentContainer}>

@@ -5,57 +5,65 @@
 <%= render(partial: 'assessments/edx_data', object: @edx_verticals) if @edx_verticals.present? -%>
 <%= render(partial: 'assessments/edx_data', object: @edx_problems) if @edx_problems.present? -%>
 
+<%
+   # create the default seettings hash and do #to_json so that string values are properly escaped
+   settings = {
+    apiUrl: application_base_url,
+    srcUrl: @src_url,
+    accountId: @account_id.to_s,
+    style: @style,
+    isLti: @is_lti,
+    assessmentId: @assessment_id.to_s,
+    assessmentKind: 'formative',
+    resultsEndPoint: @results_end_point || "http://#{request.host_with_port}/api",
+    confidenceLevels: @confidence_levels,
+    enableStart: @enable_start,
+    assessmentTitle: @assessment_title,
+    show_post_message_navigation: !!@show_post_message_navigation,
+    lti_role: @lti_role,
+    lis_user_id: (params[:lis_user_id] || params[:user_id]).to_s,
+    csrfToken: form_authenticity_token,
+    jwt: jwt_token,
+    images: client_images("Books.svg", "PersonWithBook.svg", "ProgressIcon.svg", "QuizIcon.svg","CheckMark.svg")
+   }
+
+   if @external_user_id
+     settings[:externalUserId] = @external_user_id
+   end
+   if @external_context_id
+     settings[:externalContextId] = @external_context_id
+   end
+   if @keywords
+     settings[:keywords] = @keywords
+   end
+   if @eid
+     settings[:eId] = @eid
+   end
+   settings[:offline] = @src_data.present?
+   settings[:lis_outcome_service_url] = params[:lis_outcome_service_url]
+   if @assessment.present?
+     settings[:kind] = @assessment.kind
+     settings[:assessmentKind] = @assessment.kind
+     settings[:questionCount] = @assessment.question_count
+     settings[:sectionCount] = @assessment.section_count
+   end
+   if @assessment_settings
+     settings[:allowed_attempts] = @assessment_settings.allowed_attempts.to_s
+   end
+   if @user_attempts
+     settings[:user_attempts] = @user_attempts
+   end
+   if @per_sec
+     settings[:per_sec] = @per_sec
+   end
+   if @user_assessment
+     settings[:user_assessment_id] = @user_assessment.id.to_s
+   end
+   if @lti_launch
+     settings[:lti_launch_id] = @lti_launch.id.to_s
+   end
+%>
+
 <script type="text/javascript">
-  window.DEFAULT_SETTINGS = {
-    apiUrl: '<%= application_base_url %>',
-    srcUrl: '<%= @src_url %>',
-    accountId: '<%= @account_id %>',
-    style: '<%= @style %>',
-    isLti: <%= @is_lti %>,
-    assessmentId: '<%= @assessment_id %>',
-    <% if @external_user_id %>
-    externalUserId: '<%= @external_user_id  %>',
-    <% end %>
-    <% if @external_context_id %>
-    externalContextId: '<%= @external_context_id  %>',
-    <% end %>
-    <% if @keywords %>
-    keywords: '<%= @keywords %>',
-    <% end %>
-    assessmentKind: '<%= @assessment_kind%>',
-    resultsEndPoint: '<%= @results_end_point || "http://#{request.host_with_port}/api" %>',
-    confidenceLevels: <%= @confidence_levels %>,
-    enableStart: <%= @enable_start %>,
-    assessmentTitle: '<%= @assessment_title %>',
-    sectionCount: "<%= @section_count %>",
-    <% if @eid %>
-    eId: '<%= @eid %>',
-    <% end %>
-    offline: <%= @src_data.present? %>,
-    lis_outcome_service_url: '<%= params[:lis_outcome_service_url] %>',
-    <% if @assessment.present? %>
-    kind: '<%= @assessment.kind %>',
-    <% end %>
-    <% if @assessment_settings %>
-    allowed_attempts: '<%= @assessment_settings.allowed_attempts %>',
-    <% end -%>
-    <% if @user_attempts %>
-    user_attempts: <%= @user_attempts %>,
-    <% end -%>
-    <% if @per_sec %>
-    per_sec: '<%= @per_sec %>',
-    <% end -%>
-    <% if @user_assessment %>
-    user_assessment_id: '<%= @user_assessment.id %>',
-    <% end -%>
-    <% if @lti_launch %>
-    lti_launch_id: '<%= @lti_launch.id %>',
-    <% end -%>
-    show_post_message_navigation: <%= !!@show_post_message_navigation %>,
-    lti_role: "<%= @lti_role %>",
-    lis_user_id: '<%=  params[:lis_user_id] || params[:user_id]%>',
-    csrfToken: '<%= form_authenticity_token %>',
-    jwt: '<%= jwt_token %>',
-    images: <%=client_images("Books.svg", "PersonWithBook.svg", "ProgressIcon.svg", "QuizIcon.svg","CheckMark.svg")%>
-  };
+  window.DEFAULT_SETTINGS = <%= raw settings.to_json %>;
 </script>

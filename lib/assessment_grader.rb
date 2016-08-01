@@ -1,3 +1,5 @@
+require 'jwt'
+
 class AssessmentGrader
 
   attr_reader :questions, :answers, :assessment, :correct_list, :confidence_level_list
@@ -11,7 +13,7 @@ class AssessmentGrader
     @ungraded_questions = []
     @xml_index_list = []
     @answered_correctly = 0
-    @doc = Nokogiri::XML(@assessment.assessment_xmls.where(kind: "formative").last.xml)
+    @doc = Nokogiri::XML(@assessment.xml_with_answers)
     @doc.remove_namespaces!
     @xml_questions = @doc.xpath("//item")
   end
@@ -23,21 +25,23 @@ class AssessmentGrader
       @xml_index_list.push(xml_index)
       if question["id"] == @xml_questions[xml_index].attributes["ident"].value
         total = 0
+        
         # find the question type
-        type = @xml_questions[xml_index].children.xpath("qtimetadata").children.xpath("fieldentry").children.text
+        # todo - don't grab type by order of metadata fields
+        question["type"] = @xml_questions[xml_index].children.xpath("qtimetadata").children.xpath("fieldentry").children.text
         # if the question type gets some wierd stuff if means that the assessment has outcomes so we need
         # to get the question data a little differently
-        if type != "multiple_choice_question" && type != "multiple_answers_question" && type != "matching_question"
-          type = @xml_questions[xml_index].children.xpath("qtimetadata").children.xpath("fieldentry").children.first.text
+        if question["type"] != "multiple_choice_question" && question["type"] != "multiple_answers_question" && question["type"] != "matching_question"
+          question["type"] = @xml_questions[xml_index].children.xpath("qtimetadata").children.xpath("fieldentry").children.first.text
         end
 
         # grade the question based off of question type
-        if type == "multiple_choice_question"
+        if question["type"] == "multiple_choice_question"
           total = grade_multiple_choice(xml_index, @answers[index])
-        elsif type == "multiple_answers_question"
+        elsif question["type"] == "multiple_answers_question"
           total = grade_multiple_answers(xml_index, @answers[index])
-        elsif type == "matching_question"
-          total = grade_matching(@xml_questions[xml_index], @answers[index])
+        elsif question["type"] == "mom_embed"
+          total = grade_mom_embed(xml_index, @answers[index])
         end
 
         if total == 1 then @correct_list[index] = true
@@ -104,18 +108,33 @@ class AssessmentGrader
     end
   end
 
-  # Not Currently in Use
-  # def grade_matching(question, answers)
-  #   total = 0
-  #   choices = question.children.xpath("respcondition")
-  #   total_correct = choices.length
-  #   correct = 0
-  #   choices.each_with_index do |choice, index|
-  #     if answers[index] && choice.xpath("conditionvar").xpath("varequal").children.text == answers[index]["answerId"]
-  #       correct_count += 1
-  #     end
-  #   end
-  #   total = correct
-  #   total
-  # end
+  # MOM returns a a JWT signed with the shared secret
+  # This allows us to trust the score even though it goes through the client
+  # If the JWT is invalid we score the answer for 0 points
+  # The JWT's payload looks like:
+  # {
+  #         "id" => 79660,
+  #         "score" => 1,
+  #         "redisplay" => "3766;0;(2,2)",
+  #         "auth" => "secret_lookup_key"
+  # }
+  def grade_mom_embed(xml_index, answer)
+    payload, header = JWT.decode(answer, Rails.application.secrets.mom_secret)
+
+    # Verify that the score is for the designated question
+    if payload["id"] == get_mom_question_id(xml_index)
+      return payload["score"]
+    end
+
+    return 0
+  rescue JWT::DecodeError
+    # The token was invalid
+    return 0
+  end
+
+  def get_mom_question_id(xml_index)
+    question = @xml_questions[xml_index]
+    id = question.children.at_css("material mat_extension mom_question_id").text.strip
+    id.to_i
+  end
 end

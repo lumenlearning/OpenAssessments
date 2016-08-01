@@ -39,7 +39,7 @@ export default class QuestionBlock extends React.Component{
               {
                 this.state.question.answers.map((answer, i)=>{
                   let img = null;
-                  if(answer.material === answer.matchMaterial){
+                  if(answer.isCorrect){
                     img = (<img style={style.checkOrExit} src="/assets/checkbox-48.png" alt="This Answer is Correct"/>);
                   }
 
@@ -67,3 +67,36 @@ export default class QuestionBlock extends React.Component{
   }
 
 }
+
+/*
+ <table style={style.qbAnswerTable} >
+ <thead>
+ <tr>
+ <td></td>
+ <td style={style.qbColHead} >Answer</td>
+ <td style={style.qbColHead} >Feedback</td>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+ <td style={style.qbColImg} >
+ {"X"}
+ </td>
+ <td style={_.merge({}, style.qbColAnswer, {marginRight: '10px'})} >
+ <div style={style.qbAnswerWrap} disabled>
+ <p >
+ {"Aliquam animi autem culpa dicta doloremque ea eius error explicabo inventore ipsam iusto modinemo pariatur perferendis placeat quae quia quibusdam quidem, quos sed sequi similique ullam velveniam voluptatibus?"}
+ </p>
+ </div>
+ </td>
+ <td style={style.qbColAnswer} >
+ <div style={style.qbAnswerWrap} disabled>
+ <p>
+ {"Feedback value"}
+ </p>
+ </div>
+ </td>
+ </tr>
+ </tbody>
+ </table>
+*/

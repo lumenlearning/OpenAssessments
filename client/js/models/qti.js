@@ -7,12 +7,13 @@ export default class Qti{
 
     var fromXml = (xml) => {
       xml = $(xml);
+      var items = this.parseItems(xml);
       return {
         id       : xml.attr('ident'),
         standard : 'qti',
         xml      : xml,
-        outcome  : this.parseOutcome(xml),
-        items    : this.parseItems(xml)
+        outcome  : items[0] ? items[0].outcomes : {},
+        items    : items
       };
     };
 
@@ -30,18 +31,14 @@ export default class Qti{
 
   }
 
-  static parseOutcome(xml){
-    xml = $(xml);
-    if(xml.attr("ident") == "root_section"){
-      return "root section";
-    }
-    var item = xml.find("item")[0];
-    var fields = $(item).find("qtimetadatafield");
+  static parseOutcome(item){
+    item = $(item);
+    var fields = item.find("qtimetadatafield");
     var outcome = {
       shortOutcome: "",
       longOutcome: "",
-      outcomeGuid: "",
-    }
+      outcomeGuid: ""
+    };
     for (var i = fields.length - 1; i >= 0; i--) {
       if($(fields[i]).find("fieldlabel").text() == "outcome_guid"){
         outcome.outcomeGuid = $(fields[i]).find("fieldentry").text()
@@ -52,35 +49,24 @@ export default class Qti{
       if($(fields[i]).find("fieldlabel").text() == "outcome_short_title"){
         outcome.shortOutcome = $(fields[i]).find("fieldentry").text()
       }
-    };
+    }
     return outcome;
   }
 
   static parseItems(xml){
 
-    var fromXml = (xml) => {
-      xml = $(xml);
+    var fromXml = (xml_raw) => {
+      xml = $(xml_raw);
 
       var objectives = xml.find('objectives matref').map((index, item) => { 
         return $(item).attr('linkrefid'); 
       });
-      var outcomes = {
-        shortOutcome: "",
-        longOutcome: ""
-      }
-      xml.find("fieldentry").map((index, outcome)=>{
-        if(index == 2){
-          outcomes.shortOutcome = outcome.textContent
-        }
-        if(index == 3){
-          outcomes.longOutcome = outcome.textContent
-        }
-      });
+
       var item = {
         id         : xml.attr('ident'),
         title      : xml.attr('title'),
         objectives : objectives,
-        outcomes   : outcomes,
+        outcomes   : this.parseOutcome(xml),
         xml        : xml,
         material   : this.material(xml),
         answers    : this.parseAnswers(xml),
@@ -95,12 +81,24 @@ export default class Qti{
         item.question_type = 'multiple_choice_question';
       }
 
+      if(item.question_type == 'mom_embed'){
+        item.momEmbed = {};
+        item.momEmbed.questionId = xml.find("material mat_extension mom_question_id").text();
+        item.momEmbed.embedUrl = xml.find("material mat_extension mom_embed_url").text();
+        item.momEmbed.jwt = xml.find("material mat_extension mom_jwt").text();
+        item.momEmbed.domain = xml.find("material mat_extension mom_domain").text();
+        item.momEmbed.iframeHeight = null;
+        item.material = "";
+      }
+
       var response_grp = xml.find('response_grp');
       if(response_grp){
         if(response_grp.attr('rcardinality') === 'Multiple'){
           item.question_type = 'drag_and_drop';
         }
       }
+
+      this.markCorrectAnswers(item);
 
       return item;
     };
@@ -111,14 +109,14 @@ export default class Qti{
 
   static parseCorrect(xml){
     var respconditions = xml.find("respcondition");
-    var correctAnswers = []
+    var correctAnswers = [];
     for (var i=0; i<respconditions.length; i++){
       var condition = $(respconditions[i]);
       if(condition.find('setvar').text() != '0'){
         var answer = {
           id: condition.find('conditionvar > varequal').text(),
           value: condition.find('setvar').text()
-        }
+        };
         if(answer.id == ""){
           answer.id = condition.find('conditionvar > and > varequal').map((index, condition) => {
             condition = $(condition);
@@ -136,18 +134,32 @@ export default class Qti{
 
     var fromXml = (xml) => {
       xml = $(xml);
-      var matchMaterial = xml.parent().parent().find('material')[0].textContent.trim();
       var answer = {
         id       : xml.attr('ident'),
         material : this.buildMaterial(xml.find('material').children()),
-        matchMaterial: matchMaterial, 
-        xml      : xml
+        xml      : xml,
+        isCorrect: false
       };
       return answer;
     };
 
     return this.listFromXml(xml, 'response_lid > render_choice > response_label', fromXml);
+  }
 
+  static markCorrectAnswers(item){
+    if(item.question_type == 'multiple_choice_question' || item.question_type == 'multiple_answers_question'){
+      item.correct.forEach(function(correct){
+        var ids = [].concat( correct.id );
+        ids.forEach(function(id){
+          var ans = _.find(item.answers, {id : id.toString()});
+          if(ans !== undefined){
+            ans.isCorrect = true;
+          }
+        });
+      });
+    }
+
+    return item
   }
 
   // Process nodes based on QTI spec here:

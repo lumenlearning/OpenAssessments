@@ -104,16 +104,6 @@ RSpec.describe AssessmentsController, type: :controller do
         expect(result.license).to eq("foo license")
         expect(result.keyword_list.sort).to eq(["foo", "keywords"])
       end
-
-      it "sets creates two assessment xmls" do
-        @account.restrict_signup = false
-        @account.restrict_assessment_create = false
-        xml_file = Rack::Test::UploadedFile.new File.join(Rails.root, 'spec', 'fixtures', 'assessment.xml')
-        assessment = FactoryGirl.attributes_for(:assessment).merge({title: "test", xml_file: xml_file, license: "foo license", keyword_list: "foo keywords"} )
-        post :create, assessment: assessment
-        assessment = Assessment.where({title: "test"}).first
-        expect(assessment.assessment_xmls.length).to eq(2)
-      end
     end
 
   end
