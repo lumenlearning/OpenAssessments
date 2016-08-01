@@ -58,8 +58,8 @@ export default class Qti{
     var fromXml = (xml_raw) => {
       xml = $(xml_raw);
 
-      var objectives = xml.find('objectives matref').map((index, item) => { 
-        return $(item).attr('linkrefid'); 
+      var objectives = xml.find('objectives matref').map((index, item) => {
+        return $(item).attr('linkrefid');
       });
 
       var item = {
@@ -104,7 +104,7 @@ export default class Qti{
     };
 
     return this.listFromXml(xml, 'item', fromXml);
-  
+
   }
 
   static parseCorrect(xml){
@@ -138,7 +138,8 @@ export default class Qti{
         id       : xml.attr('ident'),
         material : this.buildMaterial(xml.find('material').children()),
         xml      : xml,
-        isCorrect: false
+        isCorrect: false,
+        feedback : null
       };
       return answer;
     };
@@ -215,7 +216,7 @@ export default class Qti{
   }
 
   static material(xml){
-    
+
     var material = xml.find('presentation > material').children();
     if(material.length > 0){
       return Qti.buildMaterial(material);

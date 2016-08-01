@@ -18,7 +18,18 @@ export default class Checkbox extends React.Component{
   }
 
   componentWillMount() {
+    let correct = this.props.isCorrect;
 
+    // if the answer is correct, make checkbox active
+    if (correct) {
+      this.setState({
+        active: true
+      });
+    } else {
+      this.setState({
+        active: false
+      });
+    }
   }
 
   toggleHover() {

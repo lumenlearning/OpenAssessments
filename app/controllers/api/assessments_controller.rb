@@ -6,6 +6,7 @@ class Api::AssessmentsController < Api::ApiController
   before_action :ensure_context_admin, only:[:json_update]
   load_and_authorize_resource except: [:show, :json_update]
   skip_before_action :validate_token, only: [:show]
+  skip_before_action :protect_account, only: [:show]
 
   def index
     page = (params[:page] || 1).to_i
@@ -100,9 +101,9 @@ class Api::AssessmentsController < Api::ApiController
 
   # *******************************************************************
   # URL PARAMS
-  # 
+  #
   # enable_start
-  # => set to true or false to show the start screen 
+  # => set to true or false to show the start screen
   # style
   # => set to "lumen_learning" to use the lumen learning theme. Leave out for default style
   # asid
@@ -122,7 +123,7 @@ class Api::AssessmentsController < Api::ApiController
     @assessment.save!
     respond_with(:api, @assessment)
   end
-  
+
   def update
     @assessment.update(update_params)
     respond_with(:api, @assessment)
