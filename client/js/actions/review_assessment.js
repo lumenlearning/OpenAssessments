@@ -48,8 +48,7 @@ export default {
         return {
           id: ans.id,
           material: ans.material,
-          // todo: properly grab whether it's correct
-          is_correct: false
+          isCorrect: ans.isCorrect
         }
       });
       return {
@@ -78,31 +77,3 @@ export default {
   }
 
 };
-
-let AssessmentSchema = {
-  answers: [
-    {
-      id: '',
-      matchMaterial: 'the question that is correct',
-      material: 'the question that is associated with ID key'
-    },
-    //{...}
-  ],
-  correct: [
-    {
-      id: '',
-      value: '100' //???
-    }
-  ],
-  assessmentId: '',
-  id: '',
-  material: 'This is the question field',
-  objectives: {}, // ??,
-  outcome_guid: '',
-  outcome_long_title: '',
-  outcome_short_title: '',
-  outcomes:{},
-  question_type: 'multiple_answers_selection',
-  timeSpent: 0,
-  title: ''
-}

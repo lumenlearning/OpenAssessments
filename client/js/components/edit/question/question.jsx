@@ -12,27 +12,28 @@ import OutcomeSection                 from '../outcome_section/outcome_section.j
 import QuestionBlock                  from '../question_block/question_block.jsx';
 import QuestionInterface              from '../question_interface/question_interface.jsx';
 
-export default class Question extends React.Component{
+export default class Question extends BaseComponent{
 
   constructor(props, context) {
     super(props, context);
+    this.state = this.getState();
 
-    this.state = {
+    //Rebindings
+    this._bind("toggleEdit", "handleDuplicate", "handleDelete");
+  }//constructor
+
+  getState(){
+    return {
       question: this.props.question || null,
       editMode: false,
       minimize: false,
       hover:{
         "copy": false,
         "edit": false,
-        "delete": false,
+        "delete": false
       }
     };
-
-    //Rebindings
-    this.toggleEdit       = this.toggleEdit.bind(this);
-    this.handleDuplicate   = this.handleDuplicate.bind(this);
-    this.handleDelete     = this.handleDelete.bind(this);
-  }//constructor
+  }
 
   componentWillMount(){
     //when component will mount, grab data from the editQuiz store
@@ -43,9 +44,8 @@ export default class Question extends React.Component{
   }
 
   render(){
-    let question = this.state.question;
+    let question = this.props.question;
     let style = Style.styles();
-
     let Content = this.state.editMode ? QuestionInterface : QuestionBlock;
 
     return (

@@ -98,6 +98,8 @@ export default class Qti{
         }
       }
 
+      this.markCorrectAnswers(item);
+
       return item;
     };
 
@@ -132,18 +134,32 @@ export default class Qti{
 
     var fromXml = (xml) => {
       xml = $(xml);
-      var matchMaterial = xml.parent().parent().find('material')[0].textContent.trim();
       var answer = {
         id       : xml.attr('ident'),
         material : this.buildMaterial(xml.find('material').children()),
-        matchMaterial: matchMaterial, 
-        xml      : xml
+        xml      : xml,
+        isCorrect: false
       };
       return answer;
     };
 
     return this.listFromXml(xml, 'response_lid > render_choice > response_label', fromXml);
+  }
 
+  static markCorrectAnswers(item){
+    if(item.question_type == 'multiple_choice_question' || item.question_type == 'multiple_answers_question'){
+      item.correct.forEach(function(correct){
+        var ids = [].concat( correct.id );
+        ids.forEach(function(id){
+          var ans = _.find(item.answers, {id : id.toString()});
+          if(ans !== undefined){
+            ans.isCorrect = true;
+          }
+        });
+      });
+    }
+
+    return item
   }
 
   // Process nodes based on QTI spec here:
