@@ -6,7 +6,7 @@
     csrfToken: '<%= form_authenticity_token %>',
     jwt: '<%= jwt_token %>',
   };
-  window.location.href = "#/edit/<%= @assessment_id %>";
+  window.location.href = "#/edit/<%= @assessment.id %>";
 </script>
 
 <%= webpack_manifest_script %>

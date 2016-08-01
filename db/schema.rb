@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160731163908) do
+ActiveRecord::Schema.define(version: 20160801005426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,8 +79,8 @@ ActiveRecord::Schema.define(version: 20160731163908) do
   create_table "assessment_settings", force: :cascade do |t|
     t.integer  "assessment_id"
     t.integer  "allowed_attempts"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.string   "style"
     t.string   "per_sec"
     t.boolean  "confidence_levels"
@@ -88,15 +88,16 @@ ActiveRecord::Schema.define(version: 20160731163908) do
     t.boolean  "is_default"
     t.integer  "account_id"
     t.string   "mode"
+    t.boolean  "show_recent_results"
   end
 
   create_table "assessment_xmls", force: :cascade do |t|
     t.text     "xml"
-    t.text     "no_answer_xml"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "assessment_id"
     t.string   "kind"
+    t.text     "no_answer_xml"
     t.jsonb    "data",          default: {}, null: false
   end
 
@@ -117,6 +118,7 @@ ActiveRecord::Schema.define(version: 20160731163908) do
     t.integer  "account_id"
     t.string   "kind",                      default: "formative"
     t.integer  "current_assessment_xml_id"
+    t.jsonb    "data",                      default: {},          null: false
   end
 
   add_index "assessments", ["account_id"], name: "index_assessments_on_account_id", using: :btree

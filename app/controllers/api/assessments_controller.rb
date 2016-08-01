@@ -3,7 +3,8 @@ class Api::AssessmentsController < Api::ApiController
   
   respond_to :xml, :json
 
-  load_and_authorize_resource except: [:show]
+  before_action :ensure_context_admin, only:[:json_update]
+  load_and_authorize_resource except: [:show, :json_update]
   skip_before_action :validate_token, only: [:show]
 
   def index
@@ -123,12 +124,29 @@ class Api::AssessmentsController < Api::ApiController
   end
   
   def update
-    # if it's json convert to qti?
     @assessment.update(update_params)
     respond_with(:api, @assessment)
-  end 
+  end
+
+  def json_update
+    assessment = Assessment.where(id: params[:assessment_id], account: current_account).first
+    raise ActiveRecord::RecordNotFound unless assessment
+    return unless ensure_edit_id_scope(assessment.external_edit_id)
+
+    #todo update the assessment with the new data
+
+    # yes, confusing to return XML from JSON update, but that's the format it's saved in
+    render :xml => assessment.xml_with_answers
+  end
 
   private
+
+  # makes sure the JWT token allows admin scope for this LTI context id
+  def ensure_edit_id_scope(edit_id)
+    return true if token_has_edit_id_scope(edit_id)
+    render :json => {:error => "Unauthorized"}, status: :unauthorized
+    false
+  end
 
     def create_params
       params.require(:assessment).permit(:title, :description, :license, :xml_file,

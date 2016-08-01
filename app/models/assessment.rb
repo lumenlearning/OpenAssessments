@@ -16,12 +16,15 @@ class Assessment < ActiveRecord::Base
   has_many :assessment_settings
   has_many :user_assessments
 
+  store_accessor :data, :external_edit_id
+
   scope :by_newest, -> { order(created_at: :desc) }
   scope :by_oldest, -> { order(start_date: :asc) }
   scope :by_latest, -> { order(updated_at: :desc) }
   scope :summative, -> {where kind: 'summative'}
   scope :swyk, -> {where kind: 'show_what_you_know'}
   scope :formative, -> {where kind: 'formative'}
+  scope :by_edit_id, ->(id) {where('data @> ?', {external_edit_id: id}.to_json)}
 
   attr_accessor :xml_file
 

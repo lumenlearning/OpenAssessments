@@ -74,7 +74,7 @@ export default {
       }
     };
 
-    Api.put(Constants.SAVE_ASSESSMENT, 'api/assessments/' + assessment.assessmentId, updateParams);
+    Api.put(Constants.SAVE_ASSESSMENT, 'api/assessments/' + assessment.assessmentId + '/edit', updateParams);
   }
 
 };

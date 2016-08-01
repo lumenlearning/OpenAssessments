@@ -122,7 +122,13 @@ class AssessmentsController < LtiBaseController
 
   def edit
     @assessment = Assessment.where(id: params[:id], account: current_account).first
-    @assessment_id = @assessment ? @assessment.id : params[:assessment_id] || 'null'
+    raise ActiveRecord::RecordNotFound unless @assessment
+    set_lti_role
+
+    return user_not_authorized unless @lti_role == "admin"
+    return user_not_authorized unless params[:edit_id].present? && params[:edit_id] == @assessment.external_edit_id
+    @edit_id = params[:edit_id]
+    @external_context_id = @lti_launch.lti_context_id
 
     render :edit, layout: 'assessment'
   end
