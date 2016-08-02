@@ -5,7 +5,7 @@ require 'nokogiri'
 describe Json2Qti::Converter do
   let(:json) {
       {
-    "title" => "Show What You Know: Outcome Name",
+    "title" => "This & That",
     "ident" => "ib7b957_swyk",
     "assessmentId" => "152",
     "standard" => "qti",
@@ -66,5 +66,9 @@ describe Json2Qti::Converter do
 
     expect(converter.items[1].ident).to eq converter.items[0].ident + "_2"
     expect(converter.items[2].ident).to eq converter.items[0].ident + "_3"
+  end
+
+  it "should escape title" do
+    expect(converter.convert_to_qti).to include(%{<assessment title="This &amp; That"})
   end
 end

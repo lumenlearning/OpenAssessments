@@ -19,7 +19,7 @@ export default class Question extends BaseComponent{
     this.state = this.getState();
 
     //Rebindings
-    this._bind("toggleEdit", "handleDuplicate", "handleDelete");
+    this._bind("toggleEdit", "handleDuplicate", "handleDelete", "handleHoverStates");
   }//constructor
 
   getState(){

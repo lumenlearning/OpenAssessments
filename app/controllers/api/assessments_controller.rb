@@ -1,3 +1,4 @@
+require 'json2qti'
 
 class Api::AssessmentsController < Api::ApiController
   
@@ -134,7 +135,23 @@ class Api::AssessmentsController < Api::ApiController
     raise ActiveRecord::RecordNotFound unless assessment
     return unless ensure_edit_id_scope(assessment.external_edit_id)
 
-    #todo update the assessment with the new data
+    clean_params = params.require(:assessment)
+    assessment.title = clean_params[:title]
+
+    if clean_params[:items]
+      opts = {}
+      if settings = assessment.default_settings
+        if settings.per_sec
+          opts["group_by_section"] = true
+          opts["per_sec"] = settings.per_sec
+        end
+      end
+      xml = Json2Qti.convert_to_qti(clean_params, opts)
+
+      assessment.xml_file = xml
+    end
+
+    assessment.save!
 
     # yes, confusing to return XML from JSON update, but that's the format it's saved in
     render :xml => assessment.xml_with_answers

@@ -15,8 +15,6 @@ export default {
       url = settings.srcUrl;
     } else if(assessmentId) {
       url = settings.apiUrl + "api/assessments/" + assessmentId + ".xml";
-    } else{
-      console.log("DEATH!");
     }
 
     let param = forEdit ? "for_edit" : "for_review";

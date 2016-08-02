@@ -44,9 +44,13 @@ module Json2Qti
       end
     end
 
+    def rcardinality
+      ""
+    end
+
     def answer_choices
       <<XML
-           <response_lid ident="response1" rcardinality="Single">
+           <response_lid ident="response1" rcardinality="#{rcardinality}">
               <render_choice>
 #{response_labels}
               </render_choice>

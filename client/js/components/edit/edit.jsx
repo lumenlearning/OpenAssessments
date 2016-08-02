@@ -49,7 +49,6 @@ export default class Edit extends BaseComponent{
     let enablingOutcomeSections = this.state.enablingOutcomes;
     let style = Style.styles();
 
-    console.log("STATE:", this.state);
     let title = typeof this.state.assessment == 'undefined' || this.state.assessment == null ? '' : this.state.assessment.title;
 
     return (

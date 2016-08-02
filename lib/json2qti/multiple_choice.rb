@@ -4,6 +4,10 @@ module Json2Qti
       "multiple_choice_question"
     end
 
+    def rcardinality
+      "Single"
+    end
+
     def answer_processing
       out = ""
       @answers.each do |ans|

@@ -40,7 +40,7 @@ function loadAssessment(payload){
         _assessment.sections[0] &&
         _assessment.sections[0].items){
         if(_assessment.standard == "qti"){
-          _items = Assessment.getItems(_assessment.sections, -1);
+          _items = Assessment.getItems(_assessment.sections, -1, false);
         } else {
           _items = _assessment.sections[0].items
         }
@@ -78,8 +78,8 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
     return _assessmentResultState == LOADED;
   },
   questionCount(){
-    if(SettingsStore.current().questionCount) return SettingsStore.current().questionCount;
     if(_items && _items.length > 0)return _items.length;
+    if(SettingsStore.current().questionCount) return SettingsStore.current().questionCount;
     return SettingsStore.current().sectionCount * SettingsStore.current().perSec;
   },
   studentAnswers(){

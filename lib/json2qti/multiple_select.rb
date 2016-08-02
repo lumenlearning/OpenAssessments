@@ -4,6 +4,10 @@ module Json2Qti
       "multiple_answers_question"
     end
 
+    def rcardinality
+      "Multiple"
+    end
+
     def correct_responses
       out = ''
       @answers.select{|a| a["isCorrect"]}.each do |ans|
