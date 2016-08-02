@@ -8,10 +8,6 @@ export default class QuestionBlock extends React.Component{
 
   constructor(props, state) {
     super(props, state);
-
-    this.state = {
-      question: this.props.question || null
-    }
   }
 
   componentWillMount() {
@@ -22,7 +18,6 @@ export default class QuestionBlock extends React.Component{
     let question = this.props.question;
     let style    = Style.styles();
 
-//console.log('QUESTION:', this.state.question);
     return (
       <div style={style.qbContent}>
         <div style={style.qbContentHead}>
@@ -37,7 +32,7 @@ export default class QuestionBlock extends React.Component{
             </div>
             <div style={style.qbTblContent} >
               {
-                this.state.question.answers.map((answer, i)=>{
+                question.answers.map((answer, i)=>{
                   let img = null;
                   if(answer.isCorrect){
                     img = (<img style={style.checkOrExit} src="/assets/checkbox-48.png" alt="This Answer is Correct"/>);

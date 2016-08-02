@@ -18,7 +18,6 @@ export default new class Style {
       },
       eqNewQuestion:{
         width: '100%',
-        display: 'block',
         margin: '15px 0',
         display: 'flex',
         justifyContent: 'center',
@@ -44,11 +43,15 @@ export default new class Style {
         alignContent: 'center'
       },
       saveAssessmentBtn:{
+        width: '48px',
+        height: '48px',
         border:'transparent',
-        backgroundColor:'#CF0000',
+        borderRadius: '50%',
+        backgroundColor:'#3299bb',
         color:'#fff',
-        minWidth:'150px',
-        margin:'3px 2px',
+        padding: '0px',
+        margin:'0px 10px 0px 0px',
+        outline: 'none'
       },
 
       heading: {

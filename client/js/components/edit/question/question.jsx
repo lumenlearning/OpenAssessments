@@ -12,12 +12,18 @@ import OutcomeSection                 from '../outcome_section/outcome_section.j
 import QuestionBlock                  from '../question_block/question_block.jsx';
 import QuestionInterface              from '../question_interface/question_interface.jsx';
 
-export default class Question extends React.Component{
+export default class Question extends BaseComponent{
 
   constructor(props, context) {
     super(props, context);
+    this.state = this.getState();
 
-    this.state = {
+    //Rebindings
+    this._bind("toggleEdit", "handleDuplicate", "handleDelete");
+  }//constructor
+
+  getState(){
+    return {
       question: this.props.question || null,
       editMode: false,
       minimize: false,
@@ -27,21 +33,14 @@ export default class Question extends React.Component{
         "delete": false
       }
     };
-
-    //Rebindings
-    this.toggleEdit         = this.toggleEdit.bind(this);
-    this.handleDuplicate    = this.handleDuplicate.bind(this);
-    this.handleDelete       = this.handleDelete.bind(this);
-    this.handleHoverStates  = this.handleHoverStates.bind(this);
-
-  }//constructor
+  }
 
   componentWillMount(){
     //when component will mount, grab data from the editQuiz store
   }
 
   render(){
-    let question  = this.state.question;
+    let question = this.props.question;
     let style     = Style.styles();
     let delHover  = this.state.hover.delete;
     let copyHover = this.state.hover.copy;
@@ -105,11 +104,9 @@ export default class Question extends React.Component{
   }
 
   handleDuplicate(e){
-console.log("DUPLICATE", e);
   }
 
   handleDelete(e){
-console.log("DELETE", e);
   }
 
   handleHoverStates(e){

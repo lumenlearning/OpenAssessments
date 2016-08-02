@@ -18,16 +18,20 @@ export default class Edit extends BaseComponent{
   constructor(props, context) {
     super(props, context);
     this.stores = [ReviewAssessmentStore];
-    console.log("DEFAULT SETTINGS:", window.DEFAULT_SETTINGS);
+    this._bind("handleAddQuestion", "handleSaveAssessment");
 
     if(!ReviewAssessmentStore.isLoaded() && !ReviewAssessmentStore.isLoading()){
-      ReviewAssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, this.props.params["assessmentId"]);
+      ReviewAssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, this.props.params["assessmentId"], true);
     }
 
     this.state = this.getState();
   }
 
   getState(){
+    let assessment = ReviewAssessmentStore.current();
+    if(assessment && !assessment.assessmentId){
+      assessment.assessmentId = this.props.params["assessmentId"];
+    }
     return {
       questions        : ReviewAssessmentStore.allQuestions(),
       outcomes         : ReviewAssessmentStore.outcomes(),
@@ -56,6 +60,12 @@ export default class Edit extends BaseComponent{
           </div>
         </div>
         <div className="eqNewQuestion" style={style.eqNewQuestion} >
+          <label for="save_quiz" style={style.saveAssessmentBtn}>
+            <button name='save_quiz' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={this.handleSaveAssessment} style={style.saveAssessmentBtn}>
+              <img style={style.addQuestionImg} src="/assets/pencil-64-white.png" alt="Save Assessment"/>
+            </button>
+            Save Assessment
+          </label>
           <label for="add_question" style={style.addQuestionLbl}>
             <button name='add_question' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={this.handleAddQuestion} style={style.addQuestionBtn} ><img style={style.addQuestionImg} src="/assets/plus-52.png" alt="Add Question"/></button>
             Add Question
@@ -85,6 +95,10 @@ export default class Edit extends BaseComponent{
   toggleButtonStyle(e){
 
   }
+
+ handleSaveAssessment(e) {
+   ReviewAssessmentActions.saveAssessment(this.state.assessment);
+ }
 
   /*CUSTOM FUNCTIONS*/
 };
