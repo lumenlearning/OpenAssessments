@@ -3,20 +3,23 @@ export default new class Style {
 
     this.style = {
       qiContent: {
-        border: "1px solid rgba(0,0,0,0.2)",
         fontSize: "18px"
       },
       qiContentBlock: {
         padding: "15px 40px 40px"
       },
       qBlock: {
-        display:"inline-block",
         width: "100%",
         paddingBottom: "30px"
       },
-      qLabel: {
+      label: {
+        fontWeight: "bold",
+      },
+      textArea: {
         width: "100%",
-        fontWeight: "bold"
+        marginTop: "5px",
+        padding: "15px",
+        borderRadius: "3px"
       },
       ofLabelBlock: {
         width: "100%",
@@ -25,26 +28,22 @@ export default new class Style {
       emptyCell: {
         display: "inline-block",
         width: "4%",
-        verticalAlign: "top"
+        height: "100%",
+        verticalAlign: "middle"
       },
       optionLabelBlock: {
         display: "inline-block",
         width: "48%",
         padding: "5px 0px 0px 10px"
       },
-      optionLabel: {
-        fontWeight: "bold",
-      },
       feedbackLabelBlock: {
         display: "inline-block",
         width: "48%"
       },
-      feedbackLabel: {
-        fontWeight: "bold"
-      },
       answerRow: {
         display: "block",
         width: "100%",
+        height: "100px"
       },
       answerOptionBlock: {
         display: "inline-block",
@@ -53,7 +52,8 @@ export default new class Style {
       },
       feedbackBlock: {
         display: "inline-block",
-        width: "48%"
+        width: "48%",
+        padding: "5px 0"
       },
       block: {
         paddingBottom: "20px"
@@ -67,20 +67,13 @@ export default new class Style {
         width: "100%",
         fontWeight: "bold"
       },
-      textArea: {
-        width: "100%",
-        marginTop: "5px",
-        padding: "15px",
-        border: "1px solid",
-        borderRadius: "3px"
-      },
       buttonDiv: {
         textAlign: "center"
       },
       checkCircle: {
         width: "32px",
         height: "32px",
-        margin: "46px auto",
+        // margin: "50% auto",
         border: "2px solid #CCC", //#868686
         borderRadius: "100%"
       },
