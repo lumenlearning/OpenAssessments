@@ -56,10 +56,10 @@ export default class Question extends BaseComponent{
     let copyHover = this.state.hover.copy;
     let editHover = this.state.hover.edit;
     let Content   = this.state.editMode ? QuestionInterface : QuestionBlock;
-
     return (
       <li style={style.questionItem} >
         <div className="questionHeader" style={style.questionHeader}>
+          <div className="questionShortName" style={style.questionShortName} >{question.outcomes.shortOutcome}</div>
           <div className="questionToolbar" style={style.questionToolbar}>
             <img className='questionToolBtns'
                  style={_.merge({}, style.questionToolBtns, {backgroundColor: copyHover ? '#31708f' : 'transparent'})}

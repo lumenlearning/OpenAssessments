@@ -13,6 +13,13 @@ export default new class Style {
         height: '40px',
         borderRadius: '4px 4px 0 0'
       },
+      questionShortName:{
+        position: 'absolute',
+        display: 'inline-block',
+        left: '50px',
+        color: 'white',
+        fontSize: '24px'
+      },
       questionToolbar:{
         position: 'absolute',
         display: 'inline-block',
