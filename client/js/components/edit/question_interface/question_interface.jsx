@@ -2,16 +2,18 @@
 
 import React from "react";
 import Style from "./css/style.js";
+import BaseComponent from '../../base_component.jsx';
 
 //Components
 import OutcomeSelector      from './outcome_selector.jsx';
 import QuestionMaterial     from './question_material.jsx';
 import AnswerOptionFeedback from './answer_option_feedback.jsx';
 
-export default class QuestionInterface extends React.Component{
+export default class QuestionInterface extends BaseComponent{
 
   constructor(props, state) {
     super(props, state);
+    this._bind("handleMaterialChange");
 
     this.state = {
       question: this.props.question || {},
@@ -20,6 +22,12 @@ export default class QuestionInterface extends React.Component{
 
   componentWillMount() {
 
+  }
+
+  handleMaterialChange(e) {
+    this.setState({
+      question: {material: e.target.getContent()}
+    });
   }
 
   render() {
@@ -31,7 +39,7 @@ export default class QuestionInterface extends React.Component{
       <div style={style.qiContent}>
         <div style={style.qiContentBlock}>
           <OutcomeSelector outcomes={outcomes} />
-          <QuestionMaterial material={question.material} />
+          <QuestionMaterial material={question.material} onChange={this.handleMaterialChange} />
           <AnswerOptionFeedback answers={question.answers} />
         </div>
       </div>

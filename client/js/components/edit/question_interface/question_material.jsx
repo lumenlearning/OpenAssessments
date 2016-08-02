@@ -2,34 +2,29 @@
 
 import React    from "react";
 import Style    from "./css/style.js";
+import BaseComponent from '../../base_component.jsx';
 import Checkbox from './check_box.jsx';
+import SimpleRCE  from './simple_rce';
 
-export default class QuestionInterface extends React.Component{
+export default class QuestionInterface extends BaseComponent{
 
   constructor(props, state) {
     super(props, state);
-
-    this.state = {
-      material: this.props.material
-    }
   }
 
-  handleChange(e) {
-    this.setState({
-      material: e.target.value
-    });
+  // Don't update because we don't want SimpleRCE to get a new instance
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
   }
 
   render() {
-    let material = this.state.material;
+    let material = this.props.material;
     let style    = Style.styles();
 
     return (
       <div style={style.qBlock}>
         <div style={style.label}>Question</div>
-        <textarea style={style.textArea} name="question" id="question" rows="3" onChange={this.handleChange}>
-          {material}
-        </textarea>
+        <SimpleRCE material={this.props.material} onChange={this.props.onChange}/>
       </div>
     )
 
