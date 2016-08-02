@@ -38,18 +38,21 @@ module Json2Qti
   #   ]
   # }
   class Converter
+    attr_accessor :items, :title, :ident
+
     def initialize(json, opts={})
       @json = json
-      @items = json["items"]
       @title = @json["title"] || ''
       @ident = @json["ident"] || ''
       @qti = ""
       @group_by_section = opts["group_by_section"]
       @per_section = opts["per_sec"].to_s || ''
 
+      @items = json["items"].map{|i| Question.new_from_item(i) }
+
       if @group_by_section
-        if @json["items"].all? { |item| item["outcome"] }
-          @sections = @json["items"].group_by { |i| i["outcome"]["guid"] || i["outcome"]["outcomeGuid"] }
+        if @items.all? { |item| item.outcome }
+          @sections = @items.group_by { |i| i.outcome["guid"] }
         else
           @group_by_section = false
         end
@@ -61,7 +64,20 @@ module Json2Qti
     # returns qti string for the whole assessment
     def convert_to_qti
       @qti = ""
+      check_duplicate_question_idents
       write_quiz
+    end
+
+    def check_duplicate_question_idents
+      dup_count = {}
+      @items.each do |item|
+        if dup_count[item.ident]
+          dup_count[item.ident] += 1
+          item.ident += "_#{dup_count[item.ident]}"
+        else
+          dup_count[item.ident] = 1
+        end
+      end
     end
 
 
@@ -87,7 +103,7 @@ module Json2Qti
 
     def write_items(items)
       items.each_with_index do |item, i|
-        @qti += Question.new_from_item(item).to_qti
+        @qti += item.to_qti
       end
     end
 

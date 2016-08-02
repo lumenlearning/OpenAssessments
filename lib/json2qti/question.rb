@@ -1,6 +1,6 @@
 module Json2Qti
   class Question
-    attr_accessor :outcome, :title, :id, :material, :answers
+    attr_accessor :outcome, :title, :id, :material, :answers, :ident
 
     def initialize(item)
       @title = item["title"] || ''
@@ -8,6 +8,7 @@ module Json2Qti
       @answers = item["answers"]
       @id = item["id"]
       @key = [@material, @answers]
+      @ident = generate_digest_ident(@key)
 
       if @outcome = item["outcome"]
         @outcome["guid"] ||= @outcome.delete("outcomeGuid")
@@ -37,7 +38,7 @@ module Json2Qti
       "unknown"
     end
 
-    def set_new_anser_ids
+    def set_new_answer_ids
       @answers.each do |ans|
         ans["ident"] = generate_digest_ident(ans["material"])
       end
@@ -73,9 +74,9 @@ XML
     end
 
     def to_qti
-      set_new_anser_ids
+      set_new_answer_ids
       <<XML
-        <item title="#{@title.encode(:xml => :text)}" ident="#{generate_digest_ident(@key).encode(:xml => :text)}">
+        <item title="#{@title.encode(:xml => :text)}" ident="#{@ident.encode(:xml => :text)}">
           <itemmetadata>
             <qtimetadata>
               <qtimetadatafield>

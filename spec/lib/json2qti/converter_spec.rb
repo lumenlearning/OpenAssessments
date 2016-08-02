@@ -59,4 +59,12 @@ describe Json2Qti::Converter do
     expect(node.css('assessment > section > section > item').count).to eq 1
     expect(node.css('selection_number').text).to eq '1'
   end
+
+  it "should update duplicate item idents" do
+    2.times{ json["items"] << json["items"][0] }
+    converter.check_duplicate_question_idents
+
+    expect(converter.items[1].ident).to eq converter.items[0].ident + "_2"
+    expect(converter.items[2].ident).to eq converter.items[0].ident + "_3"
+  end
 end
