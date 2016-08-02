@@ -62,36 +62,3 @@ export default class QuestionBlock extends React.Component{
   }
 
 }
-
-/*
- <table style={style.qbAnswerTable} >
- <thead>
- <tr>
- <td></td>
- <td style={style.qbColHead} >Answer</td>
- <td style={style.qbColHead} >Feedback</td>
- </tr>
- </thead>
- <tbody>
- <tr>
- <td style={style.qbColImg} >
- {"X"}
- </td>
- <td style={_.merge({}, style.qbColAnswer, {marginRight: '10px'})} >
- <div style={style.qbAnswerWrap} disabled>
- <p >
- {"Aliquam animi autem culpa dicta doloremque ea eius error explicabo inventore ipsam iusto modinemo pariatur perferendis placeat quae quia quibusdam quidem, quos sed sequi similique ullam velveniam voluptatibus?"}
- </p>
- </div>
- </td>
- <td style={style.qbColAnswer} >
- <div style={style.qbAnswerWrap} disabled>
- <p>
- {"Feedback value"}
- </p>
- </div>
- </td>
- </tr>
- </tbody>
- </table>
-*/

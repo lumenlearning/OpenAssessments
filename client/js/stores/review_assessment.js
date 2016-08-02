@@ -133,8 +133,29 @@ Dispatcher.register(function(payload) {
 
     case Constants.ADD_ASSSESSMENT_QUESTION:
       var question = payload.data;
+      var location = payload.location;
 
-      _items.push(question);
+      if(location == 'top'){
+        _items.unshift(question);
+      }
+      else if(location == 'bottom'){
+        _items.push(question);
+      }
+      else if(location == 'duplicate'){
+        _items.forEach((item, index)=>{
+          if(item.id === question.id){
+            let nQuestion = _.clone(question, true);
+            nQuestion.id = nQuestion.newId;
+            _items.splice(index+1, 0, nQuestion);
+          }
+        });
+      }
+
+
+      //_items.unshift(question);
+      //_items.push(question);
+      //_items.splice(index, 0, question);
+
       break;
 
     case Constants.UPDATE_ASSESSMENT_QUESTION:
@@ -143,6 +164,17 @@ Dispatcher.register(function(payload) {
       _items.forEach((item, index)=>{
         if(item.id === question.id){
           _items[index] = question;
+        }
+      });
+
+      break;
+
+    case Constants.DELETE_ASSESSMENT_QUESTION:
+      var id = payload.data.id;
+
+      _items.forEach((item, index)=>{
+        if(item.id === id){
+          _items.splice(index, 1);
         }
       });
 

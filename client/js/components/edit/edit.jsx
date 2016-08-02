@@ -72,14 +72,7 @@ export default class Edit extends BaseComponent{
           {/*display question interface here if newQuestion == true*/}
         </div>
         <ul className="eqContent" style={{listStyleType: 'none', padding:'40px'}}>
-          {this.state.questions.map((question, index)=>{
-            let outcomes = this.state.outcomes;
-
-            return (
-              <Question question={question} outcomes={outcomes} />
-            )
-          })
-          }
+          {this.displayQuestions()}
         </ul>
       </div>
     );
@@ -101,6 +94,29 @@ export default class Edit extends BaseComponent{
  }
 
   /*CUSTOM FUNCTIONS*/
+  displayQuestions(){
+    if(this.state.questions.length !== 0){
+      return this.state.questions.map((question, index)=>{
+        let outcomes = this.state.outcomes;
+
+        return (
+          <Question question={question} outcomes={outcomes} />
+        )
+      });
+    }
+    else if(!this.state.newQuestion){
+      let noteStyle = {
+        fontSize: '24px',
+        color: '#CF0000',
+        border: '1px solid #CF0000',
+        padding: '15px'
+      };
+      let btnStyle = _.merge({}, Style.styles().addQuestionBtn, {borderRadius: '0', fontSize: '24px', padding: '0px 15px', margin:'0px', width: 'inherit'});
+      return (<li style={noteStyle}> You currently don't have any quiz questions. Please click <button style={btnStyle} className='btn btn-sm' onClick={this.handleAddQuestion} >Here</button> to create one :)</li>)
+    }
+
+
+  }
 };
 
 module.export = Edit;

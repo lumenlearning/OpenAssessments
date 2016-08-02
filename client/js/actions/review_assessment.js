@@ -31,12 +31,16 @@ export default {
     Api.get(Constants.REVIEW_RESULT_LOADED, "/api/assessments/" + assessmentId + "/results/" + resultId);
   },
 
-  addAssessmentQuestion(question){
-    Dispatcher.dispatch({action: Constants.ADD_ASSSESSMENT_QUESTION, data: question});
+  addAssessmentQuestion(question, location){
+    Dispatcher.dispatch({action: Constants.ADD_ASSSESSMENT_QUESTION, data: question, location: location});
   },
 
   updateAssessmentQuestion(question){
     Dispatcher.dispatch({action: Constants.UPDATE_ASSESSMENT_QUESTION, data: question});
+  },
+
+  deleteAssessmentQuestion(question){
+    Dispatcher.dispatch({action: Constants.DELETE_ASSESSMENT_QUESTION, data: question});
   },
 
   saveAssessment(assessment){

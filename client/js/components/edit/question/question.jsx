@@ -1,6 +1,7 @@
 "use strict";
 
 import React                          from 'react';
+import _                              from 'lodash';
 import BaseComponent                  from '../../base_component.jsx';
 import Style                          from './css/style';
 import {Accordion, AccordionSection}  from '../accordion/accordion.js';
@@ -39,14 +40,21 @@ export default class Question extends BaseComponent{
     //when component will mount, grab data from the editQuiz store
   }
 
+  componentWillReceiveProps(nProps, nState){
+    if(nProps.question !== this.props.question){
+      this.setState({
+        question: nProps.question
+      });
+    }
+  }
+
   render(){
-    let question  = this.props.question;
+    let question  = this.state.question;
     let outcomes  = this.props.outcomes;
     let style     = Style.styles();
     let delHover  = this.state.hover.delete;
     let copyHover = this.state.hover.copy;
     let editHover = this.state.hover.edit;
-
     let Content   = this.state.editMode ? QuestionInterface : QuestionBlock;
 
     return (
@@ -105,9 +113,15 @@ export default class Question extends BaseComponent{
   }
 
   handleDuplicate(e){
+    let question = _.clone(this.state.question, true);
+
+    question.newId =  question.id + Math.random();
+
+    ReviewAssessmentActions.addAssessmentQuestion(question, 'duplicate');
   }
 
   handleDelete(e){
+    ReviewAssessmentActions.deleteAssessmentQuestion(this.state.question);
   }
 
   handleHoverStates(e){
@@ -122,7 +136,7 @@ export default class Question extends BaseComponent{
       break;
 
       case 'mouseleave':
-        hoverStatus = false
+        hoverStatus = false;
       break;
     }
 
