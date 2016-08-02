@@ -40,13 +40,14 @@ export default class Question extends BaseComponent{
   }
 
   render(){
-    let question = this.props.question;
+    let question  = this.props.question;
+    let outcomes  = this.props.outcomes;
     let style     = Style.styles();
     let delHover  = this.state.hover.delete;
     let copyHover = this.state.hover.copy;
     let editHover = this.state.hover.edit;
 
-    let Content = this.state.editMode ? QuestionInterface : QuestionBlock;
+    let Content   = this.state.editMode ? QuestionInterface : QuestionBlock;
 
     return (
       <li style={style.questionItem} >
@@ -85,7 +86,7 @@ export default class Question extends BaseComponent{
           </div>
         </div>
         <div className="questionContent">
-          <Content question={question}/>
+          <Content question={question} outcomes={outcomes} />
         </div>
       </li>
     );
@@ -134,4 +135,3 @@ export default class Question extends BaseComponent{
 
   /*CUSTOM FUNCTIONS*/
 };
-

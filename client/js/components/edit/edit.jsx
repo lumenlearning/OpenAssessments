@@ -73,9 +73,10 @@ export default class Edit extends BaseComponent{
         </div>
         <ul className="eqContent" style={{listStyleType: 'none', padding:'40px'}}>
           {this.state.questions.map((question, index)=>{
+            let outcomes = this.state.outcomes;
 
             return (
-              <Question question={question} />
+              <Question question={question} outcomes={outcomes} />
             )
           })
           }

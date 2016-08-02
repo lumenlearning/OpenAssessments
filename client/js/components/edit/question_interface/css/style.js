@@ -82,6 +82,12 @@ export default new class Style {
         height: "28px",
         marginBottom: "2px",
         borderRadius: "100%"
+      },
+      outcomeSelect: {
+        fontSize: "16px",
+        fontWeight: "normal",
+        border: "1px solid",
+        backgroundColor: "#fff"
       }
     };
 
