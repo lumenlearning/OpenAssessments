@@ -161,7 +161,7 @@ class Assessment < ActiveRecord::Base
   def parse_counts
     return if @section_count || @question_count
 
-    node = Nokogiri::XML(assessment_xmls.where(kind: "summative").last.xml)
+    node = Nokogiri::XML(xml_with_answers)
     @section_count = node.css('section section').count
     if default_settings && default_settings[:per_sec]
       @question_count = @section_count * default_settings[:per_sec].to_i
