@@ -27,6 +27,8 @@ export default class AnswerOption extends React.Component{
     let style    = Style.styles();
     let material = this.state.answerMaterial;
 
+    // <div style={{marginRight: "10px"}}>
+    // </div>
     return(
       <SimpleRCE
         content={material}

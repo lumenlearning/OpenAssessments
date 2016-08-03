@@ -68,7 +68,7 @@ export default new class Style {
       },
       buttonDiv: {
         textAlign: "center",
-        marginTop: "30px"
+        marginTop: "20px"
       },
       checkCircle: {
         width: "32px",
