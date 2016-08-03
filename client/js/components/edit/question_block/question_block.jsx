@@ -23,7 +23,7 @@ export default class QuestionBlock extends React.Component{
         <div style={style.qbContentHead}>
           <p style={style.qbQuestion} dangerouslySetInnerHTML={this.constructor.createMarkup(question.material)} />
         </div>
-        <Expandable>
+        <Expandable startExpanded={true}>
           <div style={style.qbAnswerTable}>
             <div style={style.qbTblHead} >
               <div style={_.merge({}, style.qbHeadItem, style.qbSm)} ></div>

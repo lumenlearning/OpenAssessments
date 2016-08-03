@@ -10,14 +10,13 @@ export default class ExpandableDropDown extends React.Component{
     super(props, state);
 
     this.state = {
-      expanded: this.props.isExpanded || false,
+      expanded: this.props.isExpanded || this.props.startExpanded || false,
       mounted: false
     };
 
     this.toggleExpand   = this.toggleExpand.bind(this);
     this.findMaxHeight  = this.findMaxHeight.bind(this);
   }
-
 
   render() {
     let style         = Style.styles();
@@ -80,5 +79,6 @@ export default class ExpandableDropDown extends React.Component{
 }
 
 ExpandableDropDown.propTypes = {
-  isExpanded: React.PropTypes.bool
+  isExpanded: React.PropTypes.bool,
+  startExpanded: React.PropTypes.bool
 };
