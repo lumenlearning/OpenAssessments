@@ -100,7 +100,7 @@ export default class Edit extends BaseComponent{
         let outcomes = this.state.outcomes;
 
         return (
-          <Question question={question} outcomes={outcomes} />
+          <Question key={index} question={question} outcomes={outcomes} />
         )
       });
     }

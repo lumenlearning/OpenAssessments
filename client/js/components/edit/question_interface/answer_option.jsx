@@ -1,7 +1,9 @@
 'use strict'
 
-import React from 'react';
-import Style from './css/style.js';
+import React     from 'react';
+import Style     from './css/style.js';
+import SimpleRCE from './simple_rce.jsx';
+// import TinyMCE from 'react-tinymce';
 
 export default class AnswerOption extends React.Component{
 
@@ -13,9 +15,17 @@ export default class AnswerOption extends React.Component{
     }
   }
 
-  handleChange(e) {
-    this.setState({
-      answerMaterial: e.target.value
+  // Don't update because we don't want SimpleRCE to get a new instance
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
+  }
+
+  config() {
+    return({
+      toolbar: false,
+      statusbar: false,
+      menubar: false,
+      elementpath: false
     });
   }
 
@@ -24,14 +34,11 @@ export default class AnswerOption extends React.Component{
     let material = this.state.answerMaterial;
 
     return(
-      <textarea
-        style={style.textArea}
-        name="answerOption"
-        id="answerOption"
-        onChange={this.handleChange}
-        >
-          {material}
-      </textarea>
+      <SimpleRCE
+        content={material}
+        config={this.config()}
+        onChange={this.props.onChange}
+        />
     );
   }
 

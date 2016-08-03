@@ -1,7 +1,7 @@
 "use strict";
 
-import React from "react";
-import Style from "./css/style.js";
+import React         from "react";
+import Style         from "./css/style.js";
 import BaseComponent from '../../base_component.jsx';
 
 //Components
@@ -26,7 +26,9 @@ export default class QuestionInterface extends BaseComponent{
 
   handleMaterialChange(e) {
     this.setState({
-      question: {material: e.target.getContent()}
+      question: {
+        material: e.target.getContent()
+      }
     });
   }
 

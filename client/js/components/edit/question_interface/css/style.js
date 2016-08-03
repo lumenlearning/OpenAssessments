@@ -29,7 +29,7 @@ export default new class Style {
         display: "inline-block",
         width: "4%",
         height: "100%",
-        verticalAlign: "middle"
+        verticalAlign: "top"
       },
       optionLabelBlock: {
         display: "inline-block",
@@ -43,7 +43,7 @@ export default new class Style {
       answerRow: {
         display: "block",
         width: "100%",
-        height: "100px"
+        height: "110px"
       },
       answerOptionBlock: {
         display: "inline-block",

@@ -65,7 +65,7 @@ export default class Checkbox extends React.Component{
     let style = Style.styles();
 
     return (
-      <div>
+      <div style={{margin: "80% auto"}}>
         <div style={this.activeBorder()}>
           <img
             style={this.hoverColor()}
@@ -78,6 +78,6 @@ export default class Checkbox extends React.Component{
       </div>
     )
 
-  }//render
+  }
 
 }

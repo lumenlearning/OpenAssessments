@@ -39,7 +39,7 @@ export default class QuestionBlock extends React.Component{
                   }
 
                   return (
-                    <div style={style.qbTblRow} >
+                    <div key={i} style={style.qbTblRow} >
                       <div style={_.merge({}, style.qbTblCell, style.qbSm)} >
                         {img}
                       </div>

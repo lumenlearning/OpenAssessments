@@ -19,9 +19,8 @@ export default class OutcomeSelector extends React.Component{
           <span style={style.label}>Outcome </span>
           <select id="outcome-select" name="outcome-select" style={style.outcomeSelect}>
             {outcomes.map((outcome, index) => {
-              console.log(outcome)
               return (
-                <option value={outcome.outcomeGuid}>{outcome.shortOutcome}</option>
+                <option key={index} value={outcome.outcomeGuid}>{outcome.shortOutcome}</option>
               )
             })}
           </select>

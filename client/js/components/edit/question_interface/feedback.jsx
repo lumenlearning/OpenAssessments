@@ -1,7 +1,8 @@
 'use strict'
 
-import React from 'react';
-import Style from './css/style.js';
+import React   from 'react';
+import Style   from './css/style.js';
+import TinyMCE from 'react-tinymce';
 
 export default class Feedback extends React.Component{
 
@@ -13,10 +14,18 @@ export default class Feedback extends React.Component{
     }
   }
 
-  handleChange(e) {
-    this.setState({
-      feedback: e.target.value
-    });
+  // Don't update because we don't want SimpleRCE to get a new instance
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
+  }
+
+  config() {
+    return({
+      toolbar: false,
+      statusbar: false,
+      menubar: false,
+      elementpath: false
+    })
   }
 
   render() {
@@ -24,14 +33,11 @@ export default class Feedback extends React.Component{
     let feedback = this.state.feedback;
 
     return(
-      <textarea
-        style={style.textArea}
-        name="feedback"
-        id="feedback"
-        onChange={this.handleChange}
-        >
-          {feedback}
-      </textarea>
+      <TinyMCE
+          content={feedback}
+          config={this.config()}
+          onChange={this.props.onChange}
+      />
     );
   }
 
