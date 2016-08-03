@@ -8,6 +8,7 @@ import {Accordion, AccordionSection}  from '../accordion/accordion.js';
 import ReviewAssessmentActions        from "../../../actions/review_assessment";
 import ReviewAssessmentStore          from "../../../stores/review_assessment";
 import SettingsStore                  from '../../../stores/settings.js';
+import Tooltip                        from '../../common/tooltip/tooltip.jsx';
 
 import OutcomeSection                 from '../outcome_section/outcome_section.jsx';
 import QuestionBlock                  from '../question_block/question_block.jsx';
@@ -59,8 +60,15 @@ export default class Question extends BaseComponent{
     return (
       <li style={style.questionItem} >
         <div className="questionHeader" style={style.questionHeader}>
-          <div className="questionShortName" style={style.questionShortName} title={question.outcomes.longOutcome} >Outcome: {question.outcomes.shortOutcome}</div>
+          <div className="questionShortName" style={style.questionShortName} >
+            <Tooltip message={question.outcomes.longOutcome}
+                     position='top-right'
+              >
+              Outcome: {question.outcomes.shortOutcome}
+            </Tooltip>
+          </div>
           <div className="questionToolbar" style={style.questionToolbar}>
+            <Tooltip message='Duplicate Quiz' position='top-left'>
             <img className='questionToolBtns'
                  style={_.merge({}, style.questionToolBtns, {backgroundColor: copyHover ? '#31708f' : 'transparent'})}
                  src="/assets/copy-64-white.png"
@@ -68,9 +76,10 @@ export default class Question extends BaseComponent{
                  onMouseOver={this.handleHoverStates}
                  onMouseLeave={this.handleHoverStates}
                  data-hovertype="copy"
-                 title='Duplicate'
                  alt="Duplicate"
               />
+            </Tooltip>
+            <Tooltip message='Edit Quiz' position='top-left'>
             <img className='questionToolBtns'
                  style={_.merge({}, style.questionToolBtns, {backgroundColor: editHover || this.state.editMode ? '#31708f' : 'transparent'})}
                  src="/assets/pencil-64-white.png"
@@ -81,6 +90,8 @@ export default class Question extends BaseComponent{
                  title='Edit'
                  alt="Edit"
               />
+            </Tooltip>
+            <Tooltip message='Delete Quiz' position='top-left'>
             <img className='questionToolBtns'
                  style={_.merge({}, style.questionToolBtns, {backgroundColor: delHover ? '#bb5432' : 'transparent'})}
                  src="/assets/trash-64-white.png"
@@ -91,6 +102,7 @@ export default class Question extends BaseComponent{
                  title='Delete'
                  alt="Delete"
               />
+            </Tooltip>
           </div>
         </div>
         <div className="questionContent">

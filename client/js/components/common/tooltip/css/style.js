@@ -3,6 +3,17 @@ export default new class Style {
 
     this.style = {
       //styles go here
+      'tooltipWrapper':{
+      },
+      'tooltip':{
+        position: 'fixed',
+        backgroundColor: '#333333',
+        color: 'white',
+        padding: '15px',
+        fontSize: '18px'
+      },
+
+
     };
 
   }
