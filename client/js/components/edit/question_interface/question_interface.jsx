@@ -13,7 +13,7 @@ export default class QuestionInterface extends BaseComponent{
 
   constructor(props, state) {
     super(props, state);
-    this._bind("handleMaterialChange");
+    this._bind("handleMaterialChange", "handleAnswerChange", "handleFeedbackChange");
 
     this.state = {
       question: this.props.question || {},
@@ -32,6 +32,28 @@ export default class QuestionInterface extends BaseComponent{
     });
   }
 
+  handleAnswerChange(e, index) {
+    this.setState({
+      answers: {
+        [index]: {
+          material: e.target.getContent()
+        }
+      }
+    });
+    // console.log("answer updating? ", this.state.answers[index].material)
+  }
+
+  handleFeedbackChange(e, index) {
+    this.setState({
+      answers: {
+        [index]: {
+          feedback: e.target.getContent()
+        }
+      }
+    });
+    // console.log("feedback updating? ", this.state.answers[index].feedback)
+  }
+
   render() {
     let outcomes = this.props.outcomes;
     let question = this.props.question;
@@ -41,8 +63,13 @@ export default class QuestionInterface extends BaseComponent{
       <div style={style.qiContent}>
         <div style={style.qiContentBlock}>
           <OutcomeSelector outcomes={outcomes} />
-          <QuestionMaterial material={question.material} onChange={this.handleMaterialChange} />
-          <AnswerOptionFeedback answers={question.answers} />
+          <QuestionMaterial
+            material={question.material}
+            onChange={this.handleMaterialChange} />
+          <AnswerOptionFeedback
+            answers={question.answers}
+            handleAnswerChange={this.handleAnswerChange}
+            handleFeedbackChange={this.handleFeedbackChange} />
         </div>
       </div>
     );

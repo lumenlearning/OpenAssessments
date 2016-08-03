@@ -17,53 +17,33 @@ export default class AnswerOptionFeedback extends React.Component{
     }
   }
 
-  handleAnswerChange(e, index) {
-    this.setState({
-      answers: {
-        [index]: {
-          material: e.target.getContent()
-        }
-      }
-    });
-    // console.log("answer updating? ", this.state.answers[index].material)
-  }
-
-  handleFeedbackChange(e, index) {
-    this.setState({
-      answers: {
-        [index]: {
-          feedback: e.target.getContent()
-        }
-      }
-    });
-    // console.log("feedback updating? ", this.state.answers[index].feedback)
-  }
-
   render() {
     let style = Style.styles();
 
     return (
-      <div style={style.block}>
+      <div>
         <AnswerFeedbackLabels />
         {this.props.answers.map((answer, index) => {
 
           return (
             <div key={index} style={style.answerRow}>
               <div style={style.emptyCell}>
-                <Checkbox key={index} isCorrect={answer.isCorrect} />
+                <Checkbox
+                  key={index}
+                  isCorrect={answer.isCorrect} />
               </div>
               <div style={style.answerOptionBlock}>
                 <AnswerOption
                   key={index}
                   answerMaterial={answer.material}
-                  onChange={(event) => this.handleAnswerChange(event, index)}
+                  onChange={this.props.handleAnswerChange}
                   />
               </div>
               <div style={style.feedbackBlock}>
                 <Feedback
                   key={index}
                   feedback={answer.feedback}
-                  onChange={(event) => this.handleFeedbackChange(event, index)}
+                  onChange={this.props.handleFeedbackChange}
                   />
               </div>
             </div>
@@ -78,8 +58,8 @@ export default class AnswerOptionFeedback extends React.Component{
   }
 
   /*CUSTOM HANDLERS*/
-  handleAddOption(){
-
-  }
+  // handleAddOption(){
+  //
+  // }
 
 }

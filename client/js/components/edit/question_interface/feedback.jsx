@@ -1,8 +1,8 @@
 'use strict'
 
-import React   from 'react';
-import Style   from './css/style.js';
-import TinyMCE from 'react-tinymce';
+import React     from 'react';
+import Style     from './css/style.js';
+import SimpleRCE from './simple_rce.jsx';
 
 export default class Feedback extends React.Component{
 
@@ -12,11 +12,6 @@ export default class Feedback extends React.Component{
     this.state = {
       feedback: this.props.feedback
     }
-  }
-
-  // Don't update because we don't want SimpleRCE to get a new instance
-  shouldComponentUpdate(nextProps, nextState) {
-    return false;
   }
 
   config() {
@@ -33,10 +28,10 @@ export default class Feedback extends React.Component{
     let feedback = this.state.feedback;
 
     return(
-      <TinyMCE
-          content={feedback}
-          config={this.config()}
-          onChange={this.props.onChange}
+      <SimpleRCE
+        content={feedback}
+        config={"simple"}
+        onChange={(event, index) => this.props.onChange(event, index)}
       />
     );
   }

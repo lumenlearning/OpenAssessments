@@ -12,11 +12,6 @@ export default class QuestionInterface extends BaseComponent{
     super(props, state);
   }
 
-  // Don't update because we don't want SimpleRCE to get a new instance
-  shouldComponentUpdate(nextProps, nextState) {
-    return false;
-  }
-
   render() {
     let material = this.props.material;
     let style    = Style.styles();
@@ -26,6 +21,7 @@ export default class QuestionInterface extends BaseComponent{
         <div style={style.label}>Question</div>
         <SimpleRCE
           content={this.props.material}
+          config="basic"
           onChange={this.props.onChange}
           />
       </div>

@@ -14,6 +14,8 @@ export default new class Style {
       },
       label: {
         fontWeight: "bold",
+        paddingBottom: "0.25em",
+        paddingRight: "0.25em"
       },
       textArea: {
         width: "100%",
@@ -34,7 +36,7 @@ export default new class Style {
       optionLabelBlock: {
         display: "inline-block",
         width: "48%",
-        padding: "5px 0px 0px 10px"
+        padding: "5px 0px 2px 10px"
       },
       feedbackLabelBlock: {
         display: "inline-block",
@@ -42,21 +44,18 @@ export default new class Style {
       },
       answerRow: {
         display: "block",
-        width: "100%",
-        height: "110px"
+        width: "100%"
       },
       answerOptionBlock: {
         display: "inline-block",
         width: "48%",
-        padding: "5px 10px"
+        padding: "5px 10px",
+        verticalAlign: "top"
       },
       feedbackBlock: {
         display: "inline-block",
         width: "48%",
         padding: "5px 0"
-      },
-      block: {
-        paddingBottom: "20px"
       },
       hintBlock: {
         display:"inline-block",
@@ -68,7 +67,8 @@ export default new class Style {
         fontWeight: "bold"
       },
       buttonDiv: {
-        textAlign: "center"
+        textAlign: "center",
+        marginTop: "30px"
       },
       checkCircle: {
         width: "32px",
@@ -86,7 +86,7 @@ export default new class Style {
       outcomeSelect: {
         fontSize: "16px",
         fontWeight: "normal",
-        border: "1px solid",
+        // border: "1px solid",
         backgroundColor: "#fff"
       }
     };

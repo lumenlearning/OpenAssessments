@@ -1,8 +1,8 @@
 "use strict";
 
-import React    from "react";
+import React         from "react";
 import BaseComponent from '../../base_component.jsx';
-import TinyMCE  from 'react-tinymce';
+import TinyMCE       from 'react-tinymce';
 
 export default class SimpleRCE extends BaseComponent {
 
@@ -10,20 +10,33 @@ export default class SimpleRCE extends BaseComponent {
     super(props, state);
   }
 
+  // Don't update because we don't want SimpleRCE to get a new instance
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
+  }
+
   config() {
-    if (this.props.config) {
+    let config = this.props.config;
+
+    if (config === "simple") {
       return({
-        menubar: this.props.config.menubar,
-        statusbar: this.props.config.statusbar,
-        toolbar: this.props.config.toolbar,
-        elementpath: this.props.config.elementpath
+        toolbar: false,
+        menubar: false,
+        statusbar: true,
+        elementpath: false
+      });
+    } else if (config === "basic") {
+      return({
+        toolbar: 'undo redo | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist link image',
+        menubar: false,
+        statusbar: true,
+        elementpath: false
       });
     } else {
-      return ({
-        menubar: false,
-        statusbar: false,
-        toolbar: 'undo redo | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist link image',
-        elementpath: false
+      return({
+        menubar: true,
+        statusbar: true,
+        elementpath: true
       });
     }
   }

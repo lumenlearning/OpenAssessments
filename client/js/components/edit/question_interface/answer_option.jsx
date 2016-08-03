@@ -3,7 +3,6 @@
 import React     from 'react';
 import Style     from './css/style.js';
 import SimpleRCE from './simple_rce.jsx';
-// import TinyMCE from 'react-tinymce';
 
 export default class AnswerOption extends React.Component{
 
@@ -13,11 +12,6 @@ export default class AnswerOption extends React.Component{
     this.state = {
       answerMaterial: this.props.answerMaterial
     }
-  }
-
-  // Don't update because we don't want SimpleRCE to get a new instance
-  shouldComponentUpdate(nextProps, nextState) {
-    return false;
   }
 
   config() {
@@ -36,8 +30,8 @@ export default class AnswerOption extends React.Component{
     return(
       <SimpleRCE
         content={material}
-        config={this.config()}
-        onChange={this.props.onChange}
+        config={"simple"}
+        onChange={(event, index) => this.props.onChange(event, index)}
         />
     );
   }
