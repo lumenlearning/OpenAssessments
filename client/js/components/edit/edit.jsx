@@ -37,7 +37,6 @@ export default class Edit extends BaseComponent{
       outcomes         : ReviewAssessmentStore.outcomes(),
       settings         : SettingsStore.current(),
       assessment       : ReviewAssessmentStore.current(),
-      newQuestion      : false,
     }
   }
 
@@ -80,9 +79,22 @@ export default class Edit extends BaseComponent{
 
   /*CUSTOM HANDLER FUNCTIONS*/
   handleAddQuestion(e){
-    this.setState({
-      newQuestion: true
-    });
+    let question = {
+      id: `newQuestion-${((Math.random() * 100) * (Math.random()*100))}`, //specifies new and has random num.
+      title: 'New Question',
+      question_type: '',
+      material: '',
+      answers: [],
+      outcomes: {
+        longOutcome: '',
+        shortOutcome: '',
+        outcomeGuid: '',
+      },
+      mom_embed: ''
+    };
+
+    ReviewAssessmentActions.addAssessmentQuestion(question, 'top');
+
   }
 
   toggleButtonStyle(e){

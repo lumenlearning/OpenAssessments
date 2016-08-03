@@ -38,15 +38,23 @@ export default class Question extends BaseComponent{
   }
 
   componentWillMount(){
-    //when component will mount, grab data from the editQuiz store
+    if(this.props.question.id.includes('newQuestion')){
+      this.setState({
+        editMode: true
+      });
+    }
   }
 
   componentWillReceiveProps(nProps, nState){
+    let state = {};
     if(nProps.question !== this.props.question){
-      this.setState({
-        question: nProps.question
-      });
+      state.question = nProps.question
     }
+    if(nProps.question.id.includes('newQuestion')){
+      state.editMode = true;
+    }
+
+    this.setState(state);
   }
 
   render(){
@@ -57,6 +65,7 @@ export default class Question extends BaseComponent{
     let copyHover = this.state.hover.copy;
     let editHover = this.state.hover.edit;
     let Content   = this.state.editMode ? QuestionInterface : QuestionBlock;
+
     return (
       <li style={style.questionItem} >
         <div className="questionHeader" style={style.questionHeader}>
@@ -87,7 +96,6 @@ export default class Question extends BaseComponent{
                  onMouseOver={this.handleHoverStates}
                  onMouseLeave={this.handleHoverStates}
                  data-hovertype="edit"
-                 title='Edit'
                  alt="Edit"
               />
             </Tooltip>
@@ -99,7 +107,6 @@ export default class Question extends BaseComponent{
                  onMouseOver={this.handleHoverStates}
                  onMouseLeave={this.handleHoverStates}
                  data-hovertype='delete'
-                 title='Delete'
                  alt="Delete"
               />
             </Tooltip>
