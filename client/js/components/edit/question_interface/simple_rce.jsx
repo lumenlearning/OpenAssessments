@@ -27,10 +27,12 @@ export default class SimpleRCE extends BaseComponent {
       });
     } else if (config === "basic") {
       return({
-        toolbar: 'undo redo | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist link image',
+        toolbar: 'undo redo | fontsizeselect bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | table bullist numlist link image',
+        plugins: 'table',
         menubar: false,
         statusbar: true,
-        elementpath: false
+        elementpath: false,
+        content_css: '/assets/themes/lumen.css.scss'
       });
     } else {
       return({
