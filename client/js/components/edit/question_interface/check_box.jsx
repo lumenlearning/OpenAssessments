@@ -10,11 +10,27 @@ export default class Checkbox extends React.Component{
     super(props);
     this.toggleHover  = this.toggleHover.bind(this);
     this.toggleActive = this.toggleActive.bind(this);
+    this.handleResize = this.handleResize.bind(this);
 
     this.state = {
       hover: false,
       active: this.props.isCorrect,
+      windowWidth: window.innerWidth
     }
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  }
+
+  handleResize(e) {
+    this.setState({
+      windowWidth: window.innerWidth
+    });
   }
 
   toggleHover() {
@@ -63,9 +79,11 @@ export default class Checkbox extends React.Component{
 
   render() {
     let style = Style.styles();
+    let windowWidth = this.state.windowWidth;
+    let marginBottom = windowWidth < 1000 ? {} : {marginBottom: "25px"};
 
     return (
-      <div style={{/*margin: "100% auto"*/}}>
+      <div style={marginBottom}>
         <div style={this.activeBorder()}>
           <img
             style={this.hoverColor()}

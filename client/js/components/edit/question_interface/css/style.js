@@ -24,23 +24,22 @@ export default new class Style {
         borderRadius: "3px"
       },
       ofLabelBlock: {
-        width: "100%",
-        marginBottom: "-5px"
+        display: "table",
+        width: "100%"
       },
       emptyCell: {
-        display: "inline-block",
-        width: "4%",
+        display: "table-cell",
+        width: "50px",
         height: "100%",
         verticalAlign: "top"
       },
       optionLabelBlock: {
         display: "inline-block",
-        width: "48%",
-        padding: "5px 0px 2px 10px"
+        width: "50%"
       },
       feedbackLabelBlock: {
         display: "inline-block",
-        width: "48%"
+        width: "50%"
       },
       answerRow: {
         display: "block",
@@ -73,7 +72,6 @@ export default new class Style {
       checkCircle: {
         width: "32px",
         height: "32px",
-        // margin: "50% auto",
         border: "2px solid #CCC", //#868686
         borderRadius: "100%"
       },
@@ -86,7 +84,6 @@ export default new class Style {
       outcomeSelect: {
         fontSize: "16px",
         fontWeight: "normal",
-        // border: "1px solid",
         backgroundColor: "#fff"
       }
     };

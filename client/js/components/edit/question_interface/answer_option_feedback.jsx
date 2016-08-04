@@ -34,7 +34,7 @@ export default class AnswerOptionFeedback extends React.Component{
     });
   }
 
-  renderLabels() {
+  renderLabelsLarge() {
     let windowWidth = this.state.windowWidth;
 
     if (windowWidth <= 1000) {
@@ -50,9 +50,13 @@ export default class AnswerOptionFeedback extends React.Component{
 
     return (
       <div>
+        {this.renderLabelsLarge()}
         {this.props.answers.map((answer, index) => {
           let answerFeedbackBlock = windowWidth <= 1000 ? {display: "block", width: "100%"} : {display: "table-cell", width: "50%"};
           let answerMargin        = windowWidth <= 1000 ? {marginBottom: "10px"} : {marginRight: "10px"};
+          let answerLabelSmall    = windowWidth <= 1000 ? (<div style={style.label}>Answer Option</div>) : null;
+          let feedbackLabelSmall  = windowWidth <= 1000 ? (<div style={style.label}>Feedback</div>) : null;
+          let hr                  = windowWidth <= 1000 ? (<hr style={{margin: "10px 0 20px", borderTop: "1px dotted #868686"}}/>) : (<hr style={{margin: "0 0 25px", borderTop: "1px dotted #868686"}}/>)
 
           return (
             <div key={index} style={{}}>
@@ -66,7 +70,7 @@ export default class AnswerOptionFeedback extends React.Component{
                   <div style={{display: "table", width: "100%", marginBottom: "25px"}}>
                     <div style={answerFeedbackBlock}>
                       <div style={answerMargin}>
-                        <div style={style.label}>Answer Option</div>
+                        {answerLabelSmall}
                         <AnswerOption
                           key={index}
                           answerMaterial={answer.material}
@@ -75,7 +79,7 @@ export default class AnswerOptionFeedback extends React.Component{
                       </div>
                     </div>
                     <div style={answerFeedbackBlock}>
-                      <div style={style.label}>Feedback</div>
+                      {feedbackLabelSmall}
                       <Feedback
                         key={index}
                         feedback={answer.feedback}
@@ -85,6 +89,7 @@ export default class AnswerOptionFeedback extends React.Component{
                   </div>
                 </div>
               </div>
+              {hr}
             </div>
           );
         })}

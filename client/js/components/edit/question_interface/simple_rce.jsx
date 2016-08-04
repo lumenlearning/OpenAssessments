@@ -22,7 +22,7 @@ export default class SimpleRCE extends BaseComponent {
       return({
         toolbar: false,
         menubar: false,
-        statusbar: true,
+        statusbar: false,
         elementpath: false
       });
     } else if (config === "basic") {
