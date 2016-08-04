@@ -29,7 +29,7 @@ export default new class Style {
       },
       emptyCell: {
         display: "table-cell",
-        width: "50px",
+        width: "60px",
         height: "100%",
         verticalAlign: "top"
       },

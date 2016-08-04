@@ -8,15 +8,49 @@ export default class QuestionBlock extends React.Component{
 
   constructor(props, state) {
     super(props, state);
+
+    this.handleResize = this.handleResize.bind(this);
+
+    this.state = {
+      windowWidth: window.innerWidth
+    }
   }
 
   componentWillMount() {
 
   }
 
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  }
+
+  handleResize(e) {
+    this.setState({
+      windowWidth: window.innerWidth
+    });
+  }
+
+  renderLabels() {
+    let style = Style.styles();
+
+    return (
+      <div style={{display: "table", width: "100%"}}>
+        <div style={style.emptyCell}></div>
+        <div style={_.merge(style.labelBlock, style.label)}>Answers</div>
+        <div style={_.merge(style.labelBlock, style.label)}>Feedback</div>
+      </div>
+    );
+  }
+
   render() {
-    let question = this.props.question;
-    let style    = Style.styles();
+    let question    = this.props.question;
+    let windowWidth = this.state.windowWidth;
+    let style       = Style.styles();
+    let labels      = windowWidth < 1000 ? null : this.renderLabels();
 
     return (
       <div style={style.qbContent}>
@@ -25,26 +59,36 @@ export default class QuestionBlock extends React.Component{
         </div>
         <Expandable startExpanded={true}>
           <div style={style.qbAnswerTable}>
-            <div style={style.qbTblHead} >
-              <div style={_.merge({}, style.qbHeadItem, style.qbSm)} ></div>
-              <div style={style.qbHeadItem} >Answers</div>
-              <div style={style.qbHeadItem} >Feedback</div>
-            </div>
+            {labels}
             <div style={style.qbTblContent} >
               {
                 question.answers.map((answer, i)=>{
                   let img = null;
+                  let answerFeedbackBlock = windowWidth <= 1000 ? {display: "table", width: "100%", borderSpacing: "0 10px"} : {display: "table", width: "100%", borderSpacing: "10px"};
+                  let answerFeedback      = windowWidth <= 1000 ? {display: "block", width: "100%", marginBottom: "10px"} : {display: "table-cell", width: "50%"};
+                  let answerLabelSmall    = windowWidth <= 1000 ? (<div style={style.label}>Answer</div>) : null;
+                  let feedbackLabelSmall  = windowWidth <= 1000 ? (<div style={style.label}>Feedback</div>) : null;
+                  let hr                  = windowWidth <= 1000 ? (<hr style={{margin: "10px 0 10px", borderTop: "1px dotted #868686"}}/>) : null;
+
                   if(answer.isCorrect){
                     img = (<img style={style.checkOrExit} src="/assets/checkbox-48.png" alt="This Answer is Correct"/>);
                   }
-
                   return (
-                    <div key={i} style={style.qbTblRow} >
-                      <div style={_.merge({}, style.qbTblCell, style.qbSm)} >
-                        {img}
+                    <div key={i}>
+                      <div style={{display: "table", width: "100%"}} >
+                        <div style={{display: "table-cell", minWidth: "50px", height: "100%", verticalAlign: "middle"}} >
+                          {img}
+                        </div>
+                        <div style={{display: "table-cell", width: "100%", verticalAlign: "top"}}>
+                          <div style={answerFeedbackBlock}>
+                            {answerLabelSmall}
+                            <div style={_.merge(answerFeedback, style.qbTblCell)} dangerouslySetInnerHTML={this.constructor.createMarkup(answer.material)} />
+                            {feedbackLabelSmall}
+                            <div style={_.merge(answerFeedback, style.qbTblCell)} dangerouslySetInnerHTML={this.constructor.createMarkup("Answer Feedback")} />
+                          </div>
+                        </div>
                       </div>
-                      <div style={style.qbTblCell} dangerouslySetInnerHTML={this.constructor.createMarkup(answer.material)} />
-                      <div style={style.qbTblCell} dangerouslySetInnerHTML={this.constructor.createMarkup("Answer Feedback")} />
+                      {hr}
                     </div>
                   )
                 })
