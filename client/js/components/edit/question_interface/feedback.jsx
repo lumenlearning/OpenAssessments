@@ -31,8 +31,8 @@ export default class Feedback extends React.Component{
       <SimpleRCE
         content={feedback}
         config={"simple"}
-        onChange={(event, index) => this.props.onChange(event, index)}
-      />
+        onChange={(event) => this.props.onChange(event, this.props.index)}
+        />
     );
   }
 

@@ -57,7 +57,7 @@ export default new class Style {
       },
       label: {
         fontWeight: "bold",
-        paddingBottom: "0.25em",
+        // paddingBottom: "0.25em",
         paddingRight: "0.25em"
       },
       labelBlock: {

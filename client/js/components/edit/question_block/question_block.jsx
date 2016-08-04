@@ -64,10 +64,10 @@ export default class QuestionBlock extends React.Component{
               {
                 question.answers.map((answer, i)=>{
                   let img = null;
-                  let answerFeedbackBlock = windowWidth <= 1000 ? {display: "table", width: "100%", borderSpacing: "0 10px"} : {display: "table", width: "100%", borderSpacing: "10px"};
-                  let answerFeedback      = windowWidth <= 1000 ? {display: "block", width: "100%", marginBottom: "10px"} : {display: "table-cell", width: "50%"};
-                  let answerLabelSmall    = windowWidth <= 1000 ? (<div style={style.label}>Answer</div>) : null;
-                  let feedbackLabelSmall  = windowWidth <= 1000 ? (<div style={style.label}>Feedback</div>) : null;
+                  let answerFeedbackBlock = windowWidth <= 1000 ? {display: "table", width: "100%", borderSpacing: "0 10px"} : {display: "table", width: "100%", borderSpacing: "10px 8px"};
+                  let answerFeedback      = windowWidth <= 1000 ? {display: "block", width: "100%", marginBottom: "20px"} : {display: "table-cell", width: "50%"};
+                  let answerLabelSmall    = windowWidth <= 1000 ? (<div style={_.merge({paddingBottom: "0.25em"}, style.label)}>Answer</div>) : null;
+                  let feedbackLabelSmall  = windowWidth <= 1000 ? (<div style={_.merge({paddingBottom: "0.25em"}, style.label)}>Feedback</div>) : null;
                   let hr                  = windowWidth <= 1000 ? (<hr style={{margin: "10px 0 10px", borderTop: "1px dotted #868686"}}/>) : null;
 
                   if(answer.isCorrect){

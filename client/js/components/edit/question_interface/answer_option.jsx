@@ -27,13 +27,11 @@ export default class AnswerOption extends React.Component{
     let style    = Style.styles();
     let material = this.state.answerMaterial;
 
-    // <div style={{marginRight: "10px"}}>
-    // </div>
     return(
       <SimpleRCE
         content={material}
         config={"simple"}
-        onChange={(event, index) => this.props.onChange(event, index)}
+        onChange={(event) => this.props.onChange(event, this.props.index)}
         />
     );
   }

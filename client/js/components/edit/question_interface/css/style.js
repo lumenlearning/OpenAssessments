@@ -14,7 +14,7 @@ export default new class Style {
       },
       label: {
         fontWeight: "bold",
-        paddingBottom: "0.25em",
+        // paddingBottom: "0.25em",
         paddingRight: "0.25em"
       },
       textArea: {
@@ -25,7 +25,8 @@ export default new class Style {
       },
       ofLabelBlock: {
         display: "table",
-        width: "100%"
+        width: "100%",
+        marginBottom: "-5px"
       },
       emptyCell: {
         display: "table-cell",

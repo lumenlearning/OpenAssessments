@@ -1,9 +1,9 @@
 "use strict";
 
 import React         from "react";
-import Style         from "./css/style.js";
+import _             from "lodash";
 import BaseComponent from '../../base_component.jsx';
-import Checkbox      from './check_box.jsx';
+import Style         from "./css/style.js";
 import SimpleRCE     from './simple_rce.jsx';
 
 export default class QuestionInterface extends BaseComponent{
@@ -18,7 +18,7 @@ export default class QuestionInterface extends BaseComponent{
 
     return (
       <div style={style.qBlock}>
-        <div style={style.label}>Question</div>
+        <div style={_.merge({paddingBottom: "0.25em"}, style.label)}>Question</div>
         <SimpleRCE
           content={this.props.material}
           config="basic"
