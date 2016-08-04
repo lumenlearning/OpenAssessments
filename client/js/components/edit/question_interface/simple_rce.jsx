@@ -27,8 +27,8 @@ export default class SimpleRCE extends BaseComponent {
       });
     } else if (config === "basic") {
       return({
-        toolbar: 'undo redo | fontsizeselect bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | table bullist numlist link image',
-        plugins: 'table',
+        toolbar: 'undo redo | fontsizeselect bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | table bullist numlist link image | code',
+        plugins: 'table, code',
         menubar: false,
         statusbar: true,
         elementpath: false,
