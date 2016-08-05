@@ -26,60 +26,46 @@ export default class QuestionInterface extends BaseComponent{
   }
 
   handleOutcomeChange(newOutcome) {
-    this.setState({
-      question: {
-        outcomes: newOutcome
-      }
-    });
+    let question = _.clone(this.state.question, true);
+    question.outcomes = newOutcome;
+
+    this.setState({question: question});
   }
 
   handleMaterialChange(e) {
-    this.setState({
-      question: {
-        material: e.target.getContent()
-      }
-    });
+    let question = _.clone(this.state.question, true);
+    question.material = e.target.getContent();
+
+    this.setState({question: question});
   }
 
   handleAnswerChange(e, index) {
-    let answers     = _.clone(this.state.question.answers, true);
-    let answer      = answers[index];
+    let question = _.clone(this.state.question, true);
+    let answer = question.answers[index];
     answer.material = e.target.getContent();
 
-    this.setState({
-      question: {
-        answers: answers
-      }
-    });
+    this.setState({question: question});
   }
 
   handleFeedbackChange(e, index) {
-    let answers     = _.clone(this.state.question.answers, true);
-    let answer      = answers[index];
+    let question = _.clone(this.state.question, true);
+    let answer = question.answers[index];
     answer.feedback = e.target.getContent();
 
-    this.setState({
-      question: {
-        answers: answers
-      }
-    });
+    this.setState({question: question});
   }
 
   handleAddOption(e) {
-    let answers   = _.clone(this.state.question.answers, true);
+    let question = _.clone(this.state.question, true);
     let answerObj = {
       id: String((Math.random() * 100) * Math.random()),
       material: '',
       isCorrect: false,
       feedback: null
     };
-    answers.push(answerObj);
+    question.answers.push(answerObj);
 
-    this.setState({
-      question: {
-        answers: answers
-      }
-    });
+    this.setState({question: question});
   }
 
   render() {
