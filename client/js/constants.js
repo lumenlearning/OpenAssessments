@@ -46,6 +46,8 @@ export default {
   // Edit Assessments
   ADD_ASSSESSMENT_QUESTION: 'add_assessment_question',
   UPDATE_ASSESSMENT_QUESTION: 'update_assessment_question',
+  START_EDITING_QUESTION: 'start_editing_question',
+  STOP_EDITING_QUESTION: 'stop_editing_question',
   DELETE_ASSESSMENT_QUESTION: 'delete_assessment_question',
   SAVE_ASSESSMENT: 'save_assessment',
 

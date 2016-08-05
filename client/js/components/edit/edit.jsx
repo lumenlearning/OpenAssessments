@@ -36,7 +36,7 @@ export default class Edit extends BaseComponent{
       questions        : ReviewAssessmentStore.allQuestions(),
       outcomes         : ReviewAssessmentStore.outcomes(),
       settings         : SettingsStore.current(),
-      assessment       : ReviewAssessmentStore.current(),
+      assessment       : ReviewAssessmentStore.current()
     }
   }
 
@@ -81,6 +81,8 @@ export default class Edit extends BaseComponent{
     let question = {
       id: `newQuestion-${((Math.random() * 100) * (Math.random()*100))}`, //specifies new and has random num.
       title: 'New Question',
+      edited: true,
+      inDraft: true,
       question_type: '',
       material: '',
       answers: [],
@@ -88,8 +90,7 @@ export default class Edit extends BaseComponent{
         longOutcome: '',
         shortOutcome: '',
         outcomeGuid: ''
-      },
-      mom_embed: ''
+      }
     };
 
     ReviewAssessmentActions.addAssessmentQuestion(question, 'top');
@@ -101,6 +102,8 @@ export default class Edit extends BaseComponent{
   }
 
  handleSaveAssessment(e) {
+   // todo validations
+   // no inDraft questions, check if enough questions per outcome, etc.
    ReviewAssessmentActions.saveAssessment(this.state.assessment);
  }
 

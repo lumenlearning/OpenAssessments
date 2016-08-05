@@ -4,6 +4,7 @@ import React                  from "react";
 import _                      from "lodash";
 import Style                  from "./css/style.js";
 import BaseComponent          from '../../base_component.jsx';
+import ReviewAssessmentActions from "../../../actions/review_assessment";
 
 //Components
 import OutcomeSelector        from './outcome_selector.jsx';
@@ -14,10 +15,11 @@ export default class QuestionInterface extends BaseComponent{
 
   constructor(props, state) {
     super(props, state);
-    this._bind("handleMaterialChange", "handleAnswerChange", "handleFeedbackChange", "handleAddOption", "handleOutcomeChange");
+    this._bind("handleDoneEditing", "handleMaterialChange", "handleAnswerChange", "handleFeedbackChange", "handleAddOption", "handleOutcomeChange");
 
     this.state = {
-      question: this.props.question || {}
+      question: this.props.question || {},
+      dirty: false
     }
   }
 
@@ -25,18 +27,39 @@ export default class QuestionInterface extends BaseComponent{
 
   }
 
+  handleDoneEditing(e){
+    // todo: validations
+    // todo: set question_type based on count of correct answers
+
+    if(this.state.dirty){
+      ReviewAssessmentActions.updateAssessmentQuestion(this.state.question);
+    } else {
+      ReviewAssessmentActions.stopEditingQuestion(this.state.question);
+    }
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps != this.props){
+      this.setState({
+        question: nextProps.question,
+        dirty: false
+      });
+    }
+  }
+
+
   handleOutcomeChange(newOutcome) {
     let question = _.clone(this.state.question, true);
     question.outcome = newOutcome;
 
-    this.setState({question: question});
+    this.setState({question: question, dirty: true});
   }
 
   handleMaterialChange(e) {
     let question = _.clone(this.state.question, true);
     question.material = e.target.getContent();
 
-    this.setState({question: question});
+    this.setState({question: question, dirty: true});
   }
 
   handleAnswerChange(e, index) {
@@ -44,7 +67,7 @@ export default class QuestionInterface extends BaseComponent{
     let answer = question.answers[index];
     answer.material = e.target.getContent();
 
-    this.setState({question: question});
+    this.setState({question: question, dirty: true});
   }
 
   handleFeedbackChange(e, index) {
@@ -52,7 +75,7 @@ export default class QuestionInterface extends BaseComponent{
     let answer = question.answers[index];
     answer.feedback = e.target.getContent();
 
-    this.setState({question: question});
+    this.setState({question: question, dirty: true});
   }
 
   handleAddOption(e) {
@@ -65,7 +88,7 @@ export default class QuestionInterface extends BaseComponent{
     };
     question.answers.push(answerObj);
 
-    this.setState({question: question});
+    this.setState({question: question, dirty: true});
   }
 
   render() {
@@ -75,6 +98,7 @@ export default class QuestionInterface extends BaseComponent{
     return (
       <div style={style.qiContent}>
         <div style={style.qiContentBlock}>
+          <button onClick={this.handleDoneEditing}>Done Editing</button>
           <OutcomeSelector
             outcomes={this.props.outcomes}
             selectedOutcome={question.outcome}

@@ -27,7 +27,6 @@ export default class Question extends BaseComponent{
   getState(){
     return {
       question: this.props.question || null,
-      editMode: false,
       minimize: false,
       hover:{
         "copy": false,
@@ -38,11 +37,6 @@ export default class Question extends BaseComponent{
   }
 
   componentWillMount(){
-    if(this.props.question.id.includes('newQuestion')){
-      this.setState({
-        editMode: true
-      });
-    }
   }
 
   componentWillReceiveProps(nProps, nState){
@@ -50,10 +44,6 @@ export default class Question extends BaseComponent{
     if(nProps.question !== this.props.question){
       state.question = nProps.question
     }
-    if(nProps.question.id.includes('newQuestion')){
-      state.editMode = true;
-    }
-
     this.setState(state);
   }
 
@@ -64,16 +54,26 @@ export default class Question extends BaseComponent{
     let delHover  = this.state.hover.delete;
     let copyHover = this.state.hover.copy;
     let editHover = this.state.hover.edit;
-    let Content   = this.state.editMode ? QuestionInterface : QuestionBlock;
+    let Content   = question.inDraft ? QuestionInterface : QuestionBlock;
+    var state_text = '';
+    var headerStyle = style.questionHeader;
+    if(question.inDraft) {
+      state_text = " (In Draft)";
+      headerStyle = style.draftHeader;
+    } else if(question.edited){
+      state_text = " (Edited)";
+      headerStyle = style.editedHeader;
+    }
 
     return (
       <li style={style.questionItem} >
-        <div className="questionHeader" style={style.questionHeader}>
+        <div className="questionHeader" style={headerStyle}>
           <div className="questionShortName" style={style.questionShortName} >
             <Tooltip message={question.outcome.longOutcome}
                      position='top-right'
               >
               Outcome: {question.outcome.shortOutcome}
+              {state_text}
             </Tooltip>
           </div>
           <div className="questionToolbar" style={style.questionToolbar}>
@@ -90,7 +90,7 @@ export default class Question extends BaseComponent{
             </Tooltip>
             <Tooltip message='Edit Quiz' position='top-left'>
             <img className='questionToolBtns'
-                 style={_.merge({}, style.questionToolBtns, {backgroundColor: editHover || this.state.editMode ? '#31708f' : 'transparent'})}
+                 style={_.merge({}, style.questionToolBtns, {backgroundColor: editHover || question.inDraft ? '#31708f' : 'transparent'})}
                  src="/assets/pencil-64-white.png"
                  onClick={this.toggleEdit}
                  onMouseOver={this.handleHoverStates}
@@ -121,14 +121,11 @@ export default class Question extends BaseComponent{
 
   /*CUSTOM HANDLER FUNCTIONS*/
   toggleEdit(e){
-
-    if(this.state.editMode){
-      //Save Question to store here.
+    if (this.state.question.inDraft) {
+      ReviewAssessmentActions.stopEditingQuestion(this.state.question);
+    } else {
+      ReviewAssessmentActions.startEditingQuestion(this.state.question);
     }
-
-    this.setState({
-      editMode: !this.state.editMode
-    });
   }
 
   handleDuplicate(e){

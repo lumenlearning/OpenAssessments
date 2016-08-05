@@ -13,6 +13,16 @@ export default new class Style {
         height: '40px',
         borderRadius: '4px 4px 0 0'
       },
+      editedHeader:{
+        backgroundColor: '#71B889',
+        height: '40px',
+        borderRadius: '4px 4px 0 0'
+      },
+      draftHeader:{
+        backgroundColor: '#FF7A62',
+        height: '40px',
+        borderRadius: '4px 4px 0 0'
+      },
       questionShortName:{
         position: 'absolute',
         display: 'inline-block',

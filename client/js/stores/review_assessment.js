@@ -158,11 +158,23 @@ Dispatcher.register(function(payload) {
 
       break;
 
+    case Constants.START_EDITING_QUESTION:
+      var item = _.find(_items, {id: payload.data.id});
+      item.inDraft = true;
+      break;
+
+    case Constants.STOP_EDITING_QUESTION:
+      var item = _.find(_items, {id: payload.data.id});
+      item.inDraft = false;
+      break;
+
     case Constants.UPDATE_ASSESSMENT_QUESTION:
       var question = payload.data;
+      question.edited = true;
+      question.inDraft = false;
 
-      _items.forEach((item, index)=>{
-        if(item.id === question.id){
+      _items.forEach((item, index)=> {
+        if (item.id === question.id) {
           _items[index] = question;
         }
       });
