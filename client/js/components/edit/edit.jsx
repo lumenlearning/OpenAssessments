@@ -18,7 +18,7 @@ export default class Edit extends BaseComponent{
   constructor(props, context) {
     super(props, context);
     this.stores = [ReviewAssessmentStore];
-    this._bind("handleAddQuestion", "handleSaveAssessment");
+    this._bind("handleAddQuestion", "handleSaveAssessment", "noticeDisplay");
 
     if(!ReviewAssessmentStore.isLoaded() && !ReviewAssessmentStore.isLoading()){
       ReviewAssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, this.props.params["assessmentId"], true);
@@ -36,7 +36,9 @@ export default class Edit extends BaseComponent{
       questions        : ReviewAssessmentStore.allQuestions(),
       outcomes         : ReviewAssessmentStore.outcomes(),
       settings         : SettingsStore.current(),
-      assessment       : ReviewAssessmentStore.current()
+      assessment       : ReviewAssessmentStore.current(),
+      needsSaving       : ReviewAssessmentStore.isDirty(),
+      validationMessages : ReviewAssessmentStore.validationMessages()
     }
   }
 
@@ -56,6 +58,7 @@ export default class Edit extends BaseComponent{
             <h2 style={style.eqH2Title} >{title}</h2>
           </div>
         </div>
+        {this.noticeDisplay(style)}
         <div className="eqNewQuestion" style={style.eqNewQuestion} >
           <label for="save_quiz" style={style.saveAssessmentBtn}>
             <button name='save_quiz' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={this.handleSaveAssessment} style={style.saveAssessmentBtn}>
@@ -128,8 +131,21 @@ export default class Edit extends BaseComponent{
       let btnStyle = _.merge({}, Style.styles().addQuestionBtn, {borderRadius: '0', fontSize: '24px', padding: '0px 15px', margin:'0px', width: 'inherit'});
       return (<li style={noteStyle}> You currently don't have any quiz questions. Please click <button style={btnStyle} className='btn btn-sm' onClick={this.handleAddQuestion} >Here</button> to create one :)</li>)
     }
+  }
 
+  noticeDisplay(style) {
+    var validationMessages = this.state.validationMessages.map((message, index)=>{
+      return <p>{message}</p>
+    });
 
+    if (this.state.needsSaving) {
+      return <div className="eqHeader" style={style.noticeHeader}>
+        <div className="eqTitle" style={style.eqTitle}>
+          Quiz needs to be saved.
+        </div>
+        {validationMessages}
+      </div>
+    }
   }
 };
 

@@ -10,6 +10,10 @@ export default new class Style {
         backgroundColor:'#71B889',
         padding: '0px 40px'
       },
+      noticeHeader:{
+        backgroundColor:'#FF7A62',
+        padding: '0px 40px'
+      },
       eqTitle:{
         display: 'inline-block'
       },

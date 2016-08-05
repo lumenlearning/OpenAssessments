@@ -20,6 +20,8 @@ var _outcomes = [];
 var _assessmentState = NOT_LOADED;
 var _selectedAnswerIds = [];
 var _studentAnswers = [];
+var _dirty = false;
+var _validationMessages = [];
 
 var _assessmentResult = null;
 var _assessmentResultState = NOT_LOADED;
@@ -29,6 +31,8 @@ function parseAssessmentResult(result){
 }
 
 function loadAssessment(payload){
+  _dirty = false;
+  _validationMessages = [];
   _assessmentState = INVALID;
   if(payload.data.text){
     var text = payload.data.text.trim();
@@ -102,6 +106,21 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
       minutes: 1,
       seconds: 4
     };
+  },
+  isDirty(){
+    return _dirty;
+  },
+  validationMessages(){
+    return _validationMessages;
+  },
+  validateQuestions(){
+    _validationMessages = [];
+    if(SettingsStore.current().perSec){
+      // todo: for each outcome,
+      // if question count > 0 && < perSec, add warning you need at least perSec (also can't save quiz)
+      // if count == 0, add warning outcome will be removed
+      _validationMessages.push("You need at least " + SettingsStore.current().perSec);
+    }
   }
 
 });
@@ -150,11 +169,7 @@ Dispatcher.register(function(payload) {
           }
         });
       }
-
-
-      //_items.unshift(question);
-      //_items.push(question);
-      //_items.splice(index, 0, question);
+      _dirty = true;
 
       break;
 
@@ -178,6 +193,9 @@ Dispatcher.register(function(payload) {
           _items[index] = question;
         }
       });
+
+      _dirty = true;
+      ReviewAssessmentStore.validateQuestions();
 
       break;
 
