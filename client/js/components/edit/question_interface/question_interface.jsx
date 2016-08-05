@@ -17,7 +17,7 @@ export default class QuestionInterface extends BaseComponent{
     this._bind("handleMaterialChange", "handleAnswerChange", "handleFeedbackChange", "handleAddOption", "handleOutcomeChange");
 
     this.state = {
-      question: this.props.question || {},
+      question: this.props.question || {}
     }
   }
 
@@ -25,14 +25,10 @@ export default class QuestionInterface extends BaseComponent{
 
   }
 
-  handleOutcomeChange(e) {
-    let outcomeGuid = _.clone(this.state.question.outcomeGuid, true);
-    outcomeGuid = e.target.value;
-    console.log("ouch guid", outcomeGuid)
-
+  handleOutcomeChange(newOutcome) {
     this.setState({
       question: {
-        outcomeGuid: outcomeGuid
+        outcomes: newOutcome
       }
     });
   }
@@ -55,7 +51,6 @@ export default class QuestionInterface extends BaseComponent{
         answers: answers
       }
     });
-    // console.log("answer updating? ", this.state.answers[index].material)
   }
 
   handleFeedbackChange(e, index) {
@@ -68,7 +63,6 @@ export default class QuestionInterface extends BaseComponent{
         answers: answers
       }
     });
-    // console.log("feedback updating? ", this.state.answers[index].feedback)
   }
 
   handleAddOption(e) {
@@ -78,7 +72,7 @@ export default class QuestionInterface extends BaseComponent{
       material: '',
       isCorrect: false,
       feedback: null
-    }
+    };
     answers.push(answerObj);
 
     this.setState({
@@ -89,16 +83,16 @@ export default class QuestionInterface extends BaseComponent{
   }
 
   render() {
-    let outcomes = this.props.outcomes;
     let question = this.state.question;
     let style    = Style.styles();
-console.log("quest props lol:", this.props)
+
     return (
       <div style={style.qiContent}>
         <div style={style.qiContentBlock}>
           <OutcomeSelector
-            outcomes={outcomes}
-            handleOutcomeChange={this.handleOutcomeChange} />
+            outcomes={this.props.outcomes}
+            selectedOutcome={question.outcomes}
+            onChange={this.handleOutcomeChange} />
           <QuestionMaterial
             material={question.material}
             onChange={this.handleMaterialChange} />

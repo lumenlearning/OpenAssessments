@@ -7,45 +7,18 @@ import Style from './css/style.js';
 export default class OutcomeSelector extends React.Component{
 
   constructor(props, state) {
-    super(props, state)
+    super(props, state);
 
     this.handleChange = this.handleChange.bind(this);
-
-    this.state = this.getState();
-  }
-
-  getState() {
-    let outcomes = this.props.outcomes;
-    let selectedValue = outcomes[0].outcomeGuid;
-
-    return ({
-      outcomes: outcomes,
-      selectedValue: selectedValue
-    })
   }
 
   handleChange(e) {
-    let selectedOption = e.target.value;
-
-    this.setState({
-      selectedValue: selectedOption
-    });
+    let selectedOutcome = _.find(this.props.outcomes, { 'outcomeGuid': e.target.value });
+    this.props.onChange(selectedOutcome);
   }
 
   render() {
-    let outcomes      = this.props.outcomes;
-    let selectedValue = this.state.selectedValue;
-    let style         = Style.styles();
-
-    console.log("state:", this.state)
-    console.log("state outcomes:",this.state.outcomes)
-    console.log("select value:",this.state.selectedValue);
-
-    let selectOptions = outcomes.map((outcome, index) => {
-      return (
-        <option key={index} index={index} value={outcome.outcomeGuid}>{outcome.shortOutcome}</option>
-      )
-    });
+    let style = Style.styles();
 
     return (
       <div style={{paddingBottom: "30px"}}>
@@ -55,10 +28,14 @@ export default class OutcomeSelector extends React.Component{
             id="outcome-select"
             name="outcome-select"
             style={style.outcomeSelect}
-            value={selectedValue}
-            onChange={(event) => this.props.handleOutcomeChange(event)}
+            value={this.props.selectedOutcome.outcomeGuid}
+            onChange={this.handleChange}
             >
-              {selectOptions}
+            {this.props.outcomes.map((outcome, index) => {
+                return (
+                  <option key={index} index={index} value={outcome.outcomeGuid}>{outcome.shortOutcome}</option>
+                )
+              })}
           </select>
         </label>
       </div>
