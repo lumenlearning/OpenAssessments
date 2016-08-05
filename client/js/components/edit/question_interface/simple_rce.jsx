@@ -23,12 +23,16 @@ export default class SimpleRCE extends BaseComponent {
         toolbar: false,
         menubar: false,
         statusbar: false,
-        elementpath: false
+        elementpath: false,
+        content_css: '/assets/themes/lumen.css.scss'
       });
     } else if (config === "basic") {
       return({
-        toolbar: 'undo redo | fontsizeselect bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | table bullist numlist link image | code',
-        plugins: 'table, code',
+        toolbar: 'undo redo | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | table bullist numlist link image | code',
+        plugins: 'table, code, autoresize',
+        autoresize_bottom_margin: 10,
+        autoresize_max_height: 500,
+        autoresize_min_height: 200,
         menubar: false,
         statusbar: true,
         elementpath: false,
