@@ -14,7 +14,7 @@ export default class QuestionInterface extends BaseComponent{
 
   constructor(props, state) {
     super(props, state);
-    this._bind("handleMaterialChange", "handleAnswerChange", "handleFeedbackChange", "handleAddOption");
+    this._bind("handleMaterialChange", "handleAnswerChange", "handleFeedbackChange", "handleAddOption", "handleOutcomeChange");
 
     this.state = {
       question: this.props.question || {},
@@ -23,6 +23,18 @@ export default class QuestionInterface extends BaseComponent{
 
   componentWillMount() {
 
+  }
+
+  handleOutcomeChange(e) {
+    let outcomeGuid = _.clone(this.state.question.outcomeGuid, true);
+    outcomeGuid = e.target.value;
+    console.log("ouch guid", outcomeGuid)
+
+    this.setState({
+      question: {
+        outcomeGuid: outcomeGuid
+      }
+    });
   }
 
   handleMaterialChange(e) {
@@ -34,8 +46,8 @@ export default class QuestionInterface extends BaseComponent{
   }
 
   handleAnswerChange(e, index) {
-    let answers = _.clone(this.state.question.answers, true);
-    let answer = answers[index];
+    let answers     = _.clone(this.state.question.answers, true);
+    let answer      = answers[index];
     answer.material = e.target.getContent();
 
     this.setState({
@@ -47,8 +59,8 @@ export default class QuestionInterface extends BaseComponent{
   }
 
   handleFeedbackChange(e, index) {
-    let answers = _.clone(this.state.question.answers, true);
-    let answer = answers[index];
+    let answers     = _.clone(this.state.question.answers, true);
+    let answer      = answers[index];
     answer.feedback = e.target.getContent();
 
     this.setState({
@@ -60,7 +72,7 @@ export default class QuestionInterface extends BaseComponent{
   }
 
   handleAddOption(e) {
-    let answers = _.clone(this.state.question.answers, true);
+    let answers   = _.clone(this.state.question.answers, true);
     let answerObj = {
       id: String((Math.random() * 100) * Math.random()),
       material: '',
@@ -80,11 +92,13 @@ export default class QuestionInterface extends BaseComponent{
     let outcomes = this.props.outcomes;
     let question = this.state.question;
     let style    = Style.styles();
-
+console.log("quest props lol:", this.props)
     return (
       <div style={style.qiContent}>
         <div style={style.qiContentBlock}>
-          <OutcomeSelector outcomes={outcomes} />
+          <OutcomeSelector
+            outcomes={outcomes}
+            handleOutcomeChange={this.handleOutcomeChange} />
           <QuestionMaterial
             material={question.material}
             onChange={this.handleMaterialChange} />
