@@ -100,7 +100,7 @@ export default class ItemResult extends React.Component{
             {this.confidenceResult(styles)}
           </div>
           <div className="col-md-3 col-sm-3 col-xs-3">
-            <ResultOutcome outcomes={this.props.question.outcomes} correct={this.props.isCorrect} level={this.props.confidence}/>
+            <ResultOutcome outcome={this.props.question.outcome} correct={this.props.isCorrect} level={this.props.confidence}/>
           </div>
         </div> 
         <div className="row">

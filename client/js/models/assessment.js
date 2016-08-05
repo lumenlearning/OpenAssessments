@@ -42,8 +42,8 @@ export default class Assessment{
     for (var i = 1; i < assessment.sections.length; i++) {
       for (var j = 0; j < assessment.sections[i].items.length; j++) {
         var item = assessment.sections[i].items[j];
-        if(item.outcomes){
-          outcome_map[item.outcomes.outcomeGuid] = item.outcomes;
+        if(item.outcome){
+          outcome_map[item.outcome.outcomeGuid] = item.outcome;
         }
       }
     }

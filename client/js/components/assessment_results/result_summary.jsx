@@ -32,9 +32,9 @@ export default class ResultSummary extends React.Component{
 
     AssessmentStore.allQuestions().forEach((question, index) => {
       if (!correctList[index] || correctList[index] == "partial") {
-        if (question.outcomes) {
-          negativeList = negativeList.concat(_.filter(positiveList, 'outcomeGuid', question.outcomes.outcomeGuid));
-          positiveList = _.reject(positiveList, 'outcomeGuid', question.outcomes.outcomeGuid);
+        if (question.outcome) {
+          negativeList = negativeList.concat(_.filter(positiveList, 'outcomeGuid', question.outcome.outcomeGuid));
+          positiveList = _.reject(positiveList, 'outcomeGuid', question.outcome.outcomeGuid);
         }
       }
     });

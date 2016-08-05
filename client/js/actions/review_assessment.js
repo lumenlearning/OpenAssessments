@@ -60,7 +60,7 @@ export default {
         material: item.material,
         answers: answers,
         //correct: item.correct,
-        outcome: item.outcomes,
+        outcome: item.outcome,
         mom_embed: item.momEmbed
       }
     });

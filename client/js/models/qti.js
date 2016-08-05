@@ -11,8 +11,7 @@ export default class Qti{
       return {
         id       : xml.attr('ident'),
         standard : 'qti',
-        xml      : xml,
-        outcome  : items[0] ? items[0].outcomes : {},
+        outcome  : items[0] ? items[0].outcome : {},
         items    : items
       };
     };
@@ -22,7 +21,6 @@ export default class Qti{
       return {
         id       : 'default',
         standard : 'qti',
-        xml      : xml,
         items    : this.parseItems(xml)
       };
     };
@@ -66,8 +64,7 @@ export default class Qti{
         id         : xml.attr('ident'),
         title      : xml.attr('title'),
         objectives : objectives,
-        outcomes   : this.parseOutcome(xml),
-        xml        : xml,
+        outcome   : this.parseOutcome(xml),
         material   : this.material(xml),
         answers    : this.parseAnswers(xml),
         correct    : this.parseCorrect(xml),
@@ -134,14 +131,12 @@ export default class Qti{
 
     var fromXml = (xml) => {
       xml = $(xml);
-      var answer = {
-        id       : xml.attr('ident'),
-        material : this.buildMaterial(xml.find('material').children()),
-        xml      : xml,
+      return {
+        id: xml.attr('ident'),
+        material: this.buildMaterial(xml.find('material').children()),
         isCorrect: false,
-        feedback : null
+        feedback: null
       };
-      return answer;
     };
 
     return this.listFromXml(xml, 'response_lid > render_choice > response_label', fromXml);

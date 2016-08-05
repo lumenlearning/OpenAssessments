@@ -27,7 +27,7 @@ export default class QuestionInterface extends BaseComponent{
 
   handleOutcomeChange(newOutcome) {
     let question = _.clone(this.state.question, true);
-    question.outcomes = newOutcome;
+    question.outcome = newOutcome;
 
     this.setState({question: question});
   }
@@ -77,7 +77,7 @@ export default class QuestionInterface extends BaseComponent{
         <div style={style.qiContentBlock}>
           <OutcomeSelector
             outcomes={this.props.outcomes}
-            selectedOutcome={question.outcomes}
+            selectedOutcome={question.outcome}
             onChange={this.handleOutcomeChange} />
           <QuestionMaterial
             material={question.material}

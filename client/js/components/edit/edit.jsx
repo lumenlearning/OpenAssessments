@@ -45,7 +45,6 @@ export default class Edit extends BaseComponent{
   }
 
   render(){
-    let enablingOutcomeSections = this.state.enablingOutcomes;
     let style = Style.styles();
 
     let title = typeof this.state.assessment == 'undefined' || this.state.assessment == null ? '' : this.state.assessment.title;
@@ -85,10 +84,10 @@ export default class Edit extends BaseComponent{
       question_type: '',
       material: '',
       answers: [],
-      outcomes: {
+      outcome: {
         longOutcome: '',
         shortOutcome: '',
-        outcomeGuid: '',
+        outcomeGuid: ''
       },
       mom_embed: ''
     };

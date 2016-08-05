@@ -70,10 +70,10 @@ export default class Question extends BaseComponent{
       <li style={style.questionItem} >
         <div className="questionHeader" style={style.questionHeader}>
           <div className="questionShortName" style={style.questionShortName} >
-            <Tooltip message={question.outcomes.longOutcome}
+            <Tooltip message={question.outcome.longOutcome}
                      position='top-right'
               >
-              Outcome: {question.outcomes.shortOutcome}
+              Outcome: {question.outcome.shortOutcome}
             </Tooltip>
           </div>
           <div className="questionToolbar" style={style.questionToolbar}>
