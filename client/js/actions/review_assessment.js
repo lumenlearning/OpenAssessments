@@ -47,8 +47,8 @@ export default {
     Dispatcher.dispatch({action: Constants.START_EDITING_QUESTION, data: question});
   },
 
-  stopEditingQuestion(question){
-    Dispatcher.dispatch({action: Constants.STOP_EDITING_QUESTION, data: question});
+  cancelEditingQuestion(question){
+    Dispatcher.dispatch({action: Constants.CANCEL_EDITING_QUESTION, data: question});
   },
 
   validateQuestion(question){

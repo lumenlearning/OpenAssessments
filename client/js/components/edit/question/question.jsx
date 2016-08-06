@@ -124,7 +124,7 @@ export default class Question extends BaseComponent{
   /*CUSTOM HANDLER FUNCTIONS*/
   toggleEdit(e){
     if (this.state.question.inDraft) {
-      ReviewAssessmentActions.stopEditingQuestion(this.state.question);
+      ReviewAssessmentActions.cancelEditingQuestion(this.state.question);
     } else {
       ReviewAssessmentActions.startEditingQuestion(this.state.question);
     }

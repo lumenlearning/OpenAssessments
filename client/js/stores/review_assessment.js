@@ -22,6 +22,7 @@ var _selectedAnswerIds = [];
 var _studentAnswers = [];
 var _dirty = false;
 var _validationMessages = [];
+var _inDraftOriginals = {};
 
 var _assessmentResult = null;
 var _assessmentResultState = NOT_LOADED;
@@ -241,15 +242,16 @@ Dispatcher.register(function(payload) {
     case Constants.START_EDITING_QUESTION:
       var item = _.find(_items, {id: payload.data.id});
       if (item) {
+        _inDraftOriginals[item.id] = _.clone(item, true);
         item.inDraft = true;
       }
       break;
 
-    case Constants.STOP_EDITING_QUESTION:
-      var item = _.find(_items, {id: payload.data.id});
-      if (item) {
-        item.inDraft = false;
-
+    case Constants.CANCEL_EDITING_QUESTION:
+      var index = _.findIndex(_items, {id: payload.data.id});
+      if (index >= 0 && _inDraftOriginals[payload.data.id]) {
+        _items[index] = _inDraftOriginals[payload.data.id];
+        _inDraftOriginals[payload.data.id] = null;
       }
       break;
 
@@ -262,6 +264,7 @@ Dispatcher.register(function(payload) {
         question.inDraft = false;
         question.validationMessage = null;
         _dirty = true;
+        _inDraftOriginals[question.id] = null;
       }
 
       var index = _.findIndex(_items, {id: question.id});

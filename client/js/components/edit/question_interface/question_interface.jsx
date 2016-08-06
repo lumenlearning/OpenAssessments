@@ -113,7 +113,7 @@ export default class QuestionInterface extends BaseComponent{
     if(this.state.dirty){
       ReviewAssessmentActions.updateAssessmentQuestion(this.state.question);
     } else {
-      ReviewAssessmentActions.stopEditingQuestion(this.state.question);
+      ReviewAssessmentActions.cancelEditingQuestion(this.state.question);
     }
   }
 }
