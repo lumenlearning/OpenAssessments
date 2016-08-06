@@ -27,17 +27,6 @@ export default class QuestionInterface extends BaseComponent{
 
   }
 
-  handleDoneEditing(e){
-    // todo: validations
-    // todo: set question_type based on count of correct answers
-
-    if(this.state.dirty){
-      ReviewAssessmentActions.updateAssessmentQuestion(this.state.question);
-    } else {
-      ReviewAssessmentActions.stopEditingQuestion(this.state.question);
-    }
-  }
-
   componentWillReceiveProps(nextProps){
     if(nextProps != this.props){
       this.setState({
@@ -47,7 +36,38 @@ export default class QuestionInterface extends BaseComponent{
     }
   }
 
+  render() {
+    let question = this.state.question;
+    let style    = Style.styles();
 
+console.log("QUESTION:", question);
+
+    return (
+      <div style={style.qiContent}>
+        <div style={style.qiContentBlock}>
+
+          <OutcomeSelector
+            outcomes={this.props.outcomes}
+            selectedOutcome={question.outcome}
+            onChange={this.handleOutcomeChange}
+          >
+            <button className='btn' onClick={this.handleDoneEditing} style={{ fontSize: '16px'}}>Done Editing</button>
+          </OutcomeSelector>
+          <QuestionMaterial
+            material={question.material}
+            onChange={this.handleMaterialChange} />
+          <AnswerFeedbackMaterial
+            answers={question.answers}
+            handleAnswerChange={this.handleAnswerChange}
+            handleFeedbackChange={this.handleFeedbackChange}
+            handleAddOption={this.handleAddOption} />
+        </div>
+      </div>
+    );
+  }
+
+
+  /*CUSTOM EVENT HANDLERS*/
   handleOutcomeChange(newOutcome) {
     let question = _.clone(this.state.question, true);
     question.outcome = newOutcome;
@@ -91,29 +111,22 @@ export default class QuestionInterface extends BaseComponent{
     this.setState({question: question, dirty: true});
   }
 
-  render() {
-    let question = this.state.question;
-    let style    = Style.styles();
+  handleDoneEditing(e){
+    let question    = this.state.question;
+    let hasCorrect  = false;
+    // todo: validations
+    // todo: set question_type based on count of correct answers
+    //check if questions are blank
+    //check if answers are blank
+    //check if answers are duplicate
+    //ensure that outcome is selected
+    //ensure that correct answer is selected.
 
-    return (
-      <div style={style.qiContent}>
-        <div style={style.qiContentBlock}>
-          <button onClick={this.handleDoneEditing}>Done Editing</button>
-          <OutcomeSelector
-            outcomes={this.props.outcomes}
-            selectedOutcome={question.outcome}
-            onChange={this.handleOutcomeChange} />
-          <QuestionMaterial
-            material={question.material}
-            onChange={this.handleMaterialChange} />
-          <AnswerFeedbackMaterial
-            answers={question.answers}
-            handleAnswerChange={this.handleAnswerChange}
-            handleFeedbackChange={this.handleFeedbackChange}
-            handleAddOption={this.handleAddOption} />
-        </div>
-      </div>
-    );
+
+    if(this.state.dirty){
+      ReviewAssessmentActions.updateAssessmentQuestion(question);
+    } else {
+      ReviewAssessmentActions.stopEditingQuestion(question);
+    }
   }
-
 }

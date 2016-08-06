@@ -51,6 +51,10 @@ export default {
     Dispatcher.dispatch({action: Constants.STOP_EDITING_QUESTION, data: question});
   },
 
+  validateQuestion(question){
+    Dispatcher.dispatch({action: Constants.VALIDATE_ASSESSMENT_QUESTION, data: question});
+  },
+
   saveAssessment(assessment){
     // Only return the relevant item and answer information.
     let items = ReviewAssessmentStore.allQuestions().map(function(item){

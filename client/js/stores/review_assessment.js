@@ -56,6 +56,74 @@ function loadAssessment(payload){
 
 }
 
+function validateQuestion(qstn){
+  let question = qstn;
+  let duplicateArr = [];
+  let hasDuplicates = false;
+  let hasCorrect = false;
+  let validationMsg = {
+    questionId: question.id,
+    isDirty: false,
+    messages: []
+  };
+
+  //check if questions are blank
+  if(question.material.match(/\S/)){
+    validationMsg.isDirty = true;
+    validationMsg.messages.push('You must enter question text to finish editing this question.');
+  }
+
+  //ensure that outcome is selected
+  if(question.outcome.outcomeGuid == ''){
+    validationMsg.isDirty = true;
+    validationMsg.messages.push('You must select an outcome to finish editing this question.');
+  }
+
+  //ensure that question has minimum number of answers.
+  if(question.answers.length < 2){
+    validationMsg.isDirty = true;
+    validationMsg.messages.push("You need at least 2 answers to save your question");
+  }
+
+  //answer validations
+  question.answers.forEach((answer, index, array)=>{
+    //ensure that at least one correct answer is selected.
+    if(answer.isCorrect && !hasCorrect) {
+      hasCorrect = true
+    }
+    else if(((index + 1) === array.length) && !hasCorrect){
+      validationMsg.isDirty = true;
+      validationMsg.messages.push('You must indicate the correct answer choice(s) to finish editing this question.');
+    }
+
+    //check if answers are blank
+    if(!answer.material.match(/\S/)){
+      validationMsg.isDirty = true;
+      validationMsg.messages.push('Your answers must not be blank. Please enter answer text to finish editing this question.');
+    }
+
+    //check if answers are duplicate
+    if(duplicateArr.indexOf(answer.material.trim()) !== -1 && !hasDuplicates){
+      hasDuplicates = true;
+
+      validationMsg.isDirty = true;
+      validationMsg.messages.push(`You can't have two answers with the same text.`);
+    }
+
+    duplicateArr.push(answer.material.trim());
+  });//each
+
+  //append or add validation message to _validationMessages array
+  _validationMessages.forEach((messageObj, index)=>{
+    if(messageObj.id == validationMsg.id){
+      _validationMessages[index] = validationMsg;
+    }
+    else if((index+1) == _validationMessages.length){
+      _validationMessages.push(validationMsg);
+    }
+  });
+}
+
 // Extend User Store with EventEmitter to add eventing capabilities
 var ReviewAssessmentStore = assign({}, StoreCommon, {
 
@@ -195,7 +263,8 @@ Dispatcher.register(function(payload) {
       });
 
       _dirty = true;
-      ReviewAssessmentStore.validateQuestions();
+      //ReviewAssessmentStore.validateQuestions();
+      validateQuestion(question);
 
       break;
 
@@ -207,6 +276,20 @@ Dispatcher.register(function(payload) {
           _items.splice(index, 1);
         }
       });
+
+      break;
+
+    case Constants.VALIDATE_ASSESSMENT_QUESTIONS:
+      let questions = payload.data;
+
+      questions.forEach((question)=>{
+        validateQuestion(question);
+      });
+
+      break;
+
+    case Constants.VALIDATE_ASSESSMENT_QUESTION:
+      validateQuestion(payload.data);
 
       break;
 

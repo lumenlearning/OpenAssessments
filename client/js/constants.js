@@ -49,6 +49,8 @@ export default {
   START_EDITING_QUESTION: 'start_editing_question',
   STOP_EDITING_QUESTION: 'stop_editing_question',
   DELETE_ASSESSMENT_QUESTION: 'delete_assessment_question',
+  VALIDATE_ASSESSMENT_QUESTIONS: 'validate_assessment_questions',
+  VALIDATE_ASSESSMENT_QUESTION: 'validate_assessment_question',
   SAVE_ASSESSMENT: 'save_assessment',
 
 

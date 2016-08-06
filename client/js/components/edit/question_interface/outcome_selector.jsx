@@ -21,8 +21,8 @@ export default class OutcomeSelector extends React.Component{
     let style = Style.styles();
 
     return (
-      <div style={{paddingBottom: "30px"}}>
-        <label for="outcome-select">
+      <div style={{paddingBottom: "30px", display: 'flex', justifyContent:'space-between'}}>
+        <label for="outcome-select" >
           <span style={style.label}>Outcome </span>
           <select
             id="outcome-select"
@@ -38,6 +38,9 @@ export default class OutcomeSelector extends React.Component{
               })}
           </select>
         </label>
+        <div>
+          {this.props.children}
+        </div>
       </div>
     )
   }

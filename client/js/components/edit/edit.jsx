@@ -46,6 +46,12 @@ export default class Edit extends BaseComponent{
     //when component will mount, grab data from the editQuiz store
   }
 
+  componentWillReceiveProps(){
+    this.setState({
+      validationMessages: ReviewAssessmentStore.validationMessages()
+    });
+  }
+
   render(){
     let style = Style.styles();
 
@@ -112,12 +118,26 @@ export default class Edit extends BaseComponent{
 
   /*CUSTOM FUNCTIONS*/
   displayQuestions(){
+
+    console.log(this.state.validationMessages);
+
     if(this.state.questions.length !== 0){
       return this.state.questions.map((question, index)=>{
-        let outcomes = this.state.outcomes;
+        let outcomes      = this.state.outcomes;
+        let validationMsg = {
+          id: null,
+          isDirty: false,
+          messages:[]
+        };
+
+        this.state.validationMessages.map((validationMessage, index)=>{
+          if(validationMessage.id === question.id){
+            validationMsg = this.state.validationMessages[index];
+          }
+        });
 
         return (
-          <Question key={index} question={question} outcomes={outcomes} />
+          <Question key={index} question={question} outcomes={outcomes} validationMsg={validationMsg}/>
         )
       });
     }
@@ -135,16 +155,18 @@ export default class Edit extends BaseComponent{
 
   noticeDisplay(style) {
     var validationMessages = this.state.validationMessages.map((message, index)=>{
-      return <p>{message}</p>
+      return <p>{message.message[0]}</p> //todo: map through all messages
     });
 
     if (this.state.needsSaving) {
-      return <div className="eqHeader" style={style.noticeHeader}>
-        <div className="eqTitle" style={style.eqTitle}>
-          Quiz needs to be saved.
+      return (
+        <div className="eqHeader" style={style.noticeHeader}>
+          <div className="eqTitle" style={style.eqTitle}>
+            Quiz needs to be saved.
+          </div>
+          {validationMessages}
         </div>
-        {validationMessages}
-      </div>
+      )
     }
   }
 };
