@@ -155,7 +155,7 @@ export default class Edit extends BaseComponent{
 
   noticeDisplay(style) {
     var validationMessages = this.state.validationMessages.map((message, index)=>{
-      return <p>{message.message[0]}</p> //todo: map through all messages
+      return <p>{message.messages[0]}</p> //todo: map through all messages
     });
 
     if (this.state.needsSaving) {

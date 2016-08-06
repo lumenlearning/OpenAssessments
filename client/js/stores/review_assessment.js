@@ -114,14 +114,12 @@ function validateQuestion(qstn){
   });//each
 
   //append or add validation message to _validationMessages array
-  _validationMessages.forEach((messageObj, index)=>{
-    if(messageObj.id == validationMsg.id){
-      _validationMessages[index] = validationMsg;
-    }
-    else if((index+1) == _validationMessages.length){
-      _validationMessages.push(validationMsg);
-    }
-  });
+  var index = _.findIndex(_validationMessages, {id: validationMsg.id});
+  if(index >= 0){
+    _validationMessages[index] = validationMsg;
+  } else {
+    _validationMessages.push(validationMsg);
+  }
 }
 
 // Extend User Store with EventEmitter to add eventing capabilities
@@ -243,12 +241,17 @@ Dispatcher.register(function(payload) {
 
     case Constants.START_EDITING_QUESTION:
       var item = _.find(_items, {id: payload.data.id});
-      item.inDraft = true;
+      if (item) {
+        item.inDraft = true;
+      }
       break;
 
     case Constants.STOP_EDITING_QUESTION:
       var item = _.find(_items, {id: payload.data.id});
-      item.inDraft = false;
+      if (item) {
+        item.inDraft = false;
+
+      }
       break;
 
     case Constants.UPDATE_ASSESSMENT_QUESTION:
