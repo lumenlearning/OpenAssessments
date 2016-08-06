@@ -12,13 +12,14 @@ import Question                       from './question/question.jsx';
 import OutcomeSection                 from './outcome_section/outcome_section.jsx';
 import QuestionBlock                  from './question_block/question_block.jsx';
 import QuestionInterface              from './question_interface/question_interface.jsx';
+import ValidationMessages             from './validation_messages.jsx';
 
 export default class Edit extends BaseComponent{
 
   constructor(props, context) {
     super(props, context);
     this.stores = [ReviewAssessmentStore];
-    this._bind("handleAddQuestion", "handleSaveAssessment", "noticeDisplay");
+    this._bind("handleAddQuestion", "handleSaveAssessment");
 
     if(!ReviewAssessmentStore.isLoaded() && !ReviewAssessmentStore.isLoading()){
       ReviewAssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, this.props.params["assessmentId"], true);
@@ -64,7 +65,7 @@ export default class Edit extends BaseComponent{
             <h2 style={style.eqH2Title} >{title}</h2>
           </div>
         </div>
-        {this.noticeDisplay(style)}
+        <ValidationMessages messages={this.state.validationMessages} needsSaving={this.state.needsSaving} />
         <div className="eqNewQuestion" style={style.eqNewQuestion} >
           <label for="save_quiz" style={style.saveAssessmentBtn}>
             <button name='save_quiz' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={this.handleSaveAssessment} style={style.saveAssessmentBtn}>
@@ -119,8 +120,6 @@ export default class Edit extends BaseComponent{
   /*CUSTOM FUNCTIONS*/
   displayQuestions(){
 
-    console.log(this.state.validationMessages);
-
     if(this.state.questions.length !== 0){
       return this.state.questions.map((question, index)=>{
         let outcomes      = this.state.outcomes;
@@ -137,7 +136,7 @@ export default class Edit extends BaseComponent{
         });
 
         return (
-          <Question key={index} question={question} outcomes={outcomes} validationMsg={validationMsg}/>
+          <Question key={index} question={question} outcomes={outcomes}/>
         )
       });
     }
@@ -150,23 +149,6 @@ export default class Edit extends BaseComponent{
       };
       let btnStyle = _.merge({}, Style.styles().addQuestionBtn, {borderRadius: '0', fontSize: '24px', padding: '0px 15px', margin:'0px', width: 'inherit'});
       return (<li style={noteStyle}> You currently don't have any quiz questions. Please click <button style={btnStyle} className='btn btn-sm' onClick={this.handleAddQuestion} >Here</button> to create one :)</li>)
-    }
-  }
-
-  noticeDisplay(style) {
-    var validationMessages = this.state.validationMessages.map((message, index)=>{
-      return <p>{message.messages[0]}</p> //todo: map through all messages
-    });
-
-    if (this.state.needsSaving) {
-      return (
-        <div className="eqHeader" style={style.noticeHeader}>
-          <div className="eqTitle" style={style.eqTitle}>
-            Quiz needs to be saved.
-          </div>
-          {validationMessages}
-        </div>
-      )
     }
   }
 };

@@ -19,19 +19,19 @@ export default class QuestionInterface extends BaseComponent{
 
     this.state = {
       question: this.props.question || {},
-      dirty: false
+      dirty: this.props.question.material == "" // mark new questions as dirty
     }
-  }
-
-  componentWillMount() {
-
   }
 
   componentWillReceiveProps(nextProps){
     if(nextProps != this.props){
+      var dirty = false;
+      if(nextProps.question.validationMessage && !nextProps.question.validationMessage.is_valid){
+        dirty = true
+      }
       this.setState({
         question: nextProps.question,
-        dirty: false
+        dirty: dirty
       });
     }
   }
@@ -39,8 +39,6 @@ export default class QuestionInterface extends BaseComponent{
   render() {
     let question = this.state.question;
     let style    = Style.styles();
-
-console.log("QUESTION:", question);
 
     return (
       <div style={style.qiContent}>
@@ -112,21 +110,10 @@ console.log("QUESTION:", question);
   }
 
   handleDoneEditing(e){
-    let question    = this.state.question;
-    let hasCorrect  = false;
-    // todo: validations
-    // todo: set question_type based on count of correct answers
-    //check if questions are blank
-    //check if answers are blank
-    //check if answers are duplicate
-    //ensure that outcome is selected
-    //ensure that correct answer is selected.
-
-
     if(this.state.dirty){
-      ReviewAssessmentActions.updateAssessmentQuestion(question);
+      ReviewAssessmentActions.updateAssessmentQuestion(this.state.question);
     } else {
-      ReviewAssessmentActions.stopEditingQuestion(question);
+      ReviewAssessmentActions.stopEditingQuestion(this.state.question);
     }
   }
 }

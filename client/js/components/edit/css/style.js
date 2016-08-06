@@ -11,7 +11,8 @@ export default new class Style {
         padding: '0px 40px'
       },
       noticeHeader:{
-        backgroundColor:'#FF7A62',
+        borderColor:'#FF7A62',
+        borderStyle: 'solid',
         padding: '0px 40px'
       },
       eqTitle:{

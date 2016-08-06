@@ -56,70 +56,69 @@ function loadAssessment(payload){
 
 }
 
-function validateQuestion(qstn){
-  let question = qstn;
+function validateQuestion(question, preValidateOnly=false){
   let duplicateArr = [];
   let hasDuplicates = false;
   let hasCorrect = false;
   let validationMsg = {
     questionId: question.id,
-    isDirty: false,
+    isValid: true,
     messages: []
   };
 
   //check if questions are blank
-  if(question.material.match(/\S/)){
-    validationMsg.isDirty = true;
+  if(!question.material.match(/\S/)){
+    validationMsg.isValid = false;
     validationMsg.messages.push('You must enter question text to finish editing this question.');
   }
 
   //ensure that outcome is selected
   if(question.outcome.outcomeGuid == ''){
-    validationMsg.isDirty = true;
+    validationMsg.isValid = false;
     validationMsg.messages.push('You must select an outcome to finish editing this question.');
   }
 
   //ensure that question has minimum number of answers.
   if(question.answers.length < 2){
-    validationMsg.isDirty = true;
+    validationMsg.isValid = false;
     validationMsg.messages.push("You need at least 2 answers to save your question");
   }
 
   //answer validations
+  if (_.findIndex(question.answers, {isCorrect: true}) == -1) {
+    validationMsg.isValid = false;
+    validationMsg.messages.push('You must indicate the correct answer choice(s) to finish editing this question.');
+  }
+
+  if (_.findIndex(question.answers, {material: ''}) >= 0 ) {
+    validationMsg.isValid = false;
+    validationMsg.messages.push('Your answers must not be blank. Please enter answer text to finish editing this question.');
+  }
+
   question.answers.forEach((answer, index, array)=>{
-    //ensure that at least one correct answer is selected.
-    if(answer.isCorrect && !hasCorrect) {
-      hasCorrect = true
-    }
-    else if(((index + 1) === array.length) && !hasCorrect){
-      validationMsg.isDirty = true;
-      validationMsg.messages.push('You must indicate the correct answer choice(s) to finish editing this question.');
-    }
-
-    //check if answers are blank
-    if(!answer.material.match(/\S/)){
-      validationMsg.isDirty = true;
-      validationMsg.messages.push('Your answers must not be blank. Please enter answer text to finish editing this question.');
-    }
-
     //check if answers are duplicate
     if(duplicateArr.indexOf(answer.material.trim()) !== -1 && !hasDuplicates){
       hasDuplicates = true;
 
-      validationMsg.isDirty = true;
+      validationMsg.isValid = false;
       validationMsg.messages.push(`You can't have two answers with the same text.`);
     }
 
     duplicateArr.push(answer.material.trim());
   });//each
 
-  //append or add validation message to _validationMessages array
-  var index = _.findIndex(_validationMessages, {id: validationMsg.id});
-  if(index >= 0){
-    _validationMessages[index] = validationMsg;
-  } else {
-    _validationMessages.push(validationMsg);
+  if (!preValidateOnly) {
+    //append or add validation message to _validationMessages array
+    var index = _.findIndex(_validationMessages, {id: validationMsg.id});
+    if (index >= 0) {
+      _validationMessages[index] = validationMsg;
+    } else {
+      _validationMessages.push(validationMsg);
+    }
   }
+
+  question.validationMessage = validationMsg;
+  return validationMsg;
 }
 
 // Extend User Store with EventEmitter to add eventing capabilities
@@ -256,18 +255,19 @@ Dispatcher.register(function(payload) {
 
     case Constants.UPDATE_ASSESSMENT_QUESTION:
       var question = payload.data;
-      question.edited = true;
-      question.inDraft = false;
+      validateQuestion(question, true);
 
-      _items.forEach((item, index)=> {
-        if (item.id === question.id) {
-          _items[index] = question;
-        }
-      });
+      if (question.validationMessage.isValid) {
+        question.edited = true;
+        question.inDraft = false;
+        question.validationMessage = null;
+        _dirty = true;
+      }
 
-      _dirty = true;
-      //ReviewAssessmentStore.validateQuestions();
-      validateQuestion(question);
+      var index = _.findIndex(_items, {id: question.id});
+      if (index >= 0) {
+        _items[index] = question;
+      }
 
       break;
 
@@ -279,6 +279,8 @@ Dispatcher.register(function(payload) {
           _items.splice(index, 1);
         }
       });
+
+      _dirty = true;
 
       break;
 

@@ -13,6 +13,7 @@ import Tooltip                        from '../../common/tooltip/tooltip.jsx';
 import OutcomeSection                 from '../outcome_section/outcome_section.jsx';
 import QuestionBlock                  from '../question_block/question_block.jsx';
 import QuestionInterface              from '../question_interface/question_interface.jsx';
+import ValidationMessages             from './../validation_messages.jsx';
 
 export default class Question extends BaseComponent{
 
@@ -54,7 +55,7 @@ export default class Question extends BaseComponent{
     let delHover  = this.state.hover.delete;
     let copyHover = this.state.hover.copy;
     let editHover = this.state.hover.edit;
-    let Content   = question.inDraft || (this.props.validationMsg.length > 0) ? QuestionInterface : QuestionBlock;
+    let Content   = question.inDraft ? QuestionInterface : QuestionBlock;
     var state_text = '';
     var headerStyle = style.questionHeader;
     if(question.inDraft) {
@@ -64,8 +65,6 @@ export default class Question extends BaseComponent{
       state_text = " (Edited)";
       headerStyle = style.editedHeader;
     }
-
-    console.log("VALIDATION MESSAGES,", this.props.validationMsg);
 
     return (
       <li style={style.questionItem} >
@@ -113,12 +112,8 @@ export default class Question extends BaseComponent{
               />
             </Tooltip>
           </div>
-          <div className="questionValidationMsgs">
-            {this.props.validationMsg.messages.map((message)=>{
-              return <p>{message}</p>
-            })}
-          </div>
         </div>
+        <ValidationMessages message={question.validationMessage} />
         <div className="questionContent">
           <Content question={question} outcomes={outcomes} />
         </div>

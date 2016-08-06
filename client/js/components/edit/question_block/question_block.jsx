@@ -84,7 +84,7 @@ export default class QuestionBlock extends React.Component{
                             {answerLabelSmall}
                             <div style={_.merge(answerFeedback, style.qbTblCell)} dangerouslySetInnerHTML={this.constructor.createMarkup(answer.material)} />
                             {feedbackLabelSmall}
-                            <div style={_.merge(answerFeedback, style.qbTblCell)} dangerouslySetInnerHTML={this.constructor.createMarkup("Answer Feedback")} />
+                            <div style={_.merge(answerFeedback, style.qbTblCell)} dangerouslySetInnerHTML={this.constructor.createMarkup(answer.feedback)} />
                           </div>
                         </div>
                       </div>
