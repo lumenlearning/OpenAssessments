@@ -51,7 +51,10 @@ export default class AnswerFeedbackRow extends React.Component{
           <div style={{display: "table-cell", minWidth: "50px", height: "100%", verticalAlign: "middle"}}>
             <Checkbox
               key={index}
-              isCorrect={answer.isCorrect} />
+              index={index}
+              isCorrect={answer.isCorrect}
+              handleCorrectChange={this.props.handleCorrectChange}
+            />
           </div>
           <div style={{display: "table-cell", width: "100%", verticalAlign: "top"}}>
             <div style={answerFeedbackBlock}>

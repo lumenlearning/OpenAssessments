@@ -12,8 +12,7 @@ export default class Checkbox extends React.Component{
     this.toggleActive = this.toggleActive.bind(this);
 
     this.state = {
-      hover: false,
-      active: this.props.isCorrect
+      hover: false
     }
   }
 
@@ -29,7 +28,7 @@ export default class Checkbox extends React.Component{
     let checkCircle;
     let style = Style.styles();
 
-    if (this.state.active) {
+    if (this.props.isCorrect) {
       checkCircle = _.merge(style.checkHover, {opacity: "1"});
     } else if (this.state.hover) {
       checkCircle = _.merge(style.checkHover, {opacity: "0.5"});
@@ -41,18 +40,14 @@ export default class Checkbox extends React.Component{
   }
 
   toggleActive() {
-    let active = !this.state.active;
-
-    this.setState({
-      active: active
-    });
+    this.props.handleCorrectChange(this.props.index, !this.props.isCorrect);
   }
 
   activeBorder() {
     let style = Style.styles();
     let border;
 
-    if (this.state.active) {
+    if (this.props.isCorrect) {
       border = _.merge(style.checkCircle, {border: "2px solid #868686"});
     } else {
       border = _.merge(style.checkCircle, {border: "2px solid #CCC"});

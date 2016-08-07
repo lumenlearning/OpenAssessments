@@ -60,7 +60,8 @@ export default class AnswerFeedbackMaterial extends React.Component{
               index={index}
               answer={answer}
               handleAnswerChange={this.props.handleAnswerChange}
-              handleFeedbackChange={this.props.handleFeedbackChange} />
+              handleFeedbackChange={this.props.handleFeedbackChange}
+              handleCorrectChange={this.props.handleCorrectChange} />
           )
         })}
 

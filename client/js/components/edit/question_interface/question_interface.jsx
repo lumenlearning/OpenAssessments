@@ -15,7 +15,7 @@ export default class QuestionInterface extends BaseComponent{
 
   constructor(props, state) {
     super(props, state);
-    this._bind("handleDoneEditing", "handleMaterialChange", "handleAnswerChange", "handleFeedbackChange", "handleAddOption", "handleOutcomeChange");
+    this._bind("handleDoneEditing", "handleCorrectChange", "handleMaterialChange", "handleAnswerChange", "handleFeedbackChange", "handleAddOption", "handleOutcomeChange");
 
     this.state = {
       question: this.props.question || {},
@@ -58,6 +58,7 @@ export default class QuestionInterface extends BaseComponent{
             answers={question.answers}
             handleAnswerChange={this.handleAnswerChange}
             handleFeedbackChange={this.handleFeedbackChange}
+            handleCorrectChange={this.handleCorrectChange}
             handleAddOption={this.handleAddOption} />
         </div>
       </div>
@@ -92,6 +93,14 @@ export default class QuestionInterface extends BaseComponent{
     let question = _.clone(this.state.question, true);
     let answer = question.answers[index];
     answer.feedback = e.target.getContent();
+
+    this.setState({question: question, dirty: true});
+  }
+
+  handleCorrectChange(index, isCorrect) {
+    let question = _.clone(this.state.question, true);
+    let answer = question.answers[index];
+    answer.isCorrect = isCorrect;
 
     this.setState({question: question, dirty: true});
   }
