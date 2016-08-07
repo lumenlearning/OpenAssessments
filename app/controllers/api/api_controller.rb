@@ -6,10 +6,15 @@ class Api::ApiController < ApplicationController
 
   skip_before_action :verify_authenticity_token
 
+  rescue_from ActionController::ParameterMissing do |exception|
+    render json: {error: exception.message}, status: 400
+  end
+
   # Set the user and LtiLaunch
   def valid_token_callback(payload, header)
     @admin_scopes = payload[AuthToken::ADMIN_SCOPES] ? payload[AuthToken::ADMIN_SCOPES] : []
     @edit_id_scope = payload[AuthToken::EDIT_ID_SCOPE] ? payload[AuthToken::EDIT_ID_SCOPE] : nil
+    @jwt_scopes = payload["scopes"] || []
 
     if payload['lti_launch_id']
       @user = User.find(payload['user_id'])
@@ -37,6 +42,15 @@ class Api::ApiController < ApplicationController
   # makes sure the JWT token allows admin scope for this LTI context id
   def ensure_context_admin
     return true if @lti_launch && token_has_admin_scope(@lti_launch.lti_context_id)
+    render :json => { :error => "Unauthorized" }, status: :unauthorized
+    false
+  end
+
+  # makes sure the JWT token has the root_assessment_copier scope
+  # to issue a new token with this permission:
+  # AuthToken.issue_token({sub: 'purpose', scopes:['root_assessment_copier'], user_id: 1})
+  def ensure_copy_admin
+    return true if @jwt_scopes.member? 'root_assessment_copier'
     render :json => { :error => "Unauthorized" }, status: :unauthorized
     false
   end

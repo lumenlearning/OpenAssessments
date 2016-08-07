@@ -16,7 +16,7 @@ class Assessment < ActiveRecord::Base
   has_many :assessment_settings
   has_many :user_assessments
 
-  store_accessor :data, :external_edit_id
+  store_accessor :data, :external_edit_id, :copied_from_assessment_id
 
   scope :by_newest, -> { order(created_at: :desc) }
   scope :by_oldest, -> { order(start_date: :asc) }
@@ -25,6 +25,7 @@ class Assessment < ActiveRecord::Base
   scope :swyk, -> {where kind: 'show_what_you_know'}
   scope :formative, -> {where kind: 'formative'}
   scope :by_edit_id, ->(id) {where('data @> ?', {external_edit_id: id}.to_json)}
+  scope :by_copied_from_assessment_id, ->(id) {where('data @> ?', {copied_from_assessment_id: id}.to_json)}
 
   attr_accessor :xml_file
 

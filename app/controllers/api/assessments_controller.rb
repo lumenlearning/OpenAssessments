@@ -1,13 +1,15 @@
 require 'json2qti'
+require 'assessment_copier'
 
 class Api::AssessmentsController < Api::ApiController
   
   respond_to :xml, :json
 
   before_action :ensure_context_admin, only:[:json_update]
-  load_and_authorize_resource except: [:show, :json_update]
+  load_and_authorize_resource except: [:show, :json_update, :copy]
   skip_before_action :validate_token, only: [:show]
   skip_before_action :protect_account, only: [:show]
+  before_action :ensure_copy_admin, only:[:copy]
 
   def index
     page = (params[:page] || 1).to_i
@@ -155,6 +157,15 @@ class Api::AssessmentsController < Api::ApiController
 
     # yes, confusing to return XML from JSON update, but that's the format it's saved in
     render :xml => assessment.xml_with_answers
+  end
+
+  def copy
+    assessment = Assessment.where(id: params[:assessment_id]).first
+    raise ActiveRecord::RecordNotFound unless assessment
+
+    new_assessment = AssessmentCopier.copy!(assessment, edit_id: params.require(:edit_id), context_ids_to_update: params.require(:context_ids_to_update))
+
+    render :json => new_assessment
   end
 
   private

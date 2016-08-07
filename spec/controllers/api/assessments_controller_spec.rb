@@ -166,4 +166,79 @@ RSpec.describe Api::AssessmentsController, type: :controller do
     end
   end
 
+  describe "POST #copy" do
+    before(:each) do
+      @copy_admin_token = AuthToken.issue_token({sub: 'test', scopes:['root_assessment_copier'], user_id: @admin.id})
+      request.headers['Authorization'] = @copy_admin_token
+      @assessment = FactoryGirl.create(:assessment, account: @account, xml_file: @xml)
+    end
+
+    let(:params) {{assessment_id: @assessment.id, assessment_id: @assessment.id, edit_id: "testedit", context_ids_to_update: "oi,hoyt", format: :json}}
+
+    context "authorization" do
+      it "should accept a root_assessment_copier token" do
+        post :copy, params
+        expect(response).to have_http_status(200)
+      end
+
+      it "should reject an admin token" do
+        request.headers['Authorization'] = @admin_token
+        post :copy, params
+        expect(response).to have_http_status(401)
+      end
+
+      it "should reject a user token" do
+        request.headers['Authorization'] = @user_token
+        post :copy, params
+        expect(response).to have_http_status(401)
+      end
+
+      it "should reject no auth" do
+        request.headers['Authorization'] = nil
+        post :copy, params
+        expect(response).to have_http_status(401)
+      end
+
+    end
+
+    it "should error if no edit_id" do
+      params.delete :edit_id
+      post :copy, params
+      json = JSON.parse response.body
+
+      expect(response).to have_http_status(400)
+      expect(json["error"]).to eq "param is missing or the value is empty: edit_id"
+    end
+
+    it "should error if no context_ids_to_update" do
+      params.delete :context_ids_to_update
+      post :copy, params
+      json = JSON.parse response.body
+
+      expect(response).to have_http_status(400)
+      expect(json["error"]).to eq "param is missing or the value is empty: context_ids_to_update"
+    end
+
+    it "should error if empty context_ids_to_update" do
+      params[:context_ids_to_update] = ''
+      post :copy, params
+      json = JSON.parse response.body
+
+      expect(response).to have_http_status(400)
+      expect(json["error"]).to eq "param is missing or the value is empty: context_ids_to_update"
+    end
+
+    it "should copy the assessment" do
+      post :copy, params
+      json = JSON.parse response.body
+
+      expect(response).to have_http_status(200)
+
+      new = Assessment.by_copied_from_assessment_id(@assessment.id).first
+      expect(json["id"]).to eq new.id
+      expect(json["data"]["external_edit_id"]).to eq "testedit"
+    end
+
+  end
+
 end
