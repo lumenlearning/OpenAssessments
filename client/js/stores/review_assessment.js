@@ -21,7 +21,8 @@ var _assessmentState = NOT_LOADED;
 var _selectedAnswerIds = [];
 var _studentAnswers = [];
 var _dirty = false;
-var _validationMessages = [];
+var _errorMessages = [];
+var _warningMessages = [];
 var _inDraftOriginals = {};
 
 var _assessmentResult = null;
@@ -33,7 +34,8 @@ function parseAssessmentResult(result){
 
 function loadAssessment(payload){
   _dirty = false;
-  _validationMessages = [];
+  _errorMessages = [];
+  _warningMessages = [];
   _assessmentState = INVALID;
   if(payload.data.text){
     var text = payload.data.text.trim();
@@ -57,43 +59,82 @@ function loadAssessment(payload){
 
 }
 
-function validateQuestion(question, preValidateOnly=false){
+function outcomeNameFromGuid(guid) {
+  let outcome = _.find(_outcomes, {outcomeGuid: guid});
+  return outcome ? outcome.shortOutcome : "";
+}
+
+function validateAssessment() {
+  _errorMessages = [];
+  _warningMessages = [];
+
+  if(_dirty){
+    _warningMessages.push("You have unsaved changes.");
+  }
+
+  if(_items.length == 0){
+    // only for self-checks?
+    _errorMessages.push("There must be at least one question in this assessment. We recommend providing more than one question so that your students have multiple practice opportunities.");
+  }
+
+  let sectionCount = SettingsStore.current().perSec;
+  if (sectionCount) {
+    let outcomeCounts = {};
+    _outcomes.forEach((o)=>{ outcomeCounts[o.outcomeGuid] = 0 });
+    _items.forEach((item)=>{
+      if(item.outcome){
+        outcomeCounts[item.outcome.outcomeGuid]++;
+      }
+    });
+
+
+    _.forEach(outcomeCounts, (count, guid)=>{
+      if(count == 0){
+        _warningMessages.push('Outcome "' + outcomeNameFromGuid(guid) + '" will be removed unless you add ' + sectionCount + " questions aligned to this outcome.");
+      } else if ( count < sectionCount ){
+        _errorMessages.push('The outcome "' + outcomeNameFromGuid(guid) + '" has only ' + count + ' question(s); add ' + (sectionCount - count) + ' question(s) to keep outcome or delete all questions to remove outcome.');
+      }
+    });
+  }
+
+  if(_.findIndex(_items, {inDraft: true}) >= 0){
+   _errorMessages.push('You have questions in draft mode; press "Done Editing" to finish editing or cancel changes.');
+  }
+}
+
+function validateQuestion(question){
   let duplicateArr = [];
   let hasDuplicates = false;
-  let hasCorrect = false;
-  let validationMsg = {
-    questionId: question.id,
-    isValid: true,
-    messages: []
-  };
+  question.isValid = true;
+  question.errorMessages = [];
 
   //check if questions are blank
   if(!question.material.match(/\S/)){
-    validationMsg.isValid = false;
-    validationMsg.messages.push('You must enter question text to finish editing this question.');
+    question.isValid = false;
+    question.errorMessages.push('You must enter question text to finish editing this question.');
   }
 
   //ensure that outcome is selected
   if(question.outcome.outcomeGuid == ''){
-    validationMsg.isValid = false;
-    validationMsg.messages.push('You must select an outcome to finish editing this question.');
+    question.isValid = false;
+    question.errorMessages.push('You must select an outcome to finish editing this question.');
   }
 
   //ensure that question has minimum number of answers.
   if(question.answers.length < 2){
-    validationMsg.isValid = false;
-    validationMsg.messages.push("You need at least 2 answers to save your question");
+    question.isValid = false;
+    question.errorMessages.push("You need at least 2 answers to save your question");
   }
 
   //answer validations
   if (_.findIndex(question.answers, {isCorrect: true}) == -1) {
-    validationMsg.isValid = false;
-    validationMsg.messages.push('You must indicate the correct answer choice(s) to finish editing this question.');
+    question.isValid = false;
+    question.errorMessages.push('You must indicate the correct answer choice(s) to finish editing this question.');
   }
 
   if (_.findIndex(question.answers, {material: ''}) >= 0 ) {
-    validationMsg.isValid = false;
-    validationMsg.messages.push('Your answers must not be blank. Please enter answer text to finish editing this question.');
+    question.isValid = false;
+    question.errorMessages.push('Your answers must not be blank. Please enter answer text to finish editing this question.');
   }
 
   question.answers.forEach((answer, index, array)=>{
@@ -101,25 +142,14 @@ function validateQuestion(question, preValidateOnly=false){
     if(duplicateArr.indexOf(answer.material.trim()) !== -1 && !hasDuplicates){
       hasDuplicates = true;
 
-      validationMsg.isValid = false;
-      validationMsg.messages.push(`You can't have two answers with the same text.`);
+      question.isValid = false;
+      question.errorMessages.push(`You can't have two answers with the same text.`);
     }
 
     duplicateArr.push(answer.material.trim());
   });//each
 
-  if (!preValidateOnly) {
-    //append or add validation message to _validationMessages array
-    var index = _.findIndex(_validationMessages, {id: validationMsg.id});
-    if (index >= 0) {
-      _validationMessages[index] = validationMsg;
-    } else {
-      _validationMessages.push(validationMsg);
-    }
-  }
-
-  question.validationMessage = validationMsg;
-  return validationMsg;
+  return question;
 }
 
 // Extend User Store with EventEmitter to add eventing capabilities
@@ -176,19 +206,16 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
   isDirty(){
     return _dirty;
   },
-  validationMessages(){
-    return _validationMessages;
+  errorMessages(){
+    return _errorMessages;
   },
-  validateQuestions(){
-    _validationMessages = [];
-    if(SettingsStore.current().perSec){
-      // todo: for each outcome,
-      // if question count > 0 && < perSec, add warning you need at least perSec (also can't save quiz)
-      // if count == 0, add warning outcome will be removed
-      _validationMessages.push("You need at least " + SettingsStore.current().perSec);
-    }
+  warningMessages(){
+    return _warningMessages;
+  },
+  canBeSaved(){
+    validateAssessment();
+    return _errorMessages.count == 0;
   }
-
 });
 
 // Register callback with Dispatcher
@@ -231,11 +258,13 @@ Dispatcher.register(function(payload) {
           if(item.id === question.id){
             let nQuestion = _.clone(question, true);
             nQuestion.id = nQuestion.newId;
+            nQuestion.edited = true;
             _items.splice(index+1, 0, nQuestion);
           }
         });
       }
       _dirty = true;
+      validateAssessment();
 
       break;
 
@@ -257,14 +286,15 @@ Dispatcher.register(function(payload) {
 
     case Constants.UPDATE_ASSESSMENT_QUESTION:
       var question = payload.data;
-      validateQuestion(question, true);
+      validateQuestion(question);
 
-      if (question.validationMessage.isValid) {
+      if (question.isValid) {
         question.edited = true;
         question.inDraft = false;
-        question.validationMessage = null;
+        question.errorMessages = [];
         _dirty = true;
         _inDraftOriginals[question.id] = null;
+        validateAssessment();
       }
 
       var index = _.findIndex(_items, {id: question.id});
@@ -284,6 +314,7 @@ Dispatcher.register(function(payload) {
       });
 
       _dirty = true;
+      validateAssessment();
 
       break;
 

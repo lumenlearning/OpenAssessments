@@ -24,6 +24,7 @@ export default class SimpleRCE extends BaseComponent {
         menubar: false,
         statusbar: false,
         elementpath: false,
+        forced_root_block : '',
         content_css: '/assets/themes/lumen.css.scss'
       });
     } else if (config === "basic") {

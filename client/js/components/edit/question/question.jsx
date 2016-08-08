@@ -113,7 +113,7 @@ export default class Question extends BaseComponent{
             </Tooltip>
           </div>
         </div>
-        <ValidationMessages message={question.validationMessage} />
+        <ValidationMessages errorMessages={question.errorMessages} />
         <div className="questionContent">
           <Content question={question} outcomes={outcomes} />
         </div>

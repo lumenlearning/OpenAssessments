@@ -39,20 +39,15 @@ export default class Edit extends BaseComponent{
       outcomes         : ReviewAssessmentStore.outcomes(),
       settings         : SettingsStore.current(),
       assessment       : ReviewAssessmentStore.current(),
-      needsSaving       : ReviewAssessmentStore.isDirty(),
-      validationMessages : ReviewAssessmentStore.validationMessages()
+      needsSaving      : ReviewAssessmentStore.isDirty(),
+      errorMessages    : ReviewAssessmentStore.errorMessages(),
+      warningMessages  : ReviewAssessmentStore.warningMessages()
     }
   }
 
   componentDidMount(){
     super.componentDidMount();
     CommunicationHandler.sendSize();
-  }
-
-  componentWillReceiveProps(){
-    this.setState({
-      validationMessages: ReviewAssessmentStore.validationMessages()
-    });
   }
 
   render(){
@@ -67,7 +62,7 @@ export default class Edit extends BaseComponent{
             <h2 style={style.eqH2Title} >{title}</h2>
           </div>
         </div>
-        <ValidationMessages messages={this.state.validationMessages} needsSaving={this.state.needsSaving} />
+        <ValidationMessages errorMessages={this.state.errorMessages} warningMessages={this.state.warningMessages} />
         <div className="eqNewQuestion" style={style.eqNewQuestion} >
           <label for="save_quiz" style={style.saveAssessmentBtn}>
             <button name='save_quiz' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={this.handleSaveAssessment} style={style.saveAssessmentBtn}>
@@ -95,9 +90,11 @@ export default class Edit extends BaseComponent{
       title: 'New Question',
       edited: true,
       inDraft: true,
+      isValid: false,
       question_type: '',
       material: '',
       answers: [],
+      errorMessages: [],
       outcome: {
         longOutcome: '',
         shortOutcome: '',
@@ -124,21 +121,8 @@ export default class Edit extends BaseComponent{
 
     if(this.state.questions.length !== 0){
       return this.state.questions.map((question, index)=>{
-        let outcomes      = this.state.outcomes;
-        let validationMsg = {
-          id: null,
-          isDirty: false,
-          messages:[]
-        };
-
-        this.state.validationMessages.map((validationMessage, index)=>{
-          if(validationMessage.id === question.id){
-            validationMsg = this.state.validationMessages[index];
-          }
-        });
-
         return (
-          <Question key={index} question={question} outcomes={outcomes}/>
+          <Question key={index} question={question} outcomes={this.state.outcomes}/>
         )
       });
     }

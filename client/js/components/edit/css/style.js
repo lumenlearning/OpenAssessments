@@ -10,10 +10,25 @@ export default new class Style {
         backgroundColor:'#71B889',
         padding: '0px 40px'
       },
-      noticeHeader:{
-        borderColor:'#FF7A62',
+      errorHeader:{
+        backgroundColor:'#FFF7EF',
         borderStyle: 'solid',
-        padding: '0px 40px'
+        borderColor: 'red',
+        borderRadius: '5px',
+        borderWidth: '1px',
+        borderLeftWidth: '10px',
+        padding: '0px 40px',
+        margin: '5px'
+      },
+      warningHeader:{
+        backgroundColor:'#FFF7DF',
+        borderStyle: 'solid',
+        borderColor: '#e09600',
+        borderRadius: '5px',
+        borderWidth: '1px',
+        borderLeftWidth: '10px',
+        padding: '0px 40px',
+        margin: '5px'
       },
       eqTitle:{
         display: 'inline-block'

@@ -8,45 +8,41 @@ export default class ValidationMessages extends BaseComponent {
 
   constructor(props, state) {
     super(props, state);
-    this._bind('hasMessages', 'needsSaving', 'messages')
+    this._bind('hasMessages', 'errorMessages', 'warningMessages')
   }
 
-  messages() {
-    var validationMessages = [];
-    if (this.props.message && !this.props.message.isValid) {
-      this.props.message.messages.forEach((text, index)=> {
-        validationMessages.push(<p key={"msg_" + index}>{text}</p>);
-      });
-    }
-    if (this.props.messages) {
-      this.props.messages.forEach((message, i)=> {
-        if (!this.props.message.isValid) {
-          message.messages.forEach((text, j)=> {
-            validationMessages.push(<p key={"msg_" + i + j}>{text}</p>);
-          });
-        }
-      });
+  errorMessages(style) {
+    if (!this.props.errorMessages || this.props.errorMessages.length < 1) {
+      return '';
     }
 
-    return validationMessages
+    return <div className="eqHeader" style={style.errorHeader}>
+      Correct the following in order to save.
+      <ul>
+        {this.props.errorMessages.map((message, i)=> {
+          return <li key={"msg_" + i}>{message}</li>
+        })}
+      </ul>
+    </div>
+  }
+
+  warningMessages(style) {
+    if (!this.props.warningMessages || this.props.warningMessages.length < 1) {
+      return '';
+    }
+
+    return <div className="eqHeader" style={style.warningHeader}>
+      <ul>
+        {this.props.warningMessages.map((message, i)=> {
+          return <li key={"msg_" + i}>{message}</li>
+        })}
+      </ul>
+    </div>
   }
 
   hasMessages() {
-    return this.props.needsSaving ||
-        (this.props.message && !this.props.message.isValid ) ||
-        (this.props.messages && _.findIndex(this.props.messages, {isValid: false}) >= 0)
+    return (this.props.warningMessages && this.props.warningMessages.length > 0) || (this.props.errorMessages && this.props.errorMessages.length > 0)
   }
-
-  needsSaving(style) {
-    if (this.props.needsSaving) {
-      return <div className="eqTitle" style={style.eqTitle}>
-        Quiz needs to be saved.
-      </div>
-    } else {
-      return '';
-    }
-  }
-
   render() {
     if (!this.hasMessages()) {
       return <div />;
@@ -55,9 +51,9 @@ export default class ValidationMessages extends BaseComponent {
     let style = Style.styles();
 
     return (
-        <div className="eqHeader" style={style.noticeHeader}>
-          {this.needsSaving(style)}
-          {this.messages()}
+        <div>
+          {this.warningMessages(style)}
+          {this.errorMessages(style)}
         </div>
     );
   }

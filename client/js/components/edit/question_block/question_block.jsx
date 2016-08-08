@@ -59,7 +59,6 @@ export default class QuestionBlock extends React.Component{
         <div style={style.qbContentHead}>
           <p style={style.qbQuestion} dangerouslySetInnerHTML={this.constructor.createMarkup(question.material)} />
         </div>
-        <Expandable startExpanded={true}>
           <div style={style.qbAnswerTable}>
             {labels}
             <div style={style.qbTblContent} >
@@ -97,7 +96,6 @@ export default class QuestionBlock extends React.Component{
               }
             </div>
           </div>
-        </Expandable>
       </div>
     )
 

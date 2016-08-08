@@ -26,7 +26,7 @@ export default class QuestionInterface extends BaseComponent{
   componentWillReceiveProps(nextProps){
     if(nextProps != this.props){
       var dirty = false;
-      if(nextProps.question.validationMessage && !nextProps.question.validationMessage.is_valid){
+      if(!nextProps.question.isValid){
         dirty = true
       }
       this.setState({
