@@ -48,6 +48,7 @@ class Api::AssessmentsController < Api::ApiController
     # If it's a summative quiz the attempts are incremented here instead of UserAttemptsController#update
     # todo: refactor so that all attempts are incremented via the xml fetch? Maybe not because externally hosted xml files.
     if assessment.kind == 'summative'
+      # todo, don't require user_assessment for editing
       if user_assessment && @lti_launch
         #todo - If not admin return unauthorized error instead of starting quiz?
         for_review = user_assessment.lti_role == 'admin' && (params[:for_review] || params[:for_edit])

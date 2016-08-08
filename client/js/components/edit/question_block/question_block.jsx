@@ -3,6 +3,7 @@
 import React        from "react";
 import Style        from "./css/style.js";
 import Expandable   from '../../common/expandable_dropdown/expandable_dropdown.jsx';
+import CommunicationHandler from "../../../utils/communication_handler";
 
 export default class QuestionBlock extends React.Component{
 
@@ -21,6 +22,7 @@ export default class QuestionBlock extends React.Component{
   }
 
   componentDidMount() {
+    CommunicationHandler.sendSize();
     window.addEventListener('resize', this.handleResize);
   }
 

@@ -13,6 +13,7 @@ import OutcomeSection                 from './outcome_section/outcome_section.js
 import QuestionBlock                  from './question_block/question_block.jsx';
 import QuestionInterface              from './question_interface/question_interface.jsx';
 import ValidationMessages             from './validation_messages.jsx';
+import CommunicationHandler           from "../../utils/communication_handler";
 
 export default class Edit extends BaseComponent{
 
@@ -43,8 +44,9 @@ export default class Edit extends BaseComponent{
     }
   }
 
-  componentWillMount(){
-    //when component will mount, grab data from the editQuiz store
+  componentDidMount(){
+    super.componentDidMount();
+    CommunicationHandler.sendSize();
   }
 
   componentWillReceiveProps(){
