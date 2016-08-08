@@ -239,6 +239,16 @@ RSpec.describe Api::AssessmentsController, type: :controller do
       expect(json["data"]["external_edit_id"]).to eq "testedit"
     end
 
+    it "should update the UserAssessment" do
+      ua = UserAssessment.create!(lti_context_id: 'oi',  assessment_id: @assessment.id, user_id: @user.id)
+      post :copy, params
+      expect(response).to have_http_status(200)
+      new = Assessment.by_copied_from_assessment_id(@assessment.id).first
+
+      ua.reload
+      expect(ua.assessment_id).to eq new.id
+    end
+
   end
 
 end

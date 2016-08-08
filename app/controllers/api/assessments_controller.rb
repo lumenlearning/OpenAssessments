@@ -163,7 +163,7 @@ class Api::AssessmentsController < Api::ApiController
     assessment = Assessment.where(id: params[:assessment_id]).first
     raise ActiveRecord::RecordNotFound unless assessment
 
-    new_assessment = AssessmentCopier.copy!(assessment, edit_id: params.require(:edit_id), context_ids_to_update: params.require(:context_ids_to_update))
+    new_assessment = AssessmentCopier.copy!(assessment, edit_id: params.require(:edit_id), context_ids_to_update: params.require(:context_ids_to_update).split(","))
 
     render :json => new_assessment
   end
