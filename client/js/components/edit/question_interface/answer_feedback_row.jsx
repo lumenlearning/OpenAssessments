@@ -6,6 +6,7 @@ import Style        from './css/style.js';
 import AnswerOption from './answer_option.jsx';
 import Feedback     from './feedback.jsx';
 import Checkbox     from './check_box.jsx';
+import DeleteBtn    from './delete_btn.jsx';
 
 export default class AnswerFeedbackRow extends React.Component{
 
@@ -74,6 +75,12 @@ export default class AnswerFeedbackRow extends React.Component{
                   index={index}
                   feedback={answer.feedback}
                   onChange={this.props.handleFeedbackChange}
+                  />
+              </div>
+              <div style={{display: "table-cell", minWidth: "50px", height: "100%", verticalAlign: "middle"}}>
+                <DeleteBtn
+                  index={index}
+                  handleAnswerRemoval={this.props.handleAnswerRemoval}
                   />
               </div>
             </div>

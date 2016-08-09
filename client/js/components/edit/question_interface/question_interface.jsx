@@ -15,7 +15,14 @@ export default class QuestionInterface extends BaseComponent{
 
   constructor(props, state) {
     super(props, state);
-    this._bind("handleDoneEditing", "handleCorrectChange", "handleMaterialChange", "handleAnswerChange", "handleFeedbackChange", "handleAddOption", "handleOutcomeChange");
+    this._bind( "handleDoneEditing",
+                "handleCorrectChange",
+                "handleMaterialChange",
+                "handleAnswerChange",
+                "handleFeedbackChange",
+                "handleAddOption",
+                "handleOutcomeChange",
+                'handleAnswerRemoval');
 
     this.state = {
       question: this.props.question || {},
@@ -59,7 +66,9 @@ export default class QuestionInterface extends BaseComponent{
             handleAnswerChange={this.handleAnswerChange}
             handleFeedbackChange={this.handleFeedbackChange}
             handleCorrectChange={this.handleCorrectChange}
-            handleAddOption={this.handleAddOption} />
+            handleAddOption={this.handleAddOption}
+            handleAnswerRemoval={this.handleAnswerRemoval}
+            />
         </div>
       </div>
     );
@@ -89,6 +98,17 @@ export default class QuestionInterface extends BaseComponent{
     this.setState({question: question, dirty: true});
   }
 
+  handleAnswerRemoval(index){
+    let question = _.clone(this.state.question, true);
+
+    question.answers.splice(index, 1);
+
+    this.setState({
+      question: question,
+      dirty: true
+    });
+  }
+
   handleFeedbackChange(e, index) {
     let question = _.clone(this.state.question, true);
     let answer = question.answers[index];
@@ -104,6 +124,7 @@ export default class QuestionInterface extends BaseComponent{
 
     this.setState({question: question, dirty: true});
   }
+
 
   handleAddOption(e) {
     let question = _.clone(this.state.question, true);

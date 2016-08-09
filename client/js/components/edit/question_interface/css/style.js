@@ -86,6 +86,17 @@ export default new class Style {
         fontSize: "16px",
         fontWeight: "normal",
         backgroundColor: "#fff"
+      },
+      delBtn: {
+        border: '1px solid #D00000',
+        display: 'inline-block',
+        padding: '2px 3px 2px 2px',
+        borderRadius: '50%',
+        cursor: 'pointer',
+      },
+      delBtnIcon:{
+        width: '32px',
+        height: '32px'
       }
     };
 
