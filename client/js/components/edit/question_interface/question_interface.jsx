@@ -5,6 +5,7 @@ import _                      from "lodash";
 import Style                  from "./css/style.js";
 import BaseComponent          from '../../base_component.jsx';
 import ReviewAssessmentActions from "../../../actions/review_assessment";
+import ReviewAssessmentStore  from "../../../stores/review_assessment";
 
 //Components
 import OutcomeSelector        from './outcome_selector.jsx';
@@ -121,6 +122,12 @@ export default class QuestionInterface extends BaseComponent{
     let question = _.clone(this.state.question, true);
     let answer = question.answers[index];
     answer.isCorrect = isCorrect;
+    question.question_type = 'multiple_choice_question';
+
+    let correctCount = _.sum(question.answers, function(a) { return a.isCorrect ? 1 : 0; });
+    if(correctCount > 1){
+      question.question_type = 'multiple_answers_question';
+    }
 
     this.setState({question: question, dirty: true});
   }
@@ -128,12 +135,7 @@ export default class QuestionInterface extends BaseComponent{
 
   handleAddOption(e) {
     let question = _.clone(this.state.question, true);
-    let answerObj = {
-      id: String((Math.random() * 100) * Math.random()),
-      material: '',
-      isCorrect: false,
-      feedback: null
-    };
+    let answerObj = ReviewAssessmentStore.blankNewQuestion();
     question.answers.push(answerObj);
 
     this.setState({question: question, dirty: true});

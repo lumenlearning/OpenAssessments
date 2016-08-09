@@ -115,9 +115,14 @@ function validateQuestion(question){
   }
 
   //ensure that outcome is selected
-  if(question.outcome.outcomeGuid == ''){
+  if(!question.outcome || question.outcome.outcomeGuid == ''){
     question.isValid = false;
     question.errorMessages.push('You must select an outcome to finish editing this question.');
+  }
+
+  if(question.question_type != 'multiple_choice_question' && question.question_type != 'multiple_answers_question' ){
+    question.isValid = false;
+    question.errorMessages.push('You must select question type.');
   }
 
   //ensure that question has minimum number of answers.
@@ -143,7 +148,7 @@ function validateQuestion(question){
       hasDuplicates = true;
 
       question.isValid = false;
-      question.errorMessages.push(`You can't have two answers with the same text.`);
+      question.errorMessages.push('Each answer option must be unique.');
     }
 
     duplicateArr.push(answer.material.trim());
@@ -215,6 +220,14 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
   canBeSaved(){
     validateAssessment();
     return _errorMessages.count == 0;
+  },
+  blankNewQuestion(){
+    return {
+      id: String((Math.random() * 100) * Math.random()),
+      material: '',
+      isCorrect: false,
+      feedback: null
+    }
   }
 });
 
@@ -264,7 +277,6 @@ Dispatcher.register(function(payload) {
         });
       }
       _dirty = true;
-      validateAssessment();
 
       break;
 
@@ -294,12 +306,15 @@ Dispatcher.register(function(payload) {
         question.errorMessages = [];
         _dirty = true;
         _inDraftOriginals[question.id] = null;
-        validateAssessment();
       }
 
       var index = _.findIndex(_items, {id: question.id});
       if (index >= 0) {
         _items[index] = question;
+      }
+
+      if (question.isValid) {
+        validateAssessment();
       }
 
       break;

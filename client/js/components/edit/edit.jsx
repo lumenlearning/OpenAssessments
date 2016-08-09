@@ -89,15 +89,11 @@ export default class Edit extends BaseComponent{
       edited: true,
       inDraft: true,
       isValid: false,
-      question_type: '',
+      question_type: 'multiple_choice_question',
       material: '',
-      answers: [],
+      answers: [ReviewAssessmentStore.blankNewQuestion(), ReviewAssessmentStore.blankNewQuestion(), ReviewAssessmentStore.blankNewQuestion()],
       errorMessages: [],
-      outcome: {
-        longOutcome: '',
-        shortOutcome: '',
-        outcomeGuid: ''
-      }
+      outcome: this.state.outcomes[0]
     };
 
     ReviewAssessmentActions.addAssessmentQuestion(question, 'top');
