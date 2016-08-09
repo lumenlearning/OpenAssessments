@@ -57,11 +57,6 @@ export default class Edit extends BaseComponent{
 
     return (
       <div className="editQuizWrapper" style={style.editQuizWrapper}>
-        <div className="eqHeader" style={style.eqHeader} >
-          <div className="eqTitle" style={style.eqTitle} >
-            <h2 style={style.eqH2Title} >{title}</h2>
-          </div>
-        </div>
         <ValidationMessages errorMessages={this.state.errorMessages} warningMessages={this.state.warningMessages} />
         <div className="eqNewQuestion" style={style.eqNewQuestion} >
           <label for="save_quiz" style={style.saveAssessmentBtn}>
