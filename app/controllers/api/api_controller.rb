@@ -36,13 +36,13 @@ class Api::ApiController < ApplicationController
   # If it's an LTI Edit launch this scope is added to the JWT
   # So you can only edit quizzes you launched to with this edit_id
   def token_has_edit_id_scope(edit_id)
-    edit_id.nil? || @edit_id_scope.nil? || @edit_id_scope == edit_id
+    edit_id.present? && @edit_id_scope.present? && @edit_id_scope == edit_id
   end
 
   # makes sure the JWT token allows admin scope for this LTI context id
   def ensure_context_admin
     return true if @lti_launch && token_has_admin_scope(@lti_launch.lti_context_id)
-    render :json => { :error => "Unauthorized" }, status: :unauthorized
+    render :json => { :error => "Unauthorized for this context" }, status: :unauthorized
     false
   end
 
@@ -51,7 +51,7 @@ class Api::ApiController < ApplicationController
   # AuthToken.issue_token({sub: 'purpose', scopes:['root_assessment_copier'], user_id: 1})
   def ensure_copy_admin
     return true if @jwt_scopes.member? 'root_assessment_copier'
-    render :json => { :error => "Unauthorized" }, status: :unauthorized
+    render :json => { :error => "Unauthorized, must be copier" }, status: :unauthorized
     false
   end
 end

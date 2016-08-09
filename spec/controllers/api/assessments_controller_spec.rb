@@ -85,6 +85,131 @@ RSpec.describe Api::AssessmentsController, type: :controller do
       end
 
     end
+
+    context "for_edit" do
+      before do
+        @lti_launch = LtiLaunch.from_params({roles: 'Instructor', user_id: 'lti_id', context_id: 'extcontext'})
+        @lti_launch.user_id = @admin.id; @lti_launch.save!
+        @assessment = FactoryGirl.create(:assessment, title: "hi", external_edit_id: 'testid', kind: 'summative', xml_file: @xml, account: @account)
+        @payload = { :user_id => @admin.id, AuthToken::EDIT_ID_SCOPE => 'testid', AuthToken::ADMIN_SCOPES => ['extcontext'], 'lti_launch_id' => @lti_launch.id }
+        @edit_token = AuthToken.issue_token(@payload)
+        @params = {format: :xml, id: @assessment.id, for_edit: 1}
+        request.headers['Authorization'] = @edit_token
+      end
+
+      it "should return for summative" do
+        get :show, @params
+
+        expect(response).to have_http_status(200)
+        expect(response.body).to include("conditionvar")
+      end
+
+      it "should return for swyk" do
+        @assessment.kind = 'show_what_you_know'; @assessment.save!
+        get :show, @params
+
+        expect(response).to have_http_status(200)
+        expect(response.body).to include("conditionvar")
+      end
+
+      it "should return for formative" do
+        @assessment.kind = 'formative'; @assessment.save!
+        get :show, @params
+
+        expect(response).to have_http_status(200)
+        expect(response.body).to include("conditionvar")
+      end
+
+      it "should include answers" do
+        get :show, @params
+
+        expect(response.body).to include("conditionvar")
+      end
+
+      it "should require edit_id scope in jwt" do
+        @payload.delete AuthToken::EDIT_ID_SCOPE
+        request.headers['Authorization'] = AuthToken.issue_token(@payload)
+        get :show, @params
+
+        expect(response).to have_http_status(401)
+        expect(response.body).to include "Unauthorized for this edit scope"
+      end
+
+      it "should require edit_id scope in assessment" do
+        @assessment.external_edit_id = nil; @assessment.save!
+        get :show, @params
+
+        expect(response).to have_http_status(401)
+        expect(response.body).to include "Unauthorized for this edit scope"
+      end
+
+      it "should require context admin" do
+        @payload[AuthToken::ADMIN_SCOPES] = []
+        request.headers['Authorization'] = AuthToken.issue_token(@payload)
+        get :show, @params
+
+        expect(response).to have_http_status(401)
+        expect(response.body).to include "Unauthorized for this context"
+      end
+    end
+
+    context "for_review" do
+       before do
+        @lti_launch = LtiLaunch.from_params({roles: 'Instructor', user_id: 'lti_id', context_id: 'extcontext'})
+        @lti_launch.user_id = @admin.id; @lti_launch.save!
+        @assessment = FactoryGirl.create(:assessment, title: "hi", kind: 'summative', xml_file: @xml, account: @account)
+        @payload = { :user_id => @admin.id, AuthToken::ADMIN_SCOPES => ['extcontext'], 'lti_launch_id' => @lti_launch.id }
+        @edit_token = AuthToken.issue_token(@payload)
+        @params = {format: :xml, id: @assessment.id, for_review: 1}
+        
+        request.headers['Authorization'] = @edit_token
+       end
+
+        it "should return for summative" do
+        get :show, @params
+
+        expect(response).to have_http_status(200)
+        expect(response.body).to include("conditionvar")
+      end
+
+      it "should return for swyk" do
+        @assessment.kind = 'show_what_you_know'; @assessment.save!
+        get :show, @params
+
+        expect(response).to have_http_status(200)
+        expect(response.body).to include("conditionvar")
+      end
+
+      it "should return for formative" do
+        @assessment.kind = 'formative'; @assessment.save!
+        get :show, @params
+
+        expect(response).to have_http_status(200)
+        expect(response.body).to include("conditionvar")
+      end
+
+      it "should include answers" do
+        get :show, @params
+
+        expect(response.body).to include("conditionvar")
+      end
+
+      it "should require context admin" do
+        @payload[AuthToken::ADMIN_SCOPES] = []
+        request.headers['Authorization'] = AuthToken.issue_token(@payload)
+        get :show, @params
+
+        expect(response).to have_http_status(401)
+        expect(response.body).to include "Unauthorized for this context"
+      end
+
+      it "shouldn't create an AssessmentResult or UserAssessment" do
+        expect(UserAssessment.count).to eq 0
+        expect(AssessmentResult.count).to eq 0
+      end
+
+    end
+
   end
 
   describe "POST 'create'" do
