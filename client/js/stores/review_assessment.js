@@ -90,7 +90,7 @@ function validateAssessment() {
 
     _.forEach(outcomeCounts, (count, guid)=>{
       if(count == 0){
-        _warningMessages.push('Outcome "' + outcomeNameFromGuid(guid) + '" will be removed unless you add ' + sectionCount + " questions aligned to this outcome.");
+        _warningMessages.push('Outcome "' + outcomeNameFromGuid(guid) + '" will be removed unless you add ' + sectionCount + " question(s) aligned to this outcome.");
       } else if ( count < sectionCount ){
         _errorMessages.push('The outcome "' + outcomeNameFromGuid(guid) + '" has only ' + count + ' question(s); add ' + (sectionCount - count) + ' question(s) to keep outcome or delete all questions to remove outcome.');
       }
@@ -275,6 +275,7 @@ Dispatcher.register(function(payload) {
             _items.splice(index+1, 0, nQuestion);
           }
         });
+        validateAssessment();
       }
       _dirty = true;
 

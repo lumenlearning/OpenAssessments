@@ -129,6 +129,9 @@ class AssessmentsController < LtiBaseController
     return user_not_authorized unless params[:edit_id].present? && params[:edit_id] == @assessment.external_edit_id
     @edit_id = params[:edit_id]
     @external_context_id = @lti_launch.lti_context_id
+    if as = @assessment.default_settings
+      @per_section = as[:per_sec]
+    end
 
     render :edit, layout: 'assessment'
   end
