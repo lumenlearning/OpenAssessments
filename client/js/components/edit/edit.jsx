@@ -15,6 +15,7 @@ import QuestionInterface              from './question_interface/question_interf
 import ValidationMessages             from './validation_messages.jsx';
 import CommunicationHandler           from "../../utils/communication_handler";
 import EditButtons                    from "./edit_buttons.jsx"
+import Instructions                   from "./instructions.jsx";
 
 export default class Edit extends BaseComponent{
 
@@ -71,6 +72,9 @@ export default class Edit extends BaseComponent{
       <div className="editQuizWrapper" style={style.editQuizWrapper}>
         <ValidationMessages errorMessages={this.state.errorMessages} warningMessages={this.state.warningMessages} needsSaving={this.state.needsSaving} />
         <EditButtons newQuestionLocation="top" handleSaveAssessment={this.handleSaveAssessment} windowWidth={this.state.windowWidth} />
+        <div style={{paddingLeft: '40px', paddingRight: '40px'}}>
+        <Instructions settings={this.state.settings}/>
+        </div>
         <ul className="eqContent" style={{listStyleType: 'none', padding:'40px'}}>
           {this.displayQuestions()}
         </ul>
