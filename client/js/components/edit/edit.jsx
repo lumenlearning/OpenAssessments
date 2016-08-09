@@ -69,7 +69,10 @@ export default class Edit extends BaseComponent{
             <button name='add_question' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={this.handleAddQuestion} style={style.addQuestionBtn} ><img style={style.addQuestionImg} src="/assets/plus-52.png" alt="Add Question"/></button>
             Add Question
           </label>
-          {/*display question interface here if newQuestion == true*/}
+          <label for="studyplan" style={style.addQuestionLbl}>
+            <button name='studyplan' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={()=>{CommunicationHandler.navigateHome()}} style={style.addQuestionBtn} ><img style={style.addQuestionImg} src="/assets/plus-52.png" alt="Study Plan"/></button>
+            Study Plan
+          </label>
         </div>
         <ul className="eqContent" style={{listStyleType: 'none', padding:'40px'}}>
           {this.displayQuestions()}
