@@ -16,12 +16,11 @@ export default class Instructions extends BaseComponent{
     this._bind();
   }//constructor
 
-getInstructionType(this.props.settings.assessmentKind){
+getInstructionType(assessmentKind){
     if(true || this.props.settings.assessmentKind == "summative"){
         return (
             <ul>
-                <li>This quiz is designed to assess students on the following learning outcomes:
-    [list learning outcomes]</li>
+                <li>This quiz is designed to assess students on the following learning outcomes: [list learning outcomes]</li>
                 <li>When a student takes a quiz, they receive 2 questions for each outcome.</li>
                 <li>This bank must contain a minimum of 2 questions for each outcome covered.</li>
                 <li>You may delete an outcome from this quiz by removing all questions aligned to that outcome.</li>
@@ -60,13 +59,17 @@ getInstructionType(this.props.settings.assessmentKind){
 render() {
     let style   = Style.styles();
     console.log("rendering instructions", this.props.settings.assessmentKind);
-      return <div>
-          <div style={{marginLeft: "15px"}}>Instructions</div>
-      <Expandable>
-        <div style={{border: "1px solid rgba(0,0,0,0.2)", borderRadius: "5px"}}>
-            <div style={{margin: "10px"}}>
-                getInstructionType();
-            </div>
-        </div>
-        </Expandable>
-    }
+      return (
+          <div>
+              <div style={{marginLeft: "15px"}}>How this question bank works</div>
+                <Expandable>
+                    <div style={{border: "1px solid rgba(0,0,0,0.2)", borderRadius: "5px"}}>
+                        <div style={{margin: "10px"}}>
+                                {this.getInstructionType()}
+                        </div>
+                    </div>
+                </Expandable>
+          </div>
+      )
+  }
+}
