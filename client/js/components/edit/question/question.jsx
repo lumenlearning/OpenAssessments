@@ -23,12 +23,21 @@ export default class Question extends BaseComponent{
 
     //Rebindings
     this._bind("toggleEdit", "handleDuplicate", "handleDelete", "handleHoverStates");
+     this._bind( "handleDoneEditing",
+                "handleCorrectChange",
+                "handleMaterialChange",
+                "handleAnswerChange",
+                "handleFeedbackChange",
+                "handleAddOption",
+                "handleOutcomeChange",
+                'handleAnswerRemoval');
   }//constructor
 
   getState(){
     return {
-      question: this.props.question || null,
+      question: this.props.question || {},
       minimize: false,
+      dirty: this.props.question.material == "", // mark new questions as dirty
       hover:{
         "copy": false,
         "edit": false,
@@ -40,12 +49,17 @@ export default class Question extends BaseComponent{
   componentWillMount(){
   }
 
-  componentWillReceiveProps(nProps, nState){
-    let state = {};
-    if(nProps.question !== this.props.question){
-      state.question = nProps.question
+  componentWillReceiveProps(nextProps){
+    if(nextProps != this.props){
+      var dirty = false;
+      if(nextProps.question.hasOwnProperty("isValid") && !nextProps.question.isValid){
+        dirty = true
+      }
+      this.setState({
+        question: nextProps.question,
+        dirty: dirty
+      });
     }
-    this.setState(state);
   }
 
   render(){
@@ -115,7 +129,18 @@ export default class Question extends BaseComponent{
         </div>
         <ValidationMessages errorMessages={question.errorMessages} />
         <div className="questionContent">
-          <Content question={question} outcomes={outcomes} />
+          <Content
+              question={question}
+              outcomes={outcomes}
+              handleAnswerChange={this.handleAnswerChange}
+              handleFeedbackChange={this.handleFeedbackChange}
+              handleCorrectChange={this.handleCorrectChange}
+              handleAddOption={this.handleAddOption}
+              handleAnswerRemoval={this.handleAnswerRemoval}
+              handleMaterialChange={this.handleMaterialChange}
+              handleOutcomeChange={this.handleOutcomeChange}
+              handleDoneEditing={this.handleDoneEditing}
+          />
         </div>
       </li>
     );
@@ -165,5 +190,76 @@ export default class Question extends BaseComponent{
     });
   }
 
-  /*CUSTOM FUNCTIONS*/
+  /*CUSTOM EVENT HANDLERS*/
+  handleOutcomeChange(newOutcome) {
+    let question = _.clone(this.state.question, true);
+    question.outcome = newOutcome;
+
+    this.setState({question: question, dirty: true});
+  }
+
+  handleMaterialChange(e) {
+    let question = _.clone(this.state.question, true);
+    question.material = e.target.getContent();
+
+    this.setState({question: question, dirty: true});
+  }
+
+  handleAnswerChange(e, index) {
+    let question = _.clone(this.state.question, true);
+    let answer = question.answers[index];
+    answer.material = e.target.getContent();
+
+    this.setState({question: question, dirty: true});
+  }
+
+  handleAnswerRemoval(index){
+    let question = _.clone(this.state.question, true);
+
+    question.answers.splice(index, 1);
+
+    this.setState({
+      question: question,
+      dirty: true
+    });
+  }
+
+  handleFeedbackChange(e, index) {
+    let question = _.clone(this.state.question, true);
+    let answer = question.answers[index];
+    answer.feedback = e.target.getContent();
+
+    this.setState({question: question, dirty: true});
+  }
+
+  handleCorrectChange(index, isCorrect) {
+    let question = _.clone(this.state.question, true);
+    let answer = question.answers[index];
+    answer.isCorrect = isCorrect;
+    question.question_type = 'multiple_choice_question';
+
+    let correctCount = _.sum(question.answers, function(a) { return a.isCorrect ? 1 : 0; });
+    if(correctCount > 1){
+      question.question_type = 'multiple_answers_question';
+    }
+
+    this.setState({question: question, dirty: true});
+  }
+
+
+  handleAddOption(e) {
+    let question = _.clone(this.state.question, true);
+    let answerObj = ReviewAssessmentStore.blankNewQuestion();
+    question.answers.push(answerObj);
+
+    this.setState({question: question, dirty: true});
+  }
+
+  handleDoneEditing(e){
+    if(this.state.dirty){
+      ReviewAssessmentActions.updateAssessmentQuestion(this.state.question);
+    } else {
+      ReviewAssessmentActions.cancelEditingQuestion(this.state.question);
+    }
+  }
 };
