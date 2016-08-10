@@ -92,7 +92,7 @@ export default class Question extends BaseComponent{
             </Tooltip>
           </div>
           <div className="questionToolbar" style={style.questionToolbar}>
-            <Tooltip message='Duplicate Quiz' position='top-left'>
+            <Tooltip message='Duplicate Question' position='top-left'>
             <img className='questionToolBtns'
                  style={_.merge({}, style.questionToolBtns, {backgroundColor: copyHover ? '#31708f' : 'transparent'})}
                  src="/assets/copy-64-white.png"
@@ -103,7 +103,7 @@ export default class Question extends BaseComponent{
                  alt="Duplicate"
               />
             </Tooltip>
-            <Tooltip message='Edit Quiz' position='top-left'>
+            <Tooltip message='Edit Question' position='top-left'>
             <img className='questionToolBtns'
                  style={_.merge({}, style.questionToolBtns, {backgroundColor: editHover || question.inDraft ? '#31708f' : 'transparent'})}
                  src="/assets/pencil-64-white.png"
@@ -114,7 +114,7 @@ export default class Question extends BaseComponent{
                  alt="Edit"
               />
             </Tooltip>
-            <Tooltip message='Delete Quiz' position='top-left'>
+            <Tooltip message='Delete Question' position='top-left'>
             <img className='questionToolBtns'
                  style={_.merge({}, style.questionToolBtns, {backgroundColor: delHover ? '#bb5432' : 'transparent'})}
                  src="/assets/trash-64-white.png"
