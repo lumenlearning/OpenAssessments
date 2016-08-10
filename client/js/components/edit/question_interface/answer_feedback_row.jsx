@@ -14,9 +14,11 @@ export default class AnswerFeedbackRow extends React.Component{
     super(props, state)
 
     this.handleResize = this.handleResize.bind(this);
+    this.toggleHover = this.toggleHover.bind(this);
 
     this.state = {
-      windowWidth: window.innerWidth
+      windowWidth: window.innerWidth,
+      hover: false
     }
 
   }
@@ -35,6 +37,20 @@ export default class AnswerFeedbackRow extends React.Component{
     });
   }
 
+  toggleHover(e){
+    this.setState({
+      hover: e.type == 'mouseenter' || e.type == 'mouseover'
+    });
+  }
+
+  trash(index){
+    if(this.state.hover){
+      return <DeleteBtn index={index} handleAnswerRemoval={this.props.handleAnswerRemoval} />
+    } else {
+      return ''
+    }
+  }
+
   render() {
     let answer              = this.props.answer;
     let index               = this.props.index;
@@ -47,7 +63,7 @@ export default class AnswerFeedbackRow extends React.Component{
     let hr                  = windowWidth <= 1000 ? (<hr style={{margin: "10px 0 20px", borderTop: "1px dotted #868686"}}/>) : null;
 
     return (
-      <div key={index}>
+      <div key={index} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
         <div style={{display: "table", width: "100%"}}>
           <div style={{display: "table-cell", minWidth: "50px", height: "100%", verticalAlign: "middle"}}>
             <Checkbox
@@ -78,10 +94,7 @@ export default class AnswerFeedbackRow extends React.Component{
                   />
               </div>
               <div style={{display: "table-cell", minWidth: "50px", height: "100%", verticalAlign: "middle"}}>
-                <DeleteBtn
-                  index={index}
-                  handleAnswerRemoval={this.props.handleAnswerRemoval}
-                  />
+                {this.trash(index)}
               </div>
             </div>
           </div>

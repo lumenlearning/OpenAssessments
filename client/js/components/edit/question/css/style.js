@@ -9,7 +9,7 @@ export default new class Style {
         marginTop: "15px",
       },
       questionHeader:{
-        backgroundColor: '#3299bb',
+        backgroundColor: '#7C8284',
         height: '40px',
         borderRadius: '4px 4px 0 0'
       },
@@ -19,7 +19,7 @@ export default new class Style {
         borderRadius: '4px 4px 0 0'
       },
       draftHeader:{
-        backgroundColor: '#FF7A62',
+        backgroundColor: '#3299bb',
         height: '40px',
         borderRadius: '4px 4px 0 0'
       },

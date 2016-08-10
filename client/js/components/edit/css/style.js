@@ -13,7 +13,7 @@ export default new class Style {
       errorHeader:{
         backgroundColor:'#FFF7EF',
         borderStyle: 'solid',
-        borderColor: 'red',
+        borderColor: '#C51700',
         borderRadius: '5px',
         borderWidth: '1px',
         borderLeftWidth: '10px',
