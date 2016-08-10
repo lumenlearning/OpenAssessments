@@ -103,10 +103,6 @@ function validateAssessment() {
     });
   }
 
-  if(_.findIndex(_items, {inDraft: true}) >= 0){
-   _errorMessages.push('You have questions in draft mode; press "Done Editing" to finish editing or cancel changes.');
-  }
-
   if(_dirty){
     window.onbeforeunload = holdIt;
   }
@@ -221,6 +217,9 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
   isDirty(){
     return _dirty;
   },
+  inDraft(){
+    return _.findIndex(_items, {inDraft: true}) >= 0
+  },
   errorMessages(){
     return _errorMessages;
   },
@@ -310,6 +309,7 @@ Dispatcher.register(function(payload) {
         _inDraftOriginals[item.id] = _.clone(item, true);
         item.inDraft = true;
       }
+      //validateAssessment();
       break;
 
     case Constants.CANCEL_EDITING_QUESTION:
@@ -318,6 +318,7 @@ Dispatcher.register(function(payload) {
         _items[index] = _inDraftOriginals[payload.data.id];
         _inDraftOriginals[payload.data.id] = null;
       }
+      validateAssessment();
       break;
 
     case Constants.UPDATE_ASSESSMENT_QUESTION:

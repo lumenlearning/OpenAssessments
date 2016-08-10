@@ -147,7 +147,9 @@ export default class Edit extends BaseComponent{
   }
 
   handleSaveAssessment(e) {
-    if (this.state.errorMessages.length > 0) {
+    if (ReviewAssessmentStore.inDraft()){
+      alert('You have questions in draft mode; press "Done Editing" to finish editing or cancel changes.');
+    } else if (this.state.errorMessages.length > 0) {
       alert("You must resolve the errors before saving.");
     } else if (this.state.warningMessages.length > 0) {
       var message = "Are you sure? ";
