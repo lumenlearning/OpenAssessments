@@ -112,7 +112,7 @@ export default class Edit extends BaseComponent{
           <label for="studyplan" style={_.merge({}, style.addQuestionLbl, this.questionLblStyle())}>
             {windowWidth > 1000 ? 'Study Plan' : ''}
 
-            <button name='studyplan' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={()=>{CommunicationHandler.navigateHome()}} style={style.addQuestionBtn} >
+            <button name='studyplan' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={this.handlePostMessageHomeNav} style={style.addQuestionBtn} >
               <img style={_.merge({}, style.addQuestionImg, {width:'32px', height:'32px'})} src="/assets/return.png" alt="Study Plan"/>
             </button>
             {windowWidth <= 1000 ? 'Study Plan' : ''}
