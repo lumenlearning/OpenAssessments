@@ -85,7 +85,7 @@ export default class Tooltip extends BaseComponent{
     let style       = Style.styles();
     let visibility  = this.state.hover ? "visible" : "hidden";
 
-    return _.merge({visibility: visibility}, style.tooltip, this.positionStyle(this.props.position), {});
+    return _.merge({visibility: visibility}, style.tooltip, this.positionStyle(this.props.position), this.props.style || {});
   }
 
   positionStyle(position){

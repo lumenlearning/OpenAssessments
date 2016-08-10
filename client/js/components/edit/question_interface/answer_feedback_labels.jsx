@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Style from './css/style.js';
+import FeedbackLabel from './feedback_label.jsx'
 
 export default class AnswerFeedbackLabels extends React.Component{
   constructor(props) {
@@ -18,7 +19,7 @@ export default class AnswerFeedbackLabels extends React.Component{
           <div style={style.label}>Answer Option</div>
         </div>
         <div style={style.feedbackLabelBlock}>
-          <div style={style.label}>Feedback</div>
+          <FeedbackLabel />
         </div>
       </div>
     )

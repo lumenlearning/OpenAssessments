@@ -97,6 +97,11 @@ export default new class Style {
       delBtnIcon:{
         width: '32px',
         height: '32px'
+      },
+      warningImg:{
+        width: '15px',
+        height: '15px',
+        marginBottom: "4px"
       }
     };
 

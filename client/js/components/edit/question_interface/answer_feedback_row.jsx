@@ -7,6 +7,7 @@ import AnswerOption from './answer_option.jsx';
 import Feedback     from './feedback.jsx';
 import Checkbox     from './check_box.jsx';
 import DeleteBtn    from './delete_btn.jsx';
+import FeedbackLabel from './feedback_label.jsx'
 
 export default class AnswerFeedbackRow extends React.Component{
 
@@ -59,7 +60,7 @@ export default class AnswerFeedbackRow extends React.Component{
     let answerFeedbackBlock = windowWidth <= 1000 ? {display: "table", width: "100%", borderSpacing: "0 10px"} : {display: "table", width: "100%", borderSpacing: "10px"};
     let answerFeedback      = windowWidth <= 1000 ? {display: "block", width: "100%", marginBottom: "10px"} : {display: "table-cell", width: "50%"};
     let answerLabelSmall    = windowWidth <= 1000 ? (<div style={_.merge({paddingBottom: "5px"}, style.label)}>Answer Option</div>) : null;
-    let feedbackLabelSmall  = windowWidth <= 1000 ? (<div style={_.merge({paddingBottom: "5px"}, style.label)}>Feedback</div>) : null;
+    let feedbackLabelSmall  = windowWidth <= 1000 ? (<FeedbackLabel styles={{paddingBottom: "5px"}} />) : null;
     let hr                  = windowWidth <= 1000 ? (<hr style={{margin: "10px 0 20px", borderTop: "1px dotted #868686"}}/>) : null;
 
     return (
