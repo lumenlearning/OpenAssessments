@@ -7,8 +7,8 @@ class AssessmentsController < LtiBaseController
   
   before_filter :skip_trackable
   before_filter :authenticate_user!, only: [:new, :create, :destroy]
-  before_filter :check_lti, only: [:show, :lti]
-  load_and_authorize_resource except: [:show, :lti]
+  before_filter :check_lti, only: [:show, :edit, :lti]
+  load_and_authorize_resource except: [:show, :edit, :lti]
 
   respond_to :html
 
@@ -118,6 +118,22 @@ class AssessmentsController < LtiBaseController
     respond_to do |format|
       format.html { render :show, layout: @embedded ? 'assessment' : 'application' }
     end
+  end
+
+  def edit
+    @assessment = Assessment.where(id: params[:id], account: current_account).first
+    raise ActiveRecord::RecordNotFound unless @assessment
+    set_lti_role
+
+    return user_not_authorized unless @lti_role == "admin"
+    return user_not_authorized unless params[:edit_id].present? && params[:edit_id] == @assessment.external_edit_id
+    @edit_id = params[:edit_id]
+    @external_context_id = @lti_launch.lti_context_id
+    if as = @assessment.default_settings
+      @per_section = as[:per_sec]
+    end
+
+    render :edit, layout: 'assessment'
   end
 
   def set_lti_role

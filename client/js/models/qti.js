@@ -11,8 +11,7 @@ export default class Qti{
       return {
         id       : xml.attr('ident'),
         standard : 'qti',
-        xml      : xml,
-        outcome  : items[0] ? items[0].outcomes : {},
+        outcome  : items[0] ? items[0].outcome : {},
         items    : items
       };
     };
@@ -22,7 +21,6 @@ export default class Qti{
       return {
         id       : 'default',
         standard : 'qti',
-        xml      : xml,
         items    : this.parseItems(xml)
       };
     };
@@ -58,16 +56,15 @@ export default class Qti{
     var fromXml = (xml_raw) => {
       xml = $(xml_raw);
 
-      var objectives = xml.find('objectives matref').map((index, item) => { 
-        return $(item).attr('linkrefid'); 
+      var objectives = xml.find('objectives matref').map((index, item) => {
+        return $(item).attr('linkrefid');
       });
 
       var item = {
         id         : xml.attr('ident'),
         title      : xml.attr('title'),
         objectives : objectives,
-        outcomes   : this.parseOutcome(xml),
-        xml        : xml,
+        outcome   : this.parseOutcome(xml),
         material   : this.material(xml),
         answers    : this.parseAnswers(xml),
         correct    : this.parseCorrect(xml),
@@ -98,11 +95,13 @@ export default class Qti{
         }
       }
 
+      this.markCorrectAnswers(item);
+
       return item;
     };
 
     return this.listFromXml(xml, 'item', fromXml);
-  
+
   }
 
   static parseCorrect(xml){
@@ -132,18 +131,31 @@ export default class Qti{
 
     var fromXml = (xml) => {
       xml = $(xml);
-      var matchMaterial = xml.parent().parent().find('material')[0].textContent.trim();
-      var answer = {
-        id       : xml.attr('ident'),
-        material : this.buildMaterial(xml.find('material').children()),
-        matchMaterial: matchMaterial, 
-        xml      : xml
+      return {
+        id: xml.attr('ident'),
+        material: this.buildMaterial(xml.find('material').children()),
+        isCorrect: false,
+        feedback: null
       };
-      return answer;
     };
 
     return this.listFromXml(xml, 'response_lid > render_choice > response_label', fromXml);
+  }
 
+  static markCorrectAnswers(item){
+    if(item.question_type == 'multiple_choice_question' || item.question_type == 'multiple_answers_question'){
+      item.correct.forEach(function(correct){
+        var ids = [].concat( correct.id );
+        ids.forEach(function(id){
+          var ans = _.find(item.answers, {id : id.toString()});
+          if(ans !== undefined){
+            ans.isCorrect = true;
+          }
+        });
+      });
+    }
+
+    return item
   }
 
   // Process nodes based on QTI spec here:
@@ -199,7 +211,7 @@ export default class Qti{
   }
 
   static material(xml){
-    
+
     var material = xml.find('presentation > material').children();
     if(material.length > 0){
       return Qti.buildMaterial(material);

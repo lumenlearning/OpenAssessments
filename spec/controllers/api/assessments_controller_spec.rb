@@ -85,6 +85,131 @@ RSpec.describe Api::AssessmentsController, type: :controller do
       end
 
     end
+
+    context "for_edit" do
+      before do
+        @lti_launch = LtiLaunch.from_params({roles: 'Instructor', user_id: 'lti_id', context_id: 'extcontext'})
+        @lti_launch.user_id = @admin.id; @lti_launch.save!
+        @assessment = FactoryGirl.create(:assessment, title: "hi", external_edit_id: 'testid', kind: 'summative', xml_file: @xml, account: @account)
+        @payload = { :user_id => @admin.id, AuthToken::EDIT_ID_SCOPE => 'testid', AuthToken::ADMIN_SCOPES => ['extcontext'], 'lti_launch_id' => @lti_launch.id }
+        @edit_token = AuthToken.issue_token(@payload)
+        @params = {format: :xml, id: @assessment.id, for_edit: 1}
+        request.headers['Authorization'] = @edit_token
+      end
+
+      it "should return for summative" do
+        get :show, @params
+
+        expect(response).to have_http_status(200)
+        expect(response.body).to include("conditionvar")
+      end
+
+      it "should return for swyk" do
+        @assessment.kind = 'show_what_you_know'; @assessment.save!
+        get :show, @params
+
+        expect(response).to have_http_status(200)
+        expect(response.body).to include("conditionvar")
+      end
+
+      it "should return for formative" do
+        @assessment.kind = 'formative'; @assessment.save!
+        get :show, @params
+
+        expect(response).to have_http_status(200)
+        expect(response.body).to include("conditionvar")
+      end
+
+      it "should include answers" do
+        get :show, @params
+
+        expect(response.body).to include("conditionvar")
+      end
+
+      it "should require edit_id scope in jwt" do
+        @payload.delete AuthToken::EDIT_ID_SCOPE
+        request.headers['Authorization'] = AuthToken.issue_token(@payload)
+        get :show, @params
+
+        expect(response).to have_http_status(401)
+        expect(response.body).to include "Unauthorized for this edit scope"
+      end
+
+      it "should require edit_id scope in assessment" do
+        @assessment.external_edit_id = nil; @assessment.save!
+        get :show, @params
+
+        expect(response).to have_http_status(401)
+        expect(response.body).to include "Unauthorized for this edit scope"
+      end
+
+      it "should require context admin" do
+        @payload[AuthToken::ADMIN_SCOPES] = []
+        request.headers['Authorization'] = AuthToken.issue_token(@payload)
+        get :show, @params
+
+        expect(response).to have_http_status(401)
+        expect(response.body).to include "Unauthorized for this context"
+      end
+    end
+
+    context "for_review" do
+       before do
+        @lti_launch = LtiLaunch.from_params({roles: 'Instructor', user_id: 'lti_id', context_id: 'extcontext'})
+        @lti_launch.user_id = @admin.id; @lti_launch.save!
+        @assessment = FactoryGirl.create(:assessment, title: "hi", kind: 'summative', xml_file: @xml, account: @account)
+        @payload = { :user_id => @admin.id, AuthToken::ADMIN_SCOPES => ['extcontext'], 'lti_launch_id' => @lti_launch.id }
+        @edit_token = AuthToken.issue_token(@payload)
+        @params = {format: :xml, id: @assessment.id, for_review: 1}
+        
+        request.headers['Authorization'] = @edit_token
+       end
+
+        it "should return for summative" do
+        get :show, @params
+
+        expect(response).to have_http_status(200)
+        expect(response.body).to include("conditionvar")
+      end
+
+      it "should return for swyk" do
+        @assessment.kind = 'show_what_you_know'; @assessment.save!
+        get :show, @params
+
+        expect(response).to have_http_status(200)
+        expect(response.body).to include("conditionvar")
+      end
+
+      it "should return for formative" do
+        @assessment.kind = 'formative'; @assessment.save!
+        get :show, @params
+
+        expect(response).to have_http_status(200)
+        expect(response.body).to include("conditionvar")
+      end
+
+      it "should include answers" do
+        get :show, @params
+
+        expect(response.body).to include("conditionvar")
+      end
+
+      it "should require context admin" do
+        @payload[AuthToken::ADMIN_SCOPES] = []
+        request.headers['Authorization'] = AuthToken.issue_token(@payload)
+        get :show, @params
+
+        expect(response).to have_http_status(401)
+        expect(response.body).to include "Unauthorized for this context"
+      end
+
+      it "shouldn't create an AssessmentResult or UserAssessment" do
+        expect(UserAssessment.count).to eq 0
+        expect(AssessmentResult.count).to eq 0
+      end
+
+    end
+
   end
 
   describe "POST 'create'" do
@@ -164,6 +289,91 @@ RSpec.describe Api::AssessmentsController, type: :controller do
       expect(assessment.assessment_xmls.length).to eq(1)
       expect(response).to have_http_status(:success)
     end
+  end
+
+  describe "POST #copy" do
+    before(:each) do
+      @copy_admin_token = AuthToken.issue_token({sub: 'test', scopes:['root_assessment_copier'], user_id: @admin.id})
+      request.headers['Authorization'] = @copy_admin_token
+      @assessment = FactoryGirl.create(:assessment, account: @account, xml_file: @xml)
+    end
+
+    let(:params) {{assessment_id: @assessment.id, assessment_id: @assessment.id, edit_id: "testedit", context_ids_to_update: "oi,hoyt", format: :json}}
+
+    context "authorization" do
+      it "should accept a root_assessment_copier token" do
+        post :copy, params
+        expect(response).to have_http_status(200)
+      end
+
+      it "should reject an admin token" do
+        request.headers['Authorization'] = @admin_token
+        post :copy, params
+        expect(response).to have_http_status(401)
+      end
+
+      it "should reject a user token" do
+        request.headers['Authorization'] = @user_token
+        post :copy, params
+        expect(response).to have_http_status(401)
+      end
+
+      it "should reject no auth" do
+        request.headers['Authorization'] = nil
+        post :copy, params
+        expect(response).to have_http_status(401)
+      end
+
+    end
+
+    it "should error if no edit_id" do
+      params.delete :edit_id
+      post :copy, params
+      json = JSON.parse response.body
+
+      expect(response).to have_http_status(400)
+      expect(json["error"]).to eq "param is missing or the value is empty: edit_id"
+    end
+
+    it "should error if no context_ids_to_update" do
+      params.delete :context_ids_to_update
+      post :copy, params
+      json = JSON.parse response.body
+
+      expect(response).to have_http_status(400)
+      expect(json["error"]).to eq "param is missing or the value is empty: context_ids_to_update"
+    end
+
+    it "should error if empty context_ids_to_update" do
+      params[:context_ids_to_update] = ''
+      post :copy, params
+      json = JSON.parse response.body
+
+      expect(response).to have_http_status(400)
+      expect(json["error"]).to eq "param is missing or the value is empty: context_ids_to_update"
+    end
+
+    it "should copy the assessment" do
+      post :copy, params
+      json = JSON.parse response.body
+
+      expect(response).to have_http_status(200)
+
+      new = Assessment.by_copied_from_assessment_id(@assessment.id).first
+      expect(json["id"]).to eq new.id
+      expect(json["data"]["external_edit_id"]).to eq "testedit"
+    end
+
+    it "should update the UserAssessment" do
+      ua = UserAssessment.create!(lti_context_id: 'oi',  assessment_id: @assessment.id, user_id: @user.id)
+      post :copy, params
+      expect(response).to have_http_status(200)
+      new = Assessment.by_copied_from_assessment_id(@assessment.id).first
+
+      ua.reload
+      expect(ua.assessment_id).to eq new.id
+    end
+
   end
 
 end

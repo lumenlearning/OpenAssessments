@@ -8,12 +8,13 @@ import Start              from './components/main/start';
 import Attempts           from './components/main/attempts';
 import AssessmentResult   from './components/assessment_results/assessment_result';
 import TeacherReview      from './components/assessment_results/teacher_review';
-import TeacherPreview      from './components/assessment_results/teacher_preview';
+import TeacherPreview     from './components/assessment_results/teacher_preview';
 import Login              from './components/sessions/login';
 import Logout             from './components/sessions/logout';
 import Register           from './components/users/register';
 import NotFound           from './components/not_found';
 import About              from './components/main/about';
+import Edit               from './components/edit/edit';
 // For IE Promise support
 require('es6-promise').polyfill();
 
@@ -34,6 +35,8 @@ var routes = (
     <Route name="logout" handler={Logout}/>
     <Route name="about" handler={About}/>
     <Route name="attempts" handler={Attempts} path="attempts/:assessmentId/:contextId" />
+    <Route name="edit" handler={Edit} path="edit/:assessmentId" />
+
     <NotFoundRoute handler={NotFound}/>
   </Route>
 );

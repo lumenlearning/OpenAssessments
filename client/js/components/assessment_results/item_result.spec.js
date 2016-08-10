@@ -7,7 +7,7 @@ describe('item result', function() {
   var question = {
     material: "Hello World",
     questionType: "multiple_answers_question",
-    outcomes: {
+    outcome: {
       longOutcome: "Long",
       shorOutcome: "Short"
     }

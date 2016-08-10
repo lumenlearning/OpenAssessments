@@ -53,8 +53,8 @@ export default class ResultOutcome extends React.Component{
       <div tabIndex="0">
         <div style={styles.resultOutcome}>
           <div>{this.renderText()}</div>
-          <h5><b>{this.props.outcomes.shortOutcome}</b></h5>
-          <div>{this.props.outcomes.longOutcome}</div>
+          <h5><b>{this.props.outcome.shortOutcome}</b></h5>
+          <div>{this.props.outcome.longOutcome}</div>
         </div>
       </div>
 

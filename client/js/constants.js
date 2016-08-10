@@ -43,6 +43,17 @@ export default {
   REMOVE_MESSAGE: "remove_message",
   CLEAR_MESSAGES: "clear_messages",
 
+  // Edit Assessments
+  ADD_ASSSESSMENT_QUESTION: 'add_assessment_question',
+  UPDATE_ASSESSMENT_QUESTION: 'update_assessment_question',
+  START_EDITING_QUESTION: 'start_editing_question',
+  CANCEL_EDITING_QUESTION: 'stop_editing_question',
+  DELETE_ASSESSMENT_QUESTION: 'delete_assessment_question',
+  VALIDATE_ASSESSMENT_QUESTIONS: 'validate_assessment_questions',
+  VALIDATE_ASSESSMENT_QUESTION: 'validate_assessment_question',
+  SAVE_ASSESSMENT: 'save_assessment',
+
+
   // settings
   SETTINGS_LOAD: "settings_load",
 

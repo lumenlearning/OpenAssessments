@@ -1,0 +1,22 @@
+<div id="assessment-container"></div>
+
+<%
+   # create the default seettings hash and do #to_json so that string values are properly escaped
+   settings = {
+       apiUrl: application_base_url,
+       assessmentKind: @assessment.kind,
+       per_sec: @per_section,
+       csrfToken: form_authenticity_token,
+       jwt: jwt_token,
+   }
+%>
+
+<script type="text/javascript">
+  window.DEFAULT_SETTINGS = <%= raw settings.to_json %>;
+  window.location.href = "#/edit/<%= @assessment.id %>";
+</script>
+
+<%= webpack_manifest_script %>
+<%= webpack_bundle_tag 'app' %>
+
+<%= javascript_include_tag "open_comm.js" %>

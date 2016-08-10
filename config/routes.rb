@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   resources :assessments do
     member do
       post :show
+      post :edit
     end
   end
 
@@ -64,6 +65,8 @@ Rails.application.routes.draw do
     end
     resources :assessments do
       get 'results/:result_id', to: 'assessment_results#show'
+      put '/edit', to: 'assessments#json_update'
+      post '/copy', to: 'assessments#copy', as: 'assessments_copy'
     end
     resources :assessment_results do
       post 'send', to: 'assessment_results#send_result_to_analytics'
