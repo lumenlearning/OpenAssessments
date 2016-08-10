@@ -34,7 +34,7 @@ export default class QuestionInterface extends BaseComponent{
   componentWillReceiveProps(nextProps){
     if(nextProps != this.props){
       var dirty = false;
-      if(!nextProps.question.isValid){
+      if(nextProps.question.hasOwnProperty("isValid") && !nextProps.question.isValid){
         dirty = true
       }
       this.setState({

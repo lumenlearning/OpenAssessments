@@ -69,13 +69,8 @@ export default class Edit extends BaseComponent{
 
     return (
       <div className="editQuizWrapper" style={style.editQuizWrapper}>
-        <div className="eqHeader" style={style.eqHeader} >
-          <div className="eqTitle" style={style.eqTitle} >
-            <h2 style={style.eqH2Title} >{title}</h2>
-          </div>
-        </div>
         <ValidationMessages errorMessages={this.state.errorMessages} warningMessages={this.state.warningMessages} />
-        <div className="eqNewQuestion" style={_.merge({}, style.eqNewQuestion, {flexDirection: windowWidth <= 1000 ? "column" : 'row'})} >
+        <div className="eqNewQuestion" style={_.merge({}, style.eqNewQuestion, {flexDirection: windowWidth <= 600 ? "column" : 'row'})} >
           <label for="save_quiz" style={style.addQuestionLbl}>
             <button name='save_quiz' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={this.handleSaveAssessment} style={style.addQuestionBtn}>
               <img style={style.addQuestionImg} src="/assets/upload.png" alt="Save Assessment"/>
