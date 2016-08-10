@@ -64,13 +64,13 @@ function outcomeNameFromGuid(guid) {
   return outcome ? outcome.shortOutcome : "";
 }
 
+function holdIt(){
+  return "If you leave your changes won't be saved."
+}
+
 function validateAssessment() {
   _errorMessages = [];
   _warningMessages = [];
-
-  if(_dirty){
-    _warningMessages.push("You have unsaved changes.");
-  }
 
   if(_items.length == 0){
     // only for self-checks?
@@ -99,6 +99,10 @@ function validateAssessment() {
 
   if(_.findIndex(_items, {inDraft: true}) >= 0){
    _errorMessages.push('You have questions in draft mode; press "Done Editing" to finish editing or cancel changes.');
+  }
+
+  if(_dirty){
+    window.onbeforeunload = holdIt;
   }
 }
 
@@ -244,6 +248,7 @@ Dispatcher.register(function(payload) {
     case Constants.REVIEW_ASSESSMENT_LOADED:
 
       loadAssessment(payload);
+      window.onbeforeunload = null;
       break;
 
     case Constants.REVIEW_RESULT_LOAD_PENDING:
@@ -350,6 +355,7 @@ Dispatcher.register(function(payload) {
 
     case Constants.SAVE_ASSESSMENT:
       loadAssessment(payload);
+      window.onbeforeunload = null;
       break;
 
     default:

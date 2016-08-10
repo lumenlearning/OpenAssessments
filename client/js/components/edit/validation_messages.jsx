@@ -17,7 +17,7 @@ export default class ValidationMessages extends BaseComponent {
     }
 
     return <div className="eqHeader" style={style.errorHeader}>
-      Correct the following in order to save.
+      Correct the following in order to save:
       <ul>
         {this.props.errorMessages.map((message, i)=> {
           return <li key={"msg_" + i}>{message}</li>
@@ -27,11 +27,12 @@ export default class ValidationMessages extends BaseComponent {
   }
 
   warningMessages(style) {
-    if (!this.props.warningMessages || this.props.warningMessages.length < 1) {
+    if (!this.props.needsSaving && (!this.props.warningMessages || this.props.warningMessages.length < 1)) {
       return '';
     }
 
     return <div className="eqHeader" style={style.warningHeader}>
+      You have unsaved changes.
       <ul>
         {this.props.warningMessages.map((message, i)=> {
           return <li key={"msg_" + i}>{message}</li>
@@ -44,7 +45,7 @@ export default class ValidationMessages extends BaseComponent {
     return (this.props.warningMessages && this.props.warningMessages.length > 0) || (this.props.errorMessages && this.props.errorMessages.length > 0)
   }
   render() {
-    if (!this.hasMessages()) {
+    if (!this.hasMessages() && !this.props.needsSaving) {
       return <div />;
     }
 

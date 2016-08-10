@@ -20,7 +20,7 @@ export default class Edit extends BaseComponent{
   constructor(props, context) {
     super(props, context);
     this.stores = [ReviewAssessmentStore];
-    this._bind("handleAddQuestion", "handleSaveAssessment", 'handleResize');
+    this._bind("handleAddQuestion", "handleSaveAssessment", 'handleResize', 'handlePostMessageHomeNav');
 
     if(!ReviewAssessmentStore.isLoaded() && !ReviewAssessmentStore.isLoading()){
       ReviewAssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, this.props.params["assessmentId"], true);
@@ -69,7 +69,7 @@ export default class Edit extends BaseComponent{
 
     return (
       <div className="editQuizWrapper" style={style.editQuizWrapper}>
-        <ValidationMessages errorMessages={this.state.errorMessages} warningMessages={this.state.warningMessages} />
+        <ValidationMessages errorMessages={this.state.errorMessages} warningMessages={this.state.warningMessages} needsSaving={this.state.needsSaving} />
         <div className="eqNewQuestion" style={_.merge({}, style.eqNewQuestion, {flexDirection: windowWidth <= 600 ? "column" : 'row'})} >
           <label for="save_quiz" style={style.addQuestionLbl}>
             <button name='save_quiz' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={this.handleSaveAssessment} style={style.addQuestionBtn}>
@@ -85,7 +85,7 @@ export default class Edit extends BaseComponent{
           </label>
           <label for="studyplan" style={style.addQuestionLbl}>
             {windowWidth > 1000 ? 'Study Plan' : ''}
-            <button name='studyplan' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={()=>{CommunicationHandler.navigateHome()}} style={style.addQuestionBtn} >
+            <button name='studyplan' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={this.handlePostMessageHomeNav} style={style.addQuestionBtn} >
               <img style={_.merge({}, style.addQuestionImg, {width:'32px', height:'32px'})} src="/assets/return.png" alt="Study Plan"/>
             </button>
             {windowWidth < 1000 ? 'Study Plan' : ''}
@@ -122,11 +122,32 @@ export default class Edit extends BaseComponent{
 
   }
 
- handleSaveAssessment(e) {
-   // todo validations
-   // no inDraft questions, check if enough questions per outcome, etc.
-   ReviewAssessmentActions.saveAssessment(this.state.assessment);
- }
+  handleSaveAssessment(e) {
+    if (this.state.errorMessages.length > 0) {
+      alert("You must resolve the errors before saving.");
+    } else if (this.state.warningMessages.length > 0) {
+      var message = "Are you sure? ";
+      this.state.warningMessages.forEach((m)=> { message = message + "\n" + m });
+
+      var r = confirm(message);
+      if (r == true) {
+        ReviewAssessmentActions.saveAssessment(this.state.assessment);
+      }
+    } else if(this.state.needsSaving) {
+      ReviewAssessmentActions.saveAssessment(this.state.assessment);
+    }
+  }
+
+  handlePostMessageHomeNav(e){
+    if(ReviewAssessmentStore.isDirty()){
+      var r = confirm("If you leave your changes won't be saved.");
+      if (r == true) {
+        CommunicationHandler.navigateHome();
+      }
+    } else{
+      CommunicationHandler.navigateHome();
+    }
+  }
 
   /*CUSTOM FUNCTIONS*/
   displayQuestions(){
