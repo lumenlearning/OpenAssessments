@@ -6,7 +6,8 @@ export default new class Style {
       //styles go here
       qbContent:{},
       qbContentHead: {
-        padding: "15px"
+        padding: "15px",
+        fontSize: '24px'
       },
       qbQuestion:{
         fontSize: '24px'

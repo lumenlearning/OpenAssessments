@@ -14,6 +14,7 @@ const LOADING = 1;
 const LOADED = 2;
 
 var _assessment = null;
+var _kind = null;
 var _assessmentXml = null;
 var _items = [];
 var _outcomes = [];
@@ -41,6 +42,7 @@ function loadAssessment(payload){
     var text = payload.data.text.trim();
     if(text.length > 0){
       _assessment = Assessment.parseAssessment(SettingsStore.current(), text);
+      _kind = SettingsStore.current().assessmentKind.toLowerCase();
       _assessmentXml = text;
       if( _assessment &&
         _assessment.sections &&
@@ -90,8 +92,12 @@ function validateAssessment() {
 
     _.forEach(outcomeCounts, (count, guid)=>{
       if(count == 0){
-        _warningMessages.push('Outcome "' + outcomeNameFromGuid(guid) + '" will be removed unless you add ' + sectionCount + " question(s) aligned to this outcome.");
-      } else if ( count < sectionCount ){
+        if(ReviewAssessmentStore.isFormative()) {
+          _warningMessages.push('Outcome "' + outcomeNameFromGuid(guid) + '" will be removed unless you add a question(s) aligned to this outcome.');
+        } else {
+          _warningMessages.push('Outcome "' + outcomeNameFromGuid(guid) + '" will be removed unless you add ' + sectionCount + " question(s) aligned to this outcome.");
+        }
+      } else if ( count < sectionCount && !ReviewAssessmentStore.isFormative() ){
         _errorMessages.push('The outcome "' + outcomeNameFromGuid(guid) + '" has only ' + count + ' question(s); add ' + (sectionCount - count) + ' question(s) to keep outcome or delete all questions to remove outcome.');
       }
     });
@@ -232,6 +238,18 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
       isCorrect: false,
       feedback: null
     }
+  },
+  kind(){
+    return _kind;
+  },
+  isSummative(){
+    return _kind == "summative";
+  },
+  isFormative(){
+    return _kind == "formative";
+  },
+  isSwyk(){
+    return _kind == "swyk";
   }
 });
 
