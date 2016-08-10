@@ -20,7 +20,7 @@ export default class Edit extends BaseComponent{
   constructor(props, context) {
     super(props, context);
     this.stores = [ReviewAssessmentStore];
-    this._bind("handleAddQuestion", "handleSaveAssessment");
+    this._bind("handleAddQuestion", "handleSaveAssessment", 'handleResize');
 
     if(!ReviewAssessmentStore.isLoaded() && !ReviewAssessmentStore.isLoading()){
       ReviewAssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, this.props.params["assessmentId"], true);
@@ -41,37 +41,60 @@ export default class Edit extends BaseComponent{
       assessment       : ReviewAssessmentStore.current(),
       needsSaving      : ReviewAssessmentStore.isDirty(),
       errorMessages    : ReviewAssessmentStore.errorMessages(),
-      warningMessages  : ReviewAssessmentStore.warningMessages()
+      warningMessages  : ReviewAssessmentStore.warningMessages(),
+      windowWidth      : window.innerWidth
     }
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  }
+
+  handleResize(e) {
+    this.setState({
+      windowWidth: window.innerWidth
+    });
+  }
+
   componentDidMount(){
+    window.addEventListener('resize', this.handleResize);
     super.componentDidMount();
     CommunicationHandler.sendSize();
   }
 
   render(){
     let style = Style.styles();
-
+    let windowWidth = this.state.windowWidth;
     let title = typeof this.state.assessment == 'undefined' || this.state.assessment == null ? '' : this.state.assessment.title;
 
     return (
       <div className="editQuizWrapper" style={style.editQuizWrapper}>
+        <div className="eqHeader" style={style.eqHeader} >
+          <div className="eqTitle" style={style.eqTitle} >
+            <h2 style={style.eqH2Title} >{title}</h2>
+          </div>
+        </div>
         <ValidationMessages errorMessages={this.state.errorMessages} warningMessages={this.state.warningMessages} />
-        <div className="eqNewQuestion" style={style.eqNewQuestion} >
-          <label for="save_quiz" style={style.saveAssessmentBtn}>
-            <button name='save_quiz' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={this.handleSaveAssessment} style={style.saveAssessmentBtn}>
-              <img style={style.addQuestionImg} src="/assets/pencil-64-white.png" alt="Save Assessment"/>
+        <div className="eqNewQuestion" style={_.merge({}, style.eqNewQuestion, {flexDirection: windowWidth <= 1000 ? "column" : 'row'})} >
+          <label for="save_quiz" style={style.addQuestionLbl}>
+            <button name='save_quiz' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={this.handleSaveAssessment} style={style.addQuestionBtn}>
+              <img style={style.addQuestionImg} src="/assets/upload.png" alt="Save Assessment"/>
             </button>
             Save Assessment
           </label>
           <label for="add_question" style={style.addQuestionLbl}>
-            <button name='add_question' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={this.handleAddQuestion} style={style.addQuestionBtn} ><img style={style.addQuestionImg} src="/assets/plus-52.png" alt="Add Question"/></button>
+            <button name='add_question' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={this.handleAddQuestion} style={style.addQuestionBtn} >
+              <img style={style.addQuestionImg} src="/assets/plus-52.png" alt="Add Question"/>
+            </button>
             Add Question
           </label>
           <label for="studyplan" style={style.addQuestionLbl}>
-            <button name='studyplan' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={()=>{CommunicationHandler.navigateHome()}} style={style.addQuestionBtn} ><img style={style.addQuestionImg} src="/assets/plus-52.png" alt="Study Plan"/></button>
-            Study Plan
+            {windowWidth > 1000 ? 'Study Plan' : ''}
+            <button name='studyplan' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={()=>{CommunicationHandler.navigateHome()}} style={style.addQuestionBtn} >
+              <img style={_.merge({}, style.addQuestionImg, {width:'32px', height:'32px'})} src="/assets/return.png" alt="Study Plan"/>
+            </button>
+            {windowWidth < 1000 ? 'Study Plan' : ''}
+
           </label>
         </div>
         <ul className="eqContent" style={{listStyleType: 'none', padding:'40px'}}>

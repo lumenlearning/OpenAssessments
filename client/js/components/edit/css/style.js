@@ -40,7 +40,8 @@ export default new class Style {
         width: '100%',
         margin: '15px 0',
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
+        padding: '0px 40px'
       },
       addQuestionLbl:{
         fontSize: '18px',
@@ -54,7 +55,7 @@ export default new class Style {
         backgroundColor:'#3299bb',
         color:'#fff',
         padding: '0px',
-        margin:'0px 10px 0px 0px',
+        margin:'0px 10px',
         outline: 'none'
       },
       addQuestionImg:{
@@ -68,9 +69,9 @@ export default new class Style {
         border:'transparent',
         borderRadius: '50%',
         backgroundColor:'#3299bb',
-        color:'#fff',
+        color:'black',
         padding: '0px',
-        margin:'0px 10px 0px 0px',
+        margin:'0px 10px',
         outline: 'none'
       },
 
