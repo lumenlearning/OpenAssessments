@@ -40,12 +40,14 @@ export default new class Style {
         width: '100%',
         margin: '15px 0',
         display: 'flex',
+        flexDirection: 'row',
         justifyContent: 'space-between',
         padding: '0px 40px'
       },
       addQuestionLbl:{
         fontSize: '18px',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        display: 'inline-block',
       },
       addQuestionBtn:{
         width: '48px',

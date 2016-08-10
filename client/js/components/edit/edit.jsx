@@ -67,23 +67,24 @@ export default class Edit extends BaseComponent{
     let windowWidth = this.state.windowWidth;
     let title = typeof this.state.assessment == 'undefined' || this.state.assessment == null ? '' : this.state.assessment.title;
 
+
     return (
       <div className="editQuizWrapper" style={style.editQuizWrapper}>
         <ValidationMessages errorMessages={this.state.errorMessages} warningMessages={this.state.warningMessages} needsSaving={this.state.needsSaving} />
-        <div className="eqNewQuestion" style={_.merge({}, style.eqNewQuestion, {flexDirection: windowWidth <= 600 ? "column" : 'row'})} >
-          <label for="save_quiz" style={style.addQuestionLbl}>
+        <div className="eqNewQuestion" style={_.merge({}, style.eqNewQuestion, this.btnAreaStyle())} >
+          <label for="save_quiz" style={_.merge({}, style.addQuestionLbl, this.questionLblStyle())}>
             <button name='save_quiz' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={this.handleSaveAssessment} style={style.addQuestionBtn}>
               <img style={style.addQuestionImg} src="/assets/upload.png" alt="Save Assessment"/>
             </button>
             Save Assessment
           </label>
-          <label for="add_question" style={style.addQuestionLbl}>
-            <button name='add_question' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={this.handleAddQuestion} style={style.addQuestionBtn} >
+          <label for="add_question" style={_.merge({}, style.addQuestionLbl, this.questionLblStyle())}>
+            <button name='add_question' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={()=>this.handleAddQuestion("top")} style={style.addQuestionBtn} >
               <img style={style.addQuestionImg} src="/assets/plus-52.png" alt="Add Question"/>
             </button>
             Add Question
           </label>
-          <label for="studyplan" style={style.addQuestionLbl}>
+          <label for="studyplan" style={_.merge({}, style.addQuestionLbl, this.questionLblStyle())}>
             {windowWidth > 1000 ? 'Study Plan' : ''}
             <button name='studyplan' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={this.handlePostMessageHomeNav} style={style.addQuestionBtn} >
               <img style={_.merge({}, style.addQuestionImg, {width:'32px', height:'32px'})} src="/assets/return.png" alt="Study Plan"/>
@@ -95,12 +96,35 @@ export default class Edit extends BaseComponent{
         <ul className="eqContent" style={{listStyleType: 'none', padding:'40px'}}>
           {this.displayQuestions()}
         </ul>
+        <div className="eqNewQuestion" style={_.merge({}, style.eqNewQuestion, this.btnAreaStyle())} >
+          <label for="save_quiz" style={_.merge({}, style.addQuestionLbl, this.questionLblStyle())}>
+            <button name='save_quiz' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={this.handleSaveAssessment} style={style.addQuestionBtn}>
+              <img style={style.addQuestionImg} src="/assets/upload.png" alt="Save Assessment"/>
+            </button>
+            Save Assessment
+          </label>
+          <label for="add_question" style={_.merge({}, style.addQuestionLbl, this.questionLblStyle())}>
+            <button name='add_question' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={()=>this.handleAddQuestion("bottom")} style={style.addQuestionBtn} >
+              <img style={style.addQuestionImg} src="/assets/plus-52.png" alt="Add Question"/>
+            </button>
+            Add Question
+          </label>
+          <label for="studyplan" style={_.merge({}, style.addQuestionLbl, this.questionLblStyle())}>
+            {windowWidth > 1000 ? 'Study Plan' : ''}
+
+            <button name='studyplan' className='btn btn-sm' onMouseDown={this.toggleButtonStyle} onMouseUp={this.toggleButtonStyle} onClick={()=>{CommunicationHandler.navigateHome()}} style={style.addQuestionBtn} >
+              <img style={_.merge({}, style.addQuestionImg, {width:'32px', height:'32px'})} src="/assets/return.png" alt="Study Plan"/>
+            </button>
+            {windowWidth <= 1000 ? 'Study Plan' : ''}
+
+          </label>
+        </div>
       </div>
     );
   }
 
   /*CUSTOM HANDLER FUNCTIONS*/
-  handleAddQuestion(e){
+  handleAddQuestion(placement){
     let question = {
       id: `newQuestion-${((Math.random() * 100) * (Math.random()*100))}`, //specifies new and has random num.
       title: 'New Question',
@@ -114,7 +138,7 @@ export default class Edit extends BaseComponent{
       outcome: this.state.outcomes[0]
     };
 
-    ReviewAssessmentActions.addAssessmentQuestion(question, 'top');
+    ReviewAssessmentActions.addAssessmentQuestion(question, placement);
 
   }
 
@@ -169,6 +193,34 @@ export default class Edit extends BaseComponent{
       let btnStyle = _.merge({}, Style.styles().addQuestionBtn, {borderRadius: '0', fontSize: '24px', padding: '0px 15px', margin:'0px', width: 'inherit'});
       return (<li style={noteStyle}> You currently don't have any quiz questions. Please click <button style={btnStyle} className='btn btn-sm' onClick={this.handleAddQuestion} >Here</button> to create one :)</li>)
     }
+  }
+
+  btnAreaStyle(){
+    let windowWidth = this.state.windowWidth;
+    let styles = {};
+    if(windowWidth <= 1000){
+      styles = {
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: 'center',
+        margin: '20px auto 0px'
+      }
+    }
+
+    return styles;
+  }
+
+  questionLblStyle(){
+    let windowWidth = this.state.windowWidth;
+    let styles = {};
+    if(windowWidth <= 1000){
+      styles = {
+        marginLeft: '30%',
+        width: '40%'
+      }
+    }
+
+    return styles;
   }
 };
 
