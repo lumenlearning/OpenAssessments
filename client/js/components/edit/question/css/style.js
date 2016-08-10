@@ -28,13 +28,16 @@ export default new class Style {
         display: 'inline-block',
         left: '50px',
         color: 'white',
-        fontSize: '24px'
+        fontSize: '24px',
+        zIndex: 1
       },
       questionToolbar:{
         position: 'absolute',
         display: 'inline-block',
         right: '45px',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        backgroundColor: 'inherit',
+        zIndex: 2
       },
       questionToolBtns:{
         width: '32px',
