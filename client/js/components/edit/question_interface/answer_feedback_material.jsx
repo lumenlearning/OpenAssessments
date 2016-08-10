@@ -56,7 +56,7 @@ export default class AnswerFeedbackMaterial extends React.Component{
         {this.props.answers.map((answer, index) => {
           return (
             <AnswerFeedbackRow
-              key={index}
+              key={answer.id}
               index={index}
               answer={answer}
               handleAnswerChange={this.props.handleAnswerChange}
