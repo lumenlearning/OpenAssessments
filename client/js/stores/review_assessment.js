@@ -230,7 +230,7 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
     validateAssessment();
     return _errorMessages.count == 0;
   },
-  blankNewQuestion(){
+  blankNewAnswer(){
     return {
       id: String((Math.random() * 100) * Math.random()),
       material: '',
@@ -309,7 +309,6 @@ Dispatcher.register(function(payload) {
         _inDraftOriginals[item.id] = _.clone(item, true);
         item.inDraft = true;
       }
-      //validateAssessment();
       break;
 
     case Constants.CANCEL_EDITING_QUESTION:
@@ -323,14 +322,18 @@ Dispatcher.register(function(payload) {
 
     case Constants.UPDATE_ASSESSMENT_QUESTION:
       var question = payload.data;
-      validateQuestion(question);
+      if (payload.validate) {
+        validateQuestion(question);
 
-      if (question.isValid) {
-        question.edited = true;
-        question.inDraft = false;
-        question.errorMessages = [];
-        _dirty = true;
-        _inDraftOriginals[question.id] = null;
+        if (question.isValid) {
+          question.edited = true;
+          question.inDraft = false;
+          question.errorMessages = [];
+          question.isNew = false;
+          _dirty = true;
+          _inDraftOriginals[question.id] = null;
+        }
+
       }
 
       var index = _.findIndex(_items, {id: question.id});
@@ -338,7 +341,7 @@ Dispatcher.register(function(payload) {
         _items[index] = question;
       }
 
-      if (question.isValid) {
+      if (payload.validate && question.isValid) {
         validateAssessment();
       }
 

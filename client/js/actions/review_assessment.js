@@ -35,8 +35,8 @@ export default {
     Dispatcher.dispatch({action: Constants.ADD_ASSSESSMENT_QUESTION, data: question, location: location});
   },
 
-  updateAssessmentQuestion(question){
-    Dispatcher.dispatch({action: Constants.UPDATE_ASSESSMENT_QUESTION, data: question});
+  updateAssessmentQuestion(question, validate=true){
+    Dispatcher.dispatch({action: Constants.UPDATE_ASSESSMENT_QUESTION, data: question, validate: validate});
   },
 
   deleteAssessmentQuestion(question){

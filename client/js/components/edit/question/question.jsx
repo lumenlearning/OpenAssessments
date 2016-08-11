@@ -46,24 +46,8 @@ export default class Question extends BaseComponent{
     };
   }
 
-  componentWillMount(){
-  }
-
-  componentWillReceiveProps(nextProps){
-    if(nextProps != this.props){
-      var dirty = false;
-      if(nextProps.question.hasOwnProperty("isValid") && !nextProps.question.isValid){
-        dirty = true
-      }
-      this.setState({
-        question: nextProps.question,
-        dirty: dirty
-      });
-    }
-  }
-
   render(){
-    let question  = this.state.question;
+    let question  = this.props.question;
     let outcomes  = this.props.outcomes;
     let style     = Style.styles();
     let delHover  = this.state.hover.delete;
@@ -73,7 +57,7 @@ export default class Question extends BaseComponent{
     var state_text = '';
     var headerStyle = style.questionHeader;
     if(question.inDraft) {
-      state_text = " (In Draft)";
+      state_text = question.isNew ? " (New)" : " (In Draft)";
       headerStyle = style.draftHeader;
     } else if(question.edited){
       state_text = " (Edited)";
@@ -148,15 +132,19 @@ export default class Question extends BaseComponent{
 
   /*CUSTOM HANDLER FUNCTIONS*/
   toggleEdit(e){
-    if (this.state.question.inDraft) {
-      ReviewAssessmentActions.cancelEditingQuestion(this.state.question);
+    if (this.props.question.inDraft) {
+      if(this.props.question.isNew){
+        ReviewAssessmentActions.deleteAssessmentQuestion(this.props.question);
+      } else {
+        ReviewAssessmentActions.cancelEditingQuestion(this.props.question);
+      }
     } else {
-      ReviewAssessmentActions.startEditingQuestion(this.state.question);
+      ReviewAssessmentActions.startEditingQuestion(this.props.question);
     }
   }
 
   handleDuplicate(e){
-    let question = _.clone(this.state.question, true);
+    let question = _.clone(this.props.question, true);
 
     question.newId =  question.id + Math.random();
 
@@ -164,7 +152,7 @@ export default class Question extends BaseComponent{
   }
 
   handleDelete(e){
-    ReviewAssessmentActions.deleteAssessmentQuestion(this.state.question);
+    ReviewAssessmentActions.deleteAssessmentQuestion(this.props.question);
   }
 
   handleHoverStates(e){
@@ -192,48 +180,45 @@ export default class Question extends BaseComponent{
 
   /*CUSTOM EVENT HANDLERS*/
   handleOutcomeChange(newOutcome) {
-    let question = _.clone(this.state.question, true);
+    let question = _.clone(this.props.question, true);
     question.outcome = newOutcome;
 
-    this.setState({question: question, dirty: true});
+    ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 
   handleMaterialChange(e) {
-    let question = _.clone(this.state.question, true);
+    let question = _.clone(this.props.question, true);
     question.material = e.target.getContent();
 
-    this.setState({question: question, dirty: true});
+    ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 
   handleAnswerChange(e, index) {
-    let question = _.clone(this.state.question, true);
+    let question = _.clone(this.props.question, true);
     let answer = question.answers[index];
     answer.material = e.target.getContent();
 
-    this.setState({question: question, dirty: true});
+    
+    ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 
   handleAnswerRemoval(index){
-    let question = _.clone(this.state.question, true);
-
+    let question = _.clone(this.props.question, true);
     question.answers.splice(index, 1);
-
-    this.setState({
-      question: question,
-      dirty: true
-    });
+    
+    ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 
   handleFeedbackChange(e, index) {
-    let question = _.clone(this.state.question, true);
+    let question = _.clone(this.props.question, true);
     let answer = question.answers[index];
     answer.feedback = e.target.getContent();
 
-    this.setState({question: question, dirty: true});
+    ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 
   handleCorrectChange(index, isCorrect) {
-    let question = _.clone(this.state.question, true);
+    let question = _.clone(this.props.question, true);
     let answer = question.answers[index];
     answer.isCorrect = isCorrect;
     question.question_type = 'multiple_choice_question';
@@ -243,23 +228,19 @@ export default class Question extends BaseComponent{
       question.question_type = 'multiple_answers_question';
     }
 
-    this.setState({question: question, dirty: true});
+    ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 
 
   handleAddOption(e) {
-    let question = _.clone(this.state.question, true);
-    let answerObj = ReviewAssessmentStore.blankNewQuestion();
+    let question = _.clone(this.props.question, true);
+    let answerObj = ReviewAssessmentStore.blankNewAnswer();
     question.answers.push(answerObj);
 
-    this.setState({question: question, dirty: true});
+    ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 
   handleDoneEditing(e){
-    if(this.state.dirty){
-      ReviewAssessmentActions.updateAssessmentQuestion(this.state.question);
-    } else {
-      ReviewAssessmentActions.cancelEditingQuestion(this.state.question);
-    }
+   ReviewAssessmentActions.updateAssessmentQuestion(this.props.question);
   }
 };

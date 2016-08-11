@@ -37,6 +37,7 @@ export default class QuestionInterface extends BaseComponent{
             material={question.material}
             onChange={this.props.handleMaterialChange} />
           <AnswerFeedbackMaterial
+            key={question.id}
             answers={question.answers}
             handleAnswerChange={this.props.handleAnswerChange}
             handleFeedbackChange={this.props.handleFeedbackChange}

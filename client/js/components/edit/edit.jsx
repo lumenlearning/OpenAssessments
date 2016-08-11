@@ -131,9 +131,10 @@ export default class Edit extends BaseComponent{
       edited: true,
       inDraft: true,
       isValid: false,
+      isNew: true,
       question_type: 'multiple_choice_question',
       material: '',
-      answers: [ReviewAssessmentStore.blankNewQuestion(), ReviewAssessmentStore.blankNewQuestion(), ReviewAssessmentStore.blankNewQuestion()],
+      answers: [ReviewAssessmentStore.blankNewAnswer(), ReviewAssessmentStore.blankNewAnswer(), ReviewAssessmentStore.blankNewAnswer()],
       errorMessages: [],
       outcome: this.state.outcomes[0]
     };
@@ -188,12 +189,11 @@ export default class Edit extends BaseComponent{
     else if(!this.state.newQuestion){
       let noteStyle = {
         fontSize: '24px',
-        color: '#CF0000',
-        border: '1px solid #CF0000',
+        border: '1px solid',
         padding: '15px'
       };
       let btnStyle = _.merge({}, Style.styles().addQuestionBtn, {borderRadius: '0', fontSize: '24px', padding: '0px 15px', margin:'0px', width: 'inherit'});
-      return (<li style={noteStyle}> You currently don't have any quiz questions. Please click <button style={btnStyle} className='btn btn-sm' onClick={this.handleAddQuestion} >Here</button> to create one :)</li>)
+      return (<li style={noteStyle}>Please click <button style={btnStyle} className='btn btn-sm' onClick={()=>this.handleAddQuestion("top")} >Here</button> to create a quiz question. :)</li>)
     }
   }
 
