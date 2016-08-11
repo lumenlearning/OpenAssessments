@@ -35,6 +35,23 @@ export default {
     Dispatcher.dispatch({action: Constants.ADD_ASSSESSMENT_QUESTION, data: question, location: location});
   },
 
+  addNewAssessmentQuestion(location="top"){
+    let question = {
+      id: `newQuestion-${((Math.random() * 100) * (Math.random() * 100))}`, //specifies new and has random num.
+      title: 'New Question',
+      edited: true,
+      inDraft: true,
+      isValid: false,
+      isNew: true,
+      question_type: 'multiple_choice_question',
+      material: '',
+      answers: [ReviewAssessmentStore.blankNewAnswer(), ReviewAssessmentStore.blankNewAnswer(), ReviewAssessmentStore.blankNewAnswer()],
+      errorMessages: [],
+      outcome: ReviewAssessmentStore.outcomes()[0]
+    };
+    Dispatcher.dispatch({action: Constants.ADD_ASSSESSMENT_QUESTION, data: question, location: location});
+  },
+
   updateAssessmentQuestion(question, validate=true){
     Dispatcher.dispatch({action: Constants.UPDATE_ASSESSMENT_QUESTION, data: question, validate: validate});
   },
