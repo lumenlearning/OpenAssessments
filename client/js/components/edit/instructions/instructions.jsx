@@ -3,8 +3,9 @@
 import React                          from 'react';
 import _                              from 'lodash';
 import BaseComponent                  from '../../base_component.jsx';
-import Expandable                     from '../../common/expandable_dropdown/expandable_dropdown.jsx';
-import Style                         from '../css/style.js';
+import Expandable                     from '../expandable_dropdown/expandable_dropdown.jsx';
+import AnotherExpandable              from '../../admin/expandable'; {/* leave to try later */}
+import Style                          from '../css/style.js';
 
 
 export default class Instructions extends BaseComponent{
@@ -61,7 +62,6 @@ render() {
     console.log("rendering instructions", this.props.settings.assessmentKind);
       return (
           <div>
-              <div style={{marginLeft: "15px"}}>How this question bank works</div>
                 <Expandable>
                     <div style={{border: "1px solid rgba(0,0,0,0.2)", borderRadius: "5px"}}>
                         <div style={{margin: "10px"}}>

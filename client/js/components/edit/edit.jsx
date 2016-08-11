@@ -15,7 +15,7 @@ import QuestionInterface              from './question_interface/question_interf
 import ValidationMessages             from './validation_messages.jsx';
 import CommunicationHandler           from "../../utils/communication_handler";
 import EditButtons                    from "./edit_buttons.jsx"
-import Instructions                   from "./instructions.jsx";
+import Instructions                   from "./instructions/instructions.jsx";
 
 export default class Edit extends BaseComponent{
 
