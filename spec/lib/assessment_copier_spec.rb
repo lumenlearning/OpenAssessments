@@ -57,6 +57,9 @@ describe AssessmentCopier do
       @user_assessments = []
       @user_assessments << UserAssessment.create!(lti_context_id: 'sad',  assessment_id: @original.id, user_id: @user.id)
       @user_assessments << UserAssessment.create!(lti_context_id: 'haha',  assessment_id: @original.id, user_id: @user.id)
+      @assessment_results = []
+      @assessment_results << create(:assessment_result, :user_assessment_id => @user_assessments[0].id, assessment_id: @original.id)
+      @assessment_results << create(:assessment_result, :user_assessment_id => @user_assessments[1].id, assessment_id: @original.id)
     end
 
     it "updates all the user_assessments for given lti_context_ids" do
@@ -67,15 +70,21 @@ describe AssessmentCopier do
         ua.reload
         expect(ua.assessment_id).to eq copy.id
       end
+      @assessment_results.each do |ar|
+        ar.reload
+        expect(ar.assessment_id).to eq copy.id
+      end
     end
 
     it "doesn't update for different lti_context_ids" do
       other = UserAssessment.create!(lti_context_id: 'hahasad',  assessment_id: @original.id, user_id: @user.id)
+      other_ar = create(:assessment_result, :user_assessment_id => other.id, assessment_id: @original.id)
       @copier.copy
       @copier.move_user_assessments!
       other.reload
 
       expect(other.assessment_id).to eq @original.id
+      expect(other_ar.assessment_id).to eq @original.id
     end
 
     it "is idempotent" do
@@ -86,11 +95,19 @@ describe AssessmentCopier do
         ua.reload
         expect(ua.assessment_id).to eq copy.id
       end
+      @assessment_results.each do |ar|
+        ar.reload
+        expect(ar.assessment_id).to eq copy.id
+      end
 
       @copier.move_user_assessments!
       @user_assessments.each do |ua|
         ua.reload
         expect(ua.assessment_id).to eq copy.id
+      end
+      @assessment_results.each do |ar|
+        ar.reload
+        expect(ar.assessment_id).to eq copy.id
       end
     end
 
@@ -99,10 +116,12 @@ describe AssessmentCopier do
       @copier.move_user_assessments!
 
       new_old = UserAssessment.create!(lti_context_id: 'sad',  assessment_id: @original.id, user_id: @user.id)
+      new_old_ar = create(:assessment_result, :user_assessment_id => new_old.id, assessment_id: @original.id)
       @copier.move_user_assessments!
       new_old.reload
 
       expect(new_old.assessment_id).to eq @original.id
+      expect(new_old_ar.assessment_id).to eq @original.id
     end
 
     it "doesn't update empty context ids array" do
@@ -113,6 +132,10 @@ describe AssessmentCopier do
       @user_assessments.each do |ua|
         ua.reload
         expect(ua.assessment_id).to eq @original.id
+      end
+      @assessment_results.each do |ar|
+        ar.reload
+        expect(ar.assessment_id).to eq @original.id
       end
     end
 

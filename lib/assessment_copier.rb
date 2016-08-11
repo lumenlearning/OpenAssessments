@@ -45,7 +45,10 @@ class AssessmentCopier
   def move_user_assessments!
     existing_ids = UserAssessment.where(assessment_id: @new_assessment.id, lti_context_id: @context_ids).pluck(:user_id)
     scope = UserAssessment.where(assessment_id: @old_assessment.id, lti_context_id: @context_ids).where.not(user_id: existing_ids)
-    scope.update_all(assessment_id: @new_assessment.id)
+    ActiveRecord::Base.transaction do
+      AssessmentResult.where(user_assessment: scope).update_all(assessment_id: @new_assessment.id)
+      scope.update_all(assessment_id: @new_assessment.id)
+    end
   end
 
 
