@@ -17,7 +17,7 @@ export default class FeedbackLabels extends React.Component {
     return (
         <div style={_.merge(mergeStyle, style.label)}>
           <Tooltip message={message} position='top-right' style={{maxWidth: "300px"}}>
-            Feedback <img style={style.warningImg} src="/assets/warning-32.png" alt={message} />
+            <span style={{cursor:"help"}}>Feedback <img style={style.warningImg} src="/assets/warning-32.png" alt={message} /></span>
           </Tooltip>
         </div>
     )

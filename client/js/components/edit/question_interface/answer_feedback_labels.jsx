@@ -21,6 +21,7 @@ export default class AnswerFeedbackLabels extends React.Component{
         <div style={style.feedbackLabelBlock}>
           <FeedbackLabel />
         </div>
+        <div style={style.emptyCell}></div>
       </div>
     )
   }

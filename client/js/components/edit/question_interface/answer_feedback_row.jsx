@@ -94,10 +94,10 @@ export default class AnswerFeedbackRow extends React.Component{
                   onChange={this.props.handleFeedbackChange}
                   />
               </div>
-              <div style={{display: "table-cell", minWidth: "50px", height: "100%", verticalAlign: "middle"}}>
-                {this.trash(index)}
-              </div>
             </div>
+          </div>
+          <div style={{display: "table-cell", minWidth: "50px", height: "100%", verticalAlign: "middle"}}>
+            {this.trash(index)}
           </div>
         </div>
         {hr}

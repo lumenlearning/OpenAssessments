@@ -88,19 +88,23 @@ export default new class Style {
         backgroundColor: "#fff"
       },
       delBtn: {
-        border: '1px solid #D00000',
-        display: 'inline-block',
+        border: '2px solid #D00000',
+        width: '32px',
+        height: '32px',
+        display: 'block',
+        margin: '0 auto',
         padding: '2px 3px 2px 2px',
         borderRadius: '50%',
         cursor: 'pointer',
       },
       delBtnIcon:{
-        width: '32px',
-        height: '32px'
+        width: '23px',
+        height: '23px',
+        marginBottom: '8px'
       },
       warningImg:{
-        width: '15px',
-        height: '15px',
+        width: '17px',
+        height: '17px',
         marginBottom: "4px"
       }
     };
