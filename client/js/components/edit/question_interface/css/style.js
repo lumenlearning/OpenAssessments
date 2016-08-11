@@ -79,7 +79,7 @@ export default new class Style {
       checkHover: {
         width: "28px",
         height: "28px",
-        marginBottom: "2px",
+        marginBottom: "4px",
         borderRadius: "100%"
       },
       outcomeSelect: {
