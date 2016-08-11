@@ -31,7 +31,7 @@ export default class ExpandableDropDown extends React.Component{
           {this.props.children}
         </div>
         <div style={style.expandableBtn} onClick={this.toggleExpand} >
-          <p style={style.expandableTxt} >How this question bank works {status}</p>
+          <p style={style.expandableTxt} >How This Question Bank Works {status}</p>
         </div>
       </div>
     )

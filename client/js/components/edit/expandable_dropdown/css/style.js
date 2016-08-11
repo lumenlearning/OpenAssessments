@@ -10,6 +10,10 @@ export default new class Style {
       },
       expandableTxt:{
         textAlign: 'left',
+        fontWeight: 'bold',
+        fontSize: '14px',
+        marginBottom: '0px',
+
       },
       expandableContent:{
         overflow: 'hidden',
