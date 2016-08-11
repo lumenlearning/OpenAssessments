@@ -44,6 +44,7 @@ export default class Edit extends BaseComponent{
       needsSaving      : ReviewAssessmentStore.isDirty(),
       errorMessages    : ReviewAssessmentStore.errorMessages(),
       warningMessages  : ReviewAssessmentStore.warningMessages(),
+      loaded           : ReviewAssessmentStore.isLoaded(),
       windowWidth      : window.innerWidth
     }
   }
@@ -108,11 +109,11 @@ export default class Edit extends BaseComponent{
     if(this.state.questions.length !== 0){
       return this.state.questions.map((question, index)=>{
         return (
-          <Question key={index} question={question} outcomes={this.state.outcomes}/>
+          <Question key={question.id + index} question={question} outcomes={this.state.outcomes}/>
         )
       });
     }
-    else if(!this.state.newQuestion){
+    else if(this.state.loaded){
       let noteStyle = {
         fontSize: '24px',
         border: '1px solid',
