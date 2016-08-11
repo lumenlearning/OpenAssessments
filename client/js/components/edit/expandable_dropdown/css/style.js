@@ -20,7 +20,7 @@ export default new class Style {
         overflow: 'hidden',
         maxHeight: '0px',
         transition: 'max-height .3s ease',
-        padding: '5px 15px 0px 15px'
+        padding: '5px 0px 0px 0px'
       },
     };
 
