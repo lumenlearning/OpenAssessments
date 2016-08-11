@@ -13,6 +13,7 @@ export default new class Style {
         fontWeight: 'bold',
         fontSize: '14px',
         marginBottom: '0px',
+        color: '#3299BB'
 
       },
       expandableContent:{

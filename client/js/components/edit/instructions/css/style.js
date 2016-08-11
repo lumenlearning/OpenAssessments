@@ -8,6 +8,9 @@ export default new class Style {
           paddingLeft: '5px',
           lineHeight: '10'
       },
+      textItems = {
+          
+      }
   };
     styles() {
       return this.style;
