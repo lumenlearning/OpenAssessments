@@ -29,14 +29,14 @@ export default class EditButtons extends BaseComponent {
           </label>
           <label for="add_question" style={_.merge({}, style.addQuestionLbl, this.questionLblStyle())}>
             <button name='add_question' className='btn btn-sm' onClick={()=>this.handleAddQuestion(this.props.newQuestionLocation)} style={style.addQuestionBtn}>
-              <img style={style.addQuestionImg} src="/assets/plus-52.png" alt="Add Question"/>
+              <img style={style.addQuestionImg} src="/assets/plus.png" alt="Add Question"/>
             </button>
             Add Question
           </label>
           <label for="studyplan" style={_.merge({}, style.addQuestionLbl, this.questionLblStyle())}>
             {this.props.windowWidth > 1000 ? 'Study Plan' : ''}
             <button name='studyplan' className='btn btn-sm' onClick={this.handlePostMessageHomeNav} style={style.addQuestionBtn}>
-              <img style={_.merge({}, style.addQuestionImg, {width:'32px', height:'32px'})} src="/assets/return.png" alt="Study Plan"/>
+              <img style={style.addQuestionImg} src="/assets/return.png" alt="Study Plan"/>
             </button>
             {this.props.windowWidth < 1000 ? 'Study Plan' : ''}
 
@@ -45,7 +45,7 @@ export default class EditButtons extends BaseComponent {
 
     );
   }
-  
+
   btnAreaStyle(){
     let styles = {};
     if(this.props.windowWidth <= 1000){
