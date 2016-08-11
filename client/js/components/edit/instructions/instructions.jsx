@@ -4,7 +4,6 @@ import React                          from 'react';
 import _                              from 'lodash';
 import BaseComponent                  from '../../base_component.jsx';
 import Expandable                     from '../expandable_dropdown/expandable_dropdown.jsx';
-import AnotherExpandable              from '../../admin/expandable'; {/* leave to try later */}
 import Style                          from '../css/style.js';
 
 
@@ -17,8 +16,8 @@ export default class Instructions extends BaseComponent{
     this._bind();
   }//constructor
 
-getInstructionType(assessmentKind){
-    if(false && this.props.settings.assessmentKind == "summative"){
+getInstructionType(){
+    if(this.props.settings.assessmentKind == "summative"){
         return (
             <ul style={{listStyleType: 'none', paddingLeft: '5px', lineHeight: '2.0', fontSize: '14px'}}>
                 <li style={{padding: '2px', lineHeight: '1.25'}}> <span style={{fontWeight: 'bold'}}>Outcomes.</span> This quiz is designed to assess students on the following learning outcomes in this module.</li>
@@ -29,7 +28,7 @@ getInstructionType(assessmentKind){
             </ul>
         )
     }
-    else if(true && this.props.settings.assessmentKind == "formative"){
+    else if(this.props.settings.assessmentKind == "formative"){
         return (
             <ul style={{listStyleType: 'none', paddingLeft: '5px', lineHeight: '2.0', fontSize: '14px'}}>
                 <li style={{padding: '2px', lineHeight: '1.25'}}> <span style={{fontWeight: 'bold'}}>Outcomes.</span> This Self-Check is designed to help students check their understanding of this learning outcome before moving on to study the next learning outcome.</li>
@@ -39,7 +38,7 @@ getInstructionType(assessmentKind){
             </ul>
         )
     }
-    else if (false && this.props.settings.assessmentKind == "swyk"){
+    else if (this.props.settings.assessmentKind == "swyk"){
         return (
             <ul style={{listStyleType: 'none', paddingLeft: '5px', padding: '2px', fontSize: '14px'}}>
                 <li style={{padding: '2px', lineHeight: '1.25'}}> <span style={{fontWeight: 'bold'}}>Outcomes.</span> This Show What You Know (SWYK) pretest is designed to allow students to test their prior knowledge on all learning outcomes in this module.</li>
@@ -50,14 +49,10 @@ getInstructionType(assessmentKind){
             </ul>
         )
     }
-    else {
-        return woops
-    }
 }
 
 render() {
     let style   = Style.styles();
-    console.log("rendering instructions", this.props.settings.assessmentKind);
       return (
           <div>
                 <Expandable>
