@@ -27,11 +27,11 @@ export default class ExpandableDropDown extends React.Component{
 
     return (
       <div style={style.expandable}>
-        <div style={contentStyle} ref={'expandableContent'} >
-          {this.props.children}
-        </div>
         <div style={style.expandableBtn} onClick={this.toggleExpand} >
           <p style={style.expandableTxt} >How This Question Bank Works {status}</p>
+        </div>
+        <div style={contentStyle} ref={'expandableContent'} >
+          {this.props.children}
         </div>
       </div>
     )
