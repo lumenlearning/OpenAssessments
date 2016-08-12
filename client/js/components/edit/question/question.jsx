@@ -152,7 +152,10 @@ export default class Question extends BaseComponent{
   }
 
   handleDelete(e){
-    ReviewAssessmentActions.deleteAssessmentQuestion(this.props.question);
+    let confirmDelete = confirm("Are you sure you want to delete this question?");
+    if (confirmDelete) {
+      ReviewAssessmentActions.deleteAssessmentQuestion(this.props.question);
+    }
   }
 
   handleHoverStates(e){
@@ -198,14 +201,14 @@ export default class Question extends BaseComponent{
     let answer = question.answers[index];
     answer.material = e.target.getContent();
 
-    
+
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 
   handleAnswerRemoval(index){
     let question = _.clone(this.props.question, true);
     question.answers.splice(index, 1);
-    
+
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 
