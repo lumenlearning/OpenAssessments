@@ -38,7 +38,7 @@ getInstructionType(){
             </ul>
         )
     }
-    else if (this.props.settings.assessmentKind == "swyk"){
+    else if (this.props.settings.assessmentKind == "swyk" || this.props.settings.assessmentKind == "show_what_you_know"){
         return (
             <ul style={{listStyleType: 'none', paddingLeft: '5px', padding: '2px', fontSize: '14px'}}>
                 <li style={{padding: '2px', lineHeight: '1.25'}}> <span style={{fontWeight: 'bold'}}>Outcomes.</span> This Show What You Know (SWYK) pretest is designed to allow students to test their prior knowledge on all learning outcomes in this module.</li>
