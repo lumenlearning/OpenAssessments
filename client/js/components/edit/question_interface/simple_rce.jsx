@@ -24,6 +24,7 @@ export default class SimpleRCE extends BaseComponent {
         menubar: false,
         statusbar: false,
         elementpath: false,
+        min_height: 75,
         forced_root_block : '',
         content_css: '/assets/themes/lumen.css.scss'
       });
@@ -31,9 +32,10 @@ export default class SimpleRCE extends BaseComponent {
       return({
         toolbar: 'undo redo | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | table bullist numlist link image | code',
         plugins: 'table, code, autoresize',
+        min_height: 100,
         autoresize_bottom_margin: 10,
         autoresize_max_height: 500,
-        autoresize_min_height: 200,
+        autoresize_min_height: 100,
         menubar: false,
         statusbar: true,
         elementpath: false,
