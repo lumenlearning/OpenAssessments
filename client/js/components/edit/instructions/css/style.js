@@ -3,13 +3,15 @@ export default new class Style {
 
     this.style = {
       //styles go here
-      textList = {
+      textList:{
           listStyleType: 'none',
           paddingLeft: '5px',
-          lineHeight: '10'
+          lineHeight: '2.0',
+          fontSize: '14px'
       },
-      textItems = {
-          
+      textItems:{
+          padding: '2px',
+          lineHeight: '1.25'
       }
   };
     styles() {
