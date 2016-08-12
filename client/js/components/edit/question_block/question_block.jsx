@@ -52,8 +52,7 @@ export default class QuestionBlock extends React.Component{
     let question    = this.props.question;
     let windowWidth = this.state.windowWidth;
     let style       = Style.styles();
-    let labels      = windowWidth < 1000 ? null : this.renderLabels();
-
+    let labels      = windowWidth < 1001 ? null : this.renderLabels();
     return (
       <div style={style.qbContent}>
         <div style={style.qbContentHead}>
@@ -70,6 +69,8 @@ export default class QuestionBlock extends React.Component{
                   let answerLabelSmall    = windowWidth <= 1000 ? (<div style={_.merge({paddingBottom: "0.25em"}, style.label)}>Answer</div>) : null;
                   let feedbackLabelSmall  = windowWidth <= 1000 ? (<div style={_.merge({paddingBottom: "0.25em"}, style.label)}>Feedback</div>) : null;
                   let hr                  = windowWidth <= 1000 ? (<hr style={{margin: "10px 0 10px", borderTop: "1px dotted #868686"}}/>) : null;
+                  let answerMaterial      = answer.material ? (<div style={_.merge(answerFeedback, style.qbTblCell)} dangerouslySetInnerHTML={this.constructor.createMarkup(answer.material)} />) : (<div style={_.merge(answerFeedback, style.qbTblCell)} dangerouslySetInnerHTML={this.constructor.createMarkup("&nbsp;")} />);
+                  let feedbackMaterial    = answer.feedback ? (<div style={_.merge(answerFeedback, style.qbTblCell)} dangerouslySetInnerHTML={this.constructor.createMarkup(answer.material)} />) : (<div style={_.merge(answerFeedback, style.qbTblCell)} dangerouslySetInnerHTML={this.constructor.createMarkup("&nbsp;")} />);
 
                   if(answer.isCorrect){
                     img = (<img style={style.checkOrExit} src="/assets/checkbox-48.png" alt="This Answer is Correct"/>);
@@ -83,9 +84,9 @@ export default class QuestionBlock extends React.Component{
                         <div style={{display: "table-cell", width: "100%", verticalAlign: "top"}}>
                           <div style={answerFeedbackBlock}>
                             {answerLabelSmall}
-                            <div style={_.merge(answerFeedback, style.qbTblCell)} dangerouslySetInnerHTML={this.constructor.createMarkup(answer.material)} />
+                            {answerMaterial}
                             {feedbackLabelSmall}
-                            <div style={_.merge(answerFeedback, style.qbTblCell)} dangerouslySetInnerHTML={this.constructor.createMarkup(answer.feedback)} />
+                            {feedbackMaterial}
                           </div>
                         </div>
                       </div>

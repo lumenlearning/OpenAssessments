@@ -22,23 +22,23 @@ export default class EditButtons extends BaseComponent {
     return (
         <div className="eqNewQuestion" style={_.merge({}, style.eqNewQuestion, this.btnAreaStyle())}>
           <label for="save_quiz" style={_.merge({}, style.addQuestionLbl, this.questionLblStyle())}>
-            <button name='save_quiz' className='btn btn-sm' onClick={this.props.handleSaveAssessment} style={style.addQuestionBtn}>
-              <img style={style.addQuestionImg} src="/assets/upload.png" alt="Save Assessment"/>
+            <button name='save_quiz' className='btn btn-sm' onClick={this.props.handleSaveAssessment} style={_.merge({}, style.addQuestionBtn, this.btnStyle())}>
+              <img style={_.merge({}, style.addQuestionImg, this.btnIconStyle())} src="/assets/upload.png" alt="Save Assessment"/>
             </button>
             Save Assessment
           </label>
           <label for="add_question" style={_.merge({}, style.addQuestionLbl, this.questionLblStyle())}>
-            <button name='add_question' className='btn btn-sm' onClick={()=>this.handleAddQuestion(this.props.newQuestionLocation)} style={style.addQuestionBtn}>
-              <img style={style.addQuestionImg} src="/assets/plus.png" alt="Add Question"/>
+            <button name='add_question' className='btn btn-sm' onClick={()=>this.handleAddQuestion(this.props.newQuestionLocation)} style={_.merge({}, style.addQuestionBtn, this.btnStyle())}>
+              <img style={_.merge({}, style.addQuestionImg, this.btnIconStyle())} src="/assets/plus.png" alt="Add Question"/>
             </button>
             Add Question
           </label>
           <label for="studyplan" style={_.merge({}, style.addQuestionLbl, this.questionLblStyle())}>
-            {this.props.windowWidth > 1000 ? 'Study Plan' : ''}
-            <button name='studyplan' className='btn btn-sm' onClick={this.handlePostMessageHomeNav} style={style.addQuestionBtn}>
-              <img style={style.addQuestionImg} src="/assets/return.png" alt="Study Plan"/>
+            {this.props.windowWidth >= 600 ? 'Study Plan' : ''}
+            <button name='studyplan' className='btn btn-sm' onClick={this.handlePostMessageHomeNav} style={_.merge({}, style.addQuestionBtn, this.btnStyle())}>
+              <img style={_.merge({}, style.addQuestionImg, this.btnIconStyle())} src="/assets/return.png" alt="Study Plan"/>
             </button>
-            {this.props.windowWidth < 1000 ? 'Study Plan' : ''}
+            {this.props.windowWidth < 600 ? 'Study Plan' : ''}
 
           </label>
         </div>
@@ -48,7 +48,7 @@ export default class EditButtons extends BaseComponent {
 
   btnAreaStyle(){
     let styles = {};
-    if(this.props.windowWidth <= 1000){
+    if(this.props.windowWidth <= 600){
       styles = {
         flexDirection: "column",
         justifyContent: "center",
@@ -64,8 +64,33 @@ export default class EditButtons extends BaseComponent {
     let styles = {};
     if(this.props.windowWidth <= 1000){
       styles = {
-        marginLeft: '30%',
-        width: '40%'
+        // marginLeft: '30%',
+        // width: '40%'
+        fontSize: '16px'
+      }
+    }
+
+    return styles;
+  }
+
+  btnStyle(){
+    let styles = {};
+    if(this.props.windowWidth <= 1000){
+      styles = {
+        width: '38px',
+        height: '38px'
+      }
+    }
+
+    return styles;
+  }
+
+  btnIconStyle(){
+    let styles = {};
+    if(this.props.windowWidth <= 1000){
+      styles = {
+        width: '30px',
+        height: '30px'
       }
     }
 
