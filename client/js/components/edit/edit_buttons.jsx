@@ -15,7 +15,6 @@ export default class EditButtons extends BaseComponent {
     this._bind('handlePostMessageHomeNav', 'questionLblStyle', 'btnAreaStyle');
   }
 
-
   render() {
     let style = Style.styles();
 
@@ -25,32 +24,36 @@ export default class EditButtons extends BaseComponent {
             <button name='save_quiz' className='btn btn-sm' onClick={this.props.handleSaveAssessment} style={_.merge({}, style.addQuestionBtn, this.btnStyle())}>
               <img style={_.merge({}, style.addQuestionImg, this.btnIconStyle())} src="/assets/upload.png" alt="Save Assessment"/>
             </button>
-            Save Assessment
+            {this.renderLabel("Save Assessment")}
           </label>
           <label for="add_question" style={_.merge({}, style.addQuestionLbl, this.questionLblStyle())}>
             <button name='add_question' className='btn btn-sm' onClick={()=>this.handleAddQuestion(this.props.newQuestionLocation)} style={_.merge({}, style.addQuestionBtn, this.btnStyle())}>
               <img style={_.merge({}, style.addQuestionImg, this.btnIconStyle())} src="/assets/plus.png" alt="Add Question"/>
             </button>
-            Add Question
+            {this.renderLabel("Add Question")}
           </label>
           <label for="studyplan" style={_.merge({}, style.addQuestionLbl, this.questionLblStyle())}>
-            {this.props.windowWidth >= 600 ? 'Study Plan' : ''}
             <button name='studyplan' className='btn btn-sm' onClick={this.handlePostMessageHomeNav} style={_.merge({}, style.addQuestionBtn, this.btnStyle())}>
               <img style={_.merge({}, style.addQuestionImg, this.btnIconStyle())} src="/assets/return.png" alt="Study Plan"/>
             </button>
-            {this.props.windowWidth < 600 ? 'Study Plan' : ''}
-
+            {this.renderLabel("Study Plan")}
           </label>
         </div>
 
     );
   }
 
+  renderLabel(label){
+    if(this.props.windowWidth > 600){
+      return (label)
+    }
+  }
+
   btnAreaStyle(){
     let styles = {};
     if(this.props.windowWidth <= 600){
       styles = {
-        flexDirection: "column",
+        flexDirection: "row",
         justifyContent: "center",
         alignItems: 'center',
         margin: '20px auto 0px'
@@ -64,8 +67,6 @@ export default class EditButtons extends BaseComponent {
     let styles = {};
     if(this.props.windowWidth <= 1000){
       styles = {
-        // marginLeft: '30%',
-        // width: '40%'
         fontSize: '16px'
       }
     }
@@ -79,6 +80,14 @@ export default class EditButtons extends BaseComponent {
       styles = {
         width: '38px',
         height: '38px'
+      }
+    }
+
+    if(this.props.windowWidth <= 600){
+      styles = {
+        width: '38px',
+        height: '38px',
+        margin: '0 20px'
       }
     }
 
