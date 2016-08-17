@@ -30,6 +30,7 @@ export default class QuestionInterface extends BaseComponent{
             outcomes={this.props.outcomes}
             selectedOutcome={question.outcome}
             onChange={this.props.handleOutcomeChange}
+            isNew={question.isNew}
           >
             <button className='btn' onClick={this.props.handleDoneEditing} style={{ fontSize: '16px'}}>Done Editing</button>
           </OutcomeSelector>
