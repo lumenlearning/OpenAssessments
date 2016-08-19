@@ -18,7 +18,7 @@ export default class ValidationMessages extends BaseComponent {
 
     return <div className="eqHeader" style={style.errorHeader}>
       <div>
-        <img src="/assets/stop.png" alt="Stop"/>
+        <img style={{width:'16px', height: '16px'}} src="/assets/stop.png" alt="Stop"/>
       </div>
       <div style={{paddingLeft:'10px'}}>
         Correct the following in order to save:
@@ -38,7 +38,7 @@ export default class ValidationMessages extends BaseComponent {
 
     return <div className="eqHeader" style={style.warningHeader}>
       <div>
-        <img src="/assets/warning-32.png" alt="Warning"/>
+        <img style={{width:'16px', height: '16px'}} src="/assets/warning-32.png" alt="Warning"/>
       </div>
       <div style={{paddingLeft:'10px'}}>
         Warning, please correct the following issue(s):
