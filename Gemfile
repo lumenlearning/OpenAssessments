@@ -9,7 +9,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.1'
 
 # Database
-gem "pg"
+gem 'pg', '>= 0.18.4'
 
 # UI
 gem 'sass-rails', '~> 4.0.3'

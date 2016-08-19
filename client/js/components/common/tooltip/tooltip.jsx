@@ -24,14 +24,12 @@ export default class Tooltip extends BaseComponent{
     };
   }
 
-  componentWillMount(){
-    //when component will mount, grab data from the editQuiz store
-  }
-
   componentWillReceiveProps(nProps, nState){
-      if(nProps !== this.props){
-        this.setState(nProps);
-      }
+    if(nProps.message !== this.props.message){
+      this.setState({
+        message: nProps.message
+      });
+    }
   }
 
   render(){
@@ -58,10 +56,10 @@ export default class Tooltip extends BaseComponent{
   toggleHover(e){
     let tooltip = this.refs.tooltip.getDOMNode();
     let hover;
-    if(e.type == 'mouseenter'){
+    if(e.type == 'mouseenter' || e.type == 'mouseover'){
       hover = true;
     }
-    else if(e.type == 'mouseleave'){
+    else if(e.type == 'mouseleave' || e.type == 'mouseout'){
       hover = false;
     }
     else if(e.type == 'mousemove'){
