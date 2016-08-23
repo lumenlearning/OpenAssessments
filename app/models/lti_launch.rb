@@ -2,7 +2,8 @@ require "securerandom"
 
 class LtiLaunch < ActiveRecord::Base
   store_accessor :data, :lis_result_sourcedid, :lis_outcome_service_url,
-                 :outcome_error_message, :launch_error_message, :lti_roles
+                 :outcome_error_message, :launch_error_message, :lti_roles,
+                 :outcome_debug_info
   belongs_to :account
   belongs_to :user
   belongs_to :lti_credential
@@ -51,10 +52,16 @@ class LtiLaunch < ActiveRecord::Base
     # post the given score to the TC
     res = tp.post_replace_result!(score)
 
+    self.outcome_debug_info = {}
+    [:response_code, :message_identifier, :code_major, :severity, :description, :operation, :message_ref_identifier].each do |prop|
+      self.outcome_debug_info[prop] = res.send(prop)
+    end
+    self.save
+
     if res.success?
       true
     else
-      self.outcome_error_message = "#{res.response_code} - #{res.code_major} - #{res.severity} - #{res.description}"
+      self.outcome_error_message = "Failed to send outcome - #{res.description}"
       self.save
       false
     end
