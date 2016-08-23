@@ -22,7 +22,7 @@ export default class ValidationMessages extends BaseComponent {
       </div>
       <div style={{paddingLeft:'10px'}}>
         Correct the following in order to save:
-        <ul style={{listStyleType:'-'}}>
+        <ul style={{listStyleType:'circle'}}>
           {this.props.errorMessages.map((message, i)=> {
             return <li key={"msg_" + i}>{message}</li>
           })}
