@@ -83,6 +83,9 @@ RSpec.describe LtiLaunch, type: :model do
     it "should return true if score sent successfully" do
       result = double(IMS::LTI::OutcomeResponse)
       expect(result).to receive(:success?).and_return(true)
+      [:response_code, :message_identifier, :code_major, :severity, :description, :operation, :message_ref_identifier].each do |prop|
+        expect(result).to receive(prop).and_return('hi')
+      end
       expect_any_instance_of(IMS::LTI::ToolProvider).to receive(:post_replace_result!).and_return(result)
 
       expect(launch.send_outcome_to_tool_consumer(1)).to eq true
@@ -91,14 +94,14 @@ RSpec.describe LtiLaunch, type: :model do
     it "should return false and set error message if score failed to send" do
       result = double(IMS::LTI::OutcomeResponse)
       expect(result).to receive(:success?).and_return(false)
-      expect(result).to receive(:response_code).and_return("res_code")
-      expect(result).to receive(:code_major).and_return("code_major")
-      expect(result).to receive(:severity).and_return("severity")
       expect(result).to receive(:description).and_return("description")
+      [:response_code, :message_identifier, :code_major, :severity, :description, :operation, :message_ref_identifier].each do |prop|
+        expect(result).to receive(prop).and_return(prop.to_s)
+      end
       expect_any_instance_of(IMS::LTI::ToolProvider).to receive(:post_replace_result!).and_return(result)
 
       expect(launch.send_outcome_to_tool_consumer(1)).to eq false
-      expect(launch.outcome_error_message).to eq "res_code - code_major - severity - description"
+      expect(launch.outcome_error_message).to eq "Failed to send outcome - description"
     end
 
   end
