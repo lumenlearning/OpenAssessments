@@ -17,12 +17,17 @@ export default class ValidationMessages extends BaseComponent {
     }
 
     return <div className="eqHeader" style={style.errorHeader}>
-      Correct the following in order to save:
-      <ul>
-        {this.props.errorMessages.map((message, i)=> {
-          return <li key={"msg_" + i}>{message}</li>
-        })}
-      </ul>
+      <div>
+        <img style={{width:'16px', height: '16px'}} src="/assets/stop.png" alt="Stop"/>
+      </div>
+      <div style={{paddingLeft:'10px'}}>
+        Correct the following in order to save:
+        <ul style={{listStyleType:'circle'}}>
+          {this.props.errorMessages.map((message, i)=> {
+            return <li key={"msg_" + i}>{message}</li>
+          })}
+        </ul>
+      </div>
     </div>
   }
 
@@ -32,12 +37,18 @@ export default class ValidationMessages extends BaseComponent {
     }
 
     return <div className="eqHeader" style={style.warningHeader}>
-      You have unsaved changes.
-      <ul>
-        {this.props.warningMessages.map((message, i)=> {
-          return <li key={"msg_" + i}>{message}</li>
-        })}
-      </ul>
+      <div>
+        <img style={{width:'16px', height: '16px'}} src="/assets/warning-32.png" alt="Warning"/>
+      </div>
+      <div style={{paddingLeft:'10px'}}>
+        Warning, please correct the following issue(s):
+        <ul style={{listStyleType:'circle'}}>
+          <li>You have unsaved changes.</li>
+          {this.props.warningMessages.map((message, i)=> {
+            return <li key={"msg_" + i}>{message}</li>
+          })}
+        </ul>
+      </div>
     </div>
   }
 

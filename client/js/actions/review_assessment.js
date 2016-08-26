@@ -47,7 +47,7 @@ export default {
       material: '',
       answers: [ReviewAssessmentStore.blankNewAnswer(), ReviewAssessmentStore.blankNewAnswer(), ReviewAssessmentStore.blankNewAnswer()],
       errorMessages: [],
-      outcome: ReviewAssessmentStore.outcomes()[0]
+      outcome: ''
     };
     Dispatcher.dispatch({action: Constants.ADD_ASSSESSMENT_QUESTION, data: question, location: location});
   },

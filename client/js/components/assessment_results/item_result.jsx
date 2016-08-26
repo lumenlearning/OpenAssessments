@@ -38,7 +38,8 @@ export default class ItemResult extends React.Component{
         border: border,
         borderRadius : "4px",
         padding: "20px",
-        overflow: "auto"
+        //overflow: "auto",
+        marginBottom: '10px'
       },
       confidenceWrapper: {
         width: "440px",
@@ -80,7 +81,7 @@ export default class ItemResult extends React.Component{
       correctMessage = ""
     }
     return (
-      <div tabIndex="0" aria-label={"Question " + (this.props.index+1)}>
+      <div tabIndex="0" aria-label={"Question " + (this.props.index+1)} style={{marginTop: '10px'}} >
         <div className="row" tabIndex="0">
           <div className="col-md-9 col-sm-9 col-xs-9" style={styles.resultContainer}>
             <div className="row">

@@ -11,23 +11,25 @@ export default new class Style {
         padding: '0px 40px'
       },
       errorHeader:{
+        display: 'flex',
         backgroundColor:'#FFF7EF',
         borderStyle: 'solid',
         borderColor: '#C51700',
         borderRadius: '5px',
         borderWidth: '1px',
         borderLeftWidth: '10px',
-        padding: '0px 40px',
+        padding: '0px 20px',
         margin: '5px'
       },
       warningHeader:{
+        display: 'flex',
         backgroundColor:'#FFF7DF',
         borderStyle: 'solid',
         borderColor: '#e09600',
         borderRadius: '5px',
         borderWidth: '1px',
         borderLeftWidth: '10px',
-        padding: '0px 40px',
+        padding: '0px 20px',
         margin: '5px'
       },
       eqTitle:{

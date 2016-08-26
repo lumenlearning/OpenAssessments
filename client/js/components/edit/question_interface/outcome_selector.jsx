@@ -28,9 +28,10 @@ export default class OutcomeSelector extends React.Component{
             id="outcome-select"
             name="outcome-select"
             style={style.outcomeSelect}
-            value={this.props.selectedOutcome.outcomeGuid}
+            defaultValue={this.props.isNew ? "select-an-outcome" : this.props.selectedOutcome.outcomeGuid}
             onChange={this.handleChange}
             >
+            <option disabled="disabled" value={"select-an-outcome"}>Select an outcome</option>
             {this.props.outcomes.map((outcome, index) => {
                 return (
                   <option key={index} index={index} value={outcome.outcomeGuid}>{outcome.shortOutcome}</option>

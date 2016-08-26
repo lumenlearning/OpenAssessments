@@ -29,7 +29,8 @@ export default new class Style {
         left: '50px',
         color: 'white',
         fontSize: '24px',
-        zIndex: 1
+        zIndex: 1,
+        cursor: 'default'
       },
       questionToolbar:{
         position: 'absolute',

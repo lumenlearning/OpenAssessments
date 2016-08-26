@@ -56,11 +56,12 @@ export default class Question extends BaseComponent{
     let Content   = question.inDraft ? QuestionInterface : QuestionBlock;
     var state_text = '';
     var headerStyle = style.questionHeader;
+
     if(question.inDraft) {
-      state_text = question.isNew ? " (New)" : " (In Draft)";
+      state_text = question.isNew ? "(New)" : "(In Draft)";
       headerStyle = style.draftHeader;
     } else if(question.edited){
-      state_text = " (Edited)";
+      state_text = "(Edited)";
       headerStyle = style.editedHeader;
     }
 
@@ -68,11 +69,10 @@ export default class Question extends BaseComponent{
       <li style={style.questionItem} >
         <div className="questionHeader" style={headerStyle}>
           <div className="questionShortName" style={style.questionShortName} >
-            <Tooltip message={`${question.outcome.longOutcome} ${state_text}`}
+            <Tooltip message={`${question.outcome.longOutcome ? question.outcome.longOutcome : "Please Select an Outcome"}`}
                      position='top-right'
               >
-              Outcome: {question.outcome.shortOutcome}
-              {state_text}
+              {`${question.outcome.shortOutcome ? `Outcome: ${question.outcome.shortOutcome}` : ""} ${state_text}`}
             </Tooltip>
           </div>
           <div className="questionToolbar" style={style.questionToolbar}>
@@ -244,6 +244,10 @@ export default class Question extends BaseComponent{
   }
 
   handleDoneEditing(e){
-   ReviewAssessmentActions.updateAssessmentQuestion(this.props.question);
+    // if () {
+    //
+    // }
+
+    ReviewAssessmentActions.updateAssessmentQuestion(this.props.question);
   }
 };
