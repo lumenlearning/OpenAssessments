@@ -212,6 +212,105 @@ RSpec.describe Api::AssessmentsController, type: :controller do
 
   end
 
+  describe "GET 'review_show'" do
+    before do
+      @lti_launch = LtiLaunch.from_params({roles: 'Instructor', user_id: 'lti_id', context_id: 'extcontext'})
+      @lti_launch.user_id = @admin.id; @lti_launch.save!
+      @assessment = FactoryGirl.create(:assessment, title: "hi", kind: 'summative', xml_file: @xml, account: @account)
+      @payload = {:user_id => @admin.id, AuthToken::ADMIN_SCOPES => ['extcontext'], 'lti_launch_id' => @lti_launch.id}
+      @edit_token = AuthToken.issue_token(@payload)
+      @params = {format: :xml, assessment_id: @assessment.id}
+
+      request.headers['Authorization'] = @edit_token
+    end
+
+    it "should return for summative" do
+      get :review_show, @params
+
+      expect(response).to have_http_status(200)
+      expect(response.body).to include("conditionvar")
+    end
+
+    it "should return for swyk" do
+      @assessment.kind = 'show_what_you_know'; @assessment.save!
+      get :review_show, @params
+
+      expect(response).to have_http_status(200)
+      expect(response.body).to include("conditionvar")
+    end
+
+    it "should return for formative" do
+      @assessment.kind = 'formative'; @assessment.save!
+      get :review_show, @params
+
+      expect(response).to have_http_status(200)
+      expect(response.body).to include("conditionvar")
+    end
+
+    it "should include answers" do
+      get :review_show, @params
+
+      expect(response.body).to include("conditionvar")
+    end
+
+    it "should require context admin" do
+      @payload[AuthToken::ADMIN_SCOPES] = []
+      request.headers['Authorization'] = AuthToken.issue_token(@payload)
+      get :review_show, @params
+
+      expect(response).to have_http_status(401)
+      expect(response.body).to include "Unauthorized for this context"
+    end
+
+    context "with AssessmentResult" do
+      before do
+        @user_assessment = @assessment.user_assessments.create(lti_context_id: @lti_launch.lti_context_id, user_id: @user, assessment_id: @assessment.id)
+        @assessment_result = AssessmentResult.create(user_id: @user, assessment_id: @assessment.id, user_assessment: @user_assessment, assessment_xml: @assessment.current_assessment_xml)
+        @params[:assessment_result_id] = @assessment_result.id
+      end
+
+      it "should return the AssessmentResult's AssessmentXML" do
+        @assessment.xml_file = @xml.gsub('XQuestionSample', 'different quiz'); @assessment.save!
+
+        expect(@assessment.current_assessment_xml_id).to_not eq @assessment_result.assessment_xml_id
+        get :review_show, @params
+
+        expect(response.body).to include 'XQuestionSample'
+      end
+
+      it "should 404 if AssessmentResult not found" do
+        @params[:assessment_result_id] = 0
+
+        expect{ get :review_show, @params }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+      it "should 401 if AssessmentResult for different lti_context_id" do
+        @user_assessment.lti_context_id = "somethingdifferent"; @user_assessment.save!
+        get :review_show, @params
+
+        expect(response).to have_http_status(401)
+      end
+
+      it "should use Assessment's XML if none on AssessmentResult" do
+        @assessment_result.assessment_xml = nil; @assessment_result.save!
+        get :review_show, @params
+
+        expect(response.body).to include 'XQuestionSample'
+      end
+
+      it "should use Assessment's XML if AssessmentResult's is formative" do
+        @assessment.xml_file = @xml.gsub('XQuestionSample', 'different quiz'); @assessment.save!
+        xml = @assessment_result.assessment_xml
+        xml.kind = 'formative'
+        xml.save!
+        get :review_show, @params
+
+        expect(response.body).to include 'different quiz'
+      end
+
+    end
+  end
+
   describe "POST 'create'" do
     before do
       request.headers['Authorization'] = @admin_token
@@ -298,7 +397,7 @@ RSpec.describe Api::AssessmentsController, type: :controller do
       @assessment = FactoryGirl.create(:assessment, account: @account, xml_file: @xml)
     end
 
-    let(:params) {{assessment_id: @assessment.id, assessment_id: @assessment.id, edit_id: "testedit", context_ids_to_update: "oi,hoyt", format: :json}}
+    let(:params) {{assessment_id: @assessment.id, edit_id: "testedit", context_ids_to_update: "oi,hoyt", format: :json}}
 
     context "authorization" do
       it "should accept a root_assessment_copier token" do

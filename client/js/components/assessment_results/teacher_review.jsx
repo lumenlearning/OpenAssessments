@@ -14,9 +14,7 @@ export default class TeacherReview extends BaseComponent{
   constructor(props, context){
     super(props, context);
     this.stores = [ReviewAssessmentStore];
-    if(!ReviewAssessmentStore.isLoaded() && !ReviewAssessmentStore.isLoading()){
-      ReviewAssessmentActions.loadAssessment(window.DEFAULT_SETTINGS);
-    }
+    ReviewAssessmentActions.loadAssessmentXmlForReview(window.DEFAULT_SETTINGS, props.params.assessmentId, props.params.attempdId);
     ReviewAssessmentActions.loadAssessmentResult(props.params.assessmentId, props.params.attempdId);
     this.state = this.getState();
   }

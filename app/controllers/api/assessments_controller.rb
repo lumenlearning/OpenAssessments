@@ -5,8 +5,8 @@ class Api::AssessmentsController < Api::ApiController
   
   respond_to :xml, :json
 
-  before_action :ensure_context_admin, only:[:json_update]
-  load_and_authorize_resource except: [:show, :json_update, :copy]
+  before_action :ensure_context_admin, only:[:json_update, :review_show]
+  load_and_authorize_resource except: [:show, :json_update, :copy, :review_show]
   skip_before_action :validate_token, only: [:show]
   skip_before_action :protect_account, only: [:show]
   before_action :ensure_copy_admin, only:[:copy]
@@ -105,6 +105,28 @@ class Api::AssessmentsController < Api::ApiController
         end
       end
     end
+  end
+
+  def review_show
+    assessment = Assessment.where(id: params[:assessment_id], account: current_account).first
+    xml = nil
+
+    if params[:assessment_result_id]
+      ar = AssessmentResult.find(params[:assessment_result_id])
+      ua = ar.user_assessment
+
+      if !ua || ua.lti_context_id != @lti_launch.lti_context_id
+        render :json => {:error => "This Assessment Result is not from this context."}, status: :unauthorized
+        return
+      end
+
+      if ar.assessment_xml && (ar.assessment_xml.kind == 'summative' || ar.assessment_xml.kind == 'qti')
+        xml = ar.assessment_xml.xml
+      end
+
+    end
+
+    render :xml => xml || assessment.xml_with_answers
   end
 
   # *******************************************************************

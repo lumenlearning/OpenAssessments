@@ -64,6 +64,7 @@ Rails.application.routes.draw do
       put '/update_attempts', to: "user_assessments#update_attempts"
     end
     resources :assessments do
+      get '/review', to: 'assessments#review_show'
       get 'results/:result_id', to: 'assessment_results#show'
       put '/edit', to: 'assessments#json_update'
       post '/copy', to: 'assessments#copy', as: 'assessments_copy'

@@ -167,7 +167,11 @@ function validateQuestion(question){
 var ReviewAssessmentStore = assign({}, StoreCommon, {
 
   current(){
-    return _assessment;
+    if(_assessmentState >= LOADED){
+      return _assessment;
+    } else {
+      return null;
+    }
   },
   assessmentResult(){
     if(_assessmentResultState == LOADED){
