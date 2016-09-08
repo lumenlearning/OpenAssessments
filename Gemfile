@@ -46,6 +46,9 @@ gem 'acts-as-taggable-on'
 gem 'nokogiri'
 gem 'nokogiri-happymapper', :require => 'happymapper'
 
+# sanitizing html
+gem 'rails-html-sanitizer'
+
 # Saml
 gem 'ruby-saml-mod'
 

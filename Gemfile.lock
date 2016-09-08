@@ -415,6 +415,7 @@ DEPENDENCIES
   rack-cors
   rack-ssl-enforcer
   rails (= 4.2.1)
+  rails-html-sanitizer
   rails_12factor
   rails_apps_pages
   rails_apps_testing
@@ -438,4 +439,4 @@ DEPENDENCIES
   yajl-ruby
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
