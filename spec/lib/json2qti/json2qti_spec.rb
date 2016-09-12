@@ -2,31 +2,77 @@ require 'rails_helper'
 require 'json2qti'
 
 describe Json2Qti do
-  context "#sanitize_html" do
+  context "#white_list_sanitize_html" do
 
     it "should not change strings that aren't bad" do
-      expect(Json2Qti.sanitize_html("hi")).to eq "hi"
+      expect(Json2Qti.white_list_sanitize_html("hi")).to eq "hi"
     end
 
     it "should filter out javascript" do
-      expect(Json2Qti.sanitize_html("hi<script>alert('gotcha')</script>")).to eq "hi"
+      expect(Json2Qti.white_list_sanitize_html("hi<script> alert('gotcha')</script>")).to eq "hi alert('gotcha')"
     end
 
-    it "should filter out links" do
-      expect(Json2Qti.sanitize_html("hi<a href=http://google.com> google</a>")).to eq "hi google"
-    end
-
-    it "should filter out images" do
-      expect(Json2Qti.sanitize_html("hi<img src=https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=0ahUKEwia2ofdr4DPAhUD0GMKHUJEBYgQjRwIBw&url=http%3A%2F%2Farstechnica.com%2Fscience%2F2016%2F02%2Ftiny-blurry-pictures-find-the-limits-of-computer-image-recognition%2F&psig=AFQjCNF3V336JHjdGoorBg4IWVpETGS7MA&ust=1473444786714695>")).to eq "hi"
+    it "should not filter out links" do # yes? currently not allowing links
+      expect(Json2Qti.white_list_sanitize_html("hi<a href=https://www.google.com> google</a>")).to eq "hi<a href=\"https://www.google.com\"> google</a>"
     end
 
     it "should filter out style tag" do
-      expect(Json2Qti.sanitize_html("hi<style>background-color: #fff</style>")).to eq "hibackground-color: #fff"
+      expect(Json2Qti.white_list_sanitize_html("hi<style> background-color: #fff</style>")).to eq "hi background-color: #fff"
     end
 
-    it "should filter out embedded tags" do
-      expect(Json2Qti.sanitize_html("hi<table><a href=http://lumenlearning.com> lumen</a></table>")).to eq "hi lumen"
+    it "should filter out embedded evil tags" do
+      expect(Json2Qti.white_list_sanitize_html("hi<a href=http://lumenlearning.com> <script>alert('gotcha')</script> <strong>lumen</strong></a>")).to eq "hi<a href=\"http://lumenlearning.com\"> alert('gotcha') <strong>lumen</strong></a>"
     end
 
+    it "should not filter out &" do
+      expect(Json2Qti.white_list_sanitize_html("hi & bye")).to eq "hi &amp; bye"
+      expect(Json2Qti.white_list_sanitize_html("hi &amp; bye")).to eq "hi &amp; bye"
+    end
+
+    it "should not filter out images" do
+      expect(Json2Qti.white_list_sanitize_html("hi<img src=https://www.google.com>")).to eq "hi<img src=\"https://www.google.com\">"
+    end
+
+    it "should not filter out tinyMCE style attributes -bold, italics, underline, strikethrough" do
+      expect(Json2Qti.white_list_sanitize_html("<strong>make me bold</strong> and <p style='text-decoration: line-through underline'> underline and cross me out</p> & <em>bye</em><span> and not remove the span tags</span>")).to eq "<strong>make me bold</strong> and <p style=\"text-decoration: line-through underline;\"> underline and cross me out</p> &amp; <em>bye</em><span> and not remove the span tags</span>"
+    end
+
+    it "should filter out script within an allowed table" do
+      expect(Json2Qti.white_list_sanitize_html("<table>
+        <tr>
+          <th>Month</th>
+          <th>Savings</th>
+            <script>alert('what <b>the</b> heck?!?')</script>
+        </tr>
+        <tr>
+          <td>January</td>
+          <td>$100</td>
+        </tr>
+        <tr>
+          <td>February</td>
+          <td>$80</td>
+        </tr>
+      </table>")).to eq "<table>
+        <tr>
+          <th>Month</th>
+          <th>Savings</th>
+            alert('what <b>the</b> heck?!?')
+        </tr>
+        <tr>
+          <td>January</td>
+          <td>$100</td>
+        </tr>
+        <tr>
+          <td>February</td>
+          <td>$80</td>
+        </tr>
+      </table>"
+    end
+    it "should not allow onclick type events or embeds" do
+      expect(Json2Qti.white_list_sanitize_html("<p id='demo' onclick='myFunction()'><embed src='helloworld.swf'>Click me to change <em>my</em> text color.</p>")).to eq "<p>Click me to change <em>my</em> text color.</p>"
+    end
+    it "should not strip any h or pre tags" do
+      expect(Json2Qti.white_list_sanitize_html("<pre><h2>I am an h2 tag</h2></pre>")).to eq "<pre><h2>I am an h2 tag</h2></pre>"
+    end
   end
 end

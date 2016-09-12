@@ -8,16 +8,16 @@ describe Json2Qti::Question do
             "id" => "4965",
             "title" => "This & That",
             "question_type" => "multiple_choice_question",
-            "material" => "Which of the following? &",
+            "material" => "Which of the following? &amp;",
             "answers" => [
                     {
                             "id" => "9755",
-                            "material" => "This?",
+                            "material" => "This?<script>alert('sneakiness');</script><p style='background-color: blue'>blue</p>",
                             "isCorrect" => true
                     },
                     {
                             "id" => "4501",
-                            "material" => "& Or this?",
+                            "material" => "&amp; Or this?",
                             "isCorrect" => false
                     }
             ],
@@ -37,8 +37,8 @@ describe Json2Qti::Question do
   end
 
   it "should escape question material" do
-    expect(question.to_qti).to include(%{<mattext texttype="text/html">Which of the following? &amp;</mattext>})
-    expect(question.to_qti).to include(%{<mattext texttype="text/html">&amp; Or this?</mattext>})
+    expect(question.to_qti).to include(%{<mattext texttype="text/html">Which of the following? &amp;amp;</mattext>})
+    expect(question.to_qti).to include(%{<mattext texttype="text/html">&amp;amp; Or this?</mattext>})
     expect(question.to_qti).to include(%{<item title="This &amp; That"})
   end
 
@@ -49,5 +49,10 @@ describe Json2Qti::Question do
 
   it "should set the question type" do
     expect(question.to_qti).to include("<fieldentry>multiple_choice_question</fieldentry>")
+  end
+
+  it "should sanitize material" do
+    expect(question.to_qti).to include(%{<mattext texttype="text/html">Which of the following? &amp;amp;</mattext>})
+    expect(question.to_qti).to include(%{<mattext texttype="text/html">This?alert('sneakiness');&lt;p style=\"background-color: blue;\"&gt;blue&lt;/p&gt;</mattext>})
   end
 end
