@@ -53,7 +53,8 @@ export default class SimpleRCE extends BaseComponent {
         statusbar: true,
         elementpath: false,
         content_css: '/assets/themes/lumen.css.scss',
-        extended_valid_elements: 'img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name], a[href]'
+        schema: 'html5',
+        extended_valid_elements: 'img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name], abbr[*], audio[autoplay|controls|loop|muted|preload|src], span[*]'
       });
     } else {
       return({
