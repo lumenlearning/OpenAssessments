@@ -16,5 +16,3 @@ require 'json2qti/converter'
 require 'json2qti/question'
 require 'json2qti/multiple_choice'
 require 'json2qti/multiple_select'
-
-# ones I question:  embed ins video track audio
