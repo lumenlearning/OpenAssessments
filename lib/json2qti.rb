@@ -6,7 +6,7 @@ module Json2Qti
 
   def self.white_list_sanitize_html(html)
     white_list_sanitizer = Rails::Html::WhiteListSanitizer.new
-    sanitized = white_list_sanitizer.sanitize(html, tags: %w(a abbr acronym address area audio b bdo big blockquote br button caption center cite code col colgroup dd del dfn dir div dl dt em figure figcaption font form h1 h2 h3 h4 h5 h6 h7 h8 hr i iframe img input ins kbd label legend li map menu ol optgroup option p param pre q s samp select small source span strike strong sub sup table tbody td textarea tfoot th thead tr track tt u ul var video), attributes: %w(src style href height width))
+    sanitized = white_list_sanitizer.sanitize(html, tags: %w(a abbr acronym address area audio b bdo big blockquote br caption center cite code col colgroup controls dd del dfn dir div dl dt em figure figcaption font h1 h2 h3 h4 h5 h6 h7 h8 hr i iframe img ins kbd label li map ol optgroup option p pre q s samp select small source span strike strong sub sup table tbody td textarea tfoot th thead tr track tt u ul var video), attributes: %w(controls type width height src style href coords alt shape title selected value name data autoplay loop muted preload dir label id cols col rows span))
     sanitized
   end
 
