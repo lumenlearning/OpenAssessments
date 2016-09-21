@@ -80,5 +80,8 @@ describe Json2Qti do
     it "should not strip source or control attributes from audio files" do
       expect(Json2Qti.white_list_sanitize_html("<audio controls><source src='horse.ogg' type='audio/ogg'><source src='http://hubblesource.stsci.edu/sources/video/clips/details/images/centaur_1.mpg' type='audio/mpg'>Your browser does not support the audio tag.</audio>")).to eq "<audio controls><source src=\"horse.ogg\" type=\"audio/ogg\"><source src=\"http://hubblesource.stsci.edu/sources/video/clips/details/images/centaur_1.mpg\" type=\"audio/mpg\">Your browser does not support the audio tag.</source></source></audio>"
     end
+    it "should align right for right to left directional text" do
+      expect(Json2Qti.white_list_sanitize_html("<p style='text-align:right'><bdo dir='rtl'>write this backwards</bdo></p>")).to eq "<p style=\"text-align: right;\"><bdo dir=\"rtl\">write this backwards</bdo></p>"
+    end
   end
 end
