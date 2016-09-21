@@ -69,10 +69,16 @@ describe Json2Qti do
       </table>"
     end
     it "should not allow onclick type events or embeds" do
-      expect(Json2Qti.white_list_sanitize_html("<p id='demo' onclick='myFunction()'><embed src='helloworld.swf'>Click me to change <em>my</em> text color.</p>")).to eq "<p>Click me to change <em>my</em> text color.</p>"
+      expect(Json2Qti.white_list_sanitize_html("<p id='demo' onclick='myFunction()'><embed src='helloworld.swf'>Click me to change <em>my</em> text color.</p>")).to eq "<p id=\"demo\">Click me to change <em>my</em> text color.</p>"
     end
     it "should not strip any h or pre tags" do
       expect(Json2Qti.white_list_sanitize_html("<pre><h2>I am an h2 tag</h2></pre>")).to eq "<pre><h2>I am an h2 tag</h2></pre>"
+    end
+    it "should not strip title attributes" do
+      expect(Json2Qti.white_list_sanitize_html("<span title='my title'>I am a span with a title</span>")).to eq "<span title=\"my title\">I am a span with a title</span>"
+    end
+    it "should not strip source or control attributes from audio files" do
+      expect(Json2Qti.white_list_sanitize_html("<audio controls><source src='horse.ogg' type='audio/ogg'><source src='http://hubblesource.stsci.edu/sources/video/clips/details/images/centaur_1.mpg' type='audio/mpg'>Your browser does not support the audio tag.</audio>")).to eq "<audio controls><source src=\"horse.ogg\" type=\"audio/ogg\"><source src=\"http://hubblesource.stsci.edu/sources/video/clips/details/images/centaur_1.mpg\" type=\"audio/mpg\">Your browser does not support the audio tag.</source></source></audio>"
     end
   end
 end

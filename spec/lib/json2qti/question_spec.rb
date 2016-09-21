@@ -17,7 +17,7 @@ describe Json2Qti::Question do
                     },
                     {
                             "id" => "4501",
-                            "material" => "&amp; Or this?",
+                            "material" => "<abbr title='Lumen'>LL</abbr> &amp; <span>Or this?</span>",
                             "isCorrect" => false
                     }
             ],
@@ -38,7 +38,7 @@ describe Json2Qti::Question do
 
   it "should escape question material" do
     expect(question.to_qti).to include(%{<mattext texttype="text/html">Which of the following? &amp;amp;</mattext>})
-    expect(question.to_qti).to include(%{<mattext texttype="text/html">&amp;amp; Or this?</mattext>})
+    expect(question.to_qti).to include(%{mattext texttype="text/html">&lt;abbr title=\"Lumen\"&gt;LL&lt;/abbr&gt; &amp;amp; &lt;span&gt;Or this?&lt;/span&gt;</mattext>})
     expect(question.to_qti).to include(%{<item title="This &amp; That"})
   end
 
@@ -54,5 +54,8 @@ describe Json2Qti::Question do
   it "should sanitize material" do
     expect(question.to_qti).to include(%{<mattext texttype="text/html">Which of the following? &amp;amp;</mattext>})
     expect(question.to_qti).to include(%{<mattext texttype="text/html">This?alert('sneakiness');&lt;p style=\"background-color: blue;\"&gt;blue&lt;/p&gt;</mattext>})
+  end
+  it "should not sanitize title or span" do
+    expect(question.to_qti).to include(%{mattext texttype="text/html">&lt;abbr title=\"Lumen\"&gt;LL&lt;/abbr&gt; &amp;amp; &lt;span&gt;Or this?&lt;/span&gt;</mattext>})
   end
 end
