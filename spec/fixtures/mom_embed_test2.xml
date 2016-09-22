@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+  <assessment title="Check Your Understanding: Minute to Hour Conversion" ident="iminutehour">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>qmd_timelimit</fieldlabel>
+        <fieldentry/>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry/>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <section title="Minutes" ident="iminutehour">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>1</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item title="" ident="iminutehour">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>mom_embed</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>2222222222222</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Minute to Hours Time Conversion</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>This is useful.</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">&lt;iframe id=&quot;mom987&quot; src=&quot;https://www.myopenmath.com/OEAembedq.php?id=987&amp;jssubmit=1&amp;showscoredonsubmit=0&quot; style=&quot;width:100%;height:150px&quot;&gt;&lt;/iframe&gt;</mattext>
+              <mat_extension>
+                <mom_domain>www.myopenmath.com</mom_domain>
+                <mom_question_id>987</mom_question_id>
+                <mom_embed_url>http://www.myopenmath.com/OEAembedq.php?id=987&amp;theme=oea&amp;jssubmit=1&amp;showscoredonsubmit=0&amp;showhints=0</mom_embed_url>
+              </mat_extension>
+            </material>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <itemproc_extension>
+              <!-- My Open Math questions are graded remotely and passed via the client -->
+            </itemproc_extension>
+          </resprocessing>
+        </item>
+        <item title="" ident="iminutehour">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>mom_embed</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>2222222222222</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Minute to Hours Time Conversion</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>This is useful.</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">&lt;iframe id=&quot;mom987&quot; src=&quot;https://www.myopenmath.com/OEAembedq.php?id=987&amp;jssubmit=1&amp;showscoredonsubmit=0&quot; style=&quot;width:100%;height:150px&quot;&gt;&lt;/iframe&gt;</mattext>
+              <mat_extension>
+                <mom_domain>www.myopenmath.com</mom_domain>
+                <mom_question_id>988</mom_question_id>
+                <mom_embed_url>http://www.myopenmath.com/OEAembedq.php?id=988&amp;theme=oea&amp;jssubmit=1&amp;showscoredonsubmit=0&amp;showhints=0</mom_embed_url>
+              </mat_extension>
+            </material>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <itemproc_extension>
+              <!-- My Open Math questions are graded remotely and passed via the client -->
+            </itemproc_extension>
+          </resprocessing>
+        </item>
+        <item title="" ident="iminutehour">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>mom_embed</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>2222222222222</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Minute to Hours Time Conversion</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>This is useful.</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">&lt;iframe id=&quot;mom987&quot; src=&quot;https://www.myopenmath.com/OEAembedq.php?id=987&amp;jssubmit=1&amp;showscoredonsubmit=0&quot; style=&quot;width:100%;height:150px&quot;&gt;&lt;/iframe&gt;</mattext>
+              <mat_extension>
+                <mom_domain>www.myopenmath.com</mom_domain>
+                <mom_question_id>989</mom_question_id>
+                <mom_embed_url>http://www.myopenmath.com/OEAembedq.php?id=989&amp;theme=oea&amp;jssubmit=1&amp;showscoredonsubmit=0&amp;showhints=0</mom_embed_url>
+              </mat_extension>
+            </material>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <itemproc_extension>
+              <!-- My Open Math questions are graded remotely and passed via the client -->
+            </itemproc_extension>
+          </resprocessing>
+        </item>
+      </section>
+    </section>
+  </assessment>
+</questestinterop>
