@@ -355,7 +355,7 @@ export default class Item extends BaseComponent{
                           {submitButton}
                         </div>;
 
-    if(this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
+    if(this.props.settings.confidenceLevels  && this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
       submitButtonDiv = ""
     }
 
