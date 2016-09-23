@@ -19,6 +19,11 @@ describe Json2Qti::Question do
                             "id" => "4501",
                             "material" => "<abbr title='Lumen'>LL</abbr> &amp; <span>Or this?</span>",
                             "isCorrect" => false
+                    },
+                    {
+                            "id" => "4650",
+                            "material" => nil,
+                            "isCorrect" => nil
                     }
             ],
             "outcome" => {
@@ -57,5 +62,8 @@ describe Json2Qti::Question do
   end
   it "should not sanitize title or span" do
     expect(question.to_qti).to include(%{mattext texttype="text/html">&lt;abbr title=\"Lumen\"&gt;LL&lt;/abbr&gt; &amp;amp; &lt;span&gt;Or this?&lt;/span&gt;</mattext>})
+  end
+  it "should return nothing if material is nil" do
+    expect(question.to_qti).to include(%{mattext texttype="text/html"></mattext>})
   end
 end
