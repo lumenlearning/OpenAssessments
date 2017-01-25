@@ -10,10 +10,22 @@ else
   canvas_uri ||= 'https://atomicjolt.instructure.com'
 end
 
+# Ensure there are no trailing dots on domain names. See secrets.yml, "application_url" property.
+app_subdomain = ENV['APP_SUBDOMAIN']
+app_url = ENV['APP_URL']
+
+if app_subdomain.nil? || app_subdomain.empty?
+  first_account_domain = 'lvh.me'
+elsif app_url.nil? || app_url.empty?
+  first_account_domain = app_subdomain
+else
+  first_account_domain = app_subdomain + '.' + app_url
+end
+
 accounts = [{
   code: ENV["APP_SUBDOMAIN"],
   name: Rails.application.secrets.application_name,
-  domain: Rails.application.secrets.application_url,
+  domain: first_account_domain,
   lti_key: ENV["APP_SUBDOMAIN"],
   canvas_uri: canvas_uri
 }]
