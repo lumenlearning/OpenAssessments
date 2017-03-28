@@ -48,6 +48,7 @@ function checkAnswer(){
 
 function selectAnswer(answer){
   var item = _items[_itemIndex];
+
   if(item.question_type == "multiple_choice_question"){
     _selectedAnswerIds = answer.id;
   } else if (item.question_type == "multiple_answers_question"){
@@ -63,6 +64,9 @@ function selectAnswer(answer){
     item.momEmbed.jwt = answer.jwt;
     item.momEmbed.iframeHeight = answer.iframeHeight;
     _selectedAnswerIds = answer.jwt;
+  }
+  else if (item.question_type == 'essay_question') {
+    _selectedAnswerIds = answer;
   }
 }
 

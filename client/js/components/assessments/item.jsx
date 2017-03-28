@@ -324,7 +324,7 @@ export default class Item extends BaseComponent{
     var result = this.getResult(this.props.messageIndex);
     var must_answer_message = this.state && this.state.showMessage ? <div style={styles.warning}>You must select an answer before continuing.</div> : "";
     var confidenceButtons = this.getConfidenceLevels(this.props.confidenceLevels, styles);
-    var submitButton = (this.props.currentIndex == this.props.questionCount - 1) ? <button className="btn btn-check-answer" style={styles.submitButton}  onClick={(e)=>{this.submitButtonClicked(e)}}>Submit</button> : "";
+    var submitButton = (this.props.currentIndex == this.props.questionCount - 1) ? <button className="btn btn-check-answer" style={styles.submitButton} onClick={(e)=>{this.submitButtonClicked(e)}}>Submit</button> : "";
     var footer = this.getFooterNav(this.context.theme, styles);
     var navigationDiv = this.getNavigationButtons(styles);
 
@@ -355,7 +355,7 @@ export default class Item extends BaseComponent{
                           {submitButton}
                         </div>;
 
-    if(this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
+    if(this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" && this.props.confidenceLevels){
       submitButtonDiv = ""
     }
 
@@ -368,7 +368,7 @@ export default class Item extends BaseComponent{
           </div>
           <div style={formativeStyle}>
             {formativeHeader}
-            <form className="edit_item">
+            <form className="edit_item" aria-hidden="true">
               <div className="full_question" tabIndex="0" style={styles.fullQuestion}>
                 <div className="inner_question">
                   <div className="question_text" style={styles.questionText}>

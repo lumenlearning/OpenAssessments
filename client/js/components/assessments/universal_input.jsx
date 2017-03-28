@@ -73,6 +73,7 @@ export default class UniversalInput extends React.Component{
   }
 
   render(){
+
     var styles = this.getStyles(this.props, this.context.theme)
     var item = this.props.item;
     var messages = '';
@@ -99,7 +100,7 @@ export default class UniversalInput extends React.Component{
                   </div>
                  </div>);
     }
-
+    
     switch(item.question_type){
       case "edx_multiple_choice":
       case "multiple_choice_question":
@@ -122,8 +123,8 @@ export default class UniversalInput extends React.Component{
           return <TextField isDisabled={this.props.isResult}  key={item.id + "_" + answer.id} item={answer} name="answer-text"/>;
         });
         break;
-      case "text_only_question":
-        items = <TextArea />;
+      case "essay_question":
+        items = <TextArea key="textarea_essay_input" item={item} />;
         break;
       case "multiple_answers_question":
         items = item.answers.map((answer) => {
