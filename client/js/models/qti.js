@@ -66,16 +66,24 @@ export default class Qti{
         objectives : objectives,
         outcome   : this.parseOutcome(xml),
         material   : this.material(xml),
-        answers    : this.parseAnswers(xml),
-        correct    : this.parseCorrect(xml),
         timeSpent  : 0
       };
+
       $.each(xml.find('itemmetadata > qtimetadata > qtimetadatafield'), function(i, x){
         item[$(x).find('fieldlabel').text()] = $(x).find('fieldentry').text();
       });
 
       if(xml.find('itemmetadata > qmd_itemtype').text() === 'Multiple Choice'){
         item.question_type = 'multiple_choice_question';
+      }
+
+      if(item.question_type == 'multiple_dropdowns_question'){
+        item.answers = this.parseMultiDropdownAnswers(xml);
+        // item.correct = this.parseMultiDropdownCorrect(xml);
+      }
+      else {
+        item.answers = this.parseAnswers(xml);
+        item.correct = this.parseCorrect(xml);
       }
 
       if(item.question_type == 'mom_embed'){
@@ -96,6 +104,8 @@ export default class Qti{
       }
 
       this.markCorrectAnswers(item);
+      
+      console.log(item);
 
       return item;
     };
@@ -103,6 +113,25 @@ export default class Qti{
     return this.listFromXml(xml, 'item', fromXml);
 
   }
+  
+  static parseMultiDropdownAnswers(xml) {
+    let answers = new Object();
+
+    $.each(xml.find('presentation > response_lid'), (i, x_raw) => {
+      let x = $(x_raw);
+      let key = $(x.find('material > mattext')[0]).text();
+
+      answers[key] = x.find('render_choice > response_label').map((j, resLabel_raw) => {
+        let resLabel = $(resLabel_raw);
+        return ({
+          value: resLabel.attr('ident'),
+          name: resLabel.find('material > mattext').text()
+        });
+      }).toArray(); //make sure array not jquery object.
+    });
+
+    return answers;
+  }//parseMultiDropdownAnswers
 
   static parseCorrect(xml){
     var respconditions = xml.find("respcondition");
