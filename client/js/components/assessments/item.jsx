@@ -312,10 +312,26 @@ export default class Item extends BaseComponent{
     } else if(this.props.question.question_type == "multiple_choice_question" ||
         this.props.question.question_type == "true_false_question"){
       return <div style={styles.chooseText}>Choose the <b>BEST</b> answer.</div>;
-    } else {
+    }
+    else if (this.props.question.question_type == 'multiple_dropdowns_question') {
+      return <div style={styles.chooseText} >Complete the sentence by choosing the best answer from the drop downs</div>
+    }
+    else {
       return "";
     }
   }
+
+  questionContent() {
+    if(this.props.question.question_type !== 'multiple_dropdowns_question'){
+      return (
+        <div
+          dangerouslySetInnerHTML={{
+            __html: this.props.question.material
+          }}>
+        </div>
+      )
+    }
+  }//questionContent
 
 
   render() {
@@ -373,11 +389,7 @@ export default class Item extends BaseComponent{
                 <div className="inner_question">
                   <div className="question_text" style={styles.questionText}>
                     {this.questionDirections(styles)}
-                    <div
-                      dangerouslySetInnerHTML={{
-                    __html: this.props.question.material
-                    }}>
-                    </div>
+                    {this.questionContent()}
                   </div>
                   <UniversalInput item={this.props.question} isResult={false} registerGradingCallback={this.props.registerGradingCallback}/>
                 </div>
@@ -400,9 +412,9 @@ export default class Item extends BaseComponent{
         </div>
       </div>
     );
-  }
+  }//render
 
-}
+}//item class
 
 Item.propTypes = {
   question         : React.PropTypes.object.isRequired,

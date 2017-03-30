@@ -10,6 +10,7 @@ import MappedImage          from "../common/mapped_image";
 import Matching             from "../common/matching";
 import DragAndDrop          from "../common/drag_and_drop";
 import MomEmbed             from "../common/mom_embed";
+import MultiDropDown        from '../common/multi_drop_down'
 import CommunicationHandler from "../../utils/communication_handler";
 
 export default class UniversalInput extends React.Component{
@@ -144,6 +145,9 @@ export default class UniversalInput extends React.Component{
       case "mom_embed":
         items = <MomEmbed key={item.id} item={item} redisplayJWT={this.props.chosen ? this.props.chosen[0] : null} registerGradingCallback={this.props.registerGradingCallback} />;
         break;
+      case 'multiple_dropdowns_question':
+        items = <MultiDropDown key={item.id} item={item} />
+      break;
     }
 
 
