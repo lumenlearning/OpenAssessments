@@ -209,4 +209,41 @@ describe AssessmentGrader do
       expect(@grader.grade_mom_embed(0, different_id)).to be 0
     end
   end
+
+  context "Essay" do
+    before do
+      @questions = [{"id" => "3790",
+                     "timeSpent" => 4069,
+                     "startTime" => 1449619801421,
+                     "outcome_guid" => "2222222222222"},
+      ]
+
+      file = File.join(__dir__, '../fixtures/essay_question.xml')
+      assessment = Assessment.create!(title: 'essay testing', xml_file: open(file).read)
+      @grader = AssessmentGrader.new(@questions, ["my answer"], assessment)
+    end
+
+    it "should mark it correct if there is a non-blank response" do
+      expect(@grader.grade_essay_question(0, 'hi')).to be 1
+    end
+
+    it "should mark it incorrect if there is a blank response" do
+      expect(@grader.grade_essay_question(0, '')).to be 0
+      expect(@grader.grade_essay_question(0, ' ')).to be 0
+      expect(@grader.grade_essay_question(0, "\n")).to be 0
+    end
+
+    it "should handle an answer in an array" do
+      expect(@grader.grade_essay_question(0, ['hi'])).to be 1
+    end
+
+    it "should discover type and grade" do
+      @grader.grade!
+
+      expect(@grader.score).to eq 1.0
+      expect(@grader.correct_list).to eq [true]
+    end
+
+  end
+
 end

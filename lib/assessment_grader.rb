@@ -42,6 +42,8 @@ class AssessmentGrader
           total = grade_multiple_answers(xml_index, @answers[index])
         elsif question["type"] == "mom_embed"
           total = grade_mom_embed(xml_index, @answers[index])
+        elsif question["type"] == "essay_question"
+          total = grade_essay_question(xml_index, @answers[index])
         end
 
         if total == 1 then @correct_list[index] = true
@@ -137,4 +139,11 @@ class AssessmentGrader
     id = question.children.at_css("material mat_extension mom_question_id").text.strip
     id.to_i
   end
+
+  def grade_essay_question(xml_index, answer)
+    answer = answer.is_a?(Array) ? answer[0] : answer
+
+    answer.present? ? 1 : 0
+  end
+
 end
