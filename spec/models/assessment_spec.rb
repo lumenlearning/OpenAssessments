@@ -93,6 +93,24 @@ describe Assessment do
       assessment.xml_with_answers
     end
 
+    context "clearing answer info for summative" do
+      it "should not clear answers for xml_with_answers" do
+        expect(@assessment.xml_with_answers).to match('respcondition')
+      end
+
+      it "should clear out the answer processing for no_answer_xml" do
+        expect(@assessment.xml_without_answers).to_not match('respcondition')
+      end
+
+      it "should clear the feedback" do
+        expect(@assessment.xml_without_answers).to_not match('itemfeedback')
+      end
+
+      # it "should clear the hints?"
+
+    end
+
+
   end
 
   describe 'acts as taggable' do

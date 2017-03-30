@@ -69,7 +69,7 @@ namespace :generate do
       style: "lumen_learning",
       enable_start: asmnt.kind != 'formative',
       mode: asmnt.kind,
-      confidence_levels: true
+      confidence_levels: asmnt.kind != 'formative'
     )
 
     asmnt

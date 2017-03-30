@@ -69,8 +69,10 @@ class Assessment < ActiveRecord::Base
       xml = xml_file.read
     end
 
-    # Create a formative xml entry
-    no_answer_xml = xml.gsub /<conditionvar>(.*?)<\/conditionvar>/m, ''
+    # Create a no answer xml entry
+    no_answer_xml = xml.gsub /< *respcondition(.*?)< *\/ *respcondition *>/m, ''
+    no_answer_xml = no_answer_xml.gsub /< *itemfeedback(.*?)< *\/ *itemfeedback *>/m, ''
+
     ax = self.assessment_xmls.build(
       xml: xml,
       no_answer_xml: no_answer_xml,
