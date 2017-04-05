@@ -78,10 +78,13 @@ export default class Qti{
       }
 
       if(item.question_type == 'multiple_dropdowns_question'){
-        item.answers = this.parseMultiDropdownAnswers(xml);
+        //debugger;
+        console.log('multi dropdown');
+        item.dropdowns = this.parseMultiDropdownAnswers(xml);
         // item.correct = this.parseMultiDropdownCorrect(xml);
       }
       else {
+        console.log('lets find out');
         item.answers = this.parseAnswers(xml);
         item.correct = this.parseCorrect(xml);
       }
@@ -129,7 +132,8 @@ export default class Qti{
         });
       }).toArray(); //make sure array not jquery object.
     });
-
+    
+    console.log("PARSED ANSWERS:", answers);
     return answers;
   }//parseMultiDropdownAnswers
 
@@ -227,6 +231,7 @@ export default class Qti{
     if(list.length <= 0 && buildDefault){
       list = [buildDefault(xml)];
     }
+    console.log("FROMXML LIST:", list);
     return list;
   }
 

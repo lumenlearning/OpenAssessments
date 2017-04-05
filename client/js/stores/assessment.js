@@ -68,6 +68,20 @@ function selectAnswer(answer){
   else if (item.question_type == 'essay_question') {
     _selectedAnswerIds = answer;
   }
+  else if (item.question_type = 'multiple_dropdowns_question') {
+    let hasAnswer = _selectedAnswerIds.findIndex((selAnswer, i) => {
+      return selAnswer.dropdown_id === answer.dropdown_id
+    });
+
+    console.log("SELECT ANSWER:", hasAnswer);
+
+    if(hasAnswer !== -1){
+      _selectedAnswerIds[hasAnswer] = answer;
+    }
+    else{
+      _selectedAnswerIds.push(answer);
+    }
+  }
 }
 
 function updateMatchingAnswer(item){

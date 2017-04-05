@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import htmlParser from 'htmlparser';
+import AssessmentActions from '../../actions/assessment.js';
 //import any other dependencies here.
 
 export default class MultiDropDown extends Component {
@@ -9,12 +9,11 @@ export default class MultiDropDown extends Component {
     this.state = {};
 
     //rebindings for custom methods go here.
+    this.findAndReplace = this.findAndReplace.bind(this);
   }
 
   render() {
-    let question = this.splitByShortCodes();
-    //console.log(question);
-    console.log(this.props.item.material.search());
+    let question = this.findAndReplace();
 
     //place JSX between the parens!
     return (
@@ -24,57 +23,63 @@ export default class MultiDropDown extends Component {
     );
   }
 
+  componentDidUpdate(){
+
+  }
+
+  componentDidMount(){
+    this.addListeners();
+  }
+
+  componentWillUnmount(){
+    this.removeListeners();
+  }
+
   //========================================================================
   // PLACE CUSTOM METHODS AND HANDLERS BELOW HERE
   //========================================================================
+  findAndReplace(){
+    let string = this.props.item.material;
+    let shortcodes = Object.keys(this.props.item.dropdowns);
+    let answers = this.props.item.dropdowns;
+    let re = new RegExp(`\\[${shortcodes.join('\\]|\\[')}\\]`, 'gi'); //turn array of shortcodes into a regex
 
-  renderDropDown(index) {
-    let answers = this.props.item.answers[index];
+    return string.replace(re, (match) => {
+      let re = new RegExp('\\[|\\]', 'g');
+      let nMatch = match.replace(re, ''); //from '[shortcode]' to 'shortcode'
+      let options = answers[nMatch].map((answer) => {
+        return `<option value=${answer.value}>${answer.name}</option>`;
+      });
 
-    console.log("DROPDOWN ANSWERS", answers);
-    return (
-      <select name="" id="">
-        {answers.map((answer, i) => {
-          return (
-            <option value={answer.value}>
-              {answer.name}
-            </option>
-          )
-        })}
-      </select>
-    )
-    
-  }//renderDropDown
-
-  splitByShortCodes() {
-    let item = this.props.item;
-    let regex = /\[[^\]]*\]\n?|\n/;
-
-    return item.material.split(regex).map((questionPart, i, array) => {
-      if (array.length == i + 1) {
-       return questionPart;
-      }
-
-      return questionPart + this.renderDropDown(i);
-    });
-  }//replaceShortCodes
-
-  recursiveHTMLsplit(){
-    let material = this.props.item.material;
-    let regex = /<[^>]*>/;
-
-    return item.material.split(regex).map((questionPart, i) => {
-
+      return `<select name="${nMatch}" id="dropdown_${nMatch}">${options}</select>`;
     });
   }
 
-  parseHTML() {
-    
-  }//parseHTML
+  addListeners() {
+    let shortcodes = Object.keys(this.props.item.dropdowns);
 
-  handleParse(error, dom) {
+    shortcodes.forEach((shortcode, i) => {
+      document.getElementById(`dropdown_${shortcode}`).addEventListener('change', this.handleShortcodeChange);
+    });
+  }//addListeners
 
-  }//handleParse
+  removeListeners(){
+    let shortcodes = Object.keys(this.props.item.dropdowns);
+
+    shortcodes.forEach((shortcode, i) => {
+      document.getElementById(`dropdown_${shortcode}`).removeEventListener('change', this.handleShortcodeChange);
+    });
+  }//removeListeners
+
+  handleShortcodeChange(e){
+    //alert(`THIS IS A CHANGE! name:${e.target.name} and value:${e.target.value}`);
+
+    AssessmentActions.answerSelected({
+      "dropdown_id": e.target.name,
+      "chosen_answer_id": e.target.value
+    });
+
+  }//handleShortcodeChange
 
 }//end MultiDropDown class
 
