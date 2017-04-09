@@ -77,4 +77,11 @@ describe QuestionGraders::MultipleAnswersGrader do
     expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node1, [])).to eq 0
   end
 
+  it "AssessmentGrader should discover type and grade" do
+    @ag.grade!
+
+    expect(@ag.score).to eq 1.0
+    expect(@ag.correct_list).to eq [true, true, true]
+  end
+
 end

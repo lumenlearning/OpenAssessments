@@ -41,4 +41,11 @@ describe QuestionGraders::OhmGrader do
     expect(QuestionGraders::OhmGrader.grade(@grader.get_question_node_from_index(0), different_id)).to be 0
   end
 
+  it "AssessmentGrader should discover type and grade" do
+    @grader.grade!
+
+    expect(@grader.score).to eq 1.0
+    expect(@grader.correct_list).to eq [true]
+  end
+
 end

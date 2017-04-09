@@ -28,7 +28,7 @@ describe QuestionGraders::EssayGrader do
     expect(QuestionGraders::EssayGrader.grade(@grader.get_question_node_from_index(0), ['hi'])).to be 1
   end
 
-  it "should discover type and grade" do
+  it "AssessmentGrader should discover type and grade" do
     @grader.grade!
 
     expect(@grader.score).to eq 1.0

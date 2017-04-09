@@ -1,6 +1,16 @@
 module QuestionGraders
 
-  def grade_question(question, question_node, answer)
+  # all registered question graders
+  # to add a new one create a module that has a static method like:
+  # self.grade(question_node, answer)
+  QUESTION_GRADERS = {
+          "essay_question" => EssayGrader,
+          "multiple_choice_question" => MultipleChoiceGrader,
+          "multiple_answers_question" => MultipleAnswersGrader,
+          "mom_embed" => OhmGrader
+  }
+
+  def self.grade_question(question, question_node, answer)
     total = 0
     # find the question type
     # todo - don't grab type by order of metadata fields
@@ -11,15 +21,11 @@ module QuestionGraders
       question["type"] = question_node.children.xpath("qtimetadata").children.xpath("fieldentry").children.first.text
     end
 
-    # grade the question based off of question type
-    if question["type"] == "multiple_choice_question"
-      total = MultipleChoiceGrader.grade(question_node, answer)
-    elsif question["type"] == "multiple_answers_question"
-      total = MultipleAnswersGrader.grade(question_node, answer)
-    elsif question["type"] == "mom_embed"
-      total = OhmGrader.grade(question_node, answer)
-    elsif question["type"] == "essay_question"
-      total = EssayGrader.grade(question_node, answer)
+    if grader_module = QUESTION_GRADERS[question["type"]]
+      total = grader_module.grade(question_node, answer)
+    else
+      #todo better handle unknown question types
+      puts "uh oh"
     end
 
     total

@@ -3,7 +3,6 @@ require 'question_graders'
 
 class AssessmentGrader
 
-  include QuestionGraders
   attr_reader :questions, :answers, :assessment, :correct_list, :confidence_level_list
 
   def initialize(questions, answers, assessment)
@@ -29,7 +28,7 @@ class AssessmentGrader
       if question["id"] == @xml_questions[xml_index].attributes["ident"].value
         total = 0
         
-        total = grade_question(question, question_node, @answers[index])
+        total = QuestionGraders.grade_question(question, question_node, @answers[index])
 
         if total == 1 then @correct_list[index] = true
         elsif total == 0 then @correct_list[index] = false

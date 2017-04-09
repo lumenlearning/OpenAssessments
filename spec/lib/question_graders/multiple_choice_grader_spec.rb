@@ -48,5 +48,12 @@ describe QuestionGraders::MultipleChoiceGrader do
     expect(QuestionGraders::MultipleChoiceGrader.grade(@question_node, [])).to be 0
   end
 
+  it "AssessmentGrader should discover type and grade" do
+    @ag.grade!
+
+    expect(@ag.score).to eq 1.0
+    expect(@ag.correct_list).to eq [true, true, true]
+  end
+
 
 end
