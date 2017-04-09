@@ -93,84 +93,81 @@ describe AssessmentGrader do
   end
 
   context "Multiple answer questions" do
+    before do
+      @ag = AssessmentGrader.new(@questions, @answers, @assessment)
+      @question_node0 = @ag.get_question_node_from_index(0)
+      @question_node1 = @ag.get_question_node_from_index(1)
+    end
+
     it 'grades correctly for all correctly answered' do
-      ag = AssessmentGrader.new(@questions, @answers, @assessment)
-      expect(ag.grade_multiple_answers(ag.get_question_node_from_index(0), ['9755'])).to be 1
-      expect(ag.grade_multiple_answers(ag.get_question_node_from_index(1), ['483', '1708'])).to be 1
+      expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node0, ['9755'])).to be 1
+      expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node1, ['483', '1708'])).to be 1
     end
 
     it 'grades correctly for 1 correct other correct unanswered' do
-      ag = AssessmentGrader.new(@questions, @answers, @assessment)
-      expect(ag.grade_multiple_answers(ag.get_question_node_from_index(1), ['483'])).to be 0.5
+      expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node1, ['483'])).to be 0.5
     end
 
     it 'grades correctly for 1 correct 2 wrong' do
-      ag = AssessmentGrader.new(@questions, @answers, @assessment)
-      expect(ag.grade_multiple_answers(ag.get_question_node_from_index(1), ['483', '6386', '1111'])).to be 0.0
+      expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node1, ['483', '6386', '1111'])).to be 0.0
     end
 
     it 'grades correctly when wrong count would make it a negative score' do
-      ag = AssessmentGrader.new(@questions, @answers, @assessment)
-      expect(ag.grade_multiple_answers(ag.get_question_node_from_index(1), ['483', '6386', '1111', '2222', '3333'])).to be 0.0
+      expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node1, ['483', '6386', '1111', '2222', '3333'])).to be 0.0
     end
 
     it 'grades correctly for 1 right 1 wrong' do
-      ag = AssessmentGrader.new(@questions, @answers, @assessment)
-      expect(ag.grade_multiple_answers(ag.get_question_node_from_index(0), ['9755', '4501'])).to eq 0.667
-      expect(ag.grade_multiple_answers(ag.get_question_node_from_index(1), ['483', '6386'])).to eq 0.25
+      expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node0, ['9755', '4501'])).to eq 0.667
+      expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node1, ['483', '6386'])).to eq 0.25
     end
 
     it 'grades correctly for 1 right 2 wrong' do
-      ag = AssessmentGrader.new(@questions, @answers, @assessment)
-      expect(ag.grade_multiple_answers(ag.get_question_node_from_index(0), ['9755', '4501', '6570'])).to eq 0.333
+      expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node0, ['9755', '4501', '6570'])).to eq 0.333
     end
 
     it 'grades correctly for 2 right 1 wrong' do
-      ag = AssessmentGrader.new(@questions, @answers, @assessment)
-      expect(ag.grade_multiple_answers(ag.get_question_node_from_index(1), ['483', '1708', '6386'])).to eq 0.75
+      expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node1, ['483', '1708', '6386'])).to eq 0.75
     end
 
     it 'grades correctly for 2 right 2 wrong' do
-      ag = AssessmentGrader.new(@questions, @answers, @assessment)
-      expect(ag.grade_multiple_answers(ag.get_question_node_from_index(1), ['483', '1708', '6386', '1111'])).to eq 0.5
+      expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node1, ['483', '1708', '6386', '1111'])).to eq 0.5
     end
 
     it 'grades correctly for all wrong' do
-      ag = AssessmentGrader.new(@questions, @answers, @assessment)
-      expect(ag.grade_multiple_answers(ag.get_question_node_from_index(0), ['6570'])).to eq 0
-      expect(ag.grade_multiple_answers(ag.get_question_node_from_index(1), ['6386', '1111'])).to eq 0
+      expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node0, ['6570'])).to eq 0
+      expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node1, ['6386', '1111'])).to eq 0
     end
 
     it 'grades correctly when no answers are chosen' do
-      ag = AssessmentGrader.new(@questions, @answers, @assessment)
-      expect(ag.grade_multiple_answers(ag.get_question_node_from_index(0), [])).to eq 0
-      expect(ag.grade_multiple_answers(ag.get_question_node_from_index(1), [])).to eq 0
+      expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node0, [])).to eq 0
+      expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node1, [])).to eq 0
     end
   end
 
   context "Multiple choice question" do
+    before do
+      @ag = AssessmentGrader.new(@questions, @answers, @assessment)
+      @question_node = @ag.get_question_node_from_index(2)
+    end
+
     it 'returns the correct answer id' do
-      ag = AssessmentGrader.new(@questions, @answers, @assessment)
-      expect(ag.get_correct_mc_answer_id(ag.get_question_node_from_index(2))).to eq '6368'
+      expect(QuestionGraders::MultipleChoiceGrader.get_correct_mc_answer_id(@question_node)).to eq '6368'
     end
 
     it 'grades correctly for correctly answered' do
-      ag = AssessmentGrader.new(@questions, @answers, @assessment)
-      expect(ag.grade_multiple_choice(ag.get_question_node_from_index(2), '6368')).to eq 1
+      expect(QuestionGraders::MultipleChoiceGrader.grade(@question_node, '6368')).to eq 1
     end
 
     it 'grades correctly for incorrectly answered' do
-      ag = AssessmentGrader.new(@questions, @answers, @assessment)
-      expect(ag.grade_multiple_choice(ag.get_question_node_from_index(2), '8330')).to be 0
+      expect(QuestionGraders::MultipleChoiceGrader.grade(@question_node, '8330')).to be 0
     end
 
     it 'grades correctly when no answer is chosen' do
-      ag = AssessmentGrader.new(@questions, @answers, @assessment)
-      expect(ag.grade_multiple_choice(ag.get_question_node_from_index(2), [])).to be 0
+      expect(QuestionGraders::MultipleChoiceGrader.grade(@question_node, [])).to be 0
     end
   end
 
-  context "Embedded MOM Questions" do
+  context "Embedded OHM Questions" do
     before do
       @questions = [{"id" => "iminutehour",
                      "confidenceLevel" => "Just A Guess",
@@ -188,25 +185,25 @@ describe AssessmentGrader do
     end
 
     it "should get mom question id from `mat_extension mom_embed_url` field" do
-      expect(@grader.get_mom_question_id(@grader.get_question_node_from_index(0))).to be 987
+      expect(QuestionGraders::OhmGrader.get_mom_question_id(@grader.get_question_node_from_index(0))).to be 987
     end
 
     it "should return score from JWT when valid" do
-      expect(@grader.grade_mom_embed(@grader.get_question_node_from_index(0), @correct_jwt)).to be 1
+      expect(QuestionGraders::OhmGrader.grade(@grader.get_question_node_from_index(0), @correct_jwt)).to be 1
     end
 
     it "should return 0 for invalid JWT" do
-      expect(@grader.grade_mom_embed(@grader.get_question_node_from_index(0), "haha")).to be 0
+      expect(QuestionGraders::OhmGrader.grade(@grader.get_question_node_from_index(0), "haha")).to be 0
 
       different_key = JWT.encode(@jwt_paylod, "notsecret")
-      expect(@grader.grade_mom_embed(@grader.get_question_node_from_index(0), different_key)).to be 0
+      expect(QuestionGraders::OhmGrader.grade(@grader.get_question_node_from_index(0), different_key)).to be 0
     end
 
     it "should return 0 when JWT's question id is different than QTI's" do
       @jwt_paylod["id"] = 10
       different_id = JWT.encode(@jwt_paylod, Rails.application.secrets.mom_secret)
 
-      expect(@grader.grade_mom_embed(@grader.get_question_node_from_index(0), different_id)).to be 0
+      expect(QuestionGraders::OhmGrader.grade(@grader.get_question_node_from_index(0), different_id)).to be 0
     end
   end
 
