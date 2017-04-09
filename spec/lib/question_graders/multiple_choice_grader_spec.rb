@@ -33,19 +33,19 @@ describe QuestionGraders::MultipleChoiceGrader do
   end
 
   it 'returns the correct answer id' do
-    expect(QuestionGraders::MultipleChoiceGrader.get_correct_mc_answer_id(@question_node)).to eq '6368'
+    expect(subject.get_correct_mc_answer_id(@question_node)).to eq '6368'
   end
 
   it 'grades correctly for correctly answered' do
-    expect(QuestionGraders::MultipleChoiceGrader.grade(@question_node, '6368')).to eq 1
+    expect(subject.grade(@question_node, '6368')).to eq 1
   end
 
   it 'grades correctly for incorrectly answered' do
-    expect(QuestionGraders::MultipleChoiceGrader.grade(@question_node, '8330')).to be 0
+    expect(subject.grade(@question_node, '8330')).to be 0
   end
 
   it 'grades correctly when no answer is chosen' do
-    expect(QuestionGraders::MultipleChoiceGrader.grade(@question_node, [])).to be 0
+    expect(subject.grade(@question_node, [])).to be 0
   end
 
   it "AssessmentGrader should discover type and grade" do

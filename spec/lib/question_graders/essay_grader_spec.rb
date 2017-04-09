@@ -12,20 +12,21 @@ describe QuestionGraders::EssayGrader do
     file = File.join(__dir__, '../../fixtures/essay_question.xml')
     assessment = Assessment.create!(title: 'essay testing', xml_file: open(file).read)
     @grader = AssessmentGrader.new(@questions, ["my answer"], assessment)
+    @question_node = @grader.get_question_node_from_index(0)
   end
 
   it "should mark it correct if there is a non-blank response" do
-    expect(QuestionGraders::EssayGrader.grade(@grader.get_question_node_from_index(0), 'hi')).to be 1
+    expect(subject.grade(@question_node, 'hi')).to be 1
   end
 
   it "should mark it incorrect if there is a blank response" do
-    expect(QuestionGraders::EssayGrader.grade(@grader.get_question_node_from_index(0), '')).to be 0
-    expect(QuestionGraders::EssayGrader.grade(@grader.get_question_node_from_index(0), ' ')).to be 0
-    expect(QuestionGraders::EssayGrader.grade(@grader.get_question_node_from_index(0), "\n")).to be 0
+    expect(subject.grade(@question_node, '')).to be 0
+    expect(subject.grade(@question_node, ' ')).to be 0
+    expect(subject.grade(@question_node, "\n")).to be 0
   end
 
   it "should handle an answer in an array" do
-    expect(QuestionGraders::EssayGrader.grade(@grader.get_question_node_from_index(0), ['hi'])).to be 1
+    expect(subject.grade(@question_node, ['hi'])).to be 1
   end
 
   it "AssessmentGrader should discover type and grade" do

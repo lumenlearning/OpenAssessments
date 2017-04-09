@@ -34,47 +34,47 @@ describe QuestionGraders::MultipleAnswersGrader do
   end
 
   it 'grades correctly for all correctly answered' do
-    expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node0, ['9755'])).to be 1
-    expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node1, ['483', '1708'])).to be 1
+    expect(subject.grade(@question_node0, ['9755'])).to be 1
+    expect(subject.grade(@question_node1, ['483', '1708'])).to be 1
   end
 
   it 'grades correctly for 1 correct other correct unanswered' do
-    expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node1, ['483'])).to be 0.5
+    expect(subject.grade(@question_node1, ['483'])).to be 0.5
   end
 
   it 'grades correctly for 1 correct 2 wrong' do
-    expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node1, ['483', '6386', '1111'])).to be 0.0
+    expect(subject.grade(@question_node1, ['483', '6386', '1111'])).to be 0.0
   end
 
   it 'grades correctly when wrong count would make it a negative score' do
-    expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node1, ['483', '6386', '1111', '2222', '3333'])).to be 0.0
+    expect(subject.grade(@question_node1, ['483', '6386', '1111', '2222', '3333'])).to be 0.0
   end
 
   it 'grades correctly for 1 right 1 wrong' do
-    expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node0, ['9755', '4501'])).to eq 0.667
-    expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node1, ['483', '6386'])).to eq 0.25
+    expect(subject.grade(@question_node0, ['9755', '4501'])).to eq 0.667
+    expect(subject.grade(@question_node1, ['483', '6386'])).to eq 0.25
   end
 
   it 'grades correctly for 1 right 2 wrong' do
-    expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node0, ['9755', '4501', '6570'])).to eq 0.333
+    expect(subject.grade(@question_node0, ['9755', '4501', '6570'])).to eq 0.333
   end
 
   it 'grades correctly for 2 right 1 wrong' do
-    expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node1, ['483', '1708', '6386'])).to eq 0.75
+    expect(subject.grade(@question_node1, ['483', '1708', '6386'])).to eq 0.75
   end
 
   it 'grades correctly for 2 right 2 wrong' do
-    expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node1, ['483', '1708', '6386', '1111'])).to eq 0.5
+    expect(subject.grade(@question_node1, ['483', '1708', '6386', '1111'])).to eq 0.5
   end
 
   it 'grades correctly for all wrong' do
-    expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node0, ['6570'])).to eq 0
-    expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node1, ['6386', '1111'])).to eq 0
+    expect(subject.grade(@question_node0, ['6570'])).to eq 0
+    expect(subject.grade(@question_node1, ['6386', '1111'])).to eq 0
   end
 
   it 'grades correctly when no answers are chosen' do
-    expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node0, [])).to eq 0
-    expect(QuestionGraders::MultipleAnswersGrader.grade(@question_node1, [])).to eq 0
+    expect(subject.grade(@question_node0, [])).to eq 0
+    expect(subject.grade(@question_node1, [])).to eq 0
   end
 
   it "AssessmentGrader should discover type and grade" do
