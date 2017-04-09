@@ -7,7 +7,8 @@ module QuestionGraders
           "essay_question" => EssayGrader,
           "multiple_choice_question" => MultipleChoiceGrader,
           "multiple_answers_question" => MultipleAnswersGrader,
-          "mom_embed" => OhmGrader
+          "mom_embed" => OhmGrader,
+          "multiple_dropdowns_question" => DropdownGrader
   }
 
   def self.grade_question(question, question_node, answer)
@@ -25,7 +26,6 @@ module QuestionGraders
       total = grader_module.grade(question_node, answer)
     else
       #todo better handle unknown question types
-      puts "uh oh"
     end
 
     total
@@ -37,3 +37,4 @@ require 'question_graders/essay_grader'
 require 'question_graders/multiple_choice_grader'
 require 'question_graders/multiple_answers_grader'
 require 'question_graders/ohm_grader'
+require 'question_graders/dropdown_grader'

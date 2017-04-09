@@ -49,11 +49,11 @@
           </itemmetadata>
           <presentation>
           <material>
-            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Hey, this is a(n) [option1] question type. It is awesome because you can have [option2] dropdowns in a question. Yay! [wat3].&lt;/p&gt;&lt;/div&gt;</mattext>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Hey, this is a(n) [dropdown1] question type. It is awesome because you can have [dropdown2] dropdowns in a question. Yay! [dropdown3].&lt;/p&gt;&lt;/div&gt;</mattext>
           </material>
-          <response_lid ident="response_option1">
+          <response_lid ident="response_dropdown1">
             <material>
-              <mattext>option1</mattext>
+              <mattext>dropdown1</mattext>
             </material>
             <render_choice>
               <response_label ident="968">
@@ -73,9 +73,9 @@
               </response_label>
             </render_choice>
           </response_lid>
-          <response_lid ident="response_option2">
+          <response_lid ident="response_dropdown2">
             <material>
-              <mattext>option2</mattext>
+              <mattext>dropdown2</mattext>
             </material>
             <render_choice>
               <response_label ident="2891">
@@ -110,9 +110,9 @@
               </response_label>
             </render_choice>
           </response_lid>
-          <response_lid ident="response_wat3">
+          <response_lid ident="response_dropdown3">
             <material>
-              <mattext>wat3</mattext>
+              <mattext>dropdown3</mattext>
             </material>
             <render_choice>
               <response_label ident="2787">
@@ -139,37 +139,37 @@
           </outcomes>
           <respcondition continue="Yes">
             <conditionvar>
-              <varequal respident="response_option1">968</varequal>
+              <varequal respident="response_dropdown1">968</varequal>
             </conditionvar>
             <displayfeedback feedbacktype="Response" linkrefid="968_fb"/>
           </respcondition>
           <respcondition continue="Yes">
             <conditionvar>
-              <varequal respident="response_option1">5539</varequal>
+              <varequal respident="response_dropdown1">5539</varequal>
             </conditionvar>
             <displayfeedback feedbacktype="Response" linkrefid="5539_fb"/>
           </respcondition>
           <respcondition continue="Yes">
             <conditionvar>
-              <varequal respident="response_option1">8725</varequal>
+              <varequal respident="response_dropdown1">8725</varequal>
             </conditionvar>
             <displayfeedback feedbacktype="Response" linkrefid="8725_fb"/>
           </respcondition>
           <respcondition>
             <conditionvar>
-              <varequal respident="response_option1">968</varequal>
+              <varequal respident="response_dropdown1">968</varequal>
             </conditionvar>
             <setvar varname="SCORE" action="Add">33.33</setvar>
           </respcondition>
           <respcondition>
             <conditionvar>
-              <varequal respident="response_option2">4960</varequal>
+              <varequal respident="response_dropdown2">4960</varequal>
             </conditionvar>
             <setvar varname="SCORE" action="Add">33.33</setvar>
           </respcondition>
           <respcondition>
             <conditionvar>
-              <varequal respident="response_wat3">6259</varequal>
+              <varequal respident="response_dropdown3">6259</varequal>
             </conditionvar>
             <setvar varname="SCORE" action="Add">33.33</setvar>
           </respcondition>
