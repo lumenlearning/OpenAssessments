@@ -9,7 +9,7 @@ module MigrationHelpers
           formative.no_answer_xml = summative.xml
           formative.save!
         else
-          puts "no summative pair found for formative #{formative.id} and assessment #{formative.assessment_id}"
+          puts "no summative pair found for formative #{formative.id} and assessment #{formative.assessment_id}" unless Rails.env.test?
         end
       end
     end
