@@ -127,20 +127,4 @@ export default class MultiDropDown extends Component {
 
 MultiDropDown.propTypes = {};
 
-/*
- * Current problems with ARIA
- *
- * question material is HTML in string form,
- *   - how do I grab just the text for labelizing and making acessible?
- *   - screen reader skips over dangerously set innerHTML?
- *   - how do I get the screen reader to recognize the text at n layers of children in dangerously set HTML.
- *     - how can I get raw text to make an effective label?
- *       - do I need to get the raw text to make an effective label?
- *       - aria-roles...? //dialog role tested, no luck.
- *
- * why does the tab for voiceover pause on header, but continue with focus change?
- *   - accessibility vs DOM synchronization issue?
- *
- *
- * */
 
