@@ -6,25 +6,43 @@ export default class MultiDropDown extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      ariaAnswersLabels:{
+
+      }
+    };
 
     //rebindings for custom methods go here.
     this.findAndReplace = this.findAndReplace.bind(this);
+    this.handleShortcodeChange = this.handleShortcodeChange.bind(this);
+  }
+
+  componentWillUpdate(){
+    this.removeListeners(); //new DOM injection on update, remove old listeners.
   }
 
   render() {
     let question = this.findAndReplace();
+    let questionResult = this.findAndReplace(true);
 
     //place JSX between the parens!
     return (
       <div>
-        <p dangerouslySetInnerHTML={{__html: question}} />
+        <div tabIndex="0" dangerouslySetInnerHTML={{__html: question}} />
+        <br />
+        <br />
+        <hr aria-hidden='true' />
+
+        <div tabIndex="0" role="dialog" aria-labelledbby="question_result_header" aria-describedby="question_result_container" >
+          <h5 id="question_result_header">Question Result:</h5>
+          <div id="question_result_container" dangerouslySetInnerHTML={{__html: questionResult}} />
+        </div>
       </div>
     );
   }
 
   componentDidUpdate(){
-
+    this.addListeners();
   }
 
   componentDidMount(){
@@ -38,7 +56,7 @@ export default class MultiDropDown extends Component {
   //========================================================================
   // PLACE CUSTOM METHODS AND HANDLERS BELOW HERE
   //========================================================================
-  findAndReplace(){
+  findAndReplace(noSelect = false){
     let string = this.props.item.material;
     let shortcodes = Object.keys(this.props.item.dropdowns);
     let answers = this.props.item.dropdowns;
@@ -48,10 +66,30 @@ export default class MultiDropDown extends Component {
       let re = new RegExp('\\[|\\]', 'g');
       let nMatch = match.replace(re, ''); //from '[shortcode]' to 'shortcode'
       let options = answers[nMatch].map((answer) => {
-        return `<option value=${answer.value}>${answer.name}</option>`;
+        return `<option ${this.state[nMatch] === answer.value ? "selected" : ""} value=${answer.value}>${answer.name}</option>`;
       });
 
-      return `<select name="${nMatch}" id="dropdown_${nMatch}">${options}</select>`;
+      let ariaLabel = this.state.ariaAnswersLabels[nMatch] ? `"${this.state.ariaAnswersLabels[nMatch]}"` : `"${nMatch} choice goes here"`;
+
+      if(noSelect){
+        if(this.state.ariaAnswersLabels[nMatch]){
+          return this.state.ariaAnswersLabels[nMatch];
+        }
+        else{
+          return match;
+        }
+      }
+
+      return (
+        `<select 
+           name="${nMatch}" 
+           id="dropdown_${nMatch}" 
+           aria-label=${ariaLabel}
+         >
+            <option ${!this.state[nMatch] ? "selected" : ""} disabled aria-label="select ${nMatch} choice" value="null">Pick one</option>
+            ${options}
+        </select>`
+      );
     });
   }
 
@@ -72,16 +110,37 @@ export default class MultiDropDown extends Component {
   }//removeListeners
 
   handleShortcodeChange(e){
-    //alert(`THIS IS A CHANGE! name:${e.target.name} and value:${e.target.value}`);
+    let stateClone = {...this.state};
+
+    stateClone.ariaAnswersLabels[e.target.name] = e.target.options[e.target.options.selectedIndex].text;
+    stateClone[e.target.name] = e.target.value;
+
+    this.setState(stateClone);
 
     AssessmentActions.answerSelected({
       "dropdown_id": e.target.name,
       "chosen_answer_id": e.target.value
     });
-
   }//handleShortcodeChange
 
 }//end MultiDropDown class
 
 MultiDropDown.propTypes = {};
+
+/*
+ * Current problems with ARIA
+ *
+ * question material is HTML in string form,
+ *   - how do I grab just the text for labelizing and making acessible?
+ *   - screen reader skips over dangerously set innerHTML?
+ *   - how do I get the screen reader to recognize the text at n layers of children in dangerously set HTML.
+ *     - how can I get raw text to make an effective label?
+ *       - do I need to get the raw text to make an effective label?
+ *       - aria-roles...? //dialog role tested, no luck.
+ *
+ * why does the tab for voiceover pause on header, but continue with focus change?
+ *   - accessibility vs DOM synchronization issue?
+ *
+ *
+ * */
 

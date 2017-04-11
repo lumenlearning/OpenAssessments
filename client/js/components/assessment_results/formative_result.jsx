@@ -57,40 +57,50 @@ export default class FormativeResult extends React.Component{
                       __html: this.props.questions[index].material
                     }}>
                   </div> )
+
+      this.checkQuestionMaterial(index);
                   
-      return <div key={"result-"+index}>
-              <div style={styles.resultList}>
-                <div><div style={{color: color, float: "left"}}>Question {index+1} -- {message}</div><div style={{color: confidenceColor, float: "right"}}>{this.props.assessmentResult.confidence_level_list[index]}</div></div>
-              </div>
-              <div style={{...styles.resultList, ...styles.resultOutcome}}>
-                <div style={{width: "70%"}}>{material}</div>
-              </div>
-            </div>
+      return (
+        <div key={"result-"+index}>
+          <div style={styles.resultList}>
+            <div><div style={{color: color, float: "left"}}>Question {index+1} -- {message}</div><div style={{color: confidenceColor, float: "right"}}>{this.props.assessmentResult.confidence_level_list[index]}</div></div>
+          </div>
+          <div style={{...styles.resultList, ...styles.resultOutcome}}>
+            <div style={{width: "70%"}}>{material}</div>
+          </div>
+        </div>
+      )
     });
 
-
-
-
-    return <div style={styles.assessment}>
-            <div style={styles.assessmentContainer}>
-              <div style={styles.formative}>
-                <div className="row" style={styles.row}>
-                  <div className="col-md-12 col-lg-12" style={styles.outcomes}>
-                    <div style={styles.header}>{this.props.assessment ? this.props.assessment.title : ""}</div>
-                    <div style={styles.outcomeContainer}>
-                      {image}
-                      {head}
-                      <div>{feedback}</div>
-                      <div>{results}</div>
-                      <div style={styles.buttonsDiv}>
-                        <button className="btn btn-check-answer" style={styles.retakeButton}  onClick={(e)=>{this.retake()}}>Retake</button>
-                      </div>
-                    </div>
+    return (
+      <div style={styles.assessment}>
+        <div style={styles.assessmentContainer}>
+          <div style={styles.formative}>
+            <div className="row" style={styles.row}>
+              <div className="col-md-12 col-lg-12" style={styles.outcomes}>
+                <div style={styles.header}>{this.props.assessment ? this.props.assessment.title : ""}</div>
+                <div style={styles.outcomeContainer}>
+                  {image}
+                  {head}
+                  <div>{feedback}</div>
+                  <div>{results}</div>
+                  <div style={styles.buttonsDiv}>
+                    <button className="btn btn-check-answer" style={styles.retakeButton}  onClick={(e)=>{this.retake()}}>Retake</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    )
   }
+
+  checkQuestionMaterial(index) {
+    let question = this.props.questions[index];
+    let material = question.material;
+
+    console.log("QUESTION!:", question);
+  }//checkQuestionMaterial
 
 }

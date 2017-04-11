@@ -243,7 +243,7 @@ export default class Item extends BaseComponent{
 
   getConfidenceLevels(level, styles){
     if(level){
-      var levelMessage = <div style={{marginBottom: "10px"}}><b>How sure are you of your answer? Click below to move forward.</b></div>;
+      var levelMessage = <div tabIndex="0" style={{marginBottom: "10px"}}><b>How sure are you of your answer? Click below to move forward.</b></div>;
       return    (<div className="confidence_wrapper" style={styles.confidenceWrapper}>
                   {levelMessage}
                   <input type="button" style={styles.maybeButton}className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, "Just A Guess", this.props.currentIndex) }}/>
@@ -314,7 +314,7 @@ export default class Item extends BaseComponent{
       return <div style={styles.chooseText}>Choose the <b>BEST</b> answer.</div>;
     }
     else if (this.props.question.question_type == 'multiple_dropdowns_question') {
-      return <div style={styles.chooseText} >Complete the sentence by choosing the best answer from the drop downs</div>
+      return <div style={styles.chooseText} tabIndex="0">Complete the sentence by choosing the best answer from the drop downs</div>
     }
     else {
       return "";
@@ -384,8 +384,8 @@ export default class Item extends BaseComponent{
           </div>
           <div style={formativeStyle}>
             {formativeHeader}
-            <form className="edit_item" aria-hidden="true">
-              <div className="full_question" tabIndex="0" style={styles.fullQuestion}>
+            <form className="edit_item" >
+              <div className="full_question" style={styles.fullQuestion}>
                 <div className="inner_question">
                   <div className="question_text" style={styles.questionText}>
                     {this.questionDirections(styles)}
