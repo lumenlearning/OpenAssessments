@@ -51,14 +51,14 @@ export default class FormativeResult extends React.Component{
       } else {
         confidenceColor = this.props.context.theme.definitelyBackgroundColor;
       }
-      var material = "";
+      /*var material = "";
       material = ( <div
                     dangerouslySetInnerHTML={{
                       __html: this.props.questions[index].material
                     }}>
-                  </div> )
+                  </div> )*/
 
-      this.checkQuestionMaterial(index);
+      var material = this.checkQuestionMaterial(index);
                   
       return (
         <div key={"result-"+index}>
@@ -98,9 +98,33 @@ export default class FormativeResult extends React.Component{
 
   checkQuestionMaterial(index) {
     let question = this.props.questions[index];
+    let chosenAnswers = this.props.assessmentResult.lti_params.itemToGrade.answers[index];
     let material = question.material;
 
-    console.log("QUESTION!:", question);
+    if(question.question_type == 'multiple_dropdowns_question') {
+      let shortcodes = Object.keys(question.dropdowns);
+      let re = new RegExp(`\\[${shortcodes.join('\\]|\\[')}\\]`, 'gi');
+
+      material = material.replace(re, (shortcode) => {
+        let re = new RegExp('\\[|\\]', 'g');
+        let nShortcode = shortcode.replace(re, ''); //from '[shortcode]' to 'shortcode'
+        let answerId = chosenAnswers.find((answer) => {
+          return answer.dropdown_id === nShortcode;
+        }).chosen_answer_id;
+        let chosenAnswerVal = question.dropdowns[nShortcode].find((dropdown) => {
+          return dropdown.value === answerId;
+        }).name;
+
+
+        return `<strong>${chosenAnswerVal}</strong>`;
+
+      });
+    }
+
+    return (
+      <div dangerouslySetInnerHTML={{__html: material}} />
+    );
+
   }//checkQuestionMaterial
 
 }

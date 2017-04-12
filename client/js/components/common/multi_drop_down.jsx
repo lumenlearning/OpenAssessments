@@ -30,9 +30,8 @@ export default class MultiDropDown extends Component {
       <div>
         <div tabIndex="0" dangerouslySetInnerHTML={{__html: question}} />
         <br />
-        <br />
         <hr aria-hidden='true' />
-
+        <br />
         <div tabIndex="0" role="dialog" aria-labelledbby="question_result_header" aria-describedby="question_result_container" >
           <h5 id="question_result_header">Question Result:</h5>
           <div id="question_result_container" dangerouslySetInnerHTML={{__html: questionResult}} />
@@ -71,6 +70,7 @@ export default class MultiDropDown extends Component {
 
       let ariaLabel = this.state.ariaAnswersLabels[nMatch] ? `"${this.state.ariaAnswersLabels[nMatch]}"` : `"${nMatch} choice goes here"`;
 
+      //replace with values instead of <select /> boxes if true.
       if(noSelect){
         if(this.state.ariaAnswersLabels[nMatch]){
           return this.state.ariaAnswersLabels[nMatch];
