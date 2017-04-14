@@ -314,7 +314,7 @@ export default class Item extends BaseComponent{
       return <div style={styles.chooseText}>Choose the <b>BEST</b> answer.</div>;
     }
     else if (this.props.question.question_type == 'multiple_dropdowns_question') {
-      return <div style={styles.chooseText} tabIndex="0">Complete the sentence by choosing the best answer from the drop downs</div>
+      return <div style={styles.chooseText} tabIndex="0">Complete the sentence by choosing the best answer choices from the dropdowns.</div>
     }
     else {
       return "";

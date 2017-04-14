@@ -1,10 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
+import BaseComponent from '../base_component.jsx';
 import AssessmentActions from '../../actions/assessment.js';
 //import any other dependencies here.
 
-export default class MultiDropDown extends Component {
-  constructor(props) {
-    super(props);
+export default class MultiDropDown extends BaseComponent {
+  constructor(props, context) {
+    super(props, context);
 
     this.state = {
       ariaAnswersLabels:{
@@ -24,16 +25,20 @@ export default class MultiDropDown extends Component {
   render() {
     let question = this.findAndReplace();
     let questionResult = this.findAndReplace(true);
+    let theme = this.context.theme;
+    let questionText = {
+      fontSize: theme.questionTextFontSize,
+      fontWeight: theme.questionTextFontWeight,
+      padding: theme.questionTextPadding,
+    };
+
+    //change role from dialog to group to give them an OPTION to review it rather than force a readback.
 
     //place JSX between the parens!
     return (
       <div>
-        <div tabIndex="0" dangerouslySetInnerHTML={{__html: question}} />
-        <br />
-        <hr aria-hidden='true' />
-        <br />
-        <div tabIndex="0" role="dialog" aria-labelledbby="question_result_header" aria-describedby="question_result_container" >
-          <h5 id="question_result_header">Question Result:</h5>
+        <div tabIndex="0" dangerouslySetInnerHTML={{__html: question}} style={questionText} />
+        <div style={{position: 'absolute', left: '-10000px', top: 'auto', height: '1px', width: '1px', overflow: 'hidden'}} tabIndex="0" role="group" aria-label="Review your answer" >
           <div id="question_result_container" dangerouslySetInnerHTML={{__html: questionResult}} />
         </div>
       </div>
@@ -56,28 +61,27 @@ export default class MultiDropDown extends Component {
   // PLACE CUSTOM METHODS AND HANDLERS BELOW HERE
   //========================================================================
   findAndReplace(noSelect = false){
+    var i = 1;
     let string = this.props.item.material;
     let shortcodes = Object.keys(this.props.item.dropdowns);
     let answers = this.props.item.dropdowns;
     let re = new RegExp(`\\[${shortcodes.join('\\]|\\[')}\\]`, 'gi'); //turn array of shortcodes into a regex
 
     return string.replace(re, (match) => {
+      let str = `"blank ${i}"`;
       let re = new RegExp('\\[|\\]', 'g');
       let nMatch = match.replace(re, ''); //from '[shortcode]' to 'shortcode'
       let options = answers[nMatch].map((answer) => {
         return `<option ${this.state[nMatch] === answer.value ? "selected" : ""} value=${answer.value}>${answer.name}</option>`;
       });
 
-      let ariaLabel = this.state.ariaAnswersLabels[nMatch] ? `"${this.state.ariaAnswersLabels[nMatch]}"` : `"${nMatch} choice goes here"`;
+      console.log('FAR:', noSelect, str);
+      let ariaLabel = this.state.ariaAnswersLabels[nMatch] ? `"${this.state.ariaAnswersLabels[nMatch]}"` : str;
 
-      //replace with values instead of <select /> boxes if true.
-      if(noSelect){
-        if(this.state.ariaAnswersLabels[nMatch]){
-          return this.state.ariaAnswersLabels[nMatch];
-        }
-        else{
-          return match;
-        }
+      i++;
+
+      if(noSelect){ //replace with values instead of <select /> boxes if true.
+        return str
       }
 
       return (
@@ -86,7 +90,7 @@ export default class MultiDropDown extends Component {
            id="dropdown_${nMatch}" 
            aria-label=${ariaLabel}
          >
-            <option ${!this.state[nMatch] ? "selected" : ""} disabled aria-label="select ${nMatch} choice" value="null">Pick one</option>
+            <option ${!this.state[nMatch] ? "selected" : ""} disabled aria-label="select ${nMatch} choice" value="null">[Select]</option>
             ${options}
         </select>`
       );
@@ -126,5 +130,9 @@ export default class MultiDropDown extends Component {
 }//end MultiDropDown class
 
 MultiDropDown.propTypes = {};
+
+MultiDropDown.contextTypes = {
+  theme: React.PropTypes.object
+}
 
 
