@@ -75,7 +75,6 @@ export default class MultiDropDown extends BaseComponent {
         return `<option ${this.state[nMatch] === answer.value ? "selected" : ""} value=${answer.value}>${answer.name}</option>`;
       });
 
-      console.log('FAR:', noSelect, str);
       let ariaLabel = this.state.ariaAnswersLabels[nMatch] ? `"${this.state.ariaAnswersLabels[nMatch]}"` : str;
 
       i++;
