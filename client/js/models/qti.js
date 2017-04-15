@@ -127,6 +127,8 @@ export default class Qti{
           name: resLabel.find('material > mattext').text()
         });
       }).toArray(); //make sure array not jquery object.
+
+      answers[key] = _.shuffle(answers[key]);
     });
     
     return answers;
