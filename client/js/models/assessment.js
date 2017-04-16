@@ -140,6 +140,9 @@ export default class Assessment{
       case 'multiple_answers_question':
         results = this.checkMultipleAnswerAnswer(item, selectedAnswers);
         break;
+      case 'essay_question':
+        results = this.checkEssayAnswer(item, selectedAnswers);
+        break;
       case 'matching_question':
         results = this.checkMatchingAnswer(item, selectedAnswers);
         break;
@@ -154,30 +157,11 @@ export default class Assessment{
         break;
     }
 
-    // var end = Utils.currentTime();
-    // var settings = this.get('settings');
-    // ItemResult.create({
-    //   offline: settings.get('offline'),
-    //   assessment_result_id: this.get('controllers.application').get('model').get('assessment_result.id'),
-    //   resultsEndPoint: settings.get('resultsEndPoint'),
-    //   eId: settings.get('eId'),
-    //   external_user_id: settings.get('externalUserId'),
-    //   keywords: settings.get('keywords'),
-    //   objectives: objectives,
-    //   src_url: settings.get('srcUrl'),
-    //   identifier: this.get('id'),
-    //   session_status: 'final',
-    //   time_spent: end - start,
-    //   confidence_level: selectedConfidenceLevel,
-    //   correct: results.correct,
-    //   score: results.score
-    // }).save();
-
     return results;
   }
 
   static checkMultipleChoiceAnswer(item, selectedAnswerId){
-    var feedbacks = "";
+    var feedback = "";
     var score = "0";
     var correct = false;
     if(selectedAnswerId == item.correct[0].id){
@@ -185,49 +169,75 @@ export default class Assessment{
       score = item.correct[0].score;
     }
     return {
-      feedbacks: feedbacks,
+      feedback: feedback,
       score: score,
       correct: correct
     };
   }
 
-  static checkMultipleAnswerAnswer(item, selectedAnswerId){
-    var feedbacks = ""; // implement feedbacks
-    var score = "0";
+  static checkMultipleAnswerAnswer(item, selectedAnswerId) {
+    var feedback = "";
     var numOfAnswers = item.correct[0].id.length;
     var numOfCorrectAnswers = 0;
-    var correct = false;
+    var numOfInCorrectAnswers = 0;
 
-    // if they selected the right amount of answers then check if they are the right answers
-    if(selectedAnswerId.length == numOfAnswers){      
-      for(var i = 0; i < selectedAnswerId.length; i++){
-        for(var j = 0; j < numOfAnswers; j++){
-          if(selectedAnswerId[i] == item.correct[0].id[j]){
-            numOfCorrectAnswers++;
-          }
+    for (var i = 0; i < selectedAnswerId.length; i++) {
+      let correct = false;
+      for (var j = 0; j < numOfAnswers; j++) {
+        if (selectedAnswerId[i] == item.correct[0].id[j]) {
+          correct = true;
+          break;
         }
       }
-      if(numOfAnswers == numOfCorrectAnswers){
-        correct = true;
-        score = "100";
+      if (correct) {
+        numOfCorrectAnswers++;
+      } else {
+        numOfInCorrectAnswers++;
       }
+    }
+
+    if (numOfInCorrectAnswers == 0 && numOfAnswers == numOfCorrectAnswers) {
       return {
-        feedbacks: feedbacks,
-        score: score,
-        correct: correct
+        feedback: feedback,
+        score: 100,
+        correct: true
+      };
+    } else if (numOfCorrectAnswers > 0) {
+      return {
+        feedback: feedback,
+        score: numOfCorrectAnswers,
+        correct: false
+      };
+    } else {
+      return {
+        feedback: feedback,
+        score: 0,
+        correct: false
       };
     }
 
-    // if they selected to few or to many then return incorrect
-    return {
-        feedbacks: feedbacks,
-        score: score,
-        correct: correct
-    };
+  }
+
+  static checkEssayAnswer(item, response) {
+    if (response.length > 0) {
+      return {
+        correct: true,
+        score: 100,
+        feedback_only: true,
+        feedback: ""
+      }
+    } else {
+      return {
+        correct: false,
+        score: 0,
+        feedback_only: true,
+        feedback: "Please enter a response."
+      }
+    }
   }
 
   static checkMatchingAnswer(item, selectedAnswerId){
-    var feedbacks = ""; // implement feedbacks
+    var feedback = ""; // implement feedback
     var score = "0";
     var numOfAnswers = item.correct.length
     var numOfCorrectAnswers = 0;
@@ -257,7 +267,7 @@ export default class Assessment{
     }
 
     return {
-      feedbacks: feedbacks,
+      feedback: feedback,
       score: score,
       correct: correct
     };
@@ -285,7 +295,7 @@ export default class Assessment{
 
   static checkEdX(){
     var result = {
-      feedbacks: [],
+      feedback: [],
       score: 0,
       correct: true
     };
@@ -294,7 +304,7 @@ export default class Assessment{
         answer.set('isGraded', false);
         $.each(answer.get('graded'), function(id, graded){
           if(graded.feedback && graded.feedback.length > 0){
-            result.feedbacks.push(graded.feedback);
+            result.feedback.push(graded.feedback);
           }
           result.score += graded.score;
           if(!graded.correct){
@@ -312,7 +322,7 @@ export default class Assessment{
 }
 
     // var score = 0; // TODO we should get var names and types from the QTI. For now we just use the default 'score'
-    // var feedbacks = [];
+    // var feedback = [];
     // var correct = false;
     // var respconditions = xml.find('respcondition');
     // for (var i =0; i<respconditions.length; i++){
@@ -363,8 +373,8 @@ export default class Assessment{
     //         feedback.attr('view') === 'All' ||
     //         feedback.attr('view') === 'Candidate' ){  //All, Administrator, AdminAuthority, Assessor, Author, Candidate, InvigilatorProctor, Psychometrician, Scorer, Tutor
     //         var result = Qti.buildMaterial(feedback.find('material').children());
-    //         if(feedbacks.indexOf(result) === -1){
-    //           feedbacks.push(result);
+    //         if(feedback.indexOf(result) === -1){
+    //           feedback.push(result);
     //         }
     //       }
     //     }
@@ -372,7 +382,7 @@ export default class Assessment{
 
     //   if(correct){
     //     return {
-    //       feedbacks: feedbacks,
+    //       feedback: feedback,
     //       score: score,
     //       correct: correct
     //     };

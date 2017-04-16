@@ -10,7 +10,7 @@ import AssessmentStore    from "../../stores/assessment";
 export default class Item extends BaseComponent{
   constructor(){
     super();
-    this._bind("getConfidenceLevels", "confidenceLevelClicked","submit", "nextButtonClicked", "previousButtonClicked", "getPreviousButton", "getNextButton", "getStyles", "clearShowMessage");
+    this._bind("getConfidenceLevels", "confidenceLevelClicked","submitAssessment", "checkAnswerButton", "checkAnswerButtonClicked", "nextButtonClicked", "previousButtonClicked", "getPreviousButton", "getNextButton", "getStyles", "clearShowMessage");
   }
 
   nextButtonClicked(e){
@@ -37,7 +37,7 @@ export default class Item extends BaseComponent{
       if(AssessmentStore.hasAnsweredCurrent()){
         AssessmentActions.selectConfidenceLevel(val, currentIndex);
         if(that.props.currentIndex == that.props.questionCount - 1 && that.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
-          that.submit();
+          that.submitAssessment();
         } else {
           AssessmentActions.nextQuestion();
           that.clearShowMessage();
@@ -49,12 +49,17 @@ export default class Item extends BaseComponent{
     });
   }
 
-  submitButtonClicked(e){
+  checkAnswerButtonClicked(e){
     e && e.preventDefault();
-    this.props.selectQuestion(this.props.currentIndex, this.submit);
+    this.props.checkAnswer(this.props.currentIndex);
   }
 
-  submit(){
+  submitAssessmentButtonClicked(e){
+    e && e.preventDefault();
+    this.props.selectQuestion(this.props.currentIndex, this.submitAssessment);
+  }
+
+  submitAssessment(){
       var complete = Item.checkCompletion();
       if(complete === true){
         window.onbeforeunload = null;
@@ -131,26 +136,28 @@ export default class Item extends BaseComponent{
   }
 
 
-  getResult(index){
+  getResult(answer) {
+    if (answer == null) {
+      return ""
+    }
     var result;
 
-    if(index == -1){
-      result =  <div className="check_answer_result">
-                  <p></p>
-                </div>;
+    if (answer.feedback_only) {
+      result = <p>{answer.feedback}</p>
     }
-    else if(index == 0){
-      result =  <div className="check_answer_result">
-                  <p>Incorrect</p>
-                </div>;
+    else if (answer.correct) {
+      result = <p>Correct</p>
     }
-    else {
-      result =  <div className="check_answer_result">
-                  <p>Correct</p>
-                </div>;
+    else if (!answer.correct && answer.score > 0) {
+      result = <p>Partially Correct</p>
+    }
+    else if (!answer.correct) {
+      result = <p>Incorrect</p>
     }
 
-    return result;
+    return <div className="check_answer_result">
+      {result}
+    </div>
   }
 
   questionDirections(styles){
@@ -187,12 +194,7 @@ export default class Item extends BaseComponent{
 
   render() {
     var styles = this.getStyles(this.context.theme);
-    var unAnsweredWarning = this.getWarning(this.state,  this.props.questionCount, this.props.currentIndex, styles);
-    var result = this.getResult(this.props.messageIndex);
     var must_answer_message = this.state && this.state.showMessage ? <div style={styles.warning}>You must select an answer before continuing.</div> : "";
-    var confidenceButtons = this.getConfidenceLevels(this.props.confidenceLevels, styles);
-    var navigationDiv = this.getNavigationButtons(styles);
-
 
     return (
       <div className="assessment_container" style={styles.assessmentContainer}>
@@ -212,14 +214,15 @@ export default class Item extends BaseComponent{
                 </div>
                 <div className="row">
                   <div className="col-md-5 col-sm-6 col-xs-8" >
-                    {result}
-                    {confidenceButtons}
-                    {navigationDiv}
-                    {unAnsweredWarning}
+                    {this.getResult(this.props.answerMessage)}
+                    {this.getConfidenceLevels(this.props.confidenceLevels, styles)}
+                    {this.checkAnswerButton(styles)}
+                    {this.getNavigationButtons(styles)}
+                    {this.getWarning(this.state,  this.props.questionCount, this.props.currentIndex, styles)}
                     {must_answer_message}
                   </div>
                   <div className="col-md-7 col-sm-6 col-xs-4">
-                    {this.submitButton(styles)}
+                    {this.submitAssessmentButton(styles)}
                   </div>
                 </div>
               </div>
@@ -231,17 +234,31 @@ export default class Item extends BaseComponent{
     );
   }
 
-  submitButton(styles) {
-    if (this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" && this.props.confidenceLevels ||
+  submitAssessmentButton(styles) {
+    if ((this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" && this.props.confidenceLevels) ||
+        (this.props.settings.assessmentKind.toUpperCase() == "PRACTICE") ||
         (this.props.currentIndex != this.props.questionCount - 1)) {
       return ""
     }
 
-    return <div style={styles.submitButtonDiv}>
+    return <div style={styles.submitAssessmentButtonDiv}>
       <button className="btn btn-check-answer"
-              style={styles.submitButton}
-              onClick={(e) => { this.submitButtonClicked(e) }}
+              style={styles.submitAssessmentButton}
+              onClick={(e) => { this.submitAssessmentButtonClicked(e) }}
       >Submit</button>
+    </div>
+  }
+
+  checkAnswerButton(styles) {
+    if ( this.props.settings.assessmentKind.toUpperCase() !== "PRACTICE" ) {
+      return ""
+    }
+
+    return <div style={styles.checkAnswerButtonDiv}>
+      <button className="btn btn-check-answer"
+              style={styles.checkAnswerButton}
+              onClick={(e) => { this.checkAnswerButtonClicked(e) }}
+      >Check Answer</button>
     </div>
   }
 
@@ -337,11 +354,16 @@ export default class Item extends BaseComponent{
         backgroundColor: theme.definitelyBackgroundColor,
         color: theme.definitelyColor,
       },
-      submitButton: {
+      submitAssessmentButton: {
         width: theme.definitelyWidth,
         backgroundColor: theme.submitBackgroundColor,
         color: theme.definitelyColor,
 
+      },
+      checkAnswerButton: {
+        width: theme.definitelyWidth,
+        backgroundColor: theme.submitBackgroundColor,
+        color: theme.definitelyColor,
       },
       confidenceWrapper: {
         border: theme.confidenceWrapperBorder,
@@ -367,7 +389,11 @@ export default class Item extends BaseComponent{
       navButtons: {
         margin: navMargin
       },
-      submitButtonDiv: {
+      submitAssessmentButtonDiv: {
+        marginLeft: "20px",
+        marginTop: "86px"
+      },
+      checkAnswerButtonDiv: {
         marginLeft: "20px",
         marginTop: "86px"
       },
@@ -437,7 +463,7 @@ Item.propTypes = {
   question         : React.PropTypes.object.isRequired,
   currentIndex     : React.PropTypes.number.isRequired,
   questionCount    : React.PropTypes.number.isRequired,
-  messageIndex     : React.PropTypes.number.isRequired,
+  answerMessage     : React.PropTypes.object,
   confidenceLevels : React.PropTypes.bool.isRequired,
   outcomes         : React.PropTypes.object,
   previousQuestion : React.PropTypes.func.isRequired,

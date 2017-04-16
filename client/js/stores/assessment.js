@@ -29,7 +29,7 @@ var _startedAt;
 var _finishedAt;
 var _selectedConfidenceLevel = 0;
 var _selectedAnswerIds = [];
-var _answerMessageIndex = -1;
+var _answerMessage = null;
 var _sectionIndex = 0;
 var _itemIndex = 0;
 var _studentAnswers = [];
@@ -157,8 +157,8 @@ var AssessmentStore = assign({}, StoreCommon, {
     return !!(current && current.length > 0);
   },
 
-  answerMessageIndex(){
-    return _answerMessageIndex;
+  answerMessage(){
+    return _answerMessage;
   },
 
   studentAnswers(){
@@ -238,10 +238,7 @@ Dispatcher.register(function(payload) {
       break;
     case Constants.ASSESSMENT_CHECK_ANSWER:
       var answer = checkAnswer();
-      if(answer != null && answer.correct)
-        _answerMessageIndex = 1;
-      else if (answer != null && !answer.correct)
-        _answerMessageIndex = 0;
+      _answerMessage = answer;
       break;
 
     case Constants.ASSESSMENT_START:
@@ -263,7 +260,7 @@ Dispatcher.register(function(payload) {
         _itemIndex++;
         _items[_itemIndex].startTime = Utils.currentTime();
         _selectedAnswerIds = _studentAnswers[_itemIndex];
-        _answerMessageIndex = -1;  
+        _answerMessage = null;
       } 
       break;
 
@@ -274,7 +271,7 @@ Dispatcher.register(function(payload) {
         _itemIndex--;
         _items[_itemIndex].startTime = Utils.currentTime();
         _selectedAnswerIds = _studentAnswers[_itemIndex];
-        _answerMessageIndex = -1;
+        _answerMessage = null;
       }
       break;
 
@@ -309,9 +306,9 @@ Dispatcher.register(function(payload) {
       // if(SettingsStore.current().kind == "formative"){
       //   var answer = checkAnswer();
       //   if(answer != null && answer.correct)
-      //     _answerMessageIndex = 1;
+      //     _answerMessage = 1;
       //   else if (answer != null && !answer.correct)
-      //     _answerMessageIndex = 0;
+      //     _answerMessage = 0;
       
       // }
       break;
@@ -321,7 +318,7 @@ Dispatcher.register(function(payload) {
         _itemIndex = payload.index;
         _items[_itemIndex].startTime = Utils.currentTime();
         _selectedAnswerIds = _studentAnswers[_itemIndex];
-        _answerMessageIndex = -1;
+        _answerMessage = null;
       break;
     case Constants.RETAKE_ASSESSMENT:
       _assessmentResult = null;

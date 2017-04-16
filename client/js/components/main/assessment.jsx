@@ -35,7 +35,7 @@ export default class Assessment extends BaseComponent{
       assessmentResult     : AssessmentStore.assessmentResult(),
       showStart            : showStart,
       settings             : SettingsStore.current(),
-      messageIndex         : AssessmentStore.answerMessageIndex(),
+      answerMessage        : AssessmentStore.answerMessage(),
       studentAnswers       : AssessmentStore.allStudentAnswers(),
       allQuestions         : AssessmentStore.allQuestions(),
       outcomes             : AssessmentStore.outcomes(),
@@ -85,6 +85,10 @@ export default class Assessment extends BaseComponent{
         finishedCallback();
       }
     }
+  }
+
+  checkAnswer(qid) {
+    AssessmentActions.checkAnswer(qid);
   }
 
   previousQuestion(finishedCallback=null) {
@@ -150,13 +154,14 @@ export default class Assessment extends BaseComponent{
         settings         = {this.state.settings}
         questionCount    = {this.state.questionCount}
         assessmentResult = {this.state.assessmentResult}
-        messageIndex     = {this.state.messageIndex}
+        answerMessage     = {this.state.answerMessage}
         allQuestions     = {this.state.allQuestions}
         studentAnswers   = {this.state.studentAnswers}
         confidenceLevels = {this.state.settings.confidenceLevels}
         previousQuestion = {this.previousQuestion}
         nextQuestion     = {this.nextQuestion}
         selectQuestion   = {this.selectQuestion}
+        checkAnswer      = {this.checkAnswer}
         registerGradingCallback = {this.registerGradingCallback}
         outcomes         = {this.state.outcomes}
       />;
