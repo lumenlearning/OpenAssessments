@@ -14,7 +14,7 @@
     style: @style,
     isLti: @is_lti,
     assessmentId: @assessment_id.to_s,
-    assessmentKind: 'formative',
+    assessmentKind: @assessment_kind || 'formative',
     resultsEndPoint: @results_end_point || "http://#{request.host_with_port}/api",
     confidenceLevels: @confidence_levels,
     enableStart: @enable_start,

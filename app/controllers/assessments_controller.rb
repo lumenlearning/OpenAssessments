@@ -13,7 +13,7 @@ class AssessmentsController < LtiBaseController
   respond_to :html
 
   def index
-    @assessments = @assessments.where(account: current_account, kind: ['formative', 'show_what_you_know'])
+    @assessments = @assessments.where(account: current_account, kind: ['formative', 'practice'])
   end
 
   def show
@@ -23,6 +23,7 @@ class AssessmentsController < LtiBaseController
       @embedded = params[:src_url].present? || params[:embed].present? || @is_lti
     end
     @confidence_levels = params[:confidence_levels] ? true : false
+    @assessment_kind = params[:assessment_kind] ? params[:assessment_kind]: 'formative'
     @enable_start = params[:enable_start] ? true : false
     @eid = params[:eid] if params[:eid]
     @keywords = params[:keywords] if params[:keywords]

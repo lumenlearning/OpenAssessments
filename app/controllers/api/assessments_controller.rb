@@ -28,7 +28,7 @@ class Api::AssessmentsController < Api::ApiController
   def show
     assessment = Assessment.where(id: params[:id], account: current_account).first
     review_or_edit = !!(params[:for_review] || params[:for_edit])
-    if assessment.kind != 'formative' || review_or_edit
+    if (!assessment.formative? && !assessment.practice?) || review_or_edit
       return unless validate_token
     end
 
@@ -56,7 +56,7 @@ class Api::AssessmentsController < Api::ApiController
 
     # If it's a summative quiz the attempts are incremented here instead of UserAttemptsController#update
     # todo: refactor so that all attempts are incremented via the xml fetch? Maybe not because externally hosted xml files.
-    if assessment.kind == 'summative' && !review_or_edit
+    if assessment.summative? && !review_or_edit
       if user_assessment && @lti_launch
 
         if user_assessment.lti_role == 'student' && user_assessment.attempts >= assessment_settings.allowed_attempts
@@ -84,6 +84,8 @@ class Api::AssessmentsController < Api::ApiController
       format.json { render :json => assessment }
       format.xml do
         if review_or_edit
+          render :text => assessment.xml_with_answers
+        elsif assessment.practice?
           render :text => assessment.xml_with_answers
         else
           selected_items = []

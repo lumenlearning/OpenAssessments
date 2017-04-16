@@ -24,6 +24,7 @@ class Assessment < ActiveRecord::Base
   scope :summative, -> {where kind: 'summative'}
   scope :swyk, -> {where kind: 'show_what_you_know'}
   scope :formative, -> {where kind: 'formative'}
+  scope :practice, -> {where kind: 'practice'}
   scope :by_edit_id, ->(id) {where('data @> ?', {external_edit_id: id}.to_json)}
   scope :by_copied_from_assessment_id, ->(id) {where('data @> ?', {copied_from_assessment_id: id}.to_json)}
 
@@ -146,6 +147,10 @@ class Assessment < ActiveRecord::Base
 
   def formative?
     self.kind == 'formative'
+  end
+
+  def practice?
+    self.kind == 'practice'
   end
 
   def swyk?
