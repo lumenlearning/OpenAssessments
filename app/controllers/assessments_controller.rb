@@ -89,20 +89,6 @@ class AssessmentsController < LtiBaseController
 
     end
 
-    if params[:offline].present? && @src_url.present?
-      @src_data = open(@src_url).read
-      xml = EdxSequentialParser.parse(@src_data)
-      # edX
-      if defined?(xml.verticals)
-        base_uri = @src_url[0, @src_url.index('sequential')];
-        @edx_verticals = crawlEdx(base_uri, 'vertical', xml.verticals.map(&:url_name))
-        @edx_problems = {}
-        @edx_verticals.each do |id, vertical|
-          xml = EdxVerticalParser.parse(vertical)
-          @edx_problems.merge!(crawlEdx(base_uri, 'problem', xml.problems.map(&:url_name)))
-        end
-      end
-    end
 
     @is_lti ||= false
     @assessment_title ||= params[:assessment_title]
@@ -173,13 +159,6 @@ class AssessmentsController < LtiBaseController
   end
 
   private
-
-    def crawlEdx(base_uri, type, ids)
-      ids.inject({}) do |hsh, id|
-        hsh[id] = open(base_uri + type + '/' + id + '.xml').read
-        hsh
-      end
-    end
 
     def assessment_params
       params.require(:assessment).permit(:title, :description, :xml_file, :license, :keyword_list)

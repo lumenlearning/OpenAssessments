@@ -25,9 +25,6 @@ export default {
   ANSWER_SELECTED: "answer_selected",
   ASSESSMENT_GRADED: "assessment_graded",
   CLEAR_SELECTED_ANSWERS: "clear_selected_answers",
-  EDX_LOAD_SECTION: "edx_load_section",
-  EDX_LOAD_ITEM: "edx_load_item",
-  EDX_LOAD_ASSESSMENT: "edx_load_assessment",
   QUESTION_SELECTED: "question_selected",
   RETAKE_ASSESSMENT: "retake_assessment",
 

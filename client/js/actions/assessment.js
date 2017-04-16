@@ -34,22 +34,6 @@ export default {
     }
   },
 
-  edXLoadSection(section){
-    Dispatcher.dispatch({action: Constants.EDX_LOAD_SECTION, section: section});
-  },
-
-  clearStore(){
-    Dispatcher.dispatch({action: Constants.CLEAR_STORE});
-  },
-
-  edXLoadItem(item){
-    Dispatcher.dispatch({action: Constants.EDX_LOAD_ITEM, item: item});
-  },
-
-  edXLoadAssessment(assessment){
-    Dispatcher.dispatch({action: Constants.EDX_LOAD_ASSESSMENT, assessment: assessment});
-  },
-
   answerSelected(item){
     Dispatcher.dispatch({action: Constants.ANSWER_SELECTED, item: item});
   },

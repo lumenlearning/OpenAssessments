@@ -6,9 +6,7 @@ import Option               from "../common/option";
 import TextField            from "../common/text_field";
 import TextArea             from "../common/text_area";
 import CheckBox             from "../common/checkbox";
-import MappedImage          from "../common/mapped_image";
 import Matching             from "../common/matching";
-import DragAndDrop          from "../common/drag_and_drop";
 import MomEmbed             from "../common/mom_embed";
 import MultiDropDown        from '../common/multi_drop_down'
 import CommunicationHandler from "../../utils/communication_handler";
@@ -103,26 +101,14 @@ export default class UniversalInput extends React.Component{
     }
     
     switch(item.question_type){
-      case "edx_multiple_choice":
       case "multiple_choice_question":
       case "true_false_question":
         items = item.answers.map((answer) => {
           return <RadioButton isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-radio" checked={this.wasChosen(answer.id)}  showAsCorrect={this.showAsCorrect(answer.id)}/>;
         });
         break;
-      case "edx_dropdown":
-        items = item.answers.map((answer) => {
-          return <Option isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-option"/>;
-        });
-        break;
       case "matching_question":
         items = <Matching isDisabled={this.props.isResult}  item={item} name="answer-option"/>;
-        break;
-      case "edx_numerical_input":
-      case "edx_text_input":
-        items = item.answers.map((answer) => {
-          return <TextField isDisabled={this.props.isResult}  key={item.id + "_" + answer.id} item={answer} name="answer-text"/>;
-        });
         break;
       case "essay_question":
         items = <TextArea key="textarea_essay_input" item={item} />;
@@ -130,16 +116,6 @@ export default class UniversalInput extends React.Component{
       case "multiple_answers_question":
         items = item.answers.map((answer) => {
           return <CheckBox isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-check" checked={this.wasChosen(answer.id)} showAsCorrect={this.showAsCorrect(answer.id)}/>;
-        });
-        break;
-      case "edx_image_mapped_input":
-        items = item.answers.map((answer)=>{
-          return <MappedImage key={item.id + "_" + answer.id} item={answer} />;
-        });
-        break;
-      case"edx_drag_and_drop":
-        items = item.answers.map((answer)=>{
-          return <DragAndDrop key={item.id + "_" + answer.id} item={answer} />
         });
         break;
       case "mom_embed":
@@ -151,14 +127,6 @@ export default class UniversalInput extends React.Component{
     }
 
 
-    var material = '';
-    if(item.edXMaterial){
-      material = ( <div
-                    dangerouslySetInnerHTML={{
-                      __html: item.edXMaterial
-                    }}>
-                  </div> )
-    }
     return (<div className="panel-messages-container panel panel-default" style={styles.panel}>
               <div className="panel-heading text-center" style={styles.panelHeading}>
                 {/*{item.title}*/}
@@ -167,7 +135,6 @@ export default class UniversalInput extends React.Component{
               <div className={item.question_type === 'multiple_dropdowns_question' ? "" : "panel-body"}
                    style={item.question_type === 'multiple_dropdowns_question' ? {marginTop: '20px'} : styles.panelBody}
               >
-                {material}
                 {items}
               </div>
               {solution}

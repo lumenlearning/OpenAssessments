@@ -7,7 +7,6 @@ import StoreCommon    from "./store_common";
 import assign         from "object-assign";
 import Assessment     from "../models/assessment";
 import SettingsStore  from "./settings";
-import EdX            from "../models/edx";
 import _              from "lodash";
 const INVALID = -1;
 const NOT_LOADED = 0;
@@ -277,16 +276,6 @@ Dispatcher.register(function(payload) {
 
     case Constants.ANSWER_SELECTED:
       selectAnswer(payload.item);
-      break;
-
-    case Constants.EDX_LOAD_SECTION:
-      if(_assessment){
-        //EdX.findAndSetObject(_assessment.sections, payload.item);
-      }
-      break;
-
-    case Constants.EDX_LOAD_ITEM:
-        _items.push(payload.item);
       break;
 
     case Constants.ASSESSMENT_GRADED:

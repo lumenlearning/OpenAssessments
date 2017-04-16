@@ -2,9 +2,6 @@
   <%= @src_data %>
 </script>
 
-<%= render(partial: 'assessments/edx_data', object: @edx_verticals) if @edx_verticals.present? -%>
-<%= render(partial: 'assessments/edx_data', object: @edx_problems) if @edx_problems.present? -%>
-
 <%
    # create the default seettings hash and do #to_json so that string values are properly escaped
    settings = {
