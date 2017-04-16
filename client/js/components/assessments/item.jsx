@@ -80,18 +80,227 @@ export default class Item extends BaseComponent{
     return true;
   }
 
+  getWarning(state, questionCount, questionIndex, styles){
+    if(state && state.unAnsweredQuestions && state.unAnsweredQuestions.length > 0 && questionIndex + 1 == questionCount){
+      return <div style={styles.warning}><i className="glyphicon glyphicon-exclamation-sign"></i> You left question(s) {state.unAnsweredQuestions.join()} blank. Use the "Progress" drop-down menu at the top to go back and answer the question(s), then come back and submit.</div>
+    }
+
+    return "";
+  }
+
+  getConfidenceLevels(level, styles){
+    if(level){
+      var levelMessage = <div tabIndex="0" style={{marginBottom: "10px"}}><b>How sure are you of your answer? Click below to move forward.</b></div>;
+      return    (<div className="confidence_wrapper" style={styles.confidenceWrapper}>
+                  {levelMessage}
+                  <input type="button" style={styles.maybeButton}className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, "Just A Guess", this.props.currentIndex) }}/>
+                  <input type="button" style={{...styles.margin, ...styles.probablyButton}} className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Pretty Sure", this.props.currentIndex) }}/>
+                  <input type="button" style={{...styles.margin, ...styles.definitelyButton}} className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Very Sure", this.props.currentIndex) }}/>
+                </div>
+                );
+    } /*else {
+      return <div className="lower_level"><input type="button" className="btn btn-check-answer" value="Check Answer" onClick={() => { AssessmentActions.checkAnswer()}}/></div>
+    }*/
+  }
+
+  getNavigationButtons(styles) {
+    if ( this.props.questionCount == 1 || (!this.context.theme.shouldShowNextPrevious && this.props.confidenceLevels)) {
+      return "";
+    }
+
+    return <div className="confidence_wrapper" style={styles.navigationWrapper}>
+      {this.getPreviousButton(styles)}
+      {this.getNextButton(styles)}
+    </div>
+  }
+
+  getNextButton(styles) {
+    var disabled = (this.props.currentIndex == this.props.questionCount - 1) ? "disabled" : "";
+    return (
+        <button className={"btn btn-next-item " + disabled} style={styles.nextButton} onClick={(e) => { this.nextButtonClicked(e) }}>
+          <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
+        </button>);
+  }
+
+  getPreviousButton(styles) {
+    var prevButtonClassName = "btn btn-prev-item " + ((this.props.currentIndex > 0) ? "" : "disabled");
+    return (
+        <button className={prevButtonClassName} style={styles.previousButton} onClick={(e) => { this.previousButtonClicked(e) }}>
+          <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span>
+        </button>);
+  }
+
+
+  getResult(index){
+    var result;
+
+    if(index == -1){
+      result =  <div className="check_answer_result">
+                  <p></p>
+                </div>;
+    }
+    else if(index == 0){
+      result =  <div className="check_answer_result">
+                  <p>Incorrect</p>
+                </div>;
+    }
+    else {
+      result =  <div className="check_answer_result">
+                  <p>Correct</p>
+                </div>;
+    }
+
+    return result;
+  }
+
+  questionDirections(styles){
+    if( this.props.settings.assessmentKind.toUpperCase() == "PRACTICE" ){
+      return "";
+    }
+
+    if(this.props.question.question_type == "multiple_answers_question"){
+      return <div style={styles.chooseText}>Choose <b>ALL</b> that apply.</div>;
+    } else if(this.props.question.question_type == "multiple_choice_question" ||
+        this.props.question.question_type == "true_false_question"){
+      return <div style={styles.chooseText}>Choose the <b>BEST</b> answer.</div>;
+    }
+    else if (this.props.question.question_type == 'multiple_dropdowns_question') {
+      return <div style={styles.chooseText} tabIndex="0">Complete the sentence by choosing the best answer choices from the dropdowns.</div>
+    }
+    else {
+      return "";
+    }
+  }
+
+  questionContent() {
+    if(this.props.question.question_type !== 'multiple_dropdowns_question'){
+      return (
+        <div
+          dangerouslySetInnerHTML={{
+            __html: this.props.question.material
+          }}>
+        </div>
+      )
+    }
+  }//questionContent
+
+
+  render() {
+    var styles = this.getStyles(this.context.theme);
+    var unAnsweredWarning = this.getWarning(this.state,  this.props.questionCount, this.props.currentIndex, styles);
+    var result = this.getResult(this.props.messageIndex);
+    var must_answer_message = this.state && this.state.showMessage ? <div style={styles.warning}>You must select an answer before continuing.</div> : "";
+    var confidenceButtons = this.getConfidenceLevels(this.props.confidenceLevels, styles);
+    var navigationDiv = this.getNavigationButtons(styles);
+
+
+    return (
+      <div className="assessment_container" style={styles.assessmentContainer}>
+        <div className="question">
+          <div style={styles.formativePadding}>
+            {this.formativeHeader(styles)}
+
+            <form className="edit_item" >
+              <div className="full_question" style={styles.fullQuestion}>
+                <div className="inner_question">
+                {this.simple_progress(styles)}
+                  <div className="question_text" style={styles.questionText}>
+                    {this.questionDirections(styles)}
+                    {this.questionContent()}
+                  </div>
+                  <UniversalInput item={this.props.question} isResult={false} registerGradingCallback={this.props.registerGradingCallback}/>
+                </div>
+                <div className="row">
+                  <div className="col-md-5 col-sm-6 col-xs-8" >
+                    {result}
+                    {confidenceButtons}
+                    {navigationDiv}
+                    {unAnsweredWarning}
+                    {must_answer_message}
+                  </div>
+                  <div className="col-md-7 col-sm-6 col-xs-4">
+                    {this.submitButton(styles)}
+                  </div>
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  submitButton(styles) {
+    if (this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" && this.props.confidenceLevels ||
+        (this.props.currentIndex != this.props.questionCount - 1)) {
+      return ""
+    }
+
+    return <div style={styles.submitButtonDiv}>
+      <button className="btn btn-check-answer"
+              style={styles.submitButton}
+              onClick={(e) => { this.submitButtonClicked(e) }}
+      >Submit</button>
+    </div>
+  }
+
+  formativeHeader(styles) {
+    var formativeHeader = "";
+    if (this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE") {
+      formativeHeader =
+          <div>
+            <div className="row">
+            </div>
+            <div className="row" style={styles.checkDiv}>
+              <div className="col-md-10">
+                <h4 style={styles.h4}>{this.props.assessment.title}</h4>
+              </div>
+              <div className="col-md-2">
+              </div>
+            </div>
+          </div>
+    }
+    return formativeHeader
+  }
+
+  //Check if we need to display the counter in the top right
+  simple_progress(styles) {
+    if ( this.props.questionCount > 1 && this.props.settings.assessmentKind.toUpperCase() == "PRACTICE") {
+      return <span style={styles.counter} aria-label={"You are on question " + (this.props.currentIndex + 1) + " of " + this.props.questionCount }>
+            {this.props.currentIndex + 1} of {this.props.questionCount}
+            </span>
+    } else {
+      return ""
+    }
+  }
+
   getStyles(theme){
     var navMargin = "-35px 650px 0 0";
     if(this.props.settings.confidenceLevels)
       navMargin = "-75px 20px 0 0";
+
+    var marginTop = "100px";
+    var boxShadow = theme.assessmentContainerBoxShadow;
+    if (this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ||
+        this.props.settings.assessmentKind.toUpperCase() == "PRACTICE") {
+      marginTop = "0px";
+      boxShadow = "";
+    }
+
+    var extraPadding = this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? "20px" : "";
+
     return {
+      formativePadding:{
+        padding: extraPadding
+      },
       assessmentContainer:{
-        marginTop: this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ?  "0px" : "100px",
-        boxShadow: this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ?  "" : theme.assessmentContainerBoxShadow,
+        marginTop: marginTop,
+        boxShadow: boxShadow,
         borderRadius: theme.assessmentContainerBorderRadius
       },
       header: {
-        backgroundColor: theme.headerBackgroundColor
+        backgroundColor: theme.headerBackgroundColor,
       },
       fullQuestion:{
         backgroundColor: this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? theme.outcomesBackgroundColor : theme.fullQuestionBackgroundColor,
@@ -213,206 +422,14 @@ export default class Item extends BaseComponent{
         color: "grey",
         fontSize: "90%",
         paddingBottom: "20px"
+      },
+      counter: {
+        color: 'black',
+        float: "right"
       }
+
     }
   }
-  getFooterNav(theme, styles){
-    if(theme.shouldShowFooter){
-      return  <div style={styles.footer}>
-                <button style={styles.footerPrev} onClick={()=>{this.previousButtonClicked()}}>
-                <i className="glyphicon glyphicon-chevron-left"></i>
-                Previous
-                </button>
-                <button style={styles.footerNext} onClick={()=>{this.nextButtonClicked()}}>
-                Next
-                <i className="glyphicon glyphicon-chevron-right"></i>
-                </button>
-              </div>
-    }
-
-    return "";
-  }
-
-  getWarning(state, questionCount, questionIndex, styles){
-    if(state && state.unAnsweredQuestions && state.unAnsweredQuestions.length > 0 && questionIndex + 1 == questionCount){
-      return <div style={styles.warning}><i className="glyphicon glyphicon-exclamation-sign"></i> You left question(s) {state.unAnsweredQuestions.join()} blank. Use the "Progress" drop-down menu at the top to go back and answer the question(s), then come back and submit.</div>
-    }
-
-    return "";
-  }
-
-  getConfidenceLevels(level, styles){
-    if(level){
-      var levelMessage = <div tabIndex="0" style={{marginBottom: "10px"}}><b>How sure are you of your answer? Click below to move forward.</b></div>;
-      return    (<div className="confidence_wrapper" style={styles.confidenceWrapper}>
-                  {levelMessage}
-                  <input type="button" style={styles.maybeButton}className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, "Just A Guess", this.props.currentIndex) }}/>
-                  <input type="button" style={{...styles.margin, ...styles.probablyButton}} className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Pretty Sure", this.props.currentIndex) }}/>
-                  <input type="button" style={{...styles.margin, ...styles.definitelyButton}} className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Very Sure", this.props.currentIndex) }}/>
-                </div>
-                );
-    } /*else {
-      return <div className="lower_level"><input type="button" className="btn btn-check-answer" value="Check Answer" onClick={() => { AssessmentActions.checkAnswer()}}/></div>
-    }*/
-  }
-
-  getNavigationButtons(styles) {
-    if (!this.context.theme.shouldShowNextPrevious && this.props.confidenceLevels) {
-      return "";
-    }
-
-    return <div className="confidence_wrapper" style={styles.navigationWrapper}>
-      {this.getPreviousButton(styles)}
-      {this.getNextButton(styles)}
-    </div>
-  }
-
-  getNextButton(styles) {
-    var disabled = (this.props.currentIndex == this.props.questionCount - 1) ? "disabled" : "";
-    return (
-        <button className={"btn btn-next-item " + disabled} style={styles.nextButton} onClick={(e) => { this.nextButtonClicked(e) }}>
-          <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
-        </button>);
-  }
-
-  getPreviousButton(styles) {
-    var prevButtonClassName = "btn btn-prev-item " + ((this.props.currentIndex > 0) ? "" : "disabled");
-    return (
-        <button className={prevButtonClassName} style={styles.previousButton} onClick={(e) => { this.previousButtonClicked(e) }}>
-          <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span>
-        </button>);
-  }
-
-
-  getResult(index){
-    var result;
-
-    if(index == -1){
-      result =  <div className="check_answer_result">
-                  <p></p>
-                </div>;
-    }
-    else if(index == 0){
-      result =  <div className="check_answer_result">
-                  <p>Incorrect</p>
-                </div>;
-    }
-    else {
-      result =  <div className="check_answer_result">
-                  <p>Correct</p>
-                </div>;
-    }
-
-    return result;
-  }
-
-  questionDirections(styles){
-    if(this.props.question.question_type == "multiple_answers_question"){
-      return <div style={styles.chooseText}>Choose <b>ALL</b> that apply.</div>;
-    } else if(this.props.question.question_type == "multiple_choice_question" ||
-        this.props.question.question_type == "true_false_question"){
-      return <div style={styles.chooseText}>Choose the <b>BEST</b> answer.</div>;
-    }
-    else if (this.props.question.question_type == 'multiple_dropdowns_question') {
-      return <div style={styles.chooseText} tabIndex="0">Complete the sentence by choosing the best answer choices from the dropdowns.</div>
-    }
-    else {
-      return "";
-    }
-  }
-
-  questionContent() {
-    if(this.props.question.question_type !== 'multiple_dropdowns_question'){
-      return (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: this.props.question.material
-          }}>
-        </div>
-      )
-    }
-  }//questionContent
-
-
-  render() {
-    var styles = this.getStyles(this.context.theme);
-    var unAnsweredWarning = this.getWarning(this.state,  this.props.questionCount, this.props.currentIndex, styles);
-    var result = this.getResult(this.props.messageIndex);
-    var must_answer_message = this.state && this.state.showMessage ? <div style={styles.warning}>You must select an answer before continuing.</div> : "";
-    var confidenceButtons = this.getConfidenceLevels(this.props.confidenceLevels, styles);
-    var submitButton = (this.props.currentIndex == this.props.questionCount - 1) ? <button className="btn btn-check-answer" style={styles.submitButton} onClick={(e)=>{this.submitButtonClicked(e)}}>Submit</button> : "";
-    var footer = this.getFooterNav(this.context.theme, styles);
-    var navigationDiv = this.getNavigationButtons(styles);
-
-    //Check if we need to display the counter in the top right
-    var counter = "";
-
-    if(this.context.theme.shouldShowCounter){
-      counter = <span className="counter">{this.props.currentIndex + 1} of {this.props.questionCount}</span>
-    }
-    var formativeHeader = "";
-    if(this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
-      formativeHeader =
-          <div>
-            <div className="row">
-            </div>
-            <div className="row" style={styles.checkDiv}>
-              <div className="col-md-10">
-                <h4 style={styles.h4}>{this.props.assessment.title}</h4>
-              </div>
-              <div className="col-md-2">
-              </div>
-            </div>
-          </div>
-    }
-
-    var formativeStyle = this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? {padding: "20px"} : {};
-    var submitButtonDiv =  <div style={styles.submitButtonDiv}>
-                          {submitButton}
-                        </div>;
-
-    if(this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" && this.props.confidenceLevels){
-      submitButtonDiv = ""
-    }
-
-    return (
-      <div className="assessment_container" style={styles.assessmentContainer}>
-        <div className="question">
-          <div className="header" style={styles.header}>
-                {counter}
-            <p>{this.props.question.title}</p>
-          </div>
-          <div style={formativeStyle}>
-            {formativeHeader}
-            <form className="edit_item" >
-              <div className="full_question" style={styles.fullQuestion}>
-                <div className="inner_question">
-                  <div className="question_text" style={styles.questionText}>
-                    {this.questionDirections(styles)}
-                    {this.questionContent()}
-                  </div>
-                  <UniversalInput item={this.props.question} isResult={false} registerGradingCallback={this.props.registerGradingCallback}/>
-                </div>
-                <div className="row">
-                  <div className="col-md-5 col-sm-6 col-xs-8" >
-                    {result}
-                    {confidenceButtons}
-                    {navigationDiv}
-                    {unAnsweredWarning}
-                    {must_answer_message}
-                  </div>
-                  <div className="col-md-7 col-sm-6 col-xs-4">
-                    {submitButtonDiv}
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-          {footer}
-        </div>
-      </div>
-    );
-  }//render
 
 }//item class
 
