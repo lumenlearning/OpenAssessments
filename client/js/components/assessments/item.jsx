@@ -405,11 +405,8 @@ export default class Item extends BaseComponent{
         backgroundColor: theme.confidenceWrapperBackgroundColor,
       },
       navigationWrapper: {
-        border: theme.confidenceWrapperBorder,
-        borderRadius: theme.confidenceWrapperBorderRadius,
         width: "300px",
         height: theme.confidenceWrapperHeight,
-        padding: theme.confidenceWrapperPadding,
         margin: theme.confidenceWrapperMargin,
         backgroundColor: theme.confidenceWrapperBackgroundColor,
       },

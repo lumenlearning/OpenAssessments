@@ -107,9 +107,23 @@ export default class Assessment{
       case 'matching_question':
         results = this.checkMatchingAnswer(item, selectedAnswers);
         break;
+      case 'multiple_dropdowns_question':
+        results = this.checkDropdownAnswers(item, selectedAnswers);
+        break;
     }
 
     return results;
+  }
+
+  static checkDropdownAnswers(item, selectedAnswers){
+    let answerFeedback = {};
+
+    return {
+        feedback: item.feedback["general_fb"],
+        answerFeedback: answerFeedback,
+        score: 1,
+        correct: true
+      };
   }
 
   static checkMultipleChoiceAnswer(item, selectedAnswerId){
