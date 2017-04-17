@@ -176,14 +176,16 @@ export default class Assessment{
         correct: true,
         score: 100,
         feedback_only: true,
-        feedback: ""
+        feedback: "",
+        allowResubmit: true
       }
     } else {
       return {
         correct: false,
         score: 0,
         feedback_only: true,
-        feedback: "Please enter a response."
+        feedback: "Please enter a response.",
+        allowResubmit: true
       }
     }
   }

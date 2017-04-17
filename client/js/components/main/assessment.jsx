@@ -37,6 +37,7 @@ export default class Assessment extends BaseComponent{
       settings             : SettingsStore.current(),
       answerMessage        : AssessmentStore.answerMessage(),
       studentAnswers       : AssessmentStore.allStudentAnswers(),
+      studentAnswer        : AssessmentStore.studentAnswers(),
       allQuestions         : AssessmentStore.allQuestions(),
       outcomes             : AssessmentStore.outcomes(),
       gradingCallback      : null
@@ -157,6 +158,7 @@ export default class Assessment extends BaseComponent{
         answerMessage     = {this.state.answerMessage}
         allQuestions     = {this.state.allQuestions}
         studentAnswers   = {this.state.studentAnswers}
+        studentAnswer   = {this.state.studentAnswer}
         confidenceLevels = {this.state.settings.confidenceLevels}
         previousQuestion = {this.previousQuestion}
         nextQuestion     = {this.nextQuestion}
@@ -175,14 +177,14 @@ export default class Assessment extends BaseComponent{
     var percentCompleted = this.checkProgress(this.state.currentIndex, this.state.questionCount);
     var progressStyle = {width:percentCompleted+"%"};
     var progressText = "";
-    var quizType = this.state.settings.assessmentKind.toUpperCase() === "SUMMATIVE" ? "Quiz" : "Show What You Know";
+    var quizType = AssessmentStore.isSummative() ? "Quiz" : "Show What You Know";
     var titleBar = <div style={styles.titleBar}>{this.state.assessment ? this.state.assessment.title : ""}</div>;
     if(this.state.assessment){
       progressText = this.context.theme.shouldShowProgressText ? <div><b>{this.state.assessment.title + " Progress"}</b>{" - You are on question " + (this.state.currentIndex + 1) + " of " + this.state.questionCount}</div> : "";
     }
 
-    if (this.state.settings.assessmentKind.toUpperCase() == "FORMATIVE" ||
-        this.state.settings.assessmentKind.toUpperCase() == "PRACTICE") {
+    if (AssessmentStore.isFormative() ||
+        AssessmentStore.isPractice()) {
       progressBar = "";
       titleBar = "";
     }
@@ -203,8 +205,8 @@ export default class Assessment extends BaseComponent{
   getStyles(theme){
     var minWidth = "635px";
     var padding = theme.assessmentPadding;
-    if (this.state.settings.assessmentKind.toUpperCase() == "FORMATIVE" ||
-        this.state.settings.assessmentKind.toUpperCase() == "PRACTICE") {
+    if (AssessmentStore.isFormative() ||
+        AssessmentStore.isPractice()) {
       padding = "";
       minWidth = "480px";
     }

@@ -10,7 +10,7 @@ import AssessmentStore    from "../../stores/assessment";
 export default class Item extends BaseComponent{
   constructor(){
     super();
-    this._bind("getConfidenceLevels", "confidenceLevelClicked","submitAssessment", "checkAnswerButton", "checkAnswerButtonClicked", "nextButtonClicked", "previousButtonClicked", "getPreviousButton", "getNextButton", "getStyles", "clearShowMessage");
+    this._bind("getConfidenceLevels", "inputOrReview", "confidenceLevelClicked","submitAssessment", "checkAnswerButton", "checkAnswerButtonClicked", "nextButtonClicked", "previousButtonClicked", "getPreviousButton", "getNextButton", "getStyles", "clearShowMessage");
   }
 
   nextButtonClicked(e){
@@ -49,9 +49,15 @@ export default class Item extends BaseComponent{
     });
   }
 
-  checkAnswerButtonClicked(e){
+  checkAnswerButtonClicked(e) {
     e && e.preventDefault();
-    this.props.checkAnswer(this.props.currentIndex);
+
+    if (AssessmentStore.hasAnsweredCurrent()) {
+      this.setState({showMessage: false});
+      this.props.checkAnswer(this.props.currentIndex);
+    } else {
+      this.setState({showMessage: true});
+    }
   }
 
   submitAssessmentButtonClicked(e){
@@ -161,7 +167,7 @@ export default class Item extends BaseComponent{
   }
 
   questionDirections(styles){
-    if( this.props.settings.assessmentKind.toUpperCase() == "PRACTICE" ){
+    if( AssessmentStore.isPractice() ){
       return "";
     }
 
@@ -204,13 +210,13 @@ export default class Item extends BaseComponent{
 
             <form className="edit_item" >
               <div className="full_question" style={styles.fullQuestion}>
-                <div className="inner_question">
                 {this.simple_progress(styles)}
+                <div className="inner_question">
                   <div className="question_text" style={styles.questionText}>
                     {this.questionDirections(styles)}
                     {this.questionContent()}
                   </div>
-                  <UniversalInput item={this.props.question} isResult={false} registerGradingCallback={this.props.registerGradingCallback}/>
+                  {this.inputOrReview(styles)}
                 </div>
                 <div className="row">
                   <div className="col-md-5 col-sm-6 col-xs-8" >
@@ -234,9 +240,24 @@ export default class Item extends BaseComponent{
     );
   }
 
+  inputOrReview(styles) {
+    if (this.props.answerMessage == null || ( !AssessmentStore.isFormative() && !AssessmentStore.isPractice())) {
+      return <UniversalInput
+          item={this.props.question}
+          isResult={false}
+          registerGradingCallback={this.props.registerGradingCallback}/>
+    } else {
+      return <UniversalInput
+          item={this.props.question}
+          isResult={true}
+          chosen={this.props.studentAnswer}
+          correctAnswers={this.props.question.correct}/>
+    }
+  }
+
   submitAssessmentButton(styles) {
-    if ((this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" && this.props.confidenceLevels) ||
-        (this.props.settings.assessmentKind.toUpperCase() == "PRACTICE") ||
+    if ((AssessmentStore.isFormative() && this.props.confidenceLevels) ||
+        (AssessmentStore.isPractice()) ||
         (this.props.currentIndex != this.props.questionCount - 1)) {
       return ""
     }
@@ -250,21 +271,23 @@ export default class Item extends BaseComponent{
   }
 
   checkAnswerButton(styles) {
-    if ( this.props.settings.assessmentKind.toUpperCase() !== "PRACTICE" ) {
+    if ( !AssessmentStore.isPractice() ) {
       return ""
     }
+    var showingResult = this.props.answerMessage && !this.props.answerMessage.allowResubmit;
 
     return <div style={styles.checkAnswerButtonDiv}>
       <button className="btn btn-check-answer"
               style={styles.checkAnswerButton}
               onClick={(e) => { this.checkAnswerButtonClicked(e) }}
+              disabled={showingResult}
       >Check Answer</button>
     </div>
   }
 
   formativeHeader(styles) {
     var formativeHeader = "";
-    if (this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE") {
+    if (AssessmentStore.isFormative()) {
       formativeHeader =
           <div>
             <div className="row">
@@ -283,7 +306,7 @@ export default class Item extends BaseComponent{
 
   //Check if we need to display the counter in the top right
   simple_progress(styles) {
-    if ( this.props.questionCount > 1 && this.props.settings.assessmentKind.toUpperCase() == "PRACTICE") {
+    if ( this.props.questionCount > 1 && AssessmentStore.isPractice()) {
       return <span style={styles.counter} aria-label={"You are on question " + (this.props.currentIndex + 1) + " of " + this.props.questionCount }>
             {this.props.currentIndex + 1} of {this.props.questionCount}
             </span>
@@ -299,13 +322,13 @@ export default class Item extends BaseComponent{
 
     var marginTop = "100px";
     var boxShadow = theme.assessmentContainerBoxShadow;
-    if (this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ||
-        this.props.settings.assessmentKind.toUpperCase() == "PRACTICE") {
+    if (AssessmentStore.isFormative() ||
+        AssessmentStore.isPractice()) {
       marginTop = "0px";
       boxShadow = "";
     }
 
-    var extraPadding = this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? "20px" : "";
+    var extraPadding = AssessmentStore.isFormative() ? "20px" : "";
 
     return {
       formativePadding:{
@@ -320,7 +343,7 @@ export default class Item extends BaseComponent{
         backgroundColor: theme.headerBackgroundColor,
       },
       fullQuestion:{
-        backgroundColor: this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? theme.outcomesBackgroundColor : theme.fullQuestionBackgroundColor,
+        backgroundColor: AssessmentStore.isFormative() ? theme.outcomesBackgroundColor : theme.fullQuestionBackgroundColor,
         paddingBottom: "20px",
       },
       questionText: {
@@ -395,7 +418,7 @@ export default class Item extends BaseComponent{
       },
       checkAnswerButtonDiv: {
         marginLeft: "20px",
-        marginTop: "86px"
+        marginTop: "20px"
       },
       warning: {
         margin: theme.confidenceWrapperMargin,

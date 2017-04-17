@@ -28,7 +28,7 @@ var _startedAt;
 var _finishedAt;
 var _selectedConfidenceLevel = 0;
 var _selectedAnswerIds = [];
-var _answerMessage = null;
+var _answerMessages = [];
 var _sectionIndex = 0;
 var _itemIndex = 0;
 var _studentAnswers = [];
@@ -157,7 +157,7 @@ var AssessmentStore = assign({}, StoreCommon, {
   },
 
   answerMessage(){
-    return _answerMessage;
+    return _answerMessages[_itemIndex];
   },
 
   studentAnswers(){
@@ -190,6 +190,15 @@ var AssessmentStore = assign({}, StoreCommon, {
   isSummative(){
     return _kind == "summative";
   },
+  isFormative(){
+    return _kind == "formative";
+  },
+  isSwyk(){
+    return _kind == "swyk";
+  },
+  isPractice(){
+    return _kind == "practice";
+  }
 
 });
 
@@ -237,7 +246,7 @@ Dispatcher.register(function(payload) {
       break;
     case Constants.ASSESSMENT_CHECK_ANSWER:
       var answer = checkAnswer();
-      _answerMessage = answer;
+      _answerMessages[_itemIndex] = answer;
       break;
 
     case Constants.ASSESSMENT_START:
@@ -259,8 +268,7 @@ Dispatcher.register(function(payload) {
         _itemIndex++;
         _items[_itemIndex].startTime = Utils.currentTime();
         _selectedAnswerIds = _studentAnswers[_itemIndex];
-        _answerMessage = null;
-      } 
+      }
       break;
 
     case Constants.ASSESSMENT_PREVIOUS_QUESTION:
@@ -270,7 +278,6 @@ Dispatcher.register(function(payload) {
         _itemIndex--;
         _items[_itemIndex].startTime = Utils.currentTime();
         _selectedAnswerIds = _studentAnswers[_itemIndex];
-        _answerMessage = null;
       }
       break;
 
@@ -292,14 +299,6 @@ Dispatcher.register(function(payload) {
       if(payload.index ==  _items.length - 1){
         _studentAnswers[_itemIndex] = _selectedAnswerIds;
       }
-      // if(SettingsStore.current().kind == "formative"){
-      //   var answer = checkAnswer();
-      //   if(answer != null && answer.correct)
-      //     _answerMessage = 1;
-      //   else if (answer != null && !answer.correct)
-      //     _answerMessage = 0;
-      
-      // }
       break;
     case Constants.QUESTION_SELECTED:
         _items[_itemIndex].timeSpent += calculateTime(_items[_itemIndex].startTime, Utils.currentTime()); 
@@ -307,7 +306,6 @@ Dispatcher.register(function(payload) {
         _itemIndex = payload.index;
         _items[_itemIndex].startTime = Utils.currentTime();
         _selectedAnswerIds = _studentAnswers[_itemIndex];
-        _answerMessage = null;
       break;
     case Constants.RETAKE_ASSESSMENT:
       _assessmentResult = null;
