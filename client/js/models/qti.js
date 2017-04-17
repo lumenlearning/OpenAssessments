@@ -139,7 +139,7 @@ export default class Qti{
     var correctAnswers = [];
     for (var i=0; i<respconditions.length; i++){
       var condition = $(respconditions[i]);
-      if(condition.find('setvar').text() != '0'){
+      if(condition.find('setvar').text() > '0'){
         var answer = {
           id: condition.find('conditionvar > varequal').text(),
           value: condition.find('setvar').text()
