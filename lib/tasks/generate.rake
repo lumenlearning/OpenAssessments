@@ -67,9 +67,9 @@ namespace :generate do
       assessment_id: asmnt.id,
       account_id: 1,
       style: "lumen_learning",
-      enable_start: asmnt.kind != 'formative',
+      enable_start: asmnt.kind != 'formative' && asmnt.kind != 'practice',
       mode: asmnt.kind,
-      confidence_levels: asmnt.kind != 'formative'
+      confidence_levels: asmnt.kind != 'formative' && asmnt.kind != 'practice'
     )
 
     asmnt
@@ -77,7 +77,7 @@ namespace :generate do
 
   def create_all_quizzes
     qti_files = ['spec/fixtures/swyk_quiz.xml', 'spec/fixtures/essay_question.xml', 'spec/fixtures/multi_dropdown_question.xml', 'spec/fixtures/swyk_quiz.xml', 'spec/fixtures/dropdown_essay_questions.xml']
-    kinds = ['formative', 'summative', 'show_what_you_know']
+    kinds = ['formative', 'practice', 'summative', 'show_what_you_know']
     created_quizzes = []
 
     qti_files.each do |file|
