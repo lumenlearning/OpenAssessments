@@ -146,10 +146,9 @@ export default class Item extends BaseComponent{
     if (answer == null) {
       return ""
     }
-    var result;
+    var result = "";
 
     if (answer.feedback_only) {
-      result = <p>{answer.feedback}</p>
     }
     else if (answer.correct) {
       result = <p>Correct</p>
@@ -163,6 +162,7 @@ export default class Item extends BaseComponent{
 
     return <div className="check_answer_result">
       {result}
+      {answer.feedback}
     </div>
   }
 
@@ -247,11 +247,18 @@ export default class Item extends BaseComponent{
           isResult={false}
           registerGradingCallback={this.props.registerGradingCallback}/>
     } else {
+      let answerFeedback = {};
+      if( this.props.answerMessage && this.props.answerMessage.answerFeedback ){
+        answerFeedback = this.props.answerMessage.answerFeedback
+      }
+
       return <UniversalInput
           item={this.props.question}
           isResult={true}
           chosen={this.props.studentAnswer}
-          correctAnswers={this.props.question.correct}/>
+          correctAnswers={this.props.question.correct}
+          answerFeedback={answerFeedback}
+      />
     }
   }
 

@@ -39,6 +39,16 @@ export default class CheckBox extends React.Component{
     return optionFlag;
   }
 
+  answerFeedback() {
+    if (this.props.answerFeedback) {
+      return <div className="check_answer_result">
+        {this.props.answerFeedback}
+      </div>
+    } else {
+      return "";
+    }
+  }
+
   render(){
 
     return (
@@ -49,6 +59,7 @@ export default class CheckBox extends React.Component{
             <input type="checkbox" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={()=>{ this.answerSelected() }}/>
             <span style={styles.span} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>
           </label>
+          {this.answerFeedback()}
         </div>
       </div>
     );

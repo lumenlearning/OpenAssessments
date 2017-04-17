@@ -64,7 +64,7 @@ export default class Qti{
         id         : xml.attr('ident'),
         title      : xml.attr('title'),
         objectives : objectives,
-        outcome   : this.parseOutcome(xml),
+        outcome    : this.parseOutcome(xml),
         material   : this.material(xml),
         timeSpent  : 0
       };
@@ -78,13 +78,13 @@ export default class Qti{
       }
 
       if(item.question_type == 'multiple_dropdowns_question'){
-        //debugger;
         item.dropdowns = this.parseMultiDropdownAnswers(xml);
         // item.correct = this.parseMultiDropdownCorrect(xml);
-      }
-      else {
+        item.feedback = this.parseFeedback(xml, true);
+      } else {
         item.answers = this.parseAnswers(xml);
         item.correct = this.parseCorrect(xml);
+        item.feedback = this.parseFeedback(xml);
       }
 
       if(item.question_type == 'mom_embed'){
@@ -155,6 +155,36 @@ export default class Qti{
       }
     }
     return correctAnswers;
+  }
+
+  static parseFeedback(xml, includeRespident = false) {
+    var respconditions = xml.find("respcondition");
+    var feedback = {};
+
+    for (var i = 0; i < respconditions.length; i++) {
+      let condition = $(respconditions[i]);
+      let displayfeedback = condition.find('displayfeedback');
+
+      if (displayfeedback && displayfeedback.attr("feedbacktype") == "Response") {
+        let feedbackReference = displayfeedback.attr('linkrefid');
+        let varEqual = condition.find('conditionvar > varequal');
+        let respident = varEqual.attr('respident');
+        let answerID = varEqual.text();
+
+        //<itemfeedback ident="i9bd655ce1be232718b9a4138dd03dd7d_fb">
+        let feedbackText = xml.find("itemfeedback[ident=" + feedbackReference + "] mattext").text().trim();
+        if (feedbackText != "") {
+          if (includeRespident) {
+            answerID = respident + answerID
+          } else if ( feedbackReference == 'general_fb' && answerID == "" ){
+            answerID = "general_fb"
+          }
+          feedback[answerID] = feedbackText
+        }
+      }
+    }
+
+    return feedback;
   }
 
   static parseAnswers(xml){

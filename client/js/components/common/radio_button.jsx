@@ -38,6 +38,16 @@ export default class RadioButton extends React.Component{
     return optionFlag;
   }
 
+  answerFeedback() {
+    if (this.props.answerFeedback) {
+      return <div className="check_answer_result">
+        {this.props.answerFeedback}
+      </div>
+    } else {
+      return "";
+    }
+  }
+
   render(){
     var styles = Styles;
     var checked = null;
@@ -69,6 +79,7 @@ export default class RadioButton extends React.Component{
             <input type="radio" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={()=>{ this.answerSelected() }}/>
             <span style={styles.span} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>
           </label>
+          {this.answerFeedback()}
         </div>
       </div>
     );

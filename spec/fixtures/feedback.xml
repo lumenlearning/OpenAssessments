@@ -91,6 +91,12 @@
               </conditionvar>
               <displayfeedback feedbacktype="Response" linkrefid="icf27daf19dea3e7e0e3874bbff45b61a_fb"/>
             </respcondition>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <other/>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="general_fb"/>
+            </respcondition>
             <respcondition continue="No">
               <conditionvar>
                 <and>
@@ -107,21 +113,30 @@
           <itemfeedback ident="i9bd655ce1be232718b9a4138dd03dd7d_fb">
             <flow_mat>
               <material>
-                <mattext texttype="text/plain">Correct. The DNA must be copied faithfully each replication cycle.</mattext>
+                <mattext texttype="text/plain">The DNA must be copied faithfully each replication cycle.</mattext>
               </material>
             </flow_mat>
           </itemfeedback>
           <itemfeedback ident="i0439eb225c2920bd2c76d991a612cc51_fb">
             <flow_mat>
               <material>
-                <mattext texttype="text/plain">Correct. The DNA information must be translatable into working proteins or else it is no good as a storage mechanism.</mattext>
+                <mattext texttype="text/plain">The DNA information must be translatable into working proteins or else it is no good as a storage mechanism.</mattext>
               </material>
             </flow_mat>
           </itemfeedback>
           <itemfeedback ident="icf27daf19dea3e7e0e3874bbff45b61a_fb">
             <flow_mat>
               <material>
-                <mattext texttype="text/plain">Incorrect. Not all organisms have a nucleus, but they all have DNA.</mattext>
+                <mattext texttype="text/plain">Not all organisms have a nucleus, but they all have DNA.</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+          <itemfeedback ident="general_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/html">&lt;p&gt;Example answers are:&lt;br&gt;Weird. Because reasons.&lt;/p&gt;
+&lt;p&gt;Great.&lt;span&gt; Because reasons.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Sad.&lt;span&gt; Because reasons.&lt;/span&gt;&lt;/p&gt;</mattext>
               </material>
             </flow_mat>
           </itemfeedback>
@@ -208,6 +223,12 @@
               </conditionvar>
               <setvar varname="SCORE" action="Set">0</setvar>
             </respcondition>
+             <respcondition continue="Yes">
+              <conditionvar>
+                <other/>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="general_fb"/>
+            </respcondition>
             <respcondition continue="No">
               <conditionvar>
                 <varequal respident="response1">i7b6fe73f5bf67df73be9ad25f73708eb</varequal>
@@ -218,21 +239,28 @@
           <itemfeedback ident="i6e4863b33090c2b51aa98adde2a3c225_fb">
             <flow_mat>
               <material>
-                <mattext texttype="text/plain">Incorrect. Endocrine signaling occurs when a cell targets a distant cell using the bloodstream</mattext>
+                <mattext texttype="text/plain">Endocrine signaling occurs when a cell targets a distant cell using the bloodstream</mattext>
               </material>
             </flow_mat>
           </itemfeedback>
           <itemfeedback ident="i5c373d035208f83a8292ca6b55cd19fc_fb">
             <flow_mat>
               <material>
-                <mattext texttype="text/plain">Incorrect. Paracrine signaling involves signaling to a nearby cell.</mattext>
+                <mattext texttype="text/plain">Paracrine signaling involves signaling to a nearby cell.</mattext>
               </material>
             </flow_mat>
           </itemfeedback>
           <itemfeedback ident="i7b6fe73f5bf67df73be9ad25f73708eb_fb">
             <flow_mat>
               <material>
-                <mattext texttype="text/plain">Correct. This one should be easy to remember because of ‘auto’!</mattext>
+                <mattext texttype="text/plain">This one should be easy to remember because of ‘auto’!</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+          <itemfeedback ident="general_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/html">General Feedback: :)</mattext>
               </material>
             </flow_mat>
           </itemfeedback>
@@ -425,42 +453,42 @@
           <itemfeedback ident="i2c61ebff5a7f675451467527df66788d_response_dropdown1_fb">
             <flow_mat>
               <material>
-                <mattext texttype="text/plain">Correct. Mutations may be beneficial.</mattext>
+                <mattext texttype="text/plain">Mutations may be beneficial.</mattext>
               </material>
             </flow_mat>
           </itemfeedback>
           <itemfeedback ident="if9f90eeaf400d228facde6bc48da5cfb_response_dropdown1_fb">
             <flow_mat>
               <material>
-                <mattext texttype="text/plain">Incorrect. There is no ‘always’ in biology.</mattext>
+                <mattext texttype="text/plain">There is no ‘always’ in biology.</mattext>
               </material>
             </flow_mat>
           </itemfeedback>
           <itemfeedback ident="ic7561db7a418dd39b2201dfe110ab4a4_response_dropdown1_fb">
             <flow_mat>
               <material>
-                <mattext texttype="text/plain">Incorrect. There is no ‘never’ in biology.</mattext>
+                <mattext texttype="text/plain">There is no ‘never’ in biology.</mattext>
               </material>
             </flow_mat>
           </itemfeedback>
           <itemfeedback ident="i2c61ebff5a7f675451467527df66788d_response_dropdown2_fb">
             <flow_mat>
               <material>
-                <mattext texttype="text/plain">Correct. Mutations may be detrimental.</mattext>
+                <mattext texttype="text/plain">Mutations may be detrimental.</mattext>
               </material>
             </flow_mat>
           </itemfeedback>
           <itemfeedback ident="if9f90eeaf400d228facde6bc48da5cfb_response_dropdown2_fb">
             <flow_mat>
               <material>
-                <mattext texttype="text/plain">Incorrect. There is no ‘always’ in biology.</mattext>
+                <mattext texttype="text/plain">There is no ‘always’ in biology.</mattext>
               </material>
             </flow_mat>
           </itemfeedback>
           <itemfeedback ident="ic7561db7a418dd39b2201dfe110ab4a4_response_dropdown2_fb">
             <flow_mat>
               <material>
-                <mattext texttype="text/plain">Incorrect. There is no ‘never’ in biology.</mattext>
+                <mattext texttype="text/plain">There is no ‘never’ in biology.</mattext>
               </material>
             </flow_mat>
           </itemfeedback>

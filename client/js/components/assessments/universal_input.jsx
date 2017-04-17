@@ -71,6 +71,14 @@ export default class UniversalInput extends React.Component{
     }
   }
 
+  answerFeedback(id){
+    if( this.props.answerFeedback && this.props.answerFeedback[id] ){
+      return this.props.answerFeedback[id];
+    } else {
+      return null
+    }
+  }
+
   render(){
 
     var styles = this.getStyles(this.props, this.context.theme)
@@ -104,7 +112,7 @@ export default class UniversalInput extends React.Component{
       case "multiple_choice_question":
       case "true_false_question":
         items = item.answers.map((answer) => {
-          return <RadioButton isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-radio" checked={this.wasChosen(answer.id)}  showAsCorrect={this.showAsCorrect(answer.id)}/>;
+          return <RadioButton isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-radio" checked={this.wasChosen(answer.id)}  showAsCorrect={this.showAsCorrect(answer.id)} answerFeedback={this.answerFeedback(answer.id)} />;
         });
         break;
       case "matching_question":
@@ -115,7 +123,7 @@ export default class UniversalInput extends React.Component{
         break;
       case "multiple_answers_question":
         items = item.answers.map((answer) => {
-          return <CheckBox isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-check" checked={this.wasChosen(answer.id)} showAsCorrect={this.showAsCorrect(answer.id)}/>;
+          return <CheckBox isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-check" checked={this.wasChosen(answer.id)} showAsCorrect={this.showAsCorrect(answer.id)} answerFeedback={this.answerFeedback(answer.id)} />;
         });
         break;
       case "mom_embed":

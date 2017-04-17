@@ -113,30 +113,40 @@ export default class Assessment{
   }
 
   static checkMultipleChoiceAnswer(item, selectedAnswerId){
-    var feedback = "";
     var score = "0";
     var correct = false;
+    var answerFeedback = {};
+    if (item.feedback[selectedAnswerId]) {
+      answerFeedback[selectedAnswerId] = item.feedback[selectedAnswerId]
+    }
+
     if(selectedAnswerId == item.correct[0].id){
       correct = true;
       score = item.correct[0].score;
     }
     return {
-      feedback: feedback,
+      feedback: item.feedback["general_fb"],
+      answerFeedback: answerFeedback,
       score: score,
       correct: correct
     };
   }
 
   static checkMultipleAnswerAnswer(item, selectedAnswerId) {
-    var feedback = "";
     var numOfAnswers = item.correct[0].id.length;
     var numOfCorrectAnswers = 0;
     var numOfInCorrectAnswers = 0;
+    var answerFeedback = {};
 
     for (var i = 0; i < selectedAnswerId.length; i++) {
+      let answerID = selectedAnswerId[i];
+      if(item.feedback[answerID]){
+        answerFeedback[answerID] = item.feedback[answerID];
+      }
+
       let correct = false;
       for (var j = 0; j < numOfAnswers; j++) {
-        if (selectedAnswerId[i] == item.correct[0].id[j]) {
+        if (answerID == item.correct[0].id[j]) {
           correct = true;
           break;
         }
@@ -150,19 +160,22 @@ export default class Assessment{
 
     if (numOfInCorrectAnswers == 0 && numOfAnswers == numOfCorrectAnswers) {
       return {
-        feedback: feedback,
+        feedback: item.feedback["general_fb"],
+        answerFeedback: answerFeedback,
         score: 100,
         correct: true
       };
     } else if (numOfCorrectAnswers > 0) {
       return {
-        feedback: feedback,
+        feedback: item.feedback["general_fb"],
+        answerFeedback: answerFeedback,
         score: numOfCorrectAnswers,
         correct: false
       };
     } else {
       return {
-        feedback: feedback,
+        feedback: item.feedback["general_fb"],
+        answerFeedback: answerFeedback,
         score: 0,
         correct: false
       };
@@ -176,7 +189,7 @@ export default class Assessment{
         correct: true,
         score: 100,
         feedback_only: true,
-        feedback: "",
+        feedback: item.feedback["general_fb"],
         allowResubmit: true
       }
     } else {
