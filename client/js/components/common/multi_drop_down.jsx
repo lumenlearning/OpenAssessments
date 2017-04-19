@@ -32,9 +32,6 @@ export default class MultiDropDown extends BaseComponent {
       padding: theme.questionTextPadding,
     };
 
-    //change role from dialog to group to give them an OPTION to review it rather than force a readback.
-
-    //place JSX between the parens!
     return (
       <div>
         <div tabIndex="0" dangerouslySetInnerHTML={{__html: question}} style={questionText} />

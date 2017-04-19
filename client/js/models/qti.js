@@ -79,7 +79,7 @@ export default class Qti{
 
       if(item.question_type == 'multiple_dropdowns_question'){
         item.dropdowns = this.parseMultiDropdownAnswers(xml);
-        // item.correct = this.parseMultiDropdownCorrect(xml);
+        item.correct = this.parseMultiDropdownCorrect(xml);
         item.feedback = this.parseFeedback(xml, item.dropdowns, true);
       } else {
         item.answers = this.parseAnswers(xml);
@@ -133,6 +133,28 @@ export default class Qti{
     
     return answers;
   }//parseMultiDropdownAnswers
+
+  static parseMultiDropdownCorrect(xml) {
+    let correct = [];
+
+    $.each(xml.find('respcondition'), (i, respcondition) => {
+      let rescon = $(respcondition);
+      let varEqual = rescon.find('varequal');
+      // let displayFeedback = rescon.find('displayfeedback');
+      let setVar = rescon.find('setvar');
+
+      if(setVar.text() !== '') {
+        correct.push({
+          value: varEqual.text(),
+          name: $(xml).find(`presentation > response_lid[ident=${varEqual.attr('respident')}] > material > mattext`).text(),
+        });
+      }
+
+    }); //each
+
+    return correct;
+
+  }//parseMultiDropdownCorrect
 
   static parseCorrect(xml){
     var respconditions = xml.find("respcondition");
