@@ -4,8 +4,10 @@ module Json2Qti
 
     def initialize(item)
       @title = item["title"] || ''
-      @material = item["material"] || ''
-      @answers = item["answers"]
+
+      @material = Json2Qti::white_list_sanitize_html(item["material"]) || ''
+      @answers = item["answers"].map{|a| a["material"] = Json2Qti::white_list_sanitize_html(a["material"]) || ''; a }
+
       @id = item["id"]
       @key = [@material, @answers]
       @ident = generate_digest_ident(@key)

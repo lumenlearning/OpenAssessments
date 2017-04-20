@@ -21,7 +21,7 @@ export default class QuestionInterface extends BaseComponent{
         <div style={_.merge({paddingBottom: "0.25em"}, style.label)}>Question</div>
         <SimpleRCE
           content={this.props.material}
-          config="basic"
+          config={"sanitize_less"}
           onChange={this.props.onChange}
           />
       </div>
