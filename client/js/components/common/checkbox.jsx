@@ -41,12 +41,14 @@ export default class CheckBox extends React.Component{
 
   answerFeedback() {
     if (this.props.answerFeedback) {
-      return <div className="check_answer_result">
-        {this.props.answerFeedback}
-      </div>
+      return <div className="check_answer_result" dangerouslySetInnerHTML={ this.answerFeedbackMarkup() } />
     } else {
       return "";
     }
+  }
+
+  answerFeedbackMarkup(){
+    return { __html: this.props.answerFeedback }
   }
 
   render(){

@@ -162,8 +162,12 @@ export default class Item extends BaseComponent{
 
     return <div className="check_answer_result">
       {result}
-      {answer.feedback}
+      <div dangerouslySetInnerHTML={ this.getGeneralFeedbackMarkup(answer) }/>
     </div>
+  }
+
+  getGeneralFeedbackMarkup(answer){
+    return { __html: answer.feedback }
   }
 
   questionDirections(styles){
