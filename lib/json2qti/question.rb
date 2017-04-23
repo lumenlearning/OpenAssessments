@@ -5,7 +5,7 @@ module Json2Qti
     def initialize(item)
       @title = item["title"] || ''
       @material = item["material"] || ''
-      @answers = item["answers"]
+      @answers = item["answers"] || []
       @id = item["id"]
       @key = [@material, @answers]
       @ident = generate_digest_ident(@key)
@@ -24,7 +24,7 @@ module Json2Qti
         when 'multiple_choice_question'
           MultipleChoice.new(item)
         when 'mom_embed'
-          nil
+          OhmEmbed.new(item)
         else
           nil
       end
@@ -49,13 +49,11 @@ module Json2Qti
     end
 
     def answer_choices
-      <<XML
-           <response_lid ident="response1" rcardinality="#{rcardinality}">
-              <render_choice>
-#{response_labels}
-              </render_choice>
-            </response_lid>
-XML
+      ""
+    end
+
+    def material_ext
+      ""
     end
 
     def response_labels
@@ -93,6 +91,7 @@ XML
           <presentation>
             <material>
               <mattext texttype="text/html">#{@material.encode(:xml => :text)}</mattext>
+#{material_ext}
             </material>
 #{answer_choices}
           </presentation>

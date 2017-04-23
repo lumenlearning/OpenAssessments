@@ -87,7 +87,9 @@ module Json2Qti
       if @group_by_section
         write_sections
       else
+        @qti += start_section("selectionsection")
         write_items(@items)
+        @qti += end_section
       end
 
       @qti += end_quiz

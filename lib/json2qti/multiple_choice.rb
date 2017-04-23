@@ -8,6 +8,16 @@ module Json2Qti
       "Single"
     end
 
+    def answer_choices
+      <<XML
+           <response_lid ident="response1" rcardinality="#{rcardinality}">
+              <render_choice>
+#{response_labels}
+              </render_choice>
+            </response_lid>
+XML
+    end
+
     def answer_processing
       out = ""
       @answers.each do |ans|

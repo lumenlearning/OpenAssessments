@@ -46,7 +46,7 @@ describe Json2Qti::Converter do
   it "should build the proper structure" do
     node = Nokogiri::XML(converter.convert_to_qti)
 
-    expect(node.at_css('assessment > section > item')).not_to eq nil
+    expect(node.at_css('assessment > section > section > item')).not_to eq nil
     expect(node.at_css('assessment > qtimetadata > qtimetadatafield')).not_to eq nil
   end
 
