@@ -56,7 +56,8 @@ namespace :generate do
             title: File.basename(file_path, '.xml'),
             description: "use this to test #{kind} quizzes.",
             account_id: 1,
-            kind: kind
+            kind: kind,
+            external_edit_id: 'devedit'
     )
     File.open(file_path) do |file|
       asmnt.xml_file = file
