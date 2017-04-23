@@ -51,13 +51,20 @@ export default class Item extends BaseComponent{
 
   checkAnswerButtonClicked(e) {
     e && e.preventDefault();
+    let that = this;
+    this.props.selectQuestion(this.props.currentIndex, function () {
+      if (AssessmentStore.hasAnsweredCurrent()) {
+        that.setState({showMessage: false});
+        that.props.checkAnswer(that.props.currentIndex);
 
-    if (AssessmentStore.hasAnsweredCurrent()) {
-      this.setState({showMessage: false});
-      this.props.checkAnswer(this.props.currentIndex);
-    } else {
-      this.setState({showMessage: true});
-    }
+        // If it's a practice quiz submit the full quiz when they've checked all the answers
+        if (AssessmentStore.isPractice() && Item.checkCompletion() === true) {
+          that.submitAssessment();
+        }
+      } else {
+        that.setState({showMessage: true});
+      }
+    });
   }
 
   submitAssessmentButtonClicked(e){

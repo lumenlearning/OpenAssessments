@@ -22,7 +22,7 @@ export default class Assessment extends BaseComponent{
 
   getState(props, context){
     var showStart = SettingsStore.current().enableStart && !AssessmentStore.isStarted();
-    if(AssessmentStore.assessmentResult() != null){
+    if(AssessmentStore.assessmentResult() != null && !AssessmentStore.isPractice() ){
       context.router.transitionTo("assessment-result");
     }
     return {
@@ -145,7 +145,7 @@ export default class Assessment extends BaseComponent{
     var content;
     var progressBar;
     var titleBar;
-    if(!this.state.isLoaded || this.state.isSubmitted){
+    if(!this.state.isLoaded || (this.state.isSubmitted && !AssessmentStore.isPractice() )){
       content = <Loading />;
      }else {
       content = <Item
