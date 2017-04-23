@@ -21,13 +21,18 @@ module Json2Qti
   #   </itemproc_extension>
   # </resprocessing>
   class OhmEmbed < Question
+    BASE_URL = "https://www.myopenmath.com/OEAembedq.php"
     IFRAME = %{<iframe id="mom%d" src="%s" style="width:100%%;height:150px"></iframe>}
 
     def initialize(item)
       super(item)
 
       @embed_info = item["mom_embed"]
-      @material = IFRAME % [@embed_info["questionId"], @embed_info["embedUrl"]]
+      @domain = @embed_info["domain"]
+      @question_id = @embed_info["questionId"].to_i
+
+      @url = ohm_url(@question_id)
+      @material = IFRAME % [@question_id, @url]
     end
 
     def type
@@ -37,9 +42,9 @@ module Json2Qti
     def material_ext
       <<XML
             <mat_extension>
-              <mom_domain>#{@embed_info["domain"].encode(:xml => :text)}</mom_domain>
-              <mom_question_id>#{@embed_info["questionId"].encode(:xml => :text)}</mom_question_id>
-              <mom_embed_url>#{@embed_info["embedUrl"].encode(:xml => :text)}</mom_embed_url>
+              <mom_domain>#{@domain.encode(:xml => :text)}</mom_domain>
+              <mom_question_id>#{@question_id.to_s.encode(:xml => :text)}</mom_question_id>
+              <mom_embed_url>#{@url.encode(:xml => :text)}</mom_embed_url>
             </mat_extension>
 XML
     end
@@ -50,6 +55,24 @@ XML
               <!-- My Open Math questions are graded remotely and passed via the client -->
             </itemproc_extension>
 XML
+    end
+
+
+    # "https://www.myopenmath.com/OEAembedq.php?id=1018&theme=oea&jssubmit=1&showscoredonsubmit=0&showhints=0&auth=bracken"
+    def ohm_url(question_id=nil)
+      question_id ||= @question_id
+
+      uri = URI.parse BASE_URL
+      query_vals = URI.decode_www_form(uri.query || '')
+      query_vals << ['id', question_id]
+      query_vals << ['theme', 'oea']
+      query_vals << ['jssubmit', "1"]
+      query_vals << ['showscoredonsubmit', '0']
+      query_vals << ['showhints', '0']
+      query_vals << ['auth', Rails.application.secrets.mom_key]
+      uri.query = URI.encode_www_form(query_vals)
+
+      uri.to_s
     end
 
   end

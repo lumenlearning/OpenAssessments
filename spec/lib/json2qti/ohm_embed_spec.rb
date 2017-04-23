@@ -25,8 +25,8 @@ describe Json2Qti::OhmEmbed do
     node = Nokogiri::XML(question.to_qti)
     material = node.at_css('presentation > material > mattext').text
 
-    expect(material).to include(json["mom_embed"]["embedUrl"])
-    expect(material).to eq (Json2Qti::OhmEmbed::IFRAME % ["987", json["mom_embed"]["embedUrl"]])
+    expect(material).to_not include(json["mom_embed"]["embedUrl"])
+    expect(material).to eq (Json2Qti::OhmEmbed::IFRAME % ["987", question.ohm_url])
   end
 
   it "should info in presentation > material > mat_extension" do
@@ -34,7 +34,8 @@ describe Json2Qti::OhmEmbed do
 
     expect(node.at_css('presentation > material > mat_extension > mom_domain').text).to eq json["mom_embed"]["domain"]
     expect(node.at_css('presentation > material > mat_extension > mom_question_id').text).to eq json["mom_embed"]["questionId"]
-    expect(node.at_css('presentation > material > mat_extension > mom_embed_url').text).to eq json["mom_embed"]["embedUrl"]
+    expect(node.at_css('presentation > material > mat_extension > mom_embed_url').text).to eq question.ohm_url
+    expect(node.at_css('presentation > material > mat_extension > mom_embed_url').text).to_not eq json["mom_embed"]["embedUrl"]
   end
 
 
