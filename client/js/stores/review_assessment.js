@@ -253,6 +253,12 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
   },
   isSwyk(){
     return _kind == "swyk";
+  },
+  isPractice(){
+    return _kind == "practice";
+  },
+  editableQuestionType(type){
+    return type == 'multiple_choice_question' || type == 'multiple_answers_question';
   }
 });
 

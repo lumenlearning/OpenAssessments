@@ -52,7 +52,6 @@ export default class Question extends BaseComponent{
     let style     = Style.styles();
     let delHover  = this.state.hover.delete;
     let copyHover = this.state.hover.copy;
-    let editHover = this.state.hover.edit;
     let Content   = question.inDraft ? QuestionInterface : QuestionBlock;
     var state_text = '';
     var headerStyle = style.questionHeader;
@@ -87,17 +86,7 @@ export default class Question extends BaseComponent{
                  alt="Duplicate"
               />
             </Tooltip>
-            <Tooltip message={question.inDraft ? 'Cancel Editing' : 'Edit Question'} position='top-left'>
-            <img className='questionToolBtns'
-                 style={_.merge({}, style.questionToolBtns, {backgroundColor: editHover || question.inDraft ? '#31708f' : 'transparent'})}
-                 src={`/assets/${question.inDraft ? 'close' : 'pencil-64-white'}.png`}
-                 onClick={this.toggleEdit}
-                 onMouseOver={this.handleHoverStates}
-                 onMouseLeave={this.handleHoverStates}
-                 data-hovertype="edit"
-                 alt="Edit"
-              />
-            </Tooltip>
+            {this.editQuestionButton(question, style)}
             <Tooltip message='Delete Question' position='top-left'>
             <img className='questionToolBtns'
                  style={_.merge({}, style.questionToolBtns, {backgroundColor: delHover ? '#bb5432' : 'transparent'})}
@@ -128,6 +117,33 @@ export default class Question extends BaseComponent{
         </div>
       </li>
     );
+  }
+
+  editQuestionButton(question, style) {
+      let editHover = this.state.hover.edit;
+    if (ReviewAssessmentStore.editableQuestionType(question.question_type)) {
+
+      return <Tooltip message={question.inDraft ? 'Cancel Editing' : 'Edit Question'} position='top-left'>
+        <img className='questionToolBtns'
+             style={_.merge({}, style.questionToolBtns, {backgroundColor: editHover || question.inDraft ? '#31708f' : 'transparent'})}
+             src={`/assets/${question.inDraft ? 'close' : 'pencil-64-white'}.png`}
+             onClick={this.toggleEdit}
+             onMouseOver={this.handleHoverStates}
+             onMouseLeave={this.handleHoverStates}
+             data-hovertype="edit"
+             alt="Edit"
+        />
+      </Tooltip>
+    } else {
+      return <Tooltip message="This question type isn't currently editable." position='top-left'>
+        <img className='questionToolBtns'
+             style={_.merge({}, style.questionToolBtns, {cursor: "help", border: "none", borderRadius: ""})}
+             src={`/assets/warning-32-yellow.png`}
+             data-hovertype="edit"
+             alt="Editing not enabled for this question type."
+        />
+      </Tooltip>
+    }
   }
 
   /*CUSTOM HANDLER FUNCTIONS*/
