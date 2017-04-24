@@ -198,7 +198,8 @@ export default class Qti{
         let feedbackText = xml.find("itemfeedback[ident=" + feedbackReference + "] mattext").text().trim();
         if (feedbackText != "") {
           if (isDropdown) {
-            answerID = respident + answerID;
+            let key = xml.find(`presentation > response_lid[ident=${respident}] > material > mattext`).text();
+            answerID = key + answerID
           } else if ( feedbackReference == 'general_fb' && answerID == "" ){
             answerID = "general_fb"
           } else {

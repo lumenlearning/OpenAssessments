@@ -1,4 +1,5 @@
 import $                  from 'jquery';
+import React              from 'react';
 import Utils              from '../utils/utils';
 import Qti                from './qti';
 import AssessmentActions  from "../actions/assessment";
@@ -117,12 +118,37 @@ export default class Assessment{
 
   static checkDropdownAnswers(item, selectedAnswers){
     let answerFeedback = {};
+    let score = 0;
+    let correct = false;
 
+    let feedback = selectedAnswers.map((selAnswer, i) => {
+      let color = "";
+
+      //build score
+      item.correct.find((correctAns) => {
+        if(correctAns.name == selAnswer.dropdown_id && correctAns.value === selAnswer.chosen_answer_id){
+          color = '#6fb88a';
+          score = score + (1/item.correct.length);
+          return true;
+        }
+        else if(correctAns.name == selAnswer.dropdown_id && correctAns.value !== selAnswer.chosen_answer_id){
+          color = 'red';
+          return false;
+        }
+      });
+
+      return <p style={{color: color}}>({i+1}) {item.feedback[`${selAnswer.dropdown_id}${selAnswer.chosen_answer_id}`]}</p>;
+    });
+
+    if(score >= 1){
+      correct = true;
+    }
+    
     return {
-        feedback: item.feedback["general_fb"],
+        feedback: feedback,
         answerFeedback: answerFeedback,
-        score: 1,
-        correct: true
+        score: score,
+        correct: correct
       };
   }
 

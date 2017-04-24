@@ -154,6 +154,7 @@ export default class Item extends BaseComponent{
       return ""
     }
     var result = "";
+    let feedback = "";
 
     if (answer.feedback_only) {
     }
@@ -167,9 +168,17 @@ export default class Item extends BaseComponent{
       result = <p>Incorrect</p>
     }
 
+    if(typeof answer.feedback == 'object'){
+      feedback = answer.feedback.map((feedbackItem) => {
+        return <p>{feedbackItem}</p>
+      });
+    } else {
+      feedback = <div dangerouslySetInnerHTML={ this.getGeneralFeedbackMarkup(answer) }/>
+    }
+
     return <div className="check_answer_result">
       {result}
-      <div dangerouslySetInnerHTML={ this.getGeneralFeedbackMarkup(answer) }/>
+      {feedback}
     </div>
   }
 
