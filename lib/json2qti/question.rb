@@ -44,6 +44,14 @@ module Json2Qti
       end
     end
 
+    def respident
+      "response1"
+    end
+
+    def feedback_ident(id)
+      "#{id}_#{respident}_fb"
+    end
+
     def rcardinality
       ""
     end
@@ -100,7 +108,9 @@ XML
               <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
             </outcomes>
 #{answer_processing}
+#{feedback_processing}
           </resprocessing>
+#{feedbacks}
         </item>
 XML
     end
@@ -120,6 +130,39 @@ XML
                 <fieldlabel>outcome_long_title</fieldlabel>
                 <fieldentry>#{@outcome['long_title'].encode(:xml => :text)}</fieldentry>
               </qtimetadatafield>
+XML
+    end
+
+    # Iterate over the answers and create a `feedback_condition` for each one
+    def feedback_processing
+      ""
+    end
+
+    def feedback_condition(respident, answer_ident, feedback_ident)
+      <<XML
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="#{respident.encode(:xml => :text)}">#{answer_ident.encode(:xml => :text)}</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="#{feedback_ident.encode(:xml => :text)}"/>
+            </respcondition>
+XML
+    end
+
+    # Iterate over the answers and create a `feedback` for each one
+    def feedbacks
+      ""
+    end
+
+    def feedback(ident, mattext)
+      <<XML
+          <itemfeedback ident="#{ident.encode(:xml => :text)}">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/html">#{mattext.encode(:xml => :text)}</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
 XML
     end
 

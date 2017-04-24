@@ -13,17 +13,20 @@ describe Json2Qti::MultipleSelect do
                     {
                             "id" => "9755",
                             "material" => "This?",
-                            "isCorrect" => true
+                            "isCorrect" => true,
+                            "feedback" => 'Yay, you did it!'
                     },
                     {
                             "id" => "4501",
                             "material" => "Or this?",
-                            "isCorrect" => false
+                            "isCorrect" => false,
+                            "feedback" => "try again"
                     },
                     {
                             "id" => "4501",
                             "material" => "Or this FRD?",
-                            "isCorrect" => true
+                            "isCorrect" => true,
+                            "feedback" => "also <em>yay!</em>"
                     }
             ],
             "outcome" => {
@@ -52,4 +55,22 @@ describe Json2Qti::MultipleSelect do
   it "should set the question type" do
     expect(question.to_qti).to include("<fieldentry>multiple_answers_question</fieldentry>")
   end
+
+  it "should add the feedback respconditions and itemfeedbacks" do
+    node = Nokogiri::XML(question.to_qti)
+
+    json["answers"].each do |answer|
+      answer_ident = question.generate_digest_ident(answer["material"])
+      feedback_ident = question.feedback_ident(answer_ident)
+      displayfeedback = node.at_css("displayfeedback[linkrefid=#{feedback_ident}]")
+      resp = displayfeedback.parent
+      varequal = resp.at_css('varequal')
+      itemfeedback = node.at_css("itemfeedback[ident=#{feedback_ident}] mattext").text
+
+      expect(varequal.text).to eq answer_ident
+      expect(varequal["respident"]).to eq question.respident
+      expect(itemfeedback).to eq answer["feedback"]
+    end
+  end
+
 end

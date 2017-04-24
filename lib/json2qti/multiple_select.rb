@@ -55,5 +55,32 @@ XML
             </respcondition>
 XML
     end
+
+     # Iterate over the answers and create a `feedback_condition` for each one
+    def feedback_processing
+      out = ""
+      @answers.each do |ans|
+        unless ans["feedback"].blank?
+          out += feedback_condition(respident, ans["ident"], feedback_ident(ans["ident"]))
+        end
+      end
+
+      out
+    end
+
+    # Iterate over the answers and create a `feedback` for each one
+    def feedbacks
+      out = ""
+      @answers.each do |ans|
+        unless ans["feedback"].blank?
+          out += feedback(feedback_ident(ans["ident"]), ans["feedback"])
+        end
+      end
+
+      out
+    end
+
+
+
   end
 end

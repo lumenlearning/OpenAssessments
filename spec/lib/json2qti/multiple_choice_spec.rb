@@ -13,7 +13,8 @@ describe Json2Qti::MultipleChoice do
                     {
                             "id" => "9755",
                             "material" => "This?",
-                            "isCorrect" => true
+                            "isCorrect" => true,
+                            "feedback" => "<strong>Good job!</strong>"
                     },
                     {
                             "id" => "4501",
@@ -34,8 +35,11 @@ describe Json2Qti::MultipleChoice do
     node = Nokogiri::XML(question.to_qti)
 
     node.css('respcondition').each do |cond|
+      setvar = cond.at_css('setvar')
+      next unless setvar
+
       id = cond.at_css('varequal').text
-      score = cond.at_css('setvar').text
+      score = setvar.text
       item = question.answers.find{|a| a["ident"] == id}
 
       expect(score).to eq item["isCorrect"] ? "100" : "0"
@@ -54,4 +58,52 @@ describe Json2Qti::MultipleChoice do
   it "should set the question type" do
     expect(question.to_qti).to include("<fieldentry>multiple_choice_question</fieldentry>")
   end
+
+  context "feedback" do
+    before do
+      @answer = json["answers"][0]
+      @answer_ident = question.generate_digest_ident(@answer["material"])
+      @feedback_ident = question.feedback_ident(@answer_ident)
+      @node = Nokogiri::XML(question.to_qti)
+    end
+
+    # <respcondition continue="Yes">
+    #   <conditionvar>
+    #     <varequal respident="response1">i4358c9f7de1996591ed4140139ac8941</varequal>
+    #   </conditionvar>
+    #   <displayfeedback feedbacktype="Response" linkrefid="i4358c9f7de1996591ed4140139ac8941_response1"/>
+    # </respcondition>
+    it "should create a feedback respcondition" do
+      displayfeedback = @node.at_css("displayfeedback[linkrefid=#{@feedback_ident}]")
+      resp = displayfeedback.parent
+      varequal = resp.at_css('varequal')
+
+      expect(varequal.text).to eq @answer_ident
+      expect(varequal["respident"]).to eq question.respident
+    end
+
+    # <itemfeedback ident="i4358c9f7de1996591ed4140139ac8941_response1">
+    #   <flow_mat>
+    #     <material>
+    #       <mattext texttype="text/html">&lt;strong&gt;Good job!&lt;/strong&gt;</mattext>
+    #     </material>
+    #   </flow_mat>
+    # </itemfeedback>
+    it "should create an itemfeedback" do
+      feedback = @node.at_css("itemfeedback[ident=#{@feedback_ident}] mattext").text
+
+      expect(feedback).to eq @answer["feedback"]
+    end
+
+    it "shouldn't create respcondition/itemfeedback if none for an answer" do
+      answer = json["answers"][1]
+      answer_ident = question.generate_digest_ident(answer["material"])
+      feedback_ident = question.feedback_ident(answer_ident)
+
+      expect(@node.at_css("displayfeedback[linkrefid=#{feedback_ident}]")).to be_nil
+      expect(@node.at_css("itemfeedback[ident=#{feedback_ident}]")).to be_nil
+    end
+
+  end
+
 end

@@ -90,7 +90,8 @@ export default {
         return {
           id: ans.id,
           material: ans.material,
-          isCorrect: ans.isCorrect
+          isCorrect: ans.isCorrect,
+          feedback: ans.feedback
         }
       });
       return {

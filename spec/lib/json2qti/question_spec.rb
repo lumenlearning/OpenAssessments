@@ -9,16 +9,19 @@ describe Json2Qti::Question do
             "title" => "This & That",
             "question_type" => "multiple_choice_question",
             "material" => "Which of the following? &",
+            "general_feedback" => "You answered it!",
             "answers" => [
                     {
                             "id" => "9755",
                             "material" => "This?",
-                            "isCorrect" => true
+                            "isCorrect" => true,
+                            "feedback" => "<strong>Good job!</strong>"
                     },
                     {
                             "id" => "4501",
                             "material" => "& Or this?",
-                            "isCorrect" => false
+                            "isCorrect" => false,
+                            "feedback" => "<em>Maybe next time.</em>"
                     }
             ],
             "outcome" => {
@@ -50,4 +53,7 @@ describe Json2Qti::Question do
   it "should set the question type" do
     expect(question.to_qti).to include("<fieldentry>multiple_choice_question</fieldentry>")
   end
+
+  it "should add general feedback"
+
 end

@@ -1,5 +1,6 @@
 module Json2Qti
   class MultipleChoice < Question
+
     def type
       "multiple_choice_question"
     end
@@ -10,7 +11,7 @@ module Json2Qti
 
     def answer_choices
       <<XML
-           <response_lid ident="response1" rcardinality="#{rcardinality}">
+           <response_lid ident="#{respident}" rcardinality="#{rcardinality}">
               <render_choice>
 #{response_labels}
               </render_choice>
@@ -23,9 +24,9 @@ XML
       @answers.each do |ans|
         score = ans["isCorrect"] ? "100" : "0"
         out += <<XML
-            <respcondition continue="No">
+            <respcondition continue="Yes">
               <conditionvar>
-                <varequal respident="response1">#{ans["ident"]}</varequal>
+                <varequal respident="#{respident}">#{ans["ident"]}</varequal>
               </conditionvar>
               <setvar varname="SCORE" action="Set">#{score}</setvar>
             </respcondition>
@@ -34,5 +35,30 @@ XML
 
       out
     end
+
+    # Iterate over the answers and create a `feedback_condition` for each one
+    def feedback_processing
+      out = ""
+      @answers.each do |ans|
+        unless ans["feedback"].blank?
+          out += feedback_condition(respident, ans["ident"], feedback_ident(ans["ident"]))
+        end
+      end
+
+      out
+    end
+
+    # Iterate over the answers and create a `feedback` for each one
+    def feedbacks
+      out = ""
+      @answers.each do |ans|
+        unless ans["feedback"].blank?
+          out += feedback(feedback_ident(ans["ident"]), ans["feedback"])
+        end
+      end
+
+      out
+    end
+
   end
 end
