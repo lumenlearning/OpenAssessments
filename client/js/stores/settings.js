@@ -61,7 +61,6 @@ function loadSettings(defaultSettings){
     accountId          : bestValue('accountId', 'account_id'),
     ltiLaunchId        : defaultSettings.lti_launch_id,
     keywords           : bestValue('keywords', 'keywords'),
-    resultsEndPoint    : bestValue('resultsEndPoint', 'results_end_point', 'http  ://localhost  :4200/api'),
     confidenceLevels   : bestValue('confidenceLevels', 'confidence_levels', false),
     enableStart        : enableStart,
     style              : bestValue('style', 'style', null),
@@ -75,7 +74,6 @@ function loadSettings(defaultSettings){
     images             : defaultSettings.images,
     ltiRole            : defaultSettings.lti_role,
     assessmentTitle    : defaultSettings.assessmentTitle,
-    showPostMessageNav : defaultSettings.show_post_message_navigation,
     sectionCount       : parseInt(defaultSettings.sectionCount),
     questionCount      : defaultSettings.questionCount,
     userAssessmentId   : bestValue('user_assessment_id', 'UserAssessmentId')

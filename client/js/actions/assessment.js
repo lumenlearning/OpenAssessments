@@ -115,7 +115,6 @@ export default {
         eId              : settings.eId,
         external_user_id : settings.externalUserId,
         external_context_id : settings.externalContextId,
-        resultsEndPoint  : settings.resultsEndPoint,
         keywords         : settings.keywords,
         objectives       : assessment.objectives,
         src_url          : settings.srcUrl
@@ -141,7 +140,6 @@ export default {
         identifier           : assessment.id,
         eId                  : settings.eId,
         external_user_id     : settings.externalUserId,
-        resultsEndPoint      : settings.resultsEndPoint,
         keywords             : settings.keywords,
         objectives           : assessment.objectives,
         src_url              : settings.srcUrl

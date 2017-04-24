@@ -22,31 +22,14 @@ class AssessmentsController < LtiBaseController
     else
       @embedded = params[:src_url].present? || params[:embed].present? || @is_lti
     end
-    @confidence_levels = params[:confidence_levels] ? true : false
-    @assessment_kind = params[:assessment_kind] ? params[:assessment_kind]: 'formative'
-    @enable_start = params[:enable_start] ? true : false
-    @eid = params[:eid] if params[:eid]
-    @keywords = params[:keywords] if params[:keywords]
-    @external_user_id = params[:external_user_id] if params[:external_user_id]
-    @external_context_id = params[:external_context_id] if params[:external_context_id]
-    @results_end_point = ensure_scheme(params[:results_end_point]) if params[:results_end_point].present?
-    @style = params[:style] ? params[:style] :  ""
-    @per_sec = params[:per_sec] ? params[:per_sec] : nil
     @account_id = current_account.id
     set_lti_role
 
     if params[:id].present? && !['load', 'offline'].include?(params[:id])
       @assessment = Assessment.where(id: params[:id], account: current_account).first
       @assessment_id = @assessment ? @assessment.id : params[:assessment_id] || 'null'
-      @assessment_settings = params[:asid] ?  AssessmentSetting.find(params[:asid]) : @assessment.default_settings || current_account.default_settings || AssessmentSetting.where(is_default: true).first
-      @style ||= @assessment.default_style if @assessment.default_style
-      @assessment_title = @assessment.title
-      if @assessment_settings.present?
-        @style = @style != "" ? @style : @assessment_settings[:style] || ""
-        @enable_start = params[:enable_start] ?  @enable_start : @assessment_settings[:enable_start] || false
-        @confidence_levels = params[:confidence_levels] ?  @confidence_levels : @assessment_settings[:confidence_levels] || false
-        @per_sec = @per_sec ? @per_sec : @assessment_settings[:per_sec] || ""  
-      end
+      set_all_settings(params, @assessment)
+
       if params[:user_id].present?
         oea_user_id = @user ? @user.id : nil
         @user_assessment = @assessment.user_assessments.where(eid: params[:user_id], lti_context_id: params[:context_id]).first
@@ -79,24 +62,22 @@ class AssessmentsController < LtiBaseController
         # Show the full page with analtyics and embed code buttons
         @embed_code = embed_code(@assessment, @confidence_levels, @eid, @enable_start, params[:offline].present?, nil, @style, params[:asid], @per_sec, @assessment.kind, @assessment_title)
       end
-    else
+    elsif params[:assessment_id]
+      @assessment = Assessment.find(params[:assessment_id])
+      set_all_settings(params, @assessment)
+      @src_url = embed_url(@assessment, lti_context_id: params[:context_id])
+    elsif params[:src_url]
+      set_all_settings(params)
+
       # Get the remote url where we can download the qti
       @src_url = ensure_scheme(URI.decode(params[:src_url])) if params[:src_url].present?
       if params[:load_ui] == 'true'
         # Build an embed code and stats page for an assessment loaded via a url
         @embed_code = embed_code(nil, @confidence_levels, @eid, @enable_start, params[:offline].present?, params[:src_url], @style, params[:asid], params[:per_sec], @assessment.kind, @assessment_title)
       end
-
+    else
+      raise ActiveRecord::RecordNotFound
     end
-
-
-    @is_lti ||= false
-    @assessment_title ||= params[:assessment_title]
-    # extract LTI values
-    @external_user_id ||= params[:user_id]
-    @external_context_id ||= params[:context_id]
-
-    @show_post_message_navigation = params[:ext_post_message_navigation]
 
     if @assessment && @assessment.kind != 'summative' && @lti_launch
       @lti_launch.clear_outcome_data!
@@ -104,6 +85,32 @@ class AssessmentsController < LtiBaseController
 
     respond_to do |format|
       format.html { render :show, layout: @embedded ? 'assessment' : 'application' }
+    end
+  end
+
+  def set_all_settings(params, assessment=nil)
+    @assessment_title = params[:assessment_title]
+    @confidence_levels = !!params[:confidence_levels]
+    @assessment_kind = params[:assessment_kind] || 'formative'
+    @enable_start = !!params[:enable_start]
+    @style = params[:style] || ""
+    @per_sec = params[:per_sec]
+    @eid = params[:eid]
+
+    @external_user_id = params[:external_user_id] || params[:user_id]
+    @external_context_id = params[:external_context_id] || params[:context_id]
+    @is_lti ||= false
+
+    if assessment
+      @assessment_title = assessment.title
+      if assessment_settings = assessment.default_settings
+        @confidence_levels = !!assessment_settings[:confidence_levels] if @confidence_levels.nil?   # Prefer params
+        @assessment_kind = assessment.kind                                                          # Use settings
+        @enable_start = !!assessment_settings[:enable_start] if params[:enable_start].nil?          # Prefer params
+        @style = assessment_settings[:style] || assessment.default_style || @style                  # Prefer settings
+        @per_sec = assessment_settings[:per_sec]                                                    # Use settings
+        @allowed_attempts = assessment_settings.allowed_attempts.to_s                               # Use settings
+      end
     end
   end
 

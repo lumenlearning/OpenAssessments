@@ -12,11 +12,9 @@
     isLti: @is_lti,
     assessmentId: @assessment_id.to_s,
     assessmentKind: @assessment_kind || 'formative',
-    resultsEndPoint: @results_end_point || "http://#{request.host_with_port}/api",
     confidenceLevels: @confidence_levels,
     enableStart: @enable_start,
     assessmentTitle: @assessment_title,
-    show_post_message_navigation: !!@show_post_message_navigation,
     lti_role: @lti_role,
     lis_user_id: (params[:lis_user_id] || params[:user_id]).to_s,
     csrfToken: form_authenticity_token,
@@ -30,9 +28,6 @@
    if @external_context_id
      settings[:externalContextId] = @external_context_id
    end
-   if @keywords
-     settings[:keywords] = @keywords
-   end
    if @eid
      settings[:eId] = @eid
    end
@@ -44,8 +39,8 @@
      settings[:questionCount] = @assessment.question_count
      settings[:sectionCount] = @assessment.section_count
    end
-   if @assessment_settings
-     settings[:allowed_attempts] = @assessment_settings.allowed_attempts.to_s
+   if @allowed_attempts
+     settings[:allowed_attempts] = @allowed_attempts.to_s
    end
    if @user_attempts
      settings[:user_attempts] = @user_attempts
