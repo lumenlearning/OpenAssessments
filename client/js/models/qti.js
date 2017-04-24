@@ -80,11 +80,11 @@ export default class Qti{
       if(item.question_type == 'multiple_dropdowns_question'){
         item.dropdowns = this.parseMultiDropdownAnswers(xml);
         // item.correct = this.parseMultiDropdownCorrect(xml);
-        item.feedback = this.parseFeedback(xml, true);
+        item.feedback = this.parseFeedback(xml, item.dropdowns, true);
       } else {
         item.answers = this.parseAnswers(xml);
         item.correct = this.parseCorrect(xml);
-        item.feedback = this.parseFeedback(xml);
+        item.feedback = this.parseFeedback(xml, item.answers);
       }
 
       if(item.question_type == 'mom_embed'){
@@ -157,7 +157,8 @@ export default class Qti{
     return correctAnswers;
   }
 
-  static parseFeedback(xml, includeRespident = false) {
+  // Needs refactored into the parseAnswers function
+  static parseFeedback(xml, answers, isDropdown = false) {
     var respconditions = xml.find("respcondition");
     var feedback = {};
 
@@ -174,12 +175,20 @@ export default class Qti{
         //<itemfeedback ident="i9bd655ce1be232718b9a4138dd03dd7d_fb">
         let feedbackText = xml.find("itemfeedback[ident=" + feedbackReference + "] mattext").text().trim();
         if (feedbackText != "") {
-          if (includeRespident) {
-            answerID = respident + answerID
+          if (isDropdown) {
+            answerID = respident + answerID;
           } else if ( feedbackReference == 'general_fb' && answerID == "" ){
             answerID = "general_fb"
+          } else {
+            for (var j = 0; j < answers.length; j++) {
+              let answer = answers[j];
+              if( answer.id == answerID ){
+                answer.feedback = feedbackText;
+                break;
+              }
+            }
           }
-          feedback[answerID] = feedbackText
+          feedback[answerID] = feedbackText;
         }
       }
     }
