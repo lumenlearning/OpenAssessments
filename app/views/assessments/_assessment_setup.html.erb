@@ -54,6 +54,9 @@
    if @lti_launch
      settings[:lti_launch_id] = @lti_launch.id.to_s
    end
+   if @iframe_resize_id
+     settings[:iframe_resize_id] = @iframe_resize_id
+   end
 %>
 
 <script type="text/javascript">

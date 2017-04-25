@@ -62,7 +62,7 @@ export default class Edit extends BaseComponent{
   componentDidMount(){
     window.addEventListener('resize', this.handleResize);
     super.componentDidMount();
-    CommunicationHandler.sendSize();
+    CommunicationHandler.sendSizeThrottled();
   }
 
   render(){

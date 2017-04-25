@@ -1,37 +1,25 @@
-import $            from 'jquery';
-import Communicator from '../utils/communicator';
+import Communicator  from '../utils/communicator';
+import SettingsStore from '../stores/settings.js';
+import _             from "lodash";
 
 export default {
 
   init: function(){
     Communicator.enableListener(this);
+    this.sendSizeThrottled = _.throttle(this.sendSize, 1000);
+    this.scrollParentToTopThrottled = _.throttle(this.scrollParentToTop, 2000);
   },
 
   sendSize: function(){
-
-    // TODO if we are calculating height this
-    // way we might not need to use jquery at all.
-    var height = Math.max(
-            $(document).height(),
-            document.body.scrollHeight, 
-            document.body.offsetHeight,
-            document.documentElement.clientHeight, 
-            document.documentElement.scrollHeight,
-            document.documentElement.offsetHeight);
-
-    var payload = {
-      height: height,
-      width: $(document).width()
-    };
+    var height = Math.max( 350, document.getElementById('assessment-container').scrollHeight + 20 );
 
     var ltiPayload = {
       subject: "lti.frameResize",
-      height: height
+      height: height,
+      iframe_resize_id: SettingsStore.current().iframe_resize_id
     };
 
-    // OEA specific message indicate the need for a resize
-    Communicator.commMsg('open_assessments_resize', payload);
-    // Let the LMS (Canvas) know about a resize
+    // Let the TC know about a resize
     Communicator.broadcastMsg(ltiPayload);
   },
 

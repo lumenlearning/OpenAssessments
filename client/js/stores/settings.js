@@ -76,7 +76,8 @@ function loadSettings(defaultSettings){
     assessmentTitle    : defaultSettings.assessmentTitle,
     sectionCount       : parseInt(defaultSettings.sectionCount),
     questionCount      : defaultSettings.questionCount,
-    userAssessmentId   : bestValue('user_assessment_id', 'UserAssessmentId')
+    userAssessmentId   : bestValue('user_assessment_id', 'UserAssessmentId'),
+    iframe_resize_id   : defaultSettings.iframe_resize_id
   };
 
   if(!_settings.srcUrl && !_settings.offline){

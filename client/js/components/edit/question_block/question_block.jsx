@@ -22,7 +22,7 @@ export default class QuestionBlock extends React.Component{
   }
 
   componentDidMount() {
-    CommunicationHandler.sendSize();
+    CommunicationHandler.sendSizeThrottled();
     window.addEventListener('resize', this.handleResize);
   }
 
