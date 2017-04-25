@@ -132,7 +132,7 @@ export default class Assessment{
           return true;
         }
         else if(correctAns.name == selAnswer.dropdown_id && correctAns.value !== selAnswer.chosen_answer_id){
-          color = 'red';
+          color = '#e0542b';
           return false;
         }
       });

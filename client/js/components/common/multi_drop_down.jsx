@@ -32,6 +32,8 @@ export default class MultiDropDown extends BaseComponent {
       padding: theme.questionTextPadding,
     };
 
+    console.log('DROPDOWN PROPS!', this.props);
+
     return (
       <div>
         <div tabIndex="0" dangerouslySetInnerHTML={{__html: question}} style={questionText} />
@@ -63,6 +65,7 @@ export default class MultiDropDown extends BaseComponent {
     let shortcodes = Object.keys(this.props.item.dropdowns);
     let answers = this.props.item.dropdowns;
     let re = new RegExp(`\\[${shortcodes.join('\\]|\\[')}\\]`, 'gi'); //turn array of shortcodes into a regex
+    let answerCheck = '';
 
     return string.replace(re, (match) => {
       let str = `"blank ${i}"`;
@@ -72,6 +75,68 @@ export default class MultiDropDown extends BaseComponent {
         return `<option ${this.state[nMatch] === answer.value ? "selected" : ""} value=${answer.value}>${answer.name}</option>`;
       });
 
+      //check for selected answers
+      if (typeof this.props.selectedAnswers !== 'undefined') {
+        let selAnswer = this.props.selectedAnswers.find((selectedAnswer) => {
+          return selectedAnswer.dropdown_id === nMatch;
+        });
+
+        let correctAnswer = this.props.item.correct.find((correctAns) => {
+          return correctAns.name === nMatch;
+        });
+
+        let checkboxWrapper = `
+          height: 100%;
+          margin-left: 10px;
+          vertical-align: text-top;
+          font-size: 12px;
+          display: flex;
+        `;
+        let checkboxStyle = `
+          border-radius: 50%;
+          align-self: center;
+        `;
+        let plusStyle = `
+          border-radius: 50%;
+          background-color: #e0542b;
+          transform: rotate(45deg);
+          align-self: center;
+        `;
+
+        if(selAnswer.chosen_answer_id === correctAnswer.value){
+          answerCheck = (
+            `<span style="display:inline-block;">
+              <span style=${`"color:#6fb88a;${checkboxWrapper}"`} >
+                <img 
+                  width="20px"
+                  height="20px"
+                  src="/assets/checkbox-48.png"
+                  style="${checkboxStyle}"
+                  alt="image to indicate the correct option was chosen" 
+                  /> (${i})
+              </span>
+            </span>`
+          );
+        }
+        else{
+          answerCheck = (
+            `<span style="display:inline-block;">
+              <span style=${`"color:#e0542b;${checkboxWrapper}"`} >
+                <img 
+                  width="20px"
+                  height="20px"
+                  src="/assets/plus-52.png"
+                  style="${plusStyle}"
+                  alt="image to indicate the incorrect option was chosen" 
+                /> (${i})
+              </span>
+            </span>`
+          );
+        }
+
+      }
+
+      //Aria goodness
       let ariaLabel = this.state.ariaAnswersLabels[nMatch] ? `"${this.state.ariaAnswersLabels[nMatch]}"` : str;
 
       i++;
@@ -81,14 +146,19 @@ export default class MultiDropDown extends BaseComponent {
       }
 
       return (
-        `<select 
-           name="${nMatch}" 
-           id="dropdown_${nMatch}" 
-           aria-label=${ariaLabel}
-         >
-            <option ${!this.state[nMatch] ? "selected" : ""} disabled aria-label="select ${nMatch} choice" value="null">[Select]</option>
-            ${options}
-        </select>`
+        `<span style="display:inline-block" >
+          <span style="display:flex">
+            <select 
+              name="${nMatch}" 
+              id="dropdown_${nMatch}" 
+              aria-label=${ariaLabel}
+            >
+              <option ${!this.state[nMatch] ? "selected" : ""} disabled aria-label="select ${nMatch} choice" value="null">[Select]</option>
+              ${options}
+            </select>
+            ${answerCheck}
+          </span>
+        </span>`
       );
     });
   }
