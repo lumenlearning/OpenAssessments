@@ -74,6 +74,7 @@ function loadSettings(defaultSettings){
     images             : defaultSettings.images,
     ltiRole            : defaultSettings.lti_role,
     assessmentTitle    : defaultSettings.assessmentTitle,
+    showPostMessageNav : defaultSettings.show_post_message_navigation,
     sectionCount       : parseInt(defaultSettings.sectionCount),
     questionCount      : defaultSettings.questionCount,
     userAssessmentId   : bestValue('user_assessment_id', 'UserAssessmentId'),
