@@ -137,7 +137,7 @@ export default class Assessment{
         }
       });
 
-      return <p style={{color: color}}>({i+1}) {item.feedback[`${selAnswer.dropdown_id}${selAnswer.chosen_answer_id}`]}</p>;
+      return <p style={{color: color}} tabIndex="0" >({i+1}) {item.feedback[`${selAnswer.dropdown_id}${selAnswer.chosen_answer_id}`]}</p>;
     });
 
     if(score >= 1){

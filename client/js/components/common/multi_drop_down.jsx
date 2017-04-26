@@ -103,7 +103,11 @@ export default class MultiDropDown extends BaseComponent {
 
         if(selAnswer.chosen_answer_id === correctAnswer.value){
           answerCheck = (
-            `<span style="display:inline-block;">
+            `<span 
+                style="display:inline-block;"
+                tabindex="0"
+                aria-label="Correct: ${this.props.item.feedback[correctAnswer.name+correctAnswer.value]}"
+            >
               <span style=${`"color:#6fb88a;${checkboxWrapper}"`} >
                 <img 
                   width="20px"
@@ -118,7 +122,11 @@ export default class MultiDropDown extends BaseComponent {
         }
         else{
           answerCheck = (
-            `<span style="display:inline-block;">
+            `<span 
+                style="display:inline-block;" 
+                tabindex="0" 
+                aria-label="Wrong: ${this.props.item.feedback[correctAnswer.name+correctAnswer.value]}"
+            >
               <span style=${`"color:#e0542b;${checkboxWrapper}"`} >
                 <img 
                   width="20px"
@@ -140,7 +148,7 @@ export default class MultiDropDown extends BaseComponent {
       i++;
 
       if(noSelect){ //replace with values instead of <select /> boxes if true.
-        return str
+        return ariaLabel;
       }
 
       return (
