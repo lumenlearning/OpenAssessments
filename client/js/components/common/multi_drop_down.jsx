@@ -29,10 +29,8 @@ export default class MultiDropDown extends BaseComponent {
     let questionText = {
       fontSize: theme.questionTextFontSize,
       fontWeight: theme.questionTextFontWeight,
-      padding: theme.questionTextPadding,
+      padding: theme.questionTextNoLPadding,
     };
-
-    console.log('DROPDOWN PROPS!', this.props);
 
     return (
       <div>

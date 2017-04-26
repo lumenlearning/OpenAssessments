@@ -153,6 +153,12 @@ var AssessmentStore = assign({}, StoreCommon, {
 
   hasAnsweredCurrent(){
     var current = this.selectedAnswerId();
+    var item = this.currentQuestion();
+
+    if (item.question_type == 'multiple_dropdowns_question') {
+      return !!(current && current.length == Object.keys(item.dropdowns).length);
+    }
+
     return !!(current && current.length > 0);
   },
 

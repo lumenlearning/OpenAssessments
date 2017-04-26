@@ -9,6 +9,7 @@ export default {
   questionTextFontSize: "18px",
   questionTextFontWeight: "bold",
   questionTextPadding: "0 0 14px 4px",
+  questionTextNoLPadding: "0 0 14px 0",
 
   // ASSESSMENT
   assessmentPadding: "0px",
