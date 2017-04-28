@@ -59,7 +59,8 @@ export default class MultiDropDown extends BaseComponent {
   //========================================================================
   findAndReplace(noSelect = false){
     var i = 1;
-    let string = this.props.item.material;
+    let item = this.props.item
+    let string = item.material;
     let shortcodes = Object.keys(this.props.item.dropdowns);
     let answers = this.props.item.dropdowns;
     let re = new RegExp(`\\[${shortcodes.join('\\]|\\[')}\\]`, 'gi'); //turn array of shortcodes into a regex
@@ -69,18 +70,23 @@ export default class MultiDropDown extends BaseComponent {
       let str = `"blank ${i}"`;
       let re = new RegExp('\\[|\\]', 'g');
       let nMatch = match.replace(re, ''); //from '[shortcode]' to 'shortcode'
+      let correctAnswer = item.correct.find((correctAns) => {
+        return correctAns.name === nMatch;
+      });
       let options = answers[nMatch].map((answer) => {
-        return `<option ${this.state[nMatch] === answer.value ? "selected" : ""} value=${answer.value}>${answer.name}</option>`;
+        let selected = "";
+        let disabled = "";
+
+        if(this.state[nMatch] === answer.value) selected = "selected";
+        if(this.props.isDisabled && correctAnswer.value !== answer.value) disabled = "disabled";
+
+        return `<option ${selected} ${disabled}  value=${answer.value} >${answer.name}</option>`;
       });
 
       //check for selected answers
-      if (typeof this.props.selectedAnswers !== 'undefined') {
+      if (!!this.props.selectedAnswers && this.props.selectedAnswers.length > 0) {
         let selAnswer = this.props.selectedAnswers.find((selectedAnswer) => {
           return selectedAnswer.dropdown_id === nMatch;
-        });
-
-        let correctAnswer = this.props.item.correct.find((correctAns) => {
-          return correctAns.name === nMatch;
         });
 
         let checkboxWrapper = `
@@ -106,9 +112,9 @@ export default class MultiDropDown extends BaseComponent {
             `<span 
                 style="display:inline-block;"
                 tabindex="0"
-                aria-label="Correct: ${this.props.item.feedback[correctAnswer.name+correctAnswer.value]}"
+                aria-label="Correct: ${item.feedback[correctAnswer.name+correctAnswer.value]}"
             >
-              <span style=${`"color:#6fb88a;${checkboxWrapper}"`} >
+              <span style=${`"color:#4EAA59;${checkboxWrapper}"`} >
                 <img 
                   width="20px"
                   height="20px"
@@ -125,7 +131,7 @@ export default class MultiDropDown extends BaseComponent {
             `<span 
                 style="display:inline-block;" 
                 tabindex="0" 
-                aria-label="Wrong: ${this.props.item.feedback[correctAnswer.name+correctAnswer.value]}"
+                aria-label="Wrong: ${item.feedback[correctAnswer.name+correctAnswer.value]}"
             >
               <span style=${`"color:#e0542b;${checkboxWrapper}"`} >
                 <img 
@@ -138,7 +144,7 @@ export default class MultiDropDown extends BaseComponent {
               </span>
             </span>`
           );
-        }
+        }//else
 
       }
 
@@ -158,8 +164,10 @@ export default class MultiDropDown extends BaseComponent {
               name="${nMatch}" 
               id="dropdown_${nMatch}" 
               aria-label=${ariaLabel}
+              
+              style="${this.props.isDisabled ? "color:#4EAA59;" : ''}"
             >
-              <option ${!this.state[nMatch] ? "selected" : ""} disabled aria-label="select ${nMatch} choice" value="null">[Select]</option>
+              <option ${!this.state[nMatch] && !this.props.isDisabled ? "selected" : ""} disabled aria-label="select ${nMatch} choice" value="null">[Select]</option>
               ${options}
             </select>
             ${answerCheck}
@@ -167,7 +175,7 @@ export default class MultiDropDown extends BaseComponent {
         </span>`
       );
     });
-  }
+  }//findAndReplace
 
   addListeners() {
     let shortcodes = Object.keys(this.props.item.dropdowns);

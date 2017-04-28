@@ -71,6 +71,7 @@ export default class ItemResult extends React.Component{
   }
 
   render() {
+    console.log("RENDAMON:", this.props);
     var styles = this.getStyles(this.props, this.context.theme);
     var correctMessage = "You were incorrect."; 
     if(this.props.isCorrect == "partial"){
