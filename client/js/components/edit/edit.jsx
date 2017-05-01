@@ -29,6 +29,7 @@ export default class Edit extends BaseComponent{
     }
 
     this.state = this.getState();
+    CommunicationHandler.init();
   }
 
   getState(){

@@ -19,6 +19,7 @@ export default class AssessmentResult extends BaseComponent{
     this.state = this.getState();
     this.sendLtiOutcome();
     this.sendAnalytics();
+    CommunicationHandler.init();
   }
 
   getState(props, context){
