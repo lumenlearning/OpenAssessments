@@ -228,7 +228,7 @@ export default class Question extends BaseComponent{
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 
-  handleFeedbackChange(e, index) {
+  handleFeedbackChange(e, index) { //TODO: this method will need to change to accomodate different question types.
     let question = _.clone(this.props.question, true);
     let answer = question.answers[index];
     answer.feedback = e.target.getContent();
@@ -236,7 +236,7 @@ export default class Question extends BaseComponent{
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 
-  handleCorrectChange(index, isCorrect) {
+  handleCorrectChange(index, isCorrect) { //TODO: this method will need to change to accomodate different question types.
     let question = _.clone(this.props.question, true);
     let answer = question.answers[index];
     answer.isCorrect = isCorrect;

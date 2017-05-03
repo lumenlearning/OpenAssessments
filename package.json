@@ -25,5 +25,6 @@
   "license": "MIT",
   "homepage": "https://github.com/atomicjolt/openassessments",
   "dependencies": {
+    "react-tinymce": "^0.2.3"
   }
 }
