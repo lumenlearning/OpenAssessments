@@ -17,7 +17,11 @@ export default class MultiDropdownFeedback extends Component {
   render() {
 
     //place JSX between the parens!
-    return ();
+    return (
+      <div>
+        Multi Drop Down Feedback area
+      </div>
+    );
   }
 
   componentWillUnmount() {
@@ -29,5 +33,8 @@ export default class MultiDropdownFeedback extends Component {
   //========================================================================
 }//end MultiDropdownFeedback class
 
-MultiDropdownFeedback.propTypes = {};
+MultiDropdownFeedback.propTypes = {
+  question: React.PropTypes.object.isRequired,
+  windowWidth: React.PropTypes.object.isRequired
+};
 
