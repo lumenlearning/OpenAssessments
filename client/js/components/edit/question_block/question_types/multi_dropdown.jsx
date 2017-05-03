@@ -15,11 +15,25 @@ export default class MultiDropdownFeedback extends Component {
   }
 
   render() {
+    let question = this.props.question;
 
     //place JSX between the parens!
     return (
       <div>
-        Multi Drop Down Feedback area
+        {Object.keys(question.dropdowns).map((key, i) => {
+          return question.dropdowns[key].map((dropdown, i) => {
+            let correctAnswer = question.correct.find((correctDropdown) => {
+              return dropdown.name === correctDropdown.name;
+            });
+
+            return (
+              <div>
+                <div>Answer: </div>
+                <div>Feedback: </div>
+              </div>
+            )
+          })
+        })}
       </div>
     );
   }
