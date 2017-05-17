@@ -25,6 +25,8 @@ module Json2Qti
           MultipleChoice.new(item)
         when 'mom_embed'
           OhmEmbed.new(item)
+        when 'multiple_dropdowns_question'
+          MultipleDropdowns.new(item)
         else
           nil
       end
@@ -48,8 +50,9 @@ module Json2Qti
       "response1"
     end
 
-    def feedback_ident(id)
-      "#{id}_#{respident}_fb"
+    def feedback_ident(id, local_respident=nil)
+      local_respident ||= respident
+      "#{id}_#{local_respident}_fb"
     end
 
     def rcardinality
@@ -64,9 +67,10 @@ module Json2Qti
       ""
     end
 
-    def response_labels
+    def response_labels(answers=nil)
+      answers ||= @answers
       out = ''
-      @answers.each do |ans|
+      answers.each do |ans|
         out += <<XML
                 <response_label ident="#{ans["ident"]}">
                   <material>
