@@ -64,6 +64,7 @@ export default class Question extends BaseComponent{
       headerStyle = style.editedHeader;
     }
 
+    console.log("QUESTION:", question);
     return (
       <li style={style.questionItem} >
         <div className="questionHeader" style={headerStyle}>
@@ -113,6 +114,7 @@ export default class Question extends BaseComponent{
               handleMaterialChange={this.handleMaterialChange}
               handleOutcomeChange={this.handleOutcomeChange}
               handleDoneEditing={this.handleDoneEditing}
+              handleQuestionTypeChange={this.handleQuestionTypeChange}
           />
         </div>
       </li>
@@ -217,6 +219,8 @@ export default class Question extends BaseComponent{
     let answer = question.answers[index];
     answer.material = e.target.getContent();
 
+    //do regex to get all the shortcodes for the dropdowns here?
+
 
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
@@ -250,11 +254,31 @@ export default class Question extends BaseComponent{
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 
-
-  handleAddOption(e) {
+  handleQuestionTypeChange(e) {
     let question = _.clone(this.props.question, true);
-    let answerObj = ReviewAssessmentStore.blankNewAnswer();
-    question.answers.push(answerObj);
+    let question_type = e.target.value;
+
+    question.question_type = question_type;
+
+    ReviewAssessmentActions.updateAssessmentQuestion(question, false);
+  }//handleQuestionTypeChange
+
+  handleAddOption(e, options) {
+    let question = _.clone(this.props.question, true);
+
+    switch (question.question_type) {
+
+      case 'multiple_choice_question':
+      case 'multiple_answers_question':
+        let answerObj = ReviewAssessmentStore.blankNewAnswer();
+        question.answers.push(answerObj);
+      break;
+      case 'multiple_dropdowns_question':
+        let newDropdownOption = ReviewAssessmentStore.blankNewDropdown();
+        question.dropdowns[options.dropdownId].push(newDropdownOption);
+      break;
+    }
+
 
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }

@@ -90,5 +90,25 @@ export default {
   USER_ASSESSMENTS_LOADING: "user_assessments_loading",
   USER_ASSESSMENTS_LOADED: "user_assessments_loaded",
   USER_ASSESSMENTS_UPDATING: "user_assessments_updating",
-  USER_ASSESSMENTS_UPDATED: "user_assessments_updated"
+  USER_ASSESSMENTS_UPDATED: "user_assessments_updated",
+
+  //QuestionTypes
+  QUESTION_TYPES: [
+    {
+      value: "essay_question",
+      name: 'Essay Question',
+    },
+    {
+      value: "multiple_dropdowns_question",
+      name: 'Multiple Dropdown Question',
+    },
+    {
+      value: 'multiple_choice_question',
+      name: 'Multiple Choice Question',
+    },
+    {
+      value: 'multiple_answers_question',
+      name: 'Multiple Answers Question',
+    },
+  ]
 };

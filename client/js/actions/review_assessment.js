@@ -54,9 +54,9 @@ export default {
       inDraft: true,
       isValid: false,
       isNew: true,
-      question_type: 'multiple_choice_question',
+      question_type: null,
       material: '',
-      answers: [ReviewAssessmentStore.blankNewAnswer(), ReviewAssessmentStore.blankNewAnswer(), ReviewAssessmentStore.blankNewAnswer()],
+      //answers: [ReviewAssessmentStore.blankNewAnswer(), ReviewAssessmentStore.blankNewAnswer(), ReviewAssessmentStore.blankNewAnswer()],
       errorMessages: [],
       outcome: ''
     };

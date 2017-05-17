@@ -10,7 +10,10 @@ import ReviewAssessmentStore  from "../../../stores/review_assessment";
 //Components
 import OutcomeSelector        from './outcome_selector.jsx';
 import QuestionMaterial       from './question_material.jsx';
+import QuestionTypeSelector   from './question_type_selector.jsx';
 import AnswerFeedbackMaterial from './answer_feedback_material.jsx';
+import EssayAnswerFeedbackMaterial from './essay_feedback_material.jsx';
+import MDDAnswerFeedbackMaterial from './mdd_feedback_material.jsx';
 
 export default class QuestionInterface extends BaseComponent{
 
@@ -21,6 +24,8 @@ export default class QuestionInterface extends BaseComponent{
   render() {
     let question = this.props.question;
     let style    = Style.styles();
+
+    //TODO: create and add a type picker component for choosing types.
 
     return (
       <div style={style.qiContent}>
@@ -36,7 +41,50 @@ export default class QuestionInterface extends BaseComponent{
           </OutcomeSelector>
           <QuestionMaterial
             material={question.material}
-            onChange={this.props.handleMaterialChange} />
+            onChange={this.props.handleMaterialChange}
+          />
+          <QuestionTypeSelector question={this.props.question} handleQuestionTypeChange={this.props.handleQuestionTypeChange} />
+          {/*ensures a type has been selected before allowing feedback to be changed.*/}
+          {!!question.question_type ? this.answerFeedbackMaterial() : null}
+        </div>
+      </div>
+    );
+  }//render
+
+  answerFeedbackMaterial() {
+    let question = this.props.question;
+    let type = question.question_type;
+    let feedbackMaterial = null;
+
+    switch (type) {
+      case "essay_question":
+        feedbackMaterial = (
+          <EssayAnswerFeedbackMaterial
+            key={question.id}
+            answers={question.answers}
+            handleAnswerChange={this.props.handleAnswerChange}
+            handleFeedbackChange={this.props.handleFeedbackChange}
+            handleCorrectChange={this.props.handleCorrectChange}
+            handleAddOption={this.props.handleAddOption}
+            handleAnswerRemoval={this.props.handleAnswerRemoval}
+          />
+        );
+      break;
+      case "multiple_dropdowns_question":
+        feedbackMaterial = (
+          <MDDAnswerFeedbackMaterial
+            key={question.id}
+            answers={question.answers}
+            handleAnswerChange={this.props.handleAnswerChange}
+            handleFeedbackChange={this.props.handleFeedbackChange}
+            handleCorrectChange={this.props.handleCorrectChange}
+            handleAddOption={this.props.handleAddOption}
+            handleAnswerRemoval={this.props.handleAnswerRemoval}
+          />
+        );
+      break;
+      default:
+        feedbackMaterial = (
           <AnswerFeedbackMaterial
             key={question.id}
             answers={question.answers}
@@ -45,9 +93,12 @@ export default class QuestionInterface extends BaseComponent{
             handleCorrectChange={this.props.handleCorrectChange}
             handleAddOption={this.props.handleAddOption}
             handleAnswerRemoval={this.props.handleAnswerRemoval}
-            />
-        </div>
-      </div>
-    );
-  }
+          />
+        );
+      break;
+    }
+
+    return feedbackMaterial;
+
+  }//answerFeedbackMaterial
 }

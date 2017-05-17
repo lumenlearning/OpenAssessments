@@ -106,6 +106,14 @@ export default new class Style {
         width: '17px',
         height: '17px',
         marginBottom: "4px"
+      },
+
+      //MDD Feedack Styles
+      mddFeedbackTab:{
+
+      },
+      mddFeedbackTabActive:{
+
       }
     };
 
