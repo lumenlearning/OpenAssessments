@@ -64,7 +64,7 @@ export default class Question extends BaseComponent{
       headerStyle = style.editedHeader;
     }
 
-    console.log("QUESTION:", question);
+    //console.log("QUESTION:", question);
     return (
       <li style={style.questionItem} >
         <div className="questionHeader" style={headerStyle}>
@@ -209,8 +209,29 @@ export default class Question extends BaseComponent{
 
   handleMaterialChange(e) {
     let question = _.clone(this.props.question, true);
+    let re = new RegExp('\\[(.*?)\\]', 'gi');
     question.material = e.target.getContent();
+    let dropdownMatches = question.material.match(re);
+    let dropdowns;
 
+    if(!!dropdownMatches){
+      dropdowns = dropdownMatches.map((dropdown) => {
+        let re = new RegExp('\\[|\\]', 'g');
+        return dropdown.replace(re, '');
+      });
+    }
+
+    //if question.dropdowns is undefined or null, set it.
+    if(!(!!question.dropdowns)){
+      question.dropdowns = {};
+    }
+
+    dropdowns.forEach((dropdown, i) => {
+      if(!(!!question.dropdowns[dropdown])){
+        question.dropdowns[dropdown] = [];
+      }
+    });
+    
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 
