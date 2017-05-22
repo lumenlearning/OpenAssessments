@@ -110,10 +110,25 @@ export default new class Style {
 
       //MDD Feedack Styles
       mddFeedbackTab:{
-
+        padding: '10px',
+        //border: '1px solid black',
+        borderRadius: '5px 5px 0px 0px',
+        marginRight: '2px',
+        borderBottom: 'none',
+        backgroundColor: '#3299bb',
+        color: 'white',
+        cursor: 'pointer'
       },
-      mddFeedbackTabActive:{
-
+      mddFeedbackTabActive: {
+        backgroundColor: '#0fafe2',
+        textDecoration: 'underline'
+      },
+      mddTabContent: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        padding: '10px',
+        border: '1px solid #c1c1c1',
       }
     };
 

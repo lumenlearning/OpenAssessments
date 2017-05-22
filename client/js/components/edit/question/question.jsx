@@ -212,7 +212,7 @@ export default class Question extends BaseComponent{
     let re = new RegExp('\\[(.*?)\\]', 'gi');
     question.material = e.target.getContent();
     let dropdownMatches = question.material.match(re);
-    let dropdowns;
+    let dropdowns = [];
 
     if(!!dropdownMatches){
       dropdowns = dropdownMatches.map((dropdown) => {
@@ -227,10 +227,22 @@ export default class Question extends BaseComponent{
     }
 
     dropdowns.forEach((dropdown, i) => {
+      //if its undefined, define it.
       if(!(!!question.dropdowns[dropdown])){
         question.dropdowns[dropdown] = [];
       }
+
     });
+
+    //check if # of dropdowns match # of shortcodes. remove any non matchind dropdown.
+    if(Object.keys(question.dropdowns).length > dropdowns.length){
+      Object.keys(question.dropdowns).forEach((ddKey, i) => {
+        if(dropdowns.findIndex((dropdown)=> {return dropdown == ddKey}) == -1){
+          delete question.dropdowns[ddKey];
+        };
+      });
+    }
+
     
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }

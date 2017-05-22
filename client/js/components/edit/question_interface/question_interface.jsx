@@ -62,6 +62,7 @@ export default class QuestionInterface extends BaseComponent{
           <EssayAnswerFeedbackMaterial
             key={question.id}
             answers={question.answers}
+            question={question}
             handleAnswerChange={this.props.handleAnswerChange}
             handleFeedbackChange={this.props.handleFeedbackChange}
             handleCorrectChange={this.props.handleCorrectChange}
@@ -75,6 +76,7 @@ export default class QuestionInterface extends BaseComponent{
           <MDDAnswerFeedbackMaterial
             key={question.id}
             answers={question.answers}
+            question={question}
             handleAnswerChange={this.props.handleAnswerChange}
             handleFeedbackChange={this.props.handleFeedbackChange}
             handleCorrectChange={this.props.handleCorrectChange}

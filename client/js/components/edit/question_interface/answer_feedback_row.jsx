@@ -53,7 +53,6 @@ export default class AnswerFeedbackRow extends React.Component{
   }
 
   render() {
-    let answer              = this.props.answer;
     let index               = this.props.index;
     let style               = Style.styles();
     let windowWidth         = this.state.windowWidth;
@@ -70,7 +69,7 @@ export default class AnswerFeedbackRow extends React.Component{
             <Checkbox
               key={index}
               index={index}
-              isCorrect={answer.isCorrect}
+              isCorrect={this.props.isCorrect}
               handleCorrectChange={this.props.handleCorrectChange}
             />
           </div>
@@ -81,7 +80,7 @@ export default class AnswerFeedbackRow extends React.Component{
                 <AnswerOption
                   style={answerFeedback}
                   index={index}
-                  answerMaterial={answer.material}
+                  answerMaterial={this.props.answer}
                   onChange={this.props.handleAnswerChange}
                   />
               </div>
@@ -90,7 +89,7 @@ export default class AnswerFeedbackRow extends React.Component{
                 <Feedback
                   style={answerFeedback}
                   index={index}
-                  feedback={answer.feedback}
+                  feedback={this.props.feedback}
                   onChange={this.props.handleFeedbackChange}
                   />
               </div>

@@ -16,35 +16,45 @@ export default class MDDAnswerFeedbackMaterial extends Component {
 
   componentWillMount() {
 
+    this.setState({
+      activeTab: !!this.props.question ? Object.keys(this.props.question.dropdowns)[0] : null
+    });
   }
 
   render() {
-    let style = Style.styles()
+    let style = Style.styles();
     let question = this.props.question;
-    let dropdowns = Object.keys(question.dropdowns);
+    let dropdowns = !!question ? Object.keys(question.dropdowns) : [];
     let activeTab = this.state.activeTab;
 
     //place JSX between the parens!
     return (
       <div>
-        <div className="tabArea">
+        <div className="tabArea" style={{display: 'flex'}}>
           {dropdowns.map((dropdown, i) => {
             return (
-              <div onClick={()=>this.handleActiveTab(dropdown)} style={`mddFeedbackTab ${activeTab === dropdown ? 'mddFeedbackTabActive' : ''}`} >
+              <div onClick={()=>this.handleActiveTab(dropdown)} style={{...style.mddFeedbackTab, ...(activeTab === dropdown ? style.mddFeedbackTabActive : {})}} >
                 {dropdown}
               </div>
             )
           })}
         </div>
-        <div className="tabContent">
+        <div className="tabContent" style={style.mddTabContent}>
+          <div style={{fontWeight: 'bold', display: 'flex', justifyContent: 'space-around'}}>
+            <p>Answers</p>
+            <p>Feedback</p>
+          </div>
           {
             dropdowns.map((dropdownKey) => {
               if(!!activeTab && activeTab == dropdownKey){
                 return question.dropdowns[dropdownKey].map((dropdown) => {
                   return (
                     <AnswerFeedbackRow
-                      key={question.id}
-                      answers={question.answers}
+                      key={dropdown.value}
+                      index={dropdown.value}
+                      answer={dropdown.name}
+                      feedback={this.checkForFeedback(dropdown, dropdownKey)}
+                      isCorrect={this.checkIfCorrect(dropdown, dropdownKey)}
                       handleAnswerChange={this.props.handleAnswerChange}
                       handleFeedbackChange={this.props.handleFeedbackChange}
                       handleCorrectChange={this.props.handleCorrectChange}
@@ -76,6 +86,36 @@ export default class MDDAnswerFeedbackMaterial extends Component {
       activeTab: dropdown
     })
   }//handleActiveTab
+
+  checkIfCorrect(dropdown, key) {
+    let question = this.props.question;
+    let isCorrect = false;
+
+    //if dropdown.isCorrect is undefined.
+      //check if dropdown.value is in question.correct array. return boolean
+    if(!(!!dropdown.isCorrect)){
+      if(question.correct.findIndex((correct) => {return correct.value == dropdown.value && correct.name == key}) > -1) isCorrect = true;
+    }
+    else{
+      isCorrect = dropdown.isCorrect;
+    }
+
+    return isCorrect
+  }//checkIfCorrect
+
+  checkForFeedback(dropdown, key){
+    let question = this.props.question;
+    let feedback = '';
+
+    if(!(!!dropdown.feedback)){
+      if(!!question.feedback[key+dropdown.value]) feedback = question.feedback[key+dropdown.value];
+    }
+    else{
+      feedback = dropdown.feedback;
+    }
+
+    return feedback;
+  }//checkForFeedback
 }//end MDDAnswerFeedbackMaterial class
 
 MDDAnswerFeedbackMaterial.propTypes = {
