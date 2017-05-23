@@ -64,7 +64,8 @@ export default class Question extends BaseComponent{
       headerStyle = style.editedHeader;
     }
 
-    //console.log("QUESTION:", question);
+    //if(question.question_type == 'multiple_dropdowns_question') console.log("QUESTION:", question);
+
     return (
       <li style={style.questionItem} >
         <div className="questionHeader" style={headerStyle}>
@@ -247,41 +248,126 @@ export default class Question extends BaseComponent{
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 
-  handleAnswerChange(e, index) {
+  handleAnswerChange(e, data) {
     let question = _.clone(this.props.question, true);
-    let answer = question.answers[index];
-    answer.material = e.target.getContent();
 
-    //do regex to get all the shortcodes for the dropdowns here?
+    switch (question.question_type) {
 
+      case 'multiple_choice_question':
+      case 'multiple_answers_question':
+        let answer = question.answers[data];
+        answer.material = e.target.getContent();
+      break;
+      case 'essay_question':
+        //do literally nothing.
+      break;
+      case 'multiple_dropdowns_question':
+        let index = question.dropdowns[data.key].findIndex((answer) => {
+          return answer.value == data.dropdown;
+        });
+
+        console.log("CHANGE ANSWER:", data, e.target.getContent(), index, question);
+
+        question.dropdowns[data.key][index].name = e.target.getContent();
+      break;
+    }
 
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 
-  handleAnswerRemoval(index){
+  handleAnswerRemoval(data){
     let question = _.clone(this.props.question, true);
-    question.answers.splice(index, 1);
+
+    switch (question.question_type) {
+
+      case 'multiple_choice_question':
+      case 'multiple_answers_question':
+        question.answers.splice(data, 1);
+      break;
+      case 'essay_question':
+        //do literally nothing.
+      break;
+      case 'multiple_dropdowns_question':
+        let index = question.dropdowns[data.key].findIndex((answer) => {
+          return answer.value == data.dropdown;
+        });
+        question.dropdowns[data.key].splice(index, 1);
+      break;
+    }
 
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 
-  handleFeedbackChange(e, index) { //TODO: this method will need to change to accomodate different question types.
+  handleFeedbackChange(e, data) { //TODO: this method will need to change to accomodate different question types.
     let question = _.clone(this.props.question, true);
-    let answer = question.answers[index];
-    answer.feedback = e.target.getContent();
+
+    switch (question.question_type) {
+
+      case 'multiple_choice_question':
+      case 'multiple_answers_question':
+        let answer = question.answers[data];
+        answer.feedback = e.target.getContent();
+      break;
+      case 'essay_question':
+        //todo: figure out where this object is being placed in the data model
+      break;
+      case 'multiple_dropdowns_question':
+        let index = question.dropdowns[data.key].findIndex((answer) => {
+          return answer.value == data.dropdown;
+        });
+        question.dropdowns[data.key][index].feedback = e.target.getContent();
+      break;
+    }
 
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 
-  handleCorrectChange(index, isCorrect) { //TODO: this method will need to change to accomodate different question types.
+  handleCorrectChange(data, isCorrect) { //TODO: this method will need to change to accomodate different question types.
     let question = _.clone(this.props.question, true);
-    let answer = question.answers[index];
-    answer.isCorrect = isCorrect;
-    question.question_type = 'multiple_choice_question';
+    //question.question_type = 'multiple_choice_question';
 
     let correctCount = _.sum(question.answers, function(a) { return a.isCorrect ? 1 : 0; });
-    if(correctCount > 1){
+    /*if(correctCount > 1){
       question.question_type = 'multiple_answers_question';
+    }*/
+
+    switch (question.question_type) {
+
+      case 'multiple_choice_question':
+      case 'multiple_answers_question':
+        let answer = question.answers[data];
+        answer.isCorrect = isCorrect;
+      break;
+      case 'essay_question':
+
+      break;
+      case 'multiple_dropdowns_question':
+        let index = question.dropdowns[data.key].findIndex((answer) => {
+          return answer.value == data.dropdown;
+        });
+        let correctIndex = question.correct.findIndex((answer) => {
+          return answer.name == data.key;
+        });
+
+        question.dropdowns[data.key].forEach((answer, i) => {
+          if(i == index) {
+            question.dropdowns[data.key][index].isCorrect = isCorrect;
+
+            if(correctIndex > -1){
+              question.correct[correctIndex].value = question.dropdowns[data.key][index].value;
+            }
+            else{
+              question.correct.push({
+                name: data.key,
+                value: question.dropdowns[data.key][index].value
+              });
+            }
+          }
+          else if(isCorrect && answer.isCorrect === isCorrect){
+            question.dropdowns[data.key][i].isCorrect = false;
+          }
+        });
+      break;
     }
 
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
@@ -307,7 +393,7 @@ export default class Question extends BaseComponent{
         question.answers.push(answerObj);
       break;
       case 'multiple_dropdowns_question':
-        let newDropdownOption = ReviewAssessmentStore.blankNewDropdown();
+        let newDropdownOption = ReviewAssessmentStore.blankNewDropdownOption();
         question.dropdowns[options.dropdownId].push(newDropdownOption);
       break;
     }

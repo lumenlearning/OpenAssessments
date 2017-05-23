@@ -51,7 +51,7 @@ export default class MDDAnswerFeedbackMaterial extends Component {
                   return (
                     <AnswerFeedbackRow
                       key={dropdown.value}
-                      index={dropdown.value}
+                      index={{key: dropdownKey, dropdown: dropdown.value}}
                       answer={dropdown.name}
                       feedback={this.checkForFeedback(dropdown, dropdownKey)}
                       isCorrect={this.checkIfCorrect(dropdown, dropdownKey)}

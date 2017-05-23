@@ -247,6 +247,7 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
       name: '',
       value: String((Math.random() * 100) * Math.random()),
       feedback: null,
+      isCorrect: false
     }
   },
   kind(){
