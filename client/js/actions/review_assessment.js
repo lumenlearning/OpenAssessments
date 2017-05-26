@@ -86,23 +86,45 @@ export default {
   saveAssessment(assessment){
     // Only return the relevant item and answer information.
     let items = ReviewAssessmentStore.allQuestions().map(function(item){
-      let answers = item.answers.map(function(ans){
-        return {
-          id: ans.id,
-          material: ans.material,
-          isCorrect: ans.isCorrect,
-          feedback: ans.feedback
-        }
-      });
+      let answers = null;
+      let dropdowns = null;
+      let correct = null;
+      let feedback = null;
+
+      switch (item.question_type) {
+
+        case 'multiple_choice_question':
+        case 'multiple_answers_question':
+          answers = item.answers.map(function(ans){
+            return {
+              id: ans.id,
+              material: ans.material,
+              isCorrect: ans.isCorrect,
+              feedback: ans.feedback
+            }
+          });
+        break;
+        case 'essay_question':
+          feedback = item.feedback;
+        break;
+        case 'multiple_dropdowns_question':
+          dropdowns = item.dropdowns;
+          correct = item.correct;
+          feedback = item.feedback;
+        break;
+      }
+
       return {
         id: item.id,
         title: item.title,
         question_type: item.question_type,
         material: item.material,
         answers: answers,
-        //correct: item.correct,
+        dropdowns: dropdowns,
+        correct: correct,
         outcome: item.outcome,
-        mom_embed: item.momEmbed
+        mom_embed: item.momEmbed,
+        feedback: feedback
       }
     });
 

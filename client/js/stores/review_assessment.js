@@ -109,6 +109,22 @@ function validateAssessment() {
 }
 
 function validateQuestion(question){
+  switch (question.question_type) {
+
+    case 'multiple_choice_question':
+    case 'multiple_answers_question':
+      return validateMultiChoiceQuestion(question);
+    break;
+    case 'essay_question':
+      return validateEssayQuestion(question);
+    break;
+    case 'multiple_dropdowns_question':
+      return validateMDDQuestion(question);
+    break;
+  }
+}
+
+function validateMultiChoiceQuestion(question){
   let duplicateArr = [];
   let hasDuplicates = false;
   question.isValid = true;
@@ -161,6 +177,63 @@ function validateQuestion(question){
   });//each
 
   return question;
+}
+
+function validateMDDQuestion(question){
+  let dropDownKeys = Object.keys(question.dropdowns);
+  question.isValid = true;
+  question.errorMessages = [];
+
+  //check if question is blank
+  if(!question.material.match(/\S/)){
+    question.isValid = false;
+    question.errorMessages.push('You must enter question text to finish editing this question.');
+  }
+
+  dropDownKeys.forEach((ddKey, i) => {
+
+    let correctIndex = question.dropdowns[ddKey].findIndex((element, j) => {
+      return element.isCorrect === true;
+    });
+
+    let correctObj = question.correct.findIndex((element, j) => {
+      return element.name === ddKey
+    });
+
+    let blankAnswers = question.dropdowns[ddKey].findIndex((element, j) => {
+      return element.name.match(/\S/);
+    });
+
+    console.log('CORRECT? ', correctIndex, correctObj);
+    //check if all dropdowns have a correct answer
+    if (correctIndex === -1 && correctObj === -1) {
+      question.isValid = false;
+      question.errorMessages.push(`You must select a correct answer for ${ddKey} dropdown.`);
+    }
+
+    //check if any dropdown answers are blank
+    if(blankAnswers === -1){
+      question.isValid = false;
+      question.errorMessages.push(`You must enter answer text for all options in ${ddKey} dropdown.`);
+    }
+
+    //check if all dropdowns have at least two options.
+    if(question.dropdowns[ddKey].length < 2){
+      question.isValid = false;
+      question.errorMessages.push(`You must have at least two options for each dropdown.`);
+    }
+
+  });
+
+  return question
+
+}
+
+function validateEssayQuestion(question){
+  question.isValid = true;
+  question.errorMessages = [];
+
+  return question
 }
 
 // Extend User Store with EventEmitter to add eventing capabilities

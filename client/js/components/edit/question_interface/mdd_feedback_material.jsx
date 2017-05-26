@@ -27,6 +27,7 @@ export default class MDDAnswerFeedbackMaterial extends Component {
     let dropdowns = !!question ? Object.keys(question.dropdowns) : [];
     let activeTab = this.state.activeTab;
 
+    console.log("QUESTION!: ", question);
     //place JSX between the parens!
     return (
       <div>
