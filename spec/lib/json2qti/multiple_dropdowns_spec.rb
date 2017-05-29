@@ -42,11 +42,10 @@ describe Json2Qti::MultipleDropdowns do
   it "should mark all the correct answers" do
     node = Nokogiri::XML(question.to_qti)
 
-    # <varequal respident="response_dropdown1">if895fe8c431e4550794b0793348d0de6</varequal>
-    expect(node.at_css("varequal[respident=response_dropdown1]").text).to eq 'if895fe8c431e4550794b0793348d0de6'
-    expect(node.at_css("varequal[respident=response_dropdown2]").text).to eq 'i00881b5a9dc037b7e1e5b191ef55b80e'
-    # <setvar varname="SCORE" action="Add">0.5</setvar>
-    expect(node.at_css("setvar[action=Add]").text).to eq "0.5"
+    # get the correct answer respidents and answer choices
+    corrects = node.css("setvar[action=Add]").map{|sv| ve = sv.parent.at_css('varequal'); [ve["respident"], ve.text]}
+
+    expect(corrects).to eq([['response_dropdown1', 'if895fe8c431e4550794b0793348d0de6'], ['response_dropdown2', 'i00881b5a9dc037b7e1e5b191ef55b80e']])
   end
 
   it "should have the response_lid for each dropdown" do

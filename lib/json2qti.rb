@@ -7,7 +7,8 @@ end
 
 require 'json2qti/converter'
 require 'json2qti/question'
+require 'json2qti/essay'
 require 'json2qti/multiple_choice'
+require 'json2qti/multiple_dropdowns'
 require 'json2qti/multiple_select'
 require 'json2qti/ohm_embed'
-require 'json2qti/multiple_dropdowns'

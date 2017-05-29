@@ -48,7 +48,8 @@ module Json2Qti
       @group_by_section = opts["group_by_section"]
       @per_section = opts["per_sec"].to_s || ''
 
-      @items = json["items"].map{|i| Question.new_from_item(i) }
+      # Convert each item to a convert Question object and remove unknown types (`nil`s)
+      @items = json["items"].map{|i| Question.new_from_item(i) }.compact
 
       if @group_by_section
         if @items.all? { |item| item.outcome }

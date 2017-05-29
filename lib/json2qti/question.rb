@@ -6,6 +6,7 @@ module Json2Qti
       @title = item["title"] || ''
       @material = item["material"] || ''
       @answers = item["answers"] || []
+      @generic_feedbacks = item["feedback"] || {}
       @id = item["id"]
       @key = [@material, @answers]
       @ident = generate_digest_ident(@key)
@@ -27,6 +28,8 @@ module Json2Qti
           OhmEmbed.new(item)
         when 'multiple_dropdowns_question'
           MultipleDropdowns.new(item)
+        when 'essay_question'
+          Essay.new(item)
         else
           nil
       end
@@ -111,9 +114,11 @@ XML
             <outcomes>
               <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
             </outcomes>
-#{answer_processing}
+#{generic_feedbacks_processing}
 #{feedback_processing}
+#{answer_processing}
           </resprocessing>
+#{generic_feedbacks}
 #{feedbacks}
         </item>
 XML
@@ -135,6 +140,30 @@ XML
                 <fieldentry>#{@outcome['long_title'].encode(:xml => :text)}</fieldentry>
               </qtimetadatafield>
 XML
+    end
+
+    # if there is a @generic_feedbacks["general_fb"] show it
+    # in the future there could be "general_correct_fb" and "general_incorrect_fb"
+    def generic_feedbacks_processing
+      if @generic_feedbacks["general_fb"]
+        <<XML
+            <respcondition continue="Yes">
+              <conditionvar>
+                <other/>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="general_fb"/>
+            </respcondition>
+XML
+      else
+        ""
+      end
+    end
+
+    # if there is a @generic_feedbacks["general_fb"] show it
+    def generic_feedbacks
+      if @generic_feedbacks["general_fb"]
+        feedback("general_fb", @generic_feedbacks["general_fb"])
+      end
     end
 
     # Iterate over the answers and create a `feedback_condition` for each one
