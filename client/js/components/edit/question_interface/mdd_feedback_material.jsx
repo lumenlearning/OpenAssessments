@@ -17,24 +17,32 @@ export default class MDDAnswerFeedbackMaterial extends Component {
   componentWillMount() {
 
     this.setState({
-      activeTab: !!this.props.question ? Object.keys(this.props.question.dropdowns)[0] : null
+      activeTab: !!this.props.question && !!this.props.question.dropdowns ? Object.keys(this.props.question.dropdowns)[0] : null
     });
   }
+
+  componentWillReceiveProps(nProps, nState) {
+    if(!(!!this.state.activeTab)){
+      this.setState({
+        activeTab: !!nProps.question && !!nProps.question.dropdowns ? Object.keys(nProps.question.dropdowns)[0] : null
+      });
+    }
+  }//componentWillReceiveProps
 
   render() {
     let style = Style.styles();
     let question = this.props.question;
-    let dropdowns = !!question ? Object.keys(question.dropdowns) : [];
+    let dropdowns = !!question && !!question.dropdowns ? Object.keys(question.dropdowns) : [];
     let activeTab = this.state.activeTab;
 
-    console.log("QUESTION!: ", question);
+    if(dropdowns.length === 0) return <p><i><strong>Hint: Add some dropdowns to your question via a shortcodes like so [dropdown1] to start editing answers</strong></i></p>;
     //place JSX between the parens!
     return (
       <div>
         <div className="tabArea" style={{display: 'flex'}}>
           {dropdowns.map((dropdown, i) => {
             return (
-              <div onClick={()=>this.handleActiveTab(dropdown)} style={{...style.mddFeedbackTab, ...(activeTab === dropdown ? style.mddFeedbackTabActive : {})}} >
+              <div key={`ddTab-${dropdown}`} onClick={()=>this.handleActiveTab(dropdown)} style={{...style.mddFeedbackTab, ...(activeTab === dropdown ? style.mddFeedbackTabActive : {})}} >
                 {dropdown}
               </div>
             )
@@ -95,7 +103,7 @@ export default class MDDAnswerFeedbackMaterial extends Component {
     //if dropdown.isCorrect is undefined.
       //check if dropdown.value is in question.correct array. return boolean
     if(!(!!dropdown.isCorrect)){
-      if(question.correct.findIndex((correct) => {return correct.value == dropdown.value && correct.name == key}) > -1) isCorrect = true;
+      if(!!question.correct && question.correct.findIndex((correct) => {return correct.value == dropdown.value && correct.name == key}) > -1) isCorrect = true;
     }
     else{
       isCorrect = dropdown.isCorrect;
@@ -109,7 +117,8 @@ export default class MDDAnswerFeedbackMaterial extends Component {
     let feedback = '';
 
     if(!(!!dropdown.feedback)){
-      if(!!question.feedback[key+dropdown.value]) feedback = question.feedback[key+dropdown.value];
+      if(!!question.feedback && !!question.feedback[key+dropdown.value]) feedback = question.feedback[key+dropdown.value];
+      else feedback = null;
     }
     else{
       feedback = dropdown.feedback;

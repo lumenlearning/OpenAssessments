@@ -30,7 +30,9 @@ export default class Question extends BaseComponent{
                 "handleFeedbackChange",
                 "handleAddOption",
                 "handleOutcomeChange",
-                'handleAnswerRemoval');
+                'handleAnswerRemoval',
+                "handleQuestionTypeChange"
+     );
   }//constructor
 
   getState(){
@@ -63,8 +65,6 @@ export default class Question extends BaseComponent{
       state_text = "(Edited)";
       headerStyle = style.editedHeader;
     }
-
-    //if(question.question_type == 'multiple_dropdowns_question') console.log("QUESTION:", question);
 
     return (
       <li style={style.questionItem} >
@@ -266,8 +266,6 @@ export default class Question extends BaseComponent{
           return answer.value == data.dropdown;
         });
 
-        console.log("CHANGE ANSWER:", data, e.target.getContent(), index, question);
-
         question.dropdowns[data.key][index].name = e.target.getContent();
       break;
     }
@@ -345,9 +343,9 @@ export default class Question extends BaseComponent{
         let index = question.dropdowns[data.key].findIndex((answer) => {
           return answer.value == data.dropdown;
         });
-        let correctIndex = question.correct.findIndex((answer) => {
+        let correctIndex = !!question.correct ? question.correct.findIndex((answer) => {
           return answer.name == data.key;
-        });
+        }) : -1;
 
         question.dropdowns[data.key].forEach((answer, i) => {
           if(i == index) {
@@ -357,6 +355,8 @@ export default class Question extends BaseComponent{
               question.correct[correctIndex].value = question.dropdowns[data.key][index].value;
             }
             else{
+              if(!(!!question.correct)) question.correct = [];
+
               question.correct.push({
                 name: data.key,
                 value: question.dropdowns[data.key][index].value
@@ -384,6 +384,8 @@ export default class Question extends BaseComponent{
 
   handleAddOption(e, options) {
     let question = _.clone(this.props.question, true);
+    
+    console.log('handle add optioon', question, options);
 
     switch (question.question_type) {
 

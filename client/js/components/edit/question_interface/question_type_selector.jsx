@@ -23,6 +23,7 @@ export default class QuestionTypeSelector extends Component {
       <div>
         <p>Select your question type:</p>
         <select value={!!question.question_type ? question.question_type : null} onChange={this.props.handleQuestionTypeChange} style={{marginBottom: '25px'}}>
+          {!!question.question_type ? null : <option value={null} disabled={true} selected={true}>Select Question Type</option>}
           {questionTypes.map((type) => {
             return <option value={type.value} >{type.name}</option>
           })}

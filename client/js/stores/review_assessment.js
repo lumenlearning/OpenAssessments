@@ -110,7 +110,6 @@ function validateAssessment() {
 
 function validateQuestion(question){
   switch (question.question_type) {
-
     case 'multiple_choice_question':
     case 'multiple_answers_question':
       return validateMultiChoiceQuestion(question);
@@ -392,6 +391,8 @@ Dispatcher.register(function(payload) {
     case Constants.ADD_ASSSESSMENT_QUESTION:
       var question = payload.data;
       var location = payload.location;
+      
+      console.log("ADD_ASSSESSMENT_QUESTION", question);
 
       if(location == 'top'){
         _items.unshift(question);
