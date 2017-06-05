@@ -38,7 +38,7 @@ export default class MultiDropdownFeedback extends Component {
                   let img = null;
                   let answerFeedbackBlock = windowWidth <= 1000 ? {display: "table", width: "100%", borderSpacing: "0 10px"} : {display: "table", width: "100%", borderSpacing: "10px 8px"};
                   let answerFeedback      = windowWidth <= 1000 ? {display: "block", width: "100%", marginBottom: "20px"} : {display: "table-cell", width: "50%"};
-                  let feedback = !!question.feedback ? question.feedback[key+dropdown.value] : !!dropdown.feedback ? dropdown.feedback : null;
+                  let feedback = !!dropdown.feedback ? dropdown.feedback : !!question.feedback ? question.feedback[key+dropdown.value] : null;
                   let correctIndex = question.correct.findIndex((correctDropdown) => {
                     return dropdown.value === correctDropdown.value && key === correctDropdown.name;
                   });

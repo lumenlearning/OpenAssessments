@@ -307,6 +307,7 @@ export default class Question extends BaseComponent{
         answer.feedback = e.target.getContent();
       break;
       case 'essay_question':
+        if(!(!!question.feedback)) question.feedback = {};
         question.feedback.general_fb = e.target.getContent();
       break;
       case 'multiple_dropdowns_question':
@@ -385,13 +386,12 @@ export default class Question extends BaseComponent{
   handleAddOption(e, options) {
     let question = _.clone(this.props.question, true);
     
-    console.log('handle add optioon', question, options);
-
     switch (question.question_type) {
 
       case 'multiple_choice_question':
       case 'multiple_answers_question':
         let answerObj = ReviewAssessmentStore.blankNewAnswer();
+        if(!(!!question.answers)) question.answers = [];
         question.answers.push(answerObj);
       break;
       case 'multiple_dropdowns_question':

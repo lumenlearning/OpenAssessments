@@ -56,11 +56,8 @@ export default class QuestionInterface extends BaseComponent{
     let type = question.question_type;
     let feedbackMaterial = null;
 
-    console.log("PEW PEW ANSWER FEEDBBACK MATERIAL FUNCTION!");
-
     switch (type) {
       case "essay_question":
-        console.log('essay question:', question);
         feedbackMaterial = (
           <EssayAnswerFeedbackMaterial
             key={question.id}
@@ -88,7 +85,7 @@ export default class QuestionInterface extends BaseComponent{
         feedbackMaterial = (
           <AnswerFeedbackMaterial
             key={question.id}
-            answers={question.answers}
+            answers={!!question.answers ? question.answers : []}
             handleAnswerChange={this.props.handleAnswerChange}
             handleFeedbackChange={this.props.handleFeedbackChange}
             handleCorrectChange={this.props.handleCorrectChange}

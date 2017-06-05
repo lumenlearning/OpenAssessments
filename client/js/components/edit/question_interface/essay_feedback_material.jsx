@@ -24,7 +24,7 @@ export default class EssayAnswerFeedbackMaterial extends Component {
         <Feedback
           style={{display: "block", width: "100%", marginBottom: "10px"}}
           index={-1}
-          feedback={this.props.feedback.general_fb}
+          feedback={!!this.props.feedback ? this.props.feedback.general_fb : ''}
           onChange={this.props.handleFeedbackChange}
         />
       </div>
