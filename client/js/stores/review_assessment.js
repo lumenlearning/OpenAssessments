@@ -203,7 +203,6 @@ function validateMDDQuestion(question){
       return element.name.match(/\S/);
     });
 
-    console.log('CORRECT? ', correctIndex, correctObj);
     //check if all dropdowns have a correct answer
     if (correctIndex === -1 && correctObj === -1) {
       question.isValid = false;
@@ -392,8 +391,6 @@ Dispatcher.register(function(payload) {
       var question = payload.data;
       var location = payload.location;
       
-      console.log("ADD_ASSSESSMENT_QUESTION", question);
-
       if(location == 'top'){
         _items.unshift(question);
       }

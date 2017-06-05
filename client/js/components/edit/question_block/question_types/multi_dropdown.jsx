@@ -38,7 +38,7 @@ export default class MultiDropdownFeedback extends Component {
                   let img = null;
                   let answerFeedbackBlock = windowWidth <= 1000 ? {display: "table", width: "100%", borderSpacing: "0 10px"} : {display: "table", width: "100%", borderSpacing: "10px 8px"};
                   let answerFeedback      = windowWidth <= 1000 ? {display: "block", width: "100%", marginBottom: "20px"} : {display: "table-cell", width: "50%"};
-                  let feedback = question.feedback[key+dropdown.value];
+                  let feedback = !!question.feedback ? question.feedback[key+dropdown.value] : !!dropdown.feedback ? dropdown.feedback : null;
                   let correctIndex = question.correct.findIndex((correctDropdown) => {
                     return dropdown.value === correctDropdown.value && key === correctDropdown.name;
                   });
@@ -46,6 +46,8 @@ export default class MultiDropdownFeedback extends Component {
                   if(correctIndex >= 0){
                     img = (<img style={style.checkOrExit} src="/assets/checkbox-48.png" alt="This Answer is Correct"/>);
                   }
+
+                  //console.log("DD FEEDBACK", feedback, question, dropdown);
 
                   return (
                     <div style={{display: "table", width: "100%"}} >

@@ -48,8 +48,8 @@ export default class MDDAnswerFeedbackMaterial extends Component {
             )
           })}
         </div>
-        <div className="tabContent" style={style.mddTabContent}>
-          <div style={{fontWeight: 'bold', display: 'flex', justifyContent: 'space-around'}}>
+        <div className="tabContent" style={style.mddTabContent} >
+          <div style={{fontWeight: 'bold', display: 'flex', justifyContent: 'space-around'}} >
             <p>Answers</p>
             <p>Feedback</p>
           </div>

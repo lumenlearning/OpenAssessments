@@ -105,7 +105,7 @@ export default class Qti{
       }
 
       this.markCorrectAnswers(item);
-      
+
       return item;
     };
 
@@ -122,9 +122,21 @@ export default class Qti{
 
       answers[key] = x.find('render_choice > response_label').map((j, resLabel_raw) => {
         let resLabel = $(resLabel_raw);
+        let value = resLabel.attr('ident');
+        let name = resLabel.find('material > mattext').text();
+        let correctIndex = this.parseMultiDropdownCorrect(xml).findIndex((correctObj) => {
+          return correctObj.value === value && correctObj.name === key;
+        });
+        let feedback = this.parseFeedback(xml, [], true);
+        let feedbackKey = Object.keys(feedback).find((fbKey) => {
+          return fbKey === `${key}${value}`;
+        });
+
         return ({
-          value: resLabel.attr('ident'),
-          name: resLabel.find('material > mattext').text()
+          value: value,
+          name: name,
+          isCorrect: correctIndex > -1,
+          feedback: !!feedbackKey ? feedback[feedbackKey] : ''
         });
       }).toArray(); //make sure array not jquery object.
 
@@ -136,7 +148,7 @@ export default class Qti{
 
   static parseMultiDropdownCorrect(xml) {
     let correct = [];
-
+    
     $.each(xml.find('respcondition'), (i, respcondition) => {
       let rescon = $(respcondition);
       let varEqual = rescon.find('varequal');
@@ -151,7 +163,7 @@ export default class Qti{
       }
 
     }); //each
-
+    
     return correct;
 
   }//parseMultiDropdownCorrect
