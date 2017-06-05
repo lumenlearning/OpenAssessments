@@ -307,7 +307,7 @@ export default class Question extends BaseComponent{
         answer.feedback = e.target.getContent();
       break;
       case 'essay_question':
-        //todo: figure out where this object is being placed in the data model
+        question.feedback.general_fb = e.target.getContent();
       break;
       case 'multiple_dropdowns_question':
         let index = question.dropdowns[data.key].findIndex((answer) => {

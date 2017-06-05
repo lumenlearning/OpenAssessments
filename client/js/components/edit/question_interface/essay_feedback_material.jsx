@@ -21,7 +21,12 @@ export default class EssayAnswerFeedbackMaterial extends Component {
     //place JSX between the parens!
     return (
       <div>
-
+        <Feedback
+          style={{display: "block", width: "100%", marginBottom: "10px"}}
+          index={-1}
+          feedback={this.props.feedback.general_fb}
+          onChange={this.props.handleFeedbackChange}
+        />
       </div>
     );
   }
