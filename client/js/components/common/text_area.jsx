@@ -19,6 +19,7 @@ export default class TextArea extends React.Component{
           placeholder="Write your essay response here"
           onChange={(e) => AssessmentActions.answerSelected(e.target.value)}
           defaultValue={this.props.initialText}
+					disabled={this.props.isDisabled}
         />
 			</div>
 		);

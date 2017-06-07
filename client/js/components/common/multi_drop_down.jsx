@@ -78,7 +78,7 @@ export default class MultiDropDown extends BaseComponent {
         let disabled = "";
 
         if(this.state[nMatch] === answer.value) selected = "selected";
-        if(this.props.isDisabled && correctAnswer.value !== answer.value) disabled = "disabled";
+        if(this.props.isDisabled && !!correctAnswer && correctAnswer.value !== answer.value) disabled = "disabled";
 
         return `<option ${selected} ${disabled}  value=${answer.value} >${answer.name}</option>`;
       });

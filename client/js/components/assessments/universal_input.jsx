@@ -119,7 +119,7 @@ export default class UniversalInput extends React.Component{
         items = <Matching isDisabled={this.props.isResult}  item={item} name="answer-option"/>;
         break;
       case "essay_question":
-        items = <TextArea key="textarea_essay_input" item={item} initialText={this.props.chosen} />;
+        items = <TextArea isDisabled={this.props.isResult} key="textarea_essay_input" item={item} initialText={this.props.chosen} />;
         break;
       case "multiple_answers_question":
         items = item.answers.map((answer) => {
