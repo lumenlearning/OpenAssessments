@@ -171,7 +171,7 @@
             <conditionvar>
               <varequal respident="response_dropdown3">6259</varequal>
             </conditionvar>
-            <setvar varname="SCORE" action="Add">33.33</setvar>
+            <setvar varname="SCORE" action="Add">0.33</setvar>
           </respcondition>
         </resprocessing>
         <itemfeedback ident="968_fb">

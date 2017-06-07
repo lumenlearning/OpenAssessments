@@ -19,8 +19,10 @@ module QuestionGraders
           correct_count += 1
         end
       end
-
-      if correct_answers.count == correct_count
+      
+      if correct_answers.count == 0
+        return 0.0
+      elsif correct_answers.count == correct_count
         1.0
       else
         (correct_count.to_f / correct_answers.count).round(3)
@@ -47,7 +49,7 @@ module QuestionGraders
       question_node.children.xpath("respcondition").each do |node|
         # skip unless it's setting the score and it's great than 0
         setvar = node.at_css('setvar')
-        next unless setvar && setvar['action'] == 'Add' && setvar.text.strip.to_i > 0
+        next unless setvar && setvar['action'] == 'Add' && setvar.text.strip.to_f > 0
 
         # Grab dropdown id and correct answer
         response_lid = node.at_css('varequal')['respident']
