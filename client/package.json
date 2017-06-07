@@ -35,7 +35,7 @@
     "react-proxy-loader": "^0.3.4",
     "react-router": "^0.13.3",
     "react-tinymce": "0.2.3",
-    "reactable": "0.10.2",
+    "reactable": "^0.10.2",
     "superagent": "^1.2.0",
     "uuid": "^2.0.1",
     "validator": "^3.41.2"

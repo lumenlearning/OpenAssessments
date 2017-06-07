@@ -107,7 +107,8 @@ export default class MultiDropDown extends BaseComponent {
           align-self: center;
         `;
 
-        if(selAnswer.chosen_answer_id === correctAnswer.value){
+
+        if(!!selAnswer && selAnswer.chosen_answer_id === correctAnswer.value){
           answerCheck = (
             `<span 
                 style="display:inline-block;"

@@ -90,33 +90,35 @@ export default class Attempts extends BaseComponent{
 
   render(){
     var that = this;
-    return <div style={{marginTop:"50px"}}>
-      <div style={{textAlign:"center"}}>
-        <h2>Attempts for <span>{this.quiz_name()}</span></h2>
-        {this.no_quizzes()}
+    return (
+      <div style={{marginTop:"50px"}}>
+        <div style={{textAlign:"center"}}>
+          <h2>Attempts for <span>{this.quiz_name()}</span></h2>
+          {this.no_quizzes()}
+        </div>
+        <Table
+            className="small-12 columns"
+            id="attempts_table"
+            role="grid"
+            style={{tableLayout:"fixed", width: "100%"}}
+            filterPlaceholder="Filter by student name..."
+            sortable={[
+                        'Student Name'
+                    ]}
+            defaultSort="Student Name"
+            filterable={['Student Name']}
+            >
+          {this.state.userAssessments.map(function (ua) {
+            return <Tr key={ua.id}>
+              <Td column="Student Name" value={ua.user.name}><span title={ua.user.email}>{ua.user.name}</span></Td>
+              <Td column="Attempts">{that.attemptsStuff(ua)}</Td>
+              <Td column="Attempts Remaining">{ua.attempts_left}</Td>
+              <Td column="Actions">{that.actions(ua)}</Td>
+            </Tr>
+          })}
+        </Table>
       </div>
-      <Table
-          className="small-12 columns"
-          id="attempts_table"
-          role="grid"
-          style={{tableLayout:"fixed", width: "100%"}}
-          filterPlaceholder="Filter by student name..."
-          sortable={[
-                      'Student Name'
-                  ]}
-          defaultSort="Student Name"
-          filterable={['Student Name']}
-          >
-        {this.state.userAssessments.map(function (ua) {
-          return <Tr key={ua.id}>
-            <Td column="Student Name" value={ua.user.name}><span title={ua.user.email}>{ua.user.name}</span></Td>
-            <Td column="Attempts">{that.attemptsStuff(ua)}</Td>
-            <Td column="Attempts Remaining">{ua.attempts_left}</Td>
-            <Td column="Actions">{that.actions(ua)}</Td>
-          </Tr>
-        })}
-      </Table>
-    </div>;
+    );
   }
 
 };
