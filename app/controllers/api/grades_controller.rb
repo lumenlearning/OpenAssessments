@@ -97,9 +97,18 @@ private
         item.question_text = question["material"]
         item.base_type = question["type"]
         item.save!
-end
+      end
+      
+      chosen = answers[index]
+      if chosen.is_a?(Hash)
+        chosen = chosen.to_json
+      elsif chosen.is_a?(Array) && chosen.any?{|i| i.is_a?(Hash)}
+        chosen = chosen.to_json
+      elsif chosen.is_a?(Array)
+        chosen = answers[index].join(",")
+      end
 
-        rendered_time = Time.now
+      rendered_time = Time.now
         referer = request.env['HTTP_REFERER']
         item.item_results.create(
           identifier: question["id"],
@@ -117,8 +126,8 @@ end
           confidence_level: confidence_level_int,
           score: question["score"],
           outcome_guid: question["outcome_guid"],
-          sequence_index: answers[index],
-          answers_chosen: answers[index].is_a?(Array) ? answers[index].join(",") : answers[index]
+          sequence_index: index,
+          answers_chosen: chosen
         )
 
     end

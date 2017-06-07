@@ -40,6 +40,13 @@ class ItemResult < ActiveRecord::Base
   def processed_answers_chosen
     if item && item.base_type == 'mom_embed'
       process_mom_embed_answer(true)
+    elsif item && item.base_type == 'multiple_dropdowns_question'
+      # these were incorrectly stored as a ruby array's to_s
+      begin
+        JSON.parse self.answers_chosen
+      rescue
+        []
+      end
     else
       self.answers_chosen.split(",")
     end
