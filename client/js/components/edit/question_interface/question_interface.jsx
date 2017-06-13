@@ -14,6 +14,7 @@ import QuestionTypeSelector   from './question_type_selector.jsx';
 import AnswerFeedbackMaterial from './answer_feedback_material.jsx';
 import EssayAnswerFeedbackMaterial from './essay_feedback_material.jsx';
 import MDDAnswerFeedbackMaterial from './mdd_feedback_material.jsx';
+import MomEmbedFeedbackMaterial from './mom_embed_feedback_material.jsx';
 
 export default class QuestionInterface extends BaseComponent{
 
@@ -81,6 +82,16 @@ export default class QuestionInterface extends BaseComponent{
           />
         );
       break;
+      case "mom_embed":
+        feedbackMaterial = (
+          <MomEmbedFeedbackMaterial
+            key={question.id}
+            answers={question.answers}
+            question={question}
+            handleAnswerChange={this.props.handleAnswerChange}
+          />
+        );
+      break;
       default:
         feedbackMaterial = (
           <AnswerFeedbackMaterial
@@ -97,6 +108,5 @@ export default class QuestionInterface extends BaseComponent{
     }
 
     return feedbackMaterial;
-
   }//answerFeedbackMaterial
 }

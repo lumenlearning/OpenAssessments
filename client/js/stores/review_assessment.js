@@ -350,6 +350,9 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
        case 'essay_question':
          isEditable = true;
        break;
+       case 'mom_embed':
+         isEditable = true;
+       break;
        case 'multiple_dropdowns_question':
          isEditable = true;
        break;

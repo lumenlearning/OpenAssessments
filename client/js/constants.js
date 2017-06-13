@@ -110,5 +110,9 @@ export default {
       value: 'multiple_answers_question',
       name: 'Multiple Answers Question',
     },
+    {
+      value: 'mom_embed',
+      name: 'OHM Embedded Question'
+    }
   ]
 };

@@ -261,6 +261,9 @@ export default class Question extends BaseComponent{
       case 'essay_question':
         //do literally nothing.
       break;
+      case 'mom_embed':
+        question.mom_embed.questionId = e.target.value;
+      break;
       case 'multiple_dropdowns_question':
         let index = question.dropdowns[data.key].findIndex((answer) => {
           return answer.value == data.dropdown;

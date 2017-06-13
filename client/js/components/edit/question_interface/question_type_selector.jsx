@@ -21,7 +21,7 @@ export default class QuestionTypeSelector extends Component {
     let question = this.props.question;
     let questionTypes = Constants.QUESTION_TYPES;
     let hasEssays = AllQuestions.findIndex((question) => {
-      return question.question_type == 'essay_question'
+      return question.question_type == 'essay_question' || question.question_type == 'mom_embed'
     });
 
     return (
