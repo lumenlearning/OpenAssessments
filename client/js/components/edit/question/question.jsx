@@ -262,7 +262,8 @@ export default class Question extends BaseComponent{
         //do literally nothing.
       break;
       case 'mom_embed':
-        question.mom_embed.questionId = e.target.value;
+        console.log("ANSWER CHANGE!", question);
+        question.momEmbed.questionId = e.target.value;
       break;
       case 'multiple_dropdowns_question':
         let index = question.dropdowns[data.key].findIndex((answer) => {
@@ -382,6 +383,8 @@ export default class Question extends BaseComponent{
     let question_type = e.target.value;
 
     question.question_type = question_type;
+
+    if((question_type === 'mom_embed')) question.momEmbed = ReviewAssessmentStore.blankNewMomEmbeddedQuestion().momEmbed;
 
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }//handleQuestionTypeChange

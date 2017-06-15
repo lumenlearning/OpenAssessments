@@ -112,7 +112,7 @@ export default {
     },
     {
       value: 'mom_embed',
-      name: 'OHM Embedded Question'
+      name: 'My Open Math Embedded Question'
     }
   ]
 };

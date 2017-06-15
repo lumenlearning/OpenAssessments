@@ -117,10 +117,25 @@ function validateQuestion(question){
     case 'essay_question':
       return validateEssayQuestion(question);
     break;
+    case 'mom_embed':
+      return validateMomQuestion(question);
+    break;
     case 'multiple_dropdowns_question':
       return validateMDDQuestion(question);
     break;
   }
+}
+
+function validateMomQuestion(question){
+  question.isValid = true;
+  question.errorMessages = [];
+
+  if(!!question.momEmbed.questionId && !(question.momEmbed.questionId > 0)){
+    question.isValid = false;
+    question.errorMessages.push("please enter ")
+  }
+
+  return question;
 }
 
 function validateMultiChoiceQuestion(question){
@@ -319,6 +334,15 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
       value: String((Math.random() * 100) * Math.random()),
       feedback: null,
       isCorrect: false
+    }
+  },
+  blankNewMomEmbeddedQuestion(){
+    return {
+      "momEmbed": {
+        "questionId": null, // This is the value bound to the input on edit
+        "domain": "www.myopenmath.com", // this is default, new questions just use this
+        "iframeHeight": null
+      },
     }
   },
   kind(){

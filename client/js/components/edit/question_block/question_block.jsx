@@ -8,6 +8,7 @@ import CommunicationHandler from "../../../utils/communication_handler";
 import MultiChoiceNAnswerFeedback from './question_types/multi_choice_and_multi_answer.jsx';
 import EssayQuestionFeedback from './question_types/essay_question.jsx';
 import MultiDropdownFeedback from './question_types/multi_dropdown.jsx';
+import MomEmbed from './question_types/mom_embed.jsx';
 
 export default class QuestionBlock extends React.Component{
 
@@ -65,12 +66,14 @@ export default class QuestionBlock extends React.Component{
     let feedbackContent;
 
     switch (type) {
-
       case "essay_question":
         feedbackContent = <EssayQuestionFeedback question={question} windowWidth={windowWidth} />;
       break;
       case "multiple_dropdowns_question":
         feedbackContent = <MultiDropdownFeedback question={question} windowWidth={windowWidth} />;
+      break;
+      case 'mom_embed':
+        feedbackContent = <MomEmbed question={question} windowWidth={windowWidth} />;
       break;
       default:
         feedbackContent = <MultiChoiceNAnswerFeedback question={question} windowWidth={windowWidth} />;

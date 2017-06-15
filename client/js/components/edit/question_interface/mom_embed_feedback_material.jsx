@@ -25,8 +25,9 @@ export default class MomEmbedFeedbackMaterial extends Component {
           <input
             name="ohm input"
             type="text"
-            defaultValue={question.mom_embed.questionId}
+            defaultValue={!!question.momEmbed ? question.momEmbed.questionId : null}
             onChange={this.props.handleAnswerChange}
+            style={{fontWeight: "normal"}}
           />
         </label>
       </div>
