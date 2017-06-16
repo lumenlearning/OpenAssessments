@@ -132,7 +132,7 @@ function validateMomQuestion(question){
 
   if(!!question.momEmbed.questionId && !(question.momEmbed.questionId > 0)){
     question.isValid = false;
-    question.errorMessages.push("please enter ")
+    question.errorMessages.push("please enter a My Open Math Embedable Question Id. It should be an integer greater than 0")
   }
 
   return question;

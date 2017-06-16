@@ -262,7 +262,6 @@ export default class Question extends BaseComponent{
         //do literally nothing.
       break;
       case 'mom_embed':
-        console.log("ANSWER CHANGE!", question);
         question.momEmbed.questionId = e.target.value;
       break;
       case 'multiple_dropdowns_question':
