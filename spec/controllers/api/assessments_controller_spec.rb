@@ -315,40 +315,37 @@ RSpec.describe Api::AssessmentsController, type: :controller do
     before do
       request.headers['Authorization'] = @admin_token
       @user = FactoryGirl.create(:user)
+      @xml_file = Rack::Test::UploadedFile.new File.join(Rails.root, 'spec', 'fixtures', 'assessment.xml')
+      @params = {xml_file: @xml_file, title: 'Test', kind: 'practice'}
     end
 
-    # context "xml" do
-
-      # it "denies unauthenticated requests" do
-      #   request.headers['Authorization'] = ""
-      #   request.env['RAW_POST_DATA'] = @xml
-      #   post :create, format: :xml
-      #   expect(response.status).to eq(401)
-      # end
+    it "creates an assessment" do
+      post :create, assessment: @params, format: :json
       
-      # it "creates an assessment xml" do
-      #   request.headers['Authorization'] = @admin_token
-      #   request.env['RAW_POST_DATA'] = @xml
-      #   post :create, auth_token: @user.authentication_token, format: :xml
-      #   expect(response).to have_http_status(201)
-      # end
+      expect(response).to have_http_status(201)
+      a = Assessment.last
+      expect(a.title).to eq @params[:title]
+      expect(a.kind).to eq @params[:kind]
+      expect(a.xml_with_answers).to eq File.read(@xml_file)
+    end
 
-    # end
+    it "should create assessment settings" do
+      @params[:enable_start] = 'false'
+      @params[:style] = 'lumen_learning'
+      @params[:confidence_levels] = 'true'
+      @params[:per_sec] = "2"
+      @params[:allowed_attempts] = "2"
 
+      post :create, assessment: @params, format: :json
+      expect(response).to have_http_status(201)
 
-    context "json" do
-      
-      it "creates an assessment json" do
-        xml_file = Rack::Test::UploadedFile.new File.join(Rails.root, 'spec', 'fixtures', 'assessment.xml')
-        params = FactoryGirl.attributes_for(:assessment)
-        params[:title] = 'Test'
-        params[:description] = 'Test description'
-        params[:xml_file] = xml_file
-        params[:license] = 'test'
-        post :create, assessment: params, format: :json
-        expect(response).to have_http_status(201)
-      end
-
+      settings = Assessment.last.default_settings
+      expect( settings.enable_start ).to eq false
+      expect( settings.style ).to eq @params[:style]
+      expect( settings.confidence_levels ).to eq true
+      expect( settings.per_sec ).to eq "2"
+      expect( settings.allowed_attempts ).to eq 2
+      expect( settings.mode ).to eq @params[:kind]
     end
 
   end
@@ -356,7 +353,7 @@ RSpec.describe Api::AssessmentsController, type: :controller do
   describe "PUT 'update'" do
     before(:each) do
       request.headers['Authorization'] = @admin_token
-      @assessment = FactoryGirl.create(:assessment, account: @account, xml_file: @xml)
+      @assessment = FactoryGirl.create(:assessment, account: @account, kind: 'formative', xml_file: @xml)
     end
 
     it "should update an assessment" do
@@ -376,6 +373,48 @@ RSpec.describe Api::AssessmentsController, type: :controller do
       expect(with).to include("Neptune")
       expect(assessment.xml_without_answers).not_to include("conditionvar")
       expect(response).to have_http_status(:success)
+    end
+    
+    it "should create assessment settings" do
+      @params = {}
+      @params[:title] = 'Test'
+      @params[:enable_start] = 'false'
+      @params[:style] = 'lumen_learning'
+      @params[:confidence_levels] = 'true'
+      @params[:per_sec] = "2"
+      @params[:allowed_attempts] = "2"
+
+      put :update, account_id: @account, id: @assessment.id, assessment: @params, format: :json
+      expect(response).to have_http_status(204)
+
+      settings = @assessment.default_settings
+      expect( settings.enable_start ).to eq false
+      expect( settings.style ).to eq @params[:style]
+      expect( settings.confidence_levels ).to eq true
+      expect( settings.per_sec ).to eq "2"
+      expect( settings.allowed_attempts ).to eq 2
+      expect( settings.mode ).to eq @assessment.kind
+    end
+    
+    it "should update assessment settings" do
+      orig_settings = @assessment.assessment_settings.create(mode: 'summative')
+      @params = {}
+      @params[:title] = 'Test'
+      @params[:enable_start] = 'false'
+      @params[:style] = 'lumen_learning'
+
+      put :update, account_id: @account, id: @assessment.id, assessment: @params, format: :json
+      expect(response).to have_http_status(204)
+
+      @assessment.reload
+      settings = @assessment.default_settings
+      expect( settings.id ).to eq orig_settings.id
+      expect( settings.enable_start ).to eq false
+      expect( settings.style ).to eq @params[:style]
+      expect( settings.confidence_levels ).to be_nil
+      expect( settings.per_sec ).to be_nil
+      expect( settings.allowed_attempts ).to be_nil
+      expect( settings.mode ).to eq @assessment.kind
     end
 
     it "doesn't delete assessment xmls if there is not a new xml file" do

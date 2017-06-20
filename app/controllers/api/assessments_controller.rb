@@ -133,18 +133,12 @@ class Api::AssessmentsController < Api::ApiController
 
   # *******************************************************************
   # URL PARAMS
+  # allowed_attempts (int) How many attempts the learner gets
+  # enable_start (bool) show the start screen
+  # style (string) set to "lumen_learning" to use the lumen learning theme. Leave out for default style
+  # per_sec (int) give it the number of random questions from each section you want.
+  # confidence_levels (bool) display confidence controls
   #
-  # enable_start
-  # => set to true or false to show the start screen
-  # style
-  # => set to "lumen_learning" to use the lumen learning theme. Leave out for default style
-  # asid
-  # => give it an id to load an assessment setting which determines how many attempts a studen has to take the quiz. Right now there is no
-  #    way to create one of these so if you need one you can find the assessment you want in the database and create one by doing .assessment_settings.create({allowed_attempts: n})
-  # per_sec
-  # => give it the number of random questions from each section you want.
-  # confidence_levels
-  # => set to true or false to display confidence controls
   # Example
   # https://assessments.lumenlearning.com/assessments/15?style=lumen_learning&asid=1&per_sec=2&confidence_levels=true&enable_start=true
   # ********************************************************************
@@ -153,11 +147,19 @@ class Api::AssessmentsController < Api::ApiController
     @assessment.user = current_user
     @assessment.account = current_account
     @assessment.save!
+    @assessment.assessment_settings.create(settings_params)
+    
     respond_with(:api, @assessment)
   end
 
   def update
     @assessment.update(update_params)
+    if settings = @assessment.default_settings
+      settings.update(settings_params)
+    else
+      @assessment.assessment_settings.create(settings_params)
+    end
+    
     respond_with(:api, @assessment)
   end
 
@@ -216,6 +218,16 @@ class Api::AssessmentsController < Api::ApiController
       params.require(:assessment).permit(:title, :description, :license, :xml_file,
                                          :src_url, :recommended_height, :keyword_list,
                                          :account_id, :kind)
+    end
+  
+  def settings_params
+    settings = params.require(:assessment).permit(:allowed_attempts, :per_sec, :confidence_levels, :style, :enable_start)
+    settings[:allowed_attempts] = settings[:allowed_attempts].to_i if settings[:allowed_attempts]
+    settings[:per_sec] = settings[:per_sec].to_i if settings[:per_sec]
+    settings[:confidence_levels] = settings[:confidence_levels] == 'true' if settings[:confidence_levels]
+    settings[:enable_start] = settings[:enable_start] == 'true' if settings[:enable_start]
+    settings[:mode] = @assessment.kind
+    settings
   end
 
 end
