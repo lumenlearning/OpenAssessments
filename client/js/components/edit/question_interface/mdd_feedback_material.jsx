@@ -35,7 +35,7 @@ export default class MDDAnswerFeedbackMaterial extends Component {
     let dropdowns = !!question && !!question.dropdowns ? Object.keys(question.dropdowns) : [];
     let activeTab = this.state.activeTab;
 
-    if(dropdowns.length === 0) return <p><i><strong>Hint: Add some dropdowns to your question via a shortcodes like so [dropdown1] to start editing answers</strong></i></p>;
+    if(dropdowns.length === 0) return <p><i><strong>Hint: Add some dropdowns to your question via shortcodes like so [dropdown1] to start editing answers</strong></i></p>;
     //place JSX between the parens!
     return (
       <div>
