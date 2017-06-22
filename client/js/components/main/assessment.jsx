@@ -9,6 +9,7 @@ import Loading            from "../assessments/loading";
 import CheckUnderstanding from "../assessments/check_understanding";
 import Item               from "../assessments/item";
 import ProgressDropdown   from "../common/progress_dropdown";
+import CommunicationHandler from "../../utils/communication_handler";
 
 export default class Assessment extends BaseComponent{
 
@@ -18,6 +19,7 @@ export default class Assessment extends BaseComponent{
     this._bind("getStyles", "registerGradingCallback","selectQuestion", "nextQuestion", "previousQuestion");
     this.state = this.getState(context);
     this.context = context;
+    CommunicationHandler.init();
   }
 
   getState(props, context){
@@ -50,6 +52,20 @@ export default class Assessment extends BaseComponent{
       // Trigger action to indicate the assessment was viewed
       //AssessmentActions.assessmentViewed(this.state.settings, this.state.assessment);
     }
+    window.addEventListener('load', this.materialLoaded);
+  }
+
+  componentWillUnmount(){
+    window.removeEventListener('load', this.materialLoaded)
+  }
+
+  materialLoaded() {
+    CommunicationHandler.sendSize();
+  }
+  newQuestionMessages(){
+    CommunicationHandler.sendSizeThrottled();
+    CommunicationHandler.scrollParentToTopThrottled();
+    if(document.getElementById("focus")){document.getElementById("focus").focus();}
   }
 
   popup(){
@@ -79,12 +95,14 @@ export default class Assessment extends BaseComponent{
         if(finishedCallback){
           finishedCallback();
         }
+        this.newQuestionMessages();
       });
     } else {
       AssessmentActions.selectQuestion(qid);
       if (finishedCallback) {
         finishedCallback();
       }
+      this.newQuestionMessages();
     }
   }
 
@@ -101,12 +119,14 @@ export default class Assessment extends BaseComponent{
         if (finishedCallback) {
           finishedCallback();
         }
+        this.newQuestionMessages();
       });
     } else {
       AssessmentActions.previousQuestion();
       if (finishedCallback) {
         finishedCallback();
       }
+      this.newQuestionMessages();
     }
   }
 
@@ -119,12 +139,14 @@ export default class Assessment extends BaseComponent{
         if (finishedCallback) {
           finishedCallback();
         }
+        this.newQuestionMessages();
       });
     } else {
       AssessmentActions.nextQuestion();
       if (finishedCallback) {
         finishedCallback();
       }
+      this.newQuestionMessages();
     }
   }
 

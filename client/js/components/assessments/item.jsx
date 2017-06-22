@@ -45,7 +45,6 @@ export default class Item extends BaseComponent{
       } else {
         that.setState({showMessage: true});
       }
-      if(document.getElementById("focus")){document.getElementById("focus").focus();}
     });
   }
 
@@ -159,13 +158,13 @@ export default class Item extends BaseComponent{
     if (answer.feedback_only) {
     }
     else if (answer.correct) {
-      result = <p>Correct</p>
+      result = <p style={{color: "#6fb88a" }}>Correct</p>
     }
     else if (!answer.correct && answer.score > 0) {
-      result = <p>Partially Correct</p>
+      result = <p style={{color: "#6fb88a" }}>Partially Correct</p>
     }
     else if (!answer.correct) {
-      result = <p>Incorrect</p>
+      result = <p style={{color: '#e0542b'}}>Incorrect</p>
     }
 
     if(typeof answer.feedback == 'object'){
@@ -239,7 +238,7 @@ export default class Item extends BaseComponent{
                   {this.inputOrReview(styles)}
                 </div>
                 <div className="row">
-                  <div className="col-md-5 col-sm-6 col-xs-8" >
+                  <div className="col-md-12 col-sm-12 col-xs-10" >
                     {this.getResult(this.props.answerMessage)}
                     {this.getConfidenceLevels(this.props.confidenceLevels, styles)}
                     {this.checkAnswerButton(styles)}

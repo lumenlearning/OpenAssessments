@@ -20,13 +20,11 @@ export default class UniversalInput extends React.Component{
 
   componentDidMount(){
     CommunicationHandler.sendSizeThrottled();
-    CommunicationHandler.scrollParentToTopThrottled();
     CommunicationHandler.hideLMSNavigation();
   }
 
   componentDidUpdate(){
     CommunicationHandler.sendSizeThrottled();
-    CommunicationHandler.scrollParentToTopThrottled();
   }
 
   getStyles(props, theme){

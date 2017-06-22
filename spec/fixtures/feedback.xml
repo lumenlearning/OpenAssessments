@@ -319,8 +319,8 @@
             <flow_mat>
               <material>
                 <mattext texttype="text/html">&lt;p&gt;Example answers are:&lt;br&gt;Weird. Because reasons.&lt;/p&gt;
-&lt;p&gt;Great.&lt;span&gt; Because reasons.&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;Sad.&lt;span&gt; Because reasons.&lt;/span&gt;&lt;/p&gt;</mattext>
+&lt;p&gt;Great.&lt;strong&gt; Because reasons.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Sad.&lt;strong&gt; Because reasons.&lt;/strog&gt;  &lt;sup&gt;4&lt;/sup&gt; And also, sometimes the feedback is really long and we do not allow all the space to be used. So we should take care of that.  &lt;/p&gt;</mattext>
               </material>
             </flow_mat>
           </itemfeedback>

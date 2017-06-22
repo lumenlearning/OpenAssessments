@@ -137,13 +137,14 @@ export default class Assessment{
         }
       });
 
-      return <p style={{color: color}} tabIndex="0" >({i+1}) {item.feedback[`${selAnswer.dropdown_id}${selAnswer.chosen_answer_id}`]}</p>;
+      let feedback = '(' + (i + 1) + ') ' + item.feedback[`${selAnswer.dropdown_id}${selAnswer.chosen_answer_id}`];
+      return <p style={{color: color}} tabIndex="0" dangerouslySetInnerHTML={ {__html: feedback} } />;
     });
 
     if(score >= 1){
       correct = true;
     }
-    
+
     return {
         feedback: feedback,
         answerFeedback: answerFeedback,
