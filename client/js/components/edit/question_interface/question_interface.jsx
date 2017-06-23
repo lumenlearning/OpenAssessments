@@ -40,8 +40,8 @@ export default class QuestionInterface extends BaseComponent{
           >
             <button className='btn' onClick={this.props.handleDoneEditing} style={{ fontSize: '16px'}}>Done Editing</button>
           </OutcomeSelector>
-          {question.question_type !== 'mom_embed' ? <QuestionMaterial material={question.material} onChange={this.props.handleMaterialChange} /> : null}
           <QuestionTypeSelector question={this.props.question} handleQuestionTypeChange={this.props.handleQuestionTypeChange} />
+          {question.question_type !== 'mom_embed' ? <QuestionMaterial material={question.material} onChange={this.props.handleMaterialChange} onKeyup={this.props.handleMaterialChange} /> : null}
           {/*ensures a type has been selected before allowing feedback to be changed.*/}
           {!!question.question_type ? this.answerFeedbackMaterial() : null}
         </div>

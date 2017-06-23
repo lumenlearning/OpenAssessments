@@ -20,6 +20,7 @@ export default class SimpleRCE extends BaseComponent {
 
     if (config === "simple") {
       return({
+        branding: false,
         toolbar: false,
         menubar: false,
         statusbar: false,
@@ -30,6 +31,7 @@ export default class SimpleRCE extends BaseComponent {
       });
     } else if (config === "basic") {
       return({
+        branding: false,
         toolbar: 'undo redo | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | table bullist numlist link image | code',
         plugins: 'table, code, autoresize',
         min_height: 100,
@@ -43,6 +45,7 @@ export default class SimpleRCE extends BaseComponent {
       });
     } else {
       return({
+        branding: false,
         menubar: true,
         statusbar: true,
         elementpath: true
@@ -56,6 +59,7 @@ export default class SimpleRCE extends BaseComponent {
         content={this.props.content}
         config={this.config()}
         onChange={this.props.onChange}
+        onKeyup={this.props.onKeyup}
       />
     )
 

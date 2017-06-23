@@ -207,10 +207,10 @@ export default class Question extends BaseComponent{
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 
-  handleMaterialChange(e) {
+  handleMaterialChange(e, editor) {
     let question = _.clone(this.props.question, true);
     let re = new RegExp('\\[(.*?)\\]', 'gi');
-    question.material = e.target.getContent();
+    question.material = editor.getContent();
     let dropdownMatches = question.material.match(re);
     let dropdowns = [];
 

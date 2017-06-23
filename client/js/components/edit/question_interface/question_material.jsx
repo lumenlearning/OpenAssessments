@@ -23,6 +23,7 @@ export default class QuestionMaterial extends BaseComponent{
           content={material}
           config="basic"
           onChange={this.props.onChange}
+          onKeyup={this.props.onKeyup}
           />
       </div>
     )
