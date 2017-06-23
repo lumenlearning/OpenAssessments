@@ -159,7 +159,7 @@ export default class CheckUnderstanding extends React.Component{
               <h2>Show What You Know</h2>
               <div>Take this pre-test to see what you already know about the concepts in this section.</div>
               <div>The pre-test does not count toward your grade, but will help you plan where to focus</div>
-              <div>your time and effort as you study. The pre-test is optional.</div>
+              <div>your time and effort as you study.</div>
             </div>
   }
 

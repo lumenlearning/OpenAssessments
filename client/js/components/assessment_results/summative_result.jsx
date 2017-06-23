@@ -91,6 +91,8 @@ export default class SummativeResult extends React.Component{
           {itemResults}
         </div>
 
+        <StudyPlanButton/>
+
       </div>
     </div>)
   }
