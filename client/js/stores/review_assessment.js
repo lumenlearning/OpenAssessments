@@ -204,6 +204,10 @@ function validateMDDQuestion(question){
   question.isValid = true;
   question.errorMessages = [];
 
+  if(question.outcome === "" || typeof question.outcome !== 'object'){
+    question.isValid = false;
+    question.errorMessages.push('You must select an outcome to finish editing the question')
+  }
 
   //check if question is blank
   if(!question.material.match(/\S/)){
@@ -212,7 +216,6 @@ function validateMDDQuestion(question){
   }
 
   dropdowns.sort().forEach((ddKey, i, ddArray) => {
-    console.log("DDKEY AND ARRAY:", ddKey, ddArray[i+1]);
     if(ddKey === ddArray[i + 1]){
       question.isValid = false;
       question.errorMessages.push(`All drop down shortcodes MUST be unique.`);
