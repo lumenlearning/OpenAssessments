@@ -231,10 +231,29 @@ export default class Question extends BaseComponent{
       if(!(!!question.dropdowns[dropdown])){
         question.dropdowns[dropdown] = [];
       }
-
     });
 
-    //check if # of dropdowns match # of shortcodes. remove any non matchind dropdown.
+    // let valid = true;
+    // let errMsg = 'All drop down shortcodes MUST be unique.';
+    // dropdowns.slice().sort().forEach((dropdown, i, ddArray) => {
+    //   if(dropdown === ddArray[i + 1]){
+    //
+    //     valid = false;
+    //     question.errorMessages = [];
+    //     question.errorMessages.push(errMsg);
+    //   }
+    //
+    //   //if its valid, remove the err message if it still exists.
+    //   if(i+1 === ddArray.length && valid && (!!question.errorMessages && question.errorMessages.length > 0)){
+    //     question.errorMessages.splice(question.errorMessages.findIndex((msg) => {
+    //       return msg === errMsg;
+    //     }), 1)
+    //   }
+    // });
+
+    //question.isValid = valid;
+
+    //check if # of dropdowns match # of shortcodes. remove any non matching dropdown.
     if(Object.keys(question.dropdowns).length > dropdowns.length){
       Object.keys(question.dropdowns).forEach((ddKey, i) => {
         if(dropdowns.findIndex((dropdown)=> {return dropdown == ddKey}) == -1){
@@ -243,7 +262,6 @@ export default class Question extends BaseComponent{
       });
     }
 
-    
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 

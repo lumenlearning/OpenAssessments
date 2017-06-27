@@ -195,8 +195,15 @@ function validateMultiChoiceQuestion(question){
 
 function validateMDDQuestion(question){
   let dropDownKeys = Object.keys(question.dropdowns);
+  let re = new RegExp('\\[(.*?)\\]', 'gi');
+  let dropdownMatches = question.material.match(re);
+  let dropdowns = dropdownMatches.map((dropdown) => {
+    let re = new RegExp('\\[|\\]', 'g');
+    return dropdown.replace(re, '');
+  });
   question.isValid = true;
   question.errorMessages = [];
+
 
   //check if question is blank
   if(!question.material.match(/\S/)){
@@ -204,15 +211,24 @@ function validateMDDQuestion(question){
     question.errorMessages.push('You must enter question text to finish editing this question.');
   }
 
+  dropdowns.sort().forEach((ddKey, i, ddArray) => {
+    console.log("DDKEY AND ARRAY:", ddKey, ddArray[i+1]);
+    if(ddKey === ddArray[i + 1]){
+      question.isValid = false;
+      question.errorMessages.push(`All drop down shortcodes MUST be unique.`);
+    }
+  });
+
+
   dropDownKeys.forEach((ddKey, i) => {
 
     let correctIndex = question.dropdowns[ddKey].findIndex((element, j) => {
       return element.isCorrect === true;
     });
 
-    let correctObj = question.correct.findIndex((element, j) => {
+    let correctObj = !!question.correct ? question.correct.findIndex((element, j) => {
       return element.name === ddKey
-    });
+    }) : -1;
 
     let blankAnswers = question.dropdowns[ddKey].findIndex((element, j) => {
       return element.name.match(/\S/);
@@ -245,6 +261,11 @@ function validateMDDQuestion(question){
 function validateEssayQuestion(question){
   question.isValid = true;
   question.errorMessages = [];
+
+  if(question.material.length === 0) {
+    question.isValid = false;
+    question.errorMessages.push("Please add question text to your essay question.");
+  };
 
   return question
 }

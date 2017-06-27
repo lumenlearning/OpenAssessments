@@ -35,11 +35,8 @@ export default class QuestionTypeSelector extends Component {
           {questionTypes.map((type) => {
 
             if(hasEssays > -1 && hasMom > -1){
-              console.log('no 1');
               return <option value={type.value} >{type.name}</option>
             }
-
-
 
             else if((hasEssays === -1 && type.value !== 'essay_question') && hasMom > -1){
               return <option value={type.value} >{type.name}</option>
@@ -52,27 +49,6 @@ export default class QuestionTypeSelector extends Component {
               return <option value={type.value} >{type.name}</option>
             }
 
-            //if there ARE essays or mom questions then simply return all question type options.
-
-            {/*//yes essays, no mom
-            if((hasEssays > -1 && hasMom === -1) && type.value === 'mom_embed') {
-              console.log('no 2');
-              return <option value={type.value} >{type.name}</option>;
-            }
-            //yes mom, no essays
-            if((hasMom > -1 && hasEssays === -1) && type.value === 'essay_question') {
-              console.log('yes');
-              return <option value={type.value} >{type.name}</option>;
-            }
-            //no essays & no mom
-            if((hasEssays === -1 && hasMom === -1) && (type.value !== 'mom_embed' || type.value !== 'essay_question')){
-              console.log('no 3', ReviewAssessmentStore.allQuestions());
-              return <option value={type.value} >{type.name}</option>;
-            }
-            else{
-              console.log('no 4', ReviewAssessmentStore.allQuestions());
-              return <option value={type.value} >{type.name}</option>;
-            }*/}
           })}
         </select>
       </div>
