@@ -37,6 +37,7 @@ bin/deploy
 bower.json
 
 OpenAssessments.zip
+node_modules/
 client/node_modules
 npm-debug.log
 /app/assets/javascripts/styles.css
