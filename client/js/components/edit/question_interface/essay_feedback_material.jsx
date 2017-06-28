@@ -21,6 +21,7 @@ export default class EssayAnswerFeedbackMaterial extends Component {
     //place JSX between the parens!
     return (
       <div>
+        <p><strong>Add feedback to display to the student once they have submitted their essay.</strong></p>
         <Feedback
           style={{display: "block", width: "100%", marginBottom: "10px"}}
           index={-1}

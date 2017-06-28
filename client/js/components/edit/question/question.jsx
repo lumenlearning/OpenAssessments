@@ -349,13 +349,20 @@ export default class Question extends BaseComponent{
     /*if(correctCount > 1){
       question.question_type = 'multiple_answers_question';
     }*/
+    
+    console.log("handle correct change:", data, isCorrect);
 
     switch (question.question_type) {
 
       case 'multiple_choice_question':
       case 'multiple_answers_question':
-        if(question.question_type === 'multiple_choice_question' && question.answers.length > 0){
-          break;
+        if(question.question_type === 'multiple_choice_question' && correctCount >= 1){
+          question.answers.forEach((answer, i) => {
+            if(answer.isCorrect && i !== data){
+              question.answers[i].isCorrect = false;
+            }
+          });
+          //break;
         }
         let answer = question.answers[data];
         answer.isCorrect = isCorrect;

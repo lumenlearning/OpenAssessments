@@ -58,7 +58,7 @@ export default class AnswerFeedbackMaterial extends React.Component{
             <AnswerFeedbackRow
               key={answer.id}
               index={index}
-              answer={answer.answer}
+              answer={answer.material}
               feedback={answer.feedback}
               isCorrect={answer.isCorrect}
               handleAnswerChange={this.props.handleAnswerChange}

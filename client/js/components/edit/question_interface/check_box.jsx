@@ -40,6 +40,7 @@ export default class Checkbox extends React.Component{
   }
 
   toggleActive() {
+    console.log('toggle active');
     this.props.handleCorrectChange(this.props.index, !this.props.isCorrect);
   }
 
