@@ -229,29 +229,13 @@ export default class Question extends BaseComponent{
     dropdowns.forEach((dropdown, i) => {
       //if its undefined, define it.
       if(!(!!question.dropdowns[dropdown])){
-        question.dropdowns[dropdown] = [];
+        let newDropdownOption = ReviewAssessmentStore.blankNewDropdownOption();
+        let secondNewDDOption = ReviewAssessmentStore.blankNewDropdownOption();
+        if(!(!!question.dropdowns[dropdown])) question.dropdowns[dropdown] = [];
+        question.dropdowns[dropdown].push(newDropdownOption);
+        question.dropdowns[dropdown].push(secondNewDDOption);
       }
     });
-
-    // let valid = true;
-    // let errMsg = 'All drop down shortcodes MUST be unique.';
-    // dropdowns.slice().sort().forEach((dropdown, i, ddArray) => {
-    //   if(dropdown === ddArray[i + 1]){
-    //
-    //     valid = false;
-    //     question.errorMessages = [];
-    //     question.errorMessages.push(errMsg);
-    //   }
-    //
-    //   //if its valid, remove the err message if it still exists.
-    //   if(i+1 === ddArray.length && valid && (!!question.errorMessages && question.errorMessages.length > 0)){
-    //     question.errorMessages.splice(question.errorMessages.findIndex((msg) => {
-    //       return msg === errMsg;
-    //     }), 1)
-    //   }
-    // });
-
-    //question.isValid = valid;
 
     //check if # of dropdowns match # of shortcodes. remove any non matching dropdown.
     if(Object.keys(question.dropdowns).length > dropdowns.length){
@@ -316,7 +300,7 @@ export default class Question extends BaseComponent{
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 
-  handleFeedbackChange(e, data) { //TODO: this method will need to change to accomodate different question types.
+  handleFeedbackChange(e, data) {
     let question = _.clone(this.props.question, true);
 
     switch (question.question_type) {
@@ -341,19 +325,11 @@ export default class Question extends BaseComponent{
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }
 
-  handleCorrectChange(data, isCorrect) { //TODO: this method will need to change to accomodate different question types.
+  handleCorrectChange(data, isCorrect) {
     let question = _.clone(this.props.question, true);
-    //question.question_type = 'multiple_choice_question';
-
     let correctCount = _.sum(question.answers, function(a) { return a.isCorrect ? 1 : 0; });
-    /*if(correctCount > 1){
-      question.question_type = 'multiple_answers_question';
-    }*/
-    
-    console.log("handle correct change:", data, isCorrect);
 
     switch (question.question_type) {
-
       case 'multiple_choice_question':
       case 'multiple_answers_question':
         if(question.question_type === 'multiple_choice_question' && correctCount >= 1){
@@ -411,6 +387,11 @@ export default class Question extends BaseComponent{
     question.question_type = question_type;
 
     if((question_type === 'mom_embed')) question.momEmbed = ReviewAssessmentStore.blankNewMomEmbeddedQuestion().momEmbed;
+    if((question_type === 'multiple_choice_question' || question_type === 'multiple_answers_question') && ((!!question.answers && question.answers.length == 0) || (!(!!question.answers)))){
+      if(!(!!question.answers)) question.answers = [];
+      question.answers.push(ReviewAssessmentStore.blankNewAnswer(), ReviewAssessmentStore.blankNewAnswer());
+
+    }
 
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }//handleQuestionTypeChange
@@ -428,6 +409,7 @@ export default class Question extends BaseComponent{
       break;
       case 'multiple_dropdowns_question':
         let newDropdownOption = ReviewAssessmentStore.blankNewDropdownOption();
+        if(!(!!question.dropdowns[options.dropdownId])) question.dropdowns[options.dropdownId] = [];
         question.dropdowns[options.dropdownId].push(newDropdownOption);
       break;
     }

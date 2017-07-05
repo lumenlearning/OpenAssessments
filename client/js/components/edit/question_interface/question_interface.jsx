@@ -26,8 +26,6 @@ export default class QuestionInterface extends BaseComponent{
     let question = this.props.question;
     let style    = Style.styles();
 
-    //TODO: create and add a type picker component for choosing types.
-
     return (
       <div style={style.qiContent}>
         <div style={style.qiContentBlock}>

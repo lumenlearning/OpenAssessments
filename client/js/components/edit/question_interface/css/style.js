@@ -129,7 +129,11 @@ export default new class Style {
         justifyContent: 'center',
         padding: '10px',
         border: '1px solid #c1c1c1',
-      }
+      },
+      mddTabArea: {
+        display: 'flex',
+        overflowX: 'scroll',
+      },
     };
 
   }

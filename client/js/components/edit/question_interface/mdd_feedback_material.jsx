@@ -39,14 +39,14 @@ export default class MDDAnswerFeedbackMaterial extends Component {
     //place JSX between the parens!
     return (
       <div>
-        <div className="tabArea" style={{display: 'flex'}}>
-          {dropdowns.map((dropdown, i) => {
-            return (
-              <div key={`ddTab-${dropdown}`} onClick={()=>this.handleActiveTab(dropdown)} style={{...style.mddFeedbackTab, ...(activeTab === dropdown ? style.mddFeedbackTabActive : {})}} >
-                {dropdown}
-              </div>
-            )
-          })}
+        <div className="tabArea" style={style.mddTabArea}>
+            {dropdowns.map((dropdown, i) => {
+              return (
+                <div key={`ddTab-${dropdown}`} onClick={()=>this.handleActiveTab(dropdown)} style={{...style.mddFeedbackTab, ...(activeTab === dropdown ? style.mddFeedbackTabActive : {})}} >
+                  {dropdown}
+                </div>
+              )
+            })}
         </div>
         <div className="tabContent" style={style.mddTabContent} >
           <div style={{fontWeight: 'bold', display: 'flex', justifyContent: 'space-around'}} >
@@ -57,20 +57,22 @@ export default class MDDAnswerFeedbackMaterial extends Component {
             dropdowns.map((dropdownKey) => {
               if(!!activeTab && activeTab == dropdownKey){
                 return question.dropdowns[dropdownKey].map((dropdown) => {
-                  return (
-                    <AnswerFeedbackRow
-                      key={dropdown.value}
-                      index={{key: dropdownKey, dropdown: dropdown.value}}
-                      answer={dropdown.name}
-                      feedback={this.checkForFeedback(dropdown, dropdownKey)}
-                      isCorrect={this.checkIfCorrect(dropdown, dropdownKey)}
-                      handleAnswerChange={this.props.handleAnswerChange}
-                      handleFeedbackChange={this.props.handleFeedbackChange}
-                      handleCorrectChange={this.props.handleCorrectChange}
-                      handleAddOption={this.props.handleAddOption}
-                      handleAnswerRemoval={this.props.handleAnswerRemoval}
-                    />
-                  )
+                  if(!!dropdown) {
+                    return (
+                      <AnswerFeedbackRow
+                        key={dropdown.value}
+                        index={{key: dropdownKey, dropdown: dropdown.value}}
+                        answer={dropdown.name}
+                        feedback={this.checkForFeedback(dropdown, dropdownKey)}
+                        isCorrect={this.checkIfCorrect(dropdown, dropdownKey)}
+                        handleAnswerChange={this.props.handleAnswerChange}
+                        handleFeedbackChange={this.props.handleFeedbackChange}
+                        handleCorrectChange={this.props.handleCorrectChange}
+                        handleAddOption={this.props.handleAddOption}
+                        handleAnswerRemoval={this.props.handleAnswerRemoval}
+                      />
+                    )
+                  }
                 });
               }
             })
