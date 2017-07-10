@@ -62,7 +62,7 @@ export default class MultiDropDown extends BaseComponent {
   // PLACE CUSTOM METHODS AND HANDLERS BELOW HERE
   //========================================================================
   findAndReplace(noSelect = false){
-    var i = 1;
+    var i = 0;
     let item = this.props.item;
     let string = item.material;
     let shortcodes = Object.keys(this.props.item.dropdowns);
@@ -111,7 +111,6 @@ export default class MultiDropDown extends BaseComponent {
     return this.props.item.dropdowns[nMatch].map((answer) => {
       let selected = "";
       let disabled = "";
-
 
       if (!!this.props.selectedAnswers && this.props.selectedAnswers.length > 0) {
         let selectedAnswer = this.props.selectedAnswers.find((selAnswer) => {

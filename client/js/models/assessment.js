@@ -137,7 +137,10 @@ export default class Assessment{
         }
       });
 
-      let feedback = '(' + (i + 1) + ') ' + item.feedback[`${selAnswer.dropdown_id}${selAnswer.chosen_answer_id}`];
+      let feedback = '<div>(' + (i + 1) + ') ' + item.feedback[`${selAnswer.dropdown_id}${selAnswer.chosen_answer_id}`] + '</div>';
+      if(typeof item.feedback[`${selAnswer.dropdown_id}${selAnswer.chosen_answer_id}`] === 'undefined'){
+        return null;
+      }
       return <p style={{color: color}} tabIndex="0" dangerouslySetInnerHTML={ {__html: feedback} } />;
     });
 
