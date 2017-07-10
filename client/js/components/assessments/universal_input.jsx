@@ -10,6 +10,7 @@ import Matching             from "../common/matching";
 import MomEmbed             from "../common/mom_embed";
 import MultiDropDown        from '../common/multi_drop_down'
 import CommunicationHandler from "../../utils/communication_handler";
+import AssessmentStore      from "../../stores/assessment";
 
 export default class UniversalInput extends React.Component{
 
@@ -78,9 +79,9 @@ export default class UniversalInput extends React.Component{
   }
 
   render(){
-
     var styles = this.getStyles(this.props, this.context.theme)
     var item = this.props.item;
+    var assessmentResult = AssessmentStore.assessmentResult();
     var messages = '';
     var solution = '';
     var items = '';
@@ -105,7 +106,7 @@ export default class UniversalInput extends React.Component{
                   </div>
                  </div>);
     }
-    
+
     switch(item.question_type){
       case "multiple_choice_question":
       case "true_false_question":

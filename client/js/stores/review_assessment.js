@@ -109,6 +109,25 @@ function validateAssessment() {
 }
 
 function validateQuestion(question){
+  question.isValid = true;
+  question.errorMessages = [];
+
+  if(!(!!question.question_type)){
+    question.isValid = false;
+    question.errorMessages.push('You must select a question type');
+  }
+
+  if(!question.outcome || question.outcome.outcomeGuid == ''){
+    question.isValid = false;
+    question.errorMessages.push('You must select an outcome to finish editing this question.');
+  }
+
+  //check if questions are blank
+  if(!question.material.match(/\S/)){
+    question.isValid = false;
+    question.errorMessages.push('You must enter question text to finish editing this question.');
+  }
+
   switch (question.question_type) {
     case 'multiple_choice_question':
     case 'multiple_answers_question':
@@ -127,8 +146,6 @@ function validateQuestion(question){
 }
 
 function validateMomQuestion(question){
-  question.isValid = true;
-  question.errorMessages = [];
 
   if(!!question.momEmbed.questionId && !(question.momEmbed.questionId > 0)){
     question.isValid = false;
@@ -141,20 +158,6 @@ function validateMomQuestion(question){
 function validateMultiChoiceQuestion(question){
   let duplicateArr = [];
   let hasDuplicates = false;
-  question.isValid = true;
-  question.errorMessages = [];
-
-  //check if questions are blank
-  if(!question.material.match(/\S/)){
-    question.isValid = false;
-    question.errorMessages.push('You must enter question text to finish editing this question.');
-  }
-
-  //ensure that outcome is selected
-  if(!question.outcome || question.outcome.outcomeGuid == ''){
-    question.isValid = false;
-    question.errorMessages.push('You must select an outcome to finish editing this question.');
-  }
 
   if(question.question_type != 'multiple_choice_question' && question.question_type != 'multiple_answers_question' ){
     question.isValid = false;
@@ -194,25 +197,19 @@ function validateMultiChoiceQuestion(question){
 }
 
 function validateMDDQuestion(question){
-  let dropDownKeys = Object.keys(question.dropdowns);
+  let dropDownKeys = !!question.dropdowns ? Object.keys(question.dropdowns) : [];
   let re = new RegExp('\\[(.*?)\\]', 'gi');
   let dropdownMatches = question.material.match(re);
-  let dropdowns = dropdownMatches.map((dropdown) => {
+  let dropdowns = !!dropdownMatches ? dropdownMatches.map((dropdown) => {
     let re = new RegExp('\\[|\\]', 'g');
     return dropdown.replace(re, '');
-  });
+  }) : [];
   question.isValid = true;
   question.errorMessages = [];
 
-  if(question.outcome === "" || typeof question.outcome !== 'object'){
+  if(dropDownKeys.length === 0) {
     question.isValid = false;
-    question.errorMessages.push('You must select an outcome to finish editing the question')
-  }
-
-  //check if question is blank
-  if(!question.material.match(/\S/)){
-    question.isValid = false;
-    question.errorMessages.push('You must enter question text to finish editing this question.');
+    question.errorMessages.push('You must add dropdowns to your question text.');
   }
 
   dropdowns.sort().forEach((ddKey, i, ddArray) => {

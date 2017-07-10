@@ -30,7 +30,7 @@ export default class SummativeResult extends React.Component{
     if(this.props.questionResponses){
       return this.props.questionResponses.map((qr, index)=>{
         let question = ReviewAssessmentStore.itemByIdent(qr.ident);
-        if(question === undefined){
+        if(typeof question === 'undefined'){
           return <p>Question was removed.</p>
         } else {
           return <ItemResult key={index}
@@ -45,7 +45,13 @@ export default class SummativeResult extends React.Component{
 
     } else {
       return this.state.questions.map((question, index)=>{
-        return <ItemResult key={index} question={question} isCorrect={this.state.assessmentResult.correct_list[index]} index={index} confidence={this.state.assessmentResult.confidence_level_list[index]}/>;
+        let chosenResults = this.state.assessmentResult.lti_params.itemToGrade.answers[index];
+        return <ItemResult key={index}
+                           question={question}
+                           isCorrect={this.state.assessmentResult.correct_list[index]}
+                           index={index}
+                           chosen={chosenResults}
+                           confidence={this.state.assessmentResult.confidence_level_list[index]}/>;
       })
 
     }

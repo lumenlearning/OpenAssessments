@@ -16,6 +16,10 @@ export default class MultiDropDown extends BaseComponent {
     //rebindings for custom methods go here.
     this.findAndReplace = this.findAndReplace.bind(this);
     this.handleShortcodeChange = this.handleShortcodeChange.bind(this);
+    this.answerCheckMarks = this.answerCheckMarks.bind(this);
+    this.answerOptions = this.answerOptions.bind(this);
+    this.selectBoxStyle = this.selectBoxStyle.bind(this);
+
   }
 
   componentWillUpdate(){
@@ -59,12 +63,11 @@ export default class MultiDropDown extends BaseComponent {
   //========================================================================
   findAndReplace(noSelect = false){
     var i = 1;
-    let item = this.props.item
+    let item = this.props.item;
     let string = item.material;
     let shortcodes = Object.keys(this.props.item.dropdowns);
     let answers = this.props.item.dropdowns;
     let re = new RegExp(`\\[${shortcodes.join('\\]|\\[')}\\]`, 'gi'); //turn array of shortcodes into a regex
-    let answerCheck = '';
 
     return string.replace(re, (match) => {
       let str = `"blank ${i}"`;
@@ -73,81 +76,7 @@ export default class MultiDropDown extends BaseComponent {
       let correctAnswer = item.correct.find((correctAns) => {
         return correctAns.name === nMatch;
       });
-      let options = answers[nMatch].map((answer) => {
-        let selected = "";
-        let disabled = "";
-
-        if(this.state[nMatch] === answer.value) selected = "selected";
-        if(this.props.isDisabled && !!correctAnswer && correctAnswer.value !== answer.value) disabled = "disabled";
-
-        return `<option ${selected} ${disabled}  value=${answer.value} >${answer.name}</option>`;
-      });
-
-      //check for selected answers
-      if (!!this.props.selectedAnswers && this.props.selectedAnswers.length > 0) {
-        let selAnswer = this.props.selectedAnswers.find((selectedAnswer) => {
-          return selectedAnswer.dropdown_id === nMatch;
-        });
-
-        let checkboxWrapper = `
-          height: 100%;
-          margin-left: 10px;
-          vertical-align: text-top;
-          font-size: 12px;
-          display: flex;
-        `;
-        let checkboxStyle = `
-          border-radius: 50%;
-          align-self: center;
-        `;
-        let plusStyle = `
-          border-radius: 50%;
-          background-color: #e0542b;
-          transform: rotate(45deg);
-          align-self: center;
-        `;
-
-
-        if(!!selAnswer && selAnswer.chosen_answer_id === correctAnswer.value){
-          answerCheck = (
-            `<span 
-                style="display:inline-block;"
-                tabindex="0"
-                aria-label="Correct: ${item.feedback[correctAnswer.name+correctAnswer.value]}"
-            >
-              <span style=${`"color:#4EAA59;${checkboxWrapper}"`} >
-                <img 
-                  width="20px"
-                  height="20px"
-                  src="/assets/checkbox-48.png"
-                  style="${checkboxStyle}"
-                  alt="image to indicate the correct option was chosen" 
-                  /> (${i})
-              </span>
-            </span>`
-          );
-        }
-        else{
-          answerCheck = (
-            `<span 
-                style="display:inline-block;" 
-                tabindex="0" 
-                aria-label="Wrong: ${item.feedback[correctAnswer.name+correctAnswer.value]}"
-            >
-              <span style=${`"color:#e0542b;${checkboxWrapper}"`} >
-                <img 
-                  width="20px"
-                  height="20px"
-                  src="/assets/plus-52.png"
-                  style="${plusStyle}"
-                  alt="image to indicate the incorrect option was chosen" 
-                /> (${i})
-              </span>
-            </span>`
-          );
-        }//else
-
-      }
+      let options = this.answerOptions(correctAnswer, nMatch);
 
       //Aria goodness
       let ariaLabel = this.state.ariaAnswersLabels[nMatch] ? `"${this.state.ariaAnswersLabels[nMatch]}"` : str;
@@ -166,17 +95,133 @@ export default class MultiDropDown extends BaseComponent {
               id="dropdown_${nMatch}" 
               aria-label=${ariaLabel}
               
-              style="${this.props.isDisabled ? "color:#4EAA59;" : ''}"
+              style="${this.selectBoxStyle(correctAnswer, nMatch)}"
             >
               <option ${!this.state[nMatch] && !this.props.isDisabled ? "selected" : ""} disabled aria-label="select ${nMatch} choice" value="null">[Select]</option>
               ${options}
             </select>
-            ${answerCheck}
+            ${this.answerCheckMarks(correctAnswer, nMatch, i)}
           </span>
         </span>`
       );
     });
   }//findAndReplace
+
+  answerOptions(correctAnswer, nMatch) {
+    return this.props.item.dropdowns[nMatch].map((answer) => {
+      let selected = "";
+      let disabled = "";
+
+
+      if (!!this.props.selectedAnswers && this.props.selectedAnswers.length > 0) {
+        let selectedAnswer = this.props.selectedAnswers.find((selAnswer) => {
+          return selAnswer.dropdown_id === nMatch;
+        });
+
+        if(selectedAnswer.chosen_answer_id === answer.value){
+          selected = 'selected';
+        }
+      }
+      else if(this.state[nMatch] === answer.value){
+        selected = "selected";
+      }
+
+      if((this.props.isDisabled && !!correctAnswer) && correctAnswer.value !== answer.value) disabled = "disabled";
+
+      return `<option ${selected} ${disabled}  value=${answer.value} >${answer.name}</option>`;
+    });
+  }//correctAnswers
+
+  selectBoxStyle(correctAnswer, nMatch) {
+    let style = '';
+
+    if(this.props.isDisabled && !!correctAnswer && !!this.props.selectedAnswers && this.props.selectedAnswers.length > 0){
+      let selectedAnswer = this.props.selectedAnswers.find((selAnswer) => {
+        return selAnswer.dropdown_id === nMatch;
+      });
+
+      if(selectedAnswer.chosen_answer_id === correctAnswer.value){
+        style = 'color:#4EAA59;';
+      }
+      else{
+        style = 'color:#e0542b;';
+      }
+    }
+
+    return style;
+  }//selectBoxStyle
+
+  answerCheckMarks(correctAnswer, nMatch, i) {
+    let item = this.props.item;
+    let answerCheck = '';
+
+    if (!!correctAnswer && !!this.props.selectedAnswers && this.props.selectedAnswers.length > 0) {
+      let selAnswer = this.props.selectedAnswers.find((selectedAnswer) => {
+        return selectedAnswer.dropdown_id === nMatch;
+      });
+
+      let checkboxWrapper = `
+          height: 100%;
+          margin-left: 10px;
+          vertical-align: text-top;
+          font-size: 12px;
+          display: flex;
+        `;
+      let checkboxStyle = `
+          border-radius: 50%;
+          align-self: center;
+        `;
+      let plusStyle = `
+          border-radius: 50%;
+          background-color: #e0542b;
+          transform: rotate(45deg);
+          align-self: center;
+        `;
+
+
+      if(!!selAnswer && (!!correctAnswer && selAnswer.chosen_answer_id === correctAnswer.value)){
+        answerCheck = (
+          `<span 
+                style="display:inline-block;"
+                tabindex="0"
+                aria-label="Correct: ${item.feedback[correctAnswer.name+correctAnswer.value]}"
+            >
+              <span style=${`"color:#4EAA59;${checkboxWrapper}"`} >
+                <img 
+                  width="20px"
+                  height="20px"
+                  src="/assets/checkbox-48.png"
+                  style="${checkboxStyle}"
+                  alt="image to indicate the correct option was chosen" 
+                  /> (${i})
+              </span>
+            </span>`
+        );
+      }
+      else{
+        answerCheck = (
+          `<span 
+                style="display:inline-block;" 
+                tabindex="0" 
+                aria-label="Wrong: ${item.feedback[correctAnswer.name+correctAnswer.value]}"
+            >
+              <span style=${`"color:#e0542b;${checkboxWrapper}"`} >
+                <img 
+                  width="20px"
+                  height="20px"
+                  src="/assets/plus-52.png"
+                  style="${plusStyle}"
+                  alt="image to indicate the incorrect option was chosen" 
+                /> (${i})
+              </span>
+            </span>`
+        );
+      }//else
+
+    }
+
+    return answerCheck;
+  }//answerCheck
 
   addListeners() {
     let shortcodes = Object.keys(this.props.item.dropdowns);
