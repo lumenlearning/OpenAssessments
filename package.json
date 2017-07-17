@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Javascript for the Open Assessments.",
   "engines": {
-    "node": "0.10.32"
+    "node": "0.10.37"
   },
   "scripts": {
     "postinstall": "cd ./client && npm install",

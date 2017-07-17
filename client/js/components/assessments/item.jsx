@@ -169,7 +169,6 @@ export default class Item extends BaseComponent{
 
     if(typeof answer.feedback == 'object'){
       feedback = answer.feedback.map((feedbackItem) => {
-
         return <p>{feedbackItem}</p>
       });
     } else {
