@@ -126,7 +126,7 @@ export default class UniversalInput extends React.Component{
         });
         break;
       case "mom_embed":
-        items = <MomEmbed key={item.id} item={item} redisplayJWT={this.props.chosen ? this.props.chosen[0] : null} registerGradingCallback={this.props.registerGradingCallback} />;
+        items = <MomEmbed key={item.id} item={item} redisplayJWT={this.props.chosen ? this.props.chosen : null} registerGradingCallback={this.props.registerGradingCallback} />;
         break;
       case 'multiple_dropdowns_question':
         items = <MultiDropDown isDisabled={this.props.isResult} key={item.id} item={item} selectedAnswers={this.props.chosen} />;
