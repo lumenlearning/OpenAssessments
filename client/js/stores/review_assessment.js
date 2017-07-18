@@ -123,7 +123,7 @@ function validateQuestion(question){
   }
 
   //check if questions are blank
-  if(!question.material.match(/\S/)){
+  if(!question.material.match(/\S/) && !!question.question_type && question.question_type !== 'mom_embed'){
     question.isValid = false;
     question.errorMessages.push('You must enter question text to finish editing this question.');
   }
