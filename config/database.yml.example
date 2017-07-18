@@ -16,5 +16,8 @@ test:
 
 production:
   <<: *default
-  database: openassessments_production
-  username: openassessments
+  host: <%= ENV['DB_SERVER'] %>
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+
