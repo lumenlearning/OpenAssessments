@@ -1,0 +1,14 @@
+# Development
+/.git
+/.idea
+.DS_Store
+
+# Ignore all logfiles and tempfiles.
+/log/*
+!/log/.keep
+/tmp
+
+# This is generated from the client app
+/client
+/app/assets/javascripts/bundle.js
+

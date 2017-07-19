@@ -1,0 +1,130 @@
+#!/bin/bash
+
+set -o pipefail
+
+DIRNAME=`dirname $0`
+cd "${DIRNAME}/.."
+
+
+#
+# Ensure config files exist.
+#
+
+if [ ! -r "config/database.yml" ]; then
+	echo "ERROR: Config file database.yml does not exist!"
+	exit 1
+fi
+
+if [ ! -r "config/secrets.yml" ]; then
+	echo "ERROR: Config file secrets.yml does not exist!"
+	exit 1
+fi
+
+
+#
+# Confirm EB CLI environment
+#
+
+EB_CLI=`which eb`
+if [ -z "$EB_CLI" ]; then
+    echo 'ERROR: Unable to locate the DB CLI command "eb".'
+    exit 1
+fi
+
+echo
+echo '******************************************************************************'
+echo '****                                                                      ****'
+echo '****   Please confirm the environment you are about to deploy to below!   ****'
+echo '****                                                                      ****'
+echo '******************************************************************************'
+echo
+echo 'Loading...'
+echo
+$EB_CLI status | grep -i 'environment details'
+$EB_CLI status | grep -i 'application name'
+echo
+
+/bin/echo "(if the above is blank, you may need to \"eb init\")"
+/bin/echo -n 'Is the above environment correct? (type YES to confirm) '
+read environment_continue
+
+if [ "YES" != "$environment_continue" ]; then
+    echo 'Failed to confirm environment. Halting.'
+    exit 1
+fi
+
+
+#
+# Build assets
+#
+
+/bin/echo
+/bin/echo -n 'Build assets? ([yes]/no) '
+read build_assets
+
+if [ "yes" == "$build_assets" ] || [ "y" == "$build_assets" ] || [ "" == "$build_assets" ]; then
+	RAILS_ENV=production bundle exec rake assets:webpack
+	RAILS_ENV=production bundle exec rake assets:precompile
+	echo
+	echo '**** Please check for asset compilation errors above!'
+fi
+
+
+#
+# Deploy the project
+#
+
+
+echo
+echo '*******************************************************'
+echo '****                                               ****'
+echo '****   Do you want to continue deploying to AWS?   ****'
+echo '****                                               ****'
+echo '*******************************************************'
+echo
+/bin/echo -n 'Type YES to deploy to AWS: '
+read deploy_confirm
+
+if [ "YES" != "$deploy_confirm" ]; then
+	echo
+    echo '**** Failed to confirm deployment. Halting.'
+    exit 1
+fi
+
+eb deploy
+RC=$?
+
+if [ 0 != $RC ]; then
+	echo "AWS deployment failed. :("
+	exit $RC
+fi
+
+exit 0
+
+
+#
+# Notify New Relic of deployment
+#
+
+NEWRELIC=`which newrelic`
+
+if [ -z "$NEWRELIC" ]; then
+	echo "New Relic binary not found. Cannot notify New Relic of deployment."
+	exit 0
+fi
+
+
+echo
+echo '**********************************************
+echo '****                                     ****'
+echo '****   Notify New Relic of deployment?   ****'
+echo '****                                     ****'
+echo '**********************************************
+echo
+/bin/echo -n 'Type YES to notify New Relic: '
+read notify_new_relic
+
+if [ "yes" == "$notify_new_relic" ] || [ "y" -= "$notify_new_relic" ] || [ "" == "$notify_new_relic" ]; then
+	newrelic deployments -a Assessments
+fi
+
