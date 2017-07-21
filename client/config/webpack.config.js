@@ -71,7 +71,7 @@ module.exports = function(release){
     plugins: release ? [
       new webpack.DefinePlugin({'process.env.NODE_ENV': '"production"'}),
       new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.UglifyJsPlugin(),
+      //new webpack.optimize.UglifyJsPlugin({sourceMap: false}),
       new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.optimize.AggressiveMergingPlugin(),
       new ChunkManifestPlugin({

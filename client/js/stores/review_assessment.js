@@ -158,10 +158,17 @@ function validateMomQuestion(question){
 function validateMultiChoiceQuestion(question){
   let duplicateArr = [];
   let hasDuplicates = false;
+  let re = new RegExp('\\[(.*?)\\]', 'gi');
+  let dropdownCodes = question.material.match(re);
 
   if(question.question_type != 'multiple_choice_question' && question.question_type != 'multiple_answers_question' ){
     question.isValid = false;
     question.errorMessages.push('You must select question type.');
+  }
+
+  if(dropdownCodes.length > 0){
+    question.isValid = false;
+    question.errorMessages.push("You have dropdown shortcodes in your question, please make sure you select the correct questiont type");
   }
 
   //ensure that question has minimum number of answers.

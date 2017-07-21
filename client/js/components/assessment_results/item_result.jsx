@@ -86,10 +86,19 @@ export default class ItemResult extends React.Component{
           <div className="col-md-9 col-sm-9 col-xs-9" style={styles.resultContainer}>
             <div className="row">
               <div className="col-md-9 col-sm-9 col-xs-9">
-              <div
-                dangerouslySetInnerHTML={{
-              __html: this.props.question.material
-              }}></div>
+                {() => {
+                  if(this.props.question.question_type !== 'multiple_dropdowns_question'){
+                    return(
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: this.props.question.material
+                        }}></div>
+                    )
+                  }
+                  else {
+                    return null;
+                  }
+                }}
               </div>
               <div className="col-md-3 col-sm-3 col-xs-3" tabIndex="0">
                 <div style={styles.correctLabel}>{correctMessage}</div>

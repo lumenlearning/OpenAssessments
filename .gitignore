@@ -44,5 +44,6 @@ npm-debug.log
 
 public/assets
 
+./bin/aws_deploy
 .ebextentions/
 .elasticbeanstalk/
