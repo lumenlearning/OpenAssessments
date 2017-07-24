@@ -45,7 +45,6 @@ export default class QuestionTypeSelector extends Component {
               return <option value={type.value} >{type.name}</option>
             }
             else if((hasEssays === -1 && hasMom === -1) && (type.value !== 'essay_question' && type.value !== 'mom_embed')){
-              console.log("TEST!!!!");
               return <option value={type.value} >{type.name}</option>
             }
 

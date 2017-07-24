@@ -102,8 +102,6 @@ export default class MDDAnswerFeedbackMaterial extends Component {
     let question = this.props.question;
     let isCorrect = false;
 
-    console.log('check if correct', dropdown, question);
-
     //if dropdown.isCorrect is undefined.
       //check if dropdown.value is in question.correct array. return boolean
     if(!(!!dropdown.isCorrect)){
