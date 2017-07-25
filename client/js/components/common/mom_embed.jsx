@@ -21,12 +21,12 @@ export default class MomEmbed extends BaseComponent {
     var embedUrl = this.props.item.momEmbed.embedUrl;
     if(this.props.redisplayJWT && typeof this.props.redisplayJWT === 'string') {
       embedUrl += "&jwt=" + this.props.redisplayJWT;
-    } else if(this.props.item.momEmbed.jwt && !this.props.item.momEmbed.jwt.match(/\S/)){
+    } else if(this.props.item.momEmbed.jwt/* && !this.props.item.momEmbed.jwt.match(/\S/)*/){
       embedUrl += "&jwt=" + this.props.item.momEmbed.jwt;
     }
-    else {
+    /*else {
       embedUrl += "$jwt=" + UserStore.jwt();
-    }
+    }*/
 
     var height = 150;
     if(this.props.item.momEmbed.iframeHeight){
@@ -103,7 +103,7 @@ export default class MomEmbed extends BaseComponent {
           if (message.id == this.questionId()) {
             var data = {score: message.score, jwt: message.jwt, iframeHeight: this.state.iframeHeight};
             AssessmentActions.answerSelected(data);
-            if(this.state.doneGradingCallback){
+            if(!!this.state.doneGradingCallback && typeof this.state.doneGradingCallback == 'function'){
               this.state.doneGradingCallback();
             }
           }

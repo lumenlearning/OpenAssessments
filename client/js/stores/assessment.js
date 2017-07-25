@@ -61,6 +61,8 @@ function selectAnswer(answer){
   } else if (item.question_type == "mom_embed"){
     // Store the chosen seed info and height on the item for redisplay
     item.momEmbed.jwt = answer.jwt;
+    item.momEmbed.score = answer.score;
+    item.score = answer.score;
     item.momEmbed.iframeHeight = answer.iframeHeight;
     _selectedAnswerIds = answer.jwt;
   }

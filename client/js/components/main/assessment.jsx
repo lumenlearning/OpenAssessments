@@ -90,7 +90,7 @@ export default class Assessment extends BaseComponent{
     if (this.state.gradingCallback) {
       let callback = this.state.gradingCallback;
       this.setState({gradingCallback: null});
-      callback(function(){
+      callback(()=>{
         AssessmentActions.selectQuestion(qid);
         if(finishedCallback){
           finishedCallback();
