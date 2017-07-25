@@ -60,7 +60,6 @@ function selectAnswer(answer){
     updateMatchingAnswer(answer);
   } else if (item.question_type == "mom_embed"){
     // Store the chosen seed info and height on the item for redisplay
-    console.log("IS THIS THE JWT?", answer);
     item.momEmbed.jwt = answer.jwt;
     item.momEmbed.iframeHeight = answer.iframeHeight;
     _selectedAnswerIds = answer.jwt;

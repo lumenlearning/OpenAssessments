@@ -388,7 +388,7 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
   isPractice(){
     return _kind == "practice";
   },
-  editableQuestionType(type){
+  /*editableQuestionType(type){
      let isEditable = false;
 
      //add question types here to allow them to be editable.
@@ -413,7 +413,7 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
      return isEditable;
 
     return type == 'multiple_choice_question' || type == 'multiple_answers_question';
-  }
+  }*/
 });
 
 // Register callback with Dispatcher

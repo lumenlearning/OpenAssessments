@@ -92,7 +92,6 @@ export default class MomEmbed extends BaseComponent {
 
     try {
       var message = JSON.parse(e.data);
-      console.log("MESSAGE ME BABY ONE MORE TIME:", message);
 
       switch (message.subject) {
         case 'lti.frameResize':

@@ -124,7 +124,7 @@ export default class Question extends BaseComponent{
 
   editQuestionButton(question, style) {
       let editHover = this.state.hover.edit;
-    if (ReviewAssessmentStore.editableQuestionType(question.question_type) || !(!!question.question_type)){
+    if (!(!!question.question_type)){
       return <Tooltip message={question.inDraft ? 'Cancel Editing' : 'Edit Question'} position='top-left'>
         <img className='questionToolBtns'
              style={_.merge({}, style.questionToolBtns, {backgroundColor: editHover || question.inDraft ? '#31708f' : 'transparent'})}
