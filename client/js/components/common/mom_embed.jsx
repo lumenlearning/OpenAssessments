@@ -3,7 +3,6 @@
 import React                from 'react';
 import AssessmentActions    from "../../actions/assessment";
 import AssessmentStore      from "../../stores/assessment";
-import UserStore            from '../../stores/user'
 import Styles               from "../../themes/selection.js";
 import CommunicationHandler from "../../utils/communication_handler";
 import BaseComponent        from "../base_component";
@@ -19,14 +18,13 @@ export default class MomEmbed extends BaseComponent {
 
   render() {
     var embedUrl = this.props.item.momEmbed.embedUrl;
-    if(this.props.redisplayJWT && typeof this.props.redisplayJWT === 'string') {
-      embedUrl += "&jwt=" + this.props.redisplayJWT;
-    } else if(this.props.item.momEmbed.jwt/* && !this.props.item.momEmbed.jwt.match(/\S/)*/){
+    let redisplayJWT = Array.isArray(this.props.redisplayJWT) ? this.props.redisplayJWT[0] : this.props.redisplayJWT;
+
+    if(redisplayJWT) {
+      embedUrl += "&jwt=" + redisplayJWT;
+    } else if(this.props.item.momEmbed.jwt){
       embedUrl += "&jwt=" + this.props.item.momEmbed.jwt;
     }
-    /*else {
-      embedUrl += "$jwt=" + UserStore.jwt();
-    }*/
 
     var height = 150;
     if(this.props.item.momEmbed.iframeHeight){
@@ -34,7 +32,7 @@ export default class MomEmbed extends BaseComponent {
     } else if (this.state.iframeHeight){
       height = this.state.iframeHeight;
     }
-    
+
     return (
         <div>
           <iframe ref="momframe" src={embedUrl} height={height} frameborder="0" width="100%" style={{border: 'none'}}></iframe>
