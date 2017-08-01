@@ -166,7 +166,7 @@ function validateMultiChoiceQuestion(question){
     question.errorMessages.push('You must select question type.');
   }
 
-  if(dropdownCodes.length > 0){
+  if(!!dropdownCodes && dropdownCodes.length > 0){
     question.isValid = false;
     question.errorMessages.push("You have dropdown shortcodes in your question, please make sure you select the correct questiont type");
   }
@@ -187,7 +187,7 @@ function validateMultiChoiceQuestion(question){
     question.isValid = false;
     question.errorMessages.push('Your answers must not be blank. Please enter answer text to finish editing this question.');
   }
-
+  
   question.answers.forEach((answer, index, array)=>{
     //check if answers are duplicate
     if(duplicateArr.indexOf(answer.material.trim()) !== -1 && !hasDuplicates){
@@ -211,6 +211,9 @@ function validateMDDQuestion(question){
     let re = new RegExp('\\[|\\]', 'g');
     return dropdown.replace(re, '');
   }) : [];
+  let duplicateArr =[];
+  let hasDuplicates = false;
+
   question.isValid = true;
   question.errorMessages = [];
 
@@ -258,6 +261,18 @@ function validateMDDQuestion(question){
       question.isValid = false;
       question.errorMessages.push(`You must have at least two options for each dropdown.`);
     }
+
+    question.dropdowns[ddKey].forEach((answer, index, array)=>{
+      //check if answers are duplicate
+      if(duplicateArr.indexOf(answer.name.trim()) !== -1 && !hasDuplicates){
+        hasDuplicates = true;
+
+        question.isValid = false;
+        question.errorMessages.push('Each answer option must be unique.');
+      }
+
+      duplicateArr.push(answer.name.trim());
+    });//each
 
   });
 

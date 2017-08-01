@@ -124,17 +124,19 @@ export default class Question extends BaseComponent{
 
   editQuestionButton(question, style) {
       let editHover = this.state.hover.edit;
-    return <Tooltip message={question.inDraft ? 'Cancel Editing' : 'Edit Question'} position='top-left'>
-      <img className='questionToolBtns'
-           style={_.merge({}, style.questionToolBtns, {backgroundColor: editHover || question.inDraft ? '#31708f' : 'transparent'})}
-           src={`/assets/${question.inDraft ? 'close' : 'pencil-64-white'}.png`}
-           onClick={this.toggleEdit}
-           onMouseOver={this.handleHoverStates}
-           onMouseLeave={this.handleHoverStates}
-           data-hovertype="edit"
-           alt="Edit"
-      />
-    </Tooltip>
+    return (
+      <Tooltip message={question.inDraft ? 'Cancel Editing' : 'Edit Question'} position='top-left'>
+        <img className='questionToolBtns'
+             style={_.merge({}, style.questionToolBtns, {backgroundColor: editHover || question.inDraft ? '#31708f' : 'transparent'})}
+             src={`/assets/${question.inDraft ? 'close' : 'pencil-64-white'}.png`}
+             onClick={this.toggleEdit}
+             onMouseOver={this.handleHoverStates}
+             onMouseLeave={this.handleHoverStates}
+             data-hovertype="edit"
+             alt="Edit"
+        />
+      </Tooltip>
+    )
   }
 
   /*CUSTOM HANDLER FUNCTIONS*/
