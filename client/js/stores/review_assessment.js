@@ -388,32 +388,6 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
   isPractice(){
     return _kind == "practice";
   },
-  /*editableQuestionType(type){
-     let isEditable = false;
-
-     //add question types here to allow them to be editable.
-     switch(type){
-       case 'multiple_choice_question':
-         isEditable = true;
-       break;
-       case 'multiple_answers_question':
-         isEditable = true;
-       break;
-       case 'essay_question':
-         isEditable = true;
-       break;
-       case 'mom_embed':
-         isEditable = true;
-       break;
-       case 'multiple_dropdowns_question':
-         isEditable = true;
-       break;
-     }
-
-     return isEditable;
-
-    return type == 'multiple_choice_question' || type == 'multiple_answers_question';
-  }*/
 });
 
 // Register callback with Dispatcher
