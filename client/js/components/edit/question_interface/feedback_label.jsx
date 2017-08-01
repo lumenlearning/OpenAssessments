@@ -12,13 +12,10 @@ export default class FeedbackLabels extends React.Component {
   render() {
     let style = Style.styles();
     let mergeStyle = this.props.styles || {};
-    let message = "The ability to show the feedback you enter below to students who select the corresponding answer choice is coming.";
 
     return (
         <div style={_.merge(mergeStyle, style.label)}>
-          <Tooltip message={message} position='top-right' style={{maxWidth: "300px"}}>
-            <span style={{cursor:"help"}}>Feedback <img style={style.warningImg} src="/assets/warning-32.png" alt={message} /></span>
-          </Tooltip>
+            Feedback
         </div>
     )
   }
