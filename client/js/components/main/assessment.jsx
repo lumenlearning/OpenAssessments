@@ -62,7 +62,7 @@ export default class Assessment extends BaseComponent{
   materialLoaded() {
     CommunicationHandler.sendSize();
   }
-  newQuestionMessages(){
+  static newQuestionMessages(){
     CommunicationHandler.sendSizeThrottled();
     CommunicationHandler.scrollParentToTopThrottled();
     if(document.getElementById("focus")){document.getElementById("focus").focus();}
@@ -95,14 +95,14 @@ export default class Assessment extends BaseComponent{
         if(finishedCallback){
           finishedCallback();
         }
-        this.newQuestionMessages();
+        Assessment.newQuestionMessages();
       });
     } else {
       AssessmentActions.selectQuestion(qid);
       if (finishedCallback) {
         finishedCallback();
       }
-      this.newQuestionMessages();
+      Assessment.newQuestionMessages();
     }
   }
 
@@ -119,14 +119,14 @@ export default class Assessment extends BaseComponent{
         if (finishedCallback) {
           finishedCallback();
         }
-        this.newQuestionMessages();
+        Assessment.newQuestionMessages();
       });
     } else {
       AssessmentActions.previousQuestion();
       if (finishedCallback) {
         finishedCallback();
       }
-      this.newQuestionMessages();
+      Assessment.newQuestionMessages();
     }
   }
 
@@ -139,14 +139,14 @@ export default class Assessment extends BaseComponent{
         if (finishedCallback) {
           finishedCallback();
         }
-        this.newQuestionMessages();
+        Assessment.newQuestionMessages();
       });
     } else {
       AssessmentActions.nextQuestion();
       if (finishedCallback) {
         finishedCallback();
       }
-      this.newQuestionMessages();
+      Assessment.newQuestionMessages();
     }
   }
 

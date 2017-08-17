@@ -95,7 +95,7 @@ export default class MomEmbed extends BaseComponent {
       switch (message.subject) {
         case 'lti.frameResize':
           if (message.frame_id == "OEAembedq-" + this.questionId()) {
-            this.resizeIframe(message.height);
+            this.resizeIframe(message.height + 10);
           }
           break;
         case 'lti.ext.mom.updateScore':
