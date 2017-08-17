@@ -45,11 +45,11 @@
           </itemmetadata>
           <presentation>
             <material>
-              <mattext texttype="text/html">&lt;iframe id="mom987" src="https://www.myopenmath.com/OEAembedq.php?id=987&amp;jssubmit=1&amp;showscoredonsubmit=0" style="width:100%;height:150px"&gt;&lt;/iframe&gt;</mattext>
+              <mattext texttype="text/html">&lt;iframe id="mom987" src="https://ohm.lumenlearning.com/OEAembedq.php?id=987&amp;jssubmit=1&amp;showscoredonsubmit=0" style="width:100%;height:150px"&gt;&lt;/iframe&gt;</mattext>
               <mat_extension>
-                <mom_domain>www.myopenmath.com</mom_domain>
+                <mom_domain>ohm.lumenlearning.com</mom_domain>
                 <mom_question_id>987</mom_question_id>
-                <mom_embed_url>https://www.myopenmath.com/OEAembedq.php?id=987&amp;jssubmit=1&amp;showscoredonsubmit=0</mom_embed_url>
+                <mom_embed_url>https://ohm.lumenlearning.com/OEAembedq.php?id=987&amp;jssubmit=1&amp;showscoredonsubmit=0</mom_embed_url>
               </mat_extension>
             </material>
           </presentation>

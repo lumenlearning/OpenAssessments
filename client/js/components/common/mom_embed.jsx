@@ -84,7 +84,8 @@ export default class MomEmbed extends BaseComponent {
   }
 
   messageHandler(e) {
-    if (!e.origin.match(/https?:\/\/www.myopenmath.com/)) {
+    // if (!e.origin.match(/https?:\/\/www.myopenmath.com/)) {
+      if (!e.origin.match(/https?:\/\/www\.myopenmath\.com|https?:\/\/ohm\.lumenlearning\.com/)) {
       return;
     }
 

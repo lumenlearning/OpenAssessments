@@ -3,11 +3,11 @@ module Json2Qti
 
   # <presentation>
   #   <material>
-  #     <mattext texttype="text/html">&lt;iframe id=&quot;mom987&quot; src=&quot;https://www.myopenmath.com/OEAembedq.php?id=987&amp;jssubmit=1&amp;showscoredonsubmit=0&quot; style=&quot;width:100%;height:150px&quot;&gt;&lt;/iframe&gt;</mattext>
+  #     <mattext texttype="text/html">&lt;iframe id=&quot;mom987&quot; src=&quot;https://ohm.lumenlearning.com/OEAembedq.php?id=987&amp;jssubmit=1&amp;showscoredonsubmit=0&quot; style=&quot;width:100%;height:150px&quot;&gt;&lt;/iframe&gt;</mattext>
   #     <mat_extension>
-  #       <mom_domain>www.myopenmath.com</mom_domain>
+  #       <mom_domain>ohm.lumenlearning.com</mom_domain>
   #       <mom_question_id>987</mom_question_id>
-  #       <mom_embed_url>https://www.myopenmath.com/OEAembedq.php?id=987&amp;theme=oea&amp;jssubmit=1&amp;showscoredonsubmit=0&amp;showhints=0</mom_embed_url>
+  #       <mom_embed_url>https://ohm.lumenlearning.com/OEAembedq.php?id=987&amp;theme=oea&amp;jssubmit=1&amp;showscoredonsubmit=0&amp;showhints=0</mom_embed_url>
   #     </mat_extension>
   #   </material>
   # </presentation>
@@ -21,7 +21,7 @@ module Json2Qti
   #   </itemproc_extension>
   # </resprocessing>
   class OhmEmbed < Question
-    BASE_URL = "https://www.myopenmath.com/OEAembedq.php"
+    BASE_URL = "https://ohm.lumenlearning.com/OEAembedq.php"
     IFRAME = %{<iframe id="mom%d" src="%s" style="width:100%%;height:150px"></iframe>}
 
     def initialize(item)
@@ -58,7 +58,7 @@ XML
     end
 
 
-    # "https://www.myopenmath.com/OEAembedq.php?id=1018&theme=oea&jssubmit=1&showscoredonsubmit=0&showhints=0&auth=bracken"
+    # "https://ohm.lumenlearning.com/OEAembedq.php?id=1018&theme=oea&jssubmit=1&showscoredonsubmit=0&showhints=0&auth=bracken"
     def ohm_url(question_id=nil)
       question_id ||= @question_id
 

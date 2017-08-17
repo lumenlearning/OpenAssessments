@@ -13,9 +13,9 @@ describe Json2Qti::OhmEmbed do
                    "longOutcome" => "This is useful.",
                    "outcomeGuid" => "2222222222222"},
      "mom_embed" => {"questionId" => "987",
-                     "embedUrl" => "https://www.myopenmath.com/OEAembedq.php?id=987&amp;jssubmit=1&amp;showscoredonsubmit=0",
+                     "embedUrl" => "https://ohm.lumenlearning.com/OEAembedq.php?id=987&amp;jssubmit=1&amp;showscoredonsubmit=0",
                      "jwt" => "",
-                     "domain" => "www.myopenmath.com",
+                     "domain" => "ohm.lumenlearning.com",
                      "iframeHeight" => nil}
     }
   }

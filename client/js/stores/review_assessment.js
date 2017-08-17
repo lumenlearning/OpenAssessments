@@ -383,7 +383,7 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
     return {
       "momEmbed": {
         "questionId": null, // This is the value bound to the input on edit
-        "domain": "www.myopenmath.com", // this is default, new questions just use this
+        "domain": "ohm.lumenlearning.com", // this is default, new questions just use this
         "iframeHeight": null
       },
     }
