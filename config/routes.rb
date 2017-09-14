@@ -10,13 +10,13 @@ Rails.application.routes.draw do
   root to: "default#index"
 
   resources :lti_installs
-  
+
   devise_for :users, controllers: {
     sessions: "sessions",
     registrations: "registrations",
     omniauth_callbacks: "omniauth_callbacks"
   }
-  
+
   resources :users do
     resources :assessments, except: [:update, :edit, :show], controller: "assessments"
   end
@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   end
 
   resources :canvas_authentications
-  
+
   resources :admin, only: [:index]
 
   namespace :api do
@@ -75,13 +75,14 @@ Rails.application.routes.draw do
     resources :item_results
     resources :grades
     resources :assessment_settings
+    resources :lti_credentials, only: [:create]
   end
 
   match '/proxy' => 'default#proxy', via: [:get, :post]
   match '/contact' => 'default#contact', via: [:get, :post]
   match '/about' => 'default#about', via: [:get]
   match '/take' => 'default#take', via: [:get]
-  
+
   mount MailPreview => 'mail_view' if Rails.env.development?
 
 end
