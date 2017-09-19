@@ -15,7 +15,6 @@ RSpec.describe Api::LtiCredentialsController, type: :controller do
   it "returns ok for valid lti credentials" do
     post :create, {account_id: account.id,lti_key: 'fake_lti_key', lti_secret: 'fake_lti_secret'}
     json = JSON.parse(response.body)
-    puts json
     expect(json).to eq({"message" => "ok"})
   end
 end
