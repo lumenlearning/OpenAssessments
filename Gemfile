@@ -96,6 +96,7 @@ group :development, :test do
   gem 'faker'
   gem 'rspec-rails'
   gem 'email_spec'
+  gem 'simplecov'
 end
 
 group :test do
