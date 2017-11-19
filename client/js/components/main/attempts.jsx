@@ -39,15 +39,18 @@ export default class Attempts extends BaseComponent{
   attemptsStuff(ua){
     var that = this;
     return <div>
-      {ua.attempts.map(function(attempt){
-        var score = 'none',
+      {ua.attempts.slice().reverse().map(function(attempt){
+        let score = 'Un-submitted',
             m = moment(attempt.created_at),
-            date_sent = m.format('ddd, MMM Do, h:mm a [GMT] ZZ'),
-            relative_time = m.fromNow();
+            date_sent = m.format('ddd, MMM Do, h:mm a [GMT] ZZ') + " (" + m.fromNow() + ")",
+            attempt_count = attempt.attempt + 1;
+
         if(attempt.score){
           score = Math.floor(attempt.score) + "%";
+          return <p title={date_sent} onClick={()=>{that.reviewAttempt(attempt.id)}} style={{textDecoration:"underline", cursor: "pointer"}}>{attempt_count}) Score: {score}</p>
+        } else {
+          return <p title={date_sent} style={{cursor: "help"}} >{attempt_count}) {score}</p>
         }
-      return <p title={date_sent} onClick={()=>{that.reviewAttempt(attempt.id)}} style={{textDecoration:"underline", cursor: "pointer"}}>Score: {score}</p>
     })}
       </div>
   }
