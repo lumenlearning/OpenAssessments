@@ -52,6 +52,8 @@ export default {
   
   submitAssessment(identifier, assessmentId, questions, studentAnswers, settings, outcomes){
     Dispatcher.dispatch({action: Constants.ASSESSMENT_SUBMITTED});
+    this.submitProgress();
+
     // Only send data needed for server-side grading.
     questions = questions.map(function(q){
       return {
