@@ -264,6 +264,7 @@ export default class Item extends BaseComponent{
       return <UniversalInput
           item={this.props.question}
           isResult={false}
+          chosen={this.props.studentAnswer}
           registerGradingCallback={this.props.registerGradingCallback}/>
     } else {
       let answerFeedback = {};

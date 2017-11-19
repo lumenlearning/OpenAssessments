@@ -84,6 +84,7 @@ export default class AssessmentResult extends BaseComponent{
           timeSpent={this.state.timeSpent}
           context={this.context}
           isSummative={this.isSummative()}
+          hideChosenAnswers={true}
         />
     }
   }

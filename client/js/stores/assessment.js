@@ -69,7 +69,8 @@ function selectAnswer(answer){
   else if (item.question_type == 'essay_question') {
     _selectedAnswerIds = answer;
   }
-  else if (item.question_type = 'multiple_dropdowns_question') {
+  else if (item.question_type == 'multiple_dropdowns_question') {
+
     let hasAnswer = _selectedAnswerIds.findIndex((selAnswer, i) => {
       return selAnswer.dropdown_id === answer.dropdown_id
     });
