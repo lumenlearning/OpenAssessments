@@ -97,7 +97,7 @@ export default class MultiDropDown extends BaseComponent {
               
               style="${this.selectBoxStyle(correctAnswer, nMatch)}"
             >
-              <option ${!this.state[nMatch] && !this.props.isDisabled ? "selected" : ""} disabled aria-label="select ${nMatch} choice" value="null">[Select]</option>
+              <option ${!this.state[nMatch] ? "selected" : ""} disabled aria-label="select ${nMatch} choice" value="null">[Select]</option>
               ${options}
             </select>
             ${this.answerCheckMarks(correctAnswer, nMatch, i)}
@@ -117,7 +117,7 @@ export default class MultiDropDown extends BaseComponent {
           return selAnswer.dropdown_id === nMatch;
         });
 
-        if(selectedAnswer.chosen_answer_id === answer.value){
+        if(selectedAnswer && selectedAnswer.chosen_answer_id === answer.value){
           selected = 'selected';
         }
       }
@@ -125,7 +125,7 @@ export default class MultiDropDown extends BaseComponent {
         selected = "selected";
       }
 
-      if((this.props.isDisabled && !!correctAnswer) && correctAnswer.value !== answer.value) disabled = "disabled";
+      if((this.props.isResult && !!correctAnswer) && correctAnswer.value !== answer.value) disabled = "disabled";
 
       return `<option ${selected} ${disabled}  value=${answer.value} >${answer.name}</option>`;
     });
@@ -134,12 +134,12 @@ export default class MultiDropDown extends BaseComponent {
   selectBoxStyle(correctAnswer, nMatch) {
     let style = '';
 
-    if(this.props.isDisabled && !!correctAnswer && !!this.props.selectedAnswers && this.props.selectedAnswers.length > 0){
+    if(this.props.isResult && !!correctAnswer && !!this.props.selectedAnswers && this.props.selectedAnswers.length > 0){
       let selectedAnswer = this.props.selectedAnswers.find((selAnswer) => {
         return selAnswer.dropdown_id === nMatch;
       });
 
-      if(selectedAnswer.chosen_answer_id === correctAnswer.value){
+      if(selectedAnswer && selectedAnswer.chosen_answer_id === correctAnswer.value){
         style = 'color:#4EAA59;';
       }
       else{
@@ -154,7 +154,7 @@ export default class MultiDropDown extends BaseComponent {
     let item = this.props.item;
     let answerCheck = '';
 
-    if (!!correctAnswer && !!this.props.selectedAnswers && this.props.selectedAnswers.length > 0) {
+    if (this.props.isResult && !!correctAnswer && !!this.props.selectedAnswers && this.props.selectedAnswers.length > 0) {
       let selAnswer = this.props.selectedAnswers.find((selectedAnswer) => {
         return selectedAnswer.dropdown_id === nMatch;
       });

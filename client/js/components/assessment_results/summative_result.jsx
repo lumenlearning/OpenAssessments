@@ -39,6 +39,7 @@ export default class SummativeResult extends React.Component{
                              index={index}
                              confidence={qr.confidence_level}
                              chosen={qr.responses_chosen}
+                             hideChosenAnswers={this.props.hideChosenAnswers}
                              correctAnswers={question.correct}/>;
         }
       });
@@ -51,6 +52,7 @@ export default class SummativeResult extends React.Component{
                            isCorrect={this.state.assessmentResult.correct_list[index]}
                            index={index}
                            chosen={chosenResults}
+                           hideChosenAnswers={this.props.hideChosenAnswers}
                            confidence={this.state.assessmentResult.confidence_level_list[index]}/>;
       })
 

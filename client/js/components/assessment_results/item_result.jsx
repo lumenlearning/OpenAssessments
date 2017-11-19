@@ -80,6 +80,9 @@ export default class ItemResult extends React.Component{
     } else if(this.props.isCorrect === "teacher_preview"){
       correctMessage = ""
     }
+
+    let chosen = this.props.hideChosenAnswers ? [] : this.props.chosen;
+
     return (
       <div tabIndex="0" aria-label={"Question " + (this.props.index+1)} style={{marginTop: '10px'}} >
         <div className="row" tabIndex="0">
@@ -93,7 +96,7 @@ export default class ItemResult extends React.Component{
               </div>
             </div>
             <div>
-              <UniversalInput item={this.props.question} isResult={true} chosen={this.props.chosen} correctAnswers={this.props.correctAnswers}/>
+              <UniversalInput item={this.props.question} isResult={true} chosen={chosen} correctAnswers={this.props.correctAnswers}/>
             </div>
             {this.confidenceResult(styles)}
           </div>
