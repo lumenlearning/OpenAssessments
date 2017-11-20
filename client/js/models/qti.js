@@ -124,9 +124,7 @@ export default class Qti{
         let resLabel = $(resLabel_raw);
         let value = resLabel.attr('ident');
         let name = resLabel.find('material > mattext').text();
-        let correctIndex = this.parseMultiDropdownCorrect(xml).findIndex((correctObj) => {
-          return correctObj.value === value && correctObj.name === key;
-        });
+        let correctIndex = _.findIndex(this.parseMultiDropdownCorrect(xml), {value: value, name: key})
         let feedback = this.parseFeedback(xml, [], true);
         let feedbackKey = Object.keys(feedback).find((fbKey) => {
           return fbKey === `${key}${value}`;
