@@ -154,15 +154,27 @@ var AssessmentStore = assign({}, StoreCommon, {
     return _selectedAnswerIds;
   },
 
-  hasAnsweredCurrent(){
-    var current = this.selectedAnswerId();
-    var item = this.currentQuestion();
+  hasAnsweredCurrent() {
+    return AssessmentStore.questionIsComplete(this.currentQuestion(), this.selectedAnswerId());
+  },
 
-    if (item.question_type == 'multiple_dropdowns_question') {
-      return !!(current && current.length == Object.keys(item.dropdowns).length);
+  questionIsComplete(item, answers) {
+    if (item.question_type === 'multiple_dropdowns_question') {
+      return !!(answers && answers.length == Object.keys(item.dropdowns).length);
     }
 
-    return !!(current && current.length > 0);
+    return !!(answers && answers.length > 0);
+  },
+
+  unansweredQuestions() {
+    let unanswered = []
+    _items.forEach((item, i)=>{
+      if( !AssessmentStore.questionIsComplete(item, _studentAnswers[i]) ){
+        unanswered.push( i + 1 )
+      }
+    });
+
+    return unanswered;
   },
 
   answerMessage(){
