@@ -83,14 +83,7 @@ export default class Item extends BaseComponent{
   }
 
   static checkCompletion(){
-    var questionsNotAnswered = [];
-    var answers = AssessmentStore.allStudentAnswers();
-    for (var i = 0; i < answers.length; i++) {
-      if(answers[i] == null || answers[i].length == 0){
-
-        questionsNotAnswered.push(i+1);
-      }
-    }
+    var questionsNotAnswered = AssessmentStore.unansweredQuestions();
     if(questionsNotAnswered.length > 0){
       return questionsNotAnswered;
     }
