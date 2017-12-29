@@ -16,5 +16,9 @@ test:
 
 production:
   <<: *default
-  database: openassessments_production
-  username: openassessments
+  database: <%= ENV['RDS_DB_NAME'] || ENV['DB_NAME'] %>
+  username: <%= ENV['RDS_USERNAME'] || ENV['DB_USERNAME'] %>
+  password: <%= ENV['RDS_PASSWORD'] || ENV['DB_PASSWORD'] %>
+  host: <%= ENV['RDS_HOSTNAME'] || ENV['DB_SERVER'] %>
+  port: <%= ENV['RDS_PORT'] || 5432 %>
+
