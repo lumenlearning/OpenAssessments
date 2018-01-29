@@ -26,6 +26,10 @@ export default class Assessment extends BaseComponent{
     var showStart = SettingsStore.current().enableStart && !AssessmentStore.isStarted();
     if(AssessmentStore.assessmentResult() != null && !AssessmentStore.isPractice() ){
       context.router.transitionTo("assessment-result");
+    } else if(AssessmentStore.assessmentResult() != null && AssessmentStore.isPractice() ){
+      if(!AssessmentStore.hasPostedAnalytics() && AssessmentStore.assessmentResult().assessment_results_id) {
+        AssessmentActions.assessmentPostAnalytics(AssessmentStore.assessmentResult().assessment_results_id, this.state.settings.externalUserId, this.state.settings.externalContextId);
+      }
     }
     return {
       assessment           : AssessmentStore.current(),

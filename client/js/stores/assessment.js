@@ -32,6 +32,7 @@ var _answerMessages = [];
 var _sectionIndex = 0;
 var _itemIndex = 0;
 var _studentAnswers = [];
+var _hasPostedAnalytics = false;
 
 function parseAssessmentResult(result){
   _assessmentResult = JSON.parse(result);
@@ -132,6 +133,10 @@ var AssessmentStore = assign({}, StoreCommon, {
 
   isLoading(){
     return _assessmentState == LOADING;
+  },
+
+  hasPostedAnalytics(){
+    return _hasPostedAnalytics;
   },
 
   currentQuestion(){
@@ -319,6 +324,11 @@ Dispatcher.register(function(payload) {
         _studentAnswers[_itemIndex] = _selectedAnswerIds;
       }
       break;
+
+    case Constants.ASSESSMENT_POST_ANALYTICS:
+      _hasPostedAnalytics = true;
+      break;
+
     case Constants.QUESTION_SELECTED:
         _items[_itemIndex].timeSpent += calculateTime(_items[_itemIndex].startTime, Utils.currentTime()); 
         _studentAnswers[_itemIndex] = _selectedAnswerIds;
