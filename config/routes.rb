@@ -49,8 +49,6 @@ Rails.application.routes.draw do
   end
 
   resources :assessment_loaders
-  resources :assessment_results
-  resources :item_results
 
   get 'saml', to: 'saml#index'
   get 'saml/metadata', to: 'saml#metadata'

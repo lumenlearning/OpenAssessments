@@ -13,7 +13,13 @@ class AssessmentsController < LtiBaseController
   respond_to :html
 
   def index
-    @assessments = @assessments.where(account: current_account, kind: ['formative', 'practice'])
+    if params[:kind] == 'formative'
+      @assessments = @assessments.where(account: current_account, kind: 'formative')
+    elsif params[:kind] == 'practice'
+      @assessments = @assessments.where(account: current_account, kind: 'practice')
+    else
+      @assessments = []
+    end
   end
 
   def show
