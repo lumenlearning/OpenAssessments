@@ -431,7 +431,6 @@ export default class Item extends BaseComponent{
       },
       submitAssessmentButtonDiv: {
         marginLeft: "20px",
-        marginTop: "86px"
       },
       checkAnswerButtonDiv: {
         marginLeft: "20px",
