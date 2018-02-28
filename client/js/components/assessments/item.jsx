@@ -37,9 +37,10 @@ export default class Item extends BaseComponent{
       if(AssessmentStore.hasAnsweredCurrent()){
         AssessmentActions.selectConfidenceLevel(val, currentIndex);
         if(that.props.currentIndex == that.props.questionCount - 1 && that.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
-          that.submitAssessment();
+          // that.submitAssessment();
         } else {
-          AssessmentActions.nextQuestion();
+          // AssessmentActions.nextQuestion();
+
           that.clearShowMessage();
         }
       } else {
@@ -99,7 +100,7 @@ export default class Item extends BaseComponent{
   }
 
   getConfidenceLevels(level, styles){
-    if(level){
+    // if(level){
       var levelMessage = <div tabIndex="0" style={{marginBottom: "10px"}}><b>How sure are you of your answer? Click below to move forward.</b></div>;
       return    (<div className="confidence_wrapper" style={styles.confidenceWrapper}>
                   {levelMessage}
@@ -108,13 +109,14 @@ export default class Item extends BaseComponent{
                   <input type="button" style={{...styles.margin, ...styles.definitelyButton}} className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Very Sure", this.props.currentIndex) }}/>
                 </div>
                 );
-    } /*else {
-      return <div className="lower_level"><input type="button" className="btn btn-check-answer" value="Check Answer" onClick={() => { AssessmentActions.checkAnswer()}}/></div>
-    }*/
+    // } else {
+    //   <div className="lower_level"><input type="button" className="btn btn-check-answer" value="Check Answer" onClick={() => { AssessmentActions.checkAnswer()}}/></div>
+    // }
   }
 
   getNavigationButtons(styles) {
-    if ( this.props.questionCount == 1 || (!this.context.theme.shouldShowNextPrevious && this.props.confidenceLevels)) {
+    // if ( this.props.questionCount == 1 || (!this.context.theme.shouldShowNextPrevious && this.props.confidenceLevels)) {
+    if ( this.props.questionCount == 1 ) {
       return "";
     }
 
@@ -291,9 +293,9 @@ export default class Item extends BaseComponent{
   }
 
   checkAnswerButton(styles) {
-    if ( !AssessmentStore.isPractice() ) {
-      return ""
-    }
+    // if ( !AssessmentStore.isPractice() ) {
+    //   return ""
+    // }
     var showingResult = this.props.answerMessage && !this.props.answerMessage.allowResubmit;
 
     return <div style={styles.checkAnswerButtonDiv}>
