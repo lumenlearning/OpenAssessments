@@ -94,6 +94,7 @@ export default class Assessment{
   }
 
   static checkAnswer(item, selectedAnswers){
+    console.log('how am i getting called?')
     var results;
     switch(item.question_type){
       case 'multiple_choice_question':
