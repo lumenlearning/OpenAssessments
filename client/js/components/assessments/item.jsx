@@ -90,6 +90,16 @@ export default class Item extends BaseComponent{
     return true;
   }
 
+  checkConfidenceCompletion(){
+    var questionsNotAnswered = AssessmentStore.unansweredQuestions();
+
+    if (-1 === questionsNotAnswered.indexOf(this.props.currentIndex + 1) && !(0 === questionsNotAnswered.length)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   getWarning(state, questionCount, questionIndex, styles){
     if(state && state.unAnsweredQuestions && state.unAnsweredQuestions.length > 0 && questionIndex + 1 == questionCount){
       return <div style={styles.warning}><i className="glyphicon glyphicon-exclamation-sign"></i> You left question(s) {state.unAnsweredQuestions.join()} blank. Use the "Progress" drop-down menu at the top to go back and answer the question(s), then come back and submit.</div>
@@ -100,12 +110,14 @@ export default class Item extends BaseComponent{
 
   getConfidenceLevels(level, styles){
     if(level){
+      // if currentIndex + 1 isn't in Item.checkCompletion() array, disable the button...
+      var disabled = this.checkConfidenceCompletion() ? "disabled" : "";
       var levelMessage = <div tabIndex="0" style={{marginBottom: "10px"}}><b>How sure are you of your answer? Click below to move forward.</b></div>;
       return    (<div className="confidence_wrapper" style={styles.confidenceWrapper}>
                   {levelMessage}
-                  <input type="button" style={styles.maybeButton} className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, "Just A Guess", this.props.currentIndex) }}/>
-                  <input type="button" style={{...styles.margin, ...styles.probablyButton}} className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Pretty Sure", this.props.currentIndex) }}/>
-                  <input type="button" style={{...styles.margin, ...styles.definitelyButton}} className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Very Sure", this.props.currentIndex) }}/>
+                  <input type="button" style={styles.maybeButton} className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, "Just A Guess", this.props.currentIndex) }} disabled={disabled}/>
+                  <input type="button" style={{...styles.margin, ...styles.probablyButton}} className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Pretty Sure", this.props.currentIndex) }} disabled={disabled}/>
+                  <input type="button" style={{...styles.margin, ...styles.definitelyButton}} className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Very Sure", this.props.currentIndex) }} disabled={disabled}/>
                 </div>
                 );
     } /*else {
@@ -125,7 +137,11 @@ export default class Item extends BaseComponent{
   }
 
   getNextButton(styles) {
-    var disabled = (this.props.currentIndex == this.props.questionCount - 1) ? "disabled" : "";
+    var disabled = "";
+    if ((this.props.currentIndex == this.props.questionCount - 1) || !this.checkConfidenceCompletion()) {
+      disabled = "disabled";
+    }
+
     return (
         <button className={"btn btn-next-item " + disabled} style={styles.nextButton} onClick={(e) => { this.nextButtonClicked(e) }}>
           <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
