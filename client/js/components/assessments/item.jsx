@@ -39,7 +39,7 @@ export default class Item extends BaseComponent{
         if(that.props.currentIndex == that.props.questionCount - 1 && that.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
           that.submitAssessment();
         } else {
-          AssessmentActions.nextQuestion();
+          that.props.checkAnswer(that.props.currentIndex);
           that.clearShowMessage();
         }
       } else {
@@ -103,7 +103,7 @@ export default class Item extends BaseComponent{
       var levelMessage = <div tabIndex="0" style={{marginBottom: "10px"}}><b>How sure are you of your answer? Click below to move forward.</b></div>;
       return    (<div className="confidence_wrapper" style={styles.confidenceWrapper}>
                   {levelMessage}
-                  <input type="button" style={styles.maybeButton}className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, "Just A Guess", this.props.currentIndex) }}/>
+                  <input type="button" style={styles.maybeButton} className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, "Just A Guess", this.props.currentIndex) }}/>
                   <input type="button" style={{...styles.margin, ...styles.probablyButton}} className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Pretty Sure", this.props.currentIndex) }}/>
                   <input type="button" style={{...styles.margin, ...styles.definitelyButton}} className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Very Sure", this.props.currentIndex) }}/>
                 </div>
@@ -114,7 +114,7 @@ export default class Item extends BaseComponent{
   }
 
   getNavigationButtons(styles) {
-    if ( this.props.questionCount == 1 || (!this.context.theme.shouldShowNextPrevious && this.props.confidenceLevels)) {
+    if ( this.props.questionCount == 1 || !this.context.theme.shouldShowNextPrevious) {
       return "";
     }
 

@@ -34,7 +34,7 @@ export default {
   shouldShowAttempts: true,
   shouldShowProgressText: false,
   shouldShowCounter: false,
-  shouldShowNextPrevious: false,
+  shouldShowNextPrevious: true,
   shouldShowFooter: false,
 
   correctBackgroundColor: "rgba(113, 184, 137, 0.2)",
