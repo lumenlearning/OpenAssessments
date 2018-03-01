@@ -87,6 +87,14 @@ class Api::AssessmentsController < Api::ApiController
           render :text => assessment.xml_with_answers
         elsif assessment.practice?
           render :text => assessment.xml_with_answers
+        elsif assessment.formative?
+          if assessment_settings && assessment_settings.per_sec
+            xml = assessment.xml_with_answers(assessment_settings.per_sec.to_i)
+          else
+            xml = assessment.xml_with_answers(nil)
+          end
+
+          render :text => xml
         else
           selected_items = []
           if assessment_settings && assessment_settings.per_sec
