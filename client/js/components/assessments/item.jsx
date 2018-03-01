@@ -38,10 +38,14 @@ export default class Item extends BaseComponent{
         AssessmentActions.selectConfidenceLevel(val, currentIndex);
         if(that.props.currentIndex == that.props.questionCount - 1 && that.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
           that.submitAssessment();
+          // TODO: If UserAccount == special case then do the new behavior.
           that.props.resetAnswerMessages();
         } else {
+          // TODO: If UserAccount == special case then do the new behavior.
           that.props.checkAnswer(that.props.currentIndex);
           that.clearShowMessage();
+          // TODO: Else, do the old behavior.
+          // AssessmentActions.nextQuestion();
         }
       } else {
         that.setState({showMessage: true});
@@ -111,6 +115,8 @@ export default class Item extends BaseComponent{
 
   getConfidenceLevels(level, styles){
     if(level){
+      // TODO: if UserAccount == special case, then do this disable stuff,
+      // otherwise do the old behavior
       // if currentIndex + 1 isn't in Item.checkCompletion() array, disable the button...
       var disabled = this.checkConfidenceCompletion() ? "disabled" : "";
       var levelMessage = <div tabIndex="0" style={{marginBottom: "10px"}}><b>How sure are you of your answer? Click below to move forward.</b></div>;
@@ -127,6 +133,8 @@ export default class Item extends BaseComponent{
   }
 
   getNavigationButtons(styles) {
+    // TODO: Add back other contingency if not special case ...
+    // if ( this.props.questionCount == 1 || (!this.context.theme.shouldShowNextPrevious && this.props.confidenceLevels)) {
     if ( this.props.questionCount == 1 || !this.context.theme.shouldShowNextPrevious) {
       return "";
     }
@@ -138,6 +146,7 @@ export default class Item extends BaseComponent{
   }
 
   getNextButton(styles) {
+    // TODO: Add back other contingency if not special case ...
     var disabled = "";
     if ((this.props.currentIndex == this.props.questionCount - 1) || !this.checkConfidenceCompletion()) {
       disabled = "disabled";
