@@ -4,7 +4,7 @@ require 'lti/role_helper'
 class AssessmentsController < LtiBaseController
 
   skip_before_filter :verify_authenticity_token
-  
+
   before_filter :skip_trackable
   before_filter :authenticate_user!, only: [:new, :create, :destroy]
   before_filter :check_lti, only: [:show, :edit, :lti]
@@ -112,7 +112,7 @@ class AssessmentsController < LtiBaseController
     if assessment
       @assessment_title = assessment.title
       if assessment_settings = assessment.default_settings
-        @confidence_levels = !!assessment_settings[:confidence_levels] if @confidence_levels.nil?   # Prefer params
+        @confidence_levels = !!assessment_settings[:confidence_levels] if params[:confidence_levels].nil?   # Prefer params
         @assessment_kind = assessment.kind                                                          # Use settings
         @enable_start = !!assessment_settings[:enable_start] if params[:enable_start].nil?          # Prefer params
         @style = assessment_settings[:style] || assessment.default_style || @style                  # Prefer settings
