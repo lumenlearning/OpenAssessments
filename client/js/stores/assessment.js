@@ -41,7 +41,7 @@ function parseAssessmentResult(result){
 function checkAnswer(){
   if(_selectedAnswerIds !== null){
     return Assessment.checkAnswer(_items[_itemIndex], _selectedAnswerIds);
-  } else{ 
+  } else {
     return null;
   }
 }
@@ -184,6 +184,10 @@ var AssessmentStore = assign({}, StoreCommon, {
     return _answerMessages[_itemIndex];
   },
 
+  resetAnswerMessages(){
+    _answerMessages = [];
+  },
+
   studentAnswers(){
     return _studentAnswers[_itemIndex];
   },
@@ -229,7 +233,7 @@ var AssessmentStore = assign({}, StoreCommon, {
 // Register callback with Dispatcher
 Dispatcher.register(function(payload) {
   var action = payload.action;
-  
+
   switch(action){
 
     case Constants.ASSESSMENT_LOAD_PENDING:
@@ -245,8 +249,8 @@ Dispatcher.register(function(payload) {
           _assessment = Assessment.parseAssessment(SettingsStore.current(), text);
           _kind = SettingsStore.current().assessmentKind.toLowerCase();
           _assessmentXml = text;
-          if( _assessment && 
-              _assessment.sections && 
+          if( _assessment &&
+              _assessment.sections &&
               _assessment.sections[_sectionIndex] &&
               _assessment.sections[_sectionIndex].items){
             if(_assessment.standard == "qti"){
@@ -287,7 +291,7 @@ Dispatcher.register(function(payload) {
     case Constants.ASSESSMENT_NEXT_QUESTION:
       // Will need to advance sections and items.
       if(_itemIndex < _items.length - 1){
-        _items[_itemIndex].timeSpent += calculateTime(_items[_itemIndex].startTime, Utils.currentTime()); 
+        _items[_itemIndex].timeSpent += calculateTime(_items[_itemIndex].startTime, Utils.currentTime());
         _studentAnswers[_itemIndex] = _selectedAnswerIds;
         _itemIndex++;
         _items[_itemIndex].startTime = Utils.currentTime();
@@ -315,9 +319,9 @@ Dispatcher.register(function(payload) {
     case Constants.ASSESSMENT_SUBMITTED:
       _items[_itemIndex].timeSpent += calculateTime(_items[_itemIndex].startTime, Utils.currentTime());
       _assessmentState = SUBMITTED;
-      _finishedAt = Utils.currentTime(); 
+      _finishedAt = Utils.currentTime();
       break;
-      
+
     case Constants.LEVEL_SELECTED:
       _items[_itemIndex].confidenceLevel = payload.level;
       if(payload.index ==  _items.length - 1){
@@ -330,7 +334,7 @@ Dispatcher.register(function(payload) {
       break;
 
     case Constants.QUESTION_SELECTED:
-        _items[_itemIndex].timeSpent += calculateTime(_items[_itemIndex].startTime, Utils.currentTime()); 
+        _items[_itemIndex].timeSpent += calculateTime(_items[_itemIndex].startTime, Utils.currentTime());
         _studentAnswers[_itemIndex] = _selectedAnswerIds;
         _itemIndex = payload.index;
         _items[_itemIndex].startTime = Utils.currentTime();
@@ -361,4 +365,3 @@ Dispatcher.register(function(payload) {
 
 
 export default AssessmentStore;
-

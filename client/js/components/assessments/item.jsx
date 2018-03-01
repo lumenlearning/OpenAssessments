@@ -38,6 +38,7 @@ export default class Item extends BaseComponent{
         AssessmentActions.selectConfidenceLevel(val, currentIndex);
         if(that.props.currentIndex == that.props.questionCount - 1 && that.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
           that.submitAssessment();
+          that.props.resetAnswerMessages();
         } else {
           that.props.checkAnswer(that.props.currentIndex);
           that.clearShowMessage();
