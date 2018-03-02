@@ -15,7 +15,7 @@ export default class Item extends BaseComponent{
 
   nextButtonClicked(e){
     e.preventDefault();
-    this.setState({unAnsweredQuestions: null});
+    this.setState({unAnsweredQuestions: null, confidenceSelected: null});
     this.props.nextQuestion(this.clearShowMessage);
   }
 
@@ -37,15 +37,19 @@ export default class Item extends BaseComponent{
       if(AssessmentStore.hasAnsweredCurrent()){
         AssessmentActions.selectConfidenceLevel(val, currentIndex);
         if(that.props.currentIndex == that.props.questionCount - 1 && that.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
-          that.submitAssessment();
           // If special case then do the new behavior.
           if (that.props.formativeFeedback) {
+            that.props.checkAnswer(that.props.currentIndex);
+            that.setState({confidenceSelected: val});
             that.props.resetAnswerMessages();
+          } else {
+            that.submitAssessment();
           }
         } else {
           // If special case then do the new behavior.
           if (that.props.formativeFeedback) {
             that.props.checkAnswer(that.props.currentIndex);
+            that.setState({confidenceSelected: val});
             that.clearShowMessage();
           } else {
             // Else, do the old behavior.
@@ -103,7 +107,7 @@ export default class Item extends BaseComponent{
   checkConfidenceCompletion(){
     var questionsNotAnswered = AssessmentStore.unansweredQuestions();
 
-    if (-1 === questionsNotAnswered.indexOf(this.props.currentIndex + 1) && !(0 === questionsNotAnswered.length)) {
+    if (-1 === questionsNotAnswered.indexOf(this.props.currentIndex + 1) && this.state.confidenceSelected) {
       return true;
     } else {
       return false;
@@ -120,22 +124,25 @@ export default class Item extends BaseComponent{
 
   getConfidenceLevels(level, styles){
     if(level){
-      var disabled = "";
-
-      if (this.props.formativeFeedback) {
-        var disabled = this.checkConfidenceCompletion() ? "disabled" : "";
+      if (this.props.formativeFeedback && this.checkConfidenceCompletion()) {
+        return (
+          <div className="confidence_wrapper" style={styles.confidenceWrapper}>
+            <p>You selected {`"${this.state.confidenceSelected}"`}.</p>
+          </div>
+        );
+      } else {
+        var levelMessage = <div tabIndex="0" style={{marginBottom: "10px"}}><b>How sure are you of your answer? Click below to move forward.</b></div>;
+        return    (<div className="confidence_wrapper" style={styles.confidenceWrapper}>
+                    {levelMessage}
+                    <input type="button" style={styles.maybeButton} className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, "Just A Guess", this.props.currentIndex) }}/>
+                    <input type="button" style={{...styles.margin, ...styles.probablyButton}} className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Pretty Sure", this.props.currentIndex) }}/>
+                    <input type="button" style={{...styles.margin, ...styles.definitelyButton}} className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Very Sure", this.props.currentIndex) }}/>
+                  </div>
+                  );
+        } /*else {
+          return <div className="lower_level"><input type="button" className="btn btn-check-answer" value="Check Answer" onClick={() => { AssessmentActions.checkAnswer()}}/></div>
+        }*/
       }
-      var levelMessage = <div tabIndex="0" style={{marginBottom: "10px"}}><b>How sure are you of your answer? Click below to move forward.</b></div>;
-      return    (<div className="confidence_wrapper" style={styles.confidenceWrapper}>
-                  {levelMessage}
-                  <input type="button" style={styles.maybeButton} className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, "Just A Guess", this.props.currentIndex) }} disabled={disabled}/>
-                  <input type="button" style={{...styles.margin, ...styles.probablyButton}} className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Pretty Sure", this.props.currentIndex) }} disabled={disabled}/>
-                  <input type="button" style={{...styles.margin, ...styles.definitelyButton}} className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Very Sure", this.props.currentIndex) }} disabled={disabled}/>
-                </div>
-                );
-    } /*else {
-      return <div className="lower_level"><input type="button" className="btn btn-check-answer" value="Check Answer" onClick={() => { AssessmentActions.checkAnswer()}}/></div>
-    }*/
   }
 
   getNavigationButtons(styles) {
@@ -161,20 +168,28 @@ export default class Item extends BaseComponent{
 
     // if special case ...
     if (this.props.formativeFeedback) {
-      if ((this.props.currentIndex == this.props.questionCount - 1) || !this.checkConfidenceCompletion()) {
-        disabled = "disabled";
+      if (this.checkConfidenceCompletion() && !(this.props.currentIndex == this.props.questionCount - 1)) {
+        return (
+          <button className={"btn btn-next-item"} style={styles.nextButton} onClick={(e) => { this.nextButtonClicked(e) }}>
+            <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
+          </button>
+        );
       }
     } else {
       disabled = (this.props.currentIndex == this.props.questionCount - 1) ? "disabled" : "";
-    }
 
-    return (
-        <button className={"btn btn-next-item " + disabled} style={styles.nextButton} onClick={(e) => { this.nextButtonClicked(e) }}>
-          <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
-        </button>);
+      return (
+          <button className={"btn btn-next-item " + disabled} style={styles.nextButton} onClick={(e) => { this.nextButtonClicked(e) }}>
+            <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
+          </button>);
+    }
   }
 
   getPreviousButton(styles) {
+    // if special case ...
+    if (this.props.formativeFeedback) {
+      return "";
+    }
     var prevButtonClassName = "btn btn-prev-item " + ((this.props.currentIndex > 0) ? "" : "disabled");
     return (
         <button className={prevButtonClassName} style={styles.previousButton} onClick={(e) => { this.previousButtonClicked(e) }}>
@@ -318,18 +333,33 @@ export default class Item extends BaseComponent{
   }
 
   submitAssessmentButton(styles) {
-    if ((AssessmentStore.isFormative() && this.props.confidenceLevels) ||
-        (AssessmentStore.isPractice()) ||
-        (this.props.currentIndex != this.props.questionCount - 1)) {
-      return ""
-    }
+    if (this.props.formativeFeedback) {
+      if (this.props.currentIndex == this.props.questionCount - 1 && Item.checkCompletion()) {
+        return <div style={styles.submitAssessmentButtonDiv}>
+          <button className="btn btn-check-answer"
+                  style={styles.submitAssessmentButton}
+                  onClick={(e) => { this.submitAssessmentButtonClicked(e) }}
+          >Submit</button>
+        </div>
+      } else {
+        return "";
+      }
 
-    return <div style={styles.submitAssessmentButtonDiv}>
-      <button className="btn btn-check-answer"
-              style={styles.submitAssessmentButton}
-              onClick={(e) => { this.submitAssessmentButtonClicked(e) }}
-      >Submit</button>
-    </div>
+
+    } else {
+      if ((AssessmentStore.isFormative() && this.props.confidenceLevels) ||
+          (AssessmentStore.isPractice()) ||
+          (this.props.currentIndex != this.props.questionCount - 1)) {
+        return ""
+      }
+
+      return <div style={styles.submitAssessmentButtonDiv}>
+        <button className="btn btn-check-answer"
+                style={styles.submitAssessmentButton}
+                onClick={(e) => { this.submitAssessmentButtonClicked(e) }}
+        >Submit</button>
+      </div>
+    }
   }
 
   checkAnswerButton(styles) {
