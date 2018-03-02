@@ -48,11 +48,12 @@ export default class Item extends BaseComponent{
         } else {
           // If special case then do the new behavior.
           if (that.props.formativeFeedback) {
+            that.clearShowMessage();
             that.props.checkAnswer(that.props.currentIndex);
             that.setState({confidenceSelected: val});
-            that.clearShowMessage();
           } else {
             // Else, do the old behavior.
+            that.clearShowMessage();
             AssessmentActions.nextQuestion();
           }
         }
