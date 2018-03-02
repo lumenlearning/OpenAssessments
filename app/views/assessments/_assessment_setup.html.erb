@@ -20,7 +20,8 @@
     lis_user_id: (params[:lis_user_id] || params[:user_id]).to_s,
     csrfToken: form_authenticity_token,
     jwt: jwt_token,
-    images: client_images("Books.svg", "PersonWithBook.svg", "ProgressIcon.svg", "QuizIcon.svg","CheckMark.svg")
+    images: client_images("Books.svg", "PersonWithBook.svg", "ProgressIcon.svg", "QuizIcon.svg","CheckMark.svg"),
+    formative_feedback: true
    }
 
    if @external_user_id
