@@ -15,7 +15,7 @@ export default class Item extends BaseComponent{
 
   nextButtonClicked(e){
     e.preventDefault();
-    this.setState({unAnsweredQuestions: null, confidenceSelected: null});
+    this.setState({unAnsweredQuestions: null});
     this.props.nextQuestion(this.clearShowMessage);
   }
 
@@ -37,20 +37,16 @@ export default class Item extends BaseComponent{
       if(AssessmentStore.hasAnsweredCurrent()){
         AssessmentActions.selectConfidenceLevel(val, currentIndex);
         if(that.props.currentIndex == that.props.questionCount - 1 && that.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
-          // If special case then do the new behavior.
           if (that.props.showAnswers) {
             that.props.checkAnswer(that.props.currentIndex);
-            that.setState({confidenceSelected: val});
             that.props.resetAnswerMessages();
           } else {
             that.submitAssessment();
           }
         } else {
-          // If special case then do the new behavior.
           if (that.props.showAnswers) {
             that.clearShowMessage();
             that.props.checkAnswer(that.props.currentIndex);
-            that.setState({confidenceSelected: val});
           } else {
             // Else, do the old behavior.
             that.clearShowMessage();
@@ -105,16 +101,6 @@ export default class Item extends BaseComponent{
     return true;
   }
 
-  checkConfidenceCompletion(){
-    var questionsNotAnswered = AssessmentStore.unansweredQuestions();
-
-    if (-1 === questionsNotAnswered.indexOf(this.props.currentIndex + 1) && this.state.confidenceSelected) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   getWarning(state, questionCount, questionIndex, styles){
     if(state && state.unAnsweredQuestions && state.unAnsweredQuestions.length > 0 && questionIndex + 1 == questionCount){
       return <div style={styles.warning}><i className="glyphicon glyphicon-exclamation-sign"></i> You left question(s) {state.unAnsweredQuestions.join()} blank. Use the "Progress" drop-down menu at the top to go back and answer the question(s), then come back and submit.</div>
@@ -123,12 +109,12 @@ export default class Item extends BaseComponent{
     return "";
   }
 
-  getConfidenceLevels(level, styles){
-    if(level){
-      if (this.props.showAnswers && this.checkConfidenceCompletion()) {
+  getConfidenceLevels(showLevels, styles){
+    if(showLevels){
+      if (this.props.showAnswers && this.props.question.confidenceLevel) {
         return (
           <div className="confidence_wrapper" style={styles.confidenceWrapper}>
-            <p>You selected {`"${this.state.confidenceSelected}"`}.</p>
+            <p>You selected {`"${this.props.question.confidenceLevel}"`}.</p>
           </div>
         );
       } else {
@@ -140,9 +126,7 @@ export default class Item extends BaseComponent{
                     <input type="button" style={{...styles.margin, ...styles.definitelyButton}} className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Very Sure", this.props.currentIndex) }}/>
                   </div>
                   );
-        } /*else {
-          return <div className="lower_level"><input type="button" className="btn btn-check-answer" value="Check Answer" onClick={() => { AssessmentActions.checkAnswer()}}/></div>
-        }*/
+        }
       }
   }
 
@@ -167,9 +151,8 @@ export default class Item extends BaseComponent{
   getNextButton(styles) {
     var disabled = "";
 
-    // if special case ...
     if (this.props.showAnswers) {
-      if (this.checkConfidenceCompletion() && !(this.props.currentIndex == this.props.questionCount - 1)) {
+      if (AssessmentStore.hasAnsweredCurrent() && !(this.props.currentIndex == this.props.questionCount - 1)) {
         return (
           <button className={"btn btn-next-item"} style={styles.nextButton} onClick={(e) => { this.nextButtonClicked(e) }}>
             <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
@@ -187,7 +170,6 @@ export default class Item extends BaseComponent{
   }
 
   getPreviousButton(styles) {
-    // if special case ...
     if (this.props.showAnswers) {
       return "";
     }

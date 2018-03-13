@@ -53,6 +53,7 @@ export default class MomEmbed extends BaseComponent {
   }
 
   componentWillReceiveProps(nextProps){
+    // todo: only register if not displaying an answer already
     if(nextProps.registerGradingCallback){
       nextProps.registerGradingCallback(this.gradeQuestion)
     }
@@ -64,6 +65,7 @@ export default class MomEmbed extends BaseComponent {
       doneGradingCallback: null
     });
 
+    // todo: only register if not displaying an answer already
     if(this.props.registerGradingCallback){
       this.props.registerGradingCallback(this.gradeQuestion)
     }
@@ -84,8 +86,7 @@ export default class MomEmbed extends BaseComponent {
   }
 
   messageHandler(e) {
-    // if (!e.origin.match(/https?:\/\/www.myopenmath.com/)) {
-      if (!e.origin.match(/https?:\/\/www\.myopenmath\.com|https?:\/\/ohm\.lumenlearning\.com|https?:\/\/ohm\.ludev\.team/)) {
+    if (!e.origin.match(/https?:\/\/www\.myopenmath\.com|https?:\/\/ohm\.lumenlearning\.com|https?:\/\/ohm\.ludev\.team/)) {
       return;
     }
 
