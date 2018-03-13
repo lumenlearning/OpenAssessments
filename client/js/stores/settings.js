@@ -79,7 +79,7 @@ function loadSettings(defaultSettings){
     questionCount      : defaultSettings.questionCount,
     userAssessmentId   : bestValue('user_assessment_id', 'UserAssessmentId'),
     iframe_resize_id   : defaultSettings.iframe_resize_id,
-    formativeFeedback  : defaultSettings.formative_feedback
+    showAnswers        : defaultSettings.show_answers
   };
 
   if(!_settings.srcUrl && !_settings.offline){

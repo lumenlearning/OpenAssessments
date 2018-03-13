@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160801005426) do
+ActiveRecord::Schema.define(version: 20180313034310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,8 +79,8 @@ ActiveRecord::Schema.define(version: 20160801005426) do
   create_table "assessment_settings", force: :cascade do |t|
     t.integer  "assessment_id"
     t.integer  "allowed_attempts"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "style"
     t.string   "per_sec"
     t.boolean  "confidence_levels"
@@ -88,6 +88,8 @@ ActiveRecord::Schema.define(version: 20160801005426) do
     t.boolean  "is_default"
     t.integer  "account_id"
     t.string   "mode"
+    t.boolean  "show_recent_results"
+    t.boolean  "show_answers",        default: false
   end
 
   create_table "assessment_xmls", force: :cascade do |t|

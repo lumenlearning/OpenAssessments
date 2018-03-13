@@ -197,7 +197,7 @@ export default class Assessment extends BaseComponent{
         registerGradingCallback = {this.registerGradingCallback}
         outcomes         = {this.state.outcomes}
         resetAnswerMessages = {this.resetAnswerMessages}
-        formativeFeedback = {this.state.settings.formativeFeedback}
+        showAnswers = {this.state.settings.showAnswers}
       />;
 
       progressBar = <div style={styles.progressContainer}>

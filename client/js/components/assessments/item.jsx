@@ -38,7 +38,7 @@ export default class Item extends BaseComponent{
         AssessmentActions.selectConfidenceLevel(val, currentIndex);
         if(that.props.currentIndex == that.props.questionCount - 1 && that.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
           // If special case then do the new behavior.
-          if (that.props.formativeFeedback) {
+          if (that.props.showAnswers) {
             that.props.checkAnswer(that.props.currentIndex);
             that.setState({confidenceSelected: val});
             that.props.resetAnswerMessages();
@@ -47,7 +47,7 @@ export default class Item extends BaseComponent{
           }
         } else {
           // If special case then do the new behavior.
-          if (that.props.formativeFeedback) {
+          if (that.props.showAnswers) {
             that.clearShowMessage();
             that.props.checkAnswer(that.props.currentIndex);
             that.setState({confidenceSelected: val});
@@ -125,7 +125,7 @@ export default class Item extends BaseComponent{
 
   getConfidenceLevels(level, styles){
     if(level){
-      if (this.props.formativeFeedback && this.checkConfidenceCompletion()) {
+      if (this.props.showAnswers && this.checkConfidenceCompletion()) {
         return (
           <div className="confidence_wrapper" style={styles.confidenceWrapper}>
             <p>You selected {`"${this.state.confidenceSelected}"`}.</p>
@@ -148,7 +148,7 @@ export default class Item extends BaseComponent{
 
   getNavigationButtons(styles) {
     // if special case ...
-    if (this.props.formativeFeedback) {
+    if (this.props.showAnswers) {
       if ( this.props.questionCount == 1 || this.context.theme.shouldShowNextPrevious) {
         return "";
       }
@@ -168,7 +168,7 @@ export default class Item extends BaseComponent{
     var disabled = "";
 
     // if special case ...
-    if (this.props.formativeFeedback) {
+    if (this.props.showAnswers) {
       if (this.checkConfidenceCompletion() && !(this.props.currentIndex == this.props.questionCount - 1)) {
         return (
           <button className={"btn btn-next-item"} style={styles.nextButton} onClick={(e) => { this.nextButtonClicked(e) }}>
@@ -188,7 +188,7 @@ export default class Item extends BaseComponent{
 
   getPreviousButton(styles) {
     // if special case ...
-    if (this.props.formativeFeedback) {
+    if (this.props.showAnswers) {
       return "";
     }
     var prevButtonClassName = "btn btn-prev-item " + ((this.props.currentIndex > 0) ? "" : "disabled");
@@ -334,7 +334,7 @@ export default class Item extends BaseComponent{
   }
 
   submitAssessmentButton(styles) {
-    if (this.props.formativeFeedback) {
+    if (this.props.showAnswers) {
       if (this.props.currentIndex == this.props.questionCount - 1 && Item.checkCompletion()) {
         return <div style={styles.submitAssessmentButtonDiv}>
           <button className="btn btn-check-answer"

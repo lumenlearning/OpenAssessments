@@ -104,6 +104,7 @@ class AssessmentsController < LtiBaseController
     @eid = params[:eid]
     @iframe_resize_id = params[:iframe_resize_id]
     @show_post_message_navigation = params[:ext_post_message_navigation]
+    @show_answers = false
 
     @external_user_id = params[:external_user_id] || params[:user_id]
     @external_context_id = params[:external_context_id] || params[:context_id]
@@ -118,6 +119,7 @@ class AssessmentsController < LtiBaseController
         @style = assessment_settings[:style] || assessment.default_style || @style                  # Prefer settings
         @per_sec = assessment_settings[:per_sec]                                                    # Use settings
         @allowed_attempts = assessment_settings.allowed_attempts.to_s                               # Use settings
+        @show_answers = !!assessment_settings[:show_answers]
       end
     end
   end
