@@ -135,6 +135,9 @@ export default class Assessment{
       case 'multiple_dropdowns_question':
         results = this.checkDropdownAnswers(item, selectedAnswers);
         break;
+      case 'mom_embed':
+        results = this.checkMomAnswers(item, selectedAnswers);
+        break;
     }
 
     return results;
@@ -267,6 +270,22 @@ export default class Assessment{
         feedback_only: true,
         feedback: "Please enter a response.",
         allowResubmit: true
+      }
+    }
+  }
+
+
+  static checkMomAnswers(item, response) {
+    if (response.length > 0) {
+      return {
+        score: item.score,
+        correct: item.score === 1
+      }
+    } else {
+      return {
+        correct: false,
+        score: 0,
+        feedback: "",
       }
     }
   }

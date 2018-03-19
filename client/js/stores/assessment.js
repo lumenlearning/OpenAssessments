@@ -157,7 +157,11 @@ var AssessmentStore = assign({}, StoreCommon, {
     return _selectedAnswerIds;
   },
 
-  hasAnsweredCurrent() {
+  hasSubmittedCurrent(){
+    return !!this.answerMessage();
+  },
+
+  hasSelectedAnswerForCurrent() {
     return AssessmentStore.questionIsComplete(this.currentQuestion(), this.selectedAnswerId());
   },
 

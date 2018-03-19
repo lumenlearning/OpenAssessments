@@ -34,12 +34,11 @@ export default class Item extends BaseComponent{
 
     let that = this;
     this.props.selectQuestion(this.props.currentIndex, function(){
-      if(AssessmentStore.hasAnsweredCurrent()){
+      if(AssessmentStore.hasSelectedAnswerForCurrent()){
         AssessmentActions.selectConfidenceLevel(val, currentIndex);
         if(that.props.currentIndex == that.props.questionCount - 1 && that.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
           if (that.props.showAnswers) {
             that.props.checkAnswer(that.props.currentIndex);
-            that.props.resetAnswerMessages();
           } else {
             that.submitAssessment();
           }
@@ -63,7 +62,7 @@ export default class Item extends BaseComponent{
     e && e.preventDefault();
     let that = this;
     this.props.selectQuestion(this.props.currentIndex, function () {
-      if (AssessmentStore.hasAnsweredCurrent()) {
+      if (AssessmentStore.hasSelectedAnswerForCurrent()) {
         that.setState({showMessage: false});
         that.props.checkAnswer(that.props.currentIndex);
 
@@ -152,7 +151,7 @@ export default class Item extends BaseComponent{
     var disabled = "";
 
     if (this.props.showAnswers) {
-      if (AssessmentStore.hasAnsweredCurrent() && !(this.props.currentIndex == this.props.questionCount - 1)) {
+      if (AssessmentStore.hasSubmittedCurrent() && !(this.props.currentIndex == this.props.questionCount - 1)) {
         return (
           <button className={"btn btn-next-item"} style={styles.nextButton} onClick={(e) => { this.nextButtonClicked(e) }}>
             <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
@@ -317,7 +316,7 @@ export default class Item extends BaseComponent{
 
   submitAssessmentButton(styles) {
     if (this.props.showAnswers) {
-      if (this.props.currentIndex == this.props.questionCount - 1 && Item.checkCompletion()) {
+      if (this.props.currentIndex == this.props.questionCount - 1 && Item.checkCompletion() === true && AssessmentStore.hasSubmittedCurrent()) {
         return <div style={styles.submitAssessmentButtonDiv}>
           <button className="btn btn-check-answer"
                   style={styles.submitAssessmentButton}

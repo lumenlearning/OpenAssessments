@@ -100,6 +100,7 @@ export default class Assessment extends BaseComponent{
           finishedCallback();
         }
         Assessment.newQuestionMessages();
+        this.setState({questionSelected: true});
       });
     } else {
       AssessmentActions.selectQuestion(qid);
