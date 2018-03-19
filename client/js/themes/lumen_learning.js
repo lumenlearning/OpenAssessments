@@ -2,14 +2,13 @@
 import defines from "./defines";
 
 export default {
-  primaryBackgroundColor: defines.lumenSeafoam,
+  primaryBackgroundColor: defines.lumenDarkGreen,
   titleBarBackgroundColor: defines.lightgray,
   progressBarColor: defines.lumenSeafoam,
   progressBarHeight: "10px",
   assessmentContainerBoxShadow: "1px 4px 4px 4px rgba(0,0,0,0.2)",
   assessmentContainerBorderRadius: "4px",
   headerBackgroundColor: defines.white,
-  confidenceWrapperBorder: "1px solid rgba(0,0,0,0.2)",
 
   fullQuestionBackgroundColor: defines.white,
   panelHeadingBackgroundColor: defines.white,
@@ -18,13 +17,15 @@ export default {
   panelBorderRadius: null,
   panelBorderColor: "transparent",
   panelMarginBottom: "-30px",
-  maybeBackgroundColor: defines.lumenRed + " !important",
+  maybeBackgroundColor: defines.newLumenBlue + " !important",
   maybeColor: defines.white,
-  probablyBackgroundColor: defines.lumenBlue + " !important",
+  probablyBackgroundColor: defines.newLumenBlue + " !important",
   probablyColor: defines.white,
-  definitelyBackgroundColor: defines.lumenSeafoam + " !important",
+  definitelyBackgroundColor: defines.newLumenBlue + " !important",
   definitelyColor: defines.white,
   confidenceWrapperBackgroundColor: defines.lightergray,
+  nextButtonBackgroundColor: defines.newLumenBlue + " !important",
+  previousButtonBackgroundColor: defines.newLumenBlue + " !important",
 
   assessmentPadding: "20px",
   assessmentBackground: defines.white,
@@ -48,5 +49,11 @@ export default {
   partialBackgroundColor: "rgba(200, 133, 51, .2)",
   partialColor: "rgb(200, 133, 51)",
   outcomesBackgroundColor: "rgba(204, 204, 204, .2)",
+  questionTextColor: '#212b36',
+  questionTextFontSize: '16px',
   questionTextFontWeight: 'normal',
+  questionTextPadding: '1.25em 1em',
+
+  btnQuestionBorder: '1px solid #c4c4c4',
+  btnQuestionBorderRadius: '5px'
 }

@@ -51,7 +51,6 @@ export default class RadioButton extends React.Component{
   }
 
   render(){
-    var styles = Styles;
     var checked = null;
     var optionFlag = null;
 

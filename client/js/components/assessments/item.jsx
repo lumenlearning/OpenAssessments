@@ -117,7 +117,7 @@ export default class Item extends BaseComponent{
           </div>
         );
       } else {
-        var levelMessage = <div tabIndex="0" style={{marginBottom: "10px"}}><b>How sure are you of your answer? Click below to move forward.</b></div>;
+        var levelMessage = <div tabIndex="0" style={{marginBottom: "10px"}}>How sure are you of your answer?</div>;
         return    (<div className="confidence_wrapper" style={styles.confidenceWrapper}>
                     {levelMessage}
                     <input type="button" style={styles.maybeButton} className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, "Just A Guess", this.props.currentIndex) }}/>
@@ -223,13 +223,13 @@ export default class Item extends BaseComponent{
     }
 
     if(this.props.question.question_type == "multiple_answers_question"){
-      return <div style={styles.chooseText}>Choose <b>ALL</b> that apply.</div>;
+      return <div style={styles.chooseText}>Choose all that apply</div>;
     } else if(this.props.question.question_type == "multiple_choice_question" ||
         this.props.question.question_type == "true_false_question"){
-      return <div style={styles.chooseText}>Choose the <b>BEST</b> answer.</div>;
+      return <div style={styles.chooseText}>Choose the best answer</div>;
     }
     else if (this.props.question.question_type == 'multiple_dropdowns_question') {
-      return <div style={styles.chooseText} tabIndex="0">Complete the sentence by choosing the best answer choices from the dropdowns.</div>
+      return <div style={styles.chooseText} tabIndex="0">Complete the sentence by choosing the best answer from the dropdown's options</div>
     }
     else {
       return "";
@@ -262,7 +262,7 @@ export default class Item extends BaseComponent{
             <form className="edit_item" >
               <div className="full_question" style={styles.fullQuestion}>
                 {this.simple_progress(styles)}
-                <div className="inner_question">
+                <div className="inner_question" style={styles.innerQuestion}>
                   <div className="question_text" style={styles.questionText}>
                     {this.questionDirections(styles)}
                     {this.questionContent()}
@@ -420,7 +420,11 @@ export default class Item extends BaseComponent{
         backgroundColor: AssessmentStore.isFormative() ? theme.outcomesBackgroundColor : theme.fullQuestionBackgroundColor,
         paddingBottom: "20px",
       },
+      innerQuestion: {
+        maxWidth: "650px",
+      },
       questionText: {
+        color: theme.questionTextColor,
         fontSize: theme.questionTextFontSize,
         fontWeight: theme.questionTextFontWeight,
         padding: theme.questionTextPadding,
@@ -429,27 +433,32 @@ export default class Item extends BaseComponent{
         backgroundColor: theme.nextButtonBackgroundColor,
         color: theme.probablyColor,
         width: theme.probablyWidth,
+        padding: "8px !important",
       },
       previousButton: {
         backgroundColor: theme.previousButtonBackgroundColor,
         marginRight: "20px",
         color: theme.probablyColor,
         width: theme.probablyWidth,
+        padding: "8px !important",
       },
       maybeButton: {
         width: theme.maybeWidth,
         backgroundColor: theme.maybeBackgroundColor,
         color: theme.maybeColor,
+        padding: "8px !important",
       },
       probablyButton: {
         width: theme.probablyWidth,
         backgroundColor: theme.probablyBackgroundColor,
         color: theme.probablyColor,
+        padding: "8px !important",
       },
       definitelyButton: {
         width: theme.definitelyWidth,
         backgroundColor: theme.definitelyBackgroundColor,
         color: theme.definitelyColor,
+        padding: "8px !important",
       },
       submitAssessmentButton: {
         width: theme.definitelyWidth,
@@ -535,12 +544,17 @@ export default class Item extends BaseComponent{
         margin: "20px 0px 0px 0px"
       },
       h4: {
-        color: "white"
+        color: "white",
+        fontWeight: "bold",
+        fontStyle: "normal",
+        fontStretch: "normal",
+        lineHeight: "normal",
+        letterSpacing: "0px"
       },
       chooseText: {
-        color: "grey",
-        fontSize: "90%",
-        paddingBottom: "20px"
+        color: "#555",
+        fontWeight: "600",
+        paddingBottom: "17px"
       },
       counter: {
         color: 'black',

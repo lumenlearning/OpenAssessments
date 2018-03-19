@@ -54,8 +54,10 @@ export default {
 
   // Lumen Learing
   lumenSeafoam: "#71B889",
+  lumenDarkGreen: "#003136",
   lumenBlue: '#3299BB',
   lumenRed: "#CF0000",
+  newLumenBlue: "#1064c0",
 
   // Twitter bootstrap overrides
   navbarInverseBg:                 "#424242",
