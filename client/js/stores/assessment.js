@@ -348,6 +348,7 @@ Dispatcher.register(function(payload) {
       _assessmentResult = null;
       _assessmentState = NOT_LOADED;
       _studentAnswers = [];
+      _answerMessages = [];
       _itemIndex = 0;
       _sectionIndex = 0;
       _selectedAnswerIds = [];
