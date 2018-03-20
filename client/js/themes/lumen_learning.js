@@ -10,7 +10,7 @@ export default {
   assessmentContainerBorderRadius: "4px",
   headerBackgroundColor: defines.white,
 
-  fullQuestionBackgroundColor: defines.white,
+  fullQuestionBackgroundColor: '#f5f5f5',
   panelHeadingBackgroundColor: defines.white,
   panelBoxShadow: "0 0 0 rgba(0,0,0,0.0)",
   panelBorder: null,
@@ -21,9 +21,13 @@ export default {
   maybeColor: defines.white,
   probablyBackgroundColor: defines.newLumenBlue + " !important",
   probablyColor: defines.white,
+  probablyWidth: '130px',
   definitelyBackgroundColor: defines.newLumenBlue + " !important",
   definitelyColor: defines.white,
   confidenceWrapperBackgroundColor: defines.lightergray,
+  confidenceWrapperWidth: '650px',
+  navigationWrapperMargin: '0 0 0 36px',
+  confidenceFeedbackWrapperMargin: '1.5em 0 2em 38px',
   nextButtonBackgroundColor: defines.newLumenBlue + " !important",
   previousButtonBackgroundColor: defines.newLumenBlue + " !important",
 
@@ -54,6 +58,15 @@ export default {
   questionTextFontWeight: 'normal',
   questionTextPadding: '1.25em 1em',
 
+  // Selection button questions
+  btnBackground: '#fafafa',
   btnQuestionBorder: '1px solid #c4c4c4',
-  btnQuestionBorderRadius: '5px'
+  btnQuestionBorderRadius: '5px',
+  btnQuestionPadding: '11px',
+
+  btnCorrectBackground: '#f0faed',
+  btnCorrectBorder: '1px solid #108043',
+
+  btnIncorrectBackground: '#fbeae5',
+  btnIncorrectBorder: '1px solid #bf0711',
 }

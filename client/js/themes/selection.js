@@ -1,10 +1,10 @@
 "use strict";
-import theme from "./base";
+import theme from "./lumen_learning.js";
 
 export default {
   btnQuestion:{
     whiteSpace: theme.btnQuestionWhiteSpace,
-    background: "transparent",
+    background: theme.btnBackground,
     color: theme.btnQuestionColor,
     textAlign: theme.btnQuestionTextAlign,
     padding: theme.btnQuestionPadding,
@@ -20,9 +20,54 @@ export default {
     lineHeight: theme.btnQuestionLineHeight,
     borderRadius: theme.btnQuestionBorderRadius
   },
+  btnQuestionCorrect: {
+    whiteSpace: theme.btnQuestionWhiteSpace,
+    background: theme.btnCorrectBackground,
+    color: theme.btnQuestionColor,
+    textAlign: theme.btnQuestionTextAlign,
+    padding: theme.btnQuestionPadding,
+    marginBottom: theme.btnQuestionMarginBottom,
+    display: theme.btnQuestionDisplay,
+    width: theme.btnQuestionWidth,
+    verticalAlign: theme.btnQuestionVerticalAlign,
+    fontWeight: theme.btnQuestionFontWeight,
+    touchAction: theme.btnQuestionTouchAction,
+    cursor: theme.btnQuestionCursor,
+    border: theme.btnCorrectBorder,
+    fontSize: theme.btnQuestionFontSize,
+    lineHeight: theme.btnQuestionLineHeight,
+    borderRadius: theme.btnQuestionBorderRadius
+  },
+  btnQuestionIncorrect: {
+    whiteSpace: theme.btnQuestionWhiteSpace,
+    background: theme.btnIncorrectBackground,
+    color: theme.btnQuestionColor,
+    textAlign: theme.btnQuestionTextAlign,
+    padding: theme.btnQuestionPadding,
+    marginBottom: theme.btnQuestionMarginBottom,
+    display: theme.btnQuestionDisplay,
+    width: theme.btnQuestionWidth,
+    verticalAlign: theme.btnQuestionVerticalAlign,
+    fontWeight: theme.btnQuestionFontWeight,
+    touchAction: theme.btnQuestionTouchAction,
+    cursor: theme.btnQuestionCursor,
+    border: theme.btnIncorrectBorder,
+    fontSize: theme.btnQuestionFontSize,
+    lineHeight: theme.btnQuestionLineHeight,
+    borderRadius: theme.btnQuestionBorderRadius
+  },
+  btnLabel: {
+    marginBottom: 0,
+  },
   span: {
     fontWeight: "normal !important",
-    marginLeft: "5px"
+    marginLeft: "11px"
+  },
+  feedbackCorrect: {
+    color: "#108043"
+  },
+  feedbackIncorrect: {
+    color: "#bf0711"
   },
   radioText: {
     color: theme.radioTextColor,
@@ -31,30 +76,18 @@ export default {
   },
   checkStyleCorrect: {
     float: "left",
-    color: "white",
-    fontSize: ".9em",
-    backgroundColor: "#4EAA59",
-    width: "26px",
-    height: "22px",
-    paddingTop: "2px",
-    paddingLeft: "8px",
-    marginTop: "2px",
-    marginLeft: "-30px",
-    borderRadius: "4px",
+    width: "20px",
+    height: "20px",
+    marginTop: "12px",
+    marginLeft: "-28px",
     cursor: "default"
   },
   checkStyleWrong: {
     float: "left",
-    color: "white",
-    fontSize: ".8em",
-    backgroundColor: "#C3092B",
-    width: "26px",
-    height: "22px",
-    paddingTop: "3px",
-    paddingLeft: "9px",
-    marginTop: "2px",
-    marginLeft: "-30px",
-    borderRadius: "4px",
+    width: "20px",
+    height: "20px",
+    marginTop: "12px",
+    marginLeft: "-28px",
     cursor: "default"
   }
 }

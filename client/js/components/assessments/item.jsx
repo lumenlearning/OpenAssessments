@@ -112,8 +112,8 @@ export default class Item extends BaseComponent{
     if(showLevels){
       if (this.props.showAnswers && this.props.question.confidenceLevel) {
         return (
-          <div className="confidence_wrapper" style={styles.confidenceWrapper}>
-            <p>You selected {`"${this.props.question.confidenceLevel}"`}.</p>
+          <div className="confidence_feedback_wrapper" style={styles.confidenceFeedbackWrapper}>
+            <p>Your confidence level in answering this question was: {`${this.props.question.confidenceLevel}`}.</p>
           </div>
         );
       } else {
@@ -141,7 +141,7 @@ export default class Item extends BaseComponent{
       }
     }
 
-    return <div className="confidence_wrapper" style={styles.navigationWrapper}>
+    return <div className="navigationBtnWrapper" style={styles.navigationWrapper}>
       {this.getPreviousButton(styles)}
       {this.getNextButton(styles)}
     </div>
@@ -154,7 +154,7 @@ export default class Item extends BaseComponent{
       if (AssessmentStore.hasSubmittedCurrent() && !(this.props.currentIndex == this.props.questionCount - 1)) {
         return (
           <button className={"btn btn-next-item"} style={styles.nextButton} onClick={(e) => { this.nextButtonClicked(e) }}>
-            <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
+            Next Question
           </button>
         );
       }
@@ -271,7 +271,7 @@ export default class Item extends BaseComponent{
                 </div>
                 <div className="row">
                   <div className="col-md-12 col-sm-12 col-xs-10" >
-                    {this.getResult(this.props.answerMessage)}
+                    {this.props.question.question_type === 'essay_question' ? this.getResult(this.props.answerMessage) : null}
                     {this.getConfidenceLevels(this.props.confidenceLevels, styles)}
                     {this.checkAnswerButton(styles)}
                     {this.getNavigationButtons(styles)}
@@ -434,6 +434,7 @@ export default class Item extends BaseComponent{
         color: theme.probablyColor,
         width: theme.probablyWidth,
         padding: "8px !important",
+        margin: theme.nextButtonMargin,
       },
       previousButton: {
         backgroundColor: theme.previousButtonBackgroundColor,
@@ -480,10 +481,19 @@ export default class Item extends BaseComponent{
         margin: theme.confidenceWrapperMargin,
         backgroundColor: theme.confidenceWrapperBackgroundColor,
       },
+      confidenceFeedbackWrapper: {
+        border: theme.confidenceFeedbackWrapperBorder,
+        borderRadius: theme.confidenceFeedbackWrapperBorderRadius,
+        width: theme.confidenceFeedbackWrapperWidth,
+        height: theme.confidenceFeedbackWrapperHeight,
+        padding: theme.confidenceFeedbackWrapperPadding,
+        margin: theme.confidenceFeedbackWrapperMargin,
+        backgroundColor: theme.confidenceFeedbackWrapperBackgroundColor,
+      },
       navigationWrapper: {
         width: "300px",
         height: theme.confidenceWrapperHeight,
-        margin: theme.confidenceWrapperMargin,
+        margin: theme.navigationWrapperMargin,
         backgroundColor: theme.confidenceWrapperBackgroundColor,
       },
       margin: {
