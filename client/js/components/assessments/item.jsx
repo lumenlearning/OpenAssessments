@@ -180,38 +180,38 @@ export default class Item extends BaseComponent{
   }
 
 
-  getResult(answer) {
-    if (answer == null) {
-      return ""
-    }
-    var result = "";
-    let feedback = "";
-
-    if (answer.feedback_only) {
-    }
-    else if (answer.correct) {
-      result = <p style={{color: "#6fb88a" }}>Correct</p>
-    }
-    else if (!answer.correct && answer.score > 0) {
-      result = <p style={{color: "#6fb88a" }}>Partially Correct</p>
-    }
-    else if (!answer.correct) {
-      result = <p style={{color: '#e0542b'}}>Incorrect</p>
-    }
-
-    if(typeof answer.feedback == 'object'){
-      feedback = answer.feedback.map((feedbackItem) => {
-        return <p>{feedbackItem}</p>
-      });
-    } else {
-      feedback = <div dangerouslySetInnerHTML={ this.getGeneralFeedbackMarkup(answer) }/>
-    }
-
-    return <div className="check_answer_result">
-      {result}
-      {feedback}
-    </div>
-  }
+  // getResult(answer) {
+  //   if (answer == null) {
+  //     return ""
+  //   }
+  //   var result = "";
+  //   let feedback = "";
+  //
+  //   if (answer.feedback_only) {
+  //   }
+  //   else if (answer.correct) {
+  //     result = <p style={{color: "#6fb88a" }}>Correct</p>
+  //   }
+  //   else if (!answer.correct && answer.score > 0) {
+  //     result = <p style={{color: "#6fb88a" }}>Partially Correct</p>
+  //   }
+  //   else if (!answer.correct) {
+  //     result = <p style={{color: '#e0542b'}}>Incorrect</p>
+  //   }
+  //
+  //   if(typeof answer.feedback == 'object'){
+  //     feedback = answer.feedback.map((feedbackItem) => {
+  //       return <p>{feedbackItem}</p>
+  //     });
+  //   } else {
+  //     feedback = <div dangerouslySetInnerHTML={ this.getGeneralFeedbackMarkup(answer) }/>
+  //   }
+  //
+  //   return <div className="check_answer_result">
+  //     {result}
+  //     {feedback}
+  //   </div>
+  // }
 
   getGeneralFeedbackMarkup(answer){
     return { __html: answer.feedback }
@@ -271,7 +271,7 @@ export default class Item extends BaseComponent{
                 </div>
                 <div className="row">
                   <div className="col-md-12 col-sm-12 col-xs-10" >
-                    {this.props.question.question_type === 'essay_question' ? this.getResult(this.props.answerMessage) : null}
+                    {/*this.props.question.question_type === 'essay_question' ? this.getResult(this.props.answerMessage) : null*/}
                     {this.getConfidenceLevels(this.props.confidenceLevels, styles)}
                     {this.checkAnswerButton(styles)}
                     {this.getNavigationButtons(styles)}
@@ -445,19 +445,19 @@ export default class Item extends BaseComponent{
       },
       maybeButton: {
         width: theme.maybeWidth,
-        backgroundColor: theme.maybeBackgroundColor,
+        backgroundColor: theme.confidenceButtonBackgroundColor,
         color: theme.maybeColor,
         padding: "8px !important",
       },
       probablyButton: {
         width: theme.probablyWidth,
-        backgroundColor: theme.probablyBackgroundColor,
+        backgroundColor: theme.confidenceButtonBackgroundColor,
         color: theme.probablyColor,
         padding: "8px !important",
       },
       definitelyButton: {
         width: theme.definitelyWidth,
-        backgroundColor: theme.definitelyBackgroundColor,
+        backgroundColor: theme.confidenceButtonBackgroundColor,
         color: theme.definitelyColor,
         padding: "8px !important",
       },

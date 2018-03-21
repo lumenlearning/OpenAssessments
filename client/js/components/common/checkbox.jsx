@@ -32,9 +32,9 @@ export default class CheckBox extends React.Component{
       var label = "Correct Answer that was ";
       var optionFlag;
       label += this.checkedStatus() ? "chosen" : "not chosen";
-      optionFlag = <div className="correctIndicator" aria-label={label} style={styles.checkStyleCorrect}>&#10003;</div>;
+      optionFlag = <img src="/assets/correct.png" className="correctIndicator" aria-label={label} style={styles.checkStyleCorrect} />;
     } else if (this.props.showAsCorrect === false && this.checkedStatus()){
-      optionFlag = <div className="wrongIndicator" aria-label="Wrong answer that was chosen" style={styles.checkStyleWrong}>&#10008;</div>;
+      optionFlag = <img src="/assets/incorrect.png" alt="" className="wrongIndicator" style={styles.checkStyleWrong} aria-label="Wrong answer that was chosen" />;
     }
     return optionFlag;
   }
@@ -53,10 +53,18 @@ export default class CheckBox extends React.Component{
 
   render(){
 
+    var btnQuestionStyles = styles.btnQuestion;
+
+    if(this.props.showAsCorrect){
+      btnQuestionStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect};
+    } else if (this.props.showAsCorrect === false){
+      btnQuestionStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
+    }
+
     return (
       <div>
         {this.optionFlagStatus()}
-        <div className="btn btn-block btn-question" style={styles.btnQuestion}>
+        <div className="btn btn-block btn-question" style={btnQuestionStyles}>
           <label>
             <input type="checkbox" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={()=>{ this.answerSelected() }}/>
             <span style={styles.span} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>

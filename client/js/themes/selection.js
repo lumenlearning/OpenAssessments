@@ -21,40 +21,16 @@ export default {
     borderRadius: theme.btnQuestionBorderRadius
   },
   btnQuestionCorrect: {
-    whiteSpace: theme.btnQuestionWhiteSpace,
     background: theme.btnCorrectBackground,
-    color: theme.btnQuestionColor,
-    textAlign: theme.btnQuestionTextAlign,
-    padding: theme.btnQuestionPadding,
-    marginBottom: theme.btnQuestionMarginBottom,
-    display: theme.btnQuestionDisplay,
-    width: theme.btnQuestionWidth,
-    verticalAlign: theme.btnQuestionVerticalAlign,
-    fontWeight: theme.btnQuestionFontWeight,
-    touchAction: theme.btnQuestionTouchAction,
-    cursor: theme.btnQuestionCursor,
     border: theme.btnCorrectBorder,
-    fontSize: theme.btnQuestionFontSize,
-    lineHeight: theme.btnQuestionLineHeight,
-    borderRadius: theme.btnQuestionBorderRadius
   },
   btnQuestionIncorrect: {
-    whiteSpace: theme.btnQuestionWhiteSpace,
     background: theme.btnIncorrectBackground,
-    color: theme.btnQuestionColor,
-    textAlign: theme.btnQuestionTextAlign,
-    padding: theme.btnQuestionPadding,
-    marginBottom: theme.btnQuestionMarginBottom,
-    display: theme.btnQuestionDisplay,
-    width: theme.btnQuestionWidth,
-    verticalAlign: theme.btnQuestionVerticalAlign,
-    fontWeight: theme.btnQuestionFontWeight,
-    touchAction: theme.btnQuestionTouchAction,
-    cursor: theme.btnQuestionCursor,
     border: theme.btnIncorrectBorder,
-    fontSize: theme.btnQuestionFontSize,
-    lineHeight: theme.btnQuestionLineHeight,
-    borderRadius: theme.btnQuestionBorderRadius
+  },
+  btnQuestionNeutral: {
+    background: theme.btnNeutralBackground,
+    border: theme.btnNeutralBorder,
   },
   btnLabel: {
     marginBottom: 0,
@@ -68,6 +44,14 @@ export default {
   },
   feedbackIncorrect: {
     color: "#bf0711"
+  },
+  feedbackNeutral: {
+    backgroundColor: '#f3f4fa',
+    border: '1px solid #5c6ac4',
+    color: "#202e78",
+    borderRadius: '5px',
+    padding: '11px',
+    margin: '5px 0 0',
   },
   radioText: {
     color: theme.radioTextColor,

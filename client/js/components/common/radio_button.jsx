@@ -50,7 +50,11 @@ export default class RadioButton extends React.Component{
     if (this.props.answerFeedback) {
       return <div className="check_answer_result" style={feedbackStyles} dangerouslySetInnerHTML={ this.answerFeedbackMarkup() } />
     } else {
-      return "";
+      if (!this.props.showAsCorrect && this.props.checked) {
+        return <div className="check_answer_result" style={feedbackStyles}>Incorrect</div>;
+      } else {
+        return "";
+      }
     }
   }
 
@@ -75,12 +79,12 @@ export default class RadioButton extends React.Component{
     var btnQuestionStyles = styles.btnQuestion;
 
     if(this.props.showAsCorrect){
-      btnQuestionStyles = styles.btnQuestionCorrect;
+      btnQuestionStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect};
       var label = "Correct Answer that was ";
       label += checked ? "chosen" : "not chosen";
       optionFlag = <img src="/assets/correct.png" className="correctIndicator" aria-label={label} style={styles.checkStyleCorrect} />;
     } else if (this.props.showAsCorrect === false && checked){
-      btnQuestionStyles = styles.btnQuestionIncorrect;
+      btnQuestionStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
       optionFlag = <img src="/assets/incorrect.png" alt="" className="wrongIndicator" style={styles.checkStyleWrong} aria-label="Wrong answer that was chosen" />;
     }
 
