@@ -140,7 +140,7 @@ export default class UniversalInput extends React.Component{
                 {messages}
               </div>
               <div className={item.question_type === 'multiple_dropdowns_question' ? "" : "panel-body"}
-                   style={item.question_type === 'multiple_dropdowns_question' ? {marginTop: '20px'} : styles.panelBody}
+                   style={styles.panelBody}
               >
                 {items}
               </div>

@@ -1,7 +1,10 @@
 import React from 'react';
 import BaseComponent from '../base_component.jsx';
 import AssessmentActions from '../../actions/assessment.js';
+import Styles from "../../themes/selection.js";
 //import any other dependencies here.
+
+const styles = Styles;
 
 export default class MultiDropDown extends BaseComponent {
   constructor(props, context) {
@@ -18,8 +21,6 @@ export default class MultiDropDown extends BaseComponent {
     this.handleShortcodeChange = this.handleShortcodeChange.bind(this);
     this.answerCheckMarks = this.answerCheckMarks.bind(this);
     this.answerOptions = this.answerOptions.bind(this);
-    this.selectBoxStyle = this.selectBoxStyle.bind(this);
-
   }
 
   componentWillUpdate(){
@@ -90,12 +91,12 @@ export default class MultiDropDown extends BaseComponent {
       return (
         `<span style="display:inline-block" >
           <span style="display:flex">
-            <select 
-              name="${nMatch}" 
-              id="dropdown_${nMatch}" 
+            <select
+              name="${nMatch}"
+              id="dropdown_${nMatch}"
               aria-label=${ariaLabel}
-              
-              style="${this.selectBoxStyle(correctAnswer, nMatch)}"
+              ${this.props.item.confidenceLevel !== undefined ? "disabled" : ""}
+              style="${this.props.item.confidenceLevel !== undefined ? "cursor: not-allowed" : ""}"
             >
               <option ${!this.state[nMatch] ? "selected" : ""} disabled aria-label="select ${nMatch} choice" value="null">[Select]</option>
               ${options}
@@ -125,34 +126,11 @@ export default class MultiDropDown extends BaseComponent {
         selected = "selected";
       }
 
-      if( this.props.selectCorrectAnswer && answer.isCorrect ){
-        selected = 'selected';
-      }
-
       if((this.props.isResult && !!correctAnswer) && correctAnswer.value !== answer.value) disabled = "disabled";
 
-      return `<option ${selected} ${disabled}  value=${answer.value} >${answer.name}</option>`;
+      return `<option ${selected} ${disabled} value=${answer.value} >${answer.name}</option>`;
     });
   }//correctAnswers
-
-  selectBoxStyle(correctAnswer, nMatch) {
-    let style = '';
-
-    if(this.props.isResult && !!correctAnswer && !!this.props.selectedAnswers && this.props.selectedAnswers.length > 0){
-      let selectedAnswer = this.props.selectedAnswers.find((selAnswer) => {
-        return selAnswer.dropdown_id === nMatch;
-      });
-
-      if(selectedAnswer && selectedAnswer.chosen_answer_id === correctAnswer.value){
-        style = 'color:#4EAA59;';
-      }
-      else{
-        style = 'color:#e0542b;';
-      }
-    }
-
-    return style;
-  }//selectBoxStyle
 
   answerCheckMarks(correctAnswer, nMatch, i) {
     let item = this.props.item;
@@ -163,39 +141,40 @@ export default class MultiDropDown extends BaseComponent {
         return selectedAnswer.dropdown_id === nMatch;
       });
 
+      let correctAnswerChosen = selAnswer.chosen_answer_id === correctAnswer.value;
+
       let checkboxWrapper = `
+          color: ${correctAnswerChosen ? styles.feedbackCorrect.color : styles.feedbackIncorrect.color};
           height: 100%;
-          margin-left: 10px;
-          vertical-align: text-top;
-          font-size: 12px;
+          margin-left: 5px;
+          font-size: 14px;
           display: flex;
+          align-items: center;
         `;
-      let checkboxStyle = `
-          border-radius: 50%;
+      let correctStyle = `
           align-self: center;
+          margin-right: 5px;
         `;
-      let plusStyle = `
-          border-radius: 50%;
-          background-color: #e0542b;
-          transform: rotate(45deg);
+      let incorrectStyle = `
           align-self: center;
+          margin-right: 5px;
         `;
 
 
       if(!!selAnswer && (!!correctAnswer && selAnswer.chosen_answer_id === correctAnswer.value)){
         answerCheck = (
-          `<span 
+          `<span
                 style="display:inline-block;"
                 tabindex="0"
                 aria-label="Correct: ${item.feedback[correctAnswer.name+correctAnswer.value]}"
             >
-              <span style=${`"color:#4EAA59;${checkboxWrapper}"`} >
-                <img 
+              <span style=${`"${checkboxWrapper}"`} >
+                <img
                   width="20px"
                   height="20px"
-                  src="/assets/checkbox-48.png"
-                  style="${checkboxStyle}"
-                  alt="image to indicate the correct option was chosen" 
+                  src="/assets/correct.png"
+                  style="${correctStyle}"
+                  alt="image to indicate the correct option was chosen"
                   /> (${i})
               </span>
             </span>`
@@ -203,18 +182,18 @@ export default class MultiDropDown extends BaseComponent {
       }
       else{
         answerCheck = (
-          `<span 
-                style="display:inline-block;" 
-                tabindex="0" 
+          `<span
+                style="display:inline-block;"
+                tabindex="0"
                 aria-label="Wrong: ${item.feedback[correctAnswer.name+correctAnswer.value]}"
             >
-              <span style=${`"color:#e0542b;${checkboxWrapper}"`} >
-                <img 
+              <span style=${`"${checkboxWrapper}"`} >
+                <img
                   width="20px"
                   height="20px"
-                  src="/assets/plus-52.png"
-                  style="${plusStyle}"
-                  alt="image to indicate the incorrect option was chosen" 
+                  src="/assets/incorrect.png"
+                  style="${incorrectStyle}"
+                  alt="image to indicate the incorrect option was chosen"
                 /> (${i})
               </span>
             </span>`
@@ -263,5 +242,3 @@ MultiDropDown.propTypes = {};
 MultiDropDown.contextTypes = {
   theme: React.PropTypes.object
 }
-
-

@@ -28,6 +28,7 @@ export default {
   definitelyColor: defines.white,
   confidenceWrapperBackgroundColor: defines.lightergray,
   confidenceWrapperWidth: '650px',
+  confidenceWrapperMargin: '10px 20px',
   navigationWrapperMargin: '0 0 0 36px',
   confidenceFeedbackWrapperMargin: '1.5em 0 2em 38px',
   nextButtonBackgroundColor: defines.lumenBlue + " !important",

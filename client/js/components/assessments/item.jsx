@@ -228,9 +228,9 @@ export default class Item extends BaseComponent{
         this.props.question.question_type == "true_false_question"){
       return <div style={styles.chooseText}>Choose the best answer</div>;
     }
-    else if (this.props.question.question_type == 'multiple_dropdowns_question') {
-      return <div style={styles.chooseText} tabIndex="0">Complete the sentence by choosing the best answer from the dropdown's options</div>
-    }
+    // else if (this.props.question.question_type == 'multiple_dropdowns_question') {
+    //   return <div style={styles.chooseText} tabIndex="0">Complete the sentence by choosing the best answer from the dropdown's options</div>
+    // }
     else {
       return "";
     }
@@ -263,7 +263,7 @@ export default class Item extends BaseComponent{
               <div className="full_question" style={styles.fullQuestion}>
                 {this.simple_progress(styles)}
                 <div className="inner_question" style={styles.innerQuestion}>
-                  <div className="question_text" style={styles.questionText}>
+                  <div className="question_text" style={this.props.question.question_type !== 'multiple_dropdowns_question' ? styles.questionText : {}}>
                     {this.questionDirections(styles)}
                     {this.questionContent()}
                   </div>
