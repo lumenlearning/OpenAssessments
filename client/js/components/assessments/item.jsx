@@ -275,11 +275,9 @@ export default class Item extends BaseComponent{
                     {this.getConfidenceLevels(this.props.confidenceLevels, styles)}
                     {this.checkAnswerButton(styles)}
                     {this.getNavigationButtons(styles)}
+                    {this.submitAssessmentButton(styles)}
                     {this.getWarning(this.state,  this.props.questionCount, this.props.currentIndex, styles)}
                     {must_answer_message}
-                  </div>
-                  <div className="col-md-7 col-sm-6 col-xs-4">
-                    {this.submitAssessmentButton(styles)}
                   </div>
                 </div>
               </div>
@@ -503,7 +501,7 @@ export default class Item extends BaseComponent{
         margin: navMargin
       },
       submitAssessmentButtonDiv: {
-        marginLeft: "36px",
+        margin: "1em 0 1em 36px",
       },
       checkAnswerButtonDiv: {
         marginLeft: "20px",
