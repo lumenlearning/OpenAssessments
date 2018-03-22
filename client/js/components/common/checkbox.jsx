@@ -35,7 +35,7 @@ export default class CheckBox extends React.Component{
       label += this.checkedStatus() ? "chosen" : "not chosen";
       optionFlag = <img src="/assets/correct.png" className="correctIndicator" aria-label={label} style={styles.checkStyleCorrect} />;
     } else if (this.props.showAsCorrect && !this.props.checked) {
-      optionFlag = <img src="/assets/incorrect.png" alt="" className="wrongIndicator" style={styles.checkStyleWrong} aria-label="Wrong answer that was not chosen" />;
+      optionFlag = <img src="/assets/correct.png" className="correctIndicator" aria-label={label} style={styles.checkStyleCorrect} />;
     } else if (!this.props.showAsCorrect && this.props.checked) {
       optionFlag = <img src="/assets/incorrect.png" alt="" className="wrongIndicator" style={styles.checkStyleWrong} aria-label="Wrong answer that was chosen" />;
     }
@@ -58,12 +58,8 @@ export default class CheckBox extends React.Component{
       feedbackStyles = styles.feedbackIncorrect;
     }
 
-    return <div style={feedbackStyles}>{feedback}</div>
+    return <div className="check_answer_result" style={feedbackStyles}>{feedback}</div>
   }
-
-  // answerFeedbackMarkup(){
-  //   return { __html: this.props.answerFeedback }
-  // }
 
   render(){
 
