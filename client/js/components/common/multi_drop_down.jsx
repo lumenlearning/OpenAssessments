@@ -21,12 +21,13 @@ export default class MultiDropDown extends BaseComponent {
     this.handleShortcodeChange = this.handleShortcodeChange.bind(this);
     this.answerCheckMarks = this.answerCheckMarks.bind(this);
     this.answerOptions = this.answerOptions.bind(this);
+    this.answerFeedback = this.answerFeedback.bind(this);
+    this.correctAnswers = this.correctAnswers.bind(this);
   }
 
   componentWillUpdate(){
     this.removeListeners(); //new DOM injection on update, remove old listeners.
   }
-
   render() {
     let question = this.findAndReplace();
     let questionResult = this.findAndReplace(true);
@@ -43,6 +44,7 @@ export default class MultiDropDown extends BaseComponent {
         <div style={{position: 'absolute', left: '-10000px', top: 'auto', height: '1px', width: '1px', overflow: 'hidden'}} tabIndex="0" role="group" aria-label="Review your answer" >
           <div id="question_result_container" dangerouslySetInnerHTML={{__html: questionResult}} />
         </div>
+        {this.answerFeedback()}
       </div>
     );
   }
@@ -204,6 +206,44 @@ export default class MultiDropDown extends BaseComponent {
 
     return answerCheck;
   }//answerCheck
+
+  correctAnswers() {
+    let result = [];
+
+    this.props.item.correct.forEach((correctAns) => {
+      result.push(correctAns.name + correctAns.value);
+    });
+
+    return result;
+  }
+
+  answerFeedback() {
+    let selectedAnswers = this.props.selectedAnswers;
+    let feedback = this.props.item.feedback;
+    let correctAnswers = this.correctAnswers();
+
+    return selectedAnswers.map((answer, i) => {
+      let answerId = answer.dropdown_id + answer.chosen_answer_id;
+
+      if (answerId.indexOf(feedback)) {
+        let feedbackStyles = {};
+
+        if (correctAnswers.includes(answerId)) {
+          feedbackStyles = {...styles.feedbackCorrect, ...styles.externalFeedbackCorrect};
+        } else {
+          feedbackStyles = {...styles.feedbackIncorrect, ...styles.externalFeedbackIncorrect};
+        }
+
+        return (
+          <div className="check_answer_result" style={feedbackStyles} dangerouslySetInnerHTML={ this.answerFeedbackMarkup(i, feedback[answerId]) }></div>
+        );
+      }
+    });
+  }
+
+  answerFeedbackMarkup(i, feedback) {
+    return { __html: `(${i + 1}) ` + feedback }
+  }
 
   addListeners() {
     let shortcodes = Object.keys(this.props.item.dropdowns);

@@ -39,19 +39,33 @@ export default {
     fontWeight: "normal !important",
     marginLeft: "11px"
   },
+  externalFeedbackCorrect: {
+    backgroundColor: '#f0faed',
+    border: '1px solid #108043',
+    borderRadius: '5px',
+    margin: '5px 0 0',
+    padding: '11px',
+  },
+  externalFeedbackIncorrect: {
+    backgroundColor: '#fbeae5',
+    border: '1px solid #bf0711',
+    borderRadius: '5px',
+    margin: '5px 0 0',
+    padding: '11px',
+  },
   feedbackCorrect: {
-    color: "#108043"
+    color: "#108043",
   },
   feedbackIncorrect: {
-    color: "#bf0711"
+    color: "#bf0711",
   },
   feedbackNeutral: {
     backgroundColor: '#f3f4fa',
     border: '1px solid #5c6ac4',
-    color: "#202e78",
     borderRadius: '5px',
-    padding: '11px',
+    color: "#202e78",
     margin: '5px 0 0',
+    padding: '11px',
   },
   radioText: {
     color: theme.radioTextColor,
