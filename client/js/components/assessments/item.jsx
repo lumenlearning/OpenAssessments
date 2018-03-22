@@ -463,13 +463,13 @@ export default class Item extends BaseComponent{
       },
       submitAssessmentButton: {
         width: theme.definitelyWidth,
-        backgroundColor: theme.submitBackgroundColor,
+        backgroundColor: theme.confidenceButtonBackgroundColor,
         color: theme.definitelyColor,
 
       },
       checkAnswerButton: {
         width: theme.definitelyWidth,
-        backgroundColor: theme.submitBackgroundColor,
+        backgroundColor: theme.confidenceButtonBackgroundColor,
         color: theme.definitelyColor,
       },
       confidenceWrapper: {
@@ -503,7 +503,7 @@ export default class Item extends BaseComponent{
         margin: navMargin
       },
       submitAssessmentButtonDiv: {
-        marginLeft: "20px",
+        marginLeft: "36px",
       },
       checkAnswerButtonDiv: {
         marginLeft: "20px",
