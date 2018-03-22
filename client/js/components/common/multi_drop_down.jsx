@@ -44,7 +44,7 @@ export default class MultiDropDown extends BaseComponent {
         <div style={{position: 'absolute', left: '-10000px', top: 'auto', height: '1px', width: '1px', overflow: 'hidden'}} tabIndex="0" role="group" aria-label="Review your answer" >
           <div id="question_result_container" dangerouslySetInnerHTML={{__html: questionResult}} />
         </div>
-        {this.answerFeedback()}
+        {this.props.isResult ? this.answerFeedback() : ""}
       </div>
     );
   }
