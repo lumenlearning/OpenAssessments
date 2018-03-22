@@ -28,36 +28,52 @@ export default class CheckBox extends React.Component{
   }
 
   optionFlagStatus(){
-    if(this.props.showAsCorrect){
-      var label = "Correct Answer that was ";
-      var optionFlag;
+    let label = "Correct Answer that was ";
+    let optionFlag;
+
+    if (this.props.showAsCorrect && this.props.checked) {
       label += this.checkedStatus() ? "chosen" : "not chosen";
       optionFlag = <img src="/assets/correct.png" className="correctIndicator" aria-label={label} style={styles.checkStyleCorrect} />;
-    } else if (this.props.showAsCorrect === false && this.checkedStatus()){
+    } else if (this.props.showAsCorrect && !this.props.checked) {
+      optionFlag = <img src="/assets/incorrect.png" alt="" className="wrongIndicator" style={styles.checkStyleWrong} aria-label="Wrong answer that was not chosen" />;
+    } else if (!this.props.showAsCorrect && this.props.checked) {
       optionFlag = <img src="/assets/incorrect.png" alt="" className="wrongIndicator" style={styles.checkStyleWrong} aria-label="Wrong answer that was chosen" />;
     }
+
     return optionFlag;
   }
 
   answerFeedback() {
-    if (this.props.answerFeedback) {
-      return <div className="check_answer_result" dangerouslySetInnerHTML={ this.answerFeedbackMarkup() } />
-    } else {
-      return "";
+    let feedback = "";
+    let feedbackStyles = {};
+
+    if (this.props.showAsCorrect && this.props.checked) {
+      feedback = "Answered Correctly";
+      feedbackStyles = styles.feedbackCorrect;
+    } else if (this.props.showAsCorrect && !this.props.checked) {
+      feedback = "Not selected, but correct";
+      feedbackStyles = styles.feedbackIncorrect;
+    } else if (!this.props.showAsCorrect && this.props.checked) {
+      feedback = "Selected, but incorrect";
+      feedbackStyles = styles.feedbackIncorrect;
     }
+
+    return <div style={feedbackStyles}>{feedback}</div>
   }
 
-  answerFeedbackMarkup(){
-    return { __html: this.props.answerFeedback }
-  }
+  // answerFeedbackMarkup(){
+  //   return { __html: this.props.answerFeedback }
+  // }
 
   render(){
 
     var btnQuestionStyles = styles.btnQuestion;
 
-    if(this.props.showAsCorrect){
+    if(this.props.showAsCorrect && this.props.checked) {
       btnQuestionStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect};
-    } else if (this.props.showAsCorrect === false){
+    } else if (this.props.showAsCorrect && !this.props.checked) {
+      btnQuestionStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
+    } else if (!this.props.showAsCorrect && this.props.checked) {
       btnQuestionStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
     }
 
