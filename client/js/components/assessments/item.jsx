@@ -468,7 +468,7 @@ export default class Item extends BaseComponent{
 
       },
       checkAnswerButton: {
-        width: theme.definitelyWidth,
+        width: theme.probablyWidth,
         backgroundColor: theme.confidenceButtonBackgroundColor,
         color: theme.definitelyColor,
       },
@@ -506,8 +506,7 @@ export default class Item extends BaseComponent{
         margin: "1em 0 1em 36px",
       },
       checkAnswerButtonDiv: {
-        marginLeft: "20px",
-        marginTop: "20px"
+        margin: "1em 0 1em 36px",
       },
       warning: {
         margin: theme.confidenceWrapperMargin,

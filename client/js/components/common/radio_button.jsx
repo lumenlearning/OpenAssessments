@@ -30,7 +30,7 @@ export default class RadioButton extends React.Component{
     var label = "Correct Answer that was ";
     var optionFlag;
 
-    if (this.props.assessmentKind === "formative") {
+    if (this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice") {
       if(this.props.showAsCorrect){
         label += this.checkedStatus() ? "chosen" : "not chosen";
         optionFlag = <img src="/assets/correct.png" className="correctIndicator" aria-label={label} style={styles.checkStyleCorrect} />;
@@ -82,7 +82,7 @@ export default class RadioButton extends React.Component{
 
     var btnQuestionStyles = styles.btnQuestion;
 
-    if (this.props.assessmentKind === "formative") {
+    if (this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice") {
       if(this.props.showAsCorrect){
         btnQuestionStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect};
         var label = "Correct Answer that was ";
@@ -102,7 +102,7 @@ export default class RadioButton extends React.Component{
             <input type="radio" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={()=>{ this.answerSelected() }}/>
             <span style={styles.span} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>
           </label>
-          {this.props.assessmentKind === "formative" ? this.answerFeedback() : ""}
+          {this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice" ? this.answerFeedback() : ""}
         </div>
       </div>
     );

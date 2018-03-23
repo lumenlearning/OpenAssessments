@@ -31,7 +31,7 @@ export default class CheckBox extends React.Component{
     let label = "Correct Answer that was ";
     let optionFlag;
 
-    if (this.props.assessmentKind === "formative") {
+    if (this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice") {
       if (this.props.showAsCorrect && this.props.checked) {
         label += this.checkedStatus() ? "chosen" : "not chosen";
         optionFlag = <img src="/assets/correct.png" className="correctIndicator" aria-label={label} style={styles.checkStyleCorrect} />;
@@ -49,7 +49,7 @@ export default class CheckBox extends React.Component{
     let feedback = "";
     let feedbackStyles = {margin: 0};
 
-    if (this.props.assessmentKind === "formative") {
+    if (this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice") {
       if (this.props.showAsCorrect && this.props.checked) {
         feedback = "Answered Correctly";
         feedbackStyles = styles.feedbackCorrect;
@@ -69,7 +69,7 @@ export default class CheckBox extends React.Component{
 
     var btnQuestionStyles = styles.btnQuestion;
 
-    if (this.props.assessmentKind === "formative") {
+    if (this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice") {
       if(this.props.showAsCorrect && this.props.checked) {
         btnQuestionStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect};
       } else if (this.props.showAsCorrect && !this.props.checked) {

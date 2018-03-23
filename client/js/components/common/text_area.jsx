@@ -14,14 +14,18 @@ export default class TextArea extends React.Component{
   }//constructor
 
   answerFeedback() {
-    return (
-      <div className="check_answer_result" style={styles.feedbackNeutral}>
-        Sorry there's no feedback for this question, please reach out to your teacher with any questions.
-      </div>
-    );
+    if ((this.props.assessmentKind === "formative" && this.props.item.confidenceLevel) ||
+        (this.props.assessmentKind === "practice" && typeof this.props.initialText === 'string')) {
+      return (
+        <div className="check_answer_result" style={styles.feedbackNeutral}>
+          Sorry there's no feedback for this question, please reach out to your teacher with any questions.
+        </div>
+      );
+    }
   }
 
 	render(){
+
 		return(
 			<div>
 				<textarea
@@ -32,7 +36,7 @@ export default class TextArea extends React.Component{
           defaultValue={this.props.initialText}
 					disabled={this.props.isDisabled}
         />
-      {this.props.item.confidenceLevel ? this.answerFeedback() : ""}
+      {this.answerFeedback()}
 			</div>
 		);
 	}
