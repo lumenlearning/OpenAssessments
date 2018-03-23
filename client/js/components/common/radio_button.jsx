@@ -27,14 +27,18 @@ export default class RadioButton extends React.Component{
   }
 
   optionFlagStatus(){
-    if(this.props.showAsCorrect){
-      var label = "Correct Answer that was ";
-      var optionFlag;
-      label += this.checkedStatus() ? "chosen" : "not chosen";
-      optionFlag = <img src="/assets/correct.png" className="correctIndicator" aria-label={label} style={styles.checkStyleCorrect} />;
-    } else if (this.props.showAsCorrect === false && this.checkedStatus()){
-      optionFlag = <img src="/assets/incorrect.png" alt="" className="wrongIndicator" style={styles.checkStyleWrong} aria-label="Wrong answer that was chosen" />;
+    var label = "Correct Answer that was ";
+    var optionFlag;
+
+    if (this.props.assessmentKind === "formative") {
+      if(this.props.showAsCorrect){
+        label += this.checkedStatus() ? "chosen" : "not chosen";
+        optionFlag = <img src="/assets/correct.png" className="correctIndicator" aria-label={label} style={styles.checkStyleCorrect} />;
+      } else if (this.props.showAsCorrect === false && this.checkedStatus()){
+        optionFlag = <img src="/assets/incorrect.png" alt="" className="wrongIndicator" style={styles.checkStyleWrong} aria-label="Wrong answer that was chosen" />;
+      }
     }
+
     return optionFlag;
   }
 
@@ -78,14 +82,16 @@ export default class RadioButton extends React.Component{
 
     var btnQuestionStyles = styles.btnQuestion;
 
-    if(this.props.showAsCorrect){
-      btnQuestionStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect};
-      var label = "Correct Answer that was ";
-      label += checked ? "chosen" : "not chosen";
-      optionFlag = <img src="/assets/correct.png" className="correctIndicator" aria-label={label} style={styles.checkStyleCorrect} />;
-    } else if (this.props.showAsCorrect === false && checked){
-      btnQuestionStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
-      optionFlag = <img src="/assets/incorrect.png" alt="" className="wrongIndicator" style={styles.checkStyleWrong} aria-label="Wrong answer that was chosen" />;
+    if (this.props.assessmentKind === "formative") {
+      if(this.props.showAsCorrect){
+        btnQuestionStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect};
+        var label = "Correct Answer that was ";
+        label += checked ? "chosen" : "not chosen";
+        optionFlag = <img src="/assets/correct.png" className="correctIndicator" aria-label={label} style={styles.checkStyleCorrect} />;
+      } else if (this.props.showAsCorrect === false && checked){
+        btnQuestionStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
+        optionFlag = <img src="/assets/incorrect.png" alt="" className="wrongIndicator" style={styles.checkStyleWrong} aria-label="Wrong answer that was chosen" />;
+      }
     }
 
     return (
@@ -96,7 +102,7 @@ export default class RadioButton extends React.Component{
             <input type="radio" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={()=>{ this.answerSelected() }}/>
             <span style={styles.span} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>
           </label>
-          {this.answerFeedback()}
+          {this.props.assessmentKind === "formative" ? this.answerFeedback() : ""}
         </div>
       </div>
     );

@@ -295,6 +295,7 @@ export default class Item extends BaseComponent{
           item={this.props.question}
           isResult={false}
           chosen={this.props.studentAnswer}
+          assessmentKind={this.props.settings.assessmentKind}
           registerGradingCallback={this.props.registerGradingCallback}/>
     } else {
       let answerFeedback = {};
@@ -306,6 +307,7 @@ export default class Item extends BaseComponent{
           item={this.props.question}
           isResult={true}
           chosen={this.props.studentAnswer}
+          assessmentKind={this.props.settings.assessmentKind}
           correctAnswers={this.props.question.correct}
           answerFeedback={answerFeedback}
       />

@@ -31,13 +31,15 @@ export default class CheckBox extends React.Component{
     let label = "Correct Answer that was ";
     let optionFlag;
 
-    if (this.props.showAsCorrect && this.props.checked) {
-      label += this.checkedStatus() ? "chosen" : "not chosen";
-      optionFlag = <img src="/assets/correct.png" className="correctIndicator" aria-label={label} style={styles.checkStyleCorrect} />;
-    } else if (this.props.showAsCorrect && !this.props.checked) {
-      optionFlag = <img src="/assets/correct.png" className="correctIndicator" aria-label={label} style={styles.checkStyleCorrect} />;
-    } else if (!this.props.showAsCorrect && this.props.checked) {
-      optionFlag = <img src="/assets/incorrect.png" alt="" className="wrongIndicator" style={styles.checkStyleWrong} aria-label="Wrong answer that was chosen" />;
+    if (this.props.assessmentKind === "formative") {
+      if (this.props.showAsCorrect && this.props.checked) {
+        label += this.checkedStatus() ? "chosen" : "not chosen";
+        optionFlag = <img src="/assets/correct.png" className="correctIndicator" aria-label={label} style={styles.checkStyleCorrect} />;
+      } else if (this.props.showAsCorrect && !this.props.checked) {
+        optionFlag = <img src="/assets/correct.png" className="correctIndicator" aria-label={label} style={styles.checkStyleCorrect} />;
+      } else if (!this.props.showAsCorrect && this.props.checked) {
+        optionFlag = <img src="/assets/incorrect.png" alt="" className="wrongIndicator" style={styles.checkStyleWrong} aria-label="Wrong answer that was chosen" />;
+      }
     }
 
     return optionFlag;
@@ -45,17 +47,19 @@ export default class CheckBox extends React.Component{
 
   answerFeedback() {
     let feedback = "";
-    let feedbackStyles = {};
+    let feedbackStyles = {margin: 0};
 
-    if (this.props.showAsCorrect && this.props.checked) {
-      feedback = "Answered Correctly";
-      feedbackStyles = styles.feedbackCorrect;
-    } else if (this.props.showAsCorrect && !this.props.checked) {
-      feedback = "Not selected, but correct";
-      feedbackStyles = styles.feedbackIncorrect;
-    } else if (!this.props.showAsCorrect && this.props.checked) {
-      feedback = "Selected, but incorrect";
-      feedbackStyles = styles.feedbackIncorrect;
+    if (this.props.assessmentKind === "formative") {
+      if (this.props.showAsCorrect && this.props.checked) {
+        feedback = "Answered Correctly";
+        feedbackStyles = styles.feedbackCorrect;
+      } else if (this.props.showAsCorrect && !this.props.checked) {
+        feedback = "Not selected, but correct";
+        feedbackStyles = styles.feedbackIncorrect;
+      } else if (!this.props.showAsCorrect && this.props.checked) {
+        feedback = "Selected, but incorrect";
+        feedbackStyles = styles.feedbackIncorrect;
+      }
     }
 
     return <div className="check_answer_result" style={feedbackStyles}>{feedback}</div>
@@ -65,12 +69,14 @@ export default class CheckBox extends React.Component{
 
     var btnQuestionStyles = styles.btnQuestion;
 
-    if(this.props.showAsCorrect && this.props.checked) {
-      btnQuestionStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect};
-    } else if (this.props.showAsCorrect && !this.props.checked) {
-      btnQuestionStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
-    } else if (!this.props.showAsCorrect && this.props.checked) {
-      btnQuestionStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
+    if (this.props.assessmentKind === "formative") {
+      if(this.props.showAsCorrect && this.props.checked) {
+        btnQuestionStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect};
+      } else if (this.props.showAsCorrect && !this.props.checked) {
+        btnQuestionStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
+      } else if (!this.props.showAsCorrect && this.props.checked) {
+        btnQuestionStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
+      }
     }
 
     return (

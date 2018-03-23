@@ -111,25 +111,25 @@ export default class UniversalInput extends React.Component{
       case "multiple_choice_question":
       case "true_false_question":
         items = item.answers.map((answer) => {
-          return <RadioButton isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-radio" checked={this.wasChosen(answer.id)}  showAsCorrect={this.showAsCorrect(answer.id)} answerFeedback={this.answerFeedback(answer.id)} />;
+          return <RadioButton assessmentKind={this.props.assessmentKind} isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-radio" checked={this.wasChosen(answer.id)}  showAsCorrect={this.showAsCorrect(answer.id)} answerFeedback={this.answerFeedback(answer.id)} />;
         });
         break;
       case "matching_question":
-        items = <Matching isDisabled={this.props.isResult}  item={item} name="answer-option"/>;
+        items = <Matching assessmentKind={this.props.assessmentKind} isDisabled={this.props.isResult}  item={item} name="answer-option"/>;
         break;
       case "essay_question":
-        items = <TextArea isDisabled={this.props.isResult} key="textarea_essay_input" item={item} initialText={this.props.chosen} />;
+        items = <TextArea assessmentKind={this.props.assessmentKind} isDisabled={this.props.isResult} key="textarea_essay_input" item={item} initialText={this.props.chosen} />;
         break;
       case "multiple_answers_question":
         items = item.answers.map((answer) => {
-          return <CheckBox isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-check" checked={this.wasChosen(answer.id)} showAsCorrect={this.showAsCorrect(answer.id)} answerFeedback={this.answerFeedback(answer.id)} />;
+          return <CheckBox assessmentKind={this.props.assessmentKind} isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-check" checked={this.wasChosen(answer.id)} showAsCorrect={this.showAsCorrect(answer.id)} answerFeedback={this.answerFeedback(answer.id)} />;
         });
         break;
       case "mom_embed":
-        items = <MomEmbed key={item.id} item={item} redisplayJWT={this.props.chosen ? this.props.chosen : null} registerGradingCallback={this.props.registerGradingCallback} />;
+        items = <MomEmbed assessmentKind={this.props.assessmentKind} key={item.id} item={item} redisplayJWT={this.props.chosen ? this.props.chosen : null} registerGradingCallback={this.props.registerGradingCallback} />;
         break;
       case 'multiple_dropdowns_question':
-        items = <MultiDropDown isResult={this.props.isResult} key={item.id} item={item} selectedAnswers={this.props.chosen} selectCorrectAnswer={this.props.correctAnswers && this.props.correctAnswers.length > 0} />;
+        items = <MultiDropDown assessmentKind={this.props.assessmentKind} isResult={this.props.isResult} key={item.id} item={item} selectedAnswers={this.props.chosen} selectCorrectAnswer={this.props.correctAnswers && this.props.correctAnswers.length > 0} />;
       break;
     }
 
