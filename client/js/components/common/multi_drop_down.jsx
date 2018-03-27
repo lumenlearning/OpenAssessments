@@ -128,6 +128,11 @@ export default class MultiDropDown extends BaseComponent {
         selected = "selected";
       }
 
+      // if this is the answer key, select/show the correct answers
+      if(this.props.selectCorrectAnswer && answer.isCorrect){
+        selected = 'selected';
+      }
+
       if((this.props.isResult && !!correctAnswer) && correctAnswer.value !== answer.value) disabled = "disabled";
 
       return `<option ${selected} ${disabled} value=${answer.value} >${answer.name}</option>`;
