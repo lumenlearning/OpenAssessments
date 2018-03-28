@@ -133,7 +133,7 @@ export default class Item extends BaseComponent{
   getNavigationButtons(styles) {
     let assessmentKind = this.props.settings.assessmentKind ? this.props.settings.assessmentKind : null;
 
-    if (assessmentKind === 'summative' || assessmentKind === 'practice') {
+    if (assessmentKind === 'summative' || assessmentKind === 'practice' || assessmentKind === 'show_what_you_know') {
       return (
         <div className="navigationBtnWrapper" style={styles.navigationWrapper}>
           {this.getPreviousButton(styles)}
@@ -218,7 +218,6 @@ export default class Item extends BaseComponent{
   render() {
     var styles = this.getStyles(this.context.theme);
     var must_answer_message = this.state && this.state.showMessage ? <div style={styles.warning}>You must select an answer before continuing.</div> : "";
-    console.log(this.props)
 
     return (
       <div className="assessment_container" style={styles.assessmentContainer}>
