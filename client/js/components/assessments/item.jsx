@@ -314,15 +314,18 @@ export default class Item extends BaseComponent{
     if ( !AssessmentStore.isPractice() ) {
       return ""
     }
-    var showingResult = this.props.answerMessage && !this.props.answerMessage.allowResubmit;
 
-    return <div style={styles.checkAnswerButtonDiv}>
-      <button className="btn btn-check-answer"
-              style={styles.checkAnswerButton}
-              onClick={(e) => { this.checkAnswerButtonClicked(e) }}
-              disabled={showingResult}
-      >Check Answer</button>
-    </div>
+    let showingResult = this.props.answerMessage && AssessmentStore.hasSelectedAnswerForCurrent();
+
+    return (
+      <div style={styles.checkAnswerButtonDiv}>
+        <button className="btn btn-check-answer"
+                style={styles.checkAnswerButton}
+                onClick={(e) => { this.checkAnswerButtonClicked(e) }}
+                disabled={showingResult}
+        >Check Answer</button>
+      </div>
+    );
   }
 
   formativeHeader(styles) {
