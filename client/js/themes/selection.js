@@ -33,10 +33,11 @@ export default {
     border: theme.btnNeutralBorder,
   },
   btnLabel: {
+    cursor: 'pointer',
     height: '100%',
     marginBottom: 0,
+    padding: '11px',
     width: '100%',
-    cursor: 'pointer'
   },
   span: {
     fontWeight: "normal !important",

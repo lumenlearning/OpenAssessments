@@ -65,7 +65,6 @@ export default {
   btnBackground: '#fafafa',
   btnQuestionBorder: '1px solid #c4c4c4',
   btnQuestionBorderRadius: '5px',
-  btnQuestionPadding: '11px',
 
   btnCorrectBackground: '#f0faed',
   btnCorrectBorder: '1px solid #108043',
