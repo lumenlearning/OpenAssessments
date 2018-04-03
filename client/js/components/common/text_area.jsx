@@ -18,9 +18,17 @@ export default class TextArea extends React.Component{
         (this.props.assessmentKind === "practice" && typeof this.props.initialText === 'string')) {
       return (
         <div className="check_answer_result" style={styles.feedbackNeutral}>
-          Sorry there's no feedback for this question, please reach out to your teacher with any questions.
+          <span dangerouslySetInnerHTML={this.renderCustomFeedback(this.props.item.feedback.general_fb)}></span>
         </div>
       );
+    }
+  }
+
+  renderCustomFeedback(markup) {
+    if (markup !== null) {
+      return {__html: markup};
+    } else {
+      return {__html: "Sorry there's no feedback for this question, please reach out to your teacher with any questions."}
     }
   }
 
