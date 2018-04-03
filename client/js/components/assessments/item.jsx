@@ -386,7 +386,7 @@ export default class Item extends BaseComponent{
         backgroundColor: theme.headerBackgroundColor,
       },
       fullQuestion:{
-        backgroundColor: AssessmentStore.isFormative() ? theme.outcomesBackgroundColor : theme.fullQuestionBackgroundColor,
+        backgroundColor: AssessmentStore.isFormative() || AssessmentStore.isPractice() ? theme.fullQuestionBackgroundColor : '#fff',
         paddingBottom: "20px",
       },
       innerQuestion: {
