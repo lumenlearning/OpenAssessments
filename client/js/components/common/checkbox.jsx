@@ -11,12 +11,13 @@ export default class CheckBox extends React.Component{
 
   render() {
     let btnQuestionStyles = this.getBtnQuestionStyles();
+    let btnLabelStyles = this.props.showAsCorrect !== null ? {...styles.btnLabel, ...{cursor: "default"}} : {...styles.btnLabel, ...{cursor: "pointer"}};
 
     return (
       <div>
         {this.renderAnswerIndicator()}
         <div className="btn btn-block btn-question" style={btnQuestionStyles}>
-          <label style={styles.btnLabel}>
+          <label style={btnLabelStyles}>
             <input type="checkbox" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={() => { this.answerSelected()}} />
             <span style={styles.span} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>
           </label>

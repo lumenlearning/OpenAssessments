@@ -23,17 +23,19 @@ export default {
   btnQuestionCorrect: {
     background: theme.btnCorrectBackground,
     border: theme.btnCorrectBorder,
+    cursor: "default",
   },
   btnQuestionIncorrect: {
     background: theme.btnIncorrectBackground,
     border: theme.btnIncorrectBorder,
+    cursor: "default",
   },
   btnQuestionNeutral: {
     background: theme.btnNeutralBackground,
     border: theme.btnNeutralBorder,
+    cursor: "default",
   },
   btnLabel: {
-    cursor: 'pointer',
     height: '100%',
     marginBottom: 0,
     padding: '11px',
