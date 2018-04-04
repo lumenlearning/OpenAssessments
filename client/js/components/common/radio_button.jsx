@@ -21,7 +21,7 @@ export default class RadioButton extends React.Component{
             <input type="radio" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={() => {this.answerSelected()}} />
             <span style={styles.span} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>
           </label>
-          {this.props.assessmentKind === 'formative' || this.props.assessmentKind === 'practice' ? this.answerFeedback() : ''}
+          {this.renderAnswerIndicator() !== undefined ? this.answerFeedback() : ''}
         </div>
       </div>
     );

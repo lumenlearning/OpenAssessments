@@ -276,6 +276,7 @@ export default class Item extends BaseComponent{
           assessmentKind={this.props.settings.assessmentKind}
           correctAnswers={this.props.question.correct}
           answerFeedback={answerFeedback}
+          completed={Item.checkCompletion()}
       />
     }
   }

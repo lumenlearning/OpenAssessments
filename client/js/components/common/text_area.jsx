@@ -15,7 +15,8 @@ export default class TextArea extends React.Component{
 
   answerFeedback() {
     if ((this.props.assessmentKind === "formative" && this.props.item.confidenceLevel) ||
-        (this.props.assessmentKind === "practice" && typeof this.props.initialText === 'string')) {
+        (this.props.assessmentKind === "practice" && typeof this.props.initialText === 'string') &&
+         this.props.completed) {
       return (
         <div className="check_answer_result" style={styles.feedbackNeutral}>
           <span dangerouslySetInnerHTML={this.renderCustomFeedback(this.props.item.feedback.general_fb)}></span>
