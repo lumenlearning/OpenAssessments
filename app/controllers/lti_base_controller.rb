@@ -5,11 +5,14 @@ class LtiBaseController < ApplicationController
   #
   # LTI related functionality:
   #
-  def lti_provider
-    params[:tool_consumer_instance_guid] ||
+  def deprecated_lti_provider
             UrlHelper.safe_host(request.referer) ||
             UrlHelper.safe_host(params["launch_presentation_return_url"]) ||
             UrlHelper.safe_host(params["custom_canvas_api_domain"])
+  end
+
+  def lti_provider
+    params[:tool_consumer_instance_guid]
   end
 
   def do_lti
@@ -29,10 +32,18 @@ class LtiBaseController < ApplicationController
     if provider.valid_request?(request)
       @lti_launch.was_valid = true
       @isLtiLaunch = true
-      @lti_provider = lti_provider
       @identifier = params[:user_id]
 
-      @external_identifier = ExternalIdentifier.find_by(provider: @lti_provider, identifier: @identifier)
+      @external_identifier = ExternalIdentifier.find_by(provider: lti_provider, identifier: @identifier)
+      if !@external_identifier
+        # Lookup with deprecated backup scopes
+        @external_identifier = ExternalIdentifier.find_by(provider: deprecated_lti_provider, identifier: @identifier)
+
+        if @external_identifier && lti_provider
+          @external_identifier.provider = lti_provider
+          @external_identifier.save
+        end
+      end
 
       @user = @external_identifier.user if @external_identifier
 
@@ -70,7 +81,7 @@ class LtiBaseController < ApplicationController
 
         @external_identifier = @user.external_identifiers.create!(
                 identifier: @identifier,
-                provider: @lti_provider,
+                provider: lti_provider || deprecated_lti_provider,
                 custom_canvas_user_id: params[:custom_canvas_user_id]
         )
 
