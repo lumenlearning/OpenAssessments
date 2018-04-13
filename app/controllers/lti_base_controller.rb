@@ -6,7 +6,8 @@ class LtiBaseController < ApplicationController
   # LTI related functionality:
   #
   def deprecated_lti_provider
-            UrlHelper.safe_host(request.referer) ||
+    Rails.logger.warn("Using deprecated lti provider in LtiBaseController")
+    UrlHelper.safe_host(request.referer) ||
             UrlHelper.safe_host(params["launch_presentation_return_url"]) ||
             UrlHelper.safe_host(params["custom_canvas_api_domain"])
   end
