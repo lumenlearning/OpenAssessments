@@ -75,7 +75,7 @@ Rails.application.routes.draw do
     resources :item_results
     resources :grades
     resources :assessment_settings
-    resources :lti_credentials, only: [:create]
+    resources :lti_credentials, only: [:create, :index, :show, :update]
   end
 
   match '/proxy' => 'default#proxy', via: [:get, :post]
