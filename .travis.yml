@@ -1,15 +1,43 @@
 language: ruby
 env:
-- DB=postgresql
+  - DB=postgresql
 script:
-- RAILS_ENV=test bundle exec rake db:migrate --trace
-- bundle exec rake
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - bundle exec rake
 before_script:
-- cp config/database.yml.example config/database.yml
-- cp config/secrets.yml.example config/secrets.yml
-- psql -c 'create database openassessments_test' -U postgres
+  - nvm install 0.10.37
+  - cp config/database.yml.example config/database.yml
+  - cp config/secrets.yml.example config/secrets.yml
+  - psql -c 'create database openassessments_test' -U postgres
 addons:
   postgresql: 9.4
 notifications:
-  slack:
-    secure: GcGkVuKx1c6CHcpuwKUaAoyfiwnsL8cm9AZpwtRAoEXNMgFuPBl9hjfivKMqOSYzBCuAfK9l6T3MIhVUJOi7PPvNI9DhuDZtbZ6MgVH/PAHVZhJTx+G00O5j60T617DTKMwRDakEst9ADTkxcekO16TqZY/4d+RJNKmdyp0JiwU=
+  slack: $SLACK_SECRET
+before_deploy:
+  - echo 'Copying example files'
+  - find . -type f -name *.example | while read file; do cp "$file" "${file%.example}"; done
+  - cd client; npm install; cd ..
+  - cd client; npm install es6-promise@3.0.2; cd ..
+  - cd client; npm install reactable@0.10.2; cd ..
+  - cd client; npm install moment@2.10.6; cd ..
+  - cd client; npm install react-tinymce@0.2.3; cd ..
+  - cd client; npm install json5; cd ..
+  - npm install -g webpack@1.10.1
+  - cd client; npm run build; cd ..
+  - RAILS_ENV=production bundle exec rake assets:precompile
+  - rm -rf vendor/bundle
+  - git add --force config/
+  - git add --force public
+  - git commit -m 'release to beanstalk'
+deploy:
+  provider: elasticbeanstalk
+  skip_cleanup: true
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
+  region: us-west-2
+  app: OpenAssessments-stg
+  env: openassessments-stg2
+  bucket_name: $AWS_BUCKET_NAME
+  on:
+    repo: lumenlearning/OpenAssessments
+    branch: 2216_travis_autodeploy
