@@ -152,3 +152,21 @@ you will need to modify a value in the database.
   irb(main):003:0> a.domain = 'localhost'
   irb(main):004:0> a.save
   ```
+
+## Running Tests
+
+On the Ruby side,
+we use
+[Rspec](https://github.com/rspec/rspec)
+for unit testing.
+To run unit tests against the Ruby code,
+run `bundle exec rake spec` from the project root directory.
+
+On the JavaScript side,
+we use
+[Jasmine](https://github.com/jasmine/jasmine)
+and
+[Karma](https://github.com/karma-runner/karma)
+for running browser tests. 
+To run tests against the JavaScript code,
+run `npm run test` from the `client/` directory in this project.
