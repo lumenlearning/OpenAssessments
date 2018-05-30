@@ -5,6 +5,15 @@
 
 Open Embeddable Assessments (OA or OEA) is an open-source assessment-authoring engine.
 
+## Code of Conduct
+
+Lumen Learning's [Code of Conduct](https://github.com/lumenlearning/code_of_conduct)
+is one of the ways we put our values into practice.
+Our commitment to the standards outlined in the Code of Conduct help us build great teams,
+craft great code,
+and maintain a safe,
+pleasant work environment.
+
 ## Getting Started
 
 This application is comprised of a Ruby on Rails API and a JavaScript frontend stack.
