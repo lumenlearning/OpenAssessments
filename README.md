@@ -171,3 +171,10 @@ and
 for running browser tests. 
 To run tests against the JavaScript code,
 run `npm run test` from the `client/` directory in this project.
+
+## Deployment
+
+Assuming you are using
+[AWS](https://aws.amazon.com/)
+for hosting and you have everything configured correctly,
+deployment is as simple as running `eb deploy` from the project root directory.
