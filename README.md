@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/lumenlearning/OpenAssessments.svg?branch=master)](https://travis-ci.org/lumenlearning/OpenAssessments)
+
 # Open Assessments
 
 Open Embeddable Assessments (OA or OEA) is an open-source assessment-authoring engine.
