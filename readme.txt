@@ -1,3 +1,7 @@
+NOTE: This document was the original README for this project, but
+has been deprecated in favor of README.md.
+It still contains potentially valuable information and can be used as a supplement as needed.
+
 #Open Assessments
 
 This project provides a starting point for building a Canvas LTI or OAuth application.
@@ -79,11 +83,11 @@ Rename `.env.example` to `.env` and configure it to your liking.
 
 #### Modify application name
 1. Open application.rb and change `CanvasStarterApp` to the name you choose.
-2. Do a global search and replace for `canvas_starter_app` and change it to the name you choose. 
+2. Do a global search and replace for `canvas_starter_app` and change it to the name you choose.
 3. Do a global search and replace for `canvasstarterapp` (use only letters or numbers for this name. Special characters like '_' will result in errors).
 
 #### Secrets file
-Rename `config/secrets.example.yml` to `config/secrets.yml`. Open the file and change each entry to values that are relevant for your application. 
+Rename `config/secrets.example.yml` to `config/secrets.yml`. Open the file and change each entry to values that are relevant for your application.
 
 *This file should not be committed to your repository.*
 
@@ -160,12 +164,12 @@ browsers. The Canvas Starter App uses React. During development run the [React H
 
 Open db/seeds.rb and configuration a default account for development and production. Here's a summary of the values and their purpose:
 
-- **code:** Uniquely identifies the account. This is used for the subdomain when running 
+- **code:** Uniquely identifies the account. This is used for the subdomain when running
 applications on a single domain.
 - **domain:** Custom domain name.
 - **name:** Name the account anything you'd like.
 - **lti_key:** A unique key for the LTI application you are building. This will be provided to Canvas.
-- **lti_secret:** The shared secret for your LTI application. This will be provided to Canvas 
+- **lti_secret:** The shared secret for your LTI application. This will be provided to Canvas
 and will be used to sign the LTI request. Generate this value using `rake secret`. Alternatively if you leave this field empty an LTI secret will be automatically generated for the account.
 - **canvas_uri:** The URI of the Canvas institution to be associated with a specific account.
 
@@ -194,7 +198,7 @@ development URI will use ngrok while the production URI will use your domain.
 https://canvasstarterapp.ngrok.com/auth/canvas/callback
 
 **Icon URL:**
-https://canvasstarterapp.ngrok.com/oauth_icon.png 
+https://canvasstarterapp.ngrok.com/oauth_icon.png
 
 Once your request is approved you will receive a Canvas ID and Secret. Add these credentials to the `config/secrets.yml` file under `canvas_id` and `canvas_secret`.
 
