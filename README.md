@@ -23,7 +23,7 @@ for Ruby and Node version management, respectively.
 * Rails
 * Bundler
 * Node (v0.10.37)
-* Postgresql
+* Postgresql (v9.6.3 or higher)
 
 *For more details,
 please see the `Gemfile` and `package.json` file.*
