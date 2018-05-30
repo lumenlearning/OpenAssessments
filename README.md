@@ -172,6 +172,12 @@ for running browser tests.
 To run tests against the JavaScript code,
 run `npm run test` from the `client/` directory in this project.
 
+You may need to install `chromedriver` if you haven't already.
+
+```
+$ brew install chromedriver
+```
+
 ## Deployment
 
 Assuming you are using
