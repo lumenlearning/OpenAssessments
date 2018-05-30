@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/lumenlearning/OpenAssessments.svg?branch=master)](https://travis-ci.org/lumenlearning/OpenAssessments)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/16b428851c374eb6b6d96c6d2eb7ee4a)](https://www.codacy.com/app/monkecheese/OpenAssessments?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lumenlearning/OpenAssessments&amp;utm_campaign=Badge_Grade)
 
 # Open Assessments
 
