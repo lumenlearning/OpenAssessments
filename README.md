@@ -193,3 +193,5 @@ Assuming you are using
 [AWS](https://aws.amazon.com/)
 for hosting and you have everything configured correctly,
 deployment is as simple as running `eb deploy` from the project root directory.
+
+For details on setting up deployment with AWS, follow [these instructions](docs/deployment_instructions.md).
