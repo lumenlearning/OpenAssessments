@@ -25,14 +25,27 @@ before_deploy:
   - git add --force public
   - git commit -m 'release to beanstalk'
 deploy:
-  provider: elasticbeanstalk
-  skip_cleanup: true
-  access_key_id: $AWS_ACCESS_KEY_ID
-  secret_access_key: $AWS_SECRET_ACCESS_KEY
-  region: us-west-2
-  app: OpenAssessments-stg
-  env: openassessments-stg2
-  bucket_name: $AWS_BUCKET_NAME
-  on:
-    repo: lumenlearning/OpenAssessments
-    branch: staging
+  - provider: elasticbeanstalk
+    skip_cleanup: true
+    access_key_id: $AWS_ACCESS_KEY_ID_STG
+    secret_access_key: $AWS_SECRET_ACCESS_KEY_STG
+    region: us-west-2
+    app: OpenAssessments-stg
+    env: openassessments-stg2
+    bucket_name: $AWS_BUCKET_NAME_STG
+    on:
+      repo: lumenlearning/OpenAssessments
+      branch: staging
+  - provider: elasticbeanstalk
+    skip_cleanup: true
+    access_key_id: $AWS_ACCESS_KEY_ID_PROD
+    secret_access_key: $AWS_SECRET_ACCESS_KEY_PROD
+    region: us-west-2
+    app: OpenAssessments
+    env: openassessments-prod
+    bucket_name: $AWS_BUCKET_NAME_PROD
+    on:
+      repo: lumenlearning/OpenAssessments
+      branch:
+        - /^master$/
+        - /^\d{1-2}\.\d+\.d+[-\w]$/
