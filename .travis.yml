@@ -35,7 +35,7 @@ deploy:
     bucket_name: $AWS_BUCKET_NAME_STG
     on:
       repo: lumenlearning/OpenAssessments
-      branch: staging
+      branch: travis_autodeploy
   - provider: elasticbeanstalk
     skip_cleanup: true
     access_key_id: $AWS_ACCESS_KEY_ID_PROD
