@@ -28,9 +28,9 @@ before_deploy:
 deploy:
   - provider: elasticbeanstalk
     skip_cleanup: true
-    access_key_id: AKIAIPYAEDJMYGYMFXUA
+    access_key_id: AKIAJLQQCEIMGE5WAEBQ
     secret_access_key:
-      secure: "XJ0NA4COd0m3JzYt/NDsVmX+o47+wYNpOzFkoE6plKM0UQTtdebYrQ6HZnfq6cz33DmCUk13eyhnah0EC2fHu2Mb2a4FXft3/JF67BnS0jn4DlhXTXkbYCWylhLUglwanDFVwmYMrfkP1nYcztnLYNc7RFfUL3sm3d6+pmK3cos="
+      secure: "LqZa6jz4akaM26m05IINw1ggWbMZwoqsCMRe+jzVNQX8BZm3z/1t39iHrKnimVEoHfwlGN1vvKf/YeJqQT78yKsBe7PCHBaAkBfB04luoDgX0igl+yKioqOQ43BNmX3v9/vO7WfOYiPR0lPCLRQdhpGpZU6TGW9Lgo4VyyyRk7c="
     region: us-west-2
     app: OpenAssessments-stg
     env: openassessments-stg2
