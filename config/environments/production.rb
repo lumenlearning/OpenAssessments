@@ -100,5 +100,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # AWS CloudFront address
-  config.action_controller.asset_host = ENV['ASSET_HOST']
+  if ENV['ASSET_HOST'] do
+    config.action_controller.asset_host = ENV['ASSET_HOST']
+  end
 end
