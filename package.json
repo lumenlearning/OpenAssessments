@@ -6,7 +6,6 @@
     "node": "0.10.37"
   },
   "scripts": {
-    "preinstall": "cd ./client && npm install es6-promise@3.0.2 reactable@0.10.2 moment@2.10.6 react-tinymce@0.2.3",
     "postinstall": "cd ./client && npm install",
     "gulp": "cd ./client && npm run gulp",
     "test": "rspec && client/bin/lint && (cd client && npm run jscs .)"
