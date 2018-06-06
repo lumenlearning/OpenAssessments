@@ -12,7 +12,8 @@ before_script:
 addons:
   postgresql: 9.4
 notifications:
-  slack: jEoICshI8S2R/QgcaE2s2jII/gQIZcAjbE/BPS79fCPO/n1UkhLp9dvOXIl3gfCa6RCQ/VHurwpKp/V2Baz08jPzlKpcbEjQpdLzGFNekq6F/hJAcYJSxjpX2uG+0VnsAEPt4BBGv+XN66UoVsisycR9ZokzIbxBB8d1aZ1RPxQW0vW696HcdPF1XeMMY1hGHLInzAJ/hhPu1Pdp/xw4GjODqEy1/s2bNXhbJoP38DAUm+UTKAfHo+s6E8MrAmyfCUPH77JXagS/ydfxe/PZiOpJzyqyoXWvg0E6wrGiA5t+V7pvgQen2zqik1IcUaCyxmdMMP8JCYZtIjnK8SAHJYD5UigXWP+Zznfc+oUOsmpsrxcZJj35DoCFl7UiL6pHjSBdam0GpaW5feczMfHwkLUZksImfJ6o0aC6qF4TVUb8Po716Q9zmC1uupuDg0/0adPNE8gMs28CSIncsPtZM9HMzETF/G4BOdsSin712Pgd7vPqrhSN7jH+80Q9q0+sXuM1atxtqzOXxHnPA+F2JBG4xsyiidHvrv3vykENcMaXvBy0nj+ltKq6rXPlgW3T4wEMD+eeEyeI2xb5c7foDzaMkcMG181D7dB/NRCscXa/uejXdMlN1L2RzkMTSiuxcard0QCJgoJeRqhv/oGkVvoq4yNMEhcn2I2QpAO9ATE=
+  slack:
+    secure: jEoICshI8S2R/QgcaE2s2jII/gQIZcAjbE/BPS79fCPO/n1UkhLp9dvOXIl3gfCa6RCQ/VHurwpKp/V2Baz08jPzlKpcbEjQpdLzGFNekq6F/hJAcYJSxjpX2uG+0VnsAEPt4BBGv+XN66UoVsisycR9ZokzIbxBB8d1aZ1RPxQW0vW696HcdPF1XeMMY1hGHLInzAJ/hhPu1Pdp/xw4GjODqEy1/s2bNXhbJoP38DAUm+UTKAfHo+s6E8MrAmyfCUPH77JXagS/ydfxe/PZiOpJzyqyoXWvg0E6wrGiA5t+V7pvgQen2zqik1IcUaCyxmdMMP8JCYZtIjnK8SAHJYD5UigXWP+Zznfc+oUOsmpsrxcZJj35DoCFl7UiL6pHjSBdam0GpaW5feczMfHwkLUZksImfJ6o0aC6qF4TVUb8Po716Q9zmC1uupuDg0/0adPNE8gMs28CSIncsPtZM9HMzETF/G4BOdsSin712Pgd7vPqrhSN7jH+80Q9q0+sXuM1atxtqzOXxHnPA+F2JBG4xsyiidHvrv3vykENcMaXvBy0nj+ltKq6rXPlgW3T4wEMD+eeEyeI2xb5c7foDzaMkcMG181D7dB/NRCscXa/uejXdMlN1L2RzkMTSiuxcard0QCJgoJeRqhv/oGkVvoq4yNMEhcn2I2QpAO9ATE=
 before_deploy:
   - echo 'Copying example files'
   - find . -type f -name *.example | while read file; do cp "$file" "${file%.example}"; done
@@ -33,19 +34,19 @@ deploy:
     region: us-west-2
     app: OpenAssessments-stg
     env: openassessments-stg2
-    bucket_name:
-      secure: "dM/6hITP/ks18aN6UWKye73YSglj8h0SCincaoi2P73I8a204pXlSbRLRcZD0pETU3HkWdswMKi3+wtydoZOj00yCe82Y21qnIq6M/brg38RzzOD/CKIBOlTLi6kKTwSNNuEPMp90Aw8buSB7pFVWZ1xczdKE0TbKRLXOHfudy8="
+    bucket_name: elasticbeanstalk-us-west-2-725843923591
     on:
       repo: lumenlearning/OpenAssessments
       branch: staging
   - provider: elasticbeanstalk
     skip_cleanup: true
-    access_key_id: $AWS_ACCESS_KEY_ID_PROD
-    secret_access_key: $AWS_SECRET_ACCESS_KEY_PROD
+    access_key_id: AKIAIK5IL7PFT7LRSUBQ
+    secret_access_key:
+      secure: "QJMElA3gztJDTnw3Dd5MU1h4m4BN1RB3m/5eT2AoSfcmsF69KV3jlaNNGsYXW59vfF9o0cKOYBBnyowytOoQ6VjWjXk5M3Su4oC60/HBr8UQxH/IawiMGdIcBoyR16kBk/lyuH6p0llIyhtuHpXbwqJ0d51uarhEDdWdIPbgVuQ="
     region: us-west-2
     app: OpenAssessments
     env: openassessments-prod
-    bucket_name: $AWS_BUCKET_NAME_PROD
+    bucket_name: elasticbeanstalk-us-west-2-523740042085
     on:
       repo: lumenlearning/OpenAssessments
       branch:
