@@ -7,6 +7,7 @@
   },
   "scripts": {
     "postinstall": "cd ./client && npm install",
+    "build": "cd ./client && webpack --config webpack.release.js --progress --profile --colors --json"
     "gulp": "cd ./client && npm run gulp",
     "test": "rspec && client/bin/lint && (cd client && npm run jscs .)"
   },
