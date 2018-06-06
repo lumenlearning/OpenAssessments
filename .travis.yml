@@ -12,7 +12,7 @@ before_script:
 addons:
   postgresql: 9.4
 notifications:
-  slack: $SLACK_SECRET
+  slack: jEoICshI8S2R/QgcaE2s2jII/gQIZcAjbE/BPS79fCPO/n1UkhLp9dvOXIl3gfCa6RCQ/VHurwpKp/V2Baz08jPzlKpcbEjQpdLzGFNekq6F/hJAcYJSxjpX2uG+0VnsAEPt4BBGv+XN66UoVsisycR9ZokzIbxBB8d1aZ1RPxQW0vW696HcdPF1XeMMY1hGHLInzAJ/hhPu1Pdp/xw4GjODqEy1/s2bNXhbJoP38DAUm+UTKAfHo+s6E8MrAmyfCUPH77JXagS/ydfxe/PZiOpJzyqyoXWvg0E6wrGiA5t+V7pvgQen2zqik1IcUaCyxmdMMP8JCYZtIjnK8SAHJYD5UigXWP+Zznfc+oUOsmpsrxcZJj35DoCFl7UiL6pHjSBdam0GpaW5feczMfHwkLUZksImfJ6o0aC6qF4TVUb8Po716Q9zmC1uupuDg0/0adPNE8gMs28CSIncsPtZM9HMzETF/G4BOdsSin712Pgd7vPqrhSN7jH+80Q9q0+sXuM1atxtqzOXxHnPA+F2JBG4xsyiidHvrv3vykENcMaXvBy0nj+ltKq6rXPlgW3T4wEMD+eeEyeI2xb5c7foDzaMkcMG181D7dB/NRCscXa/uejXdMlN1L2RzkMTSiuxcard0QCJgoJeRqhv/oGkVvoq4yNMEhcn2I2QpAO9ATE=
 before_deploy:
   - echo 'Copying example files'
   - find . -type f -name *.example | while read file; do cp "$file" "${file%.example}"; done
@@ -27,12 +27,14 @@ before_deploy:
 deploy:
   - provider: elasticbeanstalk
     skip_cleanup: true
-    access_key_id: $AWS_ACCESS_KEY_ID_STG
-    secret_access_key: $AWS_SECRET_ACCESS_KEY_STG
+    access_key_id: AKIAIPYAEDJMYGYMFXUA
+    secret_access_key:
+      secure: "XJ0NA4COd0m3JzYt/NDsVmX+o47+wYNpOzFkoE6plKM0UQTtdebYrQ6HZnfq6cz33DmCUk13eyhnah0EC2fHu2Mb2a4FXft3/JF67BnS0jn4DlhXTXkbYCWylhLUglwanDFVwmYMrfkP1nYcztnLYNc7RFfUL3sm3d6+pmK3cos="
     region: us-west-2
     app: OpenAssessments-stg
     env: openassessments-stg2
-    bucket_name: $AWS_BUCKET_NAME_STG
+    bucket_name:
+      secure: "dM/6hITP/ks18aN6UWKye73YSglj8h0SCincaoi2P73I8a204pXlSbRLRcZD0pETU3HkWdswMKi3+wtydoZOj00yCe82Y21qnIq6M/brg38RzzOD/CKIBOlTLi6kKTwSNNuEPMp90Aw8buSB7pFVWZ1xczdKE0TbKRLXOHfudy8="
     on:
       repo: lumenlearning/OpenAssessments
       branch: staging
