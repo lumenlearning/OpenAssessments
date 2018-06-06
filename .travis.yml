@@ -21,6 +21,7 @@ before_deploy:
   - cd client; npm install es6-promise@3.0.2 reactable@0.10.2 moment@2.10.6 react-tinymce@0.2.3; cd ..
   - npm install -g webpack@1.10.1
   - cd client; npm run build; cd ..
+  - RAILS_ENV=production bundle exec rake assets:webpack
   - RAILS_ENV=production bundle exec rake assets:precompile
   - rm -rf vendor/bundle
   - git add --force config/
