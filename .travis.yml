@@ -18,7 +18,7 @@ before_deploy:
   - echo 'Copying example files'
   - find . -type f -name *.example | while read file; do cp "$file" "${file%.example}"; done
   - cd client; npm install; cd ..
-  - cd client; npm install es6-promise@3.0.2 reactable@0.10.2 moment@2.10.6 react-tinymce@0.2.3; cd ..
+  - cd client; npm install es6-promise@3.0.2 reactable@0.10.2 moment@2.10.6 react-tinymce@0.2.3 less-loader; cd ..
   - npm install -g webpack@1.10.1
   - cd client; npm run build; cd ..
   - RAILS_ENV=production bundle exec rake assets:precompile
