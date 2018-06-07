@@ -23,6 +23,7 @@
     "flux": "^2.0.3",
     "griddle-react": "^0.2.13",
     "htmlparser": "^1.7.7",
+    "json5": "0.4.0",
     "jquery": "^2.1.3",
     "lodash": "^3.10.0",
     "material-design-icons": "^2.0.0",
