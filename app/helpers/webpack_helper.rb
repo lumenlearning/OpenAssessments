@@ -6,7 +6,7 @@ module WebpackHelper
         manifest = Rails.configuration.webpack[:asset_manifest][bundle]
         bundle = manifest.instance_of?(Array) ? manifest[0] : manifest
 
-        "#{Rails.application.secrets.assets_host}/assets/#{bundle}"
+        "/assets/#{bundle}"
       else
         "#{Rails.application.secrets.assets_url}/assets/#{bundle}_web_pack_bundle.js"
       end
