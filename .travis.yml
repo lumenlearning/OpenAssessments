@@ -53,3 +53,6 @@ deploy:
       branch:
         - /^master$/
         - /^\d{1-2}\.\d+\.d+[-\w]$/
+addons:
+  artifacts:
+    s3_region: "us-west-2"
