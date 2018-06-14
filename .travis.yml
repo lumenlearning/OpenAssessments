@@ -1,15 +1,60 @@
 language: ruby
+
 env:
-- DB=postgresql
-script:
-- RAILS_ENV=test bundle exec rake db:migrate --trace
-- bundle exec rake
+  - DB=postgresql
+
 before_script:
-- cp config/database.yml.example config/database.yml
-- cp config/secrets.yml.example config/secrets.yml
-- psql -c 'create database openassessments_test' -U postgres
+  - nvm install 0.10.37
+  - cp config/database.yml.example config/database.yml
+  - cp config/secrets.yml.example config/secrets.yml
+  - psql -c 'create database openassessments_test' -U postgres
+
+script:
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - bundle exec rake
+
 addons:
   postgresql: 9.4
+  artifacts:
+    s3_region: 'us-west-2'
+
 notifications:
   slack:
-    secure: GcGkVuKx1c6CHcpuwKUaAoyfiwnsL8cm9AZpwtRAoEXNMgFuPBl9hjfivKMqOSYzBCuAfK9l6T3MIhVUJOi7PPvNI9DhuDZtbZ6MgVH/PAHVZhJTx+G00O5j60T617DTKMwRDakEst9ADTkxcekO16TqZY/4d+RJNKmdyp0JiwU=
+    secure: 'GcGkVuKx1c6CHcpuwKUaAoyfiwnsL8cm9AZpwtRAoEXNMgFuPBl9hjfivKMqOSYzBCuAfK9l6T3MIhVUJOi7PPvNI9DhuDZtbZ6MgVH/PAHVZhJTx+G00O5j60T617DTKMwRDakEst9ADTkxcekO16TqZY/4d+RJNKmdyp0JiwU='
+
+before_deploy:
+  - echo 'Copying example files'
+  - find . -type f -name *.example | while read file; do cp "$file" "${file%.example}"; done
+
+  # install frontend assets
+  - cd client; npm install; cd ..
+
+  # install troublesome frontend assets
+  - cd client; npm install es6-promise@3.0.2 reactable@0.10.2 moment@2.10.6 react-tinymce@0.2.3 less-loader@2.2.0 json5@0.4.0; cd ..
+
+  # install webpack (globally)
+  - npm install -g webpack@1.10.1
+
+  # compile assets
+  - RAILS_ENV=production bundle exec rake assets:webpack
+  - RAILS_ENV=production bundle exec rake assets:precompile
+
+  # add gitignored assets and configs
+  - rm -rf vendor/bundle
+  - git add --force config/
+  - git add --force public
+  - git commit -m 'release to beanstalk'
+
+deploy:
+  - provider: elasticbeanstalk
+    skip_cleanup: true
+    access_key_id: AKIAIPYAEDJMYGYMFXUA
+    secret_access_key:
+      secure: 'HDK4aZ4K3+Ctn2d+8yMEFc2OkP/lOKKoKbkj70G+So66C67nyE7jB9xqThxzr5x/nFpkow12lBhex8J1jIddP4avMAIdVpkEPYTBuXyz3ea7AQtMCEDMojusLJJ7rAe75oGxCbpGPYG5M2qKP/H2Q/DM+/Requ+n/26nofM3E6w='
+    region: 'us-west-2'
+    app: OpenAssessments-stg
+    env: openassessments-stg2
+    bucket_name: elasticbeanstalk-us-west-2-725843923591
+    on:
+      repo: lumenlearning/OpenAssessments
+      branch: staging
