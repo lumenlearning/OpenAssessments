@@ -46,6 +46,7 @@ before_deploy:
   - git commit -m 'release to beanstalk'
 
 deploy:
+  # staging
   - provider: elasticbeanstalk
     skip_cleanup: true
     access_key_id: AKIAIPYAEDJMYGYMFXUA
@@ -58,3 +59,19 @@ deploy:
     on:
       repo: lumenlearning/OpenAssessments
       branch: staging
+
+  # production
+  - provider: elasticbeanstalk
+    skip_cleanup: true
+    access_key_id: AKIAIK5IL7PFT7LRSUBQ
+    secret_access_key:
+      secure: "QJMElA3gztJDTnw3Dd5MU1h4m4BN1RB3m/5eT2AoSfcmsF69KV3jlaNNGsYXW59vfF9o0cKOYBBnyowytOoQ6VjWjXk5M3Su4oC60/HBr8UQxH/IawiMGdIcBoyR16kBk/lyuH6p0llIyhtuHpXbwqJ0d51uarhEDdWdIPbgVuQ="
+    region: us-west-2
+    app: OpenAssessments
+    env: openassessments-prod
+    bucket_name: elasticbeanstalk-us-west-2-523740042085
+    on:
+      repo: lumenlearning/OpenAssessments
+      branch:
+        - /^master$/
+        - /^\d{1-2}\.\d+\.d+[-\w]$/
