@@ -64,4 +64,7 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
+  # So that we don't have to run DelayedJob in development
+  # All jobs are run in-line
+  Delayed::Worker.delay_jobs = false
 end

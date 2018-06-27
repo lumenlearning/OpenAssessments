@@ -70,6 +70,8 @@ gem 'newrelic_rpm'
 gem 'health_check'
 gem 'rack-ssl-enforcer'
 
+gem 'delayed_job_active_record'
+
 group :development do
   gem 'spring'
   gem 'better_errors'
