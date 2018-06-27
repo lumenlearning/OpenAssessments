@@ -393,6 +393,7 @@ DEPENDENCIES
   cancancan
   capybara
   chartkick
+  daemons
   database_cleaner
   delayed_job_active_record
   devise

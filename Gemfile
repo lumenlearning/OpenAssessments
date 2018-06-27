@@ -71,6 +71,7 @@ gem 'health_check'
 gem 'rack-ssl-enforcer'
 
 gem 'delayed_job_active_record'
+gem 'daemons'
 
 group :development do
   gem 'spring'
