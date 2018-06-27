@@ -146,6 +146,7 @@ class Api::AssessmentsController < Api::ApiController
   # style (string) set to "lumen_learning" to use the lumen learning theme. Leave out for default style
   # per_sec (int) give it the number of random questions from each section you want.
   # confidence_levels (bool) display confidence controls
+  # show_answers (bool) display answers and feedback after each question is answered
   #
   # Example
   # https://assessments.lumenlearning.com/assessments/15?style=lumen_learning&asid=1&per_sec=2&confidence_levels=true&enable_start=true
@@ -255,10 +256,11 @@ class Api::AssessmentsController < Api::ApiController
     end
 
   def settings_params
-    settings = params.require(:assessment).permit(:allowed_attempts, :per_sec, :confidence_levels, :style, :enable_start)
+    settings = params.require(:assessment).permit(:allowed_attempts, :per_sec, :confidence_levels, :style, :enable_start, :show_answers)
     settings[:allowed_attempts] = settings[:allowed_attempts].to_i if settings[:allowed_attempts]
     settings[:per_sec] = settings[:per_sec].to_i if settings[:per_sec]
     settings[:confidence_levels] = settings[:confidence_levels] == 'true' if settings[:confidence_levels]
+    settings[:show_answers] = settings[:show_answers] == 'true' if settings[:show_answers]
     settings[:enable_start] = settings[:enable_start] == 'true' if settings[:enable_start]
     settings[:mode] = @assessment.kind
     settings
