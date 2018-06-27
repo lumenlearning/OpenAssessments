@@ -89,12 +89,10 @@ class Api::AssessmentResultsController < Api::ApiController
     raise "no api user" unless current_user
     result = @current_user.assessment_results.find(params[:assessment_result_id])
 
-    if Lti::AssessmentResultReporter.post_lti_outcome!(result, @lti_launch)
-      render json: {message: "OK"}
-    else
-      Rails.logger.error("Failed sending lti grade: AssessmentResult #{result.id} Errors: #{result.outcome_error_message}")
-      render json: {message: "Failed to send grade for AssessmentResult #{result.id}"}, status: :internal_server_error
-    end
+    # queue grade to be written to LMS
+    Lti::AssessmentResultReporter.delay.post_lti_outcome!(result, @lti_launch)
+
+    render json: {message: "OK"}
   end
 
   def send_result_to_analytics
@@ -117,7 +115,7 @@ class Api::AssessmentResultsController < Api::ApiController
         end
       end
 
-      message = AnalyticsHelper.send_for_result(res, params)
+      message = AnalyticsHelper.delay.send_for_result(res, params.slice(:external_context_id, :external_user_id, :external_account_id))
       render json: {message: message}
     else
       render json: {message: "not configured"}

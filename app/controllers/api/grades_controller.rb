@@ -80,6 +80,9 @@ class Api::GradesController < Api::ApiController
       assessment_results_id: result.id,
     }
 
+    # queue grade to be written to LMS
+    Lti::AssessmentResultReporter.delay.post_lti_outcome!(result, @lti_launch)
+
     respond_to do |format|
       format.json { render json: graded_assessment }
     end
