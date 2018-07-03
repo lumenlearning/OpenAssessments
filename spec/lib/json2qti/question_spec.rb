@@ -28,6 +28,11 @@ describe Json2Qti::Question do
                     "shortOutcome" => "Short & Name",
                     "longOutcome" => "Long & Name",
                     "outcomeGuid" => "&f71c5ce2"
+            },
+            "skill" => {
+                    "skillShortOutcome" => "Skill Short & Name",
+                    "skillLongOutcome" => "Skill Long & Name",
+                    "skillGuid" => "&g82d6df3"
             }
     }
   }
@@ -37,6 +42,12 @@ describe Json2Qti::Question do
     expect(question.to_qti).to include("<fieldentry>Short &amp; Name</fieldentry>")
     expect(question.to_qti).to include("<fieldentry>Long &amp; Name</fieldentry>")
     expect(question.to_qti).to include("<fieldentry>&amp;f71c5ce2</fieldentry>")
+  end
+
+  it "should add skill" do
+    expect(question.to_qti).to include("<fieldentry>Skill Short &amp; Name</fieldentry>")
+    expect(question.to_qti).to include("<fieldentry>Skill Long &amp; Name</fieldentry>")
+    expect(question.to_qti).to include("<fieldentry>&amp;g82d6df3</fieldentry>")
   end
 
   it "should escape question material" do

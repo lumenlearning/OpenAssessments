@@ -1,6 +1,6 @@
 module Json2Qti
   class Question
-    attr_accessor :outcome, :title, :id, :material, :answers, :ident
+    attr_accessor :outcome, :skill, :title, :id, :material, :answers, :ident
 
     def initialize(item)
       @title = item["title"] || ''
@@ -15,6 +15,12 @@ module Json2Qti
         @outcome["guid"] ||= @outcome.delete("outcomeGuid")
         @outcome["long_title"] ||= @outcome.delete("longOutcome")
         @outcome["short_title"] ||= @outcome.delete("shortOutcome")
+      end
+
+      if @skill = item["skill"]
+        @skill["skill_guid"] ||= @skill.delete("skillGuid")
+        @skill["skill_long_title"] ||= @skill.delete("skillLongOutcome")
+        @skill["skill_short_title"] ||= @skill.delete("skillShortOutcome")
       end
     end
 
@@ -101,6 +107,7 @@ XML
                 <fieldentry>#{type.encode(:xml => :text)}</fieldentry>
               </qtimetadatafield>
 #{outcome_meta}
+#{skill_meta}
             </qtimetadata>
           </itemmetadata>
           <presentation>
@@ -138,6 +145,24 @@ XML
               <qtimetadatafield>
                 <fieldlabel>outcome_long_title</fieldlabel>
                 <fieldentry>#{@outcome['long_title'].encode(:xml => :text)}</fieldentry>
+              </qtimetadatafield>
+XML
+    end
+
+    def skill_meta
+      return '' unless @skill
+      <<XML
+              <qtimetadatafield>
+                <fieldlabel>skill_guid</fieldlabel>
+                <fieldentry>#{@skill['skill_guid'].encode(:xml => :text)}</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_short_title</fieldlabel>
+                <fieldentry>#{@skill['skill_short_title'].encode(:xml => :text)}</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_long_title</fieldlabel>
+                <fieldentry>#{@skill['skill_long_title'].encode(:xml => :text)}</fieldentry>
               </qtimetadatafield>
 XML
     end
