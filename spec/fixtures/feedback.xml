@@ -43,6 +43,18 @@
                 <fieldlabel>outcome_long_title</fieldlabel>
                 <fieldentry>Explain how DNA stores genetic information</fieldentry>
               </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_guid</fieldlabel>
+                <fieldentry>9af406fb-af6a-4191-b931-09ecc882a43f</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_short_title</fieldlabel>
+                <fieldentry>Storing Genetic Information (skill)</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_long_title</fieldlabel>
+                <fieldentry>Explain how DNA stores genetic information (skill)</fieldentry>
+              </qtimetadatafield>
             </qtimetadata>
           </itemmetadata>
           <presentation>
@@ -162,6 +174,18 @@
               <qtimetadatafield>
                 <fieldlabel>outcome_long_title</fieldlabel>
                 <fieldentry>Differentiate between different types of signals</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_guid</fieldlabel>
+                <fieldentry>0057bbad-c6ea-4fc8-bd79-e647783f1a23</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_short_title</fieldlabel>
+                <fieldentry>Signaling Molecules and Cellular Receptors (skill)</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_long_title</fieldlabel>
+                <fieldentry>Differentiate between different types of signals (skill)</fieldentry>
               </qtimetadatafield>
             </qtimetadata>
           </itemmetadata>
@@ -286,6 +310,18 @@
                 <fieldlabel>outcome_long_title</fieldlabel>
                 <fieldentry>Distinguish between for-profit and nonprofit organizations</fieldentry>
               </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_guid</fieldlabel>
+                <fieldentry>9a82d67b-21ce-4cbf-8298-6bd1109f03b2</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_short_title</fieldlabel>
+                <fieldentry>For-Profit vs. Non-Profit (skill)</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_long_title</fieldlabel>
+                <fieldentry>Distinguish between for-profit and nonprofit organizations (skill)</fieldentry>
+              </qtimetadatafield>
             </qtimetadata>
           </itemmetadata>
 
@@ -345,6 +381,18 @@
               <qtimetadatafield>
                 <fieldlabel>outcome_long_title</fieldlabel>
                 <fieldentry>Recognize that mutations are the basis of microevolution; and that adaptations enhance the survival and reproduction of individuals in a population</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_guid</fieldlabel>
+                <fieldentry>99207ed2-b647-4712-b6f6-2446723ca192</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_short_title</fieldlabel>
+                <fieldentry>Mutations and Evolution (skill)</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_long_title</fieldlabel>
+                <fieldentry>Recognize that mutations are the basis of microevolution; and that adaptations enhance the survival and reproduction of individuals in a population (skill)</fieldentry>
               </qtimetadatafield>
             </qtimetadata>
           </itemmetadata>

@@ -26,7 +26,8 @@ export default class Assessment{
       title: assessmentXml.attr('title'),
       standard: 'qti',
       assessmentId: assessmentId,
-      outcomes: []
+      outcomes: [],
+      skills: []
     };
     assessment.objectives = xml.find('assessment > objectives matref').map((index, item) => {
       return $(item).attr('linkrefid');
@@ -44,7 +45,18 @@ export default class Assessment{
       }
     }
 
+    var skill_map = {};
+    for (var i = 1; i < assessment.sections.length; i++) {
+      for (var j = 0; j < assessment.sections[i].items.length; j++) {
+        var item = assessment.sections[i].items[j];
+        if(item.skill){
+            skill_map[item.skill.skillGuid] = item.skill;
+        }
+      }
+    }
+
     assessment.outcomes = _.values(outcome_map);
+    assessment.skills = _.values(skill_map);
 
     return assessment;
   }
@@ -90,6 +102,18 @@ export default class Assessment{
       });
       assessment.outcomes = _.drop(outcomes);
       return assessment.outcomes;
+    }
+  }
+
+  static loadSkills(assessment) {
+    if(assessment.skills){
+      return assessment.skills;
+    } else {
+      var skills = assessment.sections.map((section)=> {
+        if (section.skill != "root section") {
+          return section.skill;
+        }
+      });
     }
   }
 

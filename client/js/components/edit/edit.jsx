@@ -40,6 +40,7 @@ export default class Edit extends BaseComponent{
     return {
       questions        : ReviewAssessmentStore.allQuestions(),
       outcomes         : ReviewAssessmentStore.outcomes(),
+      skills           : ReviewAssessmentStore.skills(),
       settings         : SettingsStore.current(),
       assessment       : ReviewAssessmentStore.current(),
       needsSaving      : ReviewAssessmentStore.isDirty(),
