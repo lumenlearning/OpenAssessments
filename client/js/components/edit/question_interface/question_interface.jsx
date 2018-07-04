@@ -39,14 +39,9 @@ export default class QuestionInterface extends BaseComponent{
           >
             <button className='btn' onClick={this.props.handleDoneEditing} style={{ fontSize: '16px'}}>Done Editing</button>
           </OutcomeSelector>
-          <SkillSelector
-            skills={this.props.skills}
-            selectedSkill={question.skill}
-            onChange={this.props.handleSkillChange}
-            isNew={question.isNew}
-          >
+            {this.renderSkillSelector()}
 
-          </SkillSelector>
+
           <QuestionTypeSelector question={this.props.question} handleQuestionTypeChange={this.props.handleQuestionTypeChange} />
           {question.question_type !== 'mom_embed' ? <QuestionMaterial material={question.material} onChange={this.props.handleMaterialChange} onKeyup={this.props.handleMaterialChange} /> : null}
           {/*ensures a type has been selected before allowing feedback to be changed.*/}
@@ -55,6 +50,22 @@ export default class QuestionInterface extends BaseComponent{
       </div>
     );
   }//render
+
+  renderSkillSelector() {
+    let question = this.props.question;
+
+    if (question.skill_guid) {
+      return (
+        <SkillSelector
+          skills={this.props.skills}
+          selectedSkill={question.skill}
+          onChange={this.props.handleSkillChange}
+          isNew={question.isNew}
+          >
+        </SkillSelector>
+      );
+    }
+  }
 
   answerFeedbackMaterial() {
     let question = this.props.question;
