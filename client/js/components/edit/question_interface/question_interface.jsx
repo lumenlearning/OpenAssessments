@@ -9,6 +9,7 @@ import ReviewAssessmentStore  from "../../../stores/review_assessment";
 
 //Components
 import OutcomeSelector        from './outcome_selector.jsx';
+import SkillSelector          from './skill_selector.jsx';
 import QuestionMaterial       from './question_material.jsx';
 import QuestionTypeSelector   from './question_type_selector.jsx';
 import AnswerFeedbackMaterial from './answer_feedback_material.jsx';
@@ -38,6 +39,14 @@ export default class QuestionInterface extends BaseComponent{
           >
             <button className='btn' onClick={this.props.handleDoneEditing} style={{ fontSize: '16px'}}>Done Editing</button>
           </OutcomeSelector>
+          <SkillSelector
+            skills={this.props.skills}
+            selectedSkill={question.skill}
+            onChange={this.props.handleSkillChange}
+            isNew={question.isNew}
+          >
+
+          </SkillSelector>
           <QuestionTypeSelector question={this.props.question} handleQuestionTypeChange={this.props.handleQuestionTypeChange} />
           {question.question_type !== 'mom_embed' ? <QuestionMaterial material={question.material} onChange={this.props.handleMaterialChange} onKeyup={this.props.handleMaterialChange} /> : null}
           {/*ensures a type has been selected before allowing feedback to be changed.*/}

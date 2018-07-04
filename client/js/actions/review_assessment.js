@@ -58,7 +58,8 @@ export default {
       material: '',
       //answers: [ReviewAssessmentStore.blankNewAnswer(), ReviewAssessmentStore.blankNewAnswer(), ReviewAssessmentStore.blankNewAnswer()],
       errorMessages: [],
-      outcome: ''
+      outcome: '',
+      skill: ''
     };
     Dispatcher.dispatch({action: Constants.ADD_ASSSESSMENT_QUESTION, data: question, location: location});
   },
@@ -123,6 +124,7 @@ export default {
         dropdowns: dropdowns,
         correct: correct,
         outcome: item.outcome,
+        skill: item.skill,
         mom_embed: item.momEmbed,
         feedback: feedback
       }
