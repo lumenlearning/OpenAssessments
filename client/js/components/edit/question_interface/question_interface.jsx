@@ -61,8 +61,7 @@ export default class QuestionInterface extends BaseComponent{
           selectedSkill={question.skill}
           onChange={this.props.handleSkillChange}
           isNew={question.isNew}
-          >
-        </SkillSelector>
+          />
       );
     }
   }
