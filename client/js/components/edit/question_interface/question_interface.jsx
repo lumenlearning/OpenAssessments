@@ -54,10 +54,18 @@ export default class QuestionInterface extends BaseComponent{
   renderSkillSelector() {
     let question = this.props.question;
 
-    if (question.skill_guid) {
+    let skillsForOutcome = [];
+
+    this.props.skills.forEach((skill) => {
+        if (question.outcome.outcomeGuid === skill.skillGuid) {
+            skillsForOutcome.push(skill);
+        }
+    })
+
+    if (skillsForOutcome.length > 0) {
       return (
         <SkillSelector
-          skills={this.props.skills}
+          skills={skillsForOutcome}
           selectedSkill={question.skill}
           onChange={this.props.handleSkillChange}
           isNew={question.isNew}
