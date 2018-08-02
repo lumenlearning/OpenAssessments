@@ -109,7 +109,7 @@ export default class Assessment{
     if(assessment.skills){
       return assessment.skills;
     } else {
-      var skills = assessment.sections.map((section)=> {
+      assessment.sections.map((section)=> {
         if (section.skill != "root section") {
           return section.skill;
         }
