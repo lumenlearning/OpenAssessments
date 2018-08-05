@@ -57,7 +57,7 @@ export default class QuestionInterface extends BaseComponent{
     let skillsForOutcome = [];
 
     this.props.skills.forEach((skill) => {
-        if (question.outcome.outcomeGuid === skill.skillGuid) {
+        if (question.outcome.outcomeGuid === skill.parentGuid) {
             skillsForOutcome.push(skill);
         }
     })

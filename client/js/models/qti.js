@@ -52,12 +52,13 @@ export default class Qti{
     return outcome;
   }
 
-  static parseSkill(item){
+  static parseSkill(item, outcomeGuid){
     item = $(item);
     var fields = item.find("qtimetadatafield");
     var skill = {
-      shortOutcome: "",
-      longOutcome: "",
+      parentGuid: outcomeGuid,
+      skillShortOutcome: "",
+      skillLongOutcome: "",
       skillGuid: ""
     };
     for (var i = fields.length - 1; i >= 0; i--) {
@@ -83,12 +84,13 @@ export default class Qti{
         return $(item).attr('linkrefid');
       });
 
+      let outcome = this.parseOutcome(xml);
       var item = {
         id         : xml.attr('ident'),
         title      : xml.attr('title'),
         objectives : objectives,
-        outcome    : this.parseOutcome(xml),
-        skill      : this.parseSkill(xml),
+        outcome    : outcome,
+        skill      : this.parseSkill(xml, outcome.outcomeGuid),
         material   : this.material(xml),
         timeSpent  : 0
       };
