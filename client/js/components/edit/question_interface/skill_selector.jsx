@@ -23,7 +23,7 @@ export default class SkillSelector extends React.Component {
     return (
       <div style={{paddingBottom: "30px", display: 'flex', justifyContent:'space-between'}}>
         <label for="skill-select" >
-          <span style={style.label}>Skill </span>
+          <span style={style.label}>Sub-Outcome </span>
           <select
             id="skill-select"
             name="skill-select"

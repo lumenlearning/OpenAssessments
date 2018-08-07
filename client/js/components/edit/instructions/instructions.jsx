@@ -22,7 +22,8 @@ getInstructionType(){
     if(this.props.settings.assessmentKind == "summative"){
         return (
             <ul style={style.textList}>
-                <li style={style.textItems}> <span style={{fontWeight: 'bold'}}>Outcomes.</span> This quiz is designed to assess students on all learning outcomes in this module.</li>
+                <li style={style.textItems}> <span style={{fontWeight: 'bold'}}>Outcomes.</span> This quiz is designed to assess students on all learning outcomes in this module. Each module typically has 4-6 outcomes, one for each section in the module.</li>
+                <li style={style.textItems}> <span style={{fontWeight: 'bold'}}>Sub-Outcomes.</span> Each outcome is further broken down into sub-outcomes that represent a single skill or knowledge chunk. Questions are associated with both an outcome and a sub-outcome.</li>
                 <li style={style.textItems}> <span style={{fontWeight: 'bold'}}>Questions.</span> When a student takes a quiz, they receive 2 questions (selected at random) for each outcome. Accordingly, this bank must contain a minimum of 2 questions for each outcome covered.</li>
                 <li style={style.textItems}> <span style={{fontWeight: 'bold'}}>Deleting Outcomes.</span> You may delete an outcome from this quiz by removing all questions aligned to that outcome.</li>
                 <li style={style.textItems}> <span style={{fontWeight: 'bold'}}>Alignment with Content.</span> When adding or editing questions, be sure to confirm the question content is covered in the course material provided in the study plan tile associated with the learning outcome because students who get the question wrong will get feedback encouraging them to review that tile.</li>
