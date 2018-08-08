@@ -34,7 +34,7 @@ export default class OutcomeSelector extends React.Component{
             <option disabled="disabled" value={"select-an-outcome"}>Select an outcome</option>
             {this.props.outcomes.map((outcome, index) => {
                 return (
-                  <option key={index} index={index} value={outcome.outcomeGuid}>{outcome.shortOutcome}</option>
+                  <option key={index} index={index} value={outcome.outcomeGuid}>{outcome.longOutcome}</option>
                 )
               })}
           </select>

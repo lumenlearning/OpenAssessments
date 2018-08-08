@@ -34,7 +34,7 @@ export default class SkillSelector extends React.Component {
             <option disabled="disabled" value={"select-a-skill"}>Select a Skill</option>
             {this.props.skills.map((skill, index) => {
               return (
-                <option key={index} index={index} value={skill.skillGuid}>{skill.skillShortOutcome}</option>
+                <option key={index} index={index} value={skill.skillGuid}>{skill.skillLongOutcome}</option>
               )
             })}
             </select>
