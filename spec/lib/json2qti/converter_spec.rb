@@ -36,6 +36,11 @@ describe Json2Qti::Converter do
           "shortOutcome" => "What Is Business?",
           "longOutcome" => "Define the concept of business",
           "outcomeGuid" => "f71c5ce2-46b7-4cce-9531-1680d42faf1b"
+        },
+        "skill" => {
+            "skillShortOutcome" => "What Is Business?",
+            "skillLongOutcome" => "Define the concept of business",
+            "skillGuid" => "f71c5ce2-46b7-4cce-9531-1680d42faf1b"
         }
       }
     ]

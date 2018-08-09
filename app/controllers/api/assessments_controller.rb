@@ -177,6 +177,9 @@ class Api::AssessmentsController < Api::ApiController
         if settings.per_sec
           opts["group_by_section"] = true
           opts["per_sec"] = settings.per_sec
+          if assessment.kind == 'formative'
+            opts["group_by_outcomes"] = true
+          end
         end
       end
       xml = Json2Qti.convert_to_qti(clean_params, opts)
