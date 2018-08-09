@@ -31,7 +31,7 @@ export default class SkillSelector extends React.Component {
             defaultValue={this.props.isNew ? "select-a-skill" : this.props.selectedSkill.skillGuid}
             onChange={this.handleChange}
             >
-            <option disabled="disabled" value={"select-a-skill"}>Select a Skill</option>
+            <option disabled="disabled" value={"select-a-skill"}>Select a Sub-Outcome</option>
             {this.props.skills.map((skill, index) => {
               return (
                 <option key={index} index={index} value={skill.skillGuid}>{skill.skillLongOutcome}</option>
