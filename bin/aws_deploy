@@ -63,6 +63,7 @@ fi
 read build_assets
 
 if [ "yes" == "$build_assets" ] || [ "y" == "$build_assets" ] || [ "" == "$build_assets" ]; then
+	rm -rf public/assets/*
 	RAILS_ENV=production bundle exec rake assets:webpack
 	RAILS_ENV=production bundle exec rake assets:precompile
 	echo
