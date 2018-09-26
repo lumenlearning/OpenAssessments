@@ -92,6 +92,16 @@ class Assessment < ActiveRecord::Base
 
   end
 
+  def remove_questions_for_guid!(guid)
+    if self.summative?
+      new_assessment_xml = AssessmentXml.remove_questions_for_guid(self.current_assessment_xml.no_answer_xml, guid)
+      self.current_assessment_xml.no_answer_xml = new_assessment_xml
+    else
+      new_assessment_xml = AssessmentXml.remove_questions_for_guid(self.current_assessment_xml.xml, guid)
+      self.current_assessment_xml.xml = new_assessment_xml
+    end
+  end
+
   def parsed_xml(xml = nil)
     @parsed_xml ||= AssessmentParser.parse(xml).first if xml.present?
     @parsed_xml

@@ -46,4 +46,45 @@ class AssessmentXml < ActiveRecord::Base
     node.to_xml
   end
 
+  def self.remove_questions_for_guid(xml, guid)
+    node = Nokogiri::XML(xml)
+
+    # remove items with specified outcome guid
+    if node.css('section section').any?
+      node.css('section section').each do |section|
+        if section.css('item')
+          section.css('item').each do |item|
+            item.css('itemmetadata qtimetadata qtimetadatafield').each do |metafield|
+              if metafield.css('fieldlabel').children.text == 'outcome_guid' && metafield.css('fieldentry').children.text == guid
+                item.remove
+              end
+            end
+          end
+        end
+      end
+    else
+      node.css('section').each do |section|
+        if section.css('item')
+          section.css('item').each do |item|
+            item.css('itemmetadata qtimetadata qtimetadatafield').each do |metafield|
+              if metafield.css('fieldlabel').children.text == 'outcome_guid' && metafield.css('fieldentry').children.text == guid
+                item.remove
+              end
+            end
+          end
+        end
+      end
+    end
+
+    # after removing items, remove section if section is now empty
+    if node.css('section section').any?
+      node.css('section section').each do |section|
+        unless section.css('item').any?
+          section.remove
+        end
+      end
+    end
+
+    node.to_xml
+  end
 end

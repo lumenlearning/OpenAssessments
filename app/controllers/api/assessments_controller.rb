@@ -2,7 +2,7 @@ require 'json2qti'
 require 'assessment_copier'
 
 class Api::AssessmentsController < Api::ApiController
-  
+
   respond_to :xml, :json
 
   before_action :ensure_context_admin, only:[:json_update, :review_show]
@@ -148,7 +148,7 @@ class Api::AssessmentsController < Api::ApiController
     @assessment.account = current_account
     @assessment.save!
     @assessment.assessment_settings.create(settings_params)
-    
+
     respond_with(:api, @assessment)
   end
 
@@ -159,7 +159,7 @@ class Api::AssessmentsController < Api::ApiController
     else
       @assessment.assessment_settings.create(settings_params)
     end
-    
+
     respond_with(:api, @assessment)
   end
 
@@ -202,6 +202,13 @@ class Api::AssessmentsController < Api::ApiController
     render :json => new_assessment
   end
 
+  def remove_questions_for_guid
+    assessment = Assessment.where(id: params[:assessment_id]).first
+    raise ActiveRecord::RecordNotFound unless assessment
+
+    assessment.remove_questions_for_guid!(guid: params.require(:guid))
+  end
+
   private
 
   # makes sure the JWT token allows admin scope for this LTI context id
@@ -222,7 +229,7 @@ class Api::AssessmentsController < Api::ApiController
                                          :src_url, :recommended_height, :keyword_list,
                                          :account_id, :kind)
     end
-  
+
   def settings_params
     settings = params.require(:assessment).permit(:allowed_attempts, :per_sec, :confidence_levels, :style, :enable_start)
     settings[:allowed_attempts] = settings[:allowed_attempts].to_i if settings[:allowed_attempts]
