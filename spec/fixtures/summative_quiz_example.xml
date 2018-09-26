@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+  <assessment title="Plant Reproduction" ident="i3c1fc8e493c74d7a91e21219ca6be2b5_summative">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>qmd_timelimit</fieldlabel>
+        <fieldentry/>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry/>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <section title="Lorem ipsum dolor sit amet, consectetur adipiscing elit." ident="ida4f472d73182bed8b2a75517ea689d5">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>1</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+        <item title="Lorem ipsum dolor sit amet, consectetur adipiscing elit." ident="i30a2fc9e93004b12fce13f9e7d243df7">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>f71c5ce2-46b7-4cce-9531-1680d42faf1b</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_guid</fieldlabel>
+                <fieldentry>9d5b9603-f8c2-4614-bf0b-090b71a65c13</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_short_title</fieldlabel>
+                <fieldentry>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_long_title</fieldlabel>
+                <fieldentry>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">The ________ develops from the the black hole.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="i93e6b7e0fb9fbbed46fee5b4b01f3a50">
+                  <material>
+                    <mattext texttype="text/html">gametophyte</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="i99733d9ad0b8abfc9844b7cd48b4531c">
+                  <material>
+                    <mattext texttype="text/html">sporangium</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="icde64c0315f2faa3b2695a9afd760fbd">
+                  <material>
+                    <mattext texttype="text/html">sporophyte</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response1">i93e6b7e0fb9fbbed46fee5b4b01f3a50</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="i93e6b7e0fb9fbbed46fee5b4b01f3a50_fb"/>
+            </respcondition>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response1">i99733d9ad0b8abfc9844b7cd48b4531c</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="i99733d9ad0b8abfc9844b7cd48b4531c_fb"/>
+            </respcondition>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response1">icde64c0315f2faa3b2695a9afd760fbd</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="icde64c0315f2faa3b2695a9afd760fbd_fb"/>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">i93e6b7e0fb9fbbed46fee5b4b01f3a50</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">i99733d9ad0b8abfc9844b7cd48b4531c</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">icde64c0315f2faa3b2695a9afd760fbd</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+          <itemfeedback ident="i93e6b7e0fb9fbbed46fee5b4b01f3a50_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/plain">Incorrect. The game does not stop for the diploid.</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+          <itemfeedback ident="i99733d9ad0b8abfc9844b7cd48b4531c_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/plain">Incorrect. The game does not develop from the nothing.</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+          <itemfeedback ident="icde64c0315f2faa3b2695a9afd760fbd_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/plain">Correct. The dippidy zebra, which is a product of horse meat by fusion of the gametes.</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+        </item>
+        <item title="Lorem ipsum dolor sit amet, consectetur adipiscing elit." ident="iec6328b26c2764d54db3aa029b313d0e">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>f71c5ce2-46b7-4cce-9531-1680d42faf1b</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_guid</fieldlabel>
+                <fieldentry>9d5b9603-f8c2-4614-bf0b-090b71a65c13</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_short_title</fieldlabel>
+                <fieldentry>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_long_title</fieldlabel>
+                <fieldentry>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">The gametophyte produces ________ by ________.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="ib15432172bdd80dd3a8094d070b19edc">
+                  <material>
+                    <mattext texttype="text/html">diploid zygote; cloning</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="i7295bcaea7e5f54b36d84f8bf791f495">
+                  <material>
+                    <mattext texttype="text/html">triploid megaspores; fusion</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="i4aa360cb177534768007a5fe75718715">
+                  <material>
+                    <mattext texttype="text/html">haploid gametes; mitosis</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response1">ib15432172bdd80dd3a8094d070b19edc</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="ib15432172bdd80dd3a8094d070b19edc_fb"/>
+            </respcondition>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response1">i7295bcaea7e5f54b36d84f8bf791f495</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="i7295bcaea7e5f54b36d84f8bf791f495_fb"/>
+            </respcondition>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response1">i4aa360cb177534768007a5fe75718715</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="i4aa360cb177534768007a5fe75718715_fb"/>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">ib15432172bdd80dd3a8094d070b19edc</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">i7295bcaea7e5f54b36d84f8bf791f495</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">i4aa360cb177534768007a5fe75718715</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+          <itemfeedback ident="ib15432172bdd80dd3a8094d070b19edc_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/plain">Incorrect. Some plants scream constantly.</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+          <itemfeedback ident="i7295bcaea7e5f54b36d84f8bf791f495_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/plain">Incorrect. Some plants scream like goats who scream like humans.</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+          <itemfeedback ident="i4aa360cb177534768007a5fe75718715_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/plain">Correct. That...that is correct. Well done.</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+        </item>
+        <item title="Lorem ipsum dolor sit amet, consectetur adipiscing elit." ident="icc9c2da8eb907d4d66d5f306383d82c7">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>f71c5ce2-46b7-4cce-9531-1680d42faf1b</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_guid</fieldlabel>
+                <fieldentry>9d5b9603-f8c2-4614-bf0b-090b71a65c13</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_short_title</fieldlabel>
+                <fieldentry>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>skill_long_title</fieldlabel>
+                <fieldentry>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">In ________ planets.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="i304fd2cb82de259d06aa90af3525a13f">
+                  <material>
+                    <mattext texttype="text/html">nonvastibularized</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="i3d8b8eae44ed316fef1c570fbeafa87a">
+                  <material>
+                    <mattext texttype="text/html">both vascular and blastometric</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="i8e40978518318277636494b42b85d1c1">
+                  <material>
+                    <mattext texttype="text/html">hyperbolic</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response1">i304fd2cb82de259d06aa90af3525a13f</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="i304fd2cb82de259d06aa90af3525a13f_fb"/>
+            </respcondition>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response1">i3d8b8eae44ed316fef1c570fbeafa87a</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="i3d8b8eae44ed316fef1c570fbeafa87a_fb"/>
+            </respcondition>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response1">i8e40978518318277636494b42b85d1c1</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="i8e40978518318277636494b42b85d1c1_fb"/>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">i304fd2cb82de259d06aa90af3525a13f</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">i3d8b8eae44ed316fef1c570fbeafa87a</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">i8e40978518318277636494b42b85d1c1</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+          <itemfeedback ident="i304fd2cb82de259d06aa90af3525a13f_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/plain">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+          <itemfeedback ident="i3d8b8eae44ed316fef1c570fbeafa87a_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/plain">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+          <itemfeedback ident="i8e40978518318277636494b42b85d1c1_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/plain">Correct. The ganglia is dominant in “higher” homophones.</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+        </item>
+      </section>
+    </section>
+  </assessment>
+</questestinterop>
