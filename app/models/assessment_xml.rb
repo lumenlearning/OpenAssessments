@@ -49,30 +49,21 @@ class AssessmentXml < ActiveRecord::Base
   def self.remove_questions_for_guid(xml, guid)
     node = Nokogiri::XML(xml)
 
-    # remove items with specified outcome guid
+    # We expect an xml structure like ...
+    # <section>
+    #     <section><item /></section>
+    # </section>
     if node.css('section section').any?
       node.css('section section').each do |section|
-        if section.css('item')
-          section.css('item').each do |item|
-            item.css('itemmetadata qtimetadata qtimetadatafield').each do |metafield|
-              if metafield.css('fieldlabel').children.text == 'outcome_guid' && metafield.css('fieldentry').children.text == guid
-                item.remove
-              end
-            end
-          end
-        end
+        remove_items_from_section(section, guid)
       end
+    # But sometimes the xml structure can be just one "section" deep ...
+    # <section>
+    #     <item />
+    # </section>
     else
       node.css('section').each do |section|
-        if section.css('item')
-          section.css('item').each do |item|
-            item.css('itemmetadata qtimetadata qtimetadatafield').each do |metafield|
-              if metafield.css('fieldlabel').children.text == 'outcome_guid' && metafield.css('fieldentry').children.text == guid
-                item.remove
-              end
-            end
-          end
-        end
+        remove_items_from_section(section, guid)
       end
     end
 
@@ -86,5 +77,18 @@ class AssessmentXml < ActiveRecord::Base
     end
 
     node.to_xml
+  end
+
+  def self.remove_items_from_section(section, guid)
+    if section.css('item')
+      section.css('item').each do |item|
+        item.css('itemmetadata qtimetadata qtimetadatafield').each do |metafield|
+          if metafield.css('fieldlabel').children.text == 'outcome_guid' && metafield.css('fieldentry').children.text == guid
+            # remove items with specified outcome guid
+            item.remove
+          end
+        end
+      end
+    end
   end
 end
