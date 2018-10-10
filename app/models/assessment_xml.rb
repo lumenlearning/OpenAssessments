@@ -79,6 +79,7 @@ class AssessmentXml < ActiveRecord::Base
     node.to_xml
   end
 
+
   # Remove all items from a given section for a given outcome guid
   #
   # Inside a section, we expect an xml structure like...
