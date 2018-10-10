@@ -79,13 +79,30 @@ class AssessmentXml < ActiveRecord::Base
     node.to_xml
   end
 
+  # Remove all items from a given section for a given outcome guid
+  #
+  # Inside a section, we expect an xml structure like...
+  # <item>
+  #   <itemmetadata>
+  #     <qtimetadata>
+  #       ...
+  #       <qtimetadatafield>
+  #         <fieldlabel>outcome_guid</fieldlabel>
+  #         <fieldentry>12345678-cd69-46f6-807a-asdfghjkl666</fieldentry>
+  #       </qtimetadatafield>
+  #       ...
+  #     </qtimetadata>
+  #   </itemmetadata>
+  # </item>
   def self.remove_items_from_section(section, guid)
-    if section.css('item')
+    if section.css('item').any?
       section.css('item').each do |item|
-        item.css('itemmetadata qtimetadata qtimetadatafield').each do |metafield|
-          if metafield.css('fieldlabel').children.text == 'outcome_guid' && metafield.css('fieldentry').children.text == guid
-            # remove items with specified outcome guid
-            item.remove
+        if item.css('itemmetadata qtimetadata qtimetadatafield').any?
+          item.css('itemmetadata qtimetadata qtimetadatafield').each do |metafield|
+            if metafield.css('fieldlabel').children.text == 'outcome_guid' && metafield.css('fieldentry').children.text == guid
+              # remove item with given outcome guid
+              item.remove
+            end
           end
         end
       end
