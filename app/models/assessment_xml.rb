@@ -79,7 +79,6 @@ class AssessmentXml < ActiveRecord::Base
     node.to_xml
   end
 
-
   # Remove all items from a given section for a given outcome guid
   #
   # Inside a section, we expect an xml structure like...
@@ -100,9 +99,10 @@ class AssessmentXml < ActiveRecord::Base
       section.css('item').each do |item|
         if item.css('itemmetadata qtimetadata qtimetadatafield').any?
           item.css('itemmetadata qtimetadata qtimetadatafield').each do |metafield|
-            if metafield.css('fieldlabel').children.text == 'outcome_guid' && metafield.css('fieldentry').children.text == guid
+            if metafield.css('fieldentry').children.to_s == guid.to_s
               # remove item with given outcome guid
               item.remove
+              return
             end
           end
         end

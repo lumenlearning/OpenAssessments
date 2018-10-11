@@ -206,7 +206,8 @@ class Api::AssessmentsController < Api::ApiController
     assessment = Assessment.where(id: params[:assessment_id]).first
     raise ActiveRecord::RecordNotFound unless assessment
 
-    assessment.remove_questions_for_guid!(guid: params.require(:guid))
+    assessment.remove_questions_for_guid!(params.require(:guid))
+    assessment.save!
 
     render :json => assessment
   end
