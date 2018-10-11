@@ -94,7 +94,7 @@ class Assessment < ActiveRecord::Base
 
   def remove_questions_for_guid!(guid)
     if (self.current_assessment_xml)
-      AssessmentXml.remove_questions_for_guid(self.current_assessment_xml.xml, guid)
+      self.xml_file = AssessmentXml.remove_questions_for_guid(self.current_assessment_xml.xml, guid)
     end
   end
 
