@@ -102,7 +102,6 @@ class AssessmentXml < ActiveRecord::Base
             if metafield.css('fieldentry').children.to_s == guid.to_s
               # remove item with given outcome guid
               item.remove
-              return
             end
           end
         end
