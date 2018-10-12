@@ -121,30 +121,4 @@ describe Assessment do
       expect(Assessment.tagged_with(keyword).first).to eq(@assessment)
     end
   end
-
-  context 'removing questions for a guid' do
-    before do
-      @swyk_assessment = Assessment.create!(title: 'testing', kind: 'show_what_you_know', xml_file: File.read(File.join(__dir__, '../fixtures/swyk_quiz_example.xml')) )
-      @summative_assessment = Assessment.create!(title: 'testing', kind: 'summative', xml_file: File.read(File.join(__dir__, '../fixtures/summative_quiz_example.xml')) )
-      @guid_to_delete = 'f71c5ce2-46b7-4cce-9531-1680d42faf1b'
-    end
-
-    it 'should remove the questions in the xml with answers' do
-      @new_swyk_assessment = @swyk_assessment.remove_questions_for_guid!(@guid_to_delete)
-      expect(@new_swyk_assessment).to_not match(@guid_to_delete)
-    end
-
-    it 'should remove the questions in the xml without answers' do
-      @new_summative_assessment = @summative_assessment.remove_questions_for_guid!(@guid_to_delete)
-      expect(@new_summative_assessment).to_not match(@guid_to_delete)
-    end
-
-    it 'removes the section if its empty' do
-      @swyk_node = Nokogiri::XML(@new_swyk_assessment_xml)
-      @summative_node = Nokogiri::XML(@new_swyk_assessment_xml)
-
-      expect(@swyk_node.css('section section').count).to eq(0)
-      expect(@summative_node.css('section section').count).to eq(0)
-    end
-  end
 end
