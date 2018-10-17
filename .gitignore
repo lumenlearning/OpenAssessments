@@ -42,8 +42,6 @@ client/node_modules
 npm-debug.log
 /app/assets/javascripts/styles.css
 
-public/assets
-
 ./bin/aws_deploy
 .ebextentions/
 .elasticbeanstalk/
