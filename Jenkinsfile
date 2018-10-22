@@ -48,7 +48,7 @@ pipeline {
 
     stage('Install Dependencies') {
       agent {
-        docker { image 'ruby222-postgres94:latest' }
+        docker { image 'ruby222-postgres94-node012:latest' }
       }
 
       failFast true
@@ -78,7 +78,7 @@ pipeline {
       }
 
       agent {
-        docker { image 'ruby222-postgres94:latest' }
+        docker { image 'ruby222-postgres94-node012:latest' }
       }
 
       failFast true
