@@ -6,11 +6,11 @@ String APP_NAME = "OEA"
 String APP_DESCRIPTION = "Open Assessments"
 
 String EB_APP_NAME_STAGING = "OpenAssessments-stg"
-String EB_APP_NAME_PROD = ""
+String EB_APP_NAME_PROD = "OpenAssessments"
 
 String EB_ENV_NAME_DEV = "openassessments-dev-env"
 String EB_ENV_NAME_STAGING = "openassessments-stg2"
-String EB_ENV_NAME_PROD = ""
+String EB_ENV_NAME_PROD = "openassessments-prod3"
 
 pipeline {
   agent none
