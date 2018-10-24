@@ -91,10 +91,6 @@ pipeline {
         sh 'bundle exec rake db:create'
         sh 'bundle exec rspec'
       }
-
-      post {
-        always { cleanWs(notFailBuild: true) }
-      }
     }
 
     stage('Artifact') {
