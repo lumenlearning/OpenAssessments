@@ -93,7 +93,7 @@ We can populate the database by running the following commands:
   $ APP_SUBDOMAIN=localhost bundle exec rake db:migrate
   $ APP_SUBDOMAIN=localhost bundle exec rake db:seed
   ```
-
+  
 ### 4. Install JavaScript Dependencies
 
 Make sure to have the correct version of Node running.
@@ -178,7 +178,7 @@ we use
 [Jasmine](https://github.com/jasmine/jasmine)
 and
 [Karma](https://github.com/karma-runner/karma)
-for running browser tests.
+for running browser tests. 
 To run tests against the JavaScript code,
 run `npm run test` from the `client/` directory in this project.
 
@@ -190,15 +190,7 @@ $ brew install chromedriver
 
 ## Deployment
 
-Compile the frontend assets by running:
-
-  ```
-  $ RAILS_ENV=production bundle exec rake assets:precompile
-  $ RAILS_ENV=production bundle exec rake assets:webpack
-  ```
-
-Then,
-assuming you are using
+Assuming you are using
 [AWS](https://aws.amazon.com/)
 for hosting and you have everything configured correctly,
 deployment is as simple as running `eb deploy` from the project root directory.

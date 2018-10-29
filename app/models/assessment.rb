@@ -92,12 +92,6 @@ class Assessment < ActiveRecord::Base
 
   end
 
-  def remove_questions_for_guid!(guid)
-    if (self.current_assessment_xml)
-      self.xml_file = AssessmentXml.remove_questions_for_guid(self.current_assessment_xml.xml, guid)
-    end
-  end
-
   def parsed_xml(xml = nil)
     @parsed_xml ||= AssessmentParser.parse(xml).first if xml.present?
     @parsed_xml

@@ -10,7 +10,7 @@ RSpec.describe Api::AssessmentsController, type: :controller do
     @account.save!
     @user = FactoryGirl.create(:user, account: @account)
     @user.confirm!
-
+    
     @admin = CreateAdminService.new.call
     @admin.make_account_admin({account_id: @account.id})
 
@@ -161,7 +161,7 @@ RSpec.describe Api::AssessmentsController, type: :controller do
         @payload = { :user_id => @admin.id, AuthToken::ADMIN_SCOPES => ['extcontext'], 'lti_launch_id' => @lti_launch.id }
         @edit_token = AuthToken.issue_token(@payload)
         @params = {format: :xml, id: @assessment.id, for_review: 1}
-
+        
         request.headers['Authorization'] = @edit_token
        end
 
@@ -321,7 +321,7 @@ RSpec.describe Api::AssessmentsController, type: :controller do
 
     it "creates an assessment" do
       post :create, assessment: @params, format: :json
-
+      
       expect(response).to have_http_status(201)
       a = Assessment.last
       expect(a.title).to eq @params[:title]
@@ -374,7 +374,7 @@ RSpec.describe Api::AssessmentsController, type: :controller do
       expect(assessment.xml_without_answers).not_to include("conditionvar")
       expect(response).to have_http_status(:success)
     end
-
+    
     it "should create assessment settings" do
       @params = {}
       @params[:title] = 'Test'
@@ -395,7 +395,7 @@ RSpec.describe Api::AssessmentsController, type: :controller do
       expect( settings.allowed_attempts ).to eq 2
       expect( settings.mode ).to eq @assessment.kind
     end
-
+    
     it "should update assessment settings" do
       orig_settings = @assessment.assessment_settings.create(mode: 'summative')
       @params = {}
