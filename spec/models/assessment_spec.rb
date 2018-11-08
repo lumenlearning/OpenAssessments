@@ -121,5 +121,4 @@ describe Assessment do
       expect(Assessment.tagged_with(keyword).first).to eq(@assessment)
     end
   end
-
 end
