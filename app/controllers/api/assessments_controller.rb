@@ -212,6 +212,19 @@ class Api::AssessmentsController < Api::ApiController
     render :json => assessment
   end
 
+  def move_questions_for_guid
+    assessment = Assessment.where(id: params[:assessment_id]).first
+    raise ActiveRecord::RecordNotFound unless assessment
+
+    dest_assessment = Assessment.where(id: params[:dest_assessment_id]).first
+    raise ActiveRecord::RecordNotFound unless dest_assessment
+
+    assessment.move_questions_for_guid!(dest_assessment, params.require(:guid))
+    assessment.save!
+
+    render :json => assessment
+  end
+
   private
 
   # makes sure the JWT token allows admin scope for this LTI context id

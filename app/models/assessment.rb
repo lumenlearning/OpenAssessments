@@ -98,6 +98,12 @@ class Assessment < ActiveRecord::Base
     end
   end
 
+  def move_questions_for_guid!(destination, guid)
+    if (self.current_assessment_xml)
+      self.xml_file = AssessmentXml.move_questions_for_guid(self.current_assessment_xml.xml, destination.xml, guid)
+    end
+  end
+
   def parsed_xml(xml = nil)
     @parsed_xml ||= AssessmentParser.parse(xml).first if xml.present?
     @parsed_xml

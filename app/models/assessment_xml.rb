@@ -79,6 +79,41 @@ class AssessmentXml < ActiveRecord::Base
     node.to_xml
   end
 
+  def self.move_questions_for_guid(xml, dest_xml, guid)
+    node = Nokogiri::XML(xml)
+    dest_node = Nokogiri::XML(dest_xml)
+    # We expect an xml structure like ...
+    # <section>
+    #     <section><item /></section>
+    # </section>
+    if node.css('section section').any?
+      node.css('section section').each do |section|
+        copy_items_from_section(section, guid, dest_node)
+        remove_items_from_section(section, guid)
+      end
+    # But sometimes the xml structure can be just one "section" deep ...
+    # <section>
+    #     <item />
+    # </section>
+    else
+      node.css('section').each do |section|
+        copy_items_from_section(section, guid, dest_node)
+        remove_items_from_section(section, guid)
+      end
+    end
+
+    # after removing items, remove section if section is now empty
+    if node.css('section section').any?
+      node.css('section section').each do |section|
+        unless section.css('item').any?
+          section.remove
+        end
+      end
+    end
+
+    node.to_xml
+  end
+
   # Remove all items from a given section for a given outcome guid
   #
   # Inside a section, we expect an xml structure like...
@@ -102,6 +137,22 @@ class AssessmentXml < ActiveRecord::Base
             if metafield.css('fieldentry').children.to_s == guid.to_s
               # remove item with given outcome guid
               item.remove
+            end
+          end
+        end
+      end
+    end
+  end
+
+  def self.copy_items_from_section(section, guid, dest_xml)
+    if section.css('item').any?
+      section.css('item').each do |item|
+        if item.css('itemmetadata qtimetadata qtimetadatafield').any?
+          item.css('itemmetadata qtimetadata qtimetadatafield').each do |metafield|
+            if metafield.css('fieldentry').children.to_s == guid.to_s
+              #
+              # TODO: do some sort of copy logic here...
+              #
             end
           end
         end

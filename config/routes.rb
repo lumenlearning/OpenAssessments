@@ -67,6 +67,7 @@ Rails.application.routes.draw do
       put '/edit', to: 'assessments#json_update'
       post '/copy', to: 'assessments#copy', as: 'assessments_copy'
       post '/remove-questions-for-guid', to: 'assessments#remove_questions_for_guid'
+      put '/move-questions-for-guid', to: 'assessments#move_questions_for_guid'
     end
     resources :assessment_results do
       post 'send', to: 'assessment_results#send_result_to_analytics'
