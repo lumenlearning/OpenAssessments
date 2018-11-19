@@ -10,7 +10,7 @@ String EB_APP_NAME_PROD = "OpenAssessments"
 
 String EB_ENV_NAME_DEV = "openassessments-dev-env"
 String EB_ENV_NAME_STAGING = "openassessments-stg2"
-String EB_ENV_NAME_PROD = "openassessments-prod3"
+String EB_ENV_NAME_PROD = "openassessments-prod4"
 
 pipeline {
   agent none
@@ -31,6 +31,7 @@ pipeline {
     booleanParam(defaultValue: false, description: 'Should the Test phase be skipped?', name: 'SKIP_TESTS_REQUESTED')
     booleanParam(defaultValue: false, description: 'Should the deployment to Dev phase be skipped?', name: 'DEV_DEPLOYMENT_REQUESTED')
     booleanParam(defaultValue: false, description: 'Deploy to staging?', name: 'STAGING_DEPLOYMENT_REQUESTED')
+    booleanParam(defaultValue: false, description: 'Deploy to Prod?', name: 'PROD_DEPLOYMENT_REQUESTED')
   }
 
   stages {
