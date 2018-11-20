@@ -108,4 +108,61 @@ class AssessmentXml < ActiveRecord::Base
       end
     end
   end
+
+  def self.move_questions_for_guid(source_xml, destination_xml, guid)
+    node = Nokogiri::XML(source_xml)
+
+    if node.css('section section').any?
+      node.css('section section').each do |section|
+        remove_items_from_section(section, guid)
+      end
+    else
+      node.css('section').each do |section|
+        remove_items_from_section(section, guid)
+      end
+    end
+
+    # after moving items, remove section if section is now empty
+    if node.css('section section').any?
+      node.css('section section').each do |section|
+        unless section.css('item').any?
+          section.remove
+        end
+      end
+    end
+
+    node.to_xml
+  end
+
+  # Moves all items from a given section for a given outcome guid to another section
+  #
+  # Inside a section, we expect an xml structure like...
+  # <item>
+  #   <itemmetadata>
+  #     <qtimetadata>
+  #       ...
+  #       <qtimetadatafield>
+  #         <fieldlabel>outcome_guid</fieldlabel>
+  #         <fieldentry>12345678-cd69-46f6-807a-asdfghjkl666</fieldentry>
+  #       </qtimetadatafield>
+  #       ...
+  #     </qtimetadata>
+  #   </itemmetadata>
+  # </item>
+  def self.move_items(source_section, destination_section, guid)
+    if source_section.css('item').any?
+      source_section.css('item').each do |item|
+        if item.css('itemmetadata qtimetadata qtimetadatafield').any?
+          item.css('itemmetadata qtimetadata qtimetadatafield').each do |metafield|
+            if metafield.css('fieldentry').children.to_s == guid.to_s && item.parent
+              section = item.parent
+              # remove item with given outcome guid
+              section.unlink # remove from source
+              destination_section.children.last.next = section # and add to destination
+            end
+          end
+        end
+      end
+    end
+  end
 end
