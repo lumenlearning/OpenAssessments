@@ -123,22 +123,6 @@ class AssessmentXml < ActiveRecord::Base
     doc.css('assessment > section').first
   end
 
-  def self.move_questions_for_guid(source_xml_string, destination_xml_string, guid)
-    source_doc = Nokogiri::XML(source_xml_string)
-    destination_doc = Nokogiri::XML(destination_xml_string)
-
-    if root_section_contains_child_sections?(source_doc)
-      source_doc.css('section section').each do |source_section|
-        move_questions_from_source_section!(source_doc, source_section, destination_doc, guid)
-      end
-      clear_empty_child_sections!(source_doc)
-    else
-      source_section = root_section(source_doc)
-      move_questions_from_source_section!(source_doc, source_section, destination_doc, guid)
-    end
-    return source_doc.to_xml, destination_doc.to_xml
-  end
-
   def self.move_questions_from_source_section!(source_doc, source_section, destination_doc, guid)
     if source_section.to_s =~ /#{guid}/ # is the guid present in this section's xml?
       dest_root_section = root_section(destination_doc)
@@ -171,6 +155,31 @@ class AssessmentXml < ActiveRecord::Base
     mirror_section
   end
 
+  def self.move_questions_for_guid(source_xml, destination_xml, guid)
+    node = Nokogiri::XML(source_xml)
+
+    if node.css('section section').any?
+      node.css('section section').each do |section|
+        remove_items_from_section(section, guid)
+      end
+    else
+      node.css('section').each do |section|
+        remove_items_from_section(section, guid)
+      end
+    end
+
+    # after moving items, remove section if section is now empty
+    if node.css('section section').any?
+      node.css('section section').each do |section|
+        unless section.css('item').any?
+          section.remove
+        end
+      end
+    end
+
+    node.to_xml
+  end
+
   # Moves all items from a given section for a given outcome guid to another section
   #
   # Inside a section, we expect an xml structure like...
@@ -191,11 +200,11 @@ class AssessmentXml < ActiveRecord::Base
       source_section.css('item').each do |item|
         if item.css('itemmetadata qtimetadata qtimetadatafield').any?
           item.css('itemmetadata qtimetadata qtimetadatafield').each do |metafield|
-            if metafield.css('fieldentry').children.to_s == guid.to_s
+            if metafield.css('fieldentry').children.to_s == guid.to_s && item.parent
+              section = item.parent
               # remove item with given outcome guid
-              item.unlink # remove from source
-              item.default_namespace = "http://www.imsglobal.org/xsd/ims_qtiasiv1p2"
-              destination_section.add_child(item)
+              section.unlink # remove from source
+              destination_section.children.last.next = section # and add to destination
             end
           end
         end
