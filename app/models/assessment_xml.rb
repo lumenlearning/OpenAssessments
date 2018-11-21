@@ -112,7 +112,7 @@ class AssessmentXml < ActiveRecord::Base
   def self.move_questions_for_guid(source_xml, destination_xml, guid)
     node = Nokogiri::XML(source_xml)
 
-    if node.css('section section').any?
+    if self.root_section_contains_child_sections?(node)
       node.css('section section').each do |section|
         remove_items_from_section(section, guid)
       end
@@ -123,15 +123,40 @@ class AssessmentXml < ActiveRecord::Base
     end
 
     # after moving items, remove section if section is now empty
-    if node.css('section section').any?
-      node.css('section section').each do |section|
+    clear_empty_child_sections!(node)
+
+    node.to_xml
+  end
+
+  def self.clear_empty_child_sections!(doc)
+    if root_section_contains_child_sections?(doc)
+      doc.css('section section').each do |section|
         unless section.css('item').any?
           section.remove
         end
       end
     end
+  end
 
-    node.to_xml
+  def self.move_questions_for_guid(source_doc, destination_doc, guid)
+    # if destination root section has no child sections, then all matching items should be moved to root section
+    # otherwise, create "mirror" section in destination, and copy items into that
+    # after copy, if all items in destination are moved, remove the section - unless it is the root section!
+  end
+
+  def self.root_section_contains_child_sections?(doc)
+    doc.css('section section').any?
+  end
+
+  def self.create_mirror_section!(source_section, destination_root_section)
+    mirror_section = Nokogiri::XML::Node.new "section"
+    if source_section['ident']
+      mirror_section['ident'] = source_section['ident']
+    end
+    if source_section['title']
+      mirror_section['title'] = source_section['title']
+    end
+    destination_root_section.children.last.next = mirror_section
   end
 
   # Moves all items from a given section for a given outcome guid to another section
@@ -154,11 +179,10 @@ class AssessmentXml < ActiveRecord::Base
       source_section.css('item').each do |item|
         if item.css('itemmetadata qtimetadata qtimetadatafield').any?
           item.css('itemmetadata qtimetadata qtimetadatafield').each do |metafield|
-            if metafield.css('fieldentry').children.to_s == guid.to_s && item.parent
-              section = item.parent
+            if metafield.css('fieldentry').children.to_s == guid.to_s
               # remove item with given outcome guid
-              section.unlink # remove from source
-              destination_section.children.last.next = section # and add to destination
+              item.unlink # remove from source
+              destination_section.children.last.next = item # and add to destination
             end
           end
         end

@@ -1,4 +1,9 @@
 require 'rails_helper'
+require 'support/nokogiri_helpers'
+
+RSpec.configure do |config|
+  config.include NokogiriHelpers
+end
 
 describe AssessmentXml do
   before do
@@ -228,17 +233,17 @@ describe AssessmentXml do
     end
 
     it "should move the item from the source to the destination, if the guid is found in the item in the source" do
-      original_source_parent = @source_section.parent
       AssessmentXml.move_items(@source_section, @destination_section, '65b449c6-afb8-416f-960b-8aaf69cb4ed2')
-      expect(original_source_parent.children.select { |child| child.element? }.length).to eq 2
-      expect(@destination_section.children.select { |child| child.element? }.length).to eq 4
+      expect(retrieve_children_elements(@source_section).length).to eq 0
+      expect(retrieve_children_elements(@source_section.parent).length).to eq 3
+      expect(retrieve_children_elements(@destination_section).length).to eq 4
     end
 
     it "should leave the two XMLs unchanged if guid is not found in the source" do
       original_source_parent = @source_section.parent
       AssessmentXml.move_items(@source_section, @destination_section, 'adfb2853-598d-48f7-8206-50edaac3a16c')
-      expect(original_source_parent.children.select { |child| child.element? }.length).to eq 3
-      expect(@destination_section.children.select { |child| child.element? }.length).to eq 3
+      expect(retrieve_children_elements(original_source_parent).length).to eq 3
+      expect(retrieve_children_elements(@destination_section).length).to eq 3
     end
   end
 
