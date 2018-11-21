@@ -109,25 +109,6 @@ class AssessmentXml < ActiveRecord::Base
     end
   end
 
-  def self.move_questions_for_guid(source_xml, destination_xml, guid)
-    node = Nokogiri::XML(source_xml)
-
-    if self.root_section_contains_child_sections?(node)
-      node.css('section section').each do |section|
-        remove_items_from_section(section, guid)
-      end
-    else
-      node.css('section').each do |section|
-        remove_items_from_section(section, guid)
-      end
-    end
-
-    # after moving items, remove section if section is now empty
-    clear_empty_child_sections!(node)
-
-    node.to_xml
-  end
-
   def self.clear_empty_child_sections!(doc)
     if root_section_contains_child_sections?(doc)
       doc.css('section section').each do |section|
@@ -142,7 +123,10 @@ class AssessmentXml < ActiveRecord::Base
     doc.css('assessment > section').first
   end
 
-  def self.move_questions_for_guid!(source_doc, destination_doc, guid)
+  def self.move_questions_for_guid(source_xml_string, destination_xml_string, guid)
+    source_doc = Nokogiri::XML(source_xml_string)
+    destination_doc = Nokogiri::XML(destination_xml_string)
+
     destination_section = nil
     if root_section_contains_child_sections?(source_doc)
       source_doc.css('section section').each do |source_section|
@@ -153,6 +137,7 @@ class AssessmentXml < ActiveRecord::Base
       source_section = root_section(source_doc)
       move_questions_from_source_section!(source_doc, source_section, destination_doc, guid)
     end
+    return source_doc.to_xml, destination_doc.to_xml
   end
 
   def self.move_questions_from_source_section!(source_doc, source_section, destination_doc, guid)

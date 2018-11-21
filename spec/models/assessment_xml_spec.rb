@@ -1072,9 +1072,9 @@ describe AssessmentXml do
     end
   end
 
-  context "AssessmentXml.move_questions_for_guid!" do
+  context "AssessmentXml.move_questions_for_guid" do
     it "should move items for every section which has an item with a matching guid" do
-      source_doc = Nokogiri::XML <<-EOSOURCEXML
+      source_xml = <<-EOSOURCEXML
 <?xml version="1.0" encoding="UTF-8"?>
 <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
   <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
@@ -1200,7 +1200,7 @@ describe AssessmentXml do
 </questestinterop>
       EOSOURCEXML
 
-      destination_doc = Nokogiri::XML <<-EODESTXML
+      destination_xml = <<-EODESTXML
 <?xml version="1.0" encoding="UTF-8"?>
 <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
   <assessment title="Show What You Know: Macro Workings" ident="if8390a2480634681a1608f47c0a529fe_swyk">
@@ -1234,13 +1234,14 @@ describe AssessmentXml do
 </questestinterop>
       EODESTXML
 
-      AssessmentXml.move_questions_for_guid!(source_doc, destination_doc, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
-      source_root = AssessmentXml.root_section(source_doc)
+      updated_source_xml, updated_destination_xml =
+        AssessmentXml.move_questions_for_guid(source_xml, destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
+      source_root = AssessmentXml.root_section(Nokogiri::XML(updated_source_xml))
       expect(retrieve_children_elements(source_root).length).to eq 3
       expect(retrieve_children_elements(retrieve_children_elements(source_root)[0]).length).to eq 1
       expect(retrieve_children_elements(retrieve_children_elements(source_root)[1]).length).to eq 1
       expect(retrieve_children_elements(retrieve_children_elements(source_root)[2]).length).to eq 1
-      destination_root = AssessmentXml.root_section(destination_doc)
+      destination_root = AssessmentXml.root_section(Nokogiri::XML(updated_destination_xml))
       expect(retrieve_children_elements(destination_root).length).to eq 3
       expect(retrieve_children_elements(retrieve_children_elements(destination_root)[0]).length).to eq 1
       expect(retrieve_children_elements(retrieve_children_elements(destination_root)[1]).length).to eq 1
@@ -1248,7 +1249,7 @@ describe AssessmentXml do
     end
 
     it "should clear out sections if a child section has all items removed" do
-source_doc = Nokogiri::XML <<-EOSOURCEXML
+      source_xml = <<-EOSOURCEXML
 <?xml version="1.0" encoding="UTF-8"?>
 <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
   <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
@@ -1328,7 +1329,7 @@ source_doc = Nokogiri::XML <<-EOSOURCEXML
 </questestinterop>
       EOSOURCEXML
 
-      destination_doc = Nokogiri::XML <<-EODESTXML
+      destination_xml = <<-EODESTXML
 <?xml version="1.0" encoding="UTF-8"?>
 <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
   <assessment title="Show What You Know: Macro Workings" ident="if8390a2480634681a1608f47c0a529fe_swyk">
@@ -1362,18 +1363,19 @@ source_doc = Nokogiri::XML <<-EOSOURCEXML
 </questestinterop>
       EODESTXML
 
-      AssessmentXml.move_questions_for_guid!(source_doc, destination_doc, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
-      source_root = AssessmentXml.root_section(source_doc)
+      updated_source_xml, updated_destination_xml =
+        AssessmentXml.move_questions_for_guid(source_xml, destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
+      source_root = AssessmentXml.root_section(Nokogiri::XML(updated_source_xml))
       expect(retrieve_children_elements(source_root).length).to eq 1
       expect(retrieve_children_elements(retrieve_children_elements(source_root)[0]).length).to eq 1
-      destination_root = AssessmentXml.root_section(destination_doc)
+      destination_root = AssessmentXml.root_section(Nokogiri::XML(updated_destination_xml))
       expect(retrieve_children_elements(destination_root).length).to eq 2
       expect(retrieve_children_elements(retrieve_children_elements(destination_root)[0]).length).to eq 1
       expect(retrieve_children_elements(retrieve_children_elements(destination_root)[1]).length).to eq 2
     end
 
     it "should move items from root section if no child sections exist" do
-      source_doc = Nokogiri::XML <<-EOSOURCEXML
+      source_xml = <<-EOSOURCEXML
 <?xml version="1.0" encoding="UTF-8"?>
 <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
   <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
@@ -1449,7 +1451,7 @@ source_doc = Nokogiri::XML <<-EOSOURCEXML
 </questestinterop>
       EOSOURCEXML
 
-      destination_doc = Nokogiri::XML <<-EODESTXML
+      destination_xml = <<-EODESTXML
 <?xml version="1.0" encoding="UTF-8"?>
 <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
   <assessment title="Show What You Know: Macro Workings" ident="if8390a2480634681a1608f47c0a529fe_swyk">
@@ -1483,18 +1485,19 @@ source_doc = Nokogiri::XML <<-EOSOURCEXML
 </questestinterop>
       EODESTXML
 
-      AssessmentXml.move_questions_for_guid!(source_doc, destination_doc, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
-      source_root = AssessmentXml.root_section(source_doc)
+      updated_source_xml, updated_destination_xml =
+        AssessmentXml.move_questions_for_guid(source_xml, destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
+      source_root = AssessmentXml.root_section(Nokogiri::XML(updated_source_xml))
       expect(retrieve_children_elements(source_root).length).to eq 1
       expect(retrieve_children_elements(source_root)[0].node_name).to eq "item"
-      destination_root = AssessmentXml.root_section(destination_doc)
+      destination_root = AssessmentXml.root_section(Nokogiri::XML(updated_destination_xml))
       expect(retrieve_children_elements(destination_root).length).to eq 2
       expect(retrieve_children_elements(retrieve_children_elements(destination_root)[0]).length).to eq 1
       expect(retrieve_children_elements(retrieve_children_elements(destination_root)[1]).length).to eq 2
     end
 
     it "should never remove root section, even if no items or sections are left in it" do
-      source_doc = Nokogiri::XML <<-EOSOURCEXML
+      source_xml = <<-EOSOURCEXML
 <?xml version="1.0" encoding="UTF-8"?>
 <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
   <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
@@ -1548,7 +1551,7 @@ source_doc = Nokogiri::XML <<-EOSOURCEXML
 </questestinterop>
       EOSOURCEXML
 
-      destination_doc = Nokogiri::XML <<-EODESTXML
+      destination_xml = <<-EODESTXML
 <?xml version="1.0" encoding="UTF-8"?>
 <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
   <assessment title="Show What You Know: Macro Workings" ident="if8390a2480634681a1608f47c0a529fe_swyk">
@@ -1582,11 +1585,12 @@ source_doc = Nokogiri::XML <<-EOSOURCEXML
 </questestinterop>
       EODESTXML
 
-      AssessmentXml.move_questions_for_guid!(source_doc, destination_doc, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
-      source_root = AssessmentXml.root_section(source_doc)
+      updated_source_xml, updated_destination_xml =
+        AssessmentXml.move_questions_for_guid(source_xml, destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
+      source_root = AssessmentXml.root_section(Nokogiri::XML(updated_source_xml))
       expect(source_root).not_to be_nil
       expect(retrieve_children_elements(source_root).length).to eq 0
-      destination_root = AssessmentXml.root_section(destination_doc)
+      destination_root = AssessmentXml.root_section(Nokogiri::XML(updated_destination_xml))
       expect(retrieve_children_elements(destination_root).length).to eq 2
       expect(retrieve_children_elements(retrieve_children_elements(destination_root)[0]).length).to eq 1
       expect(retrieve_children_elements(retrieve_children_elements(destination_root)[1]).length).to eq 2
