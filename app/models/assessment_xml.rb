@@ -138,10 +138,33 @@ class AssessmentXml < ActiveRecord::Base
     end
   end
 
-  def self.move_questions_for_guid(source_doc, destination_doc, guid)
-    # if destination root section has no child sections, then all matching items should be moved to root section
-    # otherwise, create "mirror" section in destination, and copy items into that
-    # after copy, if all items in destination are moved, remove the section - unless it is the root section!
+  def self.root_section(doc)
+    doc.css('assessment > section').first
+  end
+
+  def self.move_questions_for_guid!(source_doc, destination_doc, guid)
+    destination_section = nil
+    if root_section_contains_child_sections?(source_doc)
+      source_doc.css('section section').each do |source_section|
+        move_questions_from_source_section!(source_doc, source_section, destination_doc, guid)
+      end
+      clear_empty_child_sections!(source_doc)
+    else
+      source_section = root_section(source_doc)
+      move_questions_from_source_section!(source_doc, source_section, destination_doc, guid)
+    end
+  end
+
+  def self.move_questions_from_source_section!(source_doc, source_section, destination_doc, guid)
+    if source_section.to_s =~ /#{guid}/ # is the guid present in this section's xml?
+      dest_root_section = root_section(destination_doc)
+      if root_section_contains_child_sections?(destination_doc)
+        destination_section = create_mirror_section!(source_doc, source_section, dest_root_section)
+      else
+        destination_section = dest_root_section
+      end
+      move_items(source_section, destination_section, guid)
+    end
   end
 
   def self.root_section_contains_child_sections?(doc)
@@ -157,6 +180,7 @@ class AssessmentXml < ActiveRecord::Base
       mirror_section['title'] = source_section['title']
     end
     destination_root_section.children.last.next = mirror_section
+    mirror_section
   end
 
   # Moves all items from a given section for a given outcome guid to another section
@@ -182,7 +206,7 @@ class AssessmentXml < ActiveRecord::Base
             if metafield.css('fieldentry').children.to_s == guid.to_s
               # remove item with given outcome guid
               item.unlink # remove from source
-              destination_section.children.last.next = item # and add to destination
+              destination_section.add_child(item)
             end
           end
         end
