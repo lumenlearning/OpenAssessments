@@ -148,8 +148,8 @@ class AssessmentXml < ActiveRecord::Base
     doc.css('section section').any?
   end
 
-  def self.create_mirror_section!(source_section, destination_root_section)
-    mirror_section = Nokogiri::XML::Node.new "section"
+  def self.create_mirror_section!(source_document, source_section, destination_root_section)
+    mirror_section = Nokogiri::XML::Node.new "section", source_document
     if source_section['ident']
       mirror_section['ident'] = source_section['ident']
     end
