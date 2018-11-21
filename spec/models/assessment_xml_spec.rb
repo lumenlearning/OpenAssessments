@@ -599,6 +599,77 @@ describe AssessmentXml do
   end
 
   context "AssessmentXml.root_section_contains_child_sections?" do
+    it "will return true if the root section has child sections" do
+      xml = Nokogiri::XML <<-EOXML
+    <?xml version="1.0" encoding="UTF-8"?>
+    <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+      <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
+        <section ident="root_section">
+          <section title="Liquidity Trap" ident="170">
+            <item title="" ident="7773">
+              <itemmetadata>
+                <qtimetadata>
+                  <qtimetadatafield>
+                    <fieldlabel>question_type</fieldlabel>
+                    <fieldentry>multiple_answers_question</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_guid</fieldlabel>
+                    <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_short_title</fieldlabel>
+                    <fieldentry>Liquidity Trap</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_long_title</fieldlabel>
+                    <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
+                  </qtimetadatafield>
+                </qtimetadata>
+              </itemmetadata>
+            </item>
+          </section>
+        </section>
+      </assessment>
+    </questestinterop>
+          EOXML
+      expect(AssessmentXml.root_section_contains_child_sections?(xml)).to be_truthy
+    end
+
+    it "will return false if the root section does not have child sections" do
+      xml = Nokogiri::XML <<-EOXML
+    <?xml version="1.0" encoding="UTF-8"?>
+    <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+      <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
+        <section ident="root_section">
+          <item title="" ident="7773">
+            <itemmetadata>
+              <qtimetadata>
+                <qtimetadatafield>
+                  <fieldlabel>question_type</fieldlabel>
+                  <fieldentry>multiple_answers_question</fieldentry>
+                </qtimetadatafield>
+                <qtimetadatafield>
+                  <fieldlabel>outcome_guid</fieldlabel>
+                  <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
+                </qtimetadatafield>
+                <qtimetadatafield>
+                  <fieldlabel>outcome_short_title</fieldlabel>
+                  <fieldentry>Liquidity Trap</fieldentry>
+                </qtimetadatafield>
+                <qtimetadatafield>
+                  <fieldlabel>outcome_long_title</fieldlabel>
+                  <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
+                </qtimetadatafield>
+              </qtimetadata>
+            </itemmetadata>
+          </item>
+        </section>
+      </assessment>
+    </questestinterop>
+          EOXML
+      expect(AssessmentXml.root_section_contains_child_sections?(xml)).to be_falsy
+    end
   end
 
   context "AssessmentXml.create_mirror_section!" do
