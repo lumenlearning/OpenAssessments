@@ -178,7 +178,7 @@ describe AssessmentXml do
 
   context "AssessmentXml.move_items_from_section" do
     before(:each) do
-      @source_xml = Nokogiri::HTML::DocumentFragment.parse <<-EOSOURCEXML
+      @source_xml = Nokogiri::XML <<-EOSOURCEXML
 <?xml version="1.0" encoding="UTF-8"?>
 <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
   <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
@@ -260,7 +260,7 @@ describe AssessmentXml do
 </questestinterop>
       EOSOURCEXML
 
-      @destination_xml = Nokogiri::HTML::DocumentFragment.parse <<-EODESTXML
+      @destination_xml = Nokogiri::XML <<-EODESTXML
 <?xml version="1.0" encoding="UTF-8"?>
 <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
   <assessment title="Show What You Know: Macro Workings" ident="if8390a2480634681a1608f47c0a529fe_swyk">
@@ -359,6 +359,248 @@ describe AssessmentXml do
       expect(retrieve_children_elements(original_source_parent).length).to eq 3
       expect(retrieve_children_elements(@destination_section).length).to eq 3
     end
+
+    it "will remove only those items in a section which match the guid" do
+      two_items_source_xml = Nokogiri::XML <<-EOSOURCEXML
+    <?xml version="1.0" encoding="UTF-8"?>
+    <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+      <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
+        <section ident="root_section">
+          <section title="Liquidity Trap" ident="170">
+            <item title="" ident="7773">
+              <itemmetadata>
+                <qtimetadata>
+                  <qtimetadatafield>
+                    <fieldlabel>question_type</fieldlabel>
+                    <fieldentry>multiple_answers_question</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_guid</fieldlabel>
+                    <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_short_title</fieldlabel>
+                    <fieldentry>Liquidity Trap</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_long_title</fieldlabel>
+                    <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
+                  </qtimetadatafield>
+                </qtimetadata>
+              </itemmetadata>
+            </item>
+            <item title="" ident="5326">
+              <itemmetadata>
+                <qtimetadata>
+                  <qtimetadatafield>
+                    <fieldlabel>question_type</fieldlabel>
+                    <fieldentry>multiple_answers_question</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_guid</fieldlabel>
+                    <fieldentry>129039d4-84ae-4b3d-8593-2917acdea4e2</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_short_title</fieldlabel>
+                    <fieldentry>Crowding Out</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_long_title</fieldlabel>
+                    <fieldentry>Explain how Crowding Out weakens the effectiveness of fiscal policy</fieldentry>
+                  </qtimetadatafield>
+                </qtimetadata>
+              </itemmetadata>
+            </item>
+          </section>
+          <section title="The Expenditure Multiplier" ident="2902">
+            <item title="" ident="1737">
+              <itemmetadata>
+                <qtimetadata>
+                  <qtimetadatafield>
+                    <fieldlabel>question_type</fieldlabel>
+                    <fieldentry>multiple_answers_question</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_guid</fieldlabel>
+                    <fieldentry>adfb2853-598d-48f7-8206-50edaac3a16c</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_short_title</fieldlabel>
+                    <fieldentry>The Expenditure Multiplier</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_long_title</fieldlabel>
+                    <fieldentry>Explain the significance of the Expenditure Multiplier</fieldentry>
+                  </qtimetadatafield>
+                </qtimetadata>
+              </itemmetadata>
+            </item>
+          </section>
+        </section>
+      </assessment>
+    </questestinterop>
+          EOSOURCEXML
+
+      two_items_source_section = two_items_source_xml.css("section[ident='170']").first
+
+      AssessmentXml.move_items(two_items_source_section, @destination_section, '65b449c6-afb8-416f-960b-8aaf69cb4ed2')
+      expect(retrieve_children_elements(two_items_source_section).length).to eq 1
+      expect(retrieve_children_elements(two_items_source_section.parent).length).to eq 2
+      expect(retrieve_children_elements(@destination_section).length).to eq 4
+    end
+
+    it "will remove all of the items from the source section if they match on guid" do
+      two_items_source_xml = Nokogiri::XML <<-EOSOURCEXML
+    <?xml version="1.0" encoding="UTF-8"?>
+    <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+      <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
+        <section ident="root_section">
+          <section title="Liquidity Trap" ident="170">
+            <item title="" ident="7773">
+              <itemmetadata>
+                <qtimetadata>
+                  <qtimetadatafield>
+                    <fieldlabel>question_type</fieldlabel>
+                    <fieldentry>multiple_answers_question</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_guid</fieldlabel>
+                    <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_short_title</fieldlabel>
+                    <fieldentry>Liquidity Trap</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_long_title</fieldlabel>
+                    <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
+                  </qtimetadatafield>
+                </qtimetadata>
+              </itemmetadata>
+            </item>
+            <item title="" ident="5326">
+              <itemmetadata>
+                <qtimetadata>
+                  <qtimetadatafield>
+                    <fieldlabel>question_type</fieldlabel>
+                    <fieldentry>multiple_answers_question</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_guid</fieldlabel>
+                    <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_short_title</fieldlabel>
+                    <fieldentry>Crowding Out</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_long_title</fieldlabel>
+                    <fieldentry>Explain how Crowding Out weakens the effectiveness of fiscal policy</fieldentry>
+                  </qtimetadatafield>
+                </qtimetadata>
+              </itemmetadata>
+            </item>
+          </section>
+          <section title="The Expenditure Multiplier" ident="2902">
+            <item title="" ident="1737">
+              <itemmetadata>
+                <qtimetadata>
+                  <qtimetadatafield>
+                    <fieldlabel>question_type</fieldlabel>
+                    <fieldentry>multiple_answers_question</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_guid</fieldlabel>
+                    <fieldentry>adfb2853-598d-48f7-8206-50edaac3a16c</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_short_title</fieldlabel>
+                    <fieldentry>The Expenditure Multiplier</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_long_title</fieldlabel>
+                    <fieldentry>Explain the significance of the Expenditure Multiplier</fieldentry>
+                  </qtimetadatafield>
+                </qtimetadata>
+              </itemmetadata>
+            </item>
+          </section>
+        </section>
+      </assessment>
+    </questestinterop>
+          EOSOURCEXML
+
+      two_items_source_section = two_items_source_xml.css("section[ident='170']").first
+      AssessmentXml.move_items(two_items_source_section, @destination_section, '65b449c6-afb8-416f-960b-8aaf69cb4ed2')
+      expect(retrieve_children_elements(two_items_source_section).length).to eq 0
+      expect(retrieve_children_elements(two_items_source_section.parent).length).to eq 2
+      expect(retrieve_children_elements(@destination_section).length).to eq 5
+    end
   end
 
+  context "AssessmentXml.clear_empty_child_sections!" do
+    it "will clear sections which are empty" do
+      xml = Nokogiri::XML <<-EOXML
+    <?xml version="1.0" encoding="UTF-8"?>
+    <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+      <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
+        <section ident="root_section">
+          <section title="Liquidity Trap" ident="170">
+          </section>
+        </section>
+      </assessment>
+    </questestinterop>
+          EOXML
+      section = xml.css("section[ident='root_section']").first
+      
+      AssessmentXml.clear_empty_child_sections!(xml)
+      expect(retrieve_children_elements(section).length).to be 0
+    end
+
+    it "will not clear sections which have items in them" do
+      xml = Nokogiri::XML <<-EOXML
+    <?xml version="1.0" encoding="UTF-8"?>
+    <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+      <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
+        <section ident="root_section">
+          <section title="Liquidity Trap" ident="170">
+            <item title="" ident="7773">
+              <itemmetadata>
+                <qtimetadata>
+                  <qtimetadatafield>
+                    <fieldlabel>question_type</fieldlabel>
+                    <fieldentry>multiple_answers_question</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_guid</fieldlabel>
+                    <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_short_title</fieldlabel>
+                    <fieldentry>Liquidity Trap</fieldentry>
+                  </qtimetadatafield>
+                  <qtimetadatafield>
+                    <fieldlabel>outcome_long_title</fieldlabel>
+                    <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
+                  </qtimetadatafield>
+                </qtimetadata>
+              </itemmetadata>
+            </item>
+          </section>
+        </section>
+      </assessment>
+    </questestinterop>
+          EOXML
+      section = xml.css("section[ident='root_section']").first
+
+      AssessmentXml.clear_empty_child_sections!(xml)
+      expect(retrieve_children_elements(section).length).to be 1
+    end
+  end
+
+  context "AssessmentXml.root_section_contains_child_sections?" do
+  end
+
+  context "AssessmentXml.create_mirror_section!" do
+  end
 end
