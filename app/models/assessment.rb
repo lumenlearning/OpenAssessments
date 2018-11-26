@@ -190,7 +190,10 @@ class Assessment < ActiveRecord::Base
   def self.move_questions_for_guid!(source_assessment, destination_assessment, guid)
     if (source_assessment.current_assessment_xml && destination_assessment.current_assessment_xml)
       updated_source_xml, updated_destination_xml =
-        AssessmentXml.move_questions_for_guid(self.current_assessment_xml.xml, guid)
+        AssessmentXml.move_questions_for_guid(
+          source_assessment.current_assessment_xml.xml,
+          destination_assessment.current_assessment_xml.xml,
+          guid)
       source_assessment.xml_file = updated_source_xml
       destination_assessment.xml_file = updated_destination_xml
     end
