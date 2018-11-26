@@ -127,7 +127,6 @@ class AssessmentXml < ActiveRecord::Base
     source_doc = Nokogiri::XML(source_xml_string)
     destination_doc = Nokogiri::XML(destination_xml_string)
 
-    destination_section = nil
     if root_section_contains_child_sections?(source_doc)
       source_doc.css('section section').each do |source_section|
         move_questions_from_source_section!(source_doc, source_section, destination_doc, guid)
