@@ -1176,7 +1176,6 @@ describe AssessmentXml do
       EODESTXML
 
       source_section = source_xml.css("section[ident='170']").first
-      source_section = source_xml.css("section[ident='170']").first
       AssessmentXml.move_questions_from_source_section!(source_xml, source_section, destination_xml, "6538eeef-76a6-4971-a730-356b299ded48")
       expect(retrieve_children_elements(source_section.parent).length).to eq 1
       expect(retrieve_children_elements(source_section).length).to eq 1
