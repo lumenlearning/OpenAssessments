@@ -194,6 +194,7 @@ class AssessmentXml < ActiveRecord::Base
             if metafield.css('fieldentry').children.to_s == guid.to_s
               # remove item with given outcome guid
               item.unlink # remove from source
+              item.default_namespace = "http://www.imsglobal.org/xsd/ims_qtiasiv1p2"
               destination_section.add_child(item)
             end
           end

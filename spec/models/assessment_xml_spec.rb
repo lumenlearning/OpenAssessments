@@ -1243,8 +1243,12 @@ describe AssessmentXml do
       destination_root = AssessmentXml.root_section(Nokogiri::XML(updated_destination_xml))
       expect(retrieve_children_elements(destination_root).length).to eq 3
       expect(retrieve_children_elements(retrieve_children_elements(destination_root)[0]).length).to eq 1
+      # verify that no namespace exists on item elements
+      expect(retrieve_children_elements(retrieve_children_elements(destination_root)[0])[0].name).to eq "item"
       expect(retrieve_children_elements(retrieve_children_elements(destination_root)[1]).length).to eq 1
+      expect(retrieve_children_elements(retrieve_children_elements(destination_root)[1])[0].name).to eq "item"
       expect(retrieve_children_elements(retrieve_children_elements(destination_root)[2]).length).to eq 1
+      expect(retrieve_children_elements(retrieve_children_elements(destination_root)[2])[0].name).to eq "item"
     end
 
     it "should clear out sections if a child section has all items removed" do
