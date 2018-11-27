@@ -101,7 +101,6 @@ pipeline {
 
       steps {
         unstash 'assets'
-        unstash 'node_modules'
         unstash 'vendor'
 
         compressDirectory('./', 'bundle.zip')
