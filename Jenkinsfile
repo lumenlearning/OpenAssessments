@@ -70,6 +70,8 @@ pipeline {
         stash includes: 'vendor/', name: 'vendor'
         stash includes: 'client/node_modules/', name: 'node_modules'
         stash includes: 'public/assets/', name: 'assets'
+
+        sh 'rm -r client/node_modules'
       }
     }
 
