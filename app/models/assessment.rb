@@ -194,8 +194,6 @@ class Assessment < ActiveRecord::Base
           source_assessment.current_assessment_xml.xml,
           destination_assessment.current_assessment_xml.xml,
           guid)
-      puts "updated source xml = #{updated_source_xml}"
-      puts "updated destination xml = #{updated_destination_xml}"
       source_assessment.xml_file = updated_source_xml
       destination_assessment.xml_file = updated_destination_xml
     end
