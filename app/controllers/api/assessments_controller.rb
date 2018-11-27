@@ -1,6 +1,5 @@
 require 'json2qti'
 require 'assessment_copier'
-require 'pp'
 
 class Api::AssessmentsController < Api::ApiController
 
@@ -218,11 +217,6 @@ class Api::AssessmentsController < Api::ApiController
     raise ActiveRecord::RecordNotFound.new("Source assessment was not found") unless source_assessment
     destination_assessment = Assessment.where(id: params[:destination_assessment_id]).first
     raise ActiveRecord::RecordNotFound.new("Destination assessment was not found") unless destination_assessment
-
-    puts "********** SOURCE ASSESSMENT"
-    pp source_assessment
-    puts "********** DESTINATION ASSESSMENT"
-    pp destination_assessment
 
     Assessment.move_questions_for_guid!(source_assessment, destination_assessment, params[:guid])
     source_assessment.save!
