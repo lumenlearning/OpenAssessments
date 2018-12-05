@@ -65,6 +65,7 @@ pipeline {
 
         sh 'cd client && npm install && npm run build && cd ..'
         sh 'bundle exec rake assets:precompile'
+        sh 'bundle exec rake assets:webpack'
 
         stash includes: 'config/secrets.yml,config/database.yml', name: 'local-config'
         stash includes: 'vendor/', name: 'vendor'
