@@ -57,6 +57,7 @@ pipeline {
       steps {
         sh 'cp config/secrets.yml.example config/secrets.yml'
         sh 'cp config/database.yml.example config/database.yml'
+        sh 'cp .env.example .env'
 
         sh """
           bundle install --deployment
