@@ -552,7 +552,7 @@ describe AssessmentXml do
       source_section = source_xml.css("section[ident='170']").first
       destination_section = destination_xml.css("section[ident='root_section']").first
 
-      mirror_section = AssessmentXml.create_mirror_section!(source_xml, source_section, destination_section, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
+      mirror_section = AssessmentXml.create_mirror_section!(source_xml, source_section, destination_section, "65b449c6-afb8-416f-960b-8aaf69cb4ed2", "6538eeef-76a6-4971-a730-356b299ded48")
       expect(retrieve_children_elements(source_section).length).to be 1
       expect(retrieve_children_elements(source_section.parent).length).to be 1
       expect(retrieve_children_elements(destination_section).length).to be 2
@@ -577,7 +577,7 @@ describe AssessmentXml do
       source_section = source_xml.css("section[ident='170']").first
       destination_section = destination_xml.css("section[ident='root_section']").first
 
-      mirror_section = AssessmentXml.create_mirror_section!(source_xml, source_section, destination_section, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
+      mirror_section = AssessmentXml.create_mirror_section!(source_xml, source_section, destination_section, "65b449c6-afb8-416f-960b-8aaf69cb4ed2", "6538eeef-76a6-4971-a730-356b299ded48")
       expect(destination_section.children.last['ident']).to eq "170"
       expect(destination_section.children.last['title']).to eq "Liquidity Trap"
       expect(mirror_section).not_to be_nil
@@ -623,7 +623,7 @@ describe AssessmentXml do
       source_section = source_xml.css("section[ident='root_section']").first
       destination_section = destination_xml.css("section[ident='root_section']").first
 
-      mirror_section = AssessmentXml.create_mirror_section!(source_xml, source_section, destination_section, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
+      mirror_section = AssessmentXml.create_mirror_section!(source_xml, source_section, destination_section, "65b449c6-afb8-416f-960b-8aaf69cb4ed2", "6538eeef-76a6-4971-a730-356b299ded48")
       expect(destination_section.children.last['ident']).to eq "copy_for_65b449c6-afb8-416f-960b-8aaf69cb4ed2"
       expect(mirror_section).not_to be_nil
       expect(mirror_section['ident']).to eq "copy_for_65b449c6-afb8-416f-960b-8aaf69cb4ed2"
@@ -656,7 +656,7 @@ describe AssessmentXml do
       destination_xml = Nokogiri::XML @standard_destination_xml
 
       source_section = source_xml.css("section[ident='170']").first
-      AssessmentXml.move_questions_from_source_section!(source_xml, source_section, destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
+      AssessmentXml.move_questions_from_source_section!(source_xml, source_section, destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2", "6538eeef-76a6-4971-a730-356b299ded48")
       expect(retrieve_children_elements(source_section).length).to eq 0
       expect(retrieve_children_elements(source_section.parent).length).to eq 1
       destination_root_section = AssessmentXml.root_section(destination_xml)
@@ -709,7 +709,7 @@ describe AssessmentXml do
       EODESTXML
 
       source_section = source_xml.css("section[ident='170']").first
-      AssessmentXml.move_questions_from_source_section!(source_xml, source_section, destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
+      AssessmentXml.move_questions_from_source_section!(source_xml, source_section, destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2", "6538eeef-76a6-4971-a730-356b299ded48")
       expect(retrieve_children_elements(source_section).length).to eq 0
       expect(retrieve_children_elements(source_section.parent).length).to eq 1
       destination_root_section = AssessmentXml.root_section(destination_xml)
@@ -731,7 +731,7 @@ describe AssessmentXml do
       destination_xml = Nokogiri::XML @standard_destination_xml
 
       source_section = source_xml.css("section[ident='170']").first
-      AssessmentXml.move_questions_from_source_section!(source_xml, source_section, destination_xml, "6538eeef-76a6-4971-a730-356b299ded48")
+      AssessmentXml.move_questions_from_source_section!(source_xml, source_section, destination_xml, "6538eeef-76a6-4971-a730-356b299ded48", nil)
       expect(retrieve_children_elements(source_section.parent).length).to eq 1
       expect(retrieve_children_elements(source_section).length).to eq 1
       destination_root_section = AssessmentXml.root_section(destination_xml)
@@ -845,10 +845,11 @@ describe AssessmentXml do
 </questestinterop>
       EOSOURCEXML
 
-      destination_xml = @standard_destination_xml
-
       updated_source_xml, updated_destination_xml =
-        AssessmentXml.move_questions_for_guid(source_xml, destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
+        AssessmentXml.move_questions_for_guid(source_xml,
+          @standard_destination_xml,
+          "65b449c6-afb8-416f-960b-8aaf69cb4ed2",
+          "6538eeef-76a6-4971-a730-356b299ded48")
       source_root = AssessmentXml.root_section(Nokogiri::XML(updated_source_xml))
       expect(retrieve_children_elements(source_root).length).to eq 3
       expect(retrieve_children_elements(retrieve_children_elements(source_root)[0]).length).to eq 1
@@ -924,7 +925,7 @@ describe AssessmentXml do
       EOSOURCEXML
 
       updated_source_xml, updated_destination_xml =
-        AssessmentXml.move_questions_for_guid(source_xml, @standard_destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
+        AssessmentXml.move_questions_for_guid(source_xml, @standard_destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2", nil)
       source_root = AssessmentXml.root_section(Nokogiri::XML(updated_source_xml))
       expect(retrieve_children_elements(source_root).length).to eq 1
       expect(retrieve_children_elements(retrieve_children_elements(source_root)[0]).length).to eq 1
@@ -1012,7 +1013,10 @@ describe AssessmentXml do
       EOSOURCEXML
 
       updated_source_xml, updated_destination_xml =
-        AssessmentXml.move_questions_for_guid(source_xml, @standard_destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
+        AssessmentXml.move_questions_for_guid(source_xml,
+          @standard_destination_xml,
+          "65b449c6-afb8-416f-960b-8aaf69cb4ed2",
+          "6538eeef-76a6-4971-a730-356b299ded48")
       source_root = AssessmentXml.root_section(Nokogiri::XML(updated_source_xml))
       expect(retrieve_children_elements(source_root).length).to eq 1
       expect(retrieve_children_elements(source_root)[0].node_name).to eq "item"
@@ -1078,7 +1082,10 @@ describe AssessmentXml do
       EOSOURCEXML
 
       updated_source_xml, updated_destination_xml =
-        AssessmentXml.move_questions_for_guid(source_xml, @standard_destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
+        AssessmentXml.move_questions_for_guid(source_xml,
+          @standard_destination_xml,
+          "65b449c6-afb8-416f-960b-8aaf69cb4ed2",
+          "6538eeef-76a6-4971-a730-356b299ded48")
       source_root = AssessmentXml.root_section(Nokogiri::XML(updated_source_xml))
       expect(source_root).not_to be_nil
       expect(retrieve_children_elements(source_root).length).to eq 0

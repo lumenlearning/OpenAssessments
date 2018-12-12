@@ -123,27 +123,31 @@ class AssessmentXml < ActiveRecord::Base
     doc.css('assessment > section').first
   end
 
-  def self.move_questions_for_guid(source_xml_string, destination_xml_string, guid)
+  def self.move_questions_for_guid(source_xml_string, destination_xml_string, guid, after_guid = nil)
     source_doc = Nokogiri::XML(source_xml_string)
     destination_doc = Nokogiri::XML(destination_xml_string)
 
     if root_section_contains_child_sections?(source_doc)
       source_doc.css('section section').each do |source_section|
-        move_questions_from_source_section!(source_doc, source_section, destination_doc, guid)
+        move_questions_from_source_section!(source_doc, source_section, destination_doc, guid, after_guid)
       end
       clear_empty_child_sections!(source_doc)
     else
       source_section = root_section(source_doc)
-      move_questions_from_source_section!(source_doc, source_section, destination_doc, guid)
+      move_questions_from_source_section!(source_doc, source_section, destination_doc, guid, after_guid)
     end
     return source_doc.to_xml, destination_doc.to_xml
   end
 
-  def self.move_questions_from_source_section!(source_doc, source_section, destination_doc, guid)
-    if source_section.to_s =~ /#{guid}/ # is the guid present in this section's xml?
+  def self.is_section_for?(section, guid)
+    section.to_s =~ /#{guid}/
+  end
+
+  def self.move_questions_from_source_section!(source_doc, source_section, destination_doc, guid, after_guid)
+    if is_section_for?(source_section, guid) # is the guid present in this section's xml?
       dest_root_section = root_section(destination_doc)
       if root_section_contains_child_sections?(destination_doc)
-        destination_section = create_mirror_section!(source_doc, source_section, dest_root_section, guid)
+        destination_section = create_mirror_section!(source_doc, source_section, dest_root_section, guid, after_guid)
       else
         destination_section = dest_root_section
       end
@@ -155,7 +159,18 @@ class AssessmentXml < ActiveRecord::Base
     doc.css('section section').any?
   end
 
-  def self.create_mirror_section!(source_document, source_section, destination_root_section, guid)
+  def self.find_mirror_section_position(root_section, after_guid)
+    if !after_guid.nil? && after_guid.size > 0
+      after_guid_section = root_section.children.find { |section| is_section_for?(section, after_guid) }
+      if after_guid_section
+        return after_guid_section
+      end
+    end
+    return root_section.children.first # if no after_guid or the after_guid's home section could not be found,
+                                       # simply return the first child
+  end
+
+  def self.create_mirror_section!(source_document, source_section, destination_root_section, guid, after_guid)
     mirror_section = Nokogiri::XML::Node.new "section", source_document
     if source_section['ident']
       if source_section['ident'] == "root_section"
@@ -167,7 +182,8 @@ class AssessmentXml < ActiveRecord::Base
     if source_section['title']
       mirror_section['title'] = source_section['title']
     end
-    destination_root_section.children.last.next = mirror_section
+    insertion_point = find_mirror_section_position(destination_root_section, after_guid)
+    insertion_point.next = mirror_section
     mirror_section
   end
 
