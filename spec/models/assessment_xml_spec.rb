@@ -8,118 +8,160 @@ end
 describe AssessmentXml do
   before do
     @xml = open('./spec/fixtures/sections_assessment.xml').read
+
+    @business_cycle_item = <<-BCIXML
+    <item title="" ident="1998">
+      <itemmetadata>
+        <qtimetadata>
+          <qtimetadatafield>
+            <fieldlabel>question_type</fieldlabel>
+            <fieldentry>multiple_answers_question</fieldentry>
+          </qtimetadatafield>
+          <qtimetadatafield>
+            <fieldlabel>outcome_guid</fieldlabel>
+            <fieldentry>6538eeef-76a6-4971-a730-356b299ded48</fieldentry>
+          </qtimetadatafield>
+          <qtimetadatafield>
+            <fieldlabel>outcome_short_title</fieldlabel>
+            <fieldentry>The Business Cycle</fieldentry>
+          </qtimetadatafield>
+          <qtimetadatafield>
+            <fieldlabel>outcome_long_title</fieldlabel>
+            <fieldentry>Describe the business cycle and its primary phases</fieldentry>
+          </qtimetadatafield>
+        </qtimetadata>
+      </itemmetadata>
+    </item>
+    BCIXML
+
     @standard_destination_xml = <<-EODESTXML
       <?xml version="1.0" encoding="UTF-8"?>
       <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
         <assessment title="Show What You Know: Macro Workings" ident="if8390a2480634681a1608f47c0a529fe_swyk">
           <section ident="root_section">
             <section title="The Business Cycle" ident="4112">
-              <item title="" ident="1998">
-                <itemmetadata>
-                  <qtimetadata>
-                    <qtimetadatafield>
-                      <fieldlabel>question_type</fieldlabel>
-                      <fieldentry>multiple_answers_question</fieldentry>
-                    </qtimetadatafield>
-                    <qtimetadatafield>
-                      <fieldlabel>outcome_guid</fieldlabel>
-                      <fieldentry>6538eeef-76a6-4971-a730-356b299ded48</fieldentry>
-                    </qtimetadatafield>
-                    <qtimetadatafield>
-                      <fieldlabel>outcome_short_title</fieldlabel>
-                      <fieldentry>The Business Cycle</fieldentry>
-                    </qtimetadatafield>
-                    <qtimetadatafield>
-                      <fieldlabel>outcome_long_title</fieldlabel>
-                      <fieldentry>Describe the business cycle and its primary phases</fieldentry>
-                    </qtimetadatafield>
-                  </qtimetadata>
-                </itemmetadata>
-              </item>
+              #{@business_cycle_item}
             </section>
           </section>
         </assessment>
       </questestinterop>
     EODESTXML
 
+    @liquity_trap_item = <<-LTIXML
+      <item title="" ident="7773">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>question_type</fieldlabel>
+              <fieldentry>multiple_answers_question</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>outcome_guid</fieldlabel>
+              <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>outcome_short_title</fieldlabel>
+              <fieldentry>Liquidity Trap</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>outcome_long_title</fieldlabel>
+              <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+      </item>
+    LTIXML
+
     @liquidity_trap_section = <<-LTSXML
       <section title="Liquidity Trap" ident="170">
-        <item title="" ident="7773">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>Liquidity Trap</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
+        #{@liquity_trap_item}
       </section>
     LTSXML
 
+    @expenditure_multiplier_item1 = <<-EXIXML
+      <item title="" ident="1737">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>question_type</fieldlabel>
+              <fieldentry>multiple_answers_question</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>outcome_guid</fieldlabel>
+              <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>outcome_short_title</fieldlabel>
+              <fieldentry>The Expenditure Multiplier</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>outcome_long_title</fieldlabel>
+              <fieldentry>Explain the significance of the Expenditure Multiplier</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+      </item>
+    EXIXML
+
+    @expenditure_multiplier_item2 = <<-EXI2XML
+      <item title="" ident="1737">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>question_type</fieldlabel>
+              <fieldentry>multiple_answers_question</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>outcome_guid</fieldlabel>
+              <fieldentry>adfb2853-598d-48f7-8206-50edaac3a16c</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>outcome_short_title</fieldlabel>
+              <fieldentry>The Expenditure Multiplier</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>outcome_long_title</fieldlabel>
+              <fieldentry>Explain the significance of the Expenditure Multiplier</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+      </item>
+    EXI2XML
+
     @expenditure_multiplier_section = <<-EMSXML
       <section title="The Expenditure Multiplier" ident="2902">
-        <item title="" ident="1737">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>adfb2853-598d-48f7-8206-50edaac3a16c</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>The Expenditure Multiplier</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Explain the significance of the Expenditure Multiplier</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
+        #{@expenditure_multiplier_item2}
       </section>
     EMSXML
 
+    @crowding_out_item = <<-COIXML
+      <item title="" ident="5326">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>question_type</fieldlabel>
+              <fieldentry>multiple_answers_question</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>outcome_guid</fieldlabel>
+              <fieldentry>129039d4-84ae-4b3d-8593-2917acdea4e2</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>outcome_short_title</fieldlabel>
+              <fieldentry>Crowding Out</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>outcome_long_title</fieldlabel>
+              <fieldentry>Explain how Crowding Out weakens the effectiveness of fiscal policy</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+      </item>
+    COIXML
+
     @crowding_out_section = <<-COSXML
       <section title="Crowding Out" ident="5247">
-        <item title="" ident="5326">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>129039d4-84ae-4b3d-8593-2917acdea4e2</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>Crowding Out</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Explain how Crowding Out weakens the effectiveness of fiscal policy</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
+        #{@crowding_out_item}
       </section>
     COSXML
   end
@@ -197,28 +239,7 @@ describe AssessmentXml do
   <assessment title="Show What You Know: Macro Workings" ident="if8390a2480634681a1608f47c0a529fe_swyk">
     <section ident="root_section">
       <section title="The Business Cycle" ident="4112">
-        <item title="" ident="1998">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>6538eeef-76a6-4971-a730-356b299ded48</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>The Business Cycle</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Describe the business cycle and its primary phases</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
+        #{@business_cycle_item}
       </section>
       <section title="Defining Economic Growth" ident="8139">
         <item title="" ident="9436">
@@ -298,50 +319,8 @@ describe AssessmentXml do
       <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
         <section ident="root_section">
           <section title="Liquidity Trap" ident="170">
-            <item title="" ident="7773">
-              <itemmetadata>
-                <qtimetadata>
-                  <qtimetadatafield>
-                    <fieldlabel>question_type</fieldlabel>
-                    <fieldentry>multiple_answers_question</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_guid</fieldlabel>
-                    <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_short_title</fieldlabel>
-                    <fieldentry>Liquidity Trap</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_long_title</fieldlabel>
-                    <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
-                  </qtimetadatafield>
-                </qtimetadata>
-              </itemmetadata>
-            </item>
-            <item title="" ident="5326">
-              <itemmetadata>
-                <qtimetadata>
-                  <qtimetadatafield>
-                    <fieldlabel>question_type</fieldlabel>
-                    <fieldentry>multiple_answers_question</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_guid</fieldlabel>
-                    <fieldentry>129039d4-84ae-4b3d-8593-2917acdea4e2</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_short_title</fieldlabel>
-                    <fieldentry>Crowding Out</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_long_title</fieldlabel>
-                    <fieldentry>Explain how Crowding Out weakens the effectiveness of fiscal policy</fieldentry>
-                  </qtimetadatafield>
-                </qtimetadata>
-              </itemmetadata>
-            </item>
+            #{@liquity_trap_item}
+            #{@crowding_out_item}
           </section>
           #{@expenditure_multiplier_section}
         </section>
@@ -364,28 +343,7 @@ describe AssessmentXml do
       <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
         <section ident="root_section">
           <section title="Liquidity Trap" ident="170">
-            <item title="" ident="7773">
-              <itemmetadata>
-                <qtimetadata>
-                  <qtimetadatafield>
-                    <fieldlabel>question_type</fieldlabel>
-                    <fieldentry>multiple_answers_question</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_guid</fieldlabel>
-                    <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_short_title</fieldlabel>
-                    <fieldentry>Liquidity Trap</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_long_title</fieldlabel>
-                    <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
-                  </qtimetadatafield>
-                </qtimetadata>
-              </itemmetadata>
-            </item>
+            #{@liquity_trap_item}
             <item title="" ident="5326">
               <itemmetadata>
                 <qtimetadata>
@@ -481,28 +439,7 @@ describe AssessmentXml do
     <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
       <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
         <section ident="root_section">
-          <item title="" ident="7773">
-            <itemmetadata>
-              <qtimetadata>
-                <qtimetadatafield>
-                  <fieldlabel>question_type</fieldlabel>
-                  <fieldentry>multiple_answers_question</fieldentry>
-                </qtimetadatafield>
-                <qtimetadatafield>
-                  <fieldlabel>outcome_guid</fieldlabel>
-                  <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-                </qtimetadatafield>
-                <qtimetadatafield>
-                  <fieldlabel>outcome_short_title</fieldlabel>
-                  <fieldentry>Liquidity Trap</fieldentry>
-                </qtimetadatafield>
-                <qtimetadatafield>
-                  <fieldlabel>outcome_long_title</fieldlabel>
-                  <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
-                </qtimetadatafield>
-              </qtimetadata>
-            </itemmetadata>
-          </item>
+          #{@liquity_trap_item}
         </section>
       </assessment>
     </questestinterop>
@@ -519,28 +456,7 @@ describe AssessmentXml do
   <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
     <section ident="root_section">
       <section ident="170">
-        <item title="" ident="7773">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>Liquidity Trap</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
+        #{@liquity_trap_item}
       </section>
     </section>
   </assessment>
@@ -591,28 +507,7 @@ describe AssessmentXml do
 <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
   <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
     <section ident="root_section">
-      <item title="" ident="7773">
-        <itemmetadata>
-          <qtimetadata>
-            <qtimetadatafield>
-              <fieldlabel>question_type</fieldlabel>
-              <fieldentry>multiple_answers_question</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_guid</fieldlabel>
-              <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_short_title</fieldlabel>
-              <fieldentry>Liquidity Trap</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_long_title</fieldlabel>
-              <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
-            </qtimetadatafield>
-          </qtimetadata>
-        </itemmetadata>
-      </item>
+      #{@liquity_trap_item}
     </section>
   </assessment>
 </questestinterop>
@@ -627,6 +522,64 @@ describe AssessmentXml do
       expect(retrieve_children_elements(destination_section).last['ident']).to eq "copy_for_65b449c6-afb8-416f-960b-8aaf69cb4ed2"
       expect(mirror_section).not_to be_nil
       expect(mirror_section['ident']).to eq "copy_for_65b449c6-afb8-416f-960b-8aaf69cb4ed2"
+    end
+
+    it "will put the mirror section after the first section containing the after_guid" do
+      source_xml = Nokogiri::XML <<-EOSOURCEXML
+        <?xml version="1.0" encoding="UTF-8"?>
+        <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+          <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
+            <section ident="root_section">
+              #{@liquidity_trap_section}
+            </section>
+          </assessment>
+        </questestinterop>
+      EOSOURCEXML
+
+      destination_xml = Nokogiri::XML @standard_destination_xml
+
+      source_section = source_xml.css("section[ident='170']").first
+      destination_section = destination_xml.css("section[ident='root_section']").first
+
+      mirror_section = AssessmentXml.create_mirror_section!(source_xml,
+        source_section,
+        destination_section,
+        "65b449c6-afb8-416f-960b-8aaf69cb4ed2",
+        "6538eeef-76a6-4971-a730-356b299ded48")
+      expect(retrieve_children_elements(destination_section).last['ident']).to eq "170"
+      expect(retrieve_children_elements(destination_section).last['title']).to eq "Liquidity Trap"
+      expect(mirror_section).not_to be_nil
+      expect(mirror_section['ident']).to eq "170"
+      expect(mirror_section['title']).to eq "Liquidity Trap"
+    end
+
+    it "will put the mirror section first if after_guid is nil" do
+      source_xml = Nokogiri::XML <<-EOSOURCEXML
+        <?xml version="1.0" encoding="UTF-8"?>
+        <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+          <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
+            <section ident="root_section">
+              #{@liquidity_trap_section}
+            </section>
+          </assessment>
+        </questestinterop>
+      EOSOURCEXML
+
+      destination_xml = Nokogiri::XML @standard_destination_xml
+
+      source_section = source_xml.css("section[ident='170']").first
+      destination_section = destination_xml.css("section[ident='root_section']").first
+
+      mirror_section = AssessmentXml.create_mirror_section!(source_xml,
+        source_section,
+        destination_section,
+        "65b449c6-afb8-416f-960b-8aaf69cb4ed2",
+        nil)
+      expect(retrieve_children_elements(destination_section).first['ident']).to eq "170"
+      expect(retrieve_children_elements(destination_section).first['title']).to eq "Liquidity Trap"
+      expect(mirror_section).not_to be_nil
+      expect(mirror_section['ident']).to eq "170"
+      expect(mirror_section['title']).to eq "Liquidity Trap"
     end
   end
 
@@ -681,28 +634,7 @@ describe AssessmentXml do
 <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
   <assessment title="Show What You Know: Macro Workings" ident="if8390a2480634681a1608f47c0a529fe_swyk">
     <section ident="root_section">
-      <item title="" ident="1998">
-        <itemmetadata>
-          <qtimetadata>
-            <qtimetadatafield>
-              <fieldlabel>question_type</fieldlabel>
-              <fieldentry>multiple_answers_question</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_guid</fieldlabel>
-              <fieldentry>6538eeef-76a6-4971-a730-356b299ded48</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_short_title</fieldlabel>
-              <fieldentry>The Business Cycle</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_long_title</fieldlabel>
-              <fieldentry>Describe the business cycle and its primary phases</fieldentry>
-            </qtimetadatafield>
-          </qtimetadata>
-        </itemmetadata>
-      </item>
+      #{@business_cycle_item}
     </section>
   </assessment>
 </questestinterop>
@@ -748,96 +680,12 @@ describe AssessmentXml do
   <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
     <section ident="root_section">
       <section title="Liquidity Trap" ident="170">
-        <item title="" ident="7773">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>Liquidity Trap</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-        <item title="" ident="5326">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>129039d4-84ae-4b3d-8593-2917acdea4e2</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>Crowding Out</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Explain how Crowding Out weakens the effectiveness of fiscal policy</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
+        #{@liquity_trap_item}
+        #{@crowding_out_item}
       </section>
       <section title="The Expenditure Multiplier" ident="2902">
-        <item title="" ident="1737">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>The Expenditure Multiplier</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Explain the significance of the Expenditure Multiplier</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-        <item title="" ident="5326">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>129039d4-84ae-4b3d-8593-2917acdea4e2</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>Crowding Out</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Explain how Crowding Out weakens the effectiveness of fiscal policy</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
+        #{@expenditure_multiplier_item1}
+        #{@crowding_out_item}
       </section>
       #{@crowding_out_section}
     </section>
@@ -873,28 +721,7 @@ describe AssessmentXml do
   <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
     <section ident="root_section">
       <section title="Liquidity Trap" ident="170">
-        <item title="" ident="7773">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>Liquidity Trap</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
+        #{@liquity_trap_item}
         <item title="" ident="5326">
           <itemmetadata>
             <qtimetadata>
@@ -941,72 +768,9 @@ describe AssessmentXml do
 <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
   <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
     <section ident="root_section">
-      <item title="" ident="7773">
-        <itemmetadata>
-          <qtimetadata>
-            <qtimetadatafield>
-              <fieldlabel>question_type</fieldlabel>
-              <fieldentry>multiple_answers_question</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_guid</fieldlabel>
-              <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_short_title</fieldlabel>
-              <fieldentry>Liquidity Trap</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_long_title</fieldlabel>
-              <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
-            </qtimetadatafield>
-          </qtimetadata>
-        </itemmetadata>
-      </item>
-      <item title="" ident="1737">
-        <itemmetadata>
-          <qtimetadata>
-            <qtimetadatafield>
-              <fieldlabel>question_type</fieldlabel>
-              <fieldentry>multiple_answers_question</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_guid</fieldlabel>
-              <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_short_title</fieldlabel>
-              <fieldentry>The Expenditure Multiplier</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_long_title</fieldlabel>
-              <fieldentry>Explain the significance of the Expenditure Multiplier</fieldentry>
-            </qtimetadatafield>
-          </qtimetadata>
-        </itemmetadata>
-      </item>
-      <item title="" ident="5326">
-        <itemmetadata>
-          <qtimetadata>
-            <qtimetadatafield>
-              <fieldlabel>question_type</fieldlabel>
-              <fieldentry>multiple_answers_question</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_guid</fieldlabel>
-              <fieldentry>129039d4-84ae-4b3d-8593-2917acdea4e2</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_short_title</fieldlabel>
-              <fieldentry>Crowding Out</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_long_title</fieldlabel>
-              <fieldentry>Explain how Crowding Out weakens the effectiveness of fiscal policy</fieldentry>
-            </qtimetadatafield>
-          </qtimetadata>
-        </itemmetadata>
-      </item>
+      #{@liquity_trap_item}
+      #{@expenditure_multiplier_item1}
+      #{@crowding_out_item}
     </section>
   </assessment>
 </questestinterop>
@@ -1032,50 +796,8 @@ describe AssessmentXml do
 <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
   <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
     <section ident="root_section">
-      <item title="" ident="7773">
-        <itemmetadata>
-          <qtimetadata>
-            <qtimetadatafield>
-              <fieldlabel>question_type</fieldlabel>
-              <fieldentry>multiple_answers_question</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_guid</fieldlabel>
-              <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_short_title</fieldlabel>
-              <fieldentry>Liquidity Trap</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_long_title</fieldlabel>
-              <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
-            </qtimetadatafield>
-          </qtimetadata>
-        </itemmetadata>
-      </item>
-      <item title="" ident="1737">
-        <itemmetadata>
-          <qtimetadata>
-            <qtimetadatafield>
-              <fieldlabel>question_type</fieldlabel>
-              <fieldentry>multiple_answers_question</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_guid</fieldlabel>
-              <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_short_title</fieldlabel>
-              <fieldentry>The Expenditure Multiplier</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-              <fieldlabel>outcome_long_title</fieldlabel>
-              <fieldentry>Explain the significance of the Expenditure Multiplier</fieldentry>
-            </qtimetadatafield>
-          </qtimetadata>
-        </itemmetadata>
-      </item>
+      #{@liquity_trap_item}
+      #{@expenditure_multiplier_item1}
     </section>
   </assessment>
 </questestinterop>
