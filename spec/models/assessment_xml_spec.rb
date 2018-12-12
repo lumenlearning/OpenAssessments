@@ -578,8 +578,8 @@ describe AssessmentXml do
       destination_section = destination_xml.css("section[ident='root_section']").first
 
       mirror_section = AssessmentXml.create_mirror_section!(source_xml, source_section, destination_section, "65b449c6-afb8-416f-960b-8aaf69cb4ed2", "6538eeef-76a6-4971-a730-356b299ded48")
-      expect(destination_section.children.last['ident']).to eq "170"
-      expect(destination_section.children.last['title']).to eq "Liquidity Trap"
+      expect(retrieve_children_elements(destination_section).last['ident']).to eq "170"
+      expect(retrieve_children_elements(destination_section).last['title']).to eq "Liquidity Trap"
       expect(mirror_section).not_to be_nil
       expect(mirror_section['ident']).to eq "170"
       expect(mirror_section['title']).to eq "Liquidity Trap"
@@ -624,7 +624,7 @@ describe AssessmentXml do
       destination_section = destination_xml.css("section[ident='root_section']").first
 
       mirror_section = AssessmentXml.create_mirror_section!(source_xml, source_section, destination_section, "65b449c6-afb8-416f-960b-8aaf69cb4ed2", "6538eeef-76a6-4971-a730-356b299ded48")
-      expect(destination_section.children.last['ident']).to eq "copy_for_65b449c6-afb8-416f-960b-8aaf69cb4ed2"
+      expect(retrieve_children_elements(destination_section).last['ident']).to eq "copy_for_65b449c6-afb8-416f-960b-8aaf69cb4ed2"
       expect(mirror_section).not_to be_nil
       expect(mirror_section['ident']).to eq "copy_for_65b449c6-afb8-416f-960b-8aaf69cb4ed2"
     end
@@ -931,8 +931,8 @@ describe AssessmentXml do
       expect(retrieve_children_elements(retrieve_children_elements(source_root)[0]).length).to eq 1
       destination_root = AssessmentXml.root_section(Nokogiri::XML(updated_destination_xml))
       expect(retrieve_children_elements(destination_root).length).to eq 2
-      expect(retrieve_children_elements(retrieve_children_elements(destination_root)[0]).length).to eq 1
-      expect(retrieve_children_elements(retrieve_children_elements(destination_root)[1]).length).to eq 2
+      expect(retrieve_children_elements(retrieve_children_elements(destination_root)[0]).length).to eq 2
+      expect(retrieve_children_elements(retrieve_children_elements(destination_root)[1]).length).to eq 1
     end
 
     it "should move items from root section if no child sections exist" do
