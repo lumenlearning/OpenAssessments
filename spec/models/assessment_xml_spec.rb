@@ -8,6 +8,120 @@ end
 describe AssessmentXml do
   before do
     @xml = open('./spec/fixtures/sections_assessment.xml').read
+    @standard_destination_xml = <<-EODESTXML
+      <?xml version="1.0" encoding="UTF-8"?>
+      <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+        <assessment title="Show What You Know: Macro Workings" ident="if8390a2480634681a1608f47c0a529fe_swyk">
+          <section ident="root_section">
+            <section title="The Business Cycle" ident="4112">
+              <item title="" ident="1998">
+                <itemmetadata>
+                  <qtimetadata>
+                    <qtimetadatafield>
+                      <fieldlabel>question_type</fieldlabel>
+                      <fieldentry>multiple_answers_question</fieldentry>
+                    </qtimetadatafield>
+                    <qtimetadatafield>
+                      <fieldlabel>outcome_guid</fieldlabel>
+                      <fieldentry>6538eeef-76a6-4971-a730-356b299ded48</fieldentry>
+                    </qtimetadatafield>
+                    <qtimetadatafield>
+                      <fieldlabel>outcome_short_title</fieldlabel>
+                      <fieldentry>The Business Cycle</fieldentry>
+                    </qtimetadatafield>
+                    <qtimetadatafield>
+                      <fieldlabel>outcome_long_title</fieldlabel>
+                      <fieldentry>Describe the business cycle and its primary phases</fieldentry>
+                    </qtimetadatafield>
+                  </qtimetadata>
+                </itemmetadata>
+              </item>
+            </section>
+          </section>
+        </assessment>
+      </questestinterop>
+    EODESTXML
+
+    @liquidity_trap_section = <<-LTSXML
+      <section title="Liquidity Trap" ident="170">
+        <item title="" ident="7773">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Liquidity Trap</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+        </item>
+      </section>
+    LTSXML
+
+    @expenditure_multiplier_section = <<-EMSXML
+      <section title="The Expenditure Multiplier" ident="2902">
+        <item title="" ident="1737">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>adfb2853-598d-48f7-8206-50edaac3a16c</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>The Expenditure Multiplier</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Explain the significance of the Expenditure Multiplier</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+        </item>
+      </section>
+    EMSXML
+
+    @crowding_out_section = <<-COSXML
+      <section title="Crowding Out" ident="5247">
+        <item title="" ident="5326">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>129039d4-84ae-4b3d-8593-2917acdea4e2</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Crowding Out</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Explain how Crowding Out weakens the effectiveness of fiscal policy</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+        </item>
+      </section>
+    COSXML
   end
 
   context "AssessmentXml instance" do
@@ -69,78 +183,9 @@ describe AssessmentXml do
 <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
   <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
     <section ident="root_section">
-      <section title="Liquidity Trap" ident="170">
-        <item title="" ident="7773">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>Liquidity Trap</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-      </section>
-      <section title="The Expenditure Multiplier" ident="2902">
-        <item title="" ident="1737">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>adfb2853-598d-48f7-8206-50edaac3a16c</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>The Expenditure Multiplier</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Explain the significance of the Expenditure Multiplier</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-      </section>
-      <section title="Crowding Out" ident="5247">
-        <item title="" ident="5326">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>129039d4-84ae-4b3d-8593-2917acdea4e2</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>Crowding Out</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Explain how Crowding Out weakens the effectiveness of fiscal policy</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-      </section>
+      #{@liquidity_trap_section}
+      #{@expenditure_multiplier_section}
+      #{@crowding_out_section}
     </section>
   </assessment>
 </questestinterop>
@@ -298,30 +343,7 @@ describe AssessmentXml do
               </itemmetadata>
             </item>
           </section>
-          <section title="The Expenditure Multiplier" ident="2902">
-            <item title="" ident="1737">
-              <itemmetadata>
-                <qtimetadata>
-                  <qtimetadatafield>
-                    <fieldlabel>question_type</fieldlabel>
-                    <fieldentry>multiple_answers_question</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_guid</fieldlabel>
-                    <fieldentry>adfb2853-598d-48f7-8206-50edaac3a16c</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_short_title</fieldlabel>
-                    <fieldentry>The Expenditure Multiplier</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_long_title</fieldlabel>
-                    <fieldentry>Explain the significance of the Expenditure Multiplier</fieldentry>
-                  </qtimetadatafield>
-                </qtimetadata>
-              </itemmetadata>
-            </item>
-          </section>
+          #{@expenditure_multiplier_section}
         </section>
       </assessment>
     </questestinterop>
@@ -387,30 +409,7 @@ describe AssessmentXml do
               </itemmetadata>
             </item>
           </section>
-          <section title="The Expenditure Multiplier" ident="2902">
-            <item title="" ident="1737">
-              <itemmetadata>
-                <qtimetadata>
-                  <qtimetadatafield>
-                    <fieldlabel>question_type</fieldlabel>
-                    <fieldentry>multiple_answers_question</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_guid</fieldlabel>
-                    <fieldentry>adfb2853-598d-48f7-8206-50edaac3a16c</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_short_title</fieldlabel>
-                    <fieldentry>The Expenditure Multiplier</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_long_title</fieldlabel>
-                    <fieldentry>Explain the significance of the Expenditure Multiplier</fieldentry>
-                  </qtimetadatafield>
-                </qtimetadata>
-              </itemmetadata>
-            </item>
-          </section>
+          #{@expenditure_multiplier_section}
         </section>
       </assessment>
     </questestinterop>
@@ -449,30 +448,7 @@ describe AssessmentXml do
     <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
       <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
         <section ident="root_section">
-          <section title="Liquidity Trap" ident="170">
-            <item title="" ident="7773">
-              <itemmetadata>
-                <qtimetadata>
-                  <qtimetadatafield>
-                    <fieldlabel>question_type</fieldlabel>
-                    <fieldentry>multiple_answers_question</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_guid</fieldlabel>
-                    <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_short_title</fieldlabel>
-                    <fieldentry>Liquidity Trap</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_long_title</fieldlabel>
-                    <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
-                  </qtimetadatafield>
-                </qtimetadata>
-              </itemmetadata>
-            </item>
-          </section>
+          #{@liquidity_trap_section}
         </section>
       </assessment>
     </questestinterop>
@@ -491,30 +467,7 @@ describe AssessmentXml do
     <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
       <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
         <section ident="root_section">
-          <section title="Liquidity Trap" ident="170">
-            <item title="" ident="7773">
-              <itemmetadata>
-                <qtimetadata>
-                  <qtimetadatafield>
-                    <fieldlabel>question_type</fieldlabel>
-                    <fieldentry>multiple_answers_question</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_guid</fieldlabel>
-                    <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_short_title</fieldlabel>
-                    <fieldentry>Liquidity Trap</fieldentry>
-                  </qtimetadatafield>
-                  <qtimetadatafield>
-                    <fieldlabel>outcome_long_title</fieldlabel>
-                    <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
-                  </qtimetadatafield>
-                </qtimetadata>
-              </itemmetadata>
-            </item>
-          </section>
+          #{@liquidity_trap_section}
         </section>
       </assessment>
     </questestinterop>
@@ -594,39 +547,7 @@ describe AssessmentXml do
 </questestinterop>
       EOSOURCEXML
 
-      destination_xml = Nokogiri::XML <<-EODESTXML
-<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <assessment title="Show What You Know: Macro Workings" ident="if8390a2480634681a1608f47c0a529fe_swyk">
-    <section ident="root_section">
-      <section title="The Business Cycle" ident="4112">
-        <item title="" ident="1998">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>6538eeef-76a6-4971-a730-356b299ded48</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>The Business Cycle</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Describe the business cycle and its primary phases</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-      </section>
-    </section>
-  </assessment>
-</questestinterop>
-      EODESTXML
+      destination_xml = Nokogiri::XML @standard_destination_xml
 
       source_section = source_xml.css("section[ident='170']").first
       destination_section = destination_xml.css("section[ident='root_section']").first
@@ -645,68 +566,13 @@ describe AssessmentXml do
 <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
   <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
     <section ident="root_section">
-      <section title="Liquidity Trap" ident="170">
-        <item title="" ident="7773">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>Liquidity Trap</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-      </section>
+      #{@liquidity_trap_section}
     </section>
   </assessment>
 </questestinterop>
       EOSOURCEXML
 
-      destination_xml = Nokogiri::XML <<-EODESTXML
-<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <assessment title="Show What You Know: Macro Workings" ident="if8390a2480634681a1608f47c0a529fe_swyk">
-    <section ident="root_section">
-      <section title="The Business Cycle" ident="4112">
-        <item title="" ident="1998">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>6538eeef-76a6-4971-a730-356b299ded48</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>The Business Cycle</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Describe the business cycle and its primary phases</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-      </section>
-    </section>
-  </assessment>
-</questestinterop>
-      EODESTXML
+      destination_xml = Nokogiri::XML @standard_destination_xml
 
       source_section = source_xml.css("section[ident='170']").first
       destination_section = destination_xml.css("section[ident='root_section']").first
@@ -752,39 +618,7 @@ describe AssessmentXml do
 </questestinterop>
       EOSOURCEXML
 
-      destination_xml = Nokogiri::XML <<-EODESTXML
-<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <assessment title="Show What You Know: Macro Workings" ident="if8390a2480634681a1608f47c0a529fe_swyk">
-    <section ident="root_section">
-      <section title="The Business Cycle" ident="4112">
-        <item title="" ident="1998">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>6538eeef-76a6-4971-a730-356b299ded48</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>The Business Cycle</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Describe the business cycle and its primary phases</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-      </section>
-    </section>
-  </assessment>
-</questestinterop>
-      EODESTXML
+      destination_xml = Nokogiri::XML @standard_destination_xml
 
       source_section = source_xml.css("section[ident='root_section']").first
       destination_section = destination_xml.css("section[ident='root_section']").first
@@ -798,39 +632,7 @@ describe AssessmentXml do
 
   context "AssessmentXml.root_section" do
     it "finds a section for the root section" do
-      xml = Nokogiri::XML <<-EOXML
-      <?xml version="1.0" encoding="UTF-8"?>
-      <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-        <assessment title="Show What You Know: Macro Workings" ident="if8390a2480634681a1608f47c0a529fe_swyk">
-          <section ident="root_section">
-            <section title="The Business Cycle" ident="4112">
-              <item title="" ident="1998">
-                <itemmetadata>
-                  <qtimetadata>
-                    <qtimetadatafield>
-                      <fieldlabel>question_type</fieldlabel>
-                      <fieldentry>multiple_answers_question</fieldentry>
-                    </qtimetadatafield>
-                    <qtimetadatafield>
-                      <fieldlabel>outcome_guid</fieldlabel>
-                      <fieldentry>6538eeef-76a6-4971-a730-356b299ded48</fieldentry>
-                    </qtimetadatafield>
-                    <qtimetadatafield>
-                      <fieldlabel>outcome_short_title</fieldlabel>
-                      <fieldentry>The Business Cycle</fieldentry>
-                    </qtimetadatafield>
-                    <qtimetadatafield>
-                      <fieldlabel>outcome_long_title</fieldlabel>
-                      <fieldentry>Describe the business cycle and its primary phases</fieldentry>
-                    </qtimetadatafield>
-                  </qtimetadata>
-                </itemmetadata>
-              </item>
-            </section>
-          </section>
-        </assessment>
-      </questestinterop>
-      EOXML
+      xml = Nokogiri::XML @standard_destination_xml
 
       section = AssessmentXml.root_section(xml)
       expect(section).not_to be_nil
@@ -845,68 +647,13 @@ describe AssessmentXml do
 <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
   <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
     <section ident="root_section">
-      <section title="Liquidity Trap" ident="170">
-        <item title="" ident="7773">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>Liquidity Trap</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-      </section>
+      #{@liquidity_trap_section}
     </section>
   </assessment>
 </questestinterop>
       EOSOURCEXML
 
-      destination_xml = Nokogiri::XML <<-EODESTXML
-<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <assessment title="Show What You Know: Macro Workings" ident="if8390a2480634681a1608f47c0a529fe_swyk">
-    <section ident="root_section">
-      <section title="The Business Cycle" ident="4112">
-        <item title="" ident="1998">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>6538eeef-76a6-4971-a730-356b299ded48</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>The Business Cycle</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Describe the business cycle and its primary phases</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-      </section>
-    </section>
-  </assessment>
-</questestinterop>
-      EODESTXML
+      destination_xml = Nokogiri::XML @standard_destination_xml
 
       source_section = source_xml.css("section[ident='170']").first
       AssessmentXml.move_questions_from_source_section!(source_xml, source_section, destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
@@ -923,30 +670,7 @@ describe AssessmentXml do
 <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
   <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
     <section ident="root_section">
-      <section title="Liquidity Trap" ident="170">
-        <item title="" ident="7773">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>Liquidity Trap</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-      </section>
+      #{@liquidity_trap_section}
     </section>
   </assessment>
 </questestinterop>
@@ -998,68 +722,13 @@ describe AssessmentXml do
 <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
   <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
     <section ident="root_section">
-      <section title="Liquidity Trap" ident="170">
-        <item title="" ident="7773">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>Liquidity Trap</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Explain the implications of a Liquidity Trap</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-      </section>
+      #{@liquidity_trap_section}
     </section>
   </assessment>
 </questestinterop>
       EOSOURCEXML
 
-      destination_xml = Nokogiri::XML <<-EODESTXML
-<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <assessment title="Show What You Know: Macro Workings" ident="if8390a2480634681a1608f47c0a529fe_swyk">
-    <section ident="root_section">
-      <section title="The Business Cycle" ident="4112">
-        <item title="" ident="1998">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>6538eeef-76a6-4971-a730-356b299ded48</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>The Business Cycle</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Describe the business cycle and its primary phases</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-      </section>
-    </section>
-  </assessment>
-</questestinterop>
-      EODESTXML
+      destination_xml = Nokogiri::XML @standard_destination_xml
 
       source_section = source_xml.css("section[ident='170']").first
       AssessmentXml.move_questions_from_source_section!(source_xml, source_section, destination_xml, "6538eeef-76a6-4971-a730-356b299ded48")
@@ -1170,68 +839,13 @@ describe AssessmentXml do
           </itemmetadata>
         </item>
       </section>
-      <section title="Crowding Out" ident="5247">
-        <item title="" ident="5326">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>129039d4-84ae-4b3d-8593-2917acdea4e2</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>Crowding Out</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Explain how Crowding Out weakens the effectiveness of fiscal policy</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-      </section>
+      #{@crowding_out_section}
     </section>
   </assessment>
 </questestinterop>
       EOSOURCEXML
 
-      destination_xml = <<-EODESTXML
-<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <assessment title="Show What You Know: Macro Workings" ident="if8390a2480634681a1608f47c0a529fe_swyk">
-    <section ident="root_section">
-      <section title="The Business Cycle" ident="4112">
-        <item title="" ident="1998">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>6538eeef-76a6-4971-a730-356b299ded48</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>The Business Cycle</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Describe the business cycle and its primary phases</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-      </section>
-    </section>
-  </assessment>
-</questestinterop>
-      EODESTXML
+      destination_xml = @standard_destination_xml
 
       updated_source_xml, updated_destination_xml =
         AssessmentXml.move_questions_for_guid(source_xml, destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
@@ -1303,71 +917,14 @@ describe AssessmentXml do
           </itemmetadata>
         </item>
       </section>
-      <section title="Crowding Out" ident="5247">
-        <item title="" ident="5326">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>129039d4-84ae-4b3d-8593-2917acdea4e2</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>Crowding Out</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Explain how Crowding Out weakens the effectiveness of fiscal policy</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-      </section>
+      #{@crowding_out_section}
     </section>
   </assessment>
 </questestinterop>
       EOSOURCEXML
 
-      destination_xml = <<-EODESTXML
-<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <assessment title="Show What You Know: Macro Workings" ident="if8390a2480634681a1608f47c0a529fe_swyk">
-    <section ident="root_section">
-      <section title="The Business Cycle" ident="4112">
-        <item title="" ident="1998">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>6538eeef-76a6-4971-a730-356b299ded48</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>The Business Cycle</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Describe the business cycle and its primary phases</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-      </section>
-    </section>
-  </assessment>
-</questestinterop>
-      EODESTXML
-
       updated_source_xml, updated_destination_xml =
-        AssessmentXml.move_questions_for_guid(source_xml, destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
+        AssessmentXml.move_questions_for_guid(source_xml, @standard_destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
       source_root = AssessmentXml.root_section(Nokogiri::XML(updated_source_xml))
       expect(retrieve_children_elements(source_root).length).to eq 1
       expect(retrieve_children_elements(retrieve_children_elements(source_root)[0]).length).to eq 1
@@ -1454,42 +1011,8 @@ describe AssessmentXml do
 </questestinterop>
       EOSOURCEXML
 
-      destination_xml = <<-EODESTXML
-<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <assessment title="Show What You Know: Macro Workings" ident="if8390a2480634681a1608f47c0a529fe_swyk">
-    <section ident="root_section">
-      <section title="The Business Cycle" ident="4112">
-        <item title="" ident="1998">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>6538eeef-76a6-4971-a730-356b299ded48</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>The Business Cycle</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Describe the business cycle and its primary phases</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-      </section>
-    </section>
-  </assessment>
-</questestinterop>
-      EODESTXML
-
       updated_source_xml, updated_destination_xml =
-        AssessmentXml.move_questions_for_guid(source_xml, destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
+        AssessmentXml.move_questions_for_guid(source_xml, @standard_destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
       source_root = AssessmentXml.root_section(Nokogiri::XML(updated_source_xml))
       expect(retrieve_children_elements(source_root).length).to eq 1
       expect(retrieve_children_elements(source_root)[0].node_name).to eq "item"
@@ -1554,42 +1077,8 @@ describe AssessmentXml do
 </questestinterop>
       EOSOURCEXML
 
-      destination_xml = <<-EODESTXML
-<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <assessment title="Show What You Know: Macro Workings" ident="if8390a2480634681a1608f47c0a529fe_swyk">
-    <section ident="root_section">
-      <section title="The Business Cycle" ident="4112">
-        <item title="" ident="1998">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>6538eeef-76a6-4971-a730-356b299ded48</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>The Business Cycle</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Describe the business cycle and its primary phases</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-      </section>
-    </section>
-  </assessment>
-</questestinterop>
-      EODESTXML
-
       updated_source_xml, updated_destination_xml =
-        AssessmentXml.move_questions_for_guid(source_xml, destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
+        AssessmentXml.move_questions_for_guid(source_xml, @standard_destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2")
       source_root = AssessmentXml.root_section(Nokogiri::XML(updated_source_xml))
       expect(source_root).not_to be_nil
       expect(retrieve_children_elements(source_root).length).to eq 0
