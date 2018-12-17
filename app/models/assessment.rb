@@ -192,7 +192,7 @@ class Assessment < ActiveRecord::Base
         source_assessment.current_assessment_xml &&
         destination_assessment.current_assessment_xml)
       move_questions_different_sections!(source_assessment, destination_assessment, guid, after_guid)
-    elsif (source_assessment.current_assessment_xml)
+    elsif (source_assessment.id == destination_assessment.id && source_assessment.current_assessment_xml)
       move_questions_same_section!(source_assessment, guid, after_guid)
     end
   end
