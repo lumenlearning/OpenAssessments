@@ -123,7 +123,7 @@ class AssessmentXml < ActiveRecord::Base
     doc.css('assessment > section').first
   end
 
-  def self.move_questions_for_guid(source_xml_string, destination_xml_string, guid, after_guid = nil)
+  def self.move_questions_to_different_section_for_guid(source_xml_string, destination_xml_string, guid, after_guid = nil)
     source_doc = Nokogiri::XML(source_xml_string)
     destination_doc = Nokogiri::XML(destination_xml_string)
 
@@ -160,7 +160,7 @@ class AssessmentXml < ActiveRecord::Base
   end
 
   def self.find_mirror_section_position(root_section, after_guid)
-    if !after_guid.nil? && after_guid.size > 0
+    if after_guid && after_guid.size > 0
       after_guid_section = root_section.children.find { |section| is_section_for?(section, after_guid) }
       if after_guid_section
         return after_guid_section
@@ -217,5 +217,25 @@ class AssessmentXml < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def self.move_questions_within_same_section_for_guid(xml_string, guid, after_guid = nil)
+    doc = Nokogiri::XML(xml_string)
+    root = root_section(doc)
+
+    # find section for guid
+    moving_section = root.children.find { |section| is_section_for?(section, guid) }
+    moving_section.unlink
+    moving_section.default_namespace = "http://www.imsglobal.org/xsd/ims_qtiasiv1p2"
+
+    if after_guid && after_guid.size > 0
+      destination_section = root.children.find { |section| is_section_for?(section, after_guid) }
+      destination_section.next = moving_section
+    else
+      # not after, so it must be first
+      root.children.before(moving_section)
+    end
+
+    return doc.to_xml
   end
 end
