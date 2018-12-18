@@ -108,4 +108,98 @@ class AssessmentXml < ActiveRecord::Base
       end
     end
   end
+
+  def self.clear_empty_child_sections!(doc)
+    if root_section_contains_child_sections?(doc)
+      doc.css('section section').each do |section|
+        unless section.css('item').any?
+          section.remove
+        end
+      end
+    end
+  end
+
+  def self.root_section(doc)
+    doc.css('assessment > section').first
+  end
+
+  def self.move_questions_for_guid(source_xml_string, destination_xml_string, guid)
+    source_doc = Nokogiri::XML(source_xml_string)
+    destination_doc = Nokogiri::XML(destination_xml_string)
+
+    if root_section_contains_child_sections?(source_doc)
+      source_doc.css('section section').each do |source_section|
+        move_questions_from_source_section!(source_doc, source_section, destination_doc, guid)
+      end
+      clear_empty_child_sections!(source_doc)
+    else
+      source_section = root_section(source_doc)
+      move_questions_from_source_section!(source_doc, source_section, destination_doc, guid)
+    end
+    return source_doc.to_xml, destination_doc.to_xml
+  end
+
+  def self.move_questions_from_source_section!(source_doc, source_section, destination_doc, guid)
+    if source_section.to_s =~ /#{guid}/ # is the guid present in this section's xml?
+      dest_root_section = root_section(destination_doc)
+      if root_section_contains_child_sections?(destination_doc)
+        destination_section = create_mirror_section!(source_doc, source_section, dest_root_section, guid)
+      else
+        destination_section = dest_root_section
+      end
+      move_items(source_section, destination_section, guid)
+    end
+  end
+
+  def self.root_section_contains_child_sections?(doc)
+    doc.css('section section').any?
+  end
+
+  def self.create_mirror_section!(source_document, source_section, destination_root_section, guid)
+    mirror_section = Nokogiri::XML::Node.new "section", source_document
+    if source_section['ident']
+      if source_section['ident'] == "root_section"
+        mirror_section['ident'] = "copy_for_#{guid}"
+      else
+        mirror_section['ident'] = source_section['ident']
+      end
+    end
+    if source_section['title']
+      mirror_section['title'] = source_section['title']
+    end
+    destination_root_section.children.last.next = mirror_section
+    mirror_section
+  end
+
+  # Moves all items from a given section for a given outcome guid to another section
+  #
+  # Inside a section, we expect an xml structure like...
+  # <item>
+  #   <itemmetadata>
+  #     <qtimetadata>
+  #       ...
+  #       <qtimetadatafield>
+  #         <fieldlabel>outcome_guid</fieldlabel>
+  #         <fieldentry>12345678-cd69-46f6-807a-asdfghjkl666</fieldentry>
+  #       </qtimetadatafield>
+  #       ...
+  #     </qtimetadata>
+  #   </itemmetadata>
+  # </item>
+  def self.move_items(source_section, destination_section, guid)
+    if source_section.css('item').any?
+      source_section.css('item').each do |item|
+        if item.css('itemmetadata qtimetadata qtimetadatafield').any?
+          item.css('itemmetadata qtimetadata qtimetadatafield').each do |metafield|
+            if metafield.css('fieldentry').children.to_s == guid.to_s
+              # remove item with given outcome guid
+              item.unlink # remove from source
+              item.default_namespace = "http://www.imsglobal.org/xsd/ims_qtiasiv1p2"
+              destination_section.add_child(item)
+            end
+          end
+        end
+      end
+    end
+  end
 end

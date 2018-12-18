@@ -212,6 +212,19 @@ class Api::AssessmentsController < Api::ApiController
     render :json => assessment
   end
 
+  def move_questions_for_guid
+    source_assessment = Assessment.where(id: params[:assessment_id]).first
+    raise ActiveRecord::RecordNotFound.new("Source assessment was not found") unless source_assessment
+    destination_assessment = Assessment.where(id: params[:destination_assessment_id]).first
+    raise ActiveRecord::RecordNotFound.new("Destination assessment was not found") unless destination_assessment
+
+    Assessment.move_questions_for_guid!(source_assessment, destination_assessment, params[:guid])
+    source_assessment.save!
+    destination_assessment.save!
+
+    render :json => destination_assessment
+  end
+
   private
 
   # makes sure the JWT token allows admin scope for this LTI context id
