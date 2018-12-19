@@ -225,15 +225,21 @@ class AssessmentXml < ActiveRecord::Base
 
     # find section for guid
     moving_section = root.children.find { |section| is_section_for?(section, guid) }
-    moving_section.unlink
-    moving_section.default_namespace = "http://www.imsglobal.org/xsd/ims_qtiasiv1p2"
+    if moving_section
+      moving_section.unlink
+      moving_section.default_namespace = "http://www.imsglobal.org/xsd/ims_qtiasiv1p2"
 
-    if after_guid && after_guid.size > 0
-      destination_section = root.children.find { |section| is_section_for?(section, after_guid) }
-      destination_section.next = moving_section
-    else
-      # not after, so it must be first
-      root.children.before(moving_section)
+      if after_guid && after_guid.size > 0
+        destination_section = root.children.find { |section| is_section_for?(section, after_guid) }
+        if destination_section
+          destination_section.next = moving_section
+        else
+          root.children.before(moving_section)
+        end
+      else
+        # not after, so it must be first
+        root.children.before(moving_section)
+      end
     end
 
     return doc.to_xml
