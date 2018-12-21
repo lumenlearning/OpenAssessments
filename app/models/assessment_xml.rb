@@ -159,15 +159,20 @@ class AssessmentXml < ActiveRecord::Base
     doc.css('section section').any?
   end
 
-  def self.find_mirror_section_position(root_section, after_guid)
-    if after_guid && after_guid.size > 0
-      after_guid_sections = root_section.children.select { |section| is_section_for?(section, after_guid) }
-      if !after_guid_sections.nil? && !after_guid_sections.empty?
-        return after_guid_sections.last
+  def self.find_last_section_for_guid(parent, guid, default = nil)
+    if !guid.nil? && guid.size > 0
+      guid_sections = parent.children.select { |section| is_section_for?(section, guid) }
+      if !guid_sections.nil? && !guid_sections.empty?
+        return guid_sections.last
       end
     end
-    return root_section.children.first # if no after_guid or the after_guid's home section could not be found,
-                                       # simply return the first child
+    return default
+  end
+
+  def self.find_mirror_section_position(root_section, after_guid)
+    return find_last_section_for_guid(root_section, after_guid, root_section.children.first)
+    # if no after_guid or the after_guid's home section could not be found,
+    # simply return the first child
   end
 
   def self.create_mirror_section!(source_document, source_section, destination_root_section, guid, after_guid)
@@ -229,15 +234,10 @@ class AssessmentXml < ActiveRecord::Base
       moving_section.unlink
       moving_section.default_namespace = "http://www.imsglobal.org/xsd/ims_qtiasiv1p2"
 
-      if after_guid && after_guid.size > 0
-        destination_sections = root.children.select { |section| is_section_for?(section, after_guid) }
-        if !destination_sections.nil? && !destination_sections.empty?
-          destination_sections.last.next = moving_section
-        else
-          root.children.before(moving_section)
-        end
+      destination_section = find_last_section_for_guid(root, after_guid)
+      if !destination_section.nil?
+        destination_section.next = moving_section
       else
-        # not after, so it must be first
         root.children.before(moving_section)
       end
     end
