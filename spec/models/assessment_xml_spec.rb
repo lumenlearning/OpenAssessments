@@ -78,6 +78,68 @@ describe AssessmentXml do
       </section>
     LTSXML
 
+    @liquity_trip_item1 = <<-LTI1XML
+      <item title="" ident="7778">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>question_type</fieldlabel>
+              <fieldentry>multiple_answers_question</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>outcome_guid</fieldlabel>
+              <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed7</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>outcome_short_title</fieldlabel>
+              <fieldentry>Liquidity Trip</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>outcome_long_title</fieldlabel>
+              <fieldentry>Explain the implications of a Liquidity Trip</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+      </item>
+    LTI1XML
+
+    @liquity_trip_item2 = <<-LTI2XML
+      <item title="" ident="7779">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>question_type</fieldlabel>
+              <fieldentry>multiple_answers_question</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>outcome_guid</fieldlabel>
+              <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed7</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>outcome_short_title</fieldlabel>
+              <fieldentry>Liquidity Trip</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>outcome_long_title</fieldlabel>
+              <fieldentry>Explain even more the implications of a Liquidity Trip</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+      </item>
+    LTI2XML
+
+    @liquidity_trip_section1 = <<-LTS1XML
+      <section title="Liquidity Trip" ident="174">
+        #{@liquity_trip_item1}
+      </section>
+    LTS1XML
+
+    @liquidity_trip_section2 = <<-LTS2XML
+      <section title="Liquidity Trip" ident="175">
+        #{@liquity_trip_item2}
+      </section>
+    LTS2XML
+
     @expenditure_multiplier_item1 = <<-EXIXML
       <item title="" ident="1737">
         <itemmetadata>
@@ -816,6 +878,48 @@ describe AssessmentXml do
       expect(retrieve_children_elements(retrieve_children_elements(destination_root)[0]).length).to eq 1
       expect(retrieve_children_elements(retrieve_children_elements(destination_root)[1]).length).to eq 2
     end
+
+    it "should move items for every section which has an item with a matching guid" do
+      source_xml = <<-EOSOURCEXML
+        <?xml version="1.0" encoding="UTF-8"?>
+        <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+          <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
+            <section ident="root_section">
+              #{@crowding_out_section}
+              #{@expenditure_multiplier_section}
+            </section>
+          </assessment>
+        </questestinterop>
+      EOSOURCEXML
+
+      dest_xml = <<-EODESTXML
+        <?xml version="1.0" encoding="UTF-8"?>
+        <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+          <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
+            <section ident="root_section">
+              #{@liquidity_trip_section1}
+              #{@liquidity_trip_section2}
+              #{@crowding_out_section}
+            </section>
+          </assessment>
+        </questestinterop>
+      EODESTXML
+
+      updated_source_xml, updated_destination_xml =
+        AssessmentXml.move_questions_to_different_section_for_guid(source_xml,
+          dest_xml,
+          "adfb2853-598d-48f7-8206-50edaac3a16c",
+          "65b449c6-afb8-416f-960b-8aaf69cb4ed7")
+      source_root = AssessmentXml.root_section(Nokogiri::XML(updated_source_xml))
+      expect(retrieve_children_elements(source_root).length).to eq 1
+      expect(retrieve_children_elements(source_root)[0]['ident']).to eq '5247'
+      destination_root = AssessmentXml.root_section(Nokogiri::XML(updated_destination_xml))
+      expect(retrieve_children_elements(destination_root).length).to eq 4
+      expect(retrieve_children_elements(destination_root)[0]['ident']).to eq "174"
+      expect(retrieve_children_elements(destination_root)[1]['ident']).to eq "175"
+      expect(retrieve_children_elements(destination_root)[2]['ident']).to eq "2902"
+      expect(retrieve_children_elements(destination_root)[3]['ident']).to eq "5247"
+    end
   end
 
   context "AssessmentXml.move_questions_within_same_section_for_guid" do
@@ -921,6 +1025,34 @@ describe AssessmentXml do
       expect(retrieve_children_elements(root)[0]['ident']).to eq "170"
       expect(retrieve_children_elements(root)[1]['ident']).to eq "2902"
       expect(retrieve_children_elements(root)[2]['ident']).to eq "5247"
+    end
+
+    it "should choose the last section if multiple sections have the same guid" do
+      xml = <<-EOSOURCEXML
+        <?xml version="1.0" encoding="UTF-8"?>
+        <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+          <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
+            <section ident="root_section">
+              #{@liquidity_trip_section1}
+              #{@liquidity_trip_section2}
+              #{@crowding_out_section}
+              #{@expenditure_multiplier_section}
+            </section>
+          </assessment>
+        </questestinterop>
+      EOSOURCEXML
+
+      updated_xml = AssessmentXml.move_questions_within_same_section_for_guid(
+        xml,
+        "adfb2853-598d-48f7-8206-50edaac3a16c",
+        "65b449c6-afb8-416f-960b-8aaf69cb4ed7")
+      root = AssessmentXml.root_section(Nokogiri::XML(updated_xml))
+      expect(root).not_to be_nil
+      expect(retrieve_children_elements(root).length).to eq 4
+      expect(retrieve_children_elements(root)[0]['ident']).to eq "174"
+      expect(retrieve_children_elements(root)[1]['ident']).to eq "175"
+      expect(retrieve_children_elements(root)[2]['ident']).to eq "2902"
+      expect(retrieve_children_elements(root)[3]['ident']).to eq "5247"
     end
   end
 end

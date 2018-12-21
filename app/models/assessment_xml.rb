@@ -161,9 +161,9 @@ class AssessmentXml < ActiveRecord::Base
 
   def self.find_mirror_section_position(root_section, after_guid)
     if after_guid && after_guid.size > 0
-      after_guid_section = root_section.children.find { |section| is_section_for?(section, after_guid) }
-      if after_guid_section
-        return after_guid_section
+      after_guid_sections = root_section.children.select { |section| is_section_for?(section, after_guid) }
+      if !after_guid_sections.nil? && !after_guid_sections.empty?
+        return after_guid_sections.last
       end
     end
     return root_section.children.first # if no after_guid or the after_guid's home section could not be found,
@@ -230,9 +230,9 @@ class AssessmentXml < ActiveRecord::Base
       moving_section.default_namespace = "http://www.imsglobal.org/xsd/ims_qtiasiv1p2"
 
       if after_guid && after_guid.size > 0
-        destination_section = root.children.find { |section| is_section_for?(section, after_guid) }
-        if destination_section
-          destination_section.next = moving_section
+        destination_sections = root.children.select { |section| is_section_for?(section, after_guid) }
+        if !destination_sections.nil? && !destination_sections.empty?
+          destination_sections.last.next = moving_section
         else
           root.children.before(moving_section)
         end
