@@ -920,6 +920,48 @@ describe AssessmentXml do
       expect(retrieve_children_elements(destination_root)[2]['ident']).to eq "2902"
       expect(retrieve_children_elements(destination_root)[3]['ident']).to eq "5247"
     end
+
+    it "should preserve order of sections which are moved" do
+      source_xml = <<-EOSOURCEXML
+        <?xml version="1.0" encoding="UTF-8"?>
+        <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+          <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
+            <section ident="root_section">
+              #{@liquidity_trip_section1}
+              #{@liquidity_trip_section2}
+              #{@expenditure_multiplier_section}
+            </section>
+          </assessment>
+        </questestinterop>
+      EOSOURCEXML
+
+      dest_xml = <<-EODESTXML
+        <?xml version="1.0" encoding="UTF-8"?>
+        <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+          <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
+            <section ident="root_section">
+              #{@crowding_out_section}
+              #{@expenditure_multiplier_section}
+            </section>
+          </assessment>
+        </questestinterop>
+      EODESTXML
+
+      updated_source_xml, updated_destination_xml =
+        AssessmentXml.move_questions_to_different_section_for_guid(source_xml,
+          dest_xml,
+          "65b449c6-afb8-416f-960b-8aaf69cb4ed7",
+          "129039d4-84ae-4b3d-8593-2917acdea4e2")
+      source_root = AssessmentXml.root_section(Nokogiri::XML(updated_source_xml))
+      expect(retrieve_children_elements(source_root).length).to eq 1
+      expect(retrieve_children_elements(source_root)[0]['ident']).to eq '2902'
+      destination_root = AssessmentXml.root_section(Nokogiri::XML(updated_destination_xml))
+      expect(retrieve_children_elements(destination_root).length).to eq 4
+      expect(retrieve_children_elements(destination_root)[0]['ident']).to eq "5247"
+      expect(retrieve_children_elements(destination_root)[1]['ident']).to eq "174"
+      expect(retrieve_children_elements(destination_root)[2]['ident']).to eq "175"
+      expect(retrieve_children_elements(destination_root)[3]['ident']).to eq "2902"
+    end
   end
 
   context "AssessmentXml.move_questions_within_same_section_for_guid" do
@@ -1053,6 +1095,34 @@ describe AssessmentXml do
       expect(retrieve_children_elements(root)[1]['ident']).to eq "175"
       expect(retrieve_children_elements(root)[2]['ident']).to eq "2902"
       expect(retrieve_children_elements(root)[3]['ident']).to eq "5247"
+    end
+
+    it "should move all questions from multiple sections" do
+      xml = <<-EOSOURCEXML
+        <?xml version="1.0" encoding="UTF-8"?>
+        <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+          <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
+            <section ident="root_section">
+              #{@crowding_out_section}
+              #{@expenditure_multiplier_section}
+              #{@liquidity_trip_section1}
+              #{@liquidity_trip_section2}
+            </section>
+          </assessment>
+        </questestinterop>
+      EOSOURCEXML
+
+      updated_xml = AssessmentXml.move_questions_within_same_section_for_guid(
+        xml,
+        "65b449c6-afb8-416f-960b-8aaf69cb4ed7",
+        "129039d4-84ae-4b3d-8593-2917acdea4e2")
+      root = AssessmentXml.root_section(Nokogiri::XML(updated_xml))
+      expect(root).not_to be_nil
+      expect(retrieve_children_elements(root).length).to eq 4
+      expect(retrieve_children_elements(root)[0]['ident']).to eq "5247"
+      expect(retrieve_children_elements(root)[1]['ident']).to eq "174"
+      expect(retrieve_children_elements(root)[2]['ident']).to eq "175"
+      expect(retrieve_children_elements(root)[3]['ident']).to eq "2902"
     end
   end
 end

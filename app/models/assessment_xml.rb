@@ -169,10 +169,13 @@ class AssessmentXml < ActiveRecord::Base
     return default
   end
 
-  def self.find_mirror_section_position(root_section, after_guid)
-    return find_last_section_for_guid(root_section, after_guid, root_section.children.first)
-    # if no after_guid or the after_guid's home section could not be found,
-    # simply return the first child
+  def self.find_mirror_section_position(root_section, guid, after_guid)
+    # look for last section with guid first (so order is preserved); then choose last section
+    # with after guid; if neither of those could be found, simply return the very first child
+
+    return find_last_section_for_guid(root_section, guid,
+            find_last_section_for_guid(root_section, after_guid,
+              root_section.children.first))
   end
 
   def self.create_mirror_section!(source_document, source_section, destination_root_section, guid, after_guid)
@@ -187,7 +190,7 @@ class AssessmentXml < ActiveRecord::Base
     if source_section['title']
       mirror_section['title'] = source_section['title']
     end
-    insertion_point = find_mirror_section_position(destination_root_section, after_guid)
+    insertion_point = find_mirror_section_position(destination_root_section, guid, after_guid)
     insertion_point.next = mirror_section
     mirror_section
   end
@@ -228,17 +231,23 @@ class AssessmentXml < ActiveRecord::Base
     doc = Nokogiri::XML(xml_string)
     root = root_section(doc)
 
-    # find section for guid
-    moving_section = root.children.find { |section| is_section_for?(section, guid) }
-    if moving_section
-      moving_section.unlink
-      moving_section.default_namespace = "http://www.imsglobal.org/xsd/ims_qtiasiv1p2"
+    destination_section = find_last_section_for_guid(root, after_guid)
 
-      destination_section = find_last_section_for_guid(root, after_guid)
-      if !destination_section.nil?
-        destination_section.next = moving_section
-      else
-        root.children.before(moving_section)
+    # find section for guid
+    moving_sections = root.children.select { |section| is_section_for?(section, guid) }
+    if moving_sections && !moving_sections.empty?
+      moving_sections.each do |moving_section|
+        moving_section.unlink
+        moving_section.default_namespace = "http://www.imsglobal.org/xsd/ims_qtiasiv1p2"
+
+        if !destination_section.nil?
+          destination_section.next = moving_section
+        else
+          root.children.before(moving_section)
+        end
+
+        # now make our moving_section to destination_section so that order of moving sections is preserved
+        destination_section = moving_section
       end
     end
 
