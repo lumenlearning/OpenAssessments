@@ -512,19 +512,7 @@ describe AssessmentXml do
 
   context "AssessmentXml.create_mirror_section!" do
     it "will create a mirror section" do
-      source_xml = Nokogiri::XML <<-EOSOURCEXML
-<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-    <section ident="root_section">
-      <section ident="170">
-        #{@liquity_trap_item}
-      </section>
-    </section>
-  </assessment>
-</questestinterop>
-      EOSOURCEXML
-
+      source_xml = Nokogiri::XML build_qti("<section ident=\"170\">#{@liquity_trap_item}</section>")
       destination_xml = Nokogiri::XML @standard_destination_xml
 
       source_section = source_xml.css("section[ident='170']").first
@@ -539,17 +527,7 @@ describe AssessmentXml do
     end
 
     it "will add ident and title to mirror section element if source element contains them" do
-      source_xml = Nokogiri::XML <<-EOSOURCEXML
-<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-    <section ident="root_section">
-      #{@liquidity_trap_section}
-    </section>
-  </assessment>
-</questestinterop>
-      EOSOURCEXML
-
+      source_xml = Nokogiri::XML build_qti(@liquidity_trap_section)
       destination_xml = Nokogiri::XML @standard_destination_xml
 
       source_section = source_xml.css("section[ident='170']").first
@@ -564,17 +542,7 @@ describe AssessmentXml do
     end
 
     it "will give mirror section a new name if copying from source root section" do
-      source_xml = Nokogiri::XML <<-EOSOURCEXML
-<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-    <section ident="root_section">
-      #{@liquity_trap_item}
-    </section>
-  </assessment>
-</questestinterop>
-      EOSOURCEXML
-
+      source_xml = Nokogiri::XML build_qti(@liquity_trap_item)
       destination_xml = Nokogiri::XML @standard_destination_xml
 
       source_section = source_xml.css("section[ident='root_section']").first
@@ -587,17 +555,7 @@ describe AssessmentXml do
     end
 
     it "will put the mirror section after the first section containing the after_guid" do
-      source_xml = Nokogiri::XML <<-EOSOURCEXML
-        <?xml version="1.0" encoding="UTF-8"?>
-        <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-          <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-            <section ident="root_section">
-              #{@liquidity_trap_section}
-            </section>
-          </assessment>
-        </questestinterop>
-      EOSOURCEXML
-
+      source_xml = Nokogiri::XML build_qti(@liquidity_trap_section)
       destination_xml = Nokogiri::XML @standard_destination_xml
 
       source_section = source_xml.css("section[ident='170']").first
@@ -616,17 +574,7 @@ describe AssessmentXml do
     end
 
     it "will put the mirror section first if after_guid is nil" do
-      source_xml = Nokogiri::XML <<-EOSOURCEXML
-        <?xml version="1.0" encoding="UTF-8"?>
-        <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-          <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-            <section ident="root_section">
-              #{@liquidity_trap_section}
-            </section>
-          </assessment>
-        </questestinterop>
-      EOSOURCEXML
-
+      source_xml = Nokogiri::XML build_qti(@liquidity_trap_section)
       destination_xml = Nokogiri::XML @standard_destination_xml
 
       source_section = source_xml.css("section[ident='170']").first
@@ -657,17 +605,7 @@ describe AssessmentXml do
 
   context "AssessmentXml.move_questions_from_source_section!" do
     it "moves questions from source section into mirror section in destination if destination root has sections" do
-      source_xml = Nokogiri::XML <<-EOSOURCEXML
-<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-    <section ident="root_section">
-      #{@liquidity_trap_section}
-    </section>
-  </assessment>
-</questestinterop>
-      EOSOURCEXML
-
+      source_xml = Nokogiri::XML build_qti(@liquidity_trap_section)
       destination_xml = Nokogiri::XML @standard_destination_xml
 
       source_section = source_xml.css("section[ident='170']").first
@@ -680,27 +618,8 @@ describe AssessmentXml do
     end
 
     it "moves questions from source section into destination root section if destination root does not have child sections" do
-      source_xml = Nokogiri::XML <<-EOSOURCEXML
-<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-    <section ident="root_section">
-      #{@liquidity_trap_section}
-    </section>
-  </assessment>
-</questestinterop>
-      EOSOURCEXML
-
-      destination_xml = Nokogiri::XML <<-EODESTXML
-<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <assessment title="Show What You Know: Macro Workings" ident="if8390a2480634681a1608f47c0a529fe_swyk">
-    <section ident="root_section">
-      #{@business_cycle_item}
-    </section>
-  </assessment>
-</questestinterop>
-      EODESTXML
+      source_xml = Nokogiri::XML build_qti(@liquidity_trap_section)
+      destination_xml = Nokogiri::XML build_qti(@business_cycle_item)
 
       source_section = source_xml.css("section[ident='170']").first
       AssessmentXml.move_questions_from_source_section!(source_xml, source_section, destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2", "6538eeef-76a6-4971-a730-356b299ded48")
@@ -711,16 +630,7 @@ describe AssessmentXml do
     end
 
     it "does not move any questions if no guid matches" do
-      source_xml = Nokogiri::XML <<-EOSOURCEXML
-<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-    <section ident="root_section">
-      #{@liquidity_trap_section}
-    </section>
-  </assessment>
-</questestinterop>
-      EOSOURCEXML
+      source_xml = Nokogiri::XML build_qti(@liquidity_trap_section)
 
       destination_xml = Nokogiri::XML @standard_destination_xml
 
@@ -736,24 +646,10 @@ describe AssessmentXml do
 
   context "AssessmentXml.move_questions_to_different_section_for_guid" do
     it "should move items for every section which has an item with a matching guid" do
-      source_xml = <<-EOSOURCEXML
-<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-    <section ident="root_section">
-      <section title="Liquidity Trap" ident="170">
-        #{@liquity_trap_item}
-        #{@crowding_out_item}
-      </section>
-      <section title="The Expenditure Multiplier" ident="2902">
-        #{@expenditure_multiplier_item1}
-        #{@crowding_out_item}
-      </section>
-      #{@crowding_out_section}
-    </section>
-  </assessment>
-</questestinterop>
-      EOSOURCEXML
+      local_liquidity_trap_section = "<section title=\"Liquidity Trap\" ident=\"170\">#{@liquity_trap_item}#{@crowding_out_item}</section>"
+      local_expenditure_multiplier_section = "<section title=\"The Expenditure Multiplier\" ident=\"2902\">#{@expenditure_multiplier_item1}#{@crowding_out_item}</section>"
+
+      source_xml = build_qti(local_liquidity_trap_section, local_expenditure_multiplier_section, @crowding_out_section)
 
       updated_source_xml, updated_destination_xml =
         AssessmentXml.move_questions_to_different_section_for_guid(source_xml,
@@ -777,41 +673,35 @@ describe AssessmentXml do
     end
 
     it "should clear out sections if a child section has all items removed" do
-      source_xml = <<-EOSOURCEXML
-<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-    <section ident="root_section">
-      <section title="Liquidity Trap" ident="170">
-        #{@liquity_trap_item}
-        <item title="" ident="5326">
-          <itemmetadata>
-            <qtimetadata>
-              <qtimetadatafield>
-                <fieldlabel>question_type</fieldlabel>
-                <fieldentry>multiple_answers_question</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_guid</fieldlabel>
-                <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_short_title</fieldlabel>
-                <fieldentry>Crowding Out</fieldentry>
-              </qtimetadatafield>
-              <qtimetadatafield>
-                <fieldlabel>outcome_long_title</fieldlabel>
-                <fieldentry>Explain how Crowding Out weakens the effectiveness of fiscal policy</fieldentry>
-              </qtimetadatafield>
-            </qtimetadata>
-          </itemmetadata>
-        </item>
-      </section>
-      #{@crowding_out_section}
-    </section>
-  </assessment>
-</questestinterop>
-      EOSOURCEXML
+      local_liquidity_trap_section = <<-LLTSXML
+         <section title="Liquidity Trap" ident="170">
+           #{@liquity_trap_item}
+           <item title="" ident="5326">
+             <itemmetadata>
+               <qtimetadata>
+                 <qtimetadatafield>
+                   <fieldlabel>question_type</fieldlabel>
+                   <fieldentry>multiple_answers_question</fieldentry>
+                 </qtimetadatafield>
+                 <qtimetadatafield>
+                   <fieldlabel>outcome_guid</fieldlabel>
+                   <fieldentry>65b449c6-afb8-416f-960b-8aaf69cb4ed2</fieldentry>
+                 </qtimetadatafield>
+                 <qtimetadatafield>
+                   <fieldlabel>outcome_short_title</fieldlabel>
+                   <fieldentry>Crowding Out</fieldentry>
+                 </qtimetadatafield>
+                 <qtimetadatafield>
+                   <fieldlabel>outcome_long_title</fieldlabel>
+                   <fieldentry>Explain how Crowding Out weakens the effectiveness of fiscal policy</fieldentry>
+                 </qtimetadatafield>
+               </qtimetadata>
+             </itemmetadata>
+           </item>
+         </section>
+      LLTSXML
+
+      source_xml = build_qti(local_liquidity_trap_section, @crowding_out_section)
 
       updated_source_xml, updated_destination_xml =
         AssessmentXml.move_questions_to_different_section_for_guid(source_xml, @standard_destination_xml, "65b449c6-afb8-416f-960b-8aaf69cb4ed2", nil)
@@ -825,18 +715,7 @@ describe AssessmentXml do
     end
 
     it "should move items from root section if no child sections exist" do
-      source_xml = <<-EOSOURCEXML
-<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-    <section ident="root_section">
-      #{@liquity_trap_item}
-      #{@expenditure_multiplier_item1}
-      #{@crowding_out_item}
-    </section>
-  </assessment>
-</questestinterop>
-      EOSOURCEXML
+      source_xml = build_qti(@liquity_trap_item, @expenditure_multiplier_item1, @crowding_out_item)
 
       updated_source_xml, updated_destination_xml =
         AssessmentXml.move_questions_to_different_section_for_guid(source_xml,
@@ -853,17 +732,7 @@ describe AssessmentXml do
     end
 
     it "should never remove root section, even if no items or sections are left in it" do
-      source_xml = <<-EOSOURCEXML
-<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-    <section ident="root_section">
-      #{@liquity_trap_item}
-      #{@expenditure_multiplier_item1}
-    </section>
-  </assessment>
-</questestinterop>
-      EOSOURCEXML
+      source_xml = build_qti(@liquity_trap_item, @expenditure_multiplier_item1)
 
       updated_source_xml, updated_destination_xml =
         AssessmentXml.move_questions_to_different_section_for_guid(source_xml,
@@ -880,30 +749,8 @@ describe AssessmentXml do
     end
 
     it "should move items for every section which has an item with a matching guid" do
-      source_xml = <<-EOSOURCEXML
-        <?xml version="1.0" encoding="UTF-8"?>
-        <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-          <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-            <section ident="root_section">
-              #{@crowding_out_section}
-              #{@expenditure_multiplier_section}
-            </section>
-          </assessment>
-        </questestinterop>
-      EOSOURCEXML
-
-      dest_xml = <<-EODESTXML
-        <?xml version="1.0" encoding="UTF-8"?>
-        <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-          <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-            <section ident="root_section">
-              #{@liquidity_trip_section1}
-              #{@liquidity_trip_section2}
-              #{@crowding_out_section}
-            </section>
-          </assessment>
-        </questestinterop>
-      EODESTXML
+      source_xml = build_qti(@crowding_out_section, @expenditure_multiplier_section)
+      dest_xml = build_qti(@liquidity_trip_section1, @liquidity_trip_section2, @crowding_out_section)
 
       updated_source_xml, updated_destination_xml =
         AssessmentXml.move_questions_to_different_section_for_guid(source_xml,
@@ -922,30 +769,8 @@ describe AssessmentXml do
     end
 
     it "should preserve order of sections which are moved" do
-      source_xml = <<-EOSOURCEXML
-        <?xml version="1.0" encoding="UTF-8"?>
-        <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-          <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-            <section ident="root_section">
-              #{@liquidity_trip_section1}
-              #{@liquidity_trip_section2}
-              #{@expenditure_multiplier_section}
-            </section>
-          </assessment>
-        </questestinterop>
-      EOSOURCEXML
-
-      dest_xml = <<-EODESTXML
-        <?xml version="1.0" encoding="UTF-8"?>
-        <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-          <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-            <section ident="root_section">
-              #{@crowding_out_section}
-              #{@expenditure_multiplier_section}
-            </section>
-          </assessment>
-        </questestinterop>
-      EODESTXML
+      source_xml = build_qti(@liquidity_trip_section1, @liquidity_trip_section2, @expenditure_multiplier_section)
+      dest_xml = build_qti(@crowding_out_section, @expenditure_multiplier_section)
 
       updated_source_xml, updated_destination_xml =
         AssessmentXml.move_questions_to_different_section_for_guid(source_xml,
@@ -966,18 +791,9 @@ describe AssessmentXml do
 
   context "AssessmentXml.move_questions_within_same_section_for_guid" do
     it "should move a section to after the section with the child guid" do
-      xml = <<-EOSOURCEXML
-        <?xml version="1.0" encoding="UTF-8"?>
-        <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-          <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-            <section ident="root_section">
-              #{@liquidity_trap_section}
-              #{@crowding_out_section}
-              #{@expenditure_multiplier_section}
-            </section>
-          </assessment>
-        </questestinterop>
-      EOSOURCEXML
+      xml = build_qti(@liquidity_trap_section,
+        @crowding_out_section,
+        @expenditure_multiplier_section)
 
       updated_xml = AssessmentXml.move_questions_within_same_section_for_guid(
         xml,
@@ -992,18 +808,9 @@ describe AssessmentXml do
     end
 
     it "should move a section to the first child of root section if after guid is nil" do
-      xml = <<-EOSOURCEXML
-        <?xml version="1.0" encoding="UTF-8"?>
-        <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-          <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-            <section ident="root_section">
-              #{@liquidity_trap_section}
-              #{@expenditure_multiplier_section}
-              #{@crowding_out_section}
-            </section>
-          </assessment>
-        </questestinterop>
-      EOSOURCEXML
+      xml = build_qti(@liquidity_trap_section,
+        @expenditure_multiplier_section,
+        @crowding_out_section)
 
       updated_xml = AssessmentXml.move_questions_within_same_section_for_guid(
         xml,
@@ -1018,18 +825,9 @@ describe AssessmentXml do
     end
 
     it "should move a section to the first child of root section if section matching after guid cannot be found" do
-      xml = <<-EOSOURCEXML
-        <?xml version="1.0" encoding="UTF-8"?>
-        <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-          <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-            <section ident="root_section">
-              #{@liquidity_trap_section}
-              #{@expenditure_multiplier_section}
-              #{@crowding_out_section}
-            </section>
-          </assessment>
-        </questestinterop>
-      EOSOURCEXML
+      xml = build_qti(@liquidity_trap_section,
+        @expenditure_multiplier_section,
+        @crowding_out_section)
 
       updated_xml = AssessmentXml.move_questions_within_same_section_for_guid(
         xml,
@@ -1044,18 +842,9 @@ describe AssessmentXml do
     end
 
     it "should leave quiz unchanged if moving section cannot be found" do
-      xml = <<-EOSOURCEXML
-        <?xml version="1.0" encoding="UTF-8"?>
-        <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-          <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-            <section ident="root_section">
-              #{@liquidity_trap_section}
-              #{@expenditure_multiplier_section}
-              #{@crowding_out_section}
-            </section>
-          </assessment>
-        </questestinterop>
-      EOSOURCEXML
+      xml = build_qti(@liquidity_trap_section,
+        @expenditure_multiplier_section,
+        @crowding_out_section)
 
       updated_xml = AssessmentXml.move_questions_within_same_section_for_guid(
         xml,
@@ -1070,19 +859,10 @@ describe AssessmentXml do
     end
 
     it "should choose the last section if multiple sections have the same guid" do
-      xml = <<-EOSOURCEXML
-        <?xml version="1.0" encoding="UTF-8"?>
-        <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-          <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-            <section ident="root_section">
-              #{@liquidity_trip_section1}
-              #{@liquidity_trip_section2}
-              #{@crowding_out_section}
-              #{@expenditure_multiplier_section}
-            </section>
-          </assessment>
-        </questestinterop>
-      EOSOURCEXML
+      xml = build_qti(@liquidity_trip_section1,
+        @liquidity_trip_section2,
+        @crowding_out_section,
+        @expenditure_multiplier_section)
 
       updated_xml = AssessmentXml.move_questions_within_same_section_for_guid(
         xml,
@@ -1098,19 +878,10 @@ describe AssessmentXml do
     end
 
     it "should move all questions from multiple sections" do
-      xml = <<-EOSOURCEXML
-        <?xml version="1.0" encoding="UTF-8"?>
-        <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-          <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
-            <section ident="root_section">
-              #{@crowding_out_section}
-              #{@expenditure_multiplier_section}
-              #{@liquidity_trip_section1}
-              #{@liquidity_trip_section2}
-            </section>
-          </assessment>
-        </questestinterop>
-      EOSOURCEXML
+      xml = build_qti(@crowding_out_section,
+        @expenditure_multiplier_section,
+        @liquidity_trip_section1,
+        @liquidity_trip_section2)
 
       updated_xml = AssessmentXml.move_questions_within_same_section_for_guid(
         xml,
@@ -1124,5 +895,41 @@ describe AssessmentXml do
       expect(retrieve_children_elements(root)[2]['ident']).to eq "175"
       expect(retrieve_children_elements(root)[3]['ident']).to eq "2902"
     end
+
+    it "should move all questions from multiple sections, even if they are separated" do
+      xml = build_qti(@crowding_out_section,
+        @expenditure_multiplier_section,
+        @liquidity_trip_section1,
+        "<section title=\"The Business Cycle\" ident=\"4112\">#{@business_cycle_item}</section>",
+        @liquidity_trip_section2)
+
+      updated_xml = AssessmentXml.move_questions_within_same_section_for_guid(
+        xml,
+        "65b449c6-afb8-416f-960b-8aaf69cb4ed7",
+        "129039d4-84ae-4b3d-8593-2917acdea4e2")
+      root = AssessmentXml.root_section(Nokogiri::XML(updated_xml))
+      expect(root).not_to be_nil
+      expect(retrieve_children_elements(root).length).to eq 5
+      expect(retrieve_children_elements(root)[0]['ident']).to eq "5247"
+      expect(retrieve_children_elements(root)[1]['ident']).to eq "174"
+      expect(retrieve_children_elements(root)[2]['ident']).to eq "175"
+      expect(retrieve_children_elements(root)[3]['ident']).to eq "2902"
+      expect(retrieve_children_elements(root)[4]['ident']).to eq "4112"
+    end
+  end
+
+  private
+
+  def build_qti(*more)
+    xml = <<-QTIXML
+      <?xml version="1.0" encoding="UTF-8"?>
+      <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+        <assessment title="Show What You Know: Policy Application" ident="ib116e1ef09a84426bab060f8d936d8b7_swyk">
+          <section ident="root_section">
+            #{more.join("")}
+          </section>
+        </assessment>
+      </questestinterop>
+    QTIXML
   end
 end
