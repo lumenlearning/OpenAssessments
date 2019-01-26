@@ -151,6 +151,19 @@ and you should be good to go.
 
 ### Possible errors
 
+### node-pre-gyp ERR! This is a bug in node-pre-gyp
+
+If you get this error while installing frontend dependencies,
+you might be missing XCode.
+Try installing that from the App Store.
+
+If this doesn't solve the problem,
+try install `node-gyp` and `node-pre-gyp` globally:
+
+```bash
+npm install -g node-gyp node-pre-gyp
+```
+
 #### undefined method "restrict_signup' for nil:NilClass"
 
 If this error is encountered when loading the application in a web browser,
