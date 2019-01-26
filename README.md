@@ -94,6 +94,13 @@ We can populate the database by running the following commands:
   $ APP_SUBDOMAIN=localhost bundle exec rake db:seed
   ```
 
+Additionally,
+we can run a separate rake task to populate the database with several assessments to test against:
+
+  ```
+  $ bundle exec rake generate:quizzes:all
+  ```
+
 ### 4. Install JavaScript Dependencies
 
 Make sure to have the correct version of Node running.
@@ -149,7 +156,90 @@ run the rails server in `openassessments/`:
 Navigate to `localhost:3001` in a browser window,
 and you should be good to go.
 
+### 6. Create a User
+
+Hop into a rails console and generate a user.
+
+  ```
+  $ bundle exec rails c
+  > u = User.new
+  > u.email = "admin@example.com"  # Add your own email address here
+  > u.password = "password"
+  > u.password_confirmation = u.password
+  > u.save!
+  ```
+
+Now,
+we need to confirm the user.
+
+  ```
+  > u.confirmed_at = Time.now
+  > u.save!
+  ```
+
+### 7. Associate User with Account
+
+Next,
+we want to associate that user with an account.
+
+  ```
+  > u.account_id = 1
+  > u.save!
+  ```
+
+### 8. Set LTI Key and Secret on the Account
+
+In order to do LTI launches,
+we need to set the LTI key and secret on the account.
+For local development,
+it can be something simple.
+
+  ```
+  > a = Account.first
+  > a.lti_key = "fake"
+  > a.lti_secret = "fake"
+  > a.save!
+  ```
+
+### 9. Remove public restriction on Account
+
+Things are almost working at this point,
+but in order to see the assessment results for some quiz types,
+you have to remove the public restriction setting on the Account to false:
+
+  ```
+  > a.restrict_public = false
+  > a.save!
+  ```
+
+### 10. Generate Assessments
+
+Finally,
+Lets generate some assessments.
+Hop out of the rails console and run the following command:
+
+  ```
+  $ bundle exec rake generate:quizzes:all
+  ```
+
+The output generated should be a list of assessments and their associated IDs.
+
+You should now be able to do an LTI launch to an assessment.
+
 ### Possible errors
+
+### node-pre-gyp ERR! This is a bug in node-pre-gyp
+
+If you get this error while installing frontend dependencies,
+you might be missing XCode.
+Try installing that from the App Store.
+
+If this doesn't solve the problem,
+try install `node-gyp` and `node-pre-gyp` globally:
+
+```bash
+npm install -g node-gyp node-pre-gyp
+```
 
 #### undefined method "restrict_signup' for nil:NilClass"
 
