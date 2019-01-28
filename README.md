@@ -94,6 +94,13 @@ We can populate the database by running the following commands:
   $ APP_SUBDOMAIN=localhost bundle exec rake db:seed
   ```
 
+Additionally,
+we can run a separate rake task to populate the database with several assessments to test against:
+
+  ```
+  $ bundle exec rake generate:quizzes:all
+  ```
+
 ### 4. Install JavaScript Dependencies
 
 Make sure to have the correct version of Node running.
