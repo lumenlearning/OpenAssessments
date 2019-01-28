@@ -149,6 +149,29 @@ run the rails server in `openassessments/`:
 Navigate to `localhost:3001` in a browser window,
 and you should be good to go.
 
+### 6. Create a User
+
+Hop into a rails console and generate a user.
+
+  ```
+  $ bundle exec rails c
+  > u = User.new
+  > u.email = "admin@example.com"  # Add your own email address here
+  > u.password = "password"
+  > u.password_confirmation = u.password
+  > u.save!
+  ```
+
+Now,
+we need to confirm the user.
+
+  ```
+  > u.confirmed_at = Time.now
+  > u.save!
+  ```
+
+You should now be able to log in to OEA with this user.
+
 ### Possible errors
 
 ### node-pre-gyp ERR! This is a bug in node-pre-gyp
