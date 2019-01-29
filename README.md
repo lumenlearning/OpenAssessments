@@ -201,7 +201,18 @@ it can be something simple.
   > a.save!
   ```
 
-### 9. Generate Assessments
+### 9. Remove public restriction on Account
+
+Things are almost working at this point,
+but in order to see the assessment results for some quiz types,
+you have to remove the public restriction setting on the Account to false:
+
+  ```
+  > a.restrict_public = false
+  > a.save!
+  ```
+
+### 10. Generate Assessments
 
 Finally,
 Lets generate some assessments.
