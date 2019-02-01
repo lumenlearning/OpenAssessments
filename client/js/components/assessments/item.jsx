@@ -117,8 +117,8 @@ export default class Item extends BaseComponent{
             <p>Your confidence level in answering this question was: {`${this.props.question.confidenceLevel}`}.</p>
           </div>
         );
-      // if the question is summative, don't show the confidence level button group
-      } else if (this.props.settings.kind === "summative") {
+      // if the question is summative or swyk, don't show the confidence level button group
+    } else if (this.props.settings.kind === "summative" || this.props.settings.kind === "show_what_you_know") {
         return;
       // otherwise, show the confidence level button group
       } else {
