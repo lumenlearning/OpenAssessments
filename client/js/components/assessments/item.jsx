@@ -1,59 +1,135 @@
 "use strict";
+// Dependencies
+import React from "react";
+// Components
+import BaseComponent from "../base_component";
+import UniversalInput from "./universal_input";
+// Actions
+import AssessmentActions from "../../actions/assessment";
+// Stores
+import AssessmentStore from "../../stores/assessment";
 
-import React              from 'react';
-import BaseComponent      from "../base_component";
-import AssessmentActions  from "../../actions/assessment";
-import UniversalInput     from "./universal_input";
-import AssessmentStore    from "../../stores/assessment";
-
-
-export default class Item extends BaseComponent{
-  constructor(){
+export default class Item extends BaseComponent {
+  constructor() {
     super();
-    this._bind("getConfidenceLevels", "inputOrReview", "confidenceLevelClicked","submitAssessment", "checkAnswerButton", "checkAnswerButtonClicked", "nextButtonClicked", "previousButtonClicked", "getPreviousButton", "getNextButton", "getStyles", "clearShowMessage");
+
+    this._bind(
+      "getConfidenceLevels",
+      "inputOrReview",
+      "confidenceLevelClicked",
+      "submitAssessment",
+      "checkAnswerButton",
+      "checkAnswerButtonClicked",
+      "nextButtonClicked",
+      "previousButtonClicked",
+      "getPreviousButton",
+      "getNextButton",
+      "getStyles",
+      "clearShowMessage",
+      "mustAnswerMessage"
+    );
   }
 
-  nextButtonClicked(e){
+  render() {
+    let styles = this.getStyles(this.context.theme);
+
+    return (
+      <div className="assessment_container" style={styles.assessmentContainer}>
+        <div className="question">
+          <div style={styles.formativePadding}>
+            {this.formativeHeader(styles)}
+
+            <form className="edit_item">
+              <div className="full_question" style={styles.fullQuestion}>
+                {this.simpleProgress(styles)}
+                <div className="inner_question" style={styles.innerQuestion}>
+                  <div
+                    className="question_text"
+                    style={this.props.question.question_type !== 'multiple_dropdowns_question' ? styles.questionText : {}}
+                    >
+                      {this.questionDirections(styles)}
+                      {this.questionContent()}
+                  </div>
+                  {this.inputOrReview(styles)}
+                </div>
+                <div className="row">
+                  <div className="col-md-12 col-sm-12 col-xs-10" >
+                    {this.getConfidenceLevels(this.props.confidenceLevels, styles)}
+                    {this.checkAnswerButton(styles)}
+                    {this.getNavigationButtons(styles)}
+                    {this.submitAssessmentButton(styles)}
+                    {this.getWarning(this.state,  this.props.questionCount, this.props.currentIndex, styles)}
+                    {this.mustAnswerMessage(styles)}
+                  </div>
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  mustAnswerMessage(styles) {
+    if (this.state && this.state.showMessage) {
+      return (
+        <div style={styles.warning}>
+          You must select an answer before continuing.
+        </div>
+      );
+    }
+  }
+
+  nextButtonClicked(e) {
     e.preventDefault();
-    this.setState({unAnsweredQuestions: null});
+
+    this.setState({ unAnsweredQuestions: null });
     this.props.nextQuestion(this.clearShowMessage);
   }
 
-  previousButtonClicked(e){
+  previousButtonClicked(e) {
     e.preventDefault();
-    this.setState({unAnsweredQuestions: null});
+
+    this.setState({ unAnsweredQuestions: null });
     this.props.previousQuestion(this.clearShowMessage);
   }
 
-  clearShowMessage(){
-    this.setState({showMessage: false});
+  clearShowMessage() {
+    this.setState({ showMessage: false });
   }
 
-  confidenceLevelClicked(e, val, currentIndex){
+  confidenceLevelClicked(e, val, currentIndex) {
     e.preventDefault();
-
     let that = this;
-    this.props.selectQuestion(this.props.currentIndex, function(){
-      if(AssessmentStore.hasSelectedAnswerForCurrent()){
+
+    this.props.selectQuestion(this.props.currentIndex, () => {
+      // if an answer has been selected
+      if (AssessmentStore.hasSelectedAnswerForCurrent()) {
         AssessmentActions.selectConfidenceLevel(val, currentIndex);
-        if(that.props.currentIndex == that.props.questionCount - 1 && that.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
+
+        // if this is the last question and it's a formative assessment
+        if (that.props.currentIndex === that.props.questionCount - 1 &&
+            that.props.settings.assessmentKind.toUpperCase() === "FORMATIVE") {
           if (that.props.showAnswers) {
             that.props.checkAnswer(that.props.currentIndex);
           } else {
             that.submitAssessment();
           }
+        // otherwise, this is not the last question and/or it's not formative
         } else {
           if (that.props.showAnswers) {
             that.clearShowMessage();
             that.props.checkAnswer(that.props.currentIndex);
+          // otherwise, do the old behavior.
           } else {
-            // Else, do the old behavior.
             that.clearShowMessage();
             AssessmentActions.nextQuestion();
           }
         }
+      // if an answer hasn't been selected
       } else {
-        that.setState({showMessage: true});
+        that.setState({ showMessage: true });
       }
     });
   }
@@ -61,55 +137,74 @@ export default class Item extends BaseComponent{
   checkAnswerButtonClicked(e) {
     e && e.preventDefault();
     let that = this;
-    this.props.selectQuestion(this.props.currentIndex, function () {
+
+    this.props.selectQuestion(this.props.currentIndex, () => {
+      // if an answer has been selected
       if (AssessmentStore.hasSelectedAnswerForCurrent()) {
-        that.setState({showMessage: false});
+        that.setState({ showMessage: false });
         that.props.checkAnswer(that.props.currentIndex);
 
-        // If it's a practice quiz submit the full quiz when they've checked all the answers
+        // If it's a practice quiz submit the full quiz when they've checked all
+        // the answers
         if (AssessmentStore.isPractice() && Item.checkCompletion() === true) {
           that.submitAssessment();
         }
       } else {
-        that.setState({showMessage: true});
+        that.setState({ showMessage: true });
       }
     });
   }
 
-  submitAssessmentButtonClicked(e){
+  submitAssessmentButtonClicked(e) {
     e && e.preventDefault();
     this.props.selectQuestion(this.props.currentIndex, this.submitAssessment);
   }
 
-  submitAssessment(){
-      var complete = Item.checkCompletion();
-      if(complete === true){
-        window.onbeforeunload = null;
-        AssessmentActions.submitAssessment(this.props.assessment.id, this.props.assessment.assessmentId, this.props.allQuestions, AssessmentStore.allStudentAnswers(), this.props.settings, this.props.outcomes);
-      }
-      else {
-        this.setState({unAnsweredQuestions: complete});
-      }
+  submitAssessment() {
+    let complete = Item.checkCompletion();
+
+    if (complete) {
+      window.onbeforeunload = null;
+
+      AssessmentActions.submitAssessment(
+        this.props.assessment.id,
+        this.props.assessment.assessmentId,
+        this.props.allQuestions,
+        AssessmentStore.allStudentAnswers(),
+        this.props.settings,
+        this.props.outcomes
+      );
+    } else {
+      this.setState({ unAnsweredQuestions: complete });
+    }
   }
 
-  static checkCompletion(){
-    var questionsNotAnswered = AssessmentStore.unansweredQuestions();
-    if(questionsNotAnswered.length > 0){
+  static checkCompletion() {
+    let questionsNotAnswered = AssessmentStore.unansweredQuestions();
+
+    // if there are any unanswered questions, return them
+    if (questionsNotAnswered.length > 0) {
       return questionsNotAnswered;
     }
+
     return true;
   }
 
-  getWarning(state, questionCount, questionIndex, styles){
-    if(state && state.unAnsweredQuestions && state.unAnsweredQuestions.length > 0 && questionIndex + 1 == questionCount){
-      return <div style={styles.warning}><i className="glyphicon glyphicon-exclamation-sign"></i> You left question(s) {state.unAnsweredQuestions.join()} blank. Use the "Progress" drop-down menu at the top to go back and answer the question(s), then come back and submit.</div>
+  getWarning(state, questionCount, questionIndex, styles) {
+    if (state &&
+        state.unAnsweredQuestions &&
+        state.unAnsweredQuestions.length > 0 &&
+        questionIndex + 1 == questionCount) {
+      return (
+        <div style={styles.warning}>
+          <i className="glyphicon glyphicon-exclamation-sign"></i> You left question(s) {state.unAnsweredQuestions.join()} blank. Use the "Progress" drop-down menu at the top to go back and answer the question(s), then come back and submit.
+        </div>
+      );
     }
-
-    return "";
   }
 
   getConfidenceLevels(showLevels, styles) {
-    if(showLevels) {
+    if (showLevels) {
       // if the question has been answered
       if (this.props.showAnswers && this.props.question.confidenceLevel) {
         return (
@@ -120,20 +215,37 @@ export default class Item extends BaseComponent{
       // if the question is summative or swyk, don't show the confidence level button group
       } else if (this.props.settings.kind === "summative" || this.props.settings.kind === "show_what_you_know") {
         return;
-      // otherwise, show the confidence level button group
       }
     }
 
     // if this is a formative assessment, show the confidence level buttons
     if (this.props.settings.kind === "formative") {
-      var levelMessage = <div tabIndex="0" style={{marginBottom: "10px"}}>How sure are you of your answer?</div>;
+      let levelMessage = <div tabIndex="0" style={{marginBottom: "10px"}}>How sure are you of your answer?</div>;
 
       return (
         <div className="confidence_wrapper" style={styles.confidenceWrapper}>
           {levelMessage}
-          <input type="button" style={styles.maybeButton} className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, "Just A Guess", this.props.currentIndex) }}/>
-          <input type="button" style={{...styles.margin, ...styles.probablyButton}} className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Pretty Sure", this.props.currentIndex) }}/>
-          <input type="button" style={{...styles.margin, ...styles.definitelyButton}} className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Very Sure", this.props.currentIndex) }}/>
+          <input
+            type="button"
+            style={styles.maybeButton}
+            className="btn btn-check-answer"
+            value="Just A Guess"
+            onClick={(e) => { this.confidenceLevelClicked(e, "Just A Guess", this.props.currentIndex) }}
+            />
+          <input
+            type="button"
+            style={{...styles.margin, ...styles.probablyButton}}
+            className="btn btn-check-answer"
+            value="Pretty Sure"
+            onClick={(e) => { this.confidenceLevelClicked(e, "Pretty Sure", this.props.currentIndex) }}
+            />
+          <input
+            type="button"
+            style={{...styles.margin, ...styles.definitelyButton}}
+            className="btn btn-check-answer"
+            value="Very Sure"
+            onClick={(e) => { this.confidenceLevelClicked(e, "Very Sure", this.props.currentIndex) }}
+            />
         </div>
       );
     }
@@ -167,123 +279,97 @@ export default class Item extends BaseComponent{
   getNextButton(styles) {
     let disabled = (this.props.currentIndex == this.props.questionCount - 1) ? "disabled" : "";
 
-    if (this.props.settings.assessmentKind === 'formative') {
+    // if this is a formative assessment
+    if (this.props.settings.assessmentKind === "formative") {
       return (
-        <button className={"btn btn-next-item " + disabled} style={styles.nextButton} onClick={(e) => { this.nextButtonClicked(e) }}>
+        <button
+          className={"btn btn-next-item " + disabled}
+          style={styles.nextButton}
+          onClick={(e) => { this.nextButtonClicked(e) }}
+          >
           Next Question
         </button>
       );
     } else {
       return (
-        <button className={"btn btn-next-item " + disabled} style={styles.nextButton} onClick={(e) => { this.nextButtonClicked(e) }}>
-          <span>Next</span>
-          <i className="glyphicon glyphicon-chevron-right" aria-label="Next"></i>
+        <button
+          className={"btn btn-next-item " + disabled}
+          style={styles.nextButton}
+          onClick={(e) => { this.nextButtonClicked(e) }}
+          >
+            <span>Next</span>
+            <i className="glyphicon glyphicon-chevron-right" aria-label="Next"></i>
         </button>
       );
     }
   }
 
   getPreviousButton(styles) {
-    let disabled = (this.props.currentIndex > 0) ? "" : "disabled";
+    let disabled = this.props.currentIndex > 0 ? "" : "disabled";
 
     return (
-        <button className={"btn btn-previous-item " + disabled} style={styles.previousButton} onClick={(e) => { this.previousButtonClicked(e) }}>
+      <button
+        className={"btn btn-previous-item " + disabled}
+        style={styles.previousButton}
+        onClick={(e) => { this.previousButtonClicked(e) }}
+        >
           <i className="glyphicon glyphicon-chevron-left" aria-label="Previous"></i>
           <span>Previous</span>
-        </button>);
+      </button>);
   }
 
-  getGeneralFeedbackMarkup(answer){
+  getGeneralFeedbackMarkup(answer) {
     return { __html: answer.feedback }
   }
 
-  questionDirections(styles){
-    if( AssessmentStore.isPractice() ){
-      return "";
+  questionDirections(styles) {
+    // If this is a practice assessment, bail
+    if (AssessmentStore.isPractice()) {
+      return;
     }
 
-    if(this.props.question.question_type == "multiple_answers_question") {
+    // if this is a multiple answer question
+    if (this.props.question.question_type === "multiple_answers_question") {
       return (
         <div style={styles.chooseText}>Choose all that apply</div>
       );
-    } else if(this.props.question.question_type == "multiple_choice_question" ||
-              this.props.question.question_type == "true_false_question") {
+    // if this is a multiple choice or true/false question
+    } else if (this.props.question.question_type === "multiple_choice_question" ||
+               this.props.question.question_type === "true_false_question") {
       return (
         <div style={styles.chooseText}>Choose the best answer</div>
       );
-    } else {
-      return "";
     }
   }
 
   questionContent() {
-    if(this.props.question.question_type !== 'multiple_dropdowns_question'){
+    if (this.props.question.question_type !== 'multiple_dropdowns_question') {
       return (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: this.props.question.material
-          }}>
-        </div>
-      )
+        <div dangerouslySetInnerHTML={{ __html: this.props.question.material }}></div>
+      );
     }
-  }//questionContent
-
-
-  render() {
-    var styles = this.getStyles(this.context.theme);
-    var must_answer_message = this.state && this.state.showMessage ? <div style={styles.warning}>You must select an answer before continuing.</div> : "";
-
-    return (
-      <div className="assessment_container" style={styles.assessmentContainer}>
-        <div className="question">
-          <div style={styles.formativePadding}>
-            {this.formativeHeader(styles)}
-
-            <form className="edit_item" >
-              <div className="full_question" style={styles.fullQuestion}>
-                {this.simple_progress(styles)}
-                <div className="inner_question" style={styles.innerQuestion}>
-                  <div className="question_text" style={this.props.question.question_type !== 'multiple_dropdowns_question' ? styles.questionText : {}}>
-                    {this.questionDirections(styles)}
-                    {this.questionContent()}
-                  </div>
-                  {this.inputOrReview(styles)}
-                </div>
-                <div className="row">
-                  <div className="col-md-12 col-sm-12 col-xs-10" >
-                    {/*this.props.question.question_type === 'essay_question' ? this.getResult(this.props.answerMessage) : null*/}
-                    {this.getConfidenceLevels(this.props.confidenceLevels, styles)}
-                    {this.checkAnswerButton(styles)}
-                    {this.getNavigationButtons(styles)}
-                    {this.submitAssessmentButton(styles)}
-                    {this.getWarning(this.state,  this.props.questionCount, this.props.currentIndex, styles)}
-                    {must_answer_message}
-                  </div>
-                </div>
-              </div>
-            </form>
-
-          </div>
-        </div>
-      </div>
-    );
   }
 
   inputOrReview(styles) {
-    if (this.props.answerMessage == null || ( !AssessmentStore.isFormative() && !AssessmentStore.isPractice())) {
-      return <UniversalInput
+    if (!this.props.answerMessage || (AssessmentStore.isSummative() || AssessmentStore.isSwyk())) {
+      return (
+        <UniversalInput
           item={this.props.question}
           isResult={false}
           chosen={this.props.studentAnswer}
           assessmentKind={this.props.settings.assessmentKind}
-          registerGradingCallback={this.props.registerGradingCallback}/>
+          registerGradingCallback={this.props.registerGradingCallback}
+          />
+      );
     } else {
       let answerFeedback = {};
-      if( this.props.answerMessage && this.props.answerMessage.answerFeedback ){
+
+      if (this.props.answerMessage && this.props.answerMessage.answerFeedback) {
         answerFeedback = this.props.answerMessage.answerFeedback
       }
 
-      return <UniversalInput
+      return (
+        <UniversalInput
           item={this.props.question}
           isResult={true}
           chosen={this.props.studentAnswer}
@@ -291,108 +377,122 @@ export default class Item extends BaseComponent{
           correctAnswers={this.props.question.correct}
           answerFeedback={answerFeedback}
           completed={Item.checkCompletion()}
-      />
+        />
+      );
     }
   }
 
   submitAssessmentButton(styles) {
     if (this.props.showAnswers) {
-      if (this.props.currentIndex == this.props.questionCount - 1 && Item.checkCompletion() === true && AssessmentStore.hasSubmittedCurrent()) {
-        return <div style={styles.submitAssessmentButtonDiv}>
-          <button className="btn btn-check-answer"
-                  style={styles.submitAssessmentButton}
-                  onClick={(e) => { this.submitAssessmentButtonClicked(e) }}
-          >Submit</button>
-        </div>
-      } else {
-        return "";
+      if (this.props.currentIndex === this.props.questionCount - 1 &&
+          Item.checkCompletion() === true &&
+          AssessmentStore.hasSubmittedCurrent()) {
+        return (
+          <div style={styles.submitAssessmentButtonDiv}>
+            <button
+              className="btn btn-check-answer"
+              style={styles.submitAssessmentButton}
+              onClick={(e) => { this.submitAssessmentButtonClicked(e) }}
+              >
+                Submit
+              </button>
+          </div>
+        );
       }
-
-
     } else {
       if ((AssessmentStore.isFormative() && this.props.confidenceLevels) ||
           (AssessmentStore.isPractice()) ||
-          (this.props.currentIndex != this.props.questionCount - 1)) {
+          (this.props.currentIndex !== this.props.questionCount - 1)) {
         return ""
       }
 
-      return <div style={styles.submitAssessmentButtonDiv}>
-        <button className="btn btn-check-answer"
-                style={styles.submitAssessmentButton}
-                onClick={(e) => { this.submitAssessmentButtonClicked(e) }}
-        >Submit</button>
-      </div>
+      return (
+        <div style={styles.submitAssessmentButtonDiv}>
+          <button
+            className="btn btn-check-answer"
+            style={styles.submitAssessmentButton}
+            onClick={(e) => { this.submitAssessmentButtonClicked(e) }}
+            >
+              Submit
+          </button>
+        </div>
+      );
     }
   }
 
   checkAnswerButton(styles) {
-    if ( !AssessmentStore.isPractice() ) {
-      return ""
+    if (!AssessmentStore.isPractice()) {
+      return;
     }
 
     let showingResult = this.props.answerMessage && AssessmentStore.hasSelectedAnswerForCurrent();
 
     return (
       <div style={styles.checkAnswerButtonDiv}>
-        <button className="btn btn-check-answer"
-                style={styles.checkAnswerButton}
-                onClick={(e) => { this.checkAnswerButtonClicked(e) }}
-                disabled={showingResult}
-        >Check Answer</button>
+        <button
+          className="btn btn-check-answer"
+          style={styles.checkAnswerButton}
+          onClick={(e) => { this.checkAnswerButtonClicked(e) }}
+          disabled={showingResult}
+          >
+            Check Answer
+        </button>
       </div>
     );
   }
 
   formativeHeader(styles) {
-    var formativeHeader = "";
     if (AssessmentStore.isFormative()) {
-      formativeHeader =
-          <div>
-            <div className="row">
+      return (
+        <div>
+          <div className="row"></div>
+          <div className="row" style={styles.checkDiv}>
+            <div className="col-md-10">
+              <h4 style={styles.h4}>{this.props.assessment.title}</h4>
             </div>
-            <div className="row" style={styles.checkDiv}>
-              <div className="col-md-10">
-                <h4 style={styles.h4}>{this.props.assessment.title}</h4>
-              </div>
-              <div className="col-md-2">
-              </div>
-            </div>
+            <div className="col-md-2"></div>
           </div>
+        </div>
+      );
     }
-    return formativeHeader
   }
 
-  //Check if we need to display the counter in the top right
-  simple_progress(styles) {
-    if ( this.props.questionCount > 1 && AssessmentStore.isPractice()) {
-      return <span style={styles.counter} aria-label={"You are on question " + (this.props.currentIndex + 1) + " of " + this.props.questionCount }>
+  // Check if we need to display the counter in the top right
+  simpleProgress(styles) {
+    if (this.props.questionCount > 1 && AssessmentStore.isPractice()) {
+      return (
+        <span
+          style={styles.counter}
+          aria-label={`You are on question ${this.props.currentIndex + 1} of ${this.props.questionCount}`}
+          >
             {this.props.currentIndex + 1} of {this.props.questionCount}
-            </span>
-    } else {
-      return ""
+        </span>
+      );
     }
   }
 
-  getStyles(theme){
-    var navMargin = "-35px 650px 0 0";
-    if(this.props.settings.confidenceLevels)
-      navMargin = "-75px 20px 0 0";
+  getStyles(theme) {
+    let navMargin = "-35px 650px 0 0";
 
-    var marginTop = "100px";
-    var boxShadow = theme.assessmentContainerBoxShadow;
-    if (AssessmentStore.isFormative() ||
-        AssessmentStore.isPractice()) {
+    if (this.props.settings.confidenceLevels) {
+      navMargin = "-75px 20px 0 0";
+    }
+
+    let marginTop = "100px";
+    let boxShadow = theme.assessmentContainerBoxShadow;
+
+    if (AssessmentStore.isFormative() || AssessmentStore.isPractice()) {
       marginTop = "0px";
       boxShadow = "";
     }
 
-    var extraPadding = AssessmentStore.isFormative() ? "20px" : "";
+    let extraPadding = AssessmentStore.isFormative() ? "20px" : "";
 
     return {
-      formativePadding:{
+      formativePadding: {
         padding: extraPadding
       },
-      assessmentContainer:{
+      assessmentContainer: {
         marginTop: marginTop,
         boxShadow: boxShadow,
         borderRadius: theme.assessmentContainerBorderRadius
@@ -400,8 +500,8 @@ export default class Item extends BaseComponent{
       header: {
         backgroundColor: theme.headerBackgroundColor,
       },
-      fullQuestion:{
-        backgroundColor: AssessmentStore.isFormative() || AssessmentStore.isPractice() ? theme.fullQuestionBackgroundColor : '#fff',
+      fullQuestion: {
+        backgroundColor: AssessmentStore.isFormative() || AssessmentStore.isPractice() ? theme.fullQuestionBackgroundColor : "#fff",
         paddingBottom: "20px",
       },
       innerQuestion: {
@@ -449,7 +549,6 @@ export default class Item extends BaseComponent{
         width: theme.definitelyWidth,
         backgroundColor: theme.confidenceButtonBackgroundColor,
         color: theme.definitelyColor,
-
       },
       checkAnswerButton: {
         width: theme.probablyWidth,
@@ -553,22 +652,20 @@ export default class Item extends BaseComponent{
         color: 'black',
         float: "right"
       }
-
     }
   }
-
-}//item class
+} // end item class
 
 Item.propTypes = {
-  question         : React.PropTypes.object.isRequired,
-  currentIndex     : React.PropTypes.number.isRequired,
-  questionCount    : React.PropTypes.number.isRequired,
-  answerMessage     : React.PropTypes.object,
+  question : React.PropTypes.object.isRequired,
+  currentIndex : React.PropTypes.number.isRequired,
+  questionCount : React.PropTypes.number.isRequired,
+  answerMessage : React.PropTypes.object,
   confidenceLevels : React.PropTypes.bool.isRequired,
-  outcomes         : React.PropTypes.object,
+  outcomes : React.PropTypes.object,
   previousQuestion : React.PropTypes.func.isRequired,
-  nextQuestion     : React.PropTypes.func.isRequired,
-  selectQuestion   : React.PropTypes.func.isRequired,
+  nextQuestion : React.PropTypes.func.isRequired,
+  selectQuestion : React.PropTypes.func.isRequired,
   registerGradingCallback : React.PropTypes.func.isRequired
 };
 

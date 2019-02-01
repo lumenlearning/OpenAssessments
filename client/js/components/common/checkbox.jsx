@@ -7,8 +7,7 @@ import Styles             from "../../themes/selection.js";
 
 const styles = Styles;
 
-export default class CheckBox extends React.Component{
-
+export default class CheckBox extends React.Component {
   render() {
     let btnQuestionStyles = this.getBtnQuestionStyles();
     let btnLabelStyles = this.props.showAsCorrect !== null ? {...styles.btnLabel, ...{cursor: "default"}} : {...styles.btnLabel, ...{cursor: "pointer"}};
