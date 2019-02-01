@@ -110,12 +110,17 @@ export default class Item extends BaseComponent{
 
   getConfidenceLevels(showLevels, styles) {
     if(showLevels) {
+      // if the question has been answered
       if (this.props.showAnswers && this.props.question.confidenceLevel) {
         return (
           <div className="confidence_feedback_wrapper" style={styles.confidenceFeedbackWrapper}>
             <p>Your confidence level in answering this question was: {`${this.props.question.confidenceLevel}`}.</p>
           </div>
         );
+      // if the question is summative, don't show the confidence level button group
+      } else if (this.props.settings.kind === "summative") {
+        return;
+      // otherwise, show the confidence level button group
       } else {
         var levelMessage = <div tabIndex="0" style={{marginBottom: "10px"}}>How sure are you of your answer?</div>;
         return (
