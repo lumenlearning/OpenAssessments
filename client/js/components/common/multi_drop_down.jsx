@@ -90,6 +90,15 @@ export default class MultiDropDown extends BaseComponent {
         return ariaLabel;
       }
 
+      let disabled = "";
+      let cursorNotAllowed = "";
+
+      // Disable dropdowns if this is the results page or if confidence levels have been selected
+      if (this.props.isResult || this.props.item.confidenceLevel !== undefined) {
+        disabled = "disabled";
+        cursorNotAllowed = "cursor: not-allowed";
+      }
+
       return (
         `<span style="display:inline-block" >
           <span style="display:flex">
@@ -97,8 +106,8 @@ export default class MultiDropDown extends BaseComponent {
               name="${nMatch}"
               id="dropdown_${nMatch}"
               aria-label=${ariaLabel}
-              ${this.props.item.confidenceLevel !== undefined ? "disabled" : ""}
-              style="${this.props.item.confidenceLevel !== undefined ? "cursor: not-allowed" : ""}"
+              ${disabled}
+              style="${cursorNotAllowed}"
             >
               <option ${!this.state[nMatch] ? "selected" : ""} disabled aria-label="select ${nMatch} choice" value="null">[Select]</option>
               ${options}
