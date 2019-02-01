@@ -26,7 +26,8 @@ export default class Item extends BaseComponent {
       "getNextButton",
       "getStyles",
       "clearShowMessage",
-      "mustAnswerMessage"
+      "mustAnswerMessage",
+      "getResultsButton"
     );
   }
 
@@ -113,19 +114,11 @@ export default class Item extends BaseComponent {
             that.props.settings.assessmentKind.toUpperCase() === "FORMATIVE") {
           if (that.props.showAnswers) {
             that.props.checkAnswer(that.props.currentIndex);
-          } else {
-            that.submitAssessment();
           }
         // otherwise, this is not the last question and/or it's not formative
         } else {
-          if (that.props.showAnswers) {
-            that.clearShowMessage();
-            that.props.checkAnswer(that.props.currentIndex);
-          // otherwise, do the old behavior.
-          } else {
-            that.clearShowMessage();
-            AssessmentActions.nextQuestion();
-          }
+          that.clearShowMessage();
+          that.props.checkAnswer(that.props.currentIndex);
         }
       // if an answer hasn't been selected
       } else {
@@ -204,18 +197,17 @@ export default class Item extends BaseComponent {
   }
 
   getConfidenceLevels(showLevels, styles) {
-    if (showLevels) {
-      // if the question has been answered
-      if (this.props.showAnswers && this.props.question.confidenceLevel) {
-        return (
-          <div className="confidence_feedback_wrapper" style={styles.confidenceFeedbackWrapper}>
-            <p>Your confidence level in answering this question was: {`${this.props.question.confidenceLevel}`}.</p>
-          </div>
-        );
-      // if the question is summative or swyk, don't show the confidence level button group
-      } else if (this.props.settings.kind === "summative" || this.props.settings.kind === "show_what_you_know") {
-        return;
-      }
+    // if the question has been answered
+    if (this.props.question.confidenceLevel) {
+      return (
+        <div className="confidence_feedback_wrapper" style={styles.confidenceFeedbackWrapper}>
+          <p>Your confidence level in answering this question was: {`${this.props.question.confidenceLevel}`}.</p>
+          {this.getConfidenceNavButton(styles)}
+        </div>
+      );
+    // if the question is summative or swyk, don't show the confidence level button group
+    } else if (this.props.settings.kind === "summative" || this.props.settings.kind === "show_what_you_know") {
+      return;
     }
 
     // if this is a formative assessment, show the confidence level buttons
@@ -249,6 +241,26 @@ export default class Item extends BaseComponent {
         </div>
       );
     }
+  }
+
+  getConfidenceNavButton(styles) {
+    if (this.props.currentIndex === this.props.questionCount - 1) {
+      return this.getResultsButton(styles);
+    } else {
+      return this.getNextButton(styles);
+    }
+  }
+
+  getResultsButton(styles) {
+    return (
+      <input
+        type="button"
+        style={{...styles.margin, ...styles.definitelyButton}}
+        className="btn btn-check-answer"
+        value="Show Results"
+        onClick={(e) => { this.submitAssessment() }}
+        />
+    );
   }
 
   getNavigationButtons(styles) {
@@ -383,6 +395,10 @@ export default class Item extends BaseComponent {
   }
 
   submitAssessmentButton(styles) {
+    if (this.props.settings.assessmentKind === "formative") {
+      return;
+    }
+
     if (this.props.showAnswers) {
       if (this.props.currentIndex === this.props.questionCount - 1 &&
           Item.checkCompletion() === true &&
@@ -403,7 +419,7 @@ export default class Item extends BaseComponent {
       if ((AssessmentStore.isFormative() && this.props.confidenceLevels) ||
           (AssessmentStore.isPractice()) ||
           (this.props.currentIndex !== this.props.questionCount - 1)) {
-        return ""
+        return;
       }
 
       return (
