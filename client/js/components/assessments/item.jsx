@@ -118,20 +118,24 @@ export default class Item extends BaseComponent{
           </div>
         );
       // if the question is summative or swyk, don't show the confidence level button group
-    } else if (this.props.settings.kind === "summative" || this.props.settings.kind === "show_what_you_know") {
+      } else if (this.props.settings.kind === "summative" || this.props.settings.kind === "show_what_you_know") {
         return;
       // otherwise, show the confidence level button group
-      } else {
-        var levelMessage = <div tabIndex="0" style={{marginBottom: "10px"}}>How sure are you of your answer?</div>;
-        return (
-          <div className="confidence_wrapper" style={styles.confidenceWrapper}>
-            {levelMessage}
-            <input type="button" style={styles.maybeButton} className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, "Just A Guess", this.props.currentIndex) }}/>
-            <input type="button" style={{...styles.margin, ...styles.probablyButton}} className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Pretty Sure", this.props.currentIndex) }}/>
-            <input type="button" style={{...styles.margin, ...styles.definitelyButton}} className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Very Sure", this.props.currentIndex) }}/>
-          </div>
-        );
       }
+    }
+
+    // if this is a formative assessment, show the confidence level buttons
+    if (this.props.settings.kind === "formative") {
+      var levelMessage = <div tabIndex="0" style={{marginBottom: "10px"}}>How sure are you of your answer?</div>;
+
+      return (
+        <div className="confidence_wrapper" style={styles.confidenceWrapper}>
+          {levelMessage}
+          <input type="button" style={styles.maybeButton} className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, "Just A Guess", this.props.currentIndex) }}/>
+          <input type="button" style={{...styles.margin, ...styles.probablyButton}} className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Pretty Sure", this.props.currentIndex) }}/>
+          <input type="button" style={{...styles.margin, ...styles.definitelyButton}} className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, "Very Sure", this.props.currentIndex) }}/>
+        </div>
+      );
     }
   }
 
