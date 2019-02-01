@@ -138,6 +138,11 @@ export default class Item extends BaseComponent{
   getNavigationButtons(styles) {
     let assessmentKind = this.props.settings.assessmentKind ? this.props.settings.assessmentKind : null;
 
+    // if there's only one question in the assessment, don't render the nav buttons
+    if (this.props.questionCount === 1) {
+      return;
+    }
+
     if (assessmentKind === 'summative' || assessmentKind === 'practice' || assessmentKind === 'show_what_you_know') {
       return (
         <div className="navigationBtnWrapper" style={styles.navigationWrapper}>
