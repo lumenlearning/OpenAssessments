@@ -20,7 +20,7 @@ export default class CheckBox extends React.Component {
             <input type="checkbox" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={() => { this.answerSelected()}} />
             <span style={styles.span} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>
           </label>
-          {this.props.assessmentKind === 'formative' || this.props.assessmentKind === 'practice' ? this.answerFeedback() : ''}
+          {this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice" ? this.answerFeedback() : ""}
         </div>
       </div>
     );
@@ -35,7 +35,7 @@ export default class CheckBox extends React.Component {
         indicator = <img src="/assets/correct.png" className="correctIndicator" aria-label="Correct Answer" alt="Icon indicating the correct answer" style={styles.checkStyleCorrect} />;
       }
     // else this is a quiz page
-    } else if ((this.props.assessmentKind === 'formative' || this.props.assessmentKind === 'practice')) {
+  } else if ((this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice")) {
       if (this.props.showAsCorrect === true && this.props.checked === true) {
         indicator = <img src="/assets/correct.png" className="correctIndicator" aria-label="Correct Answer that was chosen" alt="Icon indicating that a correct answer was chosen" style={styles.checkStyleCorrect} />;
       } else if (this.props.showAsCorrect === true && this.props.checked === false) {
@@ -54,7 +54,7 @@ export default class CheckBox extends React.Component {
     let qStyles = styles.btnQuestion;
 
     // this is a quiz page
-    if ((this.props.assessmentKind === 'formative' || this.props.assessmentKind === 'practice')) {
+    if ((this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice")) {
       if(this.props.showAsCorrect === true && this.props.checked === true) {
         qStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect};
       } else if (this.props.showAsCorrect === true && this.props.checked === false) {
@@ -85,25 +85,27 @@ export default class CheckBox extends React.Component {
   }
 
   answerFeedback() {
-    let feedback = '';
+    let feedback = "";
     let feedbackStyles = {margin: 0};
 
-    if (this.props.assessmentKind === 'formative' || this.props.assessmentKind === 'practice') {
+    if (this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice") {
       if (this.props.showAsCorrect === true && this.props.checked === true) {
-        feedback = 'Answered Correctly';
+        feedback = "Answered Correctly";
         feedbackStyles = styles.feedbackCorrect;
       } else if (this.props.showAsCorrect === true && this.props.checked === false) {
-        feedback = 'Not selected, but correct';
+        feedback = "Not selected, but correct";
         feedbackStyles = styles.feedbackIncorrect;
       } else if (this.props.showAsCorrect === false && this.props.checked === true) {
-        feedback = 'Selected, but incorrect';
+        feedback = "Selected, but incorrect";
         feedbackStyles = styles.feedbackIncorrect;
       } else if (this.props.showAsCorrect === false && this.props.checked === false) {
         // do nothing
       }
     }
 
-    return <div className="check_answer_result" style={feedbackStyles}>{feedback}</div>
+    return (
+      <div className="check_answer_result" style={feedbackStyles}>{feedback}</div>
+    );
   }
 
   answerSelected() {

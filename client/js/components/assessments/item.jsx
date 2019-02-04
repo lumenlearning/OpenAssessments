@@ -46,7 +46,7 @@ export default class Item extends BaseComponent {
                 <div className="inner_question" style={styles.innerQuestion}>
                   <div
                     className="question_text"
-                    style={this.props.question.question_type !== 'multiple_dropdowns_question' ? styles.questionText : {}}
+                    style={this.props.question.question_type !== "multiple_dropdowns_question" ? styles.questionText : {}}
                     >
                       {this.questionDirections(styles)}
                       {this.questionContent()}
@@ -187,7 +187,7 @@ export default class Item extends BaseComponent {
     if (state &&
         state.unAnsweredQuestions &&
         state.unAnsweredQuestions.length > 0 &&
-        questionIndex + 1 == questionCount) {
+        questionIndex + 1 === questionCount) {
       return (
         <div style={styles.warning}>
           <i className="glyphicon glyphicon-exclamation-sign"></i> You left question(s) {state.unAnsweredQuestions.join()} blank. Use the "Progress" drop-down menu at the top to go back and answer the question(s), then come back and submit.
@@ -222,21 +222,21 @@ export default class Item extends BaseComponent {
             style={styles.maybeButton}
             className="btn btn-check-answer"
             value="Just A Guess"
-            onClick={(e) => { this.confidenceLevelClicked(e, "Just A Guess", this.props.currentIndex) }}
+            onClick={(e) => { this.confidenceLevelClicked(e, "Just A Guess", this.props.currentIndex); }}
             />
           <input
             type="button"
             style={{...styles.margin, ...styles.probablyButton}}
             className="btn btn-check-answer"
             value="Pretty Sure"
-            onClick={(e) => { this.confidenceLevelClicked(e, "Pretty Sure", this.props.currentIndex) }}
+            onClick={(e) => { this.confidenceLevelClicked(e, "Pretty Sure", this.props.currentIndex); }}
             />
           <input
             type="button"
             style={{...styles.margin, ...styles.definitelyButton}}
             className="btn btn-check-answer"
             value="Very Sure"
-            onClick={(e) => { this.confidenceLevelClicked(e, "Very Sure", this.props.currentIndex) }}
+            onClick={(e) => { this.confidenceLevelClicked(e, "Very Sure", this.props.currentIndex); }}
             />
         </div>
       );
@@ -271,7 +271,7 @@ export default class Item extends BaseComponent {
       return;
     }
 
-    if (assessmentKind === 'summative' || assessmentKind === 'practice' || assessmentKind === 'show_what_you_know') {
+    if (assessmentKind === "summative" || assessmentKind === "practice" || assessmentKind === "show_what_you_know") {
       return (
         <div className="navigationBtnWrapper" style={styles.navigationWrapper}>
           {this.getPreviousButton(styles)}
@@ -279,7 +279,7 @@ export default class Item extends BaseComponent {
         </div>
       );
     // if this is a formative assessment and confidence level has been selected
-    } else if (assessmentKind === 'formative' && (this.props.showAnswers && this.props.question.confidenceLevel)) {
+  } else if (assessmentKind === "formative" && (this.props.showAnswers && this.props.question.confidenceLevel)) {
       return (
         <div className="navigationBtnWrapper" style={styles.navigationWrapper}>
           {this.getNextButton(styles)}
@@ -289,7 +289,7 @@ export default class Item extends BaseComponent {
   }
 
   getNextButton(styles) {
-    let disabled = (this.props.currentIndex == this.props.questionCount - 1) ? "disabled" : "";
+    let disabled = (this.props.currentIndex === this.props.questionCount - 1) ? "disabled" : "";
 
     // if this is a formative assessment
     if (this.props.settings.assessmentKind === "formative") {
@@ -297,7 +297,7 @@ export default class Item extends BaseComponent {
         <button
           className={"btn btn-next-item " + disabled}
           style={styles.nextButton}
-          onClick={(e) => { this.nextButtonClicked(e) }}
+          onClick={(e) => { this.nextButtonClicked(e); }}
           >
           Next Question
         </button>
@@ -307,7 +307,7 @@ export default class Item extends BaseComponent {
         <button
           className={"btn btn-next-item " + disabled}
           style={styles.nextButton}
-          onClick={(e) => { this.nextButtonClicked(e) }}
+          onClick={(e) => { this.nextButtonClicked(e); }}
           >
             <span>Next</span>
             <i className="glyphicon glyphicon-chevron-right" aria-label="Next"></i>
@@ -323,7 +323,7 @@ export default class Item extends BaseComponent {
       <button
         className={"btn btn-previous-item " + disabled}
         style={styles.previousButton}
-        onClick={(e) => { this.previousButtonClicked(e) }}
+        onClick={(e) => { this.previousButtonClicked(e); }}
         >
           <i className="glyphicon glyphicon-chevron-left" aria-label="Previous"></i>
           <span>Previous</span>

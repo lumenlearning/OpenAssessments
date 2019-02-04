@@ -15,7 +15,7 @@ export default class TextArea extends React.Component{
 
   answerFeedback() {
     if ((this.props.assessmentKind === "formative" && this.props.item.confidenceLevel) ||
-        (this.props.assessmentKind === "practice" && typeof this.props.initialText === 'string') &&
+        (this.props.assessmentKind === "practice" && typeof this.props.initialText === "string") &&
          this.props.completed) {
       return (
         <div className="check_answer_result" style={styles.feedbackNeutral}>
@@ -29,7 +29,7 @@ export default class TextArea extends React.Component{
     if (markup !== null) {
       return {__html: markup};
     } else {
-      return {__html: "Sorry there's no feedback for this question, please reach out to your teacher with any questions."}
+      return {__html: "Sorry there's no feedback for this question, please reach out to your teacher with any questions."};
     }
   }
 

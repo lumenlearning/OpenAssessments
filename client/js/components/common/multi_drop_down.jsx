@@ -256,7 +256,7 @@ export default class MultiDropDown extends BaseComponent {
   }
 
   answerFeedbackMarkup(i, feedback) {
-    return { __html: `(${i + 1}) ` + feedback }
+    return { __html: `(${i + 1}) ` + feedback };
   }
 
   addListeners() {

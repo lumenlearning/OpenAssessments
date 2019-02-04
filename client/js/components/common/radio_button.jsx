@@ -21,7 +21,7 @@ export default class RadioButton extends React.Component{
             <input type="radio" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={() => {this.answerSelected()}} />
             <span style={styles.span} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>
           </label>
-          {this.renderAnswerIndicator() !== undefined ? this.answerFeedback() : ''}
+          {this.renderAnswerIndicator() !== undefined ? this.answerFeedback() : ""}
         </div>
       </div>
     );
@@ -36,7 +36,7 @@ export default class RadioButton extends React.Component{
         indicator = <img src="/assets/correct.png" className="correctIndicator" aria-label="Correct Answer" alt="Icon indicating the correct answer" style={styles.checkStyleCorrect} />;
       }
     // else this is a quiz page
-    } else if (this.props.assessmentKind === 'formative' || this.props.assessmentKind === 'practice') {
+    } else if (this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice") {
       if (this.props.showAsCorrect === true && this.checkedStatus()) {
         indicator = <img src="/assets/correct.png" className="correctIndicator" aria-label="Correct Answer" alt="Icon indicating the correct answer was chosen" style={styles.checkStyleCorrect} />;
       } else if (this.props.showAsCorrect === false && this.checkedStatus()) {
@@ -51,7 +51,7 @@ export default class RadioButton extends React.Component{
     let qStyles = styles.btnQuestion;
 
     // this is a quiz page
-    if (this.props.assessmentKind === 'formative' || this.props.assessmentKind === 'practice') {
+    if (this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice") {
       if (this.props.showAsCorrect === true && this.checkedStatus()) {
         qStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect};
       } else if (this.props.showAsCorrect === false && this.checkedStatus()) {
@@ -85,12 +85,16 @@ export default class RadioButton extends React.Component{
     }
 
     if (this.props.answerFeedback) {
-      return <div className="check_answer_result" style={feedbackStyles} dangerouslySetInnerHTML={ this.answerFeedbackMarkup() } />
+      return (
+        <div className="check_answer_result" style={feedbackStyles} dangerouslySetInnerHTML={ this.answerFeedbackMarkup() } />
+      );
     } else {
       if (!this.props.showAsCorrect && this.props.checked) {
-        return <div className="check_answer_result" style={feedbackStyles}>Incorrect</div>;
+        return (
+          <div className="check_answer_result" style={feedbackStyles}>Incorrect</div>
+        );
       } else {
-        return '';
+        return;
       }
     }
   }
