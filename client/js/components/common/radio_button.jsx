@@ -18,7 +18,7 @@ export default class RadioButton extends React.Component{
         {this.renderAnswerIndicator()}
         <div className="btn btn-block btn-question" style={btnQuestionStyles}>
           <label style={btnLabelStyles}>
-            <input type="radio" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={() => {this.answerSelected()}} />
+            <input type="radio" disabled={this.props.isDisabled} name={this.props.name} onClick={() => {this.answerSelected()}} />
             <span style={styles.span} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>
           </label>
           {this.renderAnswerIndicator() !== undefined ? this.answerFeedback() : ""}
@@ -62,16 +62,17 @@ export default class RadioButton extends React.Component{
     return qStyles;
   }
 
-  checkedStatus(){
-    var checked = null;
-    var optionFlag = null;
-    if( this.props.checked === true ) {
-      checked = "true";
-    } else if ( this.props.checked === false ){
+  checkedStatus() {
+    let checked;
+
+    if (this.props.checked) {
+      checked = true;
+    } else if (this.props.checked === false) {
       checked = false;
-    } else if ( !this.props.isDisabled ) {
-      checked = (AssessmentStore.studentAnswers() && AssessmentStore.studentAnswers().indexOf(this.props.item.id) > -1) ? "true" : null;
+    } else if (!this.props.isDisabled) {
+      checked = (AssessmentStore.studentAnswers() && AssessmentStore.studentAnswers().indexOf(this.props.item.id) > -1) ? true : null;
     }
+
     return checked;
   }
 
@@ -83,7 +84,7 @@ export default class RadioButton extends React.Component{
     } else if (!this.props.showAsCorrect) {
       feedbackStyles = styles.feedbackIncorrect;
     }
-console.log(feedbackStyles)
+
     if (this.props.answerFeedback) {
       return (
         <div className="check_answer_result" style={feedbackStyles} dangerouslySetInnerHTML={ this.answerFeedbackMarkup() } />

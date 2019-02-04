@@ -71,7 +71,6 @@ export default class CheckBox extends React.Component {
 
   checkedStatus() {
     let checked = null;
-    let optionFlag = null;
 
     if(this.props.checked === true) {
       checked = true;

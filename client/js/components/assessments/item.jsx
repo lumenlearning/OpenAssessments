@@ -112,9 +112,7 @@ export default class Item extends BaseComponent {
         // if this is the last question and it's a formative assessment
         if (that.props.currentIndex === that.props.questionCount - 1 &&
             that.props.settings.assessmentKind.toUpperCase() === "FORMATIVE") {
-          if (that.props.showAnswers) {
-            that.props.checkAnswer(that.props.currentIndex);
-          }
+          that.props.checkAnswer(that.props.currentIndex);
         // otherwise, this is not the last question and/or it's not formative
         } else {
           that.clearShowMessage();
