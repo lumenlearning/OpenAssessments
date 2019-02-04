@@ -201,12 +201,11 @@ export default class Item extends BaseComponent {
         <div className="confidence_feedback_wrapper" style={styles.confidenceFeedbackWrapper}>
           <p>Your confidence level in answering this question was: {`${this.props.question.confidenceLevel}`}.</p>
           {this.getConfidenceNavButton(styles)}
-      //   </div>
-      // );
-    // }
+        </div>
+      );
+    }
 
     // if this is a formative assessment, show the confidence level buttons
-    console.log('LOOK AT ME!~!!!!!!',this.props.settings.kind);
     if (this.props.settings.kind === "formative") {
       return (
         <div className="confidence_wrapper" style={styles.confidenceWrapper}>
