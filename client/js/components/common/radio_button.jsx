@@ -37,9 +37,9 @@ export default class RadioButton extends React.Component{
       }
     // else this is a quiz page
     } else if (this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice") {
-      if (this.props.showAsCorrect === true && this.checkedStatus()) {
+      if (this.props.showAsCorrect && this.checkedStatus()) {
         indicator = <img src="/assets/correct.png" className="correctIndicator" aria-label="Correct Answer" alt="Icon indicating the correct answer was chosen" style={styles.checkStyleCorrect} />;
-      } else if (this.props.showAsCorrect === false && this.checkedStatus()) {
+      } else if (!this.props.showAsCorrect && this.checkedStatus()) {
         indicator = <img src="/assets/incorrect.png" className="wrongIndicator" aria-label="Wrong answer that was chosen" alt="Icon indicating the wrong answer was chosen" style={styles.checkStyleWrong} />;
       }
     }
@@ -52,9 +52,9 @@ export default class RadioButton extends React.Component{
 
     // this is a quiz page
     if (this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice") {
-      if (this.props.showAsCorrect === true && this.checkedStatus()) {
+      if (this.props.showAsCorrect && this.checkedStatus()) {
         qStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect};
-      } else if (this.props.showAsCorrect === false && this.checkedStatus()) {
+      } else if (!this.props.showAsCorrect && this.checkedStatus()) {
         qStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
       }
     }
@@ -83,7 +83,7 @@ export default class RadioButton extends React.Component{
     } else if (!this.props.showAsCorrect) {
       feedbackStyles = styles.feedbackIncorrect;
     }
-
+console.log(feedbackStyles)
     if (this.props.answerFeedback) {
       return (
         <div className="check_answer_result" style={feedbackStyles} dangerouslySetInnerHTML={ this.answerFeedbackMarkup() } />
