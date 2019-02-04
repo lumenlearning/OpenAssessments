@@ -201,20 +201,16 @@ export default class Item extends BaseComponent {
         <div className="confidence_feedback_wrapper" style={styles.confidenceFeedbackWrapper}>
           <p>Your confidence level in answering this question was: {`${this.props.question.confidenceLevel}`}.</p>
           {this.getConfidenceNavButton(styles)}
-        </div>
-      );
-    // if the question is summative or swyk, don't show the confidence level button group
-    } else if (this.props.settings.kind === "summative" || this.props.settings.kind === "show_what_you_know") {
-      return;
-    }
+      //   </div>
+      // );
+    // }
 
     // if this is a formative assessment, show the confidence level buttons
+    console.log('LOOK AT ME!~!!!!!!',this.props.settings.kind);
     if (this.props.settings.kind === "formative") {
-      let levelMessage = <div tabIndex="0" style={{marginBottom: "10px"}}>How sure are you of your answer?</div>;
-
       return (
         <div className="confidence_wrapper" style={styles.confidenceWrapper}>
-          {levelMessage}
+          <div tabIndex="0" style={{marginBottom: "10px"}}>How sure are you of your answer?</div>;
           <input
             type="button"
             style={styles.maybeButton}
