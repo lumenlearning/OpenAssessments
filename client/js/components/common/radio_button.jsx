@@ -21,7 +21,7 @@ export default class RadioButton extends React.Component{
             <input type="radio" disabled={this.props.isDisabled} name={this.props.name} onClick={() => {this.answerSelected()}} />
             <span style={styles.span} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>
           </label>
-          {this.renderAnswerIndicator() !== undefined ? this.answerFeedback() : ""}
+          {this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice" ? this.answerFeedback() : ""}
         </div>
       </div>
     );
@@ -37,9 +37,9 @@ export default class RadioButton extends React.Component{
       }
     // else this is a quiz page
     } else if (this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice") {
-      if (this.props.showAsCorrect && this.checkedStatus()) {
+      if (this.props.showAsCorrect === true && this.props.checked === true) {
         indicator = <img src="/assets/correct.png" className="correctIndicator" aria-label="Correct Answer" alt="Icon indicating the correct answer was chosen" style={styles.checkStyleCorrect} />;
-      } else if (!this.props.showAsCorrect && this.checkedStatus()) {
+      } else if (this.props.showAsCorrect === false && this.props.checked === true) {
         indicator = <img src="/assets/incorrect.png" className="wrongIndicator" aria-label="Wrong answer that was chosen" alt="Icon indicating the wrong answer was chosen" style={styles.checkStyleWrong} />;
       }
     }
@@ -52,9 +52,11 @@ export default class RadioButton extends React.Component{
 
     // this is a quiz page
     if (this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice") {
-      if (this.props.showAsCorrect && this.checkedStatus()) {
+      if (this.props.showAsCorrect === true && this.props.checked === true) {
+        console.log('both are true', this.props.showAsCorrect, this.props.checked)
         qStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect};
-      } else if (!this.props.showAsCorrect && this.checkedStatus()) {
+      } else if (this.props.showAsCorrect === false && this.props.checked === true) {
+        console.log('only checkd status is true', this.props.showAsCorrect, this.props.checked)
         qStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
       }
     }
@@ -65,7 +67,7 @@ export default class RadioButton extends React.Component{
   checkedStatus() {
     let checked;
 
-    if (this.props.checked) {
+    if (this.props.checked === true) {
       checked = true;
     } else if (this.props.checked === false) {
       checked = false;
@@ -79,9 +81,9 @@ export default class RadioButton extends React.Component{
   answerFeedback() {
     var feedbackStyles = {};
 
-    if (this.props.showAsCorrect) {
+    if (this.props.showAsCorrect === true) {
       feedbackStyles = styles.feedbackCorrect;
-    } else if (!this.props.showAsCorrect) {
+    } else if (this.props.showAsCorrect === false) {
       feedbackStyles = styles.feedbackIncorrect;
     }
 
@@ -90,7 +92,7 @@ export default class RadioButton extends React.Component{
         <div className="check_answer_result" style={feedbackStyles} dangerouslySetInnerHTML={ this.answerFeedbackMarkup() } />
       );
     } else {
-      if (!this.props.showAsCorrect && this.props.checked) {
+      if (this.props.showAsCorrect === false && this.props.checked === true) {
         return (
           <div className="check_answer_result" style={feedbackStyles}>Incorrect</div>
         );
