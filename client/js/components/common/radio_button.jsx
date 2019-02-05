@@ -53,10 +53,8 @@ export default class RadioButton extends React.Component{
     // this is a quiz page
     if (this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice") {
       if (this.props.showAsCorrect === true && this.props.checked === true) {
-        console.log('both are true', this.props.showAsCorrect, this.props.checked)
         qStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect};
       } else if (this.props.showAsCorrect === false && this.props.checked === true) {
-        console.log('only checkd status is true', this.props.showAsCorrect, this.props.checked)
         qStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
       }
     }
