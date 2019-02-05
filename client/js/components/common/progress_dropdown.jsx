@@ -10,11 +10,12 @@ export default class ProgressDropdown extends BaseComponent{
   
   constructor(props, context){
     super(props, context);
-    this._bind("navButtonClicked", "getStyles");
-
+    
+    this._bind("navButtonClicked", "getStyles", "handleKeyDown");
   }
 
-  navButtonClicked(){
+
+  navButtonClicked(e){
     if(this.state && this.state.expanded){
       this.setState({expanded: !this.state.expanded})
     } else {
@@ -24,6 +25,33 @@ export default class ProgressDropdown extends BaseComponent{
 
   selectQuestion(e,index){
     console.log(index);
+    }
+
+  handleKeyDown(e) {
+    // on escape toggle menu closed
+    if (e.keyCode === 27) {
+      this.setState({expanded: false})
+    }    
+
+    // TODO - determine if manually advancing to next menu item on 
+    // down and up key is necessary 
+    
+    // Find current DOM node
+    // var item = React.findDOMNode(this.refs['current-question'])
+    
+    // // if down or up key pressed, select correct question
+    // var that = this;
+    // if (e.keyCode === 40) {
+    // this.props.selectQuestion(this.props.currentQuestion, function(){
+    //   that.navButtonClicked;
+    //   item.focus();
+    // });
+    // } else if (e.keyCode === 38) {
+    //   this.props.selectQuestion(this.props.currentQuestion - 2, function(){
+    //     that.navButtonClicked;
+    //     item.focus();
+    //   });
+    // }
   }
 
   mouseOver(e){
@@ -44,6 +72,7 @@ export default class ProgressDropdown extends BaseComponent{
     return {
       dropdownStyle: {
         overflow: expanded ? "scroll" : "hidden",
+        display: expanded ? "block" : "none",
         height: expanded ? expHeight : "0px",
         backgroundColor: "white",
         transition: "all 0.4s",
@@ -93,18 +122,18 @@ export default class ProgressDropdown extends BaseComponent{
     var expanded = (this.state && this.state.expanded);
     var styles = this.getStyles(this.context.theme, expanded);
     var questions = this.props.questions && this.props.questions.map((question, index)=>{
-      return <ProgressListItem key={"list-item"+index} question={question} expanded={this.state && this.state.expanded} index={index} toggle={this.navButtonClicked} selectQuestion={this.props.selectQuestion}/>
+      return <ProgressListItem key={"list-item"+index} ref={(index) === this.props.currentQuestion ? "current-question" : null } question={question} expanded={this.state && this.state.expanded} index={index} toggle={this.navButtonClicked} selectQuestion={this.props.selectQuestion}/>
     });
     var text = this.props.disabled ? <b>There are {this.props.questionCount} questions</b> : <b>You are on question {this.props.currentQuestion} of {this.props.questionCount}</b>
     return (
-      <span>
+      <span onKeyDown={(e)=>{ this.handleKeyDown(e)}}>
         <img style={styles.icon}src={this.props.settings.images.ProgressIcon_svg} />
-        <button id="focus" style={styles.dropdownButton} className="btn" type="button" aria-haspopup="true" aria-expanded="true" onClick={()=>{if(!this.props.disabled)this.navButtonClicked()}}>
+        <button id="focus" style={styles.dropdownButton} className="btn" type="button" aria-haspopup="true" aria-controls="questionsMenu" aria-expanded={expanded ? true : false} onClick={(e)=>{ if(!this.props.disabled)this.navButtonClicked(e)}}>
           <div>Progress</div>
           <span>{text}</span>
           <span style={styles.caret} className="caret"></span>
         </button>
-        <div style={styles.dropdownStyle} aria-labelledby="dropdownMenu1">
+        <div style={styles.dropdownStyle} id="questionsMenu" role="menu" aria-labelledby="focus">
           {questions}
         </div>
       </span>
