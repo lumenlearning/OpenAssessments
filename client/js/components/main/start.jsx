@@ -1,53 +1,103 @@
 "use strict";
 
-import React              from 'react';
-import AssessmentStore    from "../../stores/assessment";
-import SettingsStore      from "../../stores/settings";
-import BaseComponent      from "../base_component";
-import AssessmentActions  from "../../actions/assessment";
-import Loading            from "../assessments/loading";
+// Dependencies
+import React from 'react';
+import $ from "jquery";
+// Actions
+import AssessmentActions from "../../actions/assessment";
+// Stores
+import AssessmentStore from "../../stores/assessment";
+import SettingsStore from "../../stores/settings";
+//Subcomponents
+import BaseComponent from "../base_component";
 import CheckUnderstanding from "../assessments/check_understanding";
-import Item               from "../assessments/item";
-import ProgressDropdown   from "../common/progress_dropdown";
-import $                  from "jquery";
-import CommHandler        from "../../utils/communication_handler";
-import FullPostNav        from "../post_nav/full_post_nav.jsx";
+import CommHandler from "../../utils/communication_handler";
+import FullPostNav from "../post_nav/full_post_nav.jsx";
+import Item from "../assessments/item";
+import Loading from "../assessments/loading";
+import ProgressDropdown from "../common/progress_dropdown";
 
-export default class Start extends BaseComponent{
+// Start Component
+export default class Start extends BaseComponent {
 
-  constructor(props, context){
+  constructor(props, context) {
     super(props, context);
-    this.stores = [AssessmentStore, SettingsStore];
-    this._bind["checkCompletion", "getStyles"];
+
     this.state = this.getState(context);
+    this.stores = [AssessmentStore, SettingsStore];
     this.context = context;
+
+    // Rebindings
+    this._bind["checkCompletion", "getStyles"];
   }
 
-  getState(context){
-    var showStart = SettingsStore.current().enableStart && !AssessmentStore.isStarted();
-    if(!showStart && !AssessmentStore.isStarted()){
-          AssessmentActions.start(SettingsStore.current().eId, SettingsStore.current().assessmentId, SettingsStore.current().externalContextId);
-          AssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, $('#srcData').text());
-          context.router.transitionTo("assessment");
+  getState(context) {
+    let showStart = SettingsStore.current().enableStart && !AssessmentStore.isStarted();
+
+    if (!showStart && !AssessmentStore.isStarted()) {
+      AssessmentActions.start(SettingsStore.current().eId, SettingsStore.current().assessmentId, SettingsStore.current().externalContextId);
+      AssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, $('#srcData').text());
+      context.router.transitionTo("assessment");
     }
+
     return {
-      showStart            : showStart,
-      questionCount        : AssessmentStore.questionCount(),
-      settings             : SettingsStore.current(),
+      showStart: showStart,
+      questionCount: AssessmentStore.questionCount(),
+      settings : SettingsStore.current(),
     }
   }
 
-  componentDidMount(){
+  render() {
+    let styles = this.getStyles(this.context.theme);
+    let titleBar = this.state.settings.assessmentKind.toUpperCase() === "FORMATIVE" ?  "" : <div style={styles.titleBar}>{this.state.settings ? this.state.settings.assessmentTitle : ""}</div>;
+    let content;
+
+    if (this.state.showStart) {
+      content = (
+        <CheckUnderstanding
+          title={this.state.settings.assessmentTitle}
+          maxAttempts={this.state.settings.allowedAttempts}
+          userAttempts={this.state.settings.userAttempts}
+          eid={this.state.settings.lisUserId}
+          userId={this.state.settings.userId}
+          isLti={this.state.settings.isLti}
+          assessmentId={this.state.settings.assessmentId}
+          assessmentKind={this.state.settings.assessmentKind}
+          ltiRole={this.state.settings.ltiRole}
+          externalContextId={this.state.settings.externalContextId}
+          accountId={this.state.settings.accountId}
+          icon={this.state.settings.images.QuizIcon_svg}
+          />
+      );
+    }
+
+    return (
+      <div className="assessment" style={styles.assessment}>
+        {titleBar}
+        <div className="section_list">
+          <div className="section_container">
+            {content}
+          </div>
+        </div>
+        <FullPostNav/>
+      </div>
+    );
+  }
+
+  componentDidMount() {
     super.componentDidMount();
-    if(this.state.isLoaded){
+
+    if (this.state.isLoaded) {
       // Trigger action to indicate the assessment was viewed
       AssessmentActions.assessmentViewed(this.state.settings, this.state.assessment);
     }
+
     CommHandler.sendSize();
   }
 
-  getStyles(theme){
-    var minWidth = this.state.settings.assessmentKind.toUpperCase()  == "FORMATIVE" ? "480px" : "635px";
+  getStyles(theme) {
+    let minWidth = this.state.settings.assessmentKind.toUpperCase()  == "FORMATIVE" ? "480px" : "635px";
+
     return {
       progressBar: {
         backgroundColor: theme.progressBarColor,
@@ -81,48 +131,6 @@ export default class Start extends BaseComponent{
       }
     }
   }
-
-  render(){
-    var styles = this.getStyles(this.context.theme)
-    var content;
-    var progressBar;
-    var titleBar;
-
-    if(this.state.showStart){
-        content         = <CheckUnderstanding
-        title           = {this.state.settings.assessmentTitle}
-        maxAttempts     = {this.state.settings.allowedAttempts}
-        userAttempts    = {this.state.settings.userAttempts}
-        eid             = {this.state.settings.lisUserId}
-        userId          = {this.state.settings.userId}
-        isLti           = {this.state.settings.isLti}
-        assessmentId    = {this.state.settings.assessmentId}
-        assessmentKind  = {this.state.settings.assessmentKind}
-        ltiRole         = {this.state.settings.ltiRole}
-        externalContextId = {this.state.settings.externalContextId}
-        accountId       = {this.state.settings.accountId}
-        icon            = {this.state.settings.images.QuizIcon_svg}/>;
-        // progressBar     = <div style={styles.progressContainer}>
-        //                     <ProgressDropdown disabled={true} settings={this.state.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
-        //                   </div>;
-
-    }
-    var quizType = this.state.settings.assessmentKind.toUpperCase() === "SUMMATIVE" ? "Quiz" : "Show What You Know";
-    var titleBar = this.state.settings.assessmentKind.toUpperCase() === "FORMATIVE" ?  "" : <div style={styles.titleBar}>{this.state.settings ? this.state.settings.assessmentTitle : ""}</div>;
-    progressBar = this.state.settings.assessmentKind.toUpperCase() === "FORMATIVE" ? "" : progressBar;
-
-    return <div className="assessment" style={styles.assessment}>
-      {titleBar}
-      {/*progressBar*/}
-      <div className="section_list">
-        <div className="section_container">
-          {content}
-        </div>
-      </div>
-      <FullPostNav/>
-    </div>;
-  }
-
 }
 
 Start.contextTypes = {

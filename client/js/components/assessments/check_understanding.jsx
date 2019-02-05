@@ -1,11 +1,14 @@
 "use strict";
+
 // Dependencies
 import React from "react";
 import $ from "jquery";
 // Actions
 import AssessmentActions from "../../actions/assessment";
 
+// Check Understanding Component
 export default class CheckUnderstanding extends React.Component{
+
   render() {
     let styles = this.getStyles(this.props, this.context.theme);
     let buttonText = "Start Quiz";
@@ -92,6 +95,94 @@ export default class CheckUnderstanding extends React.Component{
 
   previewAttempt() {
     this.context.router.transitionTo("teacher-preview", {contextId: this.props.externalContextId, assessmentId: this.props.assessmentId});
+  }
+
+  getAttempts(theme, styles, props) {
+    if (!theme.shouldShowAttempts) {
+      return;
+    }
+
+    if (props.userAttempts >= props.maxAttempts && props.ltiRole !== "admin") {
+      return (
+        <div style={styles.attemptsContainer}>
+          <div style={{...styles.attempts, ...{border: null}}}>
+            <h1>Oops!</h1>
+            <h3>You have already taken this quiz the maximum number of times</h3>
+          </div>
+          <h4><u>TIPS:</u></h4>
+          <div style={styles.tips}>
+            <ul>
+              <li>{"Right now you can do three things to make sure you are ready for the next performance assessment: review the material in this module, use the self-checks to see if you're getting it, and ask your peers or instructor for help if you need it."}</li>
+              <li>{"In the future, allow enough time between your first and last quiz attempts to get help from your instructor before the last attempt!"}</li>
+            </ul>
+          </div>
+        </div>
+      );
+    }
+
+    let attempt = "";
+
+    // right now only 2 attempts are allowed or other things will break
+    switch (props.userAttempts+1) {
+      case 1:
+        attempt = "1st";
+        break;
+      case 2:
+        attempt = "2nd";
+        break;
+      default: "1st";
+    }
+
+    let attemptStructure = (
+      <div style={styles.attemptsContainer}>
+        <div style={styles.attempts}>
+          <p>{`Attempt ${this.props.userAttempts + 1} of ${this.props.maxAttempts}`}</p>
+          <p>Highest score recorded as grade.</p>
+        </div>
+      </div>
+    );
+
+    if (!this.props.isLti) {
+      attemptStructure = "";
+    }
+  }
+
+  getSWYK(styles) {
+    return (
+      <div style={styles.swyk}>
+        <h2 style={styles.h2}>Take this pre-test to see what you already know about the concepts in this section.</h2>
+        <div style={{color: "#555555"}}>The pre-test does not count toward your grade, but will help you plan where to focus</div>
+        <div>your time and effort as you study.</div>
+      </div>
+    );
+  }
+
+  canManage() {
+    return (
+      this.props.assessmentKind.toUpperCase() === "SUMMATIVE" && this.props.ltiRole === "admin" && this.props.isLti
+    );
+  }
+
+  getFormative(styles) {
+    return (
+      <div style={styles.formative}>
+        <div className="row"></div>
+        <div className="row" style={styles.checkDiv}>
+          <div className="col-md-10 col-sm-9">
+            <h4 style={styles.h4}>{this.props.title}</h4>
+          </div>
+          <div className="col-md-2 col-sm-3">
+            <button
+              style={{...styles.startButton, ...styles.checkUnderstandingButton}}
+              className="btn btn-info"
+              onClick={()=>{this.start(this.props.eid, this.props.assessmentId, this.context)}}
+              >
+                Start Quiz
+            </button>
+          </div>
+        </div>
+     </div>
+   );
   }
 
   getStyles(props, theme) {
@@ -181,97 +272,6 @@ export default class CheckUnderstanding extends React.Component{
         greenQuizIcon: "greenQuizIcon",
       }
     }
-  }
-
-  getAttempts(theme, styles, props) {
-    if (!theme.shouldShowAttempts) {
-      return;
-    }
-
-    if (props.userAttempts >= props.maxAttempts && props.ltiRole !== "admin") {
-      return (
-        <div style={styles.attemptsContainer}>
-          <div style={{...styles.attempts, ...{border: null}}}>
-            <h1>Oops!</h1>
-            <h3>You have already taken this quiz the maximum number of times</h3>
-          </div>
-          <h4><u>TIPS:</u></h4>
-          <div style={styles.tips}>
-            <ul>
-              <li>{"Right now you can do three things to make sure you are ready for the next performance assessment: review the material in this module, use the self-checks to see if you're getting it, and ask your peers or instructor for help if you need it."}</li>
-              <li>{"In the future, allow enough time between your first and last quiz attempts to get help from your instructor before the last attempt!"}</li>
-            </ul>
-          </div>
-        </div>
-      );
-    }
-
-    let attempt = "";
-
-    // right now only 2 attempts are allowed or other things will break
-    switch (props.userAttempts+1) {
-      case 1:
-        attempt = "1st";
-        break;
-      case 2:
-        attempt = "2nd";
-        break;
-      default: "1st";
-    }
-
-    let attemptStructure = (
-      <div style={styles.attemptsContainer}>
-        <div> You can take this quiz twice. Your highest score will count as your grade. Don't wait until the last minute to take the quiz - take the quiz early so you'll have plenty of time to study and improve your grade on your second attempt.</div>
-          <div style={styles.attempts}>
-          <h4>Attempt</h4>
-          <h1>{this.props.userAttempts + 1}</h1>
-          <h3>of {this.props.maxAttempts}</h3>
-          <p>This is your {attempt} attempt for this quiz</p>
-        </div>
-      </div>
-    );
-
-    if (!this.props.isLti) {
-      attemptStructure = "";
-    }
-  }
-
-  getSWYK(styles) {
-    return (
-      <div style={styles.swyk}>
-        <h2 style={styles.h2}>Take this pre-test to see what you already know about the concepts in this section.</h2>
-        <div style={{color: "#555555"}}>The pre-test does not count toward your grade, but will help you plan where to focus</div>
-        <div>your time and effort as you study.</div>
-      </div>
-    );
-  }
-
-  canManage() {
-    return (
-      this.props.assessmentKind.toUpperCase() === "SUMMATIVE" && this.props.ltiRole === "admin" && this.props.isLti
-    );
-  }
-
-  getFormative(styles) {
-    return (
-      <div style={styles.formative}>
-        <div className="row"></div>
-        <div className="row" style={styles.checkDiv}>
-          <div className="col-md-10 col-sm-9">
-            <h4 style={styles.h4}>{this.props.title}</h4>
-          </div>
-          <div className="col-md-2 col-sm-3">
-            <button
-              style={{...styles.startButton, ...styles.checkUnderstandingButton}}
-              className="btn btn-info"
-              onClick={()=>{this.start(this.props.eid, this.props.assessmentId, this.context)}}
-              >
-                Start Quiz
-            </button>
-          </div>
-        </div>
-     </div>
-   );
   }
 }
 
