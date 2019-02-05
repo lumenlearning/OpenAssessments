@@ -8,11 +8,11 @@ import AssessmentStore    from "../stores/assessment";
 export default {
 
   loadAssessment(settings, srcData){
-    
+
     if(srcData){
       srcData = srcData.trim();
       if(srcData.length > 0){
-        Dispatcher.dispatch({ 
+        Dispatcher.dispatch({
           action: Constants.ASSESSMENT_LOADED,
           settings: settings,
           data: {
@@ -107,7 +107,7 @@ export default {
   retakeAssessment(){
     Dispatcher.dispatch({action: Constants.RETAKE_ASSESSMENT})
   },
-  
+
   assessmentViewed(settings, assessment){
     var body = {
       assessment_result : {
@@ -149,5 +149,5 @@ export default {
     };
     Api.post(Constants.ASSESSMENT_VIEWED, '/api/item_results', body);
   }
-  
+
 };

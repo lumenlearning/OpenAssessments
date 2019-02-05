@@ -40,7 +40,7 @@ export default class CheckUnderstanding extends React.Component{
         backgroundColor: theme.maybeBackgroundColor
       },
       fullQuestion:{
-        backgroundColor: theme.fullQuestionBackgroundColor,
+        backgroundColor: theme.checkUnderstandingBackgroundColor,
         padding: "20px"
       },
       buttonGroup: {

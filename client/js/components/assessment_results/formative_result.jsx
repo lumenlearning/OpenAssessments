@@ -59,7 +59,7 @@ export default class FormativeResult extends React.Component{
                   </div> )*/
 
       var material = this.checkQuestionMaterial(index);
-                  
+
       return (
         <div key={"result-"+index}>
           <div style={styles.resultList}>

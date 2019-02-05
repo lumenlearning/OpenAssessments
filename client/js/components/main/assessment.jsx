@@ -100,6 +100,7 @@ export default class Assessment extends BaseComponent{
           finishedCallback();
         }
         Assessment.newQuestionMessages();
+        this.setState({questionSelected: true});
       });
     } else {
       AssessmentActions.selectQuestion(qid);
@@ -162,6 +163,10 @@ export default class Assessment extends BaseComponent{
         (nextState.gradingCallback && !this.state.gradingCallback));
   }
 
+  resetAnswerMessages() {
+    AssessmentStore.resetAnswerMessages();
+  }
+
   render(){
     window.onbeforeunload = this.popup;
     if(AssessmentStore.assessmentResult() != null || this.state.settings.assessmentKind.toUpperCase() != "SUMMATIVE"){
@@ -192,6 +197,8 @@ export default class Assessment extends BaseComponent{
         checkAnswer      = {this.checkAnswer}
         registerGradingCallback = {this.registerGradingCallback}
         outcomes         = {this.state.outcomes}
+        resetAnswerMessages = {this.resetAnswerMessages}
+        showAnswers = {this.state.settings.showAnswers}
       />;
 
       progressBar = <div style={styles.progressContainer}>

@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
+  <assessment title="Quizzes of feedback" ident="feedbackaroo">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>qmd_timelimit</fieldlabel>
+        <fieldentry/>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry/>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <section title="What Is Feedback?" ident="feedsbacks">
+        <selection_ordering>
+          <selection>
+            <sourcebank_ref/>
+            <selection_number>1</selection_number>
+            <selection_extension>
+              <points_per_item>1</points_per_item>
+            </selection_extension>
+          </selection>
+        </selection_ordering>
+
+
+        <item title="" ident="ids1">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>mom_embed</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>2222222222222</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Graphing something</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>This is useful.</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">&lt;iframe id=&quot;mom40637&quot; src=&quot;https://ohm.ludev.team/OEAembedq.php?id=40637&amp;theme=oea&amp;jssubmit=1&amp;showscoredonsubmit=0&amp;showhints=0&amp;auth=lumenoea&quot; style=&quot;width:100%;height:150px&quot;&gt;&lt;/iframe&gt;</mattext>
+              <mat_extension>
+                <mom_domain>ohm.ludev.team</mom_domain>
+                <mom_question_id>40637</mom_question_id>
+                <mom_embed_url>https://ohm.ludev.team/OEAembedq.php?id=40637&amp;theme=oea&amp;jssubmit=1&amp;showscoredonsubmit=0&amp;showhints=0&amp;auth=lumenoea</mom_embed_url>
+              </mat_extension>
+            </material>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <itemproc_extension>
+              <!-- My Open Math questions are graded remotely and passed via the client -->
+            </itemproc_extension>
+          </resprocessing>
+        </item>
+
+        <item title="" ident="ia9efd149c813b332e4509842849cc6be">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_answers_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>9af406fb-af6a-4191-b931-09ecc882a43f</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Storing Genetic Information</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Explain how DNA stores genetic information</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">In order for DNA to function as a storage molecule for genetic information, which of the following are required?</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Multiple">
+              <render_choice>
+                <response_label ident="i9bd655ce1be232718b9a4138dd03dd7d">
+                  <material>
+                    <mattext texttype="text/html">accurate copying of the DNA molecule with each replication</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="i0439eb225c2920bd2c76d991a612cc51">
+                  <material>
+                    <mattext texttype="text/html">reliable expression of the stored information in a DNA strand</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="icf27daf19dea3e7e0e3874bbff45b61a">
+                  <material>
+                    <mattext texttype="text/html">high-fidelity storage of the DNA molecule in a nucleus</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response1">i9bd655ce1be232718b9a4138dd03dd7d</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="i9bd655ce1be232718b9a4138dd03dd7d_fb"/>
+            </respcondition>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response1">i0439eb225c2920bd2c76d991a612cc51</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="i0439eb225c2920bd2c76d991a612cc51_fb"/>
+            </respcondition>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response1">icf27daf19dea3e7e0e3874bbff45b61a</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="icf27daf19dea3e7e0e3874bbff45b61a_fb"/>
+            </respcondition>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <other/>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="general_fb"/>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <and>
+                  <varequal respident="response1">i9bd655ce1be232718b9a4138dd03dd7d</varequal>
+                  <varequal respident="response1">i0439eb225c2920bd2c76d991a612cc51</varequal>
+                  <not>
+                    <varequal respident="response1">icf27daf19dea3e7e0e3874bbff45b61a</varequal>
+                  </not>
+                </and>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+          <itemfeedback ident="i9bd655ce1be232718b9a4138dd03dd7d_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/html">The DNA must be &lt;strong&gt;copied&lt;/strong&gt; faithfully each replication cycle.</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+          <itemfeedback ident="i0439eb225c2920bd2c76d991a612cc51_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/html">The DNA information must be &lt;em&gt;translatable&lt;/em&gt; into working proteins or else it is no good as a storage mechanism.</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+          <itemfeedback ident="icf27daf19dea3e7e0e3874bbff45b61a_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/plain">Not all organisms have a nucleus, but they all have DNA.</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+          <itemfeedback ident="general_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/html">&lt;p&gt;Example answers are:&lt;br&gt;Weird. Because reasons.&lt;/p&gt;
+&lt;p&gt;Great.&lt;span&gt; Because reasons.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Sad.&lt;span&gt; Because reasons.&lt;/span&gt;&lt;/p&gt;</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+        </item>
+
+
+
+        <item title="" ident="ic16c85dfb7b47302916ab2ceee9ebfae">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_choice_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>0057bbad-c6ea-4fc8-bd79-e647783f1a23</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Signaling Molecules and Cellular Receptors</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Differentiate between different types of signals</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">In ________ signaling, a cell targets itself.</mattext>
+            </material>
+            <response_lid ident="response1" rcardinality="Single">
+              <render_choice>
+                <response_label ident="i6e4863b33090c2b51aa98adde2a3c225">
+                  <material>
+                    <mattext texttype="text/html">endocrine</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="i5c373d035208f83a8292ca6b55cd19fc">
+                  <material>
+                    <mattext texttype="text/html">paracrine</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="i7b6fe73f5bf67df73be9ad25f73708eb">
+                  <material>
+                    <mattext texttype="text/html">autocrine</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response1">i6e4863b33090c2b51aa98adde2a3c225</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="i6e4863b33090c2b51aa98adde2a3c225_fb"/>
+            </respcondition>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response1">i5c373d035208f83a8292ca6b55cd19fc</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="i5c373d035208f83a8292ca6b55cd19fc_fb"/>
+            </respcondition>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response1">i7b6fe73f5bf67df73be9ad25f73708eb</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="i7b6fe73f5bf67df73be9ad25f73708eb_fb"/>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">i6e4863b33090c2b51aa98adde2a3c225</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">i5c373d035208f83a8292ca6b55cd19fc</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">0</setvar>
+            </respcondition>
+             <respcondition continue="Yes">
+              <conditionvar>
+                <other/>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="general_fb"/>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <varequal respident="response1">i7b6fe73f5bf67df73be9ad25f73708eb</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Set">100</setvar>
+            </respcondition>
+          </resprocessing>
+          <itemfeedback ident="i6e4863b33090c2b51aa98adde2a3c225_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/html">&lt;strong&gt;Endocrine&lt;/strong&gt; signaling occurs when a cell targets a distant cell using the bloodstream</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+          <itemfeedback ident="i5c373d035208f83a8292ca6b55cd19fc_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/plain">Paracrine signaling involves signaling to a nearby cell.</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+          <itemfeedback ident="i7b6fe73f5bf67df73be9ad25f73708eb_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/plain">This one should be easy to remember because of ‘auto’!</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+          <itemfeedback ident="general_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/html">General Feedback: :)</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+        </item>
+
+
+        <item title="" ident="3790">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+              <fieldlabel>question_type</fieldlabel>
+              <fieldentry>essay_question</fieldentry>
+            </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>9a82d67b-21ce-4cbf-8298-6bd1109f03b2</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>For-Profit vs. Non-Profit</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Distinguish between for-profit and nonprofit organizations</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+
+          <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;How do you feel about weird flux implementation in a react app?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_str ident="response1" rcardinality="Single">
+            <render_fib>
+              <response_label ident="answer1" rshuffle="No"/>
+            </render_fib>
+          </response_str>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <other/>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="general_fb"/>
+            </respcondition>
+            <respcondition continue="No">
+              <conditionvar>
+                <other/>
+              </conditionvar>
+            </respcondition>
+          </resprocessing>
+          <itemfeedback ident="general_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/html">&lt;p&gt;Example answers are:&lt;br&gt;Weird. Because reasons.&lt;/p&gt;
+&lt;p&gt;Great.&lt;strong&gt; Because reasons.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Sad.&lt;strong&gt; Because reasons.&lt;/strog&gt;  &lt;sup&gt;4&lt;/sup&gt; And also, sometimes the feedback is really long and we do not allow all the space to be used. So we should take care of that.  &lt;/p&gt;</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+        </item>
+
+
+        <item title="" ident="ief70c36553c83d698048ffabb51b5745">
+          <itemmetadata>
+            <qtimetadata>
+              <qtimetadatafield>
+                <fieldlabel>question_type</fieldlabel>
+                <fieldentry>multiple_dropdowns_question</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_guid</fieldlabel>
+                <fieldentry>99207ed2-b647-4712-b6f6-2446723ca192</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_short_title</fieldlabel>
+                <fieldentry>Mutations and Evolution</fieldentry>
+              </qtimetadatafield>
+              <qtimetadatafield>
+                <fieldlabel>outcome_long_title</fieldlabel>
+                <fieldentry>Recognize that mutations are the basis of microevolution; and that adaptations enhance the survival and reproduction of individuals in a population</fieldentry>
+              </qtimetadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material>
+              <mattext texttype="text/html">Mutations in organisms [dropdown1] increase fitness. Mutations also [dropdown2] decrease fitness.</mattext>
+            </material>
+            <response_lid ident="response_dropdown1">
+              <material>
+                <mattext texttype="text/plain">dropdown1</mattext>
+              </material>
+              <render_choice>
+                <response_label ident="i2c61ebff5a7f675451467527df66788d">
+                  <material>
+                    <mattext texttype="text/plain">can</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="if9f90eeaf400d228facde6bc48da5cfb">
+                  <material>
+                    <mattext texttype="text/plain">always</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="ic7561db7a418dd39b2201dfe110ab4a4">
+                  <material>
+                    <mattext texttype="text/plain">never</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+            <response_lid ident="response_dropdown2">
+              <material>
+                <mattext texttype="text/plain">dropdown2</mattext>
+              </material>
+              <render_choice>
+                <response_label ident="i2c61ebff5a7f675451467527df66788d">
+                  <material>
+                    <mattext texttype="text/plain">can</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="if9f90eeaf400d228facde6bc48da5cfb">
+                  <material>
+                    <mattext texttype="text/plain">always</mattext>
+                  </material>
+                </response_label>
+                <response_label ident="ic7561db7a418dd39b2201dfe110ab4a4">
+                  <material>
+                    <mattext texttype="text/plain">never</mattext>
+                  </material>
+                </response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <outcomes>
+              <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+            </outcomes>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response_dropdown1">i2c61ebff5a7f675451467527df66788d</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="i2c61ebff5a7f675451467527df66788d_response_dropdown1_fb"/>
+            </respcondition>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response_dropdown1">if9f90eeaf400d228facde6bc48da5cfb</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="if9f90eeaf400d228facde6bc48da5cfb_response_dropdown1_fb"/>
+            </respcondition>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response_dropdown1">ic7561db7a418dd39b2201dfe110ab4a4</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="ic7561db7a418dd39b2201dfe110ab4a4_response_dropdown1_fb"/>
+            </respcondition>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response_dropdown2">i2c61ebff5a7f675451467527df66788d</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="i2c61ebff5a7f675451467527df66788d_response_dropdown2_fb"/>
+            </respcondition>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response_dropdown2">if9f90eeaf400d228facde6bc48da5cfb</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="if9f90eeaf400d228facde6bc48da5cfb_response_dropdown2_fb"/>
+            </respcondition>
+            <respcondition continue="Yes">
+              <conditionvar>
+                <varequal respident="response_dropdown2">ic7561db7a418dd39b2201dfe110ab4a4</varequal>
+              </conditionvar>
+              <displayfeedback feedbacktype="Response" linkrefid="ic7561db7a418dd39b2201dfe110ab4a4_response_dropdown2_fb"/>
+            </respcondition>
+            <respcondition>
+              <conditionvar>
+                <varequal respident="response_dropdown1">i2c61ebff5a7f675451467527df66788d</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Add">50.0</setvar>
+            </respcondition>
+            <respcondition>
+              <conditionvar>
+                <varequal respident="response_dropdown2">i2c61ebff5a7f675451467527df66788d</varequal>
+              </conditionvar>
+              <setvar varname="SCORE" action="Add">50.0</setvar>
+            </respcondition>
+          </resprocessing>
+          <itemfeedback ident="i2c61ebff5a7f675451467527df66788d_response_dropdown1_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/html">Mutations may be &lt;em&gt;beneficial&lt;/em&gt;.</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+          <itemfeedback ident="if9f90eeaf400d228facde6bc48da5cfb_response_dropdown1_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/html">There is no &lt;em&gt;always&lt;/em&gt; in biology.</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+          <itemfeedback ident="ic7561db7a418dd39b2201dfe110ab4a4_response_dropdown1_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/html">There is no &lt;em&gt;never&lt;/em&gt; in biology.</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+          <itemfeedback ident="i2c61ebff5a7f675451467527df66788d_response_dropdown2_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/plain">Mutations may be detrimental.</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+          <itemfeedback ident="if9f90eeaf400d228facde6bc48da5cfb_response_dropdown2_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/plain">There is no ‘always’ in biology.</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+          <itemfeedback ident="ic7561db7a418dd39b2201dfe110ab4a4_response_dropdown2_fb">
+            <flow_mat>
+              <material>
+                <mattext texttype="text/plain">There is no ‘never’ in biology.</mattext>
+              </material>
+            </flow_mat>
+          </itemfeedback>
+        </item>
+
+
+      </section>
+    </section>
+  </assessment>
+</questestinterop>

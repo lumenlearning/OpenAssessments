@@ -2,29 +2,37 @@
 import defines from "./defines";
 
 export default {
-  primaryBackgroundColor: defines.lumenSeafoam,
+  primaryBackgroundColor: defines.lumenDarkGreen,
   titleBarBackgroundColor: defines.lightgray,
   progressBarColor: defines.lumenSeafoam,
   progressBarHeight: "10px",
   assessmentContainerBoxShadow: "1px 4px 4px 4px rgba(0,0,0,0.2)",
   assessmentContainerBorderRadius: "4px",
   headerBackgroundColor: defines.white,
-  confidenceWrapperBorder: "1px solid rgba(0,0,0,0.2)",
 
-  fullQuestionBackgroundColor: defines.white,
+  fullQuestionBackgroundColor: "#f5f5f5",
+  checkUnderstandingBackgroundColor: defines.white,
   panelHeadingBackgroundColor: defines.white,
   panelBoxShadow: "0 0 0 rgba(0,0,0,0.0)",
   panelBorder: null,
   panelBorderRadius: null,
   panelBorderColor: "transparent",
   panelMarginBottom: "-30px",
+  confidenceButtonBackgroundColor: defines.lumenBlue + " !important",
   maybeBackgroundColor: defines.lumenRed + " !important",
   maybeColor: defines.white,
   probablyBackgroundColor: defines.lumenBlue + " !important",
   probablyColor: defines.white,
+  probablyWidth: "130px",
   definitelyBackgroundColor: defines.lumenSeafoam + " !important",
   definitelyColor: defines.white,
   confidenceWrapperBackgroundColor: defines.lightergray,
+  confidenceWrapperWidth: "650px",
+  confidenceWrapperMargin: "10px 20px",
+  navigationWrapperMargin: "0 0 0 36px",
+  confidenceFeedbackWrapperMargin: "1.5em 0 2em 38px",
+  nextButtonBackgroundColor: defines.lumenBlue + " !important",
+  previousButtonBackgroundColor: defines.lumenBlue + " !important",
 
   assessmentPadding: "20px",
   assessmentBackground: defines.white,
@@ -48,5 +56,22 @@ export default {
   partialBackgroundColor: "rgba(200, 133, 51, .2)",
   partialColor: "rgb(200, 133, 51)",
   outcomesBackgroundColor: "rgba(204, 204, 204, .2)",
-  questionTextFontWeight: 'normal',
+  questionTextColor: "#212b36",
+  questionTextFontSize: "16px",
+  questionTextFontWeight: "normal",
+  questionTextPadding: "1.25em 1em",
+
+  // Selection button questions
+  btnBackground: "#fafafa",
+  btnQuestionBorder: "1px solid #c4c4c4",
+  btnQuestionBorderRadius: "5px",
+
+  btnCorrectBackground: "#f0faed",
+  btnCorrectBorder: "1px solid #108043",
+
+  btnIncorrectBackground: "#fbeae5",
+  btnIncorrectBorder: "1px solid #bf0711",
+
+  btnNeutralBackground: "#f3f4fa",
+  btnNeutralBorder: "1px solid #5c6ac4",
 }

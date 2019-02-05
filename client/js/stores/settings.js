@@ -78,7 +78,8 @@ function loadSettings(defaultSettings){
     sectionCount       : parseInt(defaultSettings.sectionCount),
     questionCount      : defaultSettings.questionCount,
     userAssessmentId   : bestValue('user_assessment_id', 'UserAssessmentId'),
-    iframe_resize_id   : defaultSettings.iframe_resize_id
+    iframe_resize_id   : defaultSettings.iframe_resize_id,
+    showAnswers        : defaultSettings.show_answers
   };
 
   if(!_settings.srcUrl && !_settings.offline){
@@ -123,4 +124,3 @@ Dispatcher.register(function(payload) {
 });
 
 export default SettingsStore;
-

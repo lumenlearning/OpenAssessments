@@ -335,6 +335,7 @@ RSpec.describe Api::AssessmentsController, type: :controller do
       @params[:confidence_levels] = 'true'
       @params[:per_sec] = "2"
       @params[:allowed_attempts] = "2"
+      @params[:show_answers] = 'true'
 
       post :create, assessment: @params, format: :json
       expect(response).to have_http_status(201)
@@ -343,6 +344,7 @@ RSpec.describe Api::AssessmentsController, type: :controller do
       expect( settings.enable_start ).to eq false
       expect( settings.style ).to eq @params[:style]
       expect( settings.confidence_levels ).to eq true
+      expect( settings.show_answers ).to eq true
       expect( settings.per_sec ).to eq "2"
       expect( settings.allowed_attempts ).to eq 2
       expect( settings.mode ).to eq @params[:kind]
@@ -383,6 +385,7 @@ RSpec.describe Api::AssessmentsController, type: :controller do
       @params[:confidence_levels] = 'true'
       @params[:per_sec] = "2"
       @params[:allowed_attempts] = "2"
+      @params[:show_answers] = 'true'
 
       put :update, account_id: @account, id: @assessment.id, assessment: @params, format: :json
       expect(response).to have_http_status(204)
@@ -391,6 +394,7 @@ RSpec.describe Api::AssessmentsController, type: :controller do
       expect( settings.enable_start ).to eq false
       expect( settings.style ).to eq @params[:style]
       expect( settings.confidence_levels ).to eq true
+      expect( settings.show_answers ).to eq true
       expect( settings.per_sec ).to eq "2"
       expect( settings.allowed_attempts ).to eq 2
       expect( settings.mode ).to eq @assessment.kind
