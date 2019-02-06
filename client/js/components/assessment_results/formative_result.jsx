@@ -25,15 +25,15 @@ export default class FormativeResult extends React.Component{
     if(score == 100){
       head = <p style={{color: "#212b36", fontSize: "18px", fontWeight: 500, marginTop: "32px"}}>Looks like you're getting it</p>;
       feedback = "You're ready to move on to the next section.";
-      image = <img style={styles.outcomeIcon} src={this.props.settings.images.CheckMark_svg} />;
+      image = <img style={styles.outcomeIcon} src={"/assets/onTrack@2x.png"} />;
     } else if (score > 75){
       head = <p style={{color: "#212b36", fontSize: "18px", fontWeight: 500, marginTop: "32px"}}>You're making progress</p>;
       feedback = "You can learn more if you review before moving on.";
-      image = <img style={styles.outcomeIcon} src={this.props.settings.images.Books_svg} />;
+      image = <img style={styles.outcomeIcon} src={"/assets/goodWork@2x.png"} />;
     } else {
       head = <p style={{color: "#212b36", fontSize: "18px", fontWeight: 500, marginTop: "32px"}}>Needs Work</p>;
       feedback = "Make sure to review and learn the material before moving on.";
-      image = <img style={{maxWidth: "247px", marginTop: "49px"}} src={"/assets/studyLamp@2x.png"} />;
+      image = <img style={{maxWidth: "247px", marginTop: "49px"}} src={"/assets/needsWork@2x.png"} />;
     }
 
     var results = this.props.questions.map((question, index)=>{
