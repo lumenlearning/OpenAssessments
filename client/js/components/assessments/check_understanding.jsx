@@ -11,42 +11,26 @@ export default class CheckUnderstanding extends React.Component{
 
   render() {
     let styles = this.getStyles(this.props, this.context.theme);
-    let buttonText = "Start Quiz";
-    let content = "There was an error, contact your teacher.";
 
-    if (this.props.assessmentKind.toUpperCase() === "SUMMATIVE") {
-      content = this.getAttempts(this.context.theme, styles, this.props);
-    } else if (this.props.assessmentKind.toUpperCase() === "SHOW_WHAT_YOU_KNOW") {
-      content = this.getSWYK(styles);
-      buttonText = "Start Pre-test";
-    } else if (this.props.assessmentKind.toUpperCase() === "FORMATIVE") {
-      content = this.getFormative(styles);
-    }
-
-    let startButton = (
-      <div style={styles.buttonWrapper}>
-        <button
-          style={styles.startButton}
-          className="btn btn-info"
-          onClick={()=>{this.start(this.props.eid, this.props.assessmentId, this.context)}}
-          >
-            {buttonText}
-        </button>
+    return (
+      <div className="assessment_container" style={styles.assessmentContainer}>
+        {this.renderTeacherOptions(styles)}
+        <div className="question">
+          <div className="header" style={styles.header}>
+            <p>{this.props.name}</p>
+          </div>
+          <div className="full_question" style={styles.fullQuestion}>
+            {this.renderContent(styles)}
+            {this.renderStartButton(styles)}
+          </div>
+        </div>
       </div>
     );
+  }
 
-    if (this.props.userAttempts >= this.props.maxAttempts && this.props.assessmentKind.toUpperCase() === "SUMMATIVE" && this.props.ltiRole !== "admin") {
-      startButton = "";
-    }
-
-    if (this.props.assessmentKind.toUpperCase() === "FORMATIVE") {
-      startButton = "";
-    }
-
-    let teacherOptions = null;
-
+  renderTeacherOptions(styles) {
     if (this.canManage()) {
-      teacherOptions = (
+      return (
         <div style={styles.buttonGroup}>
           <button
             className="btn btn-sm"
@@ -65,23 +49,52 @@ export default class CheckUnderstanding extends React.Component{
         </div>
       );
     }
+  }
+
+  renderContent(styles) {
+    let content = "There was an error, contact your teacher.";
+
+    switch (this.props.assessmentKind.toUpperCase()) {
+      case "SUMMATIVE":
+        content = this.getAttempts(this.context.theme, styles, this.props);
+        break;
+      case "SHOW_WHAT_YOU_KNOW":
+        content = this.getSwyk(styles);
+        break;
+      case "FORMATIVE":
+        content = this.getFormative(styles);
+        break;
+    }
+
+    return content;
+  }
+
+  renderStartButton(styles) {
+    // If this is a summative assessment, max attempts have been reached, and
+    // user has LTI Role of 'Admin', bail
+    if (this.props.userAttempts >= this.props.maxAttempts &&
+        this.props.assessmentKind.toUpperCase() === "SUMMATIVE" &&
+        this.props.ltiRole !== "admin") {
+      return;
+    }
+
+    // if this is a formative assessment, bail
+    if (this.props.assessmentKind.toUpperCase() === "FORMATIVE") {
+      return;
+    }
 
     return (
-      <div className="assessment_container" style={styles.assessmentContainer}>
-        {teacherOptions}
-        <div className="question">
-          <div className="header" style={styles.header}>
-            <p>{this.props.name}</p>
-          </div>
-          <div className="full_question" style={styles.fullQuestion}>
-            {content}
-            {startButton}
-          </div>
-        </div>
+      <div style={styles.buttonWrapper}>
+        <button
+          style={styles.startButton}
+          className="btn btn-info"
+          onClick={()=>{this.start(this.props.eid, this.props.assessmentId, this.context)}}
+          >
+            {this.props.assessmentKind.toUpperCase() === "SHOW_WHAT_YOU_KNOW" ? "Start Pre-test" : "Start Quiz"}
+        </button>
       </div>
     );
   }
-
 
   start(eid, assessmentId, context) {
     AssessmentActions.start(eid, assessmentId, this.props.externalContextId);
@@ -123,7 +136,7 @@ export default class CheckUnderstanding extends React.Component{
     let attempt = "";
 
     // right now only 2 attempts are allowed or other things will break
-    switch (props.userAttempts+1) {
+    switch (props.userAttempts + 1) {
       case 1:
         attempt = "1st";
         break;
@@ -147,7 +160,7 @@ export default class CheckUnderstanding extends React.Component{
     }
   }
 
-  getSWYK(styles) {
+  getSwyk(styles) {
     return (
       <div style={styles.swyk}>
         <h2 style={styles.h2}>Take this pre-test to see what you already know about the concepts in this section.</h2>
@@ -159,7 +172,9 @@ export default class CheckUnderstanding extends React.Component{
 
   canManage() {
     return (
-      this.props.assessmentKind.toUpperCase() === "SUMMATIVE" && this.props.ltiRole === "admin" && this.props.isLti
+      this.props.assessmentKind.toUpperCase() === "SUMMATIVE" &&
+      this.props.ltiRole === "admin" &&
+      this.props.isLti
     );
   }
 

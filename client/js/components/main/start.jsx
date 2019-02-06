@@ -28,7 +28,7 @@ export default class Start extends BaseComponent {
     this.context = context;
 
     // Rebindings
-    this._bind["checkCompletion", "getStyles"];
+    this._bind["getStyles"];
   }
 
   getState(context) {
@@ -49,34 +49,13 @@ export default class Start extends BaseComponent {
 
   render() {
     let styles = this.getStyles(this.context.theme);
-    let titleBar = this.state.settings.assessmentKind.toUpperCase() === "FORMATIVE" ?  "" : <div style={styles.titleBar}>{this.state.settings ? this.state.settings.assessmentTitle : ""}</div>;
-    let content;
-
-    if (this.state.showStart) {
-      content = (
-        <CheckUnderstanding
-          title={this.state.settings.assessmentTitle}
-          maxAttempts={this.state.settings.allowedAttempts}
-          userAttempts={this.state.settings.userAttempts}
-          eid={this.state.settings.lisUserId}
-          userId={this.state.settings.userId}
-          isLti={this.state.settings.isLti}
-          assessmentId={this.state.settings.assessmentId}
-          assessmentKind={this.state.settings.assessmentKind}
-          ltiRole={this.state.settings.ltiRole}
-          externalContextId={this.state.settings.externalContextId}
-          accountId={this.state.settings.accountId}
-          icon={this.state.settings.images.QuizIcon_svg}
-          />
-      );
-    }
 
     return (
       <div className="assessment" style={styles.assessment}>
-        {titleBar}
+        {this.renderTitleBar(styles)}
         <div className="section_list">
           <div className="section_container">
-            {content}
+            {this.renderContent()}
           </div>
         </div>
         <FullPostNav/>
@@ -93,6 +72,38 @@ export default class Start extends BaseComponent {
     }
 
     CommHandler.sendSize();
+  }
+
+  renderTitleBar(styles) {
+    // If this is any assessment type *other* than formative, render title bar
+    if (this.state.settings.assessmentKind.toUpperCase() !== "FORMATIVE") {
+      return (
+        <div style={styles.titleBar}>
+          {this.state.settings ? this.state.settings.assessmentTitle : ""}
+        </div>
+      );
+    }
+  }
+
+  renderContent() {
+    if (this.state.showStart) {
+      return (
+        <CheckUnderstanding
+          title={this.state.settings.assessmentTitle}
+          maxAttempts={this.state.settings.allowedAttempts}
+          userAttempts={this.state.settings.userAttempts}
+          eid={this.state.settings.lisUserId}
+          userId={this.state.settings.userId}
+          isLti={this.state.settings.isLti}
+          assessmentId={this.state.settings.assessmentId}
+          assessmentKind={this.state.settings.assessmentKind}
+          ltiRole={this.state.settings.ltiRole}
+          externalContextId={this.state.settings.externalContextId}
+          accountId={this.state.settings.accountId}
+          icon={this.state.settings.images.QuizIcon_svg}
+          />
+      );
+    }
   }
 
   getStyles(theme) {
