@@ -1,7 +1,7 @@
 "use strict";
 
-import React            from 'react';
-import AssessmentActions    from "../../actions/assessment";
+import React from 'react';
+import AssessmentActions from "../../actions/assessment";
 
 //polyfill trunc
 Math.trunc = Math.trunc || function(x) {
@@ -23,17 +23,17 @@ export default class FormativeResult extends React.Component{
     var styles = this.props.styles;
 
     if(score == 100){
-      head = <h4 style={{color: this.props.context.theme.definitelyBackgroundColor}}>{"Looks like you're getting it!"}</h4>;
+      head = <p style={{color: "#212b36", fontSize: "18px", fontWeight: 500, marginTop: "32px"}}>Looks like you're getting it</p>;
       feedback = "You're ready to move on to the next section.";
       image = <img style={styles.outcomeIcon} src={this.props.settings.images.CheckMark_svg} />;
     } else if (score > 75){
-      head = <h4 >{"You're making progress!"}</h4>;
+      head = <p style={{color: "#212b36", fontSize: "18px", fontWeight: 500, marginTop: "32px"}}>You're making progress</p>;
       feedback = "You can learn more if you review before moving on.";
       image = <img style={styles.outcomeIcon} src={this.props.settings.images.Books_svg} />;
     } else {
-      head = <h4>{"Needs Work!"}</h4>;
+      head = <p style={{color: "#212b36", fontSize: "18px", fontWeight: 500, marginTop: "32px"}}>Needs Work</p>;
       feedback = "Make sure to review and learn the material before moving on.";
-      image = <img style={styles.outcomeIcon} src={this.props.settings.images.PersonWithBook_svg} />;
+      image = <img style={{maxWidth: "247px", marginTop: "49px"}} src={"/assets/studyLamp@2x.png"} />;
     }
 
     var results = this.props.questions.map((question, index)=>{
@@ -51,19 +51,20 @@ export default class FormativeResult extends React.Component{
       } else {
         confidenceColor = this.props.context.theme.definitelyBackgroundColor;
       }
-      /*var material = "";
-      material = ( <div
-                    dangerouslySetInnerHTML={{
-                      __html: this.props.questions[index].material
-                    }}>
-                  </div> )*/
 
       var material = this.checkQuestionMaterial(index);
 
       return (
-        <div key={"result-"+index}>
+        <div key={"result-" + index}>
           <div style={styles.resultList}>
-            <div><div style={{color: color, float: "left"}}>Question {index+1} -- {message}</div><div style={{color: confidenceColor, float: "right"}}>{this.props.assessmentResult.confidence_level_list[index]}</div></div>
+            <div>
+              <div style={{color: color, float: "left", marginTop: "20px", fontWeight: "bold"}}>
+                Question {index + 1} &mdash; {message}
+              </div>
+              <div style={{color: confidenceColor, float: "right", marginTop: "20px"}}>
+                {this.props.assessmentResult.confidence_level_list[index]}
+              </div>
+            </div>
           </div>
           <div style={{...styles.resultList, ...styles.resultOutcome}}>
             <div style={{width: "70%"}}>{material}</div>
@@ -82,10 +83,16 @@ export default class FormativeResult extends React.Component{
                 <div style={styles.outcomeContainer}>
                   {image}
                   {head}
-                  <div>{feedback}</div>
+                  <p style={{color: "#637381", fontSize: "14px", fontWeight: "normal"}}>{feedback}</p>
                   <div>{results}</div>
                   <div style={styles.buttonsDiv}>
-                    <button className="btn btn-check-answer" style={styles.retakeButton}  onClick={(e)=>{this.retake()}}>Retake</button>
+                    <button
+                      className="btn btn-check-answer"
+                      style={styles.retakeButton}
+                      onClick={(e) => {this.retake()}}
+                      >
+                        Retake Quiz
+                    </button>
                   </div>
                 </div>
               </div>

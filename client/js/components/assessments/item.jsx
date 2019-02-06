@@ -4,6 +4,7 @@ import React from "react";
 // Components
 import BaseComponent from "../base_component";
 import UniversalInput from "./universal_input";
+import FormativeHeader from "./formativeHeader";
 // Actions
 import AssessmentActions from "../../actions/assessment";
 // Stores
@@ -38,10 +39,10 @@ export default class Item extends BaseComponent {
       <div className="assessment_container" style={styles.assessmentContainer}>
         <div className="question">
           <div style={styles.formativePadding}>
-            {this.formativeHeader(styles)}
 
             <form className="edit_item">
               <div className="full_question" style={styles.fullQuestion}>
+                {this.formativeHeader()}
                 {this.simpleProgress(styles)}
                 <div className="inner_question" style={styles.innerQuestion}>
                   <div
@@ -59,7 +60,7 @@ export default class Item extends BaseComponent {
                     {this.checkAnswerButton(styles)}
                     {this.getNavigationButtons(styles)}
                     {this.submitAssessmentButton(styles)}
-                    {this.getWarning(this.state,  this.props.questionCount, this.props.currentIndex, styles)}
+                    {this.getWarning(this.state, this.props.questionCount, this.props.currentIndex, styles)}
                     {this.mustAnswerMessage(styles)}
                   </div>
                 </div>
@@ -450,18 +451,12 @@ export default class Item extends BaseComponent {
     );
   }
 
-  formativeHeader(styles) {
+  formativeHeader() {
     if (AssessmentStore.isFormative()) {
       return (
-        <div>
-          <div className="row"></div>
-          <div className="row" style={styles.checkDiv}>
-            <div className="col-md-10">
-              <h4 style={styles.h4}>{this.props.assessment.title}</h4>
-            </div>
-            <div className="col-md-2"></div>
-          </div>
-        </div>
+        <FormativeHeader
+          assessmentTitle={this.props.assessment.title}
+          />
       );
     }
   }
@@ -505,9 +500,6 @@ export default class Item extends BaseComponent {
         marginTop: marginTop,
         boxShadow: boxShadow,
         borderRadius: theme.assessmentContainerBorderRadius
-      },
-      header: {
-        backgroundColor: theme.headerBackgroundColor,
       },
       fullQuestion: {
         backgroundColor: AssessmentStore.isFormative() || AssessmentStore.isPractice() ? theme.fullQuestionBackgroundColor : "#fff",
@@ -639,10 +631,6 @@ export default class Item extends BaseComponent {
       },
       selfCheck: {
         fontSize: "140%"
-      },
-      checkDiv: {
-        backgroundColor: theme.primaryBackgroundColor,
-        margin: "20px 0px 0px 0px"
       },
       h4: {
         color: "white",

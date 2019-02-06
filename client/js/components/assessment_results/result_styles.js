@@ -56,7 +56,6 @@ export default{
       },
       outcomes: {
         backgroundColor: "rgba(204, 204, 204, .2)",
-
       },
       row: {
         padding: "15px",
@@ -72,13 +71,16 @@ export default{
         marginTop: "80px"
       },
       header: {
-        padding: "15px",
-        backgroundColor: theme.primaryBackgroundColor,
         position: "absolute",
+        borderTop: "2px solid #003136",
+        borderBottom: "1px solid #c4cdd5",
         top: "0px",
         left: "0px",
-        fontSize: "140%",
-        color: "white",
+        padding: "22px 40px",
+        fontSize: "20px",
+        fontWeight: "400",
+        color: "#212b36",
+        lineHeight: "1.4",
         width: "100%"
       },
       resultList: {
@@ -91,7 +93,7 @@ export default{
       },
       retakeButton: {
         width: theme.definitelyWidth,
-        backgroundColor: theme.definitelyBackgroundColor,
+        backgroundColor: theme.probablyBackgroundColor,
         color: theme.definitelyColor,
         marginBottom: "10px"
       },

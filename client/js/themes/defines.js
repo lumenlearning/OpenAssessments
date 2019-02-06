@@ -53,10 +53,10 @@ export default {
   ponyPurple: "#A756A3",
 
   // Lumen Learing
-  lumenSeafoam: "#71B889",
+  lumenSeafoam: "#108043",
   lumenDarkGreen: "#003136",
-  lumenBlue: "#1064c0",
-  lumenRed: "#CF0000",
+  lumenBlue: "#1e74d1",
+  lumenRed: "#ad4646",
 
   // Twitter bootstrap overrides
   navbarInverseBg:                 "#424242",
