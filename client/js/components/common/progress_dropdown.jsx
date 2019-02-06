@@ -14,7 +14,6 @@ export default class ProgressDropdown extends BaseComponent{
     this._bind("navButtonClicked", "getStyles", "handleKeyDown");
   }
 
-
   navButtonClicked(e){
     if(this.state && this.state.expanded){
       this.setState({expanded: !this.state.expanded})
@@ -30,28 +29,8 @@ export default class ProgressDropdown extends BaseComponent{
   handleKeyDown(e) {
     // on escape toggle menu closed
     if (e.keyCode === 27) {
-      this.setState({expanded: false})
-    }    
-
-    // TODO - determine if manually advancing to next menu item on 
-    // down and up key is necessary 
-    
-    // Find current DOM node
-    // var item = React.findDOMNode(this.refs['current-question'])
-    
-    // // if down or up key pressed, select correct question
-    // var that = this;
-    // if (e.keyCode === 40) {
-    // this.props.selectQuestion(this.props.currentQuestion, function(){
-    //   that.navButtonClicked;
-    //   item.focus();
-    // });
-    // } else if (e.keyCode === 38) {
-    //   this.props.selectQuestion(this.props.currentQuestion - 2, function(){
-    //     that.navButtonClicked;
-    //     item.focus();
-    //   });
-    // }
+      this.setState({expanded: false});
+    }
   }
 
   mouseOver(e){
@@ -122,7 +101,7 @@ export default class ProgressDropdown extends BaseComponent{
     var expanded = (this.state && this.state.expanded);
     var styles = this.getStyles(this.context.theme, expanded);
     var questions = this.props.questions && this.props.questions.map((question, index)=>{
-      return <ProgressListItem key={"list-item"+index} ref={(index) === this.props.currentQuestion ? "current-question" : null } question={question} expanded={this.state && this.state.expanded} index={index} toggle={this.navButtonClicked} selectQuestion={this.props.selectQuestion}/>
+      return <ProgressListItem key={"list-item"+index} question={question} expanded={this.state && this.state.expanded} index={index} toggle={this.navButtonClicked} selectQuestion={this.props.selectQuestion}/>
     });
     var text = this.props.disabled ? <b>There are {this.props.questionCount} questions</b> : <b>You are on question {this.props.currentQuestion} of {this.props.questionCount}</b>
     return (

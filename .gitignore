@@ -48,3 +48,7 @@ public/assets
 ./bin/aws_deploy
 .ebextentions/
 .elasticbeanstalk/
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
