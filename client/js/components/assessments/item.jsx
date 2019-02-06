@@ -129,7 +129,7 @@ export default class Item extends BaseComponent{
     var nextButtonClasses = "btn btn-next-item " + disabledValue;
 
     return (
-        <button className={nextButtonClasses} style={styles.nextButton} disabled={disabledValue} onClick={(e) => { this.nextButtonClicked(e) }}>
+        <button className={nextButtonClasses} style={styles.nextButton} disabled={disabledValue ? true : false} onClick={(e) => { this.nextButtonClicked(e) }}>
           <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
         </button>);
   }
@@ -138,7 +138,7 @@ export default class Item extends BaseComponent{
     var disabledValue = (this.props.currentIndex <= 0) ? "disabled" : "";
     var prevButtonClasses = "btn btn-prev-item " + disabledValue;
     return (
-        <button className={prevButtonClasses} style={styles.previousButton} disabled={disabledValue} onClick={(e) => { this.previousButtonClicked(e) }}>
+        <button className={prevButtonClasses} style={styles.previousButton} disabled={disabledValue ? true : false} onClick={(e) => { this.previousButtonClicked(e) }}>
           <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span>
         </button>);
   }
