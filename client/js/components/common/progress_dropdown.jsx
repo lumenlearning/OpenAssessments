@@ -10,7 +10,6 @@ export default class ProgressDropdown extends BaseComponent{
   
   constructor(props, context){
     super(props, context);
-    
     this._bind("navButtonClicked", "getStyles", "handleKeyDown");
   }
 
