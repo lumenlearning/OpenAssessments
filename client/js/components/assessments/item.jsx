@@ -209,7 +209,7 @@ export default class Item extends BaseComponent {
     if (this.props.settings.kind === "formative") {
       return (
         <div className="confidence_wrapper" style={styles.confidenceWrapper}>
-          <div tabIndex="0" style={{marginBottom: "10px"}}>How sure are you of your answer?</div>;
+          <div tabIndex="0" style={{marginBottom: "10px"}}>How sure are you of your answer?</div>
           <input
             type="button"
             style={styles.maybeButton}
