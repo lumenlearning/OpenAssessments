@@ -9,32 +9,68 @@ class QuizRestorer
 
   def perform
     while true
-      @assessment_ids.each do |assessment_id|
-        now = Time.now
-        assessment_results = AssessmentResult.where(assessment_id: assessment_id,
-          updated_at: ((now - time_range)..now),
-          session_status: "pendingSubmission")
-        assessment_results.each do |assessment_result|
-          if (AssessmentResult.where(lti_launch_id: assessment_result.lti_launch_id).count() > 1)
-            ua = assessment_result.user_assessment
-            if !fixed_ua_attempts.include?(ua.id) && ua.attempts > 0 && ua.attempts == ua.assessment_results.count()
-              puts "updating UserAssessment #{ua.id}"
-              ua.attempts -= 1
-              if ua.attempts > 0 && !(ua.assessment_results.group_by { |v| v.lti_launch_id }.values.select { |gar| gar.all? { |sar| sar.session_status == "pendingSubmission" and sar.progress.nil? } }).empty?
-                # does the user assessment have an attempt left and was one of the launches have all assessment results with session
-                # status in "pendingSubmission" and no progresses for either?  Then the student gets _another_ quiz back because
-                # OEA basically stole _two_ of them
-                puts "second quiz restored for #{ua.id} because the first one never went through"
-                ua.attempts -= 1
-              end
-              ua.save!
-              fixed_ua_attempts << ua.id
-            end
-          end
-        end
-      end
+      restore_quizzes
       puts "back to sleep"
       sleep 3600
+    end
+  end
+
+  private
+
+  def restore_quizzes
+    @assessment_ids.each do |assessment_id|
+      restore_quizzes_for_assessment(assessment_id)
+    end
+  end
+
+  def retrieve_assessment_results(assessment_id)
+    now = Time.now
+    AssessmentResult.where(assessment_id: assessment_id,
+      updated_at: ((now - time_range)..now),
+      session_status: "pendingSubmission")
+  end
+
+  def has_duplicate_lti_launches?(assessment_result)
+    AssessmentResult.where(lti_launch_id: assessment_result.lti_launch_id).count() > 1
+  end
+
+  def check_user_assessment(assessment_result)
+    ua = assessment_result.user_assessment
+    if should_restore_quiz?(ua)
+      restore_quiz!(ua)
+      @fixed_ua_attempts << ua.id
+    end
+  end
+
+  def should_restore_quiz?(user_assessment)
+    !@fixed_ua_attempts.include?(user_assessment.id) &&
+    user_assessment.attempts > 0 &&
+    user_assessment.attempts == user_assessment.assessment_results.count()
+  end
+
+  # does the user assessment have an attempt left and was one of the launches have all assessment results with session
+  # status in "pendingSubmission" and no progresses for either?  Then the student gets _another_ quiz back because
+  # OEA basically stole _two_ of them
+  def should_restore_second_quiz?(user_assessment)
+    user_assessment.attempts > 0 &&
+    !(user_assessment.assessment_results.group_by { |v| v.lti_launch_id }.values.select { |gar| gar.all? { |sar| sar.session_status == "pendingSubmission" and sar.progress.nil? } }).empty?
+  end
+
+  def restore_quiz!(user_assessment)
+    puts "updating UserAssessment #{ua.id}"
+    user_assessment.attempts -= 1
+    if should_restore_second_quiz?(ua)
+      puts "second quiz restored for #{ua.id} because the first one never went through"
+      user_assessment.attempts -= 1
+    end
+    user_assessment.save!
+  end
+
+  def restore_quizzes_for_assessment(assessment_id)
+    retrieve_assessment_results(assessment_id).each do |assessment_result|
+      if has_duplicate_lti_launches?(assessment_result)
+        check_user_assessment(assessment_result)
+      end
     end
   end
 end
