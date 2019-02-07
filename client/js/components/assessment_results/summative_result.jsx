@@ -79,7 +79,7 @@ export default class SummativeResult extends React.Component{
 
     return (<div style={styles.assessment}>
       <div style={styles.assessmentContainer}>
-        <div style={styles.titleBar}>{quizType}: {this.state.assessment ? this.state.assessment.title : ""}</div>
+        <div style={styles.header}>{this.state.assessment ? this.state.assessment.title : ""}</div>
         {errors}
 
         <ResultSummary
