@@ -2,5 +2,6 @@
 
 require File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'environment'))
 require 'delayed/command'
+require 'jobs/quiz_restorer'
 Delayed::Command.new(ARGV).daemonize
 Delayed::Job.enqueue(QuizRestorer.new)
