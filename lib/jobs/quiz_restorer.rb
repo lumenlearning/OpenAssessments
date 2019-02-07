@@ -8,7 +8,7 @@ class QuizRestorer
   end
 
   def perform
-    while true
+    Kernel.loop do
       restore_quizzes
       puts "back to sleep"
       sleep 3600
