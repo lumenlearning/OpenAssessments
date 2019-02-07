@@ -303,7 +303,7 @@ export default class Item extends BaseComponent {
           style={styles.nextButton}
           onClick={(e) => { this.nextButtonClicked(e); }}
           >
-            <span>Next</span>
+            <span>Next </span>
             <i className="glyphicon glyphicon-chevron-right" aria-label="Next"></i>
         </button>
       );
@@ -320,7 +320,7 @@ export default class Item extends BaseComponent {
         onClick={(e) => { this.previousButtonClicked(e); }}
         >
           <i className="glyphicon glyphicon-chevron-left" aria-label="Previous"></i>
-          <span>Previous</span>
+          <span> Previous</span>
       </button>);
   }
 
@@ -482,14 +482,6 @@ export default class Item extends BaseComponent {
       navMargin = "-75px 20px 0 0";
     }
 
-    let marginTop = "100px";
-    let boxShadow = theme.assessmentContainerBoxShadow;
-
-    if (AssessmentStore.isFormative() || AssessmentStore.isPractice()) {
-      marginTop = "0px";
-      boxShadow = "";
-    }
-
     let extraPadding = AssessmentStore.isFormative() ? "20px" : "";
 
     return {
@@ -497,8 +489,7 @@ export default class Item extends BaseComponent {
         padding: extraPadding
       },
       assessmentContainer: {
-        marginTop: marginTop,
-        boxShadow: boxShadow,
+        marginTop: "0px",
         borderRadius: theme.assessmentContainerBorderRadius
       },
       fullQuestion: {
@@ -517,15 +508,15 @@ export default class Item extends BaseComponent {
       nextButton: {
         backgroundColor: theme.nextButtonBackgroundColor,
         color: theme.probablyColor,
-        width: theme.probablyWidth,
+        width: "84px",
         padding: "8px !important",
         margin: theme.nextButtonMargin,
       },
       previousButton: {
         backgroundColor: theme.previousButtonBackgroundColor,
-        marginRight: "20px",
+        marginRight: "8px",
         color: theme.probablyColor,
-        width: theme.probablyWidth,
+        width: "110px",
         padding: "8px !important",
       },
       maybeButton: {
@@ -575,10 +566,12 @@ export default class Item extends BaseComponent {
         backgroundColor: theme.confidenceFeedbackWrapperBackgroundColor,
       },
       navigationWrapper: {
-        width: "300px",
         height: theme.confidenceWrapperHeight,
         margin: theme.navigationWrapperMargin,
+        marginTop: "30px",
+        marginRight: "18px",
         backgroundColor: theme.confidenceWrapperBackgroundColor,
+        display: "inline-block"
       },
       margin: {
        marginLeft: "5px"
@@ -587,7 +580,9 @@ export default class Item extends BaseComponent {
         margin: navMargin
       },
       submitAssessmentButtonDiv: {
-        margin: "1em 0 1em 36px",
+        display: "inline-block",
+        paddingLeft: "18px",
+        borderLeft: "1px solid #c4cdd5"
       },
       checkAnswerButtonDiv: {
         margin: "1em 0 1em 36px",

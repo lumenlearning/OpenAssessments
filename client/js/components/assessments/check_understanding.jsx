@@ -23,17 +23,15 @@ export default class CheckUnderstanding extends React.Component{
   getStyles(props, theme){
     return {
       assessmentContainer:{
-        marginTop: props.assessmentKind.toUpperCase() == "FORMATIVE" ? "0px":"100px",
-        boxShadow: props.assessmentKind.toUpperCase() == "FORMATIVE" ?  "" : theme.assessmentContainerBoxShadow,
-        borderRadius: theme.assessmentContainerBorderRadius
+        marginTop: "0px"
       },
       header: {
         backgroundColor: theme.headerBackgroundColor
       },
       startButton: {
         margin: "5px 5px 5px -5px",
-        width: theme.definitelyWidth,
-        backgroundColor: theme.definitelyBackgroundColor,
+        height: "36px",
+        backgroundColor: "#1e74d1 !important",
         border: "transparent"
       },
       checkUnderstandingButton: {
@@ -80,6 +78,11 @@ export default class CheckUnderstanding extends React.Component{
         // left: "20px"
         marginBottom: "25px",
         marginTop: "-25px"
+      },
+      h2: {
+        fontSize: "20px",
+        lineHeight: "1.4",
+        color: "#212b36"
       },
       icon: {
         height: "62px",
@@ -156,9 +159,8 @@ export default class CheckUnderstanding extends React.Component{
 
   getSWYK(styles){
     return  <div style={styles.swyk}>
-              <h2>Show What You Know</h2>
-              <div>Take this pre-test to see what you already know about the concepts in this section.</div>
-              <div>The pre-test does not count toward your grade, but will help you plan where to focus</div>
+              <h2 style={styles.h2}>Take this pre-test to see what you already know about the concepts in this section.</h2>
+              <div style={{color: "#555555"}}>The pre-test does not count toward your grade, but will help you plan where to focus</div>
               <div>your time and effort as you study.</div>
             </div>
   }

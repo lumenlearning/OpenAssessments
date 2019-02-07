@@ -71,16 +71,13 @@ export default class Start extends BaseComponent{
         backgroundColor: theme.titleBarBackgroundColor,
       },
       titleBar: {
-        position: "absolute",
-        top: "0px",
-        left: "0px",
-        width: "100%",
-        padding: "10px 20px 10px 20px",
-        backgroundColor: theme.primaryBackgroundColor,
-        color: "white",
-        fontSize: "130%",
-        minWidth: minWidth,
-        //fontWeight: "bold"
+        borderTop: "2px solid #003136",
+        borderBottom: "1px solid #c4cdd5",
+        padding: "22px 40px",
+        fontSize: "20px",
+        fontWeight: "400",
+        color: "#212b36",
+        lineHeight: "1.4"
       }
     }
   }
