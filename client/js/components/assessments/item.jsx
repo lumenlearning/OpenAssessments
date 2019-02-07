@@ -508,7 +508,7 @@ export default class Item extends BaseComponent {
       nextButton: {
         backgroundColor: theme.nextButtonBackgroundColor,
         color: theme.probablyColor,
-        width: "84px",
+        width: theme.probablyWidth,
         padding: "8px !important",
         margin: theme.nextButtonMargin,
       },
@@ -516,7 +516,7 @@ export default class Item extends BaseComponent {
         backgroundColor: theme.previousButtonBackgroundColor,
         marginRight: "8px",
         color: theme.probablyColor,
-        width: "110px",
+        width: theme.probablyWidth,
         padding: "8px !important",
       },
       maybeButton: {
