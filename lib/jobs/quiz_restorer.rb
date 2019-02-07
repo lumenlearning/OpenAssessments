@@ -26,7 +26,7 @@ class QuizRestorer
   def retrieve_assessment_results(assessment_id)
     now = Time.now
     AssessmentResult.where(assessment_id: assessment_id,
-      updated_at: ((now - time_range)..now),
+      updated_at: ((now - @time_range)..now),
       session_status: "pendingSubmission")
   end
 
