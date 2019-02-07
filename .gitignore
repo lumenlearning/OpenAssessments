@@ -12,8 +12,10 @@ pickle-email-*.html
 secrets.js
 *_web_pack_bundle.js
 .idea/
+*.iml
 .env
 .DS_Store
+*.iml
 
 # TODO Comment out these rules if you are OK with secrets being uploaded to the repo
 config/secrets.yml

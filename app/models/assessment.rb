@@ -92,6 +92,12 @@ class Assessment < ActiveRecord::Base
 
   end
 
+  def remove_questions_for_guid!(guid)
+    if (self.current_assessment_xml)
+      self.xml_file = AssessmentXml.remove_questions_for_guid(self.current_assessment_xml.xml, guid)
+    end
+  end
+
   def parsed_xml(xml = nil)
     @parsed_xml ||= AssessmentParser.parse(xml).first if xml.present?
     @parsed_xml
@@ -181,4 +187,15 @@ class Assessment < ActiveRecord::Base
     end
   end
 
+  def self.move_questions_for_guid!(source_assessment, destination_assessment, guid)
+    if (source_assessment.current_assessment_xml && destination_assessment.current_assessment_xml)
+      updated_source_xml, updated_destination_xml =
+        AssessmentXml.move_questions_for_guid(
+          source_assessment.current_assessment_xml.xml,
+          destination_assessment.current_assessment_xml.xml,
+          guid)
+      source_assessment.xml_file = updated_source_xml
+      destination_assessment.xml_file = updated_destination_xml
+    end
+  end
 end

@@ -40,6 +40,7 @@ export default class Edit extends BaseComponent{
     return {
       questions        : ReviewAssessmentStore.allQuestions(),
       outcomes         : ReviewAssessmentStore.outcomes(),
+      skills           : ReviewAssessmentStore.skills(),
       settings         : SettingsStore.current(),
       assessment       : ReviewAssessmentStore.current(),
       needsSaving      : ReviewAssessmentStore.isDirty(),
@@ -106,11 +107,10 @@ export default class Edit extends BaseComponent{
 
   /*CUSTOM FUNCTIONS*/
   displayQuestions(){
-
     if(this.state.questions.length !== 0){
       return this.state.questions.map((question, index)=>{
         return (
-          <Question key={question.id + index} question={question} outcomes={this.state.outcomes}/>
+          <Question key={question.id + index} question={question} outcomes={this.state.outcomes} skills={this.state.skills}/>
         )
       });
     }

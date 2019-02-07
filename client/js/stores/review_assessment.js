@@ -18,6 +18,7 @@ var _kind = null;
 var _assessmentXml = null;
 var _items = [];
 var _outcomes = [];
+var _skills = [];
 var _assessmentState = NOT_LOADED;
 var _selectedAnswerIds = [];
 var _studentAnswers = [];
@@ -54,6 +55,7 @@ function loadAssessment(payload){
           _items = _assessment.sections[0].items
         }
         _outcomes = Assessment.loadOutcomes(_assessment);
+        _skills = Assessment.loadSkills(_assessment);
       }
       _assessmentState = LOADED;
     }
@@ -82,10 +84,15 @@ function validateAssessment() {
   let sectionCount = SettingsStore.current().perSec;
   if (sectionCount) {
     let outcomeCounts = {};
+    let skillCounts = {};
     _outcomes.forEach((o)=>{ outcomeCounts[o.outcomeGuid] = 0 });
+    _skills.forEach((s)=>{ skillCounts[s.skillGuid] = 0 });
     _items.forEach((item)=>{
       if(item.outcome){
         outcomeCounts[item.outcome.outcomeGuid]++;
+      }
+      if(item.skill){
+        skillCounts[item.skill.skillGuid]++;
       }
     });
 
@@ -340,6 +347,9 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
   },
   outcomes(){
     return _outcomes;
+  },
+  skills(){
+    return _skills;
   },
   timeSpent(){
     return {

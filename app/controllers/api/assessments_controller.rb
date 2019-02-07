@@ -2,7 +2,7 @@ require 'json2qti'
 require 'assessment_copier'
 
 class Api::AssessmentsController < Api::ApiController
-  
+
   respond_to :xml, :json
 
   before_action :ensure_context_admin, only:[:json_update, :review_show]
@@ -148,7 +148,7 @@ class Api::AssessmentsController < Api::ApiController
     @assessment.account = current_account
     @assessment.save!
     @assessment.assessment_settings.create(settings_params)
-    
+
     respond_with(:api, @assessment)
   end
 
@@ -159,7 +159,7 @@ class Api::AssessmentsController < Api::ApiController
     else
       @assessment.assessment_settings.create(settings_params)
     end
-    
+
     respond_with(:api, @assessment)
   end
 
@@ -177,6 +177,9 @@ class Api::AssessmentsController < Api::ApiController
         if settings.per_sec
           opts["group_by_section"] = true
           opts["per_sec"] = settings.per_sec
+          if assessment.kind == 'formative'
+            opts["group_by_outcomes"] = true
+          end
         end
       end
       xml = Json2Qti.convert_to_qti(clean_params, opts)
@@ -199,6 +202,29 @@ class Api::AssessmentsController < Api::ApiController
     render :json => new_assessment
   end
 
+  def remove_questions_for_guid
+    assessment = Assessment.where(id: params[:assessment_id]).first
+    raise ActiveRecord::RecordNotFound unless assessment
+
+    assessment.remove_questions_for_guid!(params.require(:guid))
+    assessment.save!
+
+    render :json => assessment
+  end
+
+  def move_questions_for_guid
+    source_assessment = Assessment.where(id: params[:assessment_id]).first
+    raise ActiveRecord::RecordNotFound.new("Source assessment was not found") unless source_assessment
+    destination_assessment = Assessment.where(id: params[:destination_assessment_id]).first
+    raise ActiveRecord::RecordNotFound.new("Destination assessment was not found") unless destination_assessment
+
+    Assessment.move_questions_for_guid!(source_assessment, destination_assessment, params[:guid])
+    source_assessment.save!
+    destination_assessment.save!
+
+    render :json => destination_assessment
+  end
+
   private
 
   # makes sure the JWT token allows admin scope for this LTI context id
@@ -219,7 +245,7 @@ class Api::AssessmentsController < Api::ApiController
                                          :src_url, :recommended_height, :keyword_list,
                                          :account_id, :kind)
     end
-  
+
   def settings_params
     settings = params.require(:assessment).permit(:allowed_attempts, :per_sec, :confidence_levels, :style, :enable_start)
     settings[:allowed_attempts] = settings[:allowed_attempts].to_i if settings[:allowed_attempts]

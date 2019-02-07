@@ -105,9 +105,9 @@ export default class Start extends BaseComponent{
         externalContextId = {this.state.settings.externalContextId}
         accountId       = {this.state.settings.accountId}
         icon            = {this.state.settings.images.QuizIcon_svg}/>;
-        progressBar     = <div style={styles.progressContainer}>
-                            <ProgressDropdown disabled={true} settings={this.state.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
-                          </div>;
+        // progressBar     = <div style={styles.progressContainer}>
+        //                     <ProgressDropdown disabled={true} settings={this.state.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
+        //                   </div>;
 
     }
     var quizType = this.state.settings.assessmentKind.toUpperCase() === "SUMMATIVE" ? "Quiz" : "Show What You Know";
@@ -116,7 +116,7 @@ export default class Start extends BaseComponent{
 
     return <div className="assessment" style={styles.assessment}>
       {titleBar}
-      {progressBar}
+      {/*progressBar*/}
       <div className="section_list">
         <div className="section_container">
           {content}

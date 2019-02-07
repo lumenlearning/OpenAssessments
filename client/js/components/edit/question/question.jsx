@@ -30,6 +30,7 @@ export default class Question extends BaseComponent{
                 "handleFeedbackChange",
                 "handleAddOption",
                 "handleOutcomeChange",
+                "handleSkillChange",
                 'handleAnswerRemoval',
                 "handleQuestionTypeChange"
      );
@@ -51,6 +52,7 @@ export default class Question extends BaseComponent{
   render(){
     let question  = this.props.question;
     let outcomes  = this.props.outcomes;
+    let skills    = this.props.skills;
     let style     = Style.styles();
     let delHover  = this.state.hover.delete;
     let copyHover = this.state.hover.copy;
@@ -107,6 +109,7 @@ export default class Question extends BaseComponent{
           <Content
               question={question}
               outcomes={outcomes}
+              skills={skills}
               handleAnswerChange={this.handleAnswerChange}
               handleFeedbackChange={this.handleFeedbackChange}
               handleCorrectChange={this.handleCorrectChange}
@@ -114,6 +117,7 @@ export default class Question extends BaseComponent{
               handleAnswerRemoval={this.handleAnswerRemoval}
               handleMaterialChange={this.handleMaterialChange}
               handleOutcomeChange={this.handleOutcomeChange}
+              handleSkillChange={this.handleSkillChange}
               handleDoneEditing={this.handleDoneEditing}
               handleQuestionTypeChange={this.handleQuestionTypeChange}
           />
@@ -194,6 +198,13 @@ export default class Question extends BaseComponent{
   handleOutcomeChange(newOutcome) {
     let question = _.clone(this.props.question, true);
     question.outcome = newOutcome;
+
+    ReviewAssessmentActions.updateAssessmentQuestion(question, false);
+  }
+
+  handleSkillChange(newSkill) {
+    let question = _.clone(this.props.question, true);
+    question.skill = newSkill;
 
     ReviewAssessmentActions.updateAssessmentQuestion(question, false);
   }

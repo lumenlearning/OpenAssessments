@@ -12,6 +12,7 @@ export default class Qti{
         id       : xml.attr('ident'),
         standard : 'qti',
         outcome  : items[0] ? items[0].outcome : {},
+        skill    : items[0] ? items[0].skill : {},
         items    : items
       };
     };
@@ -51,6 +52,29 @@ export default class Qti{
     return outcome;
   }
 
+  static parseSkill(item, outcomeGuid){
+    item = $(item);
+    var fields = item.find("qtimetadatafield");
+    var skill = {
+      parentGuid: outcomeGuid,
+      skillShortOutcome: "",
+      skillLongOutcome: "",
+      skillGuid: ""
+    };
+    for (var i = fields.length - 1; i >= 0; i--) {
+      if($(fields[i]).find("fieldlabel").text() == "skill_guid"){
+        skill.skillGuid = $(fields[i]).find("fieldentry").text()
+      }
+      if($(fields[i]).find("fieldlabel").text() == "skill_long_title"){
+        skill.skillLongOutcome = $(fields[i]).find("fieldentry").text()
+      }
+      if($(fields[i]).find("fieldlabel").text() == "skill_short_title"){
+        skill.skillShortOutcome = $(fields[i]).find("fieldentry").text()
+      }
+    }
+    return skill;
+  }
+
   static parseItems(xml){
 
     var fromXml = (xml_raw) => {
@@ -60,11 +84,13 @@ export default class Qti{
         return $(item).attr('linkrefid');
       });
 
+      let outcome = this.parseOutcome(xml);
       var item = {
         id         : xml.attr('ident'),
         title      : xml.attr('title'),
         objectives : objectives,
-        outcome    : this.parseOutcome(xml),
+        outcome    : outcome,
+        skill      : this.parseSkill(xml, outcome.outcomeGuid),
         material   : this.material(xml),
         timeSpent  : 0
       };

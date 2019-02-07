@@ -33,6 +33,11 @@ module Json2Qti
   #         "shortOutcome": "What Is Business?",
   #         "longOutcome": "Define the concept of business",
   #         "outcomeGuid": "f71c5ce2-46b7-4cce-9531-1680d42faf1b"
+  #       },
+  #       "skill" => {
+  #         "skillShortOutcome" => "Skill Short & Name",
+  #         "skillLongOutcome" => "Skill Long & Name",
+  #         "skillGuid" => "g82d6df3-57c8-5ddf-0642-2791e53gbg2c"
   #       }
   #     }
   #   ]
@@ -47,19 +52,28 @@ module Json2Qti
       @qti = ""
       @group_by_section = opts["group_by_section"]
       @per_section = opts["per_sec"].to_s || ''
+      @group_by_outcomes = opts["group_by_outcomes"]
 
       # Convert each item to a convert Question object and remove unknown types (`nil`s)
       @items = json["items"].map{|i| Question.new_from_item(i) }.compact
 
       if @group_by_section
-        if @items.all? { |item| item.outcome }
-          @sections = @items.group_by { |i| i.outcome["guid"] }
+        if @group_by_outcomes
+          if @items.all? { |item| item.outcome }
+            @sections = @items.group_by { |i| i.outcome["guid"] }
+          elsif @items.all? { |item| item.skill }
+            @sections = @items.group_by { |i| i.skill["skill_guid"] }
+          end
         else
-          @group_by_section = false
+          if @items.all? { |item| item.skill }
+            @sections = @items.group_by { |i| i.skill["skill_guid"] }
+          elsif @items.all? { |item| item.outcome }
+            @sections = @items.group_by { |i| i.outcome["guid"] }
+          end
         end
-
+      else
+        @group_by_section = false
       end
-
     end
 
     # returns qti string for the whole assessment

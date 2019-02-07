@@ -85,7 +85,8 @@ export default new class Style {
       outcomeSelect: {
         fontSize: "16px",
         fontWeight: "normal",
-        backgroundColor: "#fff"
+        backgroundColor: "#fff",
+        maxWidth: "950px"
       },
       delBtn: {
         border: '2px solid #D00000',
