@@ -636,7 +636,7 @@ export default class Item extends BaseComponent {
         letterSpacing: "0px"
       },
       chooseText: {
-        color: "#555",
+        color: "#637381",
         fontWeight: "600",
         paddingBottom: "17px"
       },
