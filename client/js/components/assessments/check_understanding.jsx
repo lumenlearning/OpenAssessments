@@ -31,20 +31,23 @@ export default class CheckUnderstanding extends React.Component{
   renderTeacherOptions(styles) {
     if (this.canManage()) {
       return (
-        <div style={styles.buttonGroup}>
+        <div style={styles.teacherOptionsWrapper}>
           <button
-            className="btn btn-sm"
-            onClick={()=>{this.manageAttempts()}}
-            style={styles.teacherButton}
+            style={styles.teacherOption}
             >
-              Manage Quiz Attempts
+              Student Experience
           </button>
           <button
-            className="btn btn-sm"
             onClick={()=>{this.previewAttempt()}}
-            style={styles.teacherButton}
+            style={styles.teacherOption}
             >
               Answer Key
+          </button>
+          <button
+            onClick={()=>{this.manageAttempts()}}
+            style={styles.teacherOption}
+            >
+              Manage Quiz Attempts
           </button>
         </div>
       );
@@ -211,8 +214,9 @@ export default class CheckUnderstanding extends React.Component{
       startButton: {
         margin: "5px 5px 5px -5px",
         height: "36px",
+        width: "97px",
         backgroundColor: "#1e74d1 !important",
-        border: "transparent"
+        border: "#004c9f"
       },
       checkUnderstandingButton: {
         backgroundColor: theme.maybeBackgroundColor
@@ -221,20 +225,20 @@ export default class CheckUnderstanding extends React.Component{
         backgroundColor: theme.checkUnderstandingBackgroundColor,
         padding: "20px"
       },
-      buttonGroup: {
-        textAlign: props.assessmentKind.toUpperCase() !== "SUMMATIVE" ? "left" : "center",
-        background: "#e9e9e9",
-        borderBottom: "2px solid #e3e3e3"
+      teacherOptionsWrapper: {
+
       },
       buttonWrapper: {
         textAlign: props.assessmentKind.toUpperCase() !== "SUMMATIVE" ? "left" : "center"
       },
-      teacherButton: {
+      teacherOption: {
         border:"transparent",
-        backgroundColor:"#3299bb",
-        color:"#fff",
-        minWidth: "150px",
-        margin: "3px 2px"
+        backgroundColor:"#fff",
+        color:"#212b36",
+        margin: "20px 5px",
+        textTransform: "uppercase",
+        fontSize: "12px",
+        fontWeight: "bold"
       },
       attempts:{
         margin: "20px auto",
