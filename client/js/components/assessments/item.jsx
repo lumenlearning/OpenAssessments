@@ -272,13 +272,6 @@ export default class Item extends BaseComponent {
           {this.getNextButton(styles)}
         </div>
       );
-    // if this is a formative assessment and confidence level has been selected
-  } else if (assessmentKind === "formative" && (this.props.showAnswers && this.props.question.confidenceLevel)) {
-      return (
-        <div className="navigationBtnWrapper" style={styles.navigationWrapper}>
-          {this.getNextButton(styles)}
-        </div>
-      );
     }
   }
 
