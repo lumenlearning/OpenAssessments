@@ -161,6 +161,8 @@ export default class CheckUnderstanding extends React.Component{
     if (!this.props.isLti) {
       attemptStructure = "";
     }
+
+    return attemptStructure;
   }
 
   getSwyk(styles) {
