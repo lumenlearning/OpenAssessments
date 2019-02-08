@@ -216,7 +216,7 @@ export default class CheckUnderstanding extends React.Component{
       startButton: {
         margin: "5px 5px 5px -5px",
         height: "36px",
-        width: "97px",
+        minWidth: "97px",
         backgroundColor: "#1e74d1 !important",
         border: "#004c9f"
       },
