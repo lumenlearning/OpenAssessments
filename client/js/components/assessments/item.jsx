@@ -382,7 +382,7 @@ export default class Item extends BaseComponent {
   }
 
   submitAssessmentButton(styles) {
-    if (this.props.settings.assessmentKind === "formative") {
+    if (this.props.settings.assessmentKind === "formative" || this.props.settings.assessmentKind === "practice") {
       return;
     }
 
