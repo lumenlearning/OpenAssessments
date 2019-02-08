@@ -11,15 +11,17 @@ export default class RadioButton extends React.Component{
 
   render() {
     let btnQuestionStyles = this.getBtnQuestionStyles();
-    let btnLabelStyles = this.props.showAsCorrect !== null ? {...styles.btnLabel, ...{cursor: "default"}} : {...styles.btnLabel, ...{cursor: "pointer"}};
+    let btnLabelStyles = this.props.showAsCorrect !== null ? {...styles.btnLabel, ...{cursor: "default", padding: "11px 11px 6px"}} : {...styles.btnLabel, ...{cursor: "pointer", padding: "11px 11px 6px"}};
 
     return (
       <div>
         {this.renderAnswerIndicator()}
         <div className="btn btn-block btn-question" style={btnQuestionStyles}>
           <label style={btnLabelStyles}>
-            <input type="radio" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={() => {this.answerSelected()}} />
-            <span style={styles.span} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>
+            <span style={{display: "table-cell"}}>
+              <input type="radio" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={() => {this.answerSelected()}} />
+            </span>
+            <span style={{display: "table-cell", paddingLeft: "11px", fontWeight: "normal"}} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>
           </label>
           {this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice" ? this.answerFeedback() : ""}
         </div>
