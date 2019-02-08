@@ -25,7 +25,7 @@ export default{
         padding: "10px 20px 20px 20px"
       },
       improveScoreStyle:{
-        color: "#f00"
+        color: "#AD4646"
       },
       green: {
         color: "#458B00"
