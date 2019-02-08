@@ -296,8 +296,7 @@ export default class Item extends BaseComponent {
           style={styles.nextButton}
           onClick={(e) => { this.nextButtonClicked(e); }}
           >
-            <span>Next </span>
-            <i className="glyphicon glyphicon-chevron-right" aria-label="Next"></i>
+            Next
         </button>
       );
     }
@@ -312,8 +311,7 @@ export default class Item extends BaseComponent {
         style={styles.previousButton}
         onClick={(e) => { this.previousButtonClicked(e); }}
         >
-          <i className="glyphicon glyphicon-chevron-left" aria-label="Previous"></i>
-          <span> Previous</span>
+          Previous
       </button>);
   }
 
