@@ -78,7 +78,7 @@ export default class Start extends BaseComponent {
     // If this is any assessment type *other* than formative, render title bar
     if (this.state.settings.assessmentKind.toUpperCase() !== "FORMATIVE") {
       return (
-        <div style={styles.titleBar}>
+        <div className="assessment-header" style={styles.titleBar}>
           {this.state.settings ? this.state.settings.assessmentTitle : ""}
         </div>
       );
@@ -134,7 +134,7 @@ export default class Start extends BaseComponent {
       titleBar: {
         borderTop: "2px solid #003136",
         borderBottom: "1px solid #c4cdd5",
-        padding: "22px 40px",
+        padding: "22px 40px 22px 0",
         fontSize: "20px",
         fontWeight: "400",
         color: "#212b36",

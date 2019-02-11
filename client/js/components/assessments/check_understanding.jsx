@@ -13,17 +13,9 @@ export default class CheckUnderstanding extends React.Component{
     let styles = this.getStyles(this.props, this.context.theme);
 
     return (
-      <div className="assessment_container" style={styles.assessmentContainer}>
+      <div className="assessment-container" style={styles.assessmentContainer}>
         {this.renderTeacherOptions(styles)}
-        <div className="question">
-          <div className="header" style={styles.header}>
-            <p>{this.props.name}</p>
-          </div>
-          <div className="full_question" style={styles.fullQuestion}>
-            {this.renderContent(styles)}
-            {this.renderStartButton(styles)}
-          </div>
-        </div>
+        {this.renderContent(styles)}
       </div>
     );
   }
@@ -31,7 +23,7 @@ export default class CheckUnderstanding extends React.Component{
   renderTeacherOptions(styles) {
     if (this.canManage()) {
       return (
-        <div style={styles.teacherOptionsWrapper}>
+        <div className="teacher-options-wrapper" style={styles.teacherOptionsWrapper}>
           <button
             style={styles.teacherOption}
             >
@@ -59,7 +51,7 @@ export default class CheckUnderstanding extends React.Component{
 
     switch (this.props.assessmentKind.toUpperCase()) {
       case "SUMMATIVE":
-        content = this.getAttempts(this.context.theme, styles, this.props);
+        content = this.getSummative(this.context.theme, styles, this.props);
         break;
       case "SHOW_WHAT_YOU_KNOW":
         content = this.getSwyk(styles);
@@ -87,7 +79,7 @@ export default class CheckUnderstanding extends React.Component{
     }
 
     return (
-      <div style={styles.buttonWrapper}>
+      <div className="start-assessment-wrapper" style={styles.buttonWrapper}>
         <button
           style={styles.startButton}
           className="btn btn-info"
@@ -113,11 +105,12 @@ export default class CheckUnderstanding extends React.Component{
     this.context.router.transitionTo("teacher-preview", {contextId: this.props.externalContextId, assessmentId: this.props.assessmentId});
   }
 
-  getAttempts(theme, styles, props) {
+  getSummative(theme, styles, props) {
     if (!theme.shouldShowAttempts) {
       return;
     }
 
+    // If there are no more quiz attempts available and user is a student
     if (props.userAttempts >= props.maxAttempts && props.ltiRole !== "admin") {
       return (
         <div style={styles.attemptsContainer}>
@@ -149,28 +142,43 @@ export default class CheckUnderstanding extends React.Component{
       default: "1st";
     }
 
-    let attemptStructure = (
-      <div style={styles.attemptsContainer}>
-        <div style={styles.attempts}>
-          <p>{`Attempt ${this.props.userAttempts + 1} of ${this.props.maxAttempts}`}</p>
-          <p>Highest score recorded as grade.</p>
+    if (this.props.isLti) {
+      return (
+        <div className="assessment-meta-wrapper" style={styles.metaWrapper}>
+          <div className="assessment-meta-header" style={styles.metaHeader}>
+            <div className="assessment-meta-heading" style={styles.metaTitle}>
+              <h2 style={styles.metaTitle}>{this.props.title}</h2>
+              <p style={styles.metaSubtitle}>{`Attempts Possible: ${this.props.userAttempts + 1} of ${this.props.maxAttempts}`}</p>
+            </div>
+            {this.renderStartButton(styles)}
+          </div>
+          <div className="assessment-meta-table">
+            <div className="assessment-meta-table-heading" style={styles.metaTableHeaderWrapper}>
+              <h3 style={styles.metaTableHeading}>Quiz Scores</h3>
+            </div>
+            <div className="assessment-meta-table-row" style={styles.metaTableRow}>
+              <div style={styles.metaTableCell}>Attempt 1</div>
+              <div style={styles.metaTableCell}>No score yet</div>
+            </div>
+            <div className="assessment-meta-table-row" style={styles.metaTableRow}>
+              <div style={styles.metaTableCell}>Attempt 2</div>
+              <div style={styles.metaTableCell}>No score yet</div>
+            </div>
+          </div>
         </div>
-      </div>
-    );
-
-    if (!this.props.isLti) {
-      attemptStructure = "";
+      );
     }
-
-    return attemptStructure;
   }
 
   getSwyk(styles) {
     return (
       <div style={styles.swyk}>
-        <h2 style={styles.h2}>Take this pre-test to see what you already know about the concepts in this section.</h2>
-        <div style={{color: "#555555"}}>The pre-test does not count toward your grade, but will help you plan where to focus</div>
-        <div>your time and effort as you study.</div>
+        <div style={styles.swykInfoGroup}>
+          <h2 style={styles.h2}>Take this pre-test to see what you already know about the concepts in this section.</h2>
+          <div style={{color: "#555555"}}>The pre-test does not count toward your grade, but will help you plan where to focus</div>
+          <div>your time and effort as you study.</div>
+        </div>
+        {this.renderStartButton(styles)}
       </div>
     );
   }
@@ -230,14 +238,49 @@ export default class CheckUnderstanding extends React.Component{
       teacherOptionsWrapper: {
 
       },
+      metaHeader: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        borderBottom: "2px solid #212b36",
+        padding: "14px 0 20px 0"
+      },
+      metaTitle: {
+        fontSize: "20px",
+        lineHeight: "28px",
+        margin: "0, 0, 4px, 0"
+      },
+      metaSubtitle: {
+        color: "#637381",
+        fontSize: "14px",
+        margin: 0
+      },
+      metaTableHeaderWrapper: {
+        borderBottom: "1px solid #c4cdd5"
+      },
+      metaTableHeading: {
+        margin: "20px 0",
+        fontSize: "16px",
+        fontWeight: "bold"
+      },
+      metaTableRow: {
+        display: "block",
+        borderBottom: "1px solid #c4cdd5"
+      },
+      metaTableCell: {
+        display: "table-cell",
+        padding: "20px 40px 20px 0",
+      },
       buttonWrapper: {
-        textAlign: props.assessmentKind.toUpperCase() !== "SUMMATIVE" ? "left" : "center"
+        textAlign: props.assessmentKind.toUpperCase() !== "SUMMATIVE" ? "left" : "right"
       },
       teacherOption: {
         border:"transparent",
         backgroundColor:"#fff",
         color:"#212b36",
-        margin: "20px 5px",
+        margin: "20px 17px 20px 0",
+        padding: 0,
         textTransform: "uppercase",
         fontSize: "12px",
         fontWeight: "bold"
@@ -259,8 +302,10 @@ export default class CheckUnderstanding extends React.Component{
         textAlign: "center"
       },
       swyk: {
-        marginBottom: "25px",
-        marginTop: "-25px"
+        margin: "45px 0"
+      },
+      swykInfoGroup: {
+        marginBottom: "30px"
       },
       h2: {
         fontSize: "20px",
