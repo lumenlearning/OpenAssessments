@@ -71,16 +71,20 @@ class Api::AssessmentsController < Api::ApiController
           return
         end
 
-        @result = assessment.assessment_results.build
-        @result.user_assessment = user_assessment
-        @result.lti_launch = @lti_launch
-        @result.external_user_id = @lti_launch.lti_user_id if @lti_launch
-        @result.attempt = user_assessment.attempts || 0
-        @result.user = current_user
-        @result.session_status = AssessmentResult::STATUS_PENDING_SUBMISSION
-        @result.save!
+        if !exists_assessment_results_with_multiple_lti_launches?
+          # only create new assessment result and update assessment attempts if we are certain this is a unique launch
 
-        user_assessment.increment_attempts!
+          @result = assessment.assessment_results.build
+          @result.user_assessment = user_assessment
+          @result.lti_launch = @lti_launch
+          @result.external_user_id = @lti_launch.lti_user_id if @lti_launch
+          @result.attempt = user_assessment.attempts || 0
+          @result.user = current_user
+          @result.session_status = AssessmentResult::STATUS_PENDING_SUBMISSION
+          @result.save!
+
+          user_assessment.increment_attempts!
+        end
       else
         render :json => {:error => "Can't take summative without LtiLaunch or UserAssessment."}, status: :unauthorized
         return
