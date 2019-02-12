@@ -71,7 +71,7 @@ class Api::AssessmentsController < Api::ApiController
           return
         end
 
-        if !exists_assessment_results_with_multiple_lti_launches?
+        unless exists_assessment_results_with_multiple_lti_launches?
           # only create new assessment result and update assessment attempts if we are certain this is a unique launch
 
           @result = assessment.assessment_results.build
