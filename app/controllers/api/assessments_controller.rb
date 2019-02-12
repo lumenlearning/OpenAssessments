@@ -59,8 +59,7 @@ class Api::AssessmentsController < Api::ApiController
     if assessment.summative? && !review_or_edit
       if user_assessment && @lti_launch
 
-        assessment_results_with_lti_launch = AssessmentResult.where(lti_launch_id: @lti_launch.id)
-        unless assessment_results_with_lti_launch.count != 0
+        if exists_assessment_results_with_multiple_lti_launches?
           # if this is not a unique lti launch, send an error instead of
           # creating new assessment result and updating assessment attempts
           render :json => {:error => "Something went wrong. Please try again.."}, status: :unauthorized
@@ -264,4 +263,8 @@ class Api::AssessmentsController < Api::ApiController
     settings
   end
 
+  def exists_assessment_results_with_multiple_lti_launches?
+    assessment_results_with_lti_launch = AssessmentResult.where(lti_launch_id: @lti_launch.id)
+    assessment_results_with_lti_launch.count > 0
+  end
 end
