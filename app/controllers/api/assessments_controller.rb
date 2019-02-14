@@ -84,6 +84,8 @@ class Api::AssessmentsController < Api::ApiController
           @result.save!
 
           user_assessment.increment_attempts!
+        else
+          logger.warn "Received an attempt to create an AssessmentResult for UserAssessment: #{ua.id} for User: #{ua.user_id} for non_unique_lti launch: #{@lti_launch.id}"
         end
       else
         render :json => {:error => "Can't take summative without LtiLaunch or UserAssessment."}, status: :unauthorized
