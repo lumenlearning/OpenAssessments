@@ -19,9 +19,10 @@ export default class AttemptTime extends React.Component {
   parseDate(date) {
     let theDate = new Date(Date.parse(date));
     let formattedDate = `${theDate.getMonth()}/${theDate.getDate()}/${theDate.getFullYear()}`;
-    let formattedTime = `${theDate.getHours()}:${theDate.getMinutes()}`;
+    let formattedTime = `${theDate.getHours() > 12 ? theDate.getHours() - 12 : theDate.getHours()}:${theDate.getMinutes()}`;
+    let timeSuffix = `${theDate.getHours() >= 12 ? 'pm' : 'am' }`
 
-    return `${formattedDate}, ${formattedTime}`;
+    return `${formattedDate}, ${formattedTime} ${timeSuffix}`;
   }
 
   getStyles() {
