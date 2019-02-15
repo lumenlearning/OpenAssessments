@@ -159,12 +159,16 @@ export default class CheckUnderstanding extends React.Component{
             <div className="assessment-meta-table-row" style={styles.metaTableRow}>
               <div style={styles.metaTableCell}>
                 <p style={styles.metaTableCellContent}>Attempt 1</p>
+                {this.renderAttemptTime(0)}
               </div>
-              <div style={styles.metaTableCell}>{this.getScore()}</div>
+              <div style={styles.metaTableCell}>
+                {this.renderFeedbackPill(0)}
+                {this.getScore(0)}
+              </div>
             </div>
             <div className="assessment-meta-table-row" style={styles.metaTableRow}>
               <div style={styles.metaTableCell}>Attempt 2</div>
-              <div style={styles.metaTableCell}>No score yet</div>
+              <div style={styles.metaTableCell}>{this.getScore(1)}</div>
             </div>
           </div>
         </div>
@@ -172,9 +176,33 @@ export default class CheckUnderstanding extends React.Component{
     }
   }
 
-  getScore() {
-    if (this.props.attemptsData.length > 0) {
-      return `${this.props.attemptsData[0]['score']}%`;
+  renderAttemptTime(attemptIndex) {
+    if (this.props.attemptsData[attemptIndex]) {
+      return (
+        <p>{Date.parse(this.props.attemptsData[attemptIndex].created_at)}</p>
+      );
+    }
+  }
+
+  renderFeedbackPill(attemptIndex) {
+    if (this.props.attemptsData[attemptIndex]) {
+      return (
+        <span>{this.getFeedback(attemptIndex)}</span>
+      );
+    }
+  }
+
+  getFeedback(attemptIndex) {
+    if (100 === this.props.attemptsData[attemptIndex]['score']) {
+      return 'Good Work';
+    } else {
+      return 'Needs Work';
+    }
+  }
+
+  getScore(attemptIndex) {
+    if (this.props.attemptsData[attemptIndex]) {
+      return `${this.props.attemptsData[attemptIndex]['score']}%`;
     } else {
       return "No score yet";
     }

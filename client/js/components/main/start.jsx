@@ -54,7 +54,7 @@ export default class Start extends BaseComponent {
 
   render() {
     let styles = this.getStyles(this.context.theme);
-console.log(this.state)
+
     return (
       <div className="assessment" style={styles.assessment}>
         {this.renderTitleBar(styles)}
