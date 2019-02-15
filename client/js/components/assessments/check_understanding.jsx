@@ -5,6 +5,9 @@ import React from "react";
 import $ from "jquery";
 // Actions
 import AssessmentActions from "../../actions/assessment";
+// Subcomponents
+import AttemptTime from "./feature/AttemptTime.jsx";
+import FeedbackPill from "./feature/FeedbackPill.jsx";
 
 // Check Understanding Component
 export default class CheckUnderstanding extends React.Component{
@@ -156,47 +159,39 @@ export default class CheckUnderstanding extends React.Component{
             <div className="assessment-meta-table-heading" style={styles.metaTableHeaderWrapper}>
               <h3 style={styles.metaTableHeading}>Quiz Scores</h3>
             </div>
+
             <div className="assessment-meta-table-row" style={styles.metaTableRow}>
               <div style={styles.metaTableCell}>
                 <p style={styles.metaTableCellContent}>Attempt 1</p>
-                {this.renderAttemptTime(0)}
+                <AttemptTime
+                  time={this.props.attemptsData[0] ? this.props.attemptsData[0].created_at : null}
+                  />
               </div>
               <div style={styles.metaTableCell}>
-                {this.renderFeedbackPill(0)}
-                {this.getScore(0)}
+                <FeedbackPill
+                  score={this.props.attemptsData[0] ? this.props.attemptsData[0].score : null}
+                  />
+                <span>{this.getScore(0)}</span>
               </div>
             </div>
+
             <div className="assessment-meta-table-row" style={styles.metaTableRow}>
-              <div style={styles.metaTableCell}>Attempt 2</div>
-              <div style={styles.metaTableCell}>{this.getScore(1)}</div>
+              <div style={styles.metaTableCell}>
+                <p style={styles.metaTableCellContent}>Attempt 2</p>
+                <AttemptTime
+                  time={this.props.attemptsData[1] ? this.props.attemptsData[1].created_at : null}
+                  />
+              </div>
+              <div style={styles.metaTableCell}>
+                <FeedbackPill
+                  score={this.props.attemptsData[1] ? this.props.attemptsData[1].score : null}
+                  />
+                <span>{this.getScore(1)}</span>
+              </div>
             </div>
           </div>
         </div>
       );
-    }
-  }
-
-  renderAttemptTime(attemptIndex) {
-    if (this.props.attemptsData[attemptIndex]) {
-      return (
-        <p>{Date.parse(this.props.attemptsData[attemptIndex].created_at)}</p>
-      );
-    }
-  }
-
-  renderFeedbackPill(attemptIndex) {
-    if (this.props.attemptsData[attemptIndex]) {
-      return (
-        <span>{this.getFeedback(attemptIndex)}</span>
-      );
-    }
-  }
-
-  getFeedback(attemptIndex) {
-    if (100 === this.props.attemptsData[attemptIndex]['score']) {
-      return 'Good Work';
-    } else {
-      return 'Needs Work';
     }
   }
 
