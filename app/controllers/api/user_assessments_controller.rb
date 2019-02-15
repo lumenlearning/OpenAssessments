@@ -1,5 +1,5 @@
 class Api::UserAssessmentsController < Api::ApiController
-  before_action :ensure_context_admin, only:[:index, :update_attempts]
+  before_action :ensure_context_admin, only:[:update_attempts]
 
   def index
     scope = UserAssessment.where(lti_context_id: params[:context_id]).

@@ -157,8 +157,10 @@ export default class CheckUnderstanding extends React.Component{
               <h3 style={styles.metaTableHeading}>Quiz Scores</h3>
             </div>
             <div className="assessment-meta-table-row" style={styles.metaTableRow}>
-              <div style={styles.metaTableCell}>Attempt 1</div>
-              <div style={styles.metaTableCell}>No score yet</div>
+              <div style={styles.metaTableCell}>
+                <p style={styles.metaTableCellContent}>Attempt 1</p>
+              </div>
+              <div style={styles.metaTableCell}>{this.getScore()}</div>
             </div>
             <div className="assessment-meta-table-row" style={styles.metaTableRow}>
               <div style={styles.metaTableCell}>Attempt 2</div>
@@ -167,6 +169,14 @@ export default class CheckUnderstanding extends React.Component{
           </div>
         </div>
       );
+    }
+  }
+
+  getScore() {
+    if (this.props.userAssessments && this.props.userAssessments[0]) {
+      return `${this.props.userAssessments[0]['attempts'][0]['score']}%`;
+    } else {
+      return "No score yet";
     }
   }
 
@@ -271,6 +281,9 @@ export default class CheckUnderstanding extends React.Component{
       metaTableCell: {
         display: "table-cell",
         padding: "20px 40px 20px 0",
+      },
+      metaTableCellContent: {
+        margin: 0
       },
       buttonWrapper: {
         textAlign: props.assessmentKind.toUpperCase() !== "SUMMATIVE" ? "left" : "right"

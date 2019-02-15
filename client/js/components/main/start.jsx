@@ -5,9 +5,11 @@ import React from 'react';
 import $ from "jquery";
 // Actions
 import AssessmentActions from "../../actions/assessment";
+import UserAssessmentActions from "../../actions/user_assessments";
 // Stores
 import AssessmentStore from "../../stores/assessment";
 import SettingsStore from "../../stores/settings";
+import UserAssessmentStore from "../../stores/user_assessment";
 //Subcomponents
 import BaseComponent from "../base_component";
 import CheckUnderstanding from "../assessments/check_understanding";
@@ -24,8 +26,10 @@ export default class Start extends BaseComponent {
     super(props, context);
 
     this.state = this.getState(context);
-    this.stores = [AssessmentStore, SettingsStore];
+    this.stores = [AssessmentStore, SettingsStore, UserAssessmentStore];
     this.context = context;
+
+    UserAssessmentActions.loadUserAssessments(SettingsStore.current().externalContextId, SettingsStore.current().assessmentId);
 
     // Rebindings
     this._bind["getStyles"];
@@ -43,7 +47,8 @@ export default class Start extends BaseComponent {
     return {
       showStart: showStart,
       questionCount: AssessmentStore.questionCount(),
-      settings : SettingsStore.current(),
+      settings: SettingsStore.current(),
+      assessments: UserAssessmentStore.current()
     }
   }
 
@@ -92,6 +97,7 @@ export default class Start extends BaseComponent {
           title={this.state.settings.assessmentTitle}
           maxAttempts={this.state.settings.allowedAttempts}
           userAttempts={this.state.settings.userAttempts}
+          userAssessments={this.state.assessments}
           eid={this.state.settings.lisUserId}
           userId={this.state.settings.userId}
           isLti={this.state.settings.isLti}
