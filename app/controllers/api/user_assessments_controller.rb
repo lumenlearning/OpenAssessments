@@ -1,5 +1,5 @@
 class Api::UserAssessmentsController < Api::ApiController
-  before_action :ensure_context_admin, only:[:update_attempts]
+  before_action :ensure_context_admin, only:[:index, :update_attempts]
 
   def index
     scope = UserAssessment.where(lti_context_id: params[:context_id]).
@@ -10,6 +10,12 @@ class Api::UserAssessmentsController < Api::ApiController
             includes(:user)
 
     respond_with(:json, custom_json(scope))
+  end
+
+  def show
+    ua = UserAssessment.where(lti_context_id: params[:context_id]).find(params[:user_assessment_id])
+
+    render json: ua_json(ua, ua.assessment)
   end
 
   def update_attempts

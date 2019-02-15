@@ -29,7 +29,7 @@ export default class Start extends BaseComponent {
     this.stores = [AssessmentStore, SettingsStore, UserAssessmentStore];
     this.context = context;
 
-    UserAssessmentActions.loadUserAssessments(SettingsStore.current().externalContextId, SettingsStore.current().assessmentId);
+    UserAssessmentActions.loadUserAttempts(SettingsStore.current().userAssessmentId, SettingsStore.current().externalContextId, SettingsStore.current().assessmentId);
 
     // Rebindings
     this._bind["getStyles"];
@@ -48,13 +48,13 @@ export default class Start extends BaseComponent {
       showStart: showStart,
       questionCount: AssessmentStore.questionCount(),
       settings: SettingsStore.current(),
-      assessments: UserAssessmentStore.current()
+      attemptsData: UserAssessmentStore.currentAttempts()
     }
   }
 
   render() {
     let styles = this.getStyles(this.context.theme);
-
+console.log(this.state)
     return (
       <div className="assessment" style={styles.assessment}>
         {this.renderTitleBar(styles)}
@@ -97,7 +97,7 @@ export default class Start extends BaseComponent {
           title={this.state.settings.assessmentTitle}
           maxAttempts={this.state.settings.allowedAttempts}
           userAttempts={this.state.settings.userAttempts}
-          userAssessments={this.state.assessments}
+          attemptsData={this.state.attemptsData}
           eid={this.state.settings.lisUserId}
           userId={this.state.settings.userId}
           isLti={this.state.settings.isLti}

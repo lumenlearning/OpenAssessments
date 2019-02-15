@@ -173,8 +173,8 @@ export default class CheckUnderstanding extends React.Component{
   }
 
   getScore() {
-    if (this.props.userAssessments && this.props.userAssessments[0]) {
-      return `${this.props.userAssessments[0]['attempts'][0]['score']}%`;
+    if (this.props.attemptsData.length > 0) {
+      return `${this.props.attemptsData[0]['score']}%`;
     } else {
       return "No score yet";
     }
