@@ -171,7 +171,7 @@ export default class CheckUnderstanding extends React.Component{
                 <FeedbackPill
                   score={this.props.attemptsData[0] ? this.props.attemptsData[0].score : null}
                   />
-                <span>{this.getScore(0)}</span>
+                <span style={styles.theScore}>{this.getScore(0)}</span>
               </div>
             </div>
 
@@ -186,7 +186,7 @@ export default class CheckUnderstanding extends React.Component{
                 <FeedbackPill
                   score={this.props.attemptsData[1] ? this.props.attemptsData[1].score : null}
                   />
-                <span>{this.getScore(1)}</span>
+                <span style={styles.theScore}>{this.getScore(1)}</span>
               </div>
             </div>
           </div>
@@ -303,10 +303,14 @@ export default class CheckUnderstanding extends React.Component{
       },
       metaTableCell: {
         display: "table-cell",
-        padding: "20px 40px 20px 0",
+        padding: "20px 0",
+        minWidth: "150px"
       },
       metaTableCellContent: {
         margin: 0
+      },
+      theScore: {
+        fontWeight: "bold"
       },
       buttonWrapper: {
         textAlign: props.assessmentKind.toUpperCase() !== "SUMMATIVE" ? "left" : "right"
