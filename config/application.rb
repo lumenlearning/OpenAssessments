@@ -46,5 +46,9 @@ module CanvasStarterApp
      common_manifest: {}
     }
 
+    # have logger write to STDOUT
+    config.logger = Logger.new(STDOUT)
+    config.log_level = :warn
+
   end
 end
