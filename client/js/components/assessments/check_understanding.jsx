@@ -156,7 +156,9 @@ export default class CheckUnderstanding extends React.Component{
             </div>
             {this.renderStartButton(styles)}
           </div>
-          <StudyTip />
+          <StudyTip
+            attempts={this.props.attemptsData}
+            />
           <div className="assessment-meta-table">
             <div className="assessment-meta-table-heading" style={styles.metaTableHeaderWrapper}>
               <h3 style={styles.metaTableHeading}>Quiz Scores</h3>
