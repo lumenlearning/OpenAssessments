@@ -294,12 +294,12 @@ export default class CheckUnderstanding extends React.Component{
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "14px 0 20px 0"
+        padding: "20px 0"
       },
       metaTitle: {
         fontSize: "20px",
         lineHeight: "28px",
-        margin: "0, 0, 4px, 0"
+        margin: "0 0 4px 0"
       },
       metaSubtitle: {
         color: "#637381",
