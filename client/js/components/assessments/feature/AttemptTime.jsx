@@ -30,7 +30,7 @@ export default class AttemptTime extends React.Component {
       date: {
         color: "#637381",
         fontSize: "12px",
-        marginTop: "4px"
+        margin: "4px 0 0"
       }
     }
   }

@@ -8,6 +8,7 @@ import AssessmentActions from "../../actions/assessment";
 // Subcomponents
 import AttemptTime from "./feature/AttemptTime.jsx";
 import FeedbackPill from "./feature/FeedbackPill.jsx";
+import StudyTip from "./feature/StudyTip.jsx";
 
 // Check Understanding Component
 export default class CheckUnderstanding extends React.Component{
@@ -155,6 +156,7 @@ export default class CheckUnderstanding extends React.Component{
             </div>
             {this.renderStartButton(styles)}
           </div>
+          <StudyTip />
           <div className="assessment-meta-table">
             <div className="assessment-meta-table-heading" style={styles.metaTableHeaderWrapper}>
               <h3 style={styles.metaTableHeading}>Quiz Scores</h3>
@@ -276,7 +278,6 @@ export default class CheckUnderstanding extends React.Component{
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        borderBottom: "2px solid #212b36",
         padding: "14px 0 20px 0"
       },
       metaTitle: {
@@ -290,7 +291,8 @@ export default class CheckUnderstanding extends React.Component{
         margin: 0
       },
       metaTableHeaderWrapper: {
-        borderBottom: "1px solid #c4cdd5"
+        borderBottom: "1px solid #c4cdd5",
+        borderTop: "2px solid #212b36",
       },
       metaTableHeading: {
         margin: "20px 0",
@@ -298,11 +300,11 @@ export default class CheckUnderstanding extends React.Component{
         fontWeight: "bold"
       },
       metaTableRow: {
-        display: "block",
+        display: "flex",
+        alignItems: "center",
         borderBottom: "1px solid #c4cdd5"
       },
       metaTableCell: {
-        display: "table-cell",
         padding: "20px 0",
         minWidth: "150px"
       },
