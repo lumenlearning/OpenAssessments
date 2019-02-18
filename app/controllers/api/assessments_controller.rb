@@ -59,21 +59,34 @@ class Api::AssessmentsController < Api::ApiController
     if assessment.summative? && !review_or_edit
       if user_assessment && @lti_launch
 
+        if exists_assessment_results_with_multiple_lti_launches?
+          # if this is not a unique lti launch, send an error instead of
+          # creating new assessment result and updating assessment attempts
+          render :json => {:error => "Something went wrong. Please try again.."}, status: :unauthorized
+          return
+        end
+
         if user_assessment.lti_role == 'student' && user_assessment.attempts >= assessment_settings.allowed_attempts
           render :json => {:error => "Too many attempts."}, status: :unauthorized
           return
         end
 
-        @result = assessment.assessment_results.build
-        @result.user_assessment = user_assessment
-        @result.lti_launch = @lti_launch
-        @result.external_user_id = @lti_launch.lti_user_id if @lti_launch
-        @result.attempt = user_assessment.attempts || 0
-        @result.user = current_user
-        @result.session_status = AssessmentResult::STATUS_PENDING_SUBMISSION
-        @result.save!
+        unless exists_assessment_results_with_multiple_lti_launches?
+          # only create new assessment result and update assessment attempts if we are certain this is a unique launch
 
-        user_assessment.increment_attempts!
+          @result = assessment.assessment_results.build
+          @result.user_assessment = user_assessment
+          @result.lti_launch = @lti_launch
+          @result.external_user_id = @lti_launch.lti_user_id if @lti_launch
+          @result.attempt = user_assessment.attempts || 0
+          @result.user = current_user
+          @result.session_status = AssessmentResult::STATUS_PENDING_SUBMISSION
+          @result.save!
+
+          user_assessment.increment_attempts!
+        else
+          logger.warn "Received an additional attempt to create an AssessmentResult for UserAssessment: #{ua.id} for User: #{ua.user_id} for non_unique_lti launch: #{@lti_launch.id}"
+        end
       else
         render :json => {:error => "Can't take summative without LtiLaunch or UserAssessment."}, status: :unauthorized
         return
@@ -266,4 +279,8 @@ class Api::AssessmentsController < Api::ApiController
     settings
   end
 
+  def exists_assessment_results_with_multiple_lti_launches?
+    assessment_results_with_lti_launch = AssessmentResult.where(lti_launch_id: @lti_launch.id)
+    assessment_results_with_lti_launch.count > 0
+  end
 end
