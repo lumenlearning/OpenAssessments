@@ -8,6 +8,7 @@ import AssessmentActions from "../../actions/assessment";
 // Subcomponents
 import AttemptTime from "./feature/AttemptTime.jsx";
 import FeedbackPill from "./feature/FeedbackPill.jsx";
+import StudySummary from "./feature/StudySummary.jsx";
 import StudyTip from "./feature/StudyTip.jsx";
 
 // Check Understanding Component
@@ -164,35 +165,48 @@ export default class CheckUnderstanding extends React.Component{
               <h3 style={styles.metaTableHeading}>Quiz Scores</h3>
             </div>
 
-            <div className="assessment-meta-table-row" style={styles.metaTableRow}>
-              <div style={styles.metaTableCell}>
-                <p style={styles.metaTableCellContent}>Attempt 1</p>
-                <AttemptTime
-                  time={this.props.attemptsData[0] ? this.props.attemptsData[0].created_at : null}
-                  />
+            <div style={styles.metaTableRowWrapper}>
+              <div className="assessment-meta-table-row" style={styles.metaTableRow}>
+                <div style={styles.metaTableCell}>
+                  <p style={styles.metaTableCellContent}>Attempt 1</p>
+                  <AttemptTime
+                    time={this.props.attemptsData[0] ? this.props.attemptsData[0].created_at : null}
+                    />
+                </div>
+                <div style={styles.metaTableCell}>
+                  <FeedbackPill
+                    score={this.props.attemptsData[0] ? this.props.attemptsData[0].score : null}
+                    />
+                  <span style={styles.theScore}>{this.getScore(0)}</span>
+                </div>
               </div>
-              <div style={styles.metaTableCell}>
-                <FeedbackPill
-                  score={this.props.attemptsData[0] ? this.props.attemptsData[0].score : null}
-                  />
-                <span style={styles.theScore}>{this.getScore(0)}</span>
+
+              <div style={styles.metaTableCellContent}>
+                <StudySummary />
               </div>
             </div>
 
-            <div className="assessment-meta-table-row" style={styles.metaTableRow}>
-              <div style={styles.metaTableCell}>
-                <p style={styles.metaTableCellContent}>Attempt 2</p>
-                <AttemptTime
-                  time={this.props.attemptsData[1] ? this.props.attemptsData[1].created_at : null}
-                  />
+            <div style={styles.metaTableRowWrapper}>
+              <div className="assessment-meta-table-row" style={styles.metaTableRow}>
+                <div style={styles.metaTableCell}>
+                  <p style={styles.metaTableCellContent}>Attempt 2</p>
+                  <AttemptTime
+                    time={this.props.attemptsData[1] ? this.props.attemptsData[1].created_at : null}
+                    />
+                </div>
+                <div style={styles.metaTableCell}>
+                  <FeedbackPill
+                    score={this.props.attemptsData[1] ? this.props.attemptsData[1].score : null}
+                    />
+                  <span style={styles.theScore}>{this.getScore(1)}</span>
+                </div>
               </div>
-              <div style={styles.metaTableCell}>
-                <FeedbackPill
-                  score={this.props.attemptsData[1] ? this.props.attemptsData[1].score : null}
-                  />
-                <span style={styles.theScore}>{this.getScore(1)}</span>
+
+              <div style={styles.metaTableCellContent}>
+                <StudySummary />
               </div>
             </div>
+
           </div>
         </div>
       );
@@ -301,10 +315,12 @@ export default class CheckUnderstanding extends React.Component{
         fontSize: "16px",
         fontWeight: "bold"
       },
+      metaTableRowWrapper: {
+        borderBottom: "1px solid #c4cdd5"
+      },
       metaTableRow: {
         display: "flex",
-        alignItems: "center",
-        borderBottom: "1px solid #c4cdd5"
+        alignItems: "center"
       },
       metaTableCell: {
         padding: "20px 0",
