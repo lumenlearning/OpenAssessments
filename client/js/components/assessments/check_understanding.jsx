@@ -7,7 +7,6 @@ import $ from "jquery";
 import AssessmentActions from "../../actions/assessment";
 // Subcomponents
 import AttemptTime from "./feature/AttemptTime.jsx";
-import FeedbackPill from "./feature/FeedbackPill.jsx";
 import StudySummary from "./feature/StudySummary.jsx";
 import StudyTip from "./feature/StudyTip.jsx";
 
@@ -174,9 +173,6 @@ export default class CheckUnderstanding extends React.Component{
                     />
                 </div>
                 <div style={styles.metaTableCell}>
-                  <FeedbackPill
-                    score={this.props.attemptsData[0] ? this.props.attemptsData[0].score : null}
-                    />
                   <span style={styles.theScore}>{this.getScore(0)}</span>
                 </div>
               </div>
@@ -195,9 +191,6 @@ export default class CheckUnderstanding extends React.Component{
                     />
                 </div>
                 <div style={styles.metaTableCell}>
-                  <FeedbackPill
-                    score={this.props.attemptsData[1] ? this.props.attemptsData[1].score : null}
-                    />
                   <span style={styles.theScore}>{this.getScore(1)}</span>
                 </div>
               </div>
