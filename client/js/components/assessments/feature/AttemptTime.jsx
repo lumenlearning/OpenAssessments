@@ -9,6 +9,7 @@ export default class AttemptTime extends React.Component {
 
   render() {
     let styles = this.getStyles();
+
     return (
       <p style={styles.date}>
         {this.parseDate(this.props.time)}

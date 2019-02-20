@@ -168,36 +168,26 @@ export default class CheckUnderstanding extends React.Component{
               <div className="assessment-meta-table-row" style={styles.metaTableRow}>
                 <div style={styles.metaTableCell}>
                   <p style={styles.metaTableCellContent}>Attempt 1</p>
-                  <AttemptTime
-                    time={this.props.attemptsData[0] ? this.props.attemptsData[0].created_at : null}
-                    />
+                  {this.renderAttemptTime(0)}
                 </div>
                 <div style={styles.metaTableCell}>
                   <span style={styles.theScore}>{this.getScore(0)}</span>
                 </div>
               </div>
-
-              <div style={styles.metaTableCellContent}>
-                <StudySummary />
-              </div>
+              {this.renderStudySummary(0)}
             </div>
 
             <div style={styles.metaTableRowWrapper}>
               <div className="assessment-meta-table-row" style={styles.metaTableRow}>
                 <div style={styles.metaTableCell}>
                   <p style={styles.metaTableCellContent}>Attempt 2</p>
-                  <AttemptTime
-                    time={this.props.attemptsData[1] ? this.props.attemptsData[1].created_at : null}
-                    />
+                  {this.renderAttemptTime(1)}
                 </div>
                 <div style={styles.metaTableCell}>
                   <span style={styles.theScore}>{this.getScore(1)}</span>
                 </div>
               </div>
-
-              <div style={styles.metaTableCellContent}>
-                <StudySummary />
-              </div>
+              {this.renderStudySummary(1)}
             </div>
 
           </div>
@@ -206,8 +196,31 @@ export default class CheckUnderstanding extends React.Component{
     }
   }
 
+  renderAttemptTime(attemptIndex) {
+    // if quiz attempts have been made, render time attempted
+    if (this.props.attemptsData.length > 0 && this.props.attemptsData[attemptIndex]) {
+      return (
+        <AttemptTime
+          time={this.props.attemptsData[0] ? this.props.attemptsData[0].created_at : null}
+          />
+      );
+    }
+  }
+
+  renderStudySummary(attemptIndex) {
+    let styles = this.getStyles;
+
+    if (this.props.attemptsData.length > 0 && this.props.attemptsData[attemptIndex]) {
+      return (
+        <div style={styles.metaTableCellContent}>
+          <StudySummary />
+        </div>
+      );
+    }
+  }
+
   getScore(attemptIndex) {
-    if (this.props.attemptsData[attemptIndex]) {
+    if (this.props.attemptsData.length > 0 && this.props.attemptsData[attemptIndex]) {
       return `${this.props.attemptsData[attemptIndex]['score']}%`;
     } else {
       return "No score yet";
