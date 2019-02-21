@@ -6,10 +6,12 @@ import $ from "jquery";
 // Actions
 import AssessmentActions from "../../actions/assessment";
 import UserAssessmentActions from "../../actions/user_assessments";
+import ReviewAssessmentActions from "../../actions/review_assessment";
 // Stores
 import AssessmentStore from "../../stores/assessment";
 import SettingsStore from "../../stores/settings";
 import UserAssessmentStore from "../../stores/user_assessment";
+import ReviewAssessmentStore from "../../stores/review_assessment";
 //Subcomponents
 import BaseComponent from "../base_component";
 import CheckUnderstanding from "../assessments/check_understanding";
@@ -26,10 +28,11 @@ export default class Start extends BaseComponent {
     super(props, context);
 
     this.state = this.getState(context);
-    this.stores = [AssessmentStore, SettingsStore, UserAssessmentStore];
+    this.stores = [AssessmentStore, SettingsStore, UserAssessmentStore, ReviewAssessmentStore];
     this.context = context;
 
     UserAssessmentActions.loadUserAttempts(SettingsStore.current().userAssessmentId, SettingsStore.current().externalContextId, SettingsStore.current().assessmentId);
+    ReviewAssessmentActions.loadAssessmentForStudentReview(SettingsStore.current(), SettingsStore.current().assessmentId, SettingsStore.current().userAssessmentId);
 
     // Rebindings
     this._bind["getStyles"];
@@ -46,6 +49,7 @@ export default class Start extends BaseComponent {
 
     return {
       showStart: showStart,
+      attemptedAssessments: ReviewAssessmentStore.getAttemptedAssessments(),
       questionCount: AssessmentStore.questionCount(),
       settings: SettingsStore.current(),
       attemptsData: UserAssessmentStore.currentAttempts()

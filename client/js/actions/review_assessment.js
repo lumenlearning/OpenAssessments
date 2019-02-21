@@ -26,6 +26,11 @@ export default {
     Api.get(Constants.REVIEW_ASSESSMENT_LOADED, url);
   },
 
+  loadAssessmentForStudentReview(settings, assessmentId, userAssessmentId){
+    Dispatcher.dispatch({ action: Constants.REVIEW_ASSESSMENT_LOAD_PENDING });
+    Api.get(Constants.REVIEW_ATTEMPTED_ASSESSMENTS_LOADED, `api/assessments/${assessmentId}/student_review?uaid=${userAssessmentId}`);
+  },
+
   loadAssessmentXmlForReview(settings, assessmentId, resultId=null){
     Dispatcher.dispatch({ action: Constants.REVIEW_ASSESSMENT_LOAD_PENDING });
     var url = settings.apiUrl + "api/assessments/" + assessmentId + "/review";

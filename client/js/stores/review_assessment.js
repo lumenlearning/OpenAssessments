@@ -28,6 +28,7 @@ var _warningMessages = [];
 var _inDraftOriginals = {};
 
 var _assessmentResult = null;
+var _attemptedAssessmentsResults = null;
 var _assessmentResultState = NOT_LOADED;
 
 function parseAssessmentResult(result){
@@ -60,7 +61,12 @@ function loadAssessment(payload){
       _assessmentState = LOADED;
     }
   }
+}
 
+function loadAttemptedAssessments(payload){
+  if (payload.data.text) {
+    _attemptedAssessmentsResults = JSON.parse(payload.data.text);
+  }
 }
 
 function outcomeNameFromGuid(guid) {
@@ -194,7 +200,7 @@ function validateMultiChoiceQuestion(question){
     question.isValid = false;
     question.errorMessages.push('Your answers must not be blank. Please enter answer text to finish editing this question.');
   }
-  
+
   question.answers.forEach((answer, index, array)=>{
     //check if answers are duplicate
     if(duplicateArr.indexOf(answer.material.trim()) !== -1 && !hasDuplicates){
@@ -413,16 +419,25 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
   isPractice(){
     return _kind == "practice";
   },
+  getAttemptedAssessments(){
+    return _attemptedAssessmentsResults;
+  }
 });
 
 // Register callback with Dispatcher
 Dispatcher.register(function(payload) {
   var action = payload.action;
-  
+
   switch(action){
 
     case Constants.REVIEW_ASSESSMENT_LOAD_PENDING:
       _assessmentState = LOADING;
+      break;
+
+    case Constants.REVIEW_ATTEMPTED_ASSESSMENTS_LOADED:
+
+      loadAttemptedAssessments(payload);
+      window.onbeforeunload = null;
       break;
 
     case Constants.REVIEW_ASSESSMENT_LOADED:
@@ -444,7 +459,7 @@ Dispatcher.register(function(payload) {
     case Constants.ADD_ASSSESSMENT_QUESTION:
       var question = payload.data;
       var location = payload.location;
-      
+
       if(location == 'top'){
         _items.unshift(question);
       }
@@ -556,4 +571,3 @@ Dispatcher.register(function(payload) {
 
 
 export default ReviewAssessmentStore;
-

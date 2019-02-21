@@ -6,7 +6,7 @@ class Api::AssessmentsController < Api::ApiController
   respond_to :xml, :json
 
   before_action :ensure_context_admin, only:[:json_update, :review_show]
-  load_and_authorize_resource except: [:show, :json_update, :copy, :review_show]
+  load_and_authorize_resource except: [:show, :json_update, :copy, :review_show, :student_review_show]
   skip_before_action :validate_token, only: [:show]
   skip_before_action :protect_account, only: [:show]
   before_action :ensure_copy_admin, only:[:copy]
@@ -150,6 +150,45 @@ class Api::AssessmentsController < Api::ApiController
     end
 
     render :xml => xml || assessment.xml_with_answers
+  end
+
+  def student_review_show
+    results = []
+
+    if params[:uaid]
+      ua = UserAssessment.find(params[:uaid])
+
+      if !ua || ua.lti_context_id != @lti_launch.lti_context_id
+        render :json => {:error => "This Assessment Result is not from this context."}, status: :unauthorized
+        return
+      end
+
+      correct_map = ->(score) {
+        case score
+          when 0
+            false
+          when 1
+            true
+          else
+            'partial'
+        end
+      }
+
+      assessment_results = ua.assessment_results
+
+      assessment_results.each_with_index do |assessment_result, index|
+        results << { assessment_result_id: assessment_result.id }
+        results[index][:results] = assessment_result.item_results.order(:sequence_index).includes(:item).map do |ir|
+          {
+            ident: ir.identifier,
+            score: ir.score,
+            correct: correct_map.call(ir.score)
+          }
+        end
+      end
+    end
+
+    render :json => results
   end
 
   # *******************************************************************
