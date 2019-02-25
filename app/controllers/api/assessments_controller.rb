@@ -158,11 +158,6 @@ class Api::AssessmentsController < Api::ApiController
     if params[:uaid]
       ua = UserAssessment.find(params[:uaid])
 
-      if !ua || ua.lti_context_id != @lti_launch.lti_context_id
-        render :json => {:error => "This Assessment Result is not from this context."}, status: :unauthorized
-        return
-      end
-
       correct_map = ->(score) {
         case score
           when 0
@@ -181,6 +176,7 @@ class Api::AssessmentsController < Api::ApiController
         results[index][:results] = assessment_result.item_results.order(:sequence_index).includes(:item).map do |ir|
           {
             ident: ir.identifier,
+            title: ir.item.title,
             score: ir.score,
             correct: correct_map.call(ir.score)
           }
