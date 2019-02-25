@@ -7,7 +7,6 @@ import assign         from "object-assign";
 import _              from "lodash";
 
 var _user_assessments = [];
-var _user_attempts = [];
 var _currentContextId = null;
 
 function loadUserAssessments(data){
@@ -22,24 +21,12 @@ function updateUserAssessment(data){
   }
 }
 
-function loadUserAttempts(data){
-  let json_data = JSON.parse(data);
-
-  if (json_data.attempts) {
-    _user_attempts = json_data.attempts;
-  }
-}
-
 // Extend User Store with EventEmitter to add eventing capabilities
 var UserAssessmentStore = assign({}, StoreCommon, {
 
   // Return the accounts
   current(){
     return _user_assessments;
-  },
-
-  currentAttempts(){
-    return _user_attempts;
   },
 
   userAssessmentById(id){
@@ -58,10 +45,6 @@ Dispatcher.register(function(payload) {
 
     case Constants.USER_ASSESSMENTS_LOADED:
       loadUserAssessments(payload.data.text);
-
-      break;
-    case Constants.USER_ATTEMPTS_LOADED:
-      loadUserAttempts(payload.data.text);
 
       break;
     case Constants.USER_ASSESSMENTS_UPDATED:

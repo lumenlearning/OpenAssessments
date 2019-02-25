@@ -172,15 +172,20 @@ class Api::AssessmentsController < Api::ApiController
       assessment_results = ua.assessment_results
 
       assessment_results.each_with_index do |assessment_result, index|
-        results << { assessment_result_id: assessment_result.id }
-        results[index][:results] = assessment_result.item_results.order(:sequence_index).includes(:item).map do |ir|
-          {
-            ident: ir.identifier,
-            title: ir.item.title,
-            score: ir.score,
-            correct: correct_map.call(ir.score)
-          }
-        end
+        results << {
+          assessment_result_id: assessment_result.id,
+          assessment_result_attempt: assessment_result.attempt,
+          assessment_result_score: assessment_result.score,
+          assessment_result_created_at: assessment_result.created_at,
+          assessment_result_items: assessment_result.item_results.order(:sequence_index).includes(:item).map do |ir|
+            {
+              identifier: ir.identifier,
+              title: ir.item.title,
+              score: ir.score,
+              correct: correct_map.call(ir.score)
+            }
+          end
+        }
       end
     end
 

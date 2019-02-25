@@ -19,7 +19,7 @@ export default class StudyTip extends React.Component {
   }
 
   getStudyTip(styles) {
-    if (this.props.attempts.length > 0) {
+    if (this.props.attempts && this.props.attempts.length > 0) {
       return (
         <div style={styles.bodyTextWrapper}>
           <p style={styles.bodyText}>

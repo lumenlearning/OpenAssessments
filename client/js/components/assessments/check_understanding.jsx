@@ -157,7 +157,7 @@ export default class CheckUnderstanding extends React.Component{
             {this.renderStartButton(styles)}
           </div>
           <StudyTip
-            attempts={this.props.attemptsData}
+            attempts={this.props.assessmentAttempts}
             />
           <div className="assessment-meta-table">
             <div className="assessment-meta-table-heading" style={styles.metaTableHeaderWrapper}>
@@ -168,26 +168,26 @@ export default class CheckUnderstanding extends React.Component{
               <div className="assessment-meta-table-row" style={styles.metaTableRow}>
                 <div style={styles.metaTableCell}>
                   <p style={styles.metaTableCellContent}>Attempt 1</p>
-                  {this.renderAttemptTime(0)}
+                  {/*this.renderAttemptTime(0)*/}
                 </div>
                 <div style={styles.metaTableCell}>
-                  <span style={styles.theScore}>{this.getScore(0)}</span>
+                  <span style={styles.theScore}>{/*this.getScore(0)*/}</span>
                 </div>
               </div>
-              {this.renderStudySummary(0)}
+              {/*this.renderStudySummary(0)*/}
             </div>
 
             <div style={styles.metaTableRowWrapper}>
               <div className="assessment-meta-table-row" style={styles.metaTableRow}>
                 <div style={styles.metaTableCell}>
                   <p style={styles.metaTableCellContent}>Attempt 2</p>
-                  {this.renderAttemptTime(1)}
+                  {/*this.renderAttemptTime(1)*/}
                 </div>
                 <div style={styles.metaTableCell}>
-                  <span style={styles.theScore}>{this.getScore(1)}</span>
+                  <span style={styles.theScore}>{/*this.getScore(1)*/}</span>
                 </div>
               </div>
-              {this.renderStudySummary(1)}
+              {/*this.renderStudySummary(1)*/}
             </div>
 
           </div>
@@ -198,10 +198,10 @@ export default class CheckUnderstanding extends React.Component{
 
   renderAttemptTime(attemptIndex) {
     // if quiz attempts have been made, render time attempted
-    if (this.props.attemptsData.length > 0 && this.props.attemptsData[attemptIndex]) {
+    if (this.props.assessmentAttempts.length > 0 && this.props.assessmentAttempts[attemptIndex]) {
       return (
         <AttemptTime
-          time={this.props.attemptsData[0] ? this.props.attemptsData[0].created_at : null}
+          time={this.props.assessmentAttempts[0] ? this.props.assessmentAttempts[0].created_at : null}
           />
       );
     }
@@ -210,7 +210,7 @@ export default class CheckUnderstanding extends React.Component{
   renderStudySummary(attemptIndex) {
     let styles = this.getStyles;
 
-    if (this.props.attemptsData.length > 0 && this.props.attemptsData[attemptIndex]) {
+    if (this.props.assessmentAttempts.length > 0 && this.props.assessmentAttempts[attemptIndex]) {
       return (
         <div style={styles.metaTableCellContent}>
           <StudySummary />
@@ -220,8 +220,8 @@ export default class CheckUnderstanding extends React.Component{
   }
 
   getScore(attemptIndex) {
-    if (this.props.attemptsData.length > 0 && this.props.attemptsData[attemptIndex]) {
-      return `${this.props.attemptsData[attemptIndex]['score']}%`;
+    if (this.props.assessmentAttempts.length > 0 && this.props.assessmentAttempts[attemptIndex]) {
+      return `${this.props.assessmentAttempts[attemptIndex]['score']}%`;
     } else {
       return "No score yet";
     }

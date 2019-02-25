@@ -5,12 +5,10 @@ import React from 'react';
 import $ from "jquery";
 // Actions
 import AssessmentActions from "../../actions/assessment";
-import UserAssessmentActions from "../../actions/user_assessments";
 import ReviewAssessmentActions from "../../actions/review_assessment";
 // Stores
 import AssessmentStore from "../../stores/assessment";
 import SettingsStore from "../../stores/settings";
-import UserAssessmentStore from "../../stores/user_assessment";
 import ReviewAssessmentStore from "../../stores/review_assessment";
 //Subcomponents
 import BaseComponent from "../base_component";
@@ -28,10 +26,9 @@ export default class Start extends BaseComponent {
     super(props, context);
 
     this.state = this.getState(context);
-    this.stores = [AssessmentStore, SettingsStore, UserAssessmentStore, ReviewAssessmentStore];
+    this.stores = [AssessmentStore, SettingsStore, ReviewAssessmentStore];
     this.context = context;
 
-    UserAssessmentActions.loadUserAttempts(SettingsStore.current().userAssessmentId, SettingsStore.current().externalContextId, SettingsStore.current().assessmentId);
     ReviewAssessmentActions.loadAssessmentForStudentReview(SettingsStore.current(), SettingsStore.current().assessmentId, SettingsStore.current().userAssessmentId);
 
     // Rebindings
@@ -49,10 +46,9 @@ export default class Start extends BaseComponent {
 
     return {
       showStart: showStart,
-      attemptedAssessments: ReviewAssessmentStore.getAttemptedAssessments(),
+      assessmentAttempts: ReviewAssessmentStore.getAttemptedAssessments(),
       questionCount: AssessmentStore.questionCount(),
-      settings: SettingsStore.current(),
-      attemptsData: UserAssessmentStore.currentAttempts()
+      settings: SettingsStore.current()
     }
   }
 
@@ -101,7 +97,7 @@ export default class Start extends BaseComponent {
           title={this.state.settings.assessmentTitle}
           maxAttempts={this.state.settings.allowedAttempts}
           userAttempts={this.state.settings.userAttempts}
-          attemptsData={this.state.attemptsData}
+          assessmentAttempts={this.state.assessmentAttempts}
           eid={this.state.settings.lisUserId}
           userId={this.state.settings.userId}
           isLti={this.state.settings.isLti}

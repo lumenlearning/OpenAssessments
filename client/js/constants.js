@@ -92,7 +92,6 @@ export default {
   USER_ASSESSMENTS_LOADED: "user_assessments_loaded",
   USER_ASSESSMENTS_UPDATING: "user_assessments_updating",
   USER_ASSESSMENTS_UPDATED: "user_assessments_updated",
-  USER_ATTEMPTS_LOADED: "user_attempts_loaded",
 
   //QuestionTypes
   QUESTION_TYPES: [
