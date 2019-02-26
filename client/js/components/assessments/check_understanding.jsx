@@ -6,9 +6,10 @@ import $ from "jquery";
 // Actions
 import AssessmentActions from "../../actions/assessment";
 // Subcomponents
+import AttemptOverview from "./feature/AttemptOverview.jsx";
 import AttemptTime from "./feature/AttemptTime.jsx";
 import StudySummary from "./feature/StudySummary.jsx";
-import StudyTip from "./feature/StudyTip.jsx";
+import QuizTip from "./feature/QuizTip.jsx";
 
 // Check Understanding Component
 export default class CheckUnderstanding extends React.Component{
@@ -83,13 +84,29 @@ export default class CheckUnderstanding extends React.Component{
     }
 
     return (
-      <div className="start-assessment-wrapper" style={styles.buttonWrapper}>
+      <div className="start-assessment-button-wrapper" style={styles.buttonWrapper}>
         <button
           style={styles.startButton}
           className="btn btn-info"
-          onClick={()=>{this.start(this.props.eid, this.props.assessmentId, this.context)}}
+          onClick={() => {this.start(this.props.eid, this.props.assessmentId, this.context)}}
           >
             {this.props.assessmentKind.toUpperCase() === "SHOW_WHAT_YOU_KNOW" ? "Start Pre-test" : "Start Quiz"}
+        </button>
+      </div>
+    );
+  }
+
+  renderStudyButton(styles) {
+    //
+    // TODO: onClick, return user to study plan
+    //
+    return (
+      <div className="study-more-button-wrapper" style={styles.studyButtonWrapper}>
+        <button
+          style={styles.startButton}
+          className="btn btn-info"
+          >
+            Study More
         </button>
       </div>
     );
@@ -110,88 +127,61 @@ export default class CheckUnderstanding extends React.Component{
   }
 
   getSummative(theme, styles, props) {
+    // If we shouldn't show attempts, bail.
     if (!theme.shouldShowAttempts) {
       return;
     }
 
-    // If there are no more quiz attempts available and user is a student
+    // If there are no more quiz attempts available and user == student, render
+    // the Max Attempts screen.
     if (props.userAttempts >= props.maxAttempts && props.ltiRole !== "admin") {
+      this.renderMaxAttempts(styles);
+    }
+
+    // If this is an LTI Launch and above conditions were not met, return the
+    // Start Summative Assessment screen.
+    if (this.props.isLti) {
       return (
-        <div style={styles.attemptsContainer}>
-          <div style={{...styles.attempts, ...{border: null}}}>
-            <h1>Oops!</h1>
-            <h3>You have already taken this quiz the maximum number of times</h3>
+        <div className="start-wrapper">
+          <div className="start-header-wrapper" style={styles.headerWrapper}>
+            <h2 style={styles.quizTitle}>{`${this.props.title} Quiz`}</h2>
+            <p style={styles.quizSubtitle}>{`Attempt ${this.props.userAttempts + 1} of ${this.props.maxAttempts}`}</p>
           </div>
-          <h4><u>TIPS:</u></h4>
-          <div style={styles.tips}>
-            <ul>
-              <li>{"Right now you can do three things to make sure you are ready for the next performance assessment: review the material in this module, use the self-checks to see if you're getting it, and ask your peers or instructor for help if you need it."}</li>
-              <li>{"In the future, allow enough time between your first and last quiz attempts to get help from your instructor before the last attempt!"}</li>
-            </ul>
+
+          <div className="start-body-wrapper">
+            {this.renderAttemptsFeedback(styles)}
+          </div>
+
+          <div className="start-footer-wrapper" style={styles.footerWrapper}>
+            <div className="start-footer-text">
+              <p style={styles.footerHeading}>{`Start attempt ${this.props.userAttempts + 1} of ${this.props.maxAttempts}`}</p>
+              <p style={styles.footerSubheading}>The highest score of all completed attempts will be recorded as your grade</p>
+            </div>
+            <div className="start-study-button-wrapper" style={styles.startStudyButtonsWrapper}>
+              {this.renderStartButton(styles)}
+              {this.renderStudyButton(styles)}
+            </div>
           </div>
         </div>
       );
     }
+  }
 
-    let attempt = "";
-
-    // right now only 2 attempts are allowed or other things will break
-    switch (props.userAttempts + 1) {
-      case 1:
-        attempt = "1st";
-        break;
-      case 2:
-        attempt = "2nd";
-        break;
-      default: "1st";
-    }
-
-    if (this.props.isLti) {
+  renderAttemptsFeedback() {
+    if (this.props.assessmentAttempts && this.props.assessmentAttempts.length > 0) {
       return (
-        <div className="assessment-meta-wrapper" style={styles.metaWrapper}>
-          <div className="assessment-meta-header" style={styles.metaHeader}>
-            <div className="assessment-meta-heading" style={styles.metaTitle}>
-              <h2 style={styles.metaTitle}>{this.props.title}</h2>
-              <p style={styles.metaSubtitle}>{`Attempts Possible: ${this.props.userAttempts + 1} of ${this.props.maxAttempts}`}</p>
-            </div>
-            {this.renderStartButton(styles)}
-          </div>
-          <StudyTip
-            attempts={this.props.assessmentAttempts}
-            />
-          <div className="assessment-meta-table">
-            <div className="assessment-meta-table-heading" style={styles.metaTableHeaderWrapper}>
-              <h3 style={styles.metaTableHeading}>Quiz Scores</h3>
-            </div>
-
-            <div style={styles.metaTableRowWrapper}>
-              <div className="assessment-meta-table-row" style={styles.metaTableRow}>
-                <div style={styles.metaTableCell}>
-                  <p style={styles.metaTableCellContent}>Attempt 1</p>
-                  {/*this.renderAttemptTime(0)*/}
-                </div>
-                <div style={styles.metaTableCell}>
-                  <span style={styles.theScore}>{/*this.getScore(0)*/}</span>
-                </div>
-              </div>
-              {/*this.renderStudySummary(0)*/}
-            </div>
-
-            <div style={styles.metaTableRowWrapper}>
-              <div className="assessment-meta-table-row" style={styles.metaTableRow}>
-                <div style={styles.metaTableCell}>
-                  <p style={styles.metaTableCellContent}>Attempt 2</p>
-                  {/*this.renderAttemptTime(1)*/}
-                </div>
-                <div style={styles.metaTableCell}>
-                  <span style={styles.theScore}>{/*this.getScore(1)*/}</span>
-                </div>
-              </div>
-              {/*this.renderStudySummary(1)*/}
-            </div>
-
-          </div>
-        </div>
+        this.props.assessmentAttempts.map((attempt, key) => {
+          return (
+            <AttemptOverview
+              key={key}
+              attempt={attempt}
+              />
+          )}
+        )
+      );
+    } else {
+      return (
+        <QuizTip attempts={this.props.assessmentAttempts} />
       );
     }
   }
@@ -219,12 +209,22 @@ export default class CheckUnderstanding extends React.Component{
     }
   }
 
-  getScore(attemptIndex) {
-    if (this.props.assessmentAttempts.length > 0 && this.props.assessmentAttempts[attemptIndex]) {
-      return `${this.props.assessmentAttempts[attemptIndex]['score']}%`;
-    } else {
-      return "No score yet";
-    }
+  renderMaxAttempts(styles) {
+    return (
+      <div style={styles.attemptsContainer}>
+        <div style={{...styles.attempts, ...{border: null}}}>
+          <h1>Oops!</h1>
+          <h3>You have already taken this quiz the maximum number of times</h3>
+        </div>
+        <h4><u>TIPS:</u></h4>
+        <div style={styles.tips}>
+          <ul>
+            <li>{"Right now you can do three things to make sure you are ready for the next performance assessment: review the material in this module, use the self-checks to see if you're getting it, and ask your peers or instructor for help if you need it."}</li>
+            <li>{"In the future, allow enough time between your first and last quiz attempts to get help from your instructor before the last attempt!"}</li>
+          </ul>
+        </div>
+      </div>
+    );
   }
 
   getSwyk(styles) {
@@ -292,54 +292,45 @@ export default class CheckUnderstanding extends React.Component{
         backgroundColor: theme.checkUnderstandingBackgroundColor,
         padding: "20px"
       },
-      teacherOptionsWrapper: {
-
-      },
-      metaHeader: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
+      headerWrapper: {
+        borderBottom: "1px solid #c4cdd5",
         padding: "20px 0"
       },
-      metaTitle: {
+      quizTitle: {
+        color: "#212b36",
         fontSize: "20px",
         lineHeight: "28px",
         margin: "0 0 4px 0"
       },
-      metaSubtitle: {
+      quizSubtitle: {
         color: "#637381",
         fontSize: "14px",
         margin: 0
       },
-      metaTableHeaderWrapper: {
-        borderBottom: "1px solid #c4cdd5",
-        borderTop: "2px solid #212b36",
-      },
-      metaTableHeading: {
-        margin: "20px 0",
-        fontSize: "16px",
-        fontWeight: "bold"
-      },
-      metaTableRowWrapper: {
-        borderBottom: "1px solid #c4cdd5"
-      },
-      metaTableRow: {
-        display: "flex",
-        alignItems: "center"
-      },
-      metaTableCell: {
-        padding: "20px 0",
-        minWidth: "150px"
-      },
-      metaTableCellContent: {
-        margin: 0
-      },
-      theScore: {
-        fontWeight: "bold"
-      },
       buttonWrapper: {
         textAlign: props.assessmentKind.toUpperCase() !== "SUMMATIVE" ? "left" : "right"
+      },
+      footerWrapper: {
+        marginTop: "20px"
+      },
+      footerHeading: {
+        color: "#212b36",
+        fontSize: "20px",
+        marginBottom: "4px"
+      },
+      footerSubheading: {
+        color: "#637381",
+        fontSize: "14px"
+      },
+      startStudyButtonsWrapper: {
+        display: "flex",
+        flexDirection: "row"
+      },
+      studyButtonWrapper: {
+        marginLeft: "8px"
+      },
+      teacherOptionsWrapper: {
+
       },
       teacherOption: {
         border:"transparent",

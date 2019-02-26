@@ -138,10 +138,10 @@ export default class Start extends BaseComponent {
         backgroundColor: theme.titleBarBackgroundColor,
       },
       titleBar: {
-        borderTop: "2px solid #003136",
-        borderBottom: "1px solid #c4cdd5",
+        borderBottom: "2px solid #003136",
         padding: "22px 40px 22px 0",
-        fontSize: "20px",
+        fontFamily: "Arial",
+        fontSize: "28px",
         fontWeight: "400",
         color: "#212b36",
         lineHeight: "1.4"
