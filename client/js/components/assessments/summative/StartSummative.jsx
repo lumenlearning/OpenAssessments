@@ -1,0 +1,95 @@
+"use strict";
+
+// Dependencies
+import React from "react";
+// Subcomponents
+import AttemptOverview from "./feature/AttemptOverview";
+import AttemptTime from "./feature/AttemptTime";
+import QuizTip from "./feature/QuizTip";
+
+// Summative Assessment Start Page
+export default class StartSummative extends React.Component {
+
+  render() {
+    let styles = this.getStyles();
+
+    return (
+      <div className="start-wrapper">
+        <div className="start-header-wrapper" style={styles.headerWrapper}>
+          <h2 style={styles.quizTitle}>{`${this.props.title} Quiz`}</h2>
+          <p style={styles.quizSubtitle}>{`Attempt ${this.props.userAttempts + 1} of ${this.props.maxAttempts}`}</p>
+        </div>
+
+        <div className="start-body-wrapper">
+          {this.renderAttemptsFeedback()}
+        </div>
+
+        <div className="start-footer-wrapper" style={styles.footerWrapper}>
+          <div className="start-footer-text">
+            <p style={styles.footerHeading}>{`Start attempt ${this.props.userAttempts + 1} of ${this.props.maxAttempts}`}</p>
+            <p style={styles.footerSubheading}>The highest score of all completed attempts will be recorded as your grade</p>
+          </div>
+          <div className="start-study-button-wrapper" style={styles.startStudyButtonsWrapper}>
+            {this.props.startButton}
+            {this.props.studyButton}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderAttemptsFeedback() {
+    if (this.props.assessmentAttempts && this.props.assessmentAttempts.length > 0) {
+      return (
+        this.props.assessmentAttempts.map((attempt, key) => {
+          return (
+            <AttemptOverview
+              key={key}
+              attempt={attempt}
+              />
+          )}
+        )
+      );
+    } else {
+      return (
+        <QuizTip attempts={this.props.assessmentAttempts} />
+      );
+    }
+  }
+
+  getStyles() {
+    return {
+      headerWrapper: {
+        borderBottom: "1px solid #c4cdd5",
+        padding: "20px 0"
+      },
+      quizTitle: {
+        color: "#212b36",
+        fontSize: "20px",
+        lineHeight: "28px",
+        margin: "0 0 4px 0"
+      },
+      quizSubtitle: {
+        color: "#637381",
+        fontSize: "14px",
+        margin: 0
+      },
+      footerWrapper: {
+        marginTop: "20px"
+      },
+      footerHeading: {
+        color: "#212b36",
+        fontSize: "20px",
+        marginBottom: "4px"
+      },
+      footerSubheading: {
+        color: "#637381",
+        fontSize: "14px"
+      },
+      startStudyButtonsWrapper: {
+        display: "flex",
+        flexDirection: "row"
+      }
+    }
+  }
+}
