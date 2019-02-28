@@ -45,8 +45,9 @@ export default class AttemptOverview extends React.Component {
   }
 
   getQuizTipAttemptFeedback(styles) {
-    // if this is the most recent quiz attempt result, show feedback.
-    if (this.props.mostRecentAttempt) {
+    // if this is the most recent quiz attempt result, and the attempt
+    // is a completed one, show feedback.
+    if (this.props.mostRecentAttempt && this.props.attempt.assessment_result_score) {
       return (
         <div className="attempt-feedback-wrapper" style={styles.attemptFeedbackWrapper}>
           <QuizTip attempts={null} postIt={true} />
