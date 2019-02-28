@@ -1,7 +1,10 @@
 "use strict";
+// Dependencies
+import React from "react";
+// Subcomponents
+import QuizTip from "./QuizTip";
 
-import React from 'react';
-
+// Attempt Overview Subcomponent
 export default class AttemptOverview extends React.Component {
 
   render() {
@@ -10,7 +13,10 @@ export default class AttemptOverview extends React.Component {
     return (
       <div className="attempt-overview-wrapper" style={styles.outerWrapper}>
         <p style={styles.attemptHeading}>Attempt {this.props.attempt.assessment_result_attempt + 1}</p>
-        {this.getScore(styles)}
+        <div style={styles.innerWrapper}>
+          {this.getScore(styles)}
+          {this.getQuizTipAttemptFeedback(styles)}
+        </div>
       </div>
     );
   }
@@ -35,6 +41,35 @@ export default class AttemptOverview extends React.Component {
           </div>
         </div>
       )
+    }
+  }
+
+  getQuizTipAttemptFeedback(styles) {
+    // if this is the most recent quiz attempt result, show feedback.
+    if (this.props.mostRecentAttempt) {
+      return (
+        <div className="attempt-feedback-wrapper" style={styles.attemptFeedbackWrapper}>
+          <QuizTip attempts={null} postIt={true} />
+
+          <div className="attempt-feedback" style={styles.attemptFeedback}>
+            <div className="recommended-studying" style={styles.feedbackBox1}>
+              <img src="" />
+              <p style={styles.feedbackTitle}>Recommended Studying</p>
+              <ul>
+                <li>The Evolution of Psychology</li>
+                <li>Contemporary Fields in Psychology</li>
+              </ul>
+            </div>
+            <div className="mastered-concepts" style={styles.feedbackBox2}>
+              <img src="" />
+              <p style={styles.feedbackTitle}>Mastered Concepts</p>
+                <ul>
+                  <li>Psychology Foundations</li>
+                </ul>
+            </div>
+          </div>
+        </div>
+      );
     }
   }
 
@@ -64,6 +99,30 @@ export default class AttemptOverview extends React.Component {
       },
       notSubmittedText: {
         marginBottom: 0
+      },
+      attemptFeedbackWrapper: {
+        display: "flex",
+        flexDirection: "row"
+      },
+      attemptFeedback: {
+        borderRadius: "3px",
+        boxShadow: "0 1px 3px 0 rgba(63, 63, 68, 0.15), 0 0 0 1px rgba(63, 63, 68, 0.05)",
+        display: "flex",
+        flexDirection: "row",
+      },
+      feedbackBox1: {
+        borderRight: "1px solid #dfe3e8",
+        padding: "45px 40px",
+        width: "365px"
+      },
+      feedbackBox2: {
+        padding: "45px 40px",
+        width: "365px"
+      },
+      feedbackTitle: {
+        color: "#212b36",
+        fontSize: "16px",
+        fontWeight: "bold"
       }
     }
   }

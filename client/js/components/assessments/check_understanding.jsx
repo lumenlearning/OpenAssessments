@@ -77,6 +77,7 @@ export default class CheckUnderstanding extends React.Component{
         <StartSummative
           assessmentAttempts={this.props.assessmentAttempts}
           maxAttempts={this.props.maxAttempts}
+          title={this.props.title}
           startButton={this.renderStartButton(styles)}
           studyButton={this.renderStudyButton(styles)}
           userAttempts={this.props.userAttempts + 1}
