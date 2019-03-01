@@ -5,7 +5,7 @@ class Api::AssessmentsController < Api::ApiController
 
   respond_to :xml, :json
 
-  before_action :ensure_context_admin, only:[:json_update, :review_show]
+  before_action :ensure_context_admin, only:[:json_update]
   load_and_authorize_resource except: [:show, :json_update, :copy, :review_show, :student_review_show]
   skip_before_action :validate_token, only: [:show]
   skip_before_action :protect_account, only: [:show]
@@ -179,7 +179,8 @@ class Api::AssessmentsController < Api::ApiController
           assessment_result_created_at: assessment_result.created_at,
           assessment_result_items: assessment_result.item_results.order(:sequence_index).includes(:item).map do |ir|
             {
-              identifier: ir.identifier,
+              ident: ir.identifier,
+              outcome_guid: ir.outcome_guid,
               title: ir.item.title,
               score: ir.score,
               correct: correct_map.call(ir.score)

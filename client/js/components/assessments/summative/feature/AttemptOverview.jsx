@@ -57,19 +57,38 @@ export default class AttemptOverview extends React.Component {
               <img src="" />
               <p style={styles.feedbackTitle}>Recommended Studying</p>
               <ul>
-                <li>The Evolution of Psychology</li>
-                <li>Contemporary Fields in Psychology</li>
+                {this.getReviewOutcomeList("negative", styles)}
               </ul>
             </div>
             <div className="mastered-concepts" style={styles.feedbackBox2}>
               <img src="" />
               <p style={styles.feedbackTitle}>Mastered Concepts</p>
-                <ul>
-                  <li>Psychology Foundations</li>
-                </ul>
+              <ul>
+                {this.getReviewOutcomeList("positive", styles)}
+              </ul>
             </div>
           </div>
         </div>
+      );
+    }
+  }
+
+  getReviewOutcomeList(feedbackType, styles) {
+    if ("negative" === feedbackType) {
+      return (
+        this.props.studyAndMasteryFeedback.negativeList.map((feedback, index) => {
+          return (
+            <li>{feedback.shortOutcome}</li>
+          );
+        })
+      );
+    } else if ("positive" === feedbackType) {
+      return (
+        this.props.studyAndMasteryFeedback.positiveList.map((feedback, index) => {
+          return (
+            <li>{feedback.shortOutcome}</li>
+          );
+        })
       );
     }
   }

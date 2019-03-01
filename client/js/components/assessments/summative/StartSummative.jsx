@@ -49,6 +49,8 @@ export default class StartSummative extends React.Component {
               attempt={attempt}
               key={key}
               mostRecentAttempt={attempt.assessment_result_attempt === this.props.assessmentAttempts.length -1 ? true : false}
+              assessmentAttemptsOutcomes={this.props.assessmentAttemptsOutcomes}
+              studyAndMasteryFeedback={this.props.studyAndMasteryFeedback}
               />
           )}
         )

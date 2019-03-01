@@ -30,6 +30,7 @@ export default class Start extends BaseComponent {
     this.context = context;
 
     ReviewAssessmentActions.loadAssessmentForStudentReview(SettingsStore.current(), SettingsStore.current().assessmentId, SettingsStore.current().userAssessmentId);
+    ReviewAssessmentActions.loadAssessmentXmlForReview(SettingsStore.current(), SettingsStore.current().assessmentId, SettingsStore.current().userAssessmentId);
 
     // Rebindings
     this._bind["getStyles"];
@@ -46,6 +47,7 @@ export default class Start extends BaseComponent {
 
     return {
       showStart: showStart,
+      assessmentAttemptsOutcomes: ReviewAssessmentStore.outcomes(),
       assessmentAttempts: ReviewAssessmentStore.getAttemptedAssessments(),
       questionCount: AssessmentStore.questionCount(),
       settings: SettingsStore.current()
@@ -97,7 +99,9 @@ export default class Start extends BaseComponent {
           title={this.state.settings.assessmentTitle}
           maxAttempts={this.state.settings.allowedAttempts}
           userAttempts={this.state.settings.userAttempts}
+          assessmentAttemptsOutcomes={this.state.assessmentAttemptsOutcomes}
           assessmentAttempts={this.state.assessmentAttempts}
+          studyAndMasteryFeedback={this.studyAndMasteryFeedback()}
           eid={this.state.settings.lisUserId}
           userId={this.state.settings.userId}
           isLti={this.state.settings.isLti}
@@ -110,6 +114,29 @@ export default class Start extends BaseComponent {
           />
       );
     }
+  }
+
+  studyAndMasteryFeedback() {
+    let positiveList = _.clone(this.state.assessmentAttemptsOutcomes);
+    let negativeList = [];
+
+    if (this.state.assessmentAttempts) {
+      this.state.assessmentAttempts.map((qr, index) => {
+        let question = ReviewAssessmentStore.itemByIdent(qr.ident);
+
+        if (question !== undefined) {
+          if (qr.correct !== true) {
+            negativeList = negativeList.concat(_.filter(positiveList, 'outcomeGuid', question.outcome_guid));
+            positiveList = _.reject(positiveList, 'outcomeGuid', question.outcome_guid);
+          }
+        }
+      });
+    }
+
+    return ({
+      positiveList: positiveList,
+      negativeList: negativeList
+    });
   }
 
   getStyles(theme) {
