@@ -30,7 +30,7 @@ export default class Start extends BaseComponent {
     this.context = context;
 
     ReviewAssessmentActions.loadAssessmentForStudentReview(SettingsStore.current(), SettingsStore.current().assessmentId, SettingsStore.current().userAssessmentId);
-    ReviewAssessmentActions.loadAssessmentXmlForReview(SettingsStore.current(), SettingsStore.current().assessmentId, SettingsStore.current().userAssessmentId);
+    ReviewAssessmentActions.loadAssessmentXmlForStudentReview(SettingsStore.current(), SettingsStore.current().assessmentId, SettingsStore.current().userAssessmentId);
 
     // Rebindings
     this._bind["getStyles"];

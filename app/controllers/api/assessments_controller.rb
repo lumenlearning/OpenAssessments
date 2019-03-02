@@ -5,8 +5,8 @@ class Api::AssessmentsController < Api::ApiController
 
   respond_to :xml, :json
 
-  before_action :ensure_context_admin, only:[:json_update]
-  load_and_authorize_resource except: [:show, :json_update, :copy, :review_show, :student_review_show]
+  before_action :ensure_context_admin, only:[:json_update, :review_show]
+  load_and_authorize_resource except: [:show, :json_update, :copy, :student_review_show, :student_review_show_xml]
   skip_before_action :validate_token, only: [:show]
   skip_before_action :protect_account, only: [:show]
   before_action :ensure_copy_admin, only:[:copy]
@@ -191,6 +191,29 @@ class Api::AssessmentsController < Api::ApiController
     end
 
     render :json => results
+  end
+
+  # This is the same as 'review_show' endpoint, only this will never return a
+  # version of the xml that has answers in it.
+  def student_review_show_xml
+    assessment = Assessment.where(id: params[:assessment_id], account: current_account).first
+    xml = nil
+
+    if params[:assessment_result_id]
+      ar = AssessmentResult.find(params[:assessment_result_id])
+      ua = ar.user_assessment
+
+      if !ua || ua.lti_context_id != @lti_launch.lti_context_id
+        render :json => {:error => "This Assessment Result is not from this context."}, status: :unauthorized
+        return
+      end
+
+      if ar.assessment_xml && (ar.assessment_xml.kind == 'summative' || ar.assessment_xml.kind == 'qti')
+        xml = ar.assessment_xml.xml
+      end
+    end
+
+    render :xml => xml || assessment.xml_without_answers
   end
 
   # *******************************************************************

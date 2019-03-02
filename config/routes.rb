@@ -64,6 +64,7 @@ Rails.application.routes.draw do
     resources :assessments do
       get '/review', to: 'assessments#review_show'
       get '/student_review', to: 'assessments#student_review_show'
+      get '/student_review_xml', to: 'assessments#student_review_show_xml'
       get 'results/:result_id', to: 'assessment_results#show'
       put '/edit', to: 'assessments#json_update'
       post '/copy', to: 'assessments#copy', as: 'assessments_copy'

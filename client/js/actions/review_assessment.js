@@ -42,6 +42,17 @@ export default {
     Api.get(Constants.REVIEW_ASSESSMENT_LOADED, url);
   },
 
+  loadAssessmentXmlForStudentReview(settings, assessmentId, resultId=null){
+    Dispatcher.dispatch({ action: Constants.REVIEW_ASSESSMENT_LOAD_PENDING });
+    var url = settings.apiUrl + "api/assessments/" + assessmentId + "/student_review_xml";
+
+    if(resultId){
+      url = url + "?assessment_result_id=" + resultId
+    }
+
+    Api.get(Constants.REVIEW_ASSESSMENT_LOADED, url);
+  },
+
   loadAssessmentResult(assessmentId, resultId){
     Dispatcher.dispatch({ action: Constants.REVIEW_RESULT_LOAD_PENDING });
     Api.get(Constants.REVIEW_RESULT_LOADED, "/api/assessments/" + assessmentId + "/results/" + resultId);
