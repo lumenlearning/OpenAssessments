@@ -54,16 +54,20 @@ export default class AttemptOverview extends React.Component {
 
           <div className="attempt-feedback" style={styles.attemptFeedback}>
             <div className="recommended-studying" style={styles.feedbackBox1}>
-              <img src="" />
-              <p style={styles.feedbackTitle}>Recommended Studying</p>
-              <ul>
+              <div style={styles.feedbackBoxHeadingWrapper}>
+                <img src="/assets/Recommended_Studying_Icon@2x.png" style={styles.feedbackIcons} />
+                <p style={styles.feedbackTitle}>Recommended Studying</p>
+              </div>
+              <ul style={styles.feedbackList}>
                 {this.getReviewOutcomeList("negative", styles)}
               </ul>
             </div>
             <div className="mastered-concepts" style={styles.feedbackBox2}>
-              <img src="" />
-              <p style={styles.feedbackTitle}>Mastered Concepts</p>
-              <ul>
+              <div style={styles.feedbackBoxHeadingWrapper}>
+                <img src="/assets/Mastered_Concepts_Icon@2x.png" style={styles.feedbackIcons} />
+                <p style={styles.feedbackTitle}>Mastered Concepts</p>
+              </div>
+              <ul style={styles.feedbackList}>
                 {this.getReviewOutcomeList("positive", styles)}
               </ul>
             </div>
@@ -143,6 +147,21 @@ export default class AttemptOverview extends React.Component {
         color: "#212b36",
         fontSize: "16px",
         fontWeight: "bold"
+      },
+      feedbackIcons: {
+        height: "28px",
+        marginBottom: "10px",
+        marginRight: "8px",
+        width: "28px"
+      },
+      feedbackBoxHeadingWrapper: {
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "row"
+      },
+      feedbackList: {
+        listStyleType: "none",
+        padding: 0
       }
     }
   }
