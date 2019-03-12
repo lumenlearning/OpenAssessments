@@ -46,9 +46,9 @@ export default class Attempts extends BaseComponent {
           {this.state.settings ? this.state.settings.assessmentTitle : ""}
         </div>
         <TeacherOptions
-          assessmentId={this.props.assessmentId}
+          assessmentId={this.props.params.assessmentId}
           context={this.context}
-          externalContextId={this.props.externalContextId}
+          externalContextId={this.state.settings.externalContextId}
           />
 
         <div style={styles.attemptsWrapper}>
@@ -184,13 +184,9 @@ export default class Attempts extends BaseComponent {
   }
 
   quiz_name() {
-    let name = "this quiz";
-
-    if (this.state.userAssessments[0]) {
-      name = this.state.userAssessments[0].assessment.name;
-    }
-
-    return name;
+    return (
+      this.state.userAssessments[0] ? this.state.userAssessments[0].assessment.name : "this quiz"
+    );
   }
 
   no_quizzes() {

@@ -18,10 +18,11 @@ export default class TeacherPreview extends BaseComponent{
   constructor(props, context) {
     super(props, context);
 
-    this.stores = [ReviewAssessmentStore];
-    ReviewAssessmentActions.loadAssessmentXmlForReview(window.DEFAULT_SETTINGS, props.params.assessmentId);
-
     this.state = this.getState();
+    this.stores = [ReviewAssessmentStore];
+    this.context = context;
+
+    ReviewAssessmentActions.loadAssessmentXmlForReview(window.DEFAULT_SETTINGS, props.params.assessmentId);
   }
 
   getState() {
@@ -45,9 +46,9 @@ export default class TeacherPreview extends BaseComponent{
             {this.state.settings ? this.state.settings.assessmentTitle : ""}
           </div>
           <TeacherOptions
-            assessmentId={this.props.assessmentId}
+            assessmentId={this.props.params.assessmentId}
             context={this.context}
-            externalContextId={this.props.externalContextId}
+            externalContextId={this.state.settings.externalContextId}
             />
           <div className="start-header-wrapper" style={styles.headerWrapper}>
             <h2 style={styles.quizTitle}>{this.state.settings ? this.state.settings.assessmentTitle : ""}</h2>
