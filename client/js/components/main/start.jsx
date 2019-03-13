@@ -48,7 +48,7 @@ export default class Start extends BaseComponent {
     return {
       showStart: showStart,
       assessmentAttemptsOutcomes: ReviewAssessmentStore.outcomes(),
-      assessmentAttempts: ReviewAssessmentStore.getAttemptedAssessments(),
+      assessmentAttempts: this.orderBySequence(ReviewAssessmentStore.getAttemptedAssessments()),
       questionCount: AssessmentStore.questionCount(),
       settings: SettingsStore.current()
     }
@@ -137,6 +137,14 @@ export default class Start extends BaseComponent {
       positiveList: positiveList,
       negativeList: negativeList
     });
+  }
+
+  orderBySequence(list) {
+    if (list) {
+      return [...list].sort((a, b) => {
+        return a.assessment_result_attempt - b.assessment_result_attempt
+      });
+    }
   }
 
   getStyles(theme) {

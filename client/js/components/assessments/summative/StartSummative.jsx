@@ -41,6 +41,7 @@ export default class StartSummative extends React.Component {
   renderAttemptsFeedback() {
     // if there are assessment attempts to map over ...
     if (this.props.assessmentAttempts && this.props.assessmentAttempts.length > 0) {
+
       // map over each attempt and render attempt overview.
       return (
         this.props.assessmentAttempts.map((attempt, key) => {
