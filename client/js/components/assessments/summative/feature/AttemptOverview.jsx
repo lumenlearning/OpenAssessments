@@ -81,7 +81,6 @@ export default class AttemptOverview extends React.Component {
     if ("negative" === feedbackType) {
       return (
         this.props.studyAndMasteryFeedback.negativeList.map((feedback, index) => {
-          console.log(this.props)
           return (
             <li style={styles.outcomeItem}>
               <p style={styles.outcomeTitle}>{feedback.shortOutcome}</p>
