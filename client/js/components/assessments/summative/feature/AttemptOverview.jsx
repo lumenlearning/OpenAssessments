@@ -81,8 +81,14 @@ export default class AttemptOverview extends React.Component {
     if ("negative" === feedbackType) {
       return (
         this.props.studyAndMasteryFeedback.negativeList.map((feedback, index) => {
+          console.log(this.props)
           return (
-            <li>{feedback.shortOutcome}</li>
+            <li style={styles.outcomeItem}>
+              <p style={styles.outcomeTitle}>{feedback.shortOutcome}</p>
+              <p style={styles.correctPerOutcome}>
+                {`${this.correctPerOutcome(feedback)} of ${this.totalPerOutcome(feedback)} answers correct`}
+              </p>
+            </li>
           );
         })
       );
@@ -90,11 +96,44 @@ export default class AttemptOverview extends React.Component {
       return (
         this.props.studyAndMasteryFeedback.positiveList.map((feedback, index) => {
           return (
-            <li>{feedback.shortOutcome}</li>
+            <li style={styles.outcomeItem}>
+              <p style={styles.outcomeTitle}>{feedback.shortOutcome}</p>
+              <p style={styles.correctPerOutcome}>
+                {`${this.correctPerOutcome(feedback)} of ${this.totalPerOutcome(feedback)} answers correct`}
+              </p>
+            </li>
           );
         })
       );
     }
+  }
+
+  correctPerOutcome(feedback) {
+    let correct = 0;
+
+    if (this.props.attempt.assessment_result_items.length > 0) {
+      this.props.attempt.assessment_result_items.forEach((item) => {
+        if (item.outcome_guid === feedback.outcomeGuid && item.score === 1) {
+          correct += 1;
+        }
+      });
+    }
+
+    return correct;
+  }
+
+  totalPerOutcome(feedback) {
+    let total = 0;
+
+    if (this.props.attempt.assessment_result_items.length > 0) {
+      this.props.attempt.assessment_result_items.forEach((item) => {
+        if (item.outcome_guid === feedback.outcomeGuid) {
+          total += 1;
+        }
+      });
+    }
+
+    return total;
   }
 
   getStyles() {
@@ -161,7 +200,21 @@ export default class AttemptOverview extends React.Component {
       },
       feedbackList: {
         listStyleType: "none",
+        margin: 0,
         padding: 0
+      },
+      outcomeItem: {
+        marginBottom: "20px"
+      },
+      outcomeTitle: {
+        color: "#212b36",
+        fontSize: "14px",
+        margin: "0 0 4px"
+      },
+      correctPerOutcome: {
+        color: "#637381",
+        fontSize: "12px",
+        margin: 0
       }
     }
   }
