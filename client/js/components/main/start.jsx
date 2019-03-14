@@ -132,24 +132,26 @@ export default class Start extends BaseComponent {
   }
 
   studyAndMasteryFeedback() {
-    let positiveList = _.clone(this.state.assessmentAttemptsOutcomes);
-    let negativeList = [];
+    if (this.state.settings.assessmentKind.toUpperCase() === "SUMMATIVE") {
+      let positiveList = _.clone(this.state.assessmentAttemptsOutcomes);
+      let negativeList = [];
 
-    if (this.state.assessmentAttempts) {
-      let lastAttempt = this.state.assessmentAttempts[this.state.assessmentAttempts.length - 1];
+      if (this.state.assessmentAttempts) {
+        let lastAttempt = this.state.assessmentAttempts[this.state.assessmentAttempts.length - 1];
 
-      lastAttempt.assessment_result_items.forEach((chosenAnswer, index) => {
-        if (chosenAnswer.correct !== true) {
-          negativeList = negativeList.concat(_.filter(positiveList, 'outcomeGuid', chosenAnswer.outcome_guid));
-          positiveList = _.reject(positiveList, 'outcomeGuid', chosenAnswer.outcome_guid);
-        }
+        lastAttempt.assessment_result_items.forEach((chosenAnswer, index) => {
+          if (chosenAnswer.correct !== true) {
+            negativeList = negativeList.concat(_.filter(positiveList, 'outcomeGuid', chosenAnswer.outcome_guid));
+            positiveList = _.reject(positiveList, 'outcomeGuid', chosenAnswer.outcome_guid);
+          }
+        });
+      }
+
+      return ({
+        positiveList: positiveList,
+        negativeList: negativeList
       });
     }
-
-    return ({
-      positiveList: positiveList,
-      negativeList: negativeList
-    });
   }
 
   orderBySequence(list) {

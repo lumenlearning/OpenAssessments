@@ -132,7 +132,7 @@ export default class CheckUnderstanding extends React.Component{
   startAssessment(eid, assessmentId, context) {
     // if student should be pestered to go back and study, render wait/WAIT!...
     // TODO: Add an appropriate condition to case off of.
-    if (true) {
+    if (this.props.assessmentKind.toUpperCase() === "SUMMATIVE") {
       this.props.showModal();
     // otherwise, load the assessment.
     } else {
