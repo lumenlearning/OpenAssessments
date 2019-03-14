@@ -53,25 +53,37 @@ export default class AttemptOverview extends React.Component {
           <QuizTip attempts={null} postIt={true} />
 
           <div className="attempt-feedback" style={styles.attemptFeedback}>
-            <div className="recommended-studying" style={styles.feedbackBox1}>
-              <div style={styles.feedbackBoxHeadingWrapper}>
-                <img src="/assets/Recommended_Studying_Icon@2x.png" style={styles.feedbackIcons} />
-                <p style={styles.feedbackTitle}>Recommended Studying</p>
-              </div>
-              <ul style={styles.feedbackList}>
-                {this.getReviewOutcomeList("negative", styles)}
-              </ul>
-            </div>
-            <div className="mastered-concepts" style={styles.feedbackBox2}>
-              <div style={styles.feedbackBoxHeadingWrapper}>
-                <img src="/assets/Mastered_Concepts_Icon@2x.png" style={styles.feedbackIcons} />
-                <p style={styles.feedbackTitle}>Mastered Concepts</p>
-              </div>
-              <ul style={styles.feedbackList}>
-                {this.getReviewOutcomeList("positive", styles)}
-              </ul>
-            </div>
+            {this.getFeedback("negative", styles)}
+            {this.getFeedback("positive", styles)}
           </div>
+        </div>
+      );
+    }
+  }
+
+  getFeedback(feedbackType, styles) {
+    if ("negative" === feedbackType && this.props.studyAndMasteryFeedback.negativeList.length > 0) {
+      return (
+        <div className="recommended-studying" style={styles.feedbackBox1}>
+          <div style={styles.feedbackBoxHeadingWrapper}>
+            <img src="/assets/Recommended_Studying_Icon@2x.png" style={styles.feedbackIcons} />
+            <p style={styles.feedbackTitle}>Recommended Studying</p>
+          </div>
+          <ul style={styles.feedbackList}>
+            {this.getReviewOutcomeList(feedbackType, styles)}
+          </ul>
+        </div>
+      );
+    } else if ("positive" === feedbackType && this.props.studyAndMasteryFeedback.positiveList.length > 0) {
+      return (
+        <div className="mastered-concepts" style={styles.feedbackBox2}>
+          <div style={styles.feedbackBoxHeadingWrapper}>
+            <img src="/assets/Mastered_Concepts_Icon@2x.png" style={styles.feedbackIcons} />
+            <p style={styles.feedbackTitle}>Mastered Concepts</p>
+          </div>
+          <ul style={styles.feedbackList}>
+            {this.getReviewOutcomeList(feedbackType, styles)}
+          </ul>
         </div>
       );
     }
@@ -84,9 +96,12 @@ export default class AttemptOverview extends React.Component {
           return (
             <li style={styles.outcomeItem}>
               <p style={styles.outcomeTitle}>{feedback.shortOutcome}</p>
-              <p style={styles.correctPerOutcome}>
-                {`${this.correctPerOutcome(feedback)} of ${this.totalPerOutcome(feedback)} answers correct`}
-              </p>
+              <div style={styles.outcomeDetails}>
+                <div style={styles.dotsContainer}>{this.getIndicatorDots(feedback, styles)}</div>
+                <p style={styles.correctPerOutcome}>
+                  {`${this.correctPerOutcome(feedback)} of ${this.totalPerOutcome(feedback)} answers correct`}
+                </p>
+              </div>
             </li>
           );
         })
@@ -97,14 +112,34 @@ export default class AttemptOverview extends React.Component {
           return (
             <li style={styles.outcomeItem}>
               <p style={styles.outcomeTitle}>{feedback.shortOutcome}</p>
-              <p style={styles.correctPerOutcome}>
-                {`${this.correctPerOutcome(feedback)} of ${this.totalPerOutcome(feedback)} answers correct`}
-              </p>
+              <div style={styles.outcomeDetails}>
+                <div style={styles.dotsContainer}>{this.getIndicatorDots(feedback, styles)}</div>
+                <p style={styles.correctPerOutcome}>
+                  {`${this.correctPerOutcome(feedback)} of ${this.totalPerOutcome(feedback)} answers correct`}
+                </p>
+              </div>
             </li>
           );
         })
       );
     }
+  }
+
+  getIndicatorDots(feedback, styles) {
+    let correct = this.correctPerOutcome(feedback);
+    let total = this.totalPerOutcome(feedback);
+
+    let dots = [];
+
+    _.times(correct, () => {
+      dots.push(<span style={styles.correctDot}></span>);
+    });
+
+    _.times(total - correct, () => {
+      dots.push(<span style={styles.incorrectDot}></span>);
+    });
+
+    return dots;
   }
 
   correctPerOutcome(feedback) {
@@ -195,7 +230,8 @@ export default class AttemptOverview extends React.Component {
       feedbackBoxHeadingWrapper: {
         alignItems: "center",
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
+        marginBottom: "14px"
       },
       feedbackList: {
         listStyleType: "none",
@@ -210,10 +246,37 @@ export default class AttemptOverview extends React.Component {
         fontSize: "14px",
         margin: "0 0 4px"
       },
+      outcomeDetails: {
+        display: "flex",
+        alignItems: "center"
+      },
       correctPerOutcome: {
         color: "#637381",
         fontSize: "12px",
         margin: 0
+      },
+      dotsContainer: {
+        display: "flex",
+        alignItems: "center",
+        marginRight: "7px"
+      },
+      correctDot: {
+        backgroundColor: "#9ac0ea",
+        border: "solid 2px #1e74d1",
+        borderRadius: "6px",
+        display: "block",
+        height: "12px",
+        marginRight: "4px",
+        width: "12px"
+      },
+      incorrectDot: {
+        backgroundColor: "#fff",
+        border: "solid 2px #1e74d1",
+        borderRadius: "6px",
+        display: "block",
+        height: "12px",
+        marginRight: "4px",
+        width: "12px"
       }
     }
   }
