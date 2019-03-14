@@ -120,12 +120,3 @@ export default class StartSummative extends React.Component {
     }
   }
 }
-
-StartSummative.propTypes = {
-  assessmentAttempts: React.PropTypes.Array,
-  maxAttempts: React.PropTypes.Number,
-  title: React.PropTypes.String,
-  startButton: React.PropTypes.func,
-  studyButton: React.PropTypes.func,
-  userAttempts: React.PropTypes.Number
-};

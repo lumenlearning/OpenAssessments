@@ -177,10 +177,6 @@ export default class CheckUnderstanding extends React.Component{
   }
 }
 
-CheckUnderstanding.propTypes = {
-  name: React.PropTypes.string.isRequired
-};
-
 CheckUnderstanding.contextTypes = {
   theme: React.PropTypes.object,
   router: React.PropTypes.func,

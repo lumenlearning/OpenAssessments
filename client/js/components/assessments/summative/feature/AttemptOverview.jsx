@@ -108,7 +108,7 @@ export default class AttemptOverview extends React.Component {
       return (
         this.props.studyAndMasteryFeedback.negativeList.map((feedback, index) => {
           return (
-            <li style={styles.outcomeItem}>
+            <li style={styles.outcomeItem} key={index}>
               <p style={styles.outcomeTitle}>{feedback.shortOutcome}</p>
               <div style={styles.outcomeDetails}>
                 <div style={styles.dotsContainer}>{this.getIndicatorDots(feedback, styles)}</div>
@@ -124,7 +124,7 @@ export default class AttemptOverview extends React.Component {
       return (
         this.props.studyAndMasteryFeedback.positiveList.map((feedback, index) => {
           return (
-            <li style={styles.outcomeItem}>
+            <li style={styles.outcomeItem} key={index}>
               <p style={styles.outcomeTitle}>{feedback.shortOutcome}</p>
               <div style={styles.outcomeDetails}>
                 <div style={styles.dotsContainer}>{this.getIndicatorDots(feedback, styles)}</div>
