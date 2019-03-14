@@ -22,6 +22,12 @@ export default class WaitModal extends React.Component {
         <div style={styles.container}>
           <div style={styles.titleBar}>
             <h1 style={styles.titleHeader}>Wait!</h1>
+            <img
+              style={styles.close}
+              src="/assets/x_to_close_light.png"
+              data-expandable-status={"disabled"}
+              onClick={() => {this.props.hideModal()}}
+              />
           </div>
           <div style={styles.body}>
             <p style={styles.bodyText}>
@@ -79,6 +85,14 @@ export default class WaitModal extends React.Component {
         fontSize: "20px",
         fontWeight: 600,
         margin: 0
+      },
+      close: {
+        position: "absolute",
+        top: "50px",
+        right: "50px",
+        width: "15px",
+        height: "15px",
+        cursor: "pointer"
       },
       body: {
         padding: "40px"
