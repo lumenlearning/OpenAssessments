@@ -121,14 +121,12 @@ export default class Start extends BaseComponent {
     let negativeList = [];
 
     if (this.state.assessmentAttempts) {
-      this.state.assessmentAttempts.map((qr, index) => {
-        let question = ReviewAssessmentStore.itemByIdent(qr.ident);
+      let lastAttempt = this.state.assessmentAttempts[this.state.assessmentAttempts.length - 1];
 
-        if (question !== undefined) {
-          if (qr.correct !== true) {
-            negativeList = negativeList.concat(_.filter(positiveList, 'outcomeGuid', question.outcome_guid));
-            positiveList = _.reject(positiveList, 'outcomeGuid', question.outcome_guid);
-          }
+      lastAttempt.assessment_result_items.forEach((chosenAnswer, index) => {
+        if (chosenAnswer.correct !== true) {
+          negativeList = negativeList.concat(_.filter(positiveList, 'outcomeGuid', chosenAnswer.outcome_guid));
+          positiveList = _.reject(positiveList, 'outcomeGuid', chosenAnswer.outcome_guid);
         }
       });
     }
