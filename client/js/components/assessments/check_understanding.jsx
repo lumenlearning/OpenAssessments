@@ -130,9 +130,16 @@ export default class CheckUnderstanding extends React.Component{
   }
 
   startAssessment(eid, assessmentId, context) {
-    AssessmentActions.start(eid, assessmentId, this.props.externalContextId);
-    AssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, $("#srcData").text());
-    context.router.transitionTo("assessment");
+    // if student should be pestered to go back and study, render wait/WAIT!...
+    // TODO: Add an appropriate condition to case off of.
+    if (true) {
+      this.props.showModal();
+    // otherwise, load the assessment.
+    } else {
+      AssessmentActions.start(eid, assessmentId, this.props.externalContextId);
+      AssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, $("#srcData").text());
+      context.router.transitionTo("assessment");
+    }
   }
 
   renderStudyButton(styles) {

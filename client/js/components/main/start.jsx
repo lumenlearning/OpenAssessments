@@ -18,6 +18,7 @@ import FullPostNav from "../post_nav/full_post_nav.jsx";
 import Item from "../assessments/item";
 import Loading from "../assessments/loading";
 import ProgressDropdown from "../common/progress_dropdown";
+import WaitModal from "../assessments/summative/feature/WaitModal.jsx";
 
 // Start Component
 export default class Start extends BaseComponent {
@@ -47,6 +48,7 @@ export default class Start extends BaseComponent {
 
     return {
       showStart: showStart,
+      showModal: false,
       assessmentAttemptsOutcomes: ReviewAssessmentStore.outcomes(),
       assessmentAttempts: this.orderBySequence(ReviewAssessmentStore.getAttemptedAssessments()),
       questionCount: AssessmentStore.questionCount(),
@@ -59,6 +61,7 @@ export default class Start extends BaseComponent {
 
     return (
       <div className="assessment" style={styles.assessment}>
+        {this.renderWaitModal()}
         {this.renderTitleBar(styles)}
         <div className="section_list">
           <div className="section_container">
@@ -81,6 +84,17 @@ export default class Start extends BaseComponent {
     CommHandler.sendSize();
   }
 
+  renderWaitModal() {
+    if (this.state.showModal) {
+      return (
+        <WaitModal
+          hideModal={() => this.hideModal()}
+          showModal={this.state.showModal}
+          />
+      );
+    }
+  }
+
   renderTitleBar(styles) {
     // If this is any assessment type *other* than formative, render title bar
     if (this.state.settings.assessmentKind.toUpperCase() !== "FORMATIVE") {
@@ -96,21 +110,22 @@ export default class Start extends BaseComponent {
     if (this.state.showStart) {
       return (
         <CheckUnderstanding
-          title={this.state.settings.assessmentTitle}
-          maxAttempts={this.state.settings.allowedAttempts}
-          userAttempts={this.state.settings.userAttempts}
-          assessmentAttemptsOutcomes={this.state.assessmentAttemptsOutcomes}
+          accountId={this.state.settings.accountId}
           assessmentAttempts={this.state.assessmentAttempts}
-          studyAndMasteryFeedback={this.studyAndMasteryFeedback()}
-          eid={this.state.settings.lisUserId}
-          userId={this.state.settings.userId}
-          isLti={this.state.settings.isLti}
+          assessmentAttemptsOutcomes={this.state.assessmentAttemptsOutcomes}
           assessmentId={this.state.settings.assessmentId}
           assessmentKind={this.state.settings.assessmentKind}
-          ltiRole={this.state.settings.ltiRole}
+          eid={this.state.settings.lisUserId}
           externalContextId={this.state.settings.externalContextId}
-          accountId={this.state.settings.accountId}
           icon={this.state.settings.images.QuizIcon_svg}
+          isLti={this.state.settings.isLti}
+          ltiRole={this.state.settings.ltiRole}
+          maxAttempts={this.state.settings.allowedAttempts}
+          showModal={() => this.showModal()}
+          studyAndMasteryFeedback={this.studyAndMasteryFeedback()}
+          title={this.state.settings.assessmentTitle}
+          userAttempts={this.state.settings.userAttempts}
+          userId={this.state.settings.userId}
           />
       );
     }
@@ -143,6 +158,14 @@ export default class Start extends BaseComponent {
         return a.assessment_result_attempt - b.assessment_result_attempt
       });
     }
+  }
+
+  showModal() {
+    this.setState({showModal: true});
+  }
+
+  hideModal() {
+    this.setState({showModal: false});
   }
 
   getStyles(theme) {
