@@ -24,9 +24,12 @@ export default class AttemptOverview extends React.Component {
   getScore(styles) {
     if (this.props.attempt.assessment_result_score !== null) {
       return (
-        <p style={styles.score}>
-          {`${this.props.attempt.assessment_result_score}%`}
-        </p>
+        <div style={styles.scoreContainer}>
+          <p style={styles.score}>
+            {`${this.props.attempt.assessment_result_score}%`}
+          </p>
+          {this.getRecordedGradeFlag(styles)}
+        </div>
       );
     } else {
       return (
@@ -40,7 +43,18 @@ export default class AttemptOverview extends React.Component {
             </p>
           </div>
         </div>
-      )
+      );
+    }
+  }
+
+  getRecordedGradeFlag(styles) {
+    if (this.props.highScoreAttempt) {
+      return (
+        <span style={styles.recordedGradeFlag}>
+          <img style={styles.recordedCheck} src="/assets/Check@2x.png" />
+          Score recorded as grade
+        </span>
+      );
     }
   }
 
@@ -181,11 +195,26 @@ export default class AttemptOverview extends React.Component {
         fontSize: "14px",
         marginBottom: "8px"
       },
+      scoreContainer: {
+        display: "flex",
+        alignItems: "center"
+      },
       score: {
         color: "#212b36",
         fontSize: "28px",
         fontWeight: "bold",
         marginBottom: "8px"
+      },
+      recordedGradeFlag: {
+        color: "#637381",
+        fontSize: "12px",
+        marginBottom: "8px",
+        marginLeft: "14px"
+      },
+      recordedCheck: {
+        height: "8px",
+        marginRight: "8px",
+        width: "8px"
       },
       noScoreAvailable: {
         marginBottom: "8px"

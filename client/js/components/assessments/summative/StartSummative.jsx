@@ -48,9 +48,10 @@ export default class StartSummative extends React.Component {
           return (
             <AttemptOverview
               attempt={attempt}
-              key={key}
-              mostRecentAttempt={attempt.assessment_result_attempt === this.props.assessmentAttempts.length -1 ? true : false}
               assessmentAttemptsOutcomes={this.props.assessmentAttemptsOutcomes}
+              highScoreAttempt={this.highestScoreAttempt() === attempt.assessment_result_id ? true : false}
+              key={key}
+              mostRecentAttempt={attempt.assessment_result_attempt === this.props.assessmentAttempts.length - 1 ? true : false}
               studyAndMasteryFeedback={this.props.studyAndMasteryFeedback}
               />
           )}
@@ -65,6 +66,22 @@ export default class StartSummative extends React.Component {
           />
       );
     }
+  }
+
+  highestScoreAttempt() {
+    let highScore = 0;
+    let highScoreAttemptId = null;
+
+    if (this.props.assessmentAttempts && this.props.assessmentAttempts.length > 0) {
+      this.props.assessmentAttempts.forEach((attempt, key) => {
+        if (attempt.assessment_result_score > highScore) {
+          highScore = attempt.assessment_result_score;
+          highScoreAttemptId = attempt.assessment_result_id;
+        }
+      });
+    }
+
+    return highScoreAttemptId;
   }
 
   getStyles() {
