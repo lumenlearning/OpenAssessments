@@ -173,6 +173,7 @@ class Api::AssessmentsController < Api::ApiController
 
       assessment_results.each_with_index do |assessment_result, index|
         results << {
+          user_id: ua.user_id,
           assessment_result_id: assessment_result.id,
           assessment_result_attempt: assessment_result.attempt,
           assessment_result_score: assessment_result.score,

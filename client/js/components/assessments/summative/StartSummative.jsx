@@ -62,6 +62,7 @@ export default class StartSummative extends React.Component {
       return (
         <QuizTip
           attempts={this.props.assessmentAttempts}
+          userId={null}
           postIt={false}
           />
       );

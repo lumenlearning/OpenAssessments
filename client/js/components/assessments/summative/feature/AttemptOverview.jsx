@@ -64,7 +64,11 @@ export default class AttemptOverview extends React.Component {
     if (this.props.mostRecentAttempt && this.props.attempt.assessment_result_score !== null) {
       return (
         <div className="attempt-feedback-wrapper" style={styles.attemptFeedbackWrapper}>
-          <QuizTip attempts={null} postIt={true} />
+          <QuizTip
+            attempts={null}
+            userId={this.props.attempt.user_id}
+            postIt={true}
+            />
 
           <div className="attempt-feedback" style={styles.attemptFeedback}>
             {this.getFeedback("negative", styles)}

@@ -13,21 +13,51 @@ export default class QuizTip extends React.Component {
           <img style={styles.tipIcon} src="/assets/Icon@2x.png" alt="" />
           <h3 style={styles.heading}>Quiz Tip</h3>
         </div>
-        {this.getStudyTip(styles)}
+        <div style={styles.bodyTextWrapper}>
+          {this.getQuizTip(styles)}
+        </div>
       </div>
     );
   }
 
-  getStudyTip(styles) {
-    return (
-      <div style={styles.bodyTextWrapper}>
-        <p style={styles.bodyText}>
-          <b>Did you know,</b> if you take your first quiz attempt early you'll have
-          plenty of time to study and improve your grade on your second
-          attempt?
-        </p>
-      </div>
-    );
+  /**
+   * A/B Testing Quiz Tip Language
+   *
+   * Casing off of last digit of the User Id
+   */
+  getQuizTip(styles) {
+    let userIdLastDigit = this.props.userId ? this.props.userId.toString().split('').pop() : "";
+
+    switch (userIdLastDigit) {
+      case "0":
+      case "1":
+      case "2":
+      case "3":
+      case "4":
+        return (
+          <p style={styles.bodyText}>
+            Test Group 1
+          </p>
+        );
+      case "5":
+      case "6":
+      case "7":
+      case "8":
+      case "9":
+        return (
+          <p style={styles.bodyText}>
+            Test Group 2
+          </p>
+        );
+      default:
+        return (
+          <p style={styles.bodyText}>
+            <b>Did you know,</b> if you take your first quiz attempt early you'll have
+            plenty of time to study and improve your grade on your second
+            attempt?
+          </p>
+        );
+    }
   }
 
   getVanillaStyles() {
