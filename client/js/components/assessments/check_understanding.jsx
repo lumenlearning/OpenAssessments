@@ -11,6 +11,8 @@ import StartFormative from "./formative/StartFormative";
 import StartSummative from "./summative/StartSummative";
 import StartSwyk from "./swyk/StartSwyk";
 import TeacherOptions from "./teacher_options/TeacherOptions";
+// Utils
+import CommHandler from "../../utils/communication_handler";
 
 // Check Understanding Component
 export default class CheckUnderstanding extends React.Component{
@@ -148,18 +150,12 @@ export default class CheckUnderstanding extends React.Component{
         <button
           style={styles.startButton}
           className="btn btn-info"
-          onClick={() => {this.studyMore()}}
+          onClick={()=>{CommHandler.navigateHome()}}
           >
             Study More
         </button>
       </div>
     );
-  }
-
-  studyMore() {
-    //
-    // TODO: onClick, return user to study plan
-    //
   }
 
   getStyles(props, theme) {
