@@ -61,7 +61,7 @@ export default class Start extends BaseComponent {
 
     return (
       <div className="assessment" style={styles.assessment}>
-        {this.renderWaitModal()}
+        {this.abTestingWaitModal()}
         {this.renderTitleBar(styles)}
         <div className="section_list">
           <div className="section_container">
@@ -84,10 +84,44 @@ export default class Start extends BaseComponent {
     CommHandler.sendSize();
   }
 
-  renderWaitModal() {
+  /**
+   * A/B Testing the efficacy of the Wait Modal
+   *
+   * Casing off of last digit of the User Id
+   *
+   * 0-3: The modal shouldn't appear at all
+   * 4-6: Content set 1
+   * 7-9: Content set 2
+   */
+  abTestingWaitModal() {
+    let userIdLastDigit = this.state.assessmentAttempts ? this.state.assessmentAttempts[this.state.assessmentAttempts.length -1].user_id.toString().split("").pop() : "";
+
+    switch (userIdLastDigit) {
+      case "0":
+      case "1":
+      case "2":
+      case "3":
+        return;
+      case "4":
+      case "5":
+      case "6":
+        return this.renderWaitModal("content set 1");
+      case "7":
+      case "8":
+      case "9":
+        return this.renderWaitModal("content set 2");
+      default:
+        return this.renderWaitModal(
+          "Are you sure you'd like to start the quiz now, or would you like to study for longer to try to improve your grade?"
+        );
+    }
+  }
+
+  renderWaitModal(content) {
     if (this.state.showModal) {
       return (
         <WaitModal
+          bodyContent={content}
           hideModal={() => this.hideModal()}
           showModal={this.state.showModal}
           />

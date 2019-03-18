@@ -27,7 +27,7 @@ export default class QuizTip extends React.Component {
    */
   getQuizTip(styles) {
     let userIdLastDigit = this.props.userId ? this.props.userId.toString().split('').pop() : "";
-
+console.log(this.props.userId)
     switch (userIdLastDigit) {
       case "0":
       case "1":

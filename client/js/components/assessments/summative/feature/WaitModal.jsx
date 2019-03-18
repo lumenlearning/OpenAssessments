@@ -31,8 +31,7 @@ export default class WaitModal extends React.Component {
           </div>
           <div style={styles.body}>
             <p style={styles.bodyText}>
-              Are you sure you'd like to start the quiz now, or would you like to
-              study for longer to try to improve your grade?
+              {this.props.bodyContent}
             </p>
           </div>
           <div style={styles.footer}>
