@@ -11,17 +11,29 @@ import StartFormative from "./formative/StartFormative";
 import StartSummative from "./summative/StartSummative";
 import StartSwyk from "./swyk/StartSwyk";
 import TeacherOptions from "./teacher_options/TeacherOptions";
+import WaitModal from "./summative/feature/WaitModal.jsx";
 // Utils
 import CommHandler from "../../utils/communication_handler";
 
 // Check Understanding Component
 export default class CheckUnderstanding extends React.Component{
 
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {
+      showModal: false
+    }
+
+    this.waitOrStart = this.waitOrStart.bind(this);
+  }
+
   render() {
     let styles = this.getStyles(this.props, this.context.theme);
 
     return (
       <div className="assessment-container" style={styles.assessmentContainer}>
+        {this.renderWaitModal()}
         {this.renderTeacherOptions()}
         {this.renderContent(styles)}
       </div>
@@ -123,7 +135,7 @@ export default class CheckUnderstanding extends React.Component{
         <button
           style={styles.startButton}
           className="btn btn-info"
-          onClick={() => {this.startAssessment(this.props.eid, this.props.assessmentId, this.context)}}
+          onClick={this.waitOrStart}
           >
             {this.props.assessmentKind.toUpperCase() === "SHOW_WHAT_YOU_KNOW" ? "Start Pre-test" : "Start Quiz"}
         </button>
@@ -131,17 +143,107 @@ export default class CheckUnderstanding extends React.Component{
     );
   }
 
-  startAssessment(eid, assessmentId, context) {
-    // if student should be pestered to go back and study, render wait/WAIT!...
-    // TODO: Add an appropriate condition to case off of.
+  waitOrStart() {
+    // if this is a summative assessment...
     if (this.props.assessmentKind.toUpperCase() === "SUMMATIVE") {
-      this.props.showModal();
-    // otherwise, load the assessment.
+      // if the user id ends in a number greater than three and
+      // if it hasn't been at least 5 minutes since their last attempt
+      // then pester the user with wait modal.
+      if (this.calculateUserIdLastDigitLastAttempt() > 3 &&
+          this.calculateTimeSinceLastAttempt() <= 5) {
+            this.showWaitModal();
+      // otherwise, start the assessment attempt
+      } else {
+        this.startAssessment(
+          this.props.eid,
+          this.props.assessmentId,
+          this.context
+        );
+      }
+    //  otherwise, start the assessment attempt
     } else {
-      AssessmentActions.start(eid, assessmentId, this.props.externalContextId);
-      AssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, $("#srcData").text());
-      context.router.transitionTo("assessment");
+      this.startAssessment(
+        this.props.eid,
+        this.props.assessmentId,
+        this.context
+      );
     }
+  }
+
+  /**
+   * A/B Testing
+   *
+   * Casing off of last digit of the User Id to determine what verbage to use in
+   * the body of the wait modal.
+   *
+   * 0-3: The modal shouldn't appear at all
+   * 4-6: Content set 1
+   * 7-9: Content set 2
+   */
+  getWaitModalBodyText() {
+    let userIdLastDigit = this.calculateUserIdLastDigitLastAttempt();
+    let bodyText = "";
+
+    switch (userIdLastDigit) {
+      case "0":
+      case "1":
+      case "2":
+      case "3":
+        break;
+      case "4":
+      case "5":
+      case "6":
+        bodyText = "content set 1";
+        break;
+      case "7":
+      case "8":
+      case "9":
+        bodyText = "content set 2";
+        break;
+      default:
+        bodyText = "Are you sure you'd like to start the quiz now, or would you like to study for longer to try to improve your grade?";
+    }
+
+    return bodyText;
+  }
+
+  calculateTimeSinceLastAttempt() {
+    if (this.props.assessmentAttempts && this.props.assessmentAttempts.length > 0) {
+      let now = new Date();
+      let attemptTimeStamp = (new Date(this.props.assessmentAttempts[this.props.assessmentAttempts.length - 1].assessment_result_created_at)).getTime();
+      let nowTimeStamp = now.getTime();
+
+      let differenceInMilliseconds = Math.abs(attemptTimeStamp - nowTimeStamp);
+      let differenceInMinutes = Math.floor((differenceInMilliseconds / 1000) / 60);
+
+      return differenceInMinutes;
+    }
+  }
+
+  calculateUserIdLastDigitLastAttempt() {
+    if (this.props.assessmentAttempts && this.props.assessmentAttempts.length > 0) {
+      return this.props.assessmentAttempts[this.props.assessmentAttempts.length - 1].user_id.toString().split("").pop();
+    }
+  }
+
+  renderWaitModal() {
+    let bodyContent = this.getWaitModalBodyText();
+
+    if (this.state.showModal && bodyContent !== "") {
+      return (
+        <WaitModal
+          bodyContent={bodyContent}
+          hideModal={() => this.hideWaitModal()}
+          showModal={() => this.showWaitModal()}
+          />
+      );
+    }
+  }
+
+  startAssessment(eid, assessmentId, context) {
+    AssessmentActions.start(eid, assessmentId, this.props.externalContextId);
+    AssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, $("#srcData").text());
+    context.router.transitionTo("assessment");
   }
 
   renderStudyButton(styles) {
@@ -156,6 +258,14 @@ export default class CheckUnderstanding extends React.Component{
         </button>
       </div>
     );
+  }
+
+  showWaitModal() {
+    this.setState({showModal: true});
+  }
+
+  hideWaitModal() {
+    this.setState({showModal: false});
   }
 
   getStyles(props, theme) {

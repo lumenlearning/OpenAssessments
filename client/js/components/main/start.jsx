@@ -18,7 +18,6 @@ import FullPostNav from "../post_nav/full_post_nav.jsx";
 import Item from "../assessments/item";
 import Loading from "../assessments/loading";
 import ProgressDropdown from "../common/progress_dropdown";
-import WaitModal from "../assessments/summative/feature/WaitModal.jsx";
 
 // Start Component
 export default class Start extends BaseComponent {
@@ -48,7 +47,6 @@ export default class Start extends BaseComponent {
 
     return {
       showStart: showStart,
-      showModal: false,
       assessmentAttemptsOutcomes: ReviewAssessmentStore.outcomes(),
       assessmentAttempts: this.orderBySequence(ReviewAssessmentStore.getAttemptedAssessments()),
       questionCount: AssessmentStore.questionCount(),
@@ -61,7 +59,6 @@ export default class Start extends BaseComponent {
 
     return (
       <div className="assessment" style={styles.assessment}>
-        {this.abTestingWaitModal()}
         {this.renderTitleBar(styles)}
         <div className="section_list">
           <div className="section_container">
@@ -82,51 +79,6 @@ export default class Start extends BaseComponent {
     }
 
     CommHandler.sendSize();
-  }
-
-  /**
-   * A/B Testing the efficacy of the Wait Modal
-   *
-   * Casing off of last digit of the User Id
-   *
-   * 0-3: The modal shouldn't appear at all
-   * 4-6: Content set 1
-   * 7-9: Content set 2
-   */
-  abTestingWaitModal() {
-    let userIdLastDigit = this.state.assessmentAttempts ? this.state.assessmentAttempts[this.state.assessmentAttempts.length -1].user_id.toString().split("").pop() : "";
-
-    switch (userIdLastDigit) {
-      case "0":
-      case "1":
-      case "2":
-      case "3":
-        return;
-      case "4":
-      case "5":
-      case "6":
-        return this.renderWaitModal("content set 1");
-      case "7":
-      case "8":
-      case "9":
-        return this.renderWaitModal("content set 2");
-      default:
-        return this.renderWaitModal(
-          "Are you sure you'd like to start the quiz now, or would you like to study for longer to try to improve your grade?"
-        );
-    }
-  }
-
-  renderWaitModal(content) {
-    if (this.state.showModal) {
-      return (
-        <WaitModal
-          bodyContent={content}
-          hideModal={() => this.hideModal()}
-          showModal={this.state.showModal}
-          />
-      );
-    }
   }
 
   renderTitleBar(styles) {
@@ -155,7 +107,6 @@ export default class Start extends BaseComponent {
           isLti={this.state.settings.isLti}
           ltiRole={this.state.settings.ltiRole}
           maxAttempts={this.state.settings.allowedAttempts}
-          showModal={() => this.showModal()}
           studyAndMasteryFeedback={this.studyAndMasteryFeedback()}
           title={this.state.settings.assessmentTitle}
           userAttempts={this.state.settings.userAttempts}
@@ -196,14 +147,6 @@ export default class Start extends BaseComponent {
         return a.assessment_result_attempt - b.assessment_result_attempt
       });
     }
-  }
-
-  showModal() {
-    this.setState({showModal: true});
-  }
-
-  hideModal() {
-    this.setState({showModal: false});
   }
 
   getStyles(theme) {
