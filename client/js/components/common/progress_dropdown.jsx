@@ -10,11 +10,10 @@ export default class ProgressDropdown extends BaseComponent{
   
   constructor(props, context){
     super(props, context);
-    this._bind("navButtonClicked", "getStyles");
-
+    this._bind("navButtonClicked", "getStyles", "handleKeyDown");
   }
 
-  navButtonClicked(){
+  navButtonClicked(e){
     if(this.state && this.state.expanded){
       this.setState({expanded: !this.state.expanded})
     } else {
@@ -24,6 +23,13 @@ export default class ProgressDropdown extends BaseComponent{
 
   selectQuestion(e,index){
     console.log(index);
+    }
+
+  handleKeyDown(e) {
+    // on escape toggle menu closed
+    if (e.keyCode === 27) {
+      this.setState({expanded: false});
+    }
   }
 
   mouseOver(e){
@@ -44,6 +50,7 @@ export default class ProgressDropdown extends BaseComponent{
     return {
       dropdownStyle: {
         overflow: expanded ? "scroll" : "hidden",
+        display: expanded ? "block" : "none",
         height: expanded ? expHeight : "0px",
         backgroundColor: "white",
         transition: "all 0.4s",
@@ -97,14 +104,14 @@ export default class ProgressDropdown extends BaseComponent{
     });
     var text = this.props.disabled ? <b>There are {this.props.questionCount} questions</b> : <b>You are on question {this.props.currentQuestion} of {this.props.questionCount}</b>
     return (
-      <span>
+      <span onKeyDown={(e)=>{ this.handleKeyDown(e)}}>
         <img style={styles.icon}src={this.props.settings.images.ProgressIcon_svg} />
-        <button id="focus" style={styles.dropdownButton} className="btn" type="button" aria-haspopup="true" aria-expanded="true" onClick={()=>{if(!this.props.disabled)this.navButtonClicked()}}>
+        <button id="focus" style={styles.dropdownButton} className="btn" type="button" aria-haspopup="true" aria-controls="questionsMenu" aria-expanded={expanded ? true : false} onClick={(e)=>{ if(!this.props.disabled)this.navButtonClicked(e)}}>
           <div>Progress</div>
           <span>{text}</span>
           <span style={styles.caret} className="caret"></span>
         </button>
-        <div style={styles.dropdownStyle} aria-labelledby="dropdownMenu1">
+        <div style={styles.dropdownStyle} id="questionsMenu" role="menu" aria-labelledby="focus">
           {questions}
         </div>
       </span>
