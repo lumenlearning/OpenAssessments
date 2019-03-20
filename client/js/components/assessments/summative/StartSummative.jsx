@@ -17,23 +17,14 @@ export default class StartSummative extends React.Component {
       <div className="start-wrapper">
         <div className="start-header-wrapper" style={styles.headerWrapper}>
           <h2 style={styles.quizTitle}>{`${this.props.title} Quiz`}</h2>
-          <p style={styles.quizSubtitle}>{`Attempt ${this.props.userAttempts} of ${this.props.maxAttempts}`}</p>
+          {this.maxAttemptsReachedHeader(styles)}
         </div>
 
         <div className="start-body-wrapper">
           {this.renderAttemptsFeedback()}
         </div>
 
-        <div className="start-footer-wrapper" style={styles.footerWrapper}>
-          <div className="start-footer-text">
-            <p style={styles.footerHeading}>{`Start attempt ${this.props.userAttempts} of ${this.props.maxAttempts}`}</p>
-            <p style={styles.footerSubheading}>The highest score of all completed attempts will be recorded as your grade</p>
-          </div>
-          <div className="start-study-button-wrapper" style={styles.startStudyButtonsWrapper}>
-            {this.props.startButton}
-            {this.props.studyButton}
-          </div>
-        </div>
+        {this.maxAttemptsReachedFooter(styles)}
       </div>
     );
   }
@@ -65,6 +56,41 @@ export default class StartSummative extends React.Component {
           userId={null}
           postIt={false}
           />
+      );
+    }
+  }
+
+  maxAttemptsReachedHeader(styles) {
+    if (this.props.maxAttemptsReached) {
+      return (
+        <p style={styles.noAttemptsAvailable}>No quiz attempts available</p>
+      );
+    } else {
+      return (
+        <p style={styles.quizSubtitle}>{`Attempt ${this.props.userAttempts} of ${this.props.maxAttempts}`}</p>
+      );
+    }
+  }
+
+  maxAttemptsReachedFooter(styles) {
+    if (this.props.maxAttemptsReached) {
+      return (
+        <div className="start-footer-wrapper" style={styles.footerWrapper}>
+          <p style={styles.noAttemptsAvailable}>No quiz attempts available</p>
+        </div>
+      );
+    } else {
+      return (
+        <div className="start-footer-wrapper" style={styles.footerWrapper}>
+          <div className="start-footer-text">
+            <p style={styles.footerHeading}>{`Start attempt ${this.props.userAttempts} of ${this.props.maxAttempts}`}</p>
+            <p style={styles.footerSubheading}>The highest score of all completed attempts will be recorded as your grade</p>
+          </div>
+          <div className="start-study-button-wrapper" style={styles.startStudyButtonsWrapper}>
+            {this.props.startButton}
+            {this.props.studyButton}
+          </div>
+        </div>
       );
     }
   }
@@ -117,6 +143,9 @@ export default class StartSummative extends React.Component {
       startStudyButtonsWrapper: {
         display: "flex",
         flexDirection: "row"
+      },
+      noAttemptsAvailable: {
+        color: "#ad4646"
       }
     }
   }

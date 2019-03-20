@@ -6,7 +6,6 @@ import $ from "jquery";
 // Actions
 import AssessmentActions from "../../actions/assessment";
 // Subcomponents
-import MaxAttempts from "./summative/maxAttempts";
 import StartFormative from "./formative/StartFormative";
 import StartSummative from "./summative/StartSummative";
 import StartSwyk from "./swyk/StartSwyk";
@@ -78,12 +77,6 @@ export default class CheckUnderstanding extends React.Component{
       return;
     }
 
-    // If there are no more quiz attempts available and user == student, render
-    // the Max Attempts screen.
-    if (props.userAttempts >= props.maxAttempts && props.ltiRole !== "admin") {
-      return <MaxAttempts />;
-    }
-
     // If this is an LTI Launch and above conditions were not met, return the
     // Start Summative Assessment screen.
     if (this.props.isLti) {
@@ -93,6 +86,7 @@ export default class CheckUnderstanding extends React.Component{
           assessmentAttemptsOutcomes={this.props.assessmentAttemptsOutcomes}
           studyAndMasteryFeedback={this.props.studyAndMasteryFeedback}
           maxAttempts={this.props.maxAttempts}
+          maxAttemptsReached={this.maxAttemptsReached()}
           title={this.props.title}
           startButton={this.renderStartButton(styles)}
           studyButton={this.renderStudyButton(styles)}
@@ -100,6 +94,12 @@ export default class CheckUnderstanding extends React.Component{
           />
       );
     }
+  }
+
+  maxAttemptsReached() {
+    // if the user's number of attempts are equal to or more than the max number
+    // of attempts allowed, and the user isn't an admin, return true.
+    return this.props.userAttempts >= this.props.maxAttempts && this.props.ltiRole !== "admin";
   }
 
   getStartSwyk(styles) {
