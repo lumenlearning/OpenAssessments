@@ -42,7 +42,12 @@ export default class WaitModal extends React.Component {
                 >
                   Start Quiz
                 </button>
-              <button style={styles.studyButton}>Study More</button>
+              <button
+                style={styles.studyButton}
+                onClick={() => this.props.studyMore()}
+                >
+                  Study More
+                </button>
             </div>
           </div>
         </div>

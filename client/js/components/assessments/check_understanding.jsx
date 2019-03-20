@@ -240,6 +240,7 @@ export default class CheckUnderstanding extends React.Component{
             this.props.assessmentId,
             this.context
           )}
+          studyMore={()=>CommHandler.navigateHome()}
           />
       );
     }
