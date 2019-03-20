@@ -235,6 +235,11 @@ export default class CheckUnderstanding extends React.Component{
           bodyContent={bodyContent}
           hideModal={() => this.hideWaitModal()}
           showModal={() => this.showWaitModal()}
+          startAssessment={() => this.startAssessment(
+            this.props.eid,
+            this.props.assessmentId,
+            this.context
+          )}
           />
       );
     }
