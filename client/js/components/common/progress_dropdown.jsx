@@ -98,7 +98,7 @@ export default class ProgressDropdown extends BaseComponent{
   }
 
   generateProgressText() {
-    return this.props.disabled ? <b>There are {this.props.questionCount} questions</b> : <b>You are on question {this.props.currentQuestion} of {this.props.questionCount}</b>
+    return this.props.disabled ? <b>There are {this.props.questionCount} questions</b> : <b>You are on question {this.props.currentQuestion} of {this.props.questionCount}</b>;
   }
 
   render(){
