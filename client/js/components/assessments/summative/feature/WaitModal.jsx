@@ -37,17 +37,18 @@ export default class WaitModal extends React.Component {
           <div style={styles.footer}>
             <div style={styles.buttonGroup}>
               <button
-                style={styles.startButton}
+                style={styles.button}
                 onClick={() => this.props.startAssessment()}
                 >
                   Start Quiz
                 </button>
-              <button
-                style={styles.studyButton}
-                onClick={() => this.props.studyMore()}
-                >
-                  Study More
+              <a style={styles.returnUrl} href={this.props.returnUrl}>
+                <button
+                  style={styles.button}
+                  >
+                    Study More
                 </button>
+              </a>
             </div>
           </div>
         </div>
@@ -117,7 +118,7 @@ export default class WaitModal extends React.Component {
         display: "flex",
         justifyContent: "flex-end"
       },
-      startButton: {
+      button: {
         color: "#fff",
         backgroundColor: "#1E72CD",
         border: "1px solid #004C9F",
@@ -129,18 +130,8 @@ export default class WaitModal extends React.Component {
         height: "40px",
         minWidth: "97px"
       },
-      studyButton: {
-        marginLeft: "8px",
-        color: "#fff",
-        backgroundColor: "#1E72CD",
-        border: "1px solid #004C9F",
-        borderRadius: "3px",
-        marginBottom: 0,
-        padding: "10px 0.75rem",
-        fontSize: "14px",
-        fontWeight: "400",
-        height: "40px",
-        minWidth: "97px"
+      returnUrl: {
+        marginLeft: "8px"
       }
     }
   }

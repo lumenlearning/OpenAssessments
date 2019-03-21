@@ -13,7 +13,6 @@ import ReviewAssessmentStore from "../../stores/review_assessment";
 //Subcomponents
 import BaseComponent from "../base_component";
 import CheckUnderstanding from "../assessments/check_understanding";
-import CommHandler from "../../utils/communication_handler";
 import FullPostNav from "../post_nav/full_post_nav.jsx";
 import Item from "../assessments/item";
 import Loading from "../assessments/loading";
@@ -111,6 +110,7 @@ export default class Start extends BaseComponent {
           title={this.state.settings.assessmentTitle}
           userAttempts={this.state.settings.userAttempts}
           userId={this.state.settings.userId}
+          returnUrl={this.state.settings.returnUrl}
           />
       );
     }

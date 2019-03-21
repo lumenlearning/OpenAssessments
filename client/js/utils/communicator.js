@@ -1,5 +1,5 @@
 export default {
-  
+
   enableListener: function(handler){
     // Create IE + others compatible event handler
     var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";

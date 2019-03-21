@@ -11,8 +11,6 @@ import StartSummative from "./summative/StartSummative";
 import StartSwyk from "./swyk/StartSwyk";
 import TeacherOptions from "./teacher_options/TeacherOptions";
 import WaitModal from "./summative/feature/WaitModal.jsx";
-// Utils
-import CommHandler from "../../utils/communication_handler";
 
 // Check Understanding Component
 export default class CheckUnderstanding extends React.Component{
@@ -240,7 +238,7 @@ export default class CheckUnderstanding extends React.Component{
             this.props.assessmentId,
             this.context
           )}
-          studyMore={()=>CommHandler.navigateHome()}
+          returnUrl={this.props.returnUrl}
           />
       );
     }
@@ -255,15 +253,16 @@ export default class CheckUnderstanding extends React.Component{
   renderStudyButton(styles) {
     return (
       <div className="study-more-button-wrapper" style={styles.studyButtonWrapper}>
-        <button
-          style={styles.startButton}
-          className="btn btn-info"
-          onClick={()=>{CommHandler.navigateHome()}}
-          >
-            Study More
-        </button>
+        <a href={this.props.returnUrl}>
+          <button
+            style={styles.startButton}
+            className="btn btn-info"
+            >
+              Study More
+          </button>
+        </a>
       </div>
-    );
+    )
   }
 
   showWaitModal() {
