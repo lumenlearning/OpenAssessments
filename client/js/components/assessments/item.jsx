@@ -125,7 +125,7 @@ export default class Item extends BaseComponent{
   }
 
   getNextButton(styles) {
-    var disabledValue = (this.props.currentIndex == this.props.questionCount - 1) ? "disabled" : "";
+    var disabledValue = (this.props.currentIndex === this.props.questionCount - 1) ? "disabled" : "";
     var nextButtonClasses = "btn btn-next-item " + disabledValue;
 
     return (
