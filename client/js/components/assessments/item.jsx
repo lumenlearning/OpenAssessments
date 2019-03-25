@@ -36,7 +36,7 @@ export default class Item extends BaseComponent {
     let styles = this.getStyles(this.context.theme);
 
     return (
-      <div className="assessment_container" style={styles.assessmentContainer}>
+      <div className="assessment-container" style={styles.assessmentContainer}>
         <div className="question">
           <div style={styles.formativePadding}>
 

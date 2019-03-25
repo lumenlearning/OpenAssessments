@@ -6,7 +6,7 @@ class Api::AssessmentsController < Api::ApiController
   respond_to :xml, :json
 
   before_action :ensure_context_admin, only:[:json_update, :review_show]
-  load_and_authorize_resource except: [:show, :json_update, :copy, :review_show]
+  load_and_authorize_resource except: [:show, :json_update, :copy, :student_review_show, :student_review_show_xml]
   skip_before_action :validate_token, only: [:show]
   skip_before_action :protect_account, only: [:show]
   before_action :ensure_copy_admin, only:[:copy]
@@ -150,6 +150,71 @@ class Api::AssessmentsController < Api::ApiController
     end
 
     render :xml => xml || assessment.xml_with_answers
+  end
+
+  def student_review_show
+    results = []
+
+    if params[:uaid]
+      ua = UserAssessment.find(params[:uaid])
+
+      correct_map = ->(score) {
+        case score
+          when 0
+            false
+          when 1
+            true
+          else
+            'partial'
+        end
+      }
+
+      assessment_results = ua.assessment_results
+
+      assessment_results.each_with_index do |assessment_result, index|
+        results << {
+          user_id: ua.user_id,
+          assessment_result_id: assessment_result.id,
+          assessment_result_attempt: assessment_result.attempt,
+          assessment_result_score: assessment_result.score,
+          assessment_result_created_at: assessment_result.created_at,
+          assessment_result_items: assessment_result.item_results.order(:sequence_index).includes(:item).map do |ir|
+            {
+              ident: ir.identifier,
+              outcome_guid: ir.outcome_guid,
+              title: ir.item.title,
+              score: ir.score,
+              correct: correct_map.call(ir.score)
+            }
+          end
+        }
+      end
+    end
+
+    render :json => results
+  end
+
+  # This is the same as 'review_show' endpoint, only this will never return a
+  # version of the xml that has answers in it.
+  def student_review_show_xml
+    assessment = Assessment.where(id: params[:assessment_id], account: current_account).first
+    xml = nil
+
+    if params[:assessment_result_id]
+      ar = AssessmentResult.find(params[:assessment_result_id])
+      ua = ar.user_assessment
+
+      if !ua || ua.lti_context_id != @lti_launch.lti_context_id
+        render :json => {:error => "This Assessment Result is not from this context."}, status: :unauthorized
+        return
+      end
+
+      if ar.assessment_xml && (ar.assessment_xml.kind == 'summative' || ar.assessment_xml.kind == 'qti')
+        xml = ar.assessment_xml.xml
+      end
+    end
+
+    render :xml => xml || assessment.xml_without_answers
   end
 
   # *******************************************************************

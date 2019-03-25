@@ -31,13 +31,12 @@ export default{
         color: "#458B00"
       },
       assessmentContainer:{
-        marginTop: isFormative ? "0px" : "70px",
+        marginTop: "0px",
         boxShadow: isFormative ? "" : theme.assessmentContainerBoxShadow,
-        borderRadius: theme.assessmentContainerBorderRadius,
-        padding: "20px"
+        borderRadius: theme.assessmentContainerBorderRadius
       },
       resultsStyle: {
-        padding: "20px"
+        padding: "20px 15px"
       },
       formative: {
         padding: "5",
@@ -83,6 +82,24 @@ export default{
         lineHeight: "1.4",
         width: "100%"
       },
+      headerWrapper: {
+        borderBottom: "1px solid #c4cdd5",
+        padding: "20px 0"
+      },
+      quizTitle: {
+        color: "#212b36",
+        fontSize: "20px",
+        lineHeight: "28px",
+        margin: "0 0 4px 0"
+      },
+      answerKeyLabel: {
+        color: "#212b36",
+        fontSize: "16px",
+        fontWeight: "600",
+        marginBottom: "30px",
+        marginLeft: "-15px",
+        marginTop: "-15px"
+      },
       resultList: {
         width: "90%",
         margin: "auto",
@@ -114,15 +131,13 @@ export default{
         marginBottom: "50px"
       },
       titleBar: {
-        position: "absolute",
-        top: "0px",
-        left: "0px",
-        width: "100%",
-        padding: "10px 20px 10px 20px",
-        backgroundColor: theme.primaryBackgroundColor,
-        color: "white",
-        fontSize: "130%",
-        //fontWeight: "bold"
+        borderBottom: "2px solid #003136",
+        padding: "22px 40px 22px 0",
+        fontFamily: "Arial",
+        fontSize: "28px",
+        fontWeight: "400",
+        color: "#212b36",
+        lineHeight: "1.4"
       },
       warningStyle: {
         width: "100%",

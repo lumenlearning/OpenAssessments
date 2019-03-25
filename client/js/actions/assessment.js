@@ -49,7 +49,7 @@ export default {
   selectConfidenceLevel(level, index){
     Dispatcher.dispatch({action: Constants.LEVEL_SELECTED, level: level, index: index});
   },
-  
+
   submitAssessment(identifier, assessmentId, questions, studentAnswers, settings, outcomes){
     Dispatcher.dispatch({action: Constants.ASSESSMENT_SUBMITTED});
     this.submitProgress();

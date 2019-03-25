@@ -1,79 +1,85 @@
 "use strict";
-
-import React                   from 'react';
-import BaseComponent           from "../base_component";
-import SettingsStore           from "../../stores/settings";
+// Dependencies
+import React from 'react';
+// Actions
 import ReviewAssessmentActions from "../../actions/review_assessment";
-import ReviewAssessmentStore   from "../../stores/review_assessment";
-import ResultStyles            from "./result_styles.js";
-import CommunicationHandler    from "../../utils/communication_handler";
-import ItemResult           from "./item_result";
+// Stores
+import ReviewAssessmentStore from "../../stores/review_assessment";
+import SettingsStore from "../../stores/settings";
+// Subcomponents
+import BaseComponent from "../base_component";
+import TeacherOptions from "../assessments/teacher_options/TeacherOptions";
+import ItemResult from "./item_result";
+// Styles/Scripts
+import ResultStyles from "./result_styles.js";
+import CommunicationHandler from "../../utils/communication_handler";
 
 export default class TeacherPreview extends BaseComponent{
-
-  constructor(props, context){
+  constructor(props, context) {
     super(props, context);
-    this.stores = [ReviewAssessmentStore];
-    ReviewAssessmentActions.loadAssessmentXmlForReview(window.DEFAULT_SETTINGS, props.params.assessmentId);
+
     this.state = this.getState();
+    this.stores = [ReviewAssessmentStore];
+    this.context = context;
+
+    ReviewAssessmentActions.loadAssessmentXmlForReview(window.DEFAULT_SETTINGS, props.params.assessmentId);
   }
 
-  getState(){
+  getState() {
     return {
-      questions        : ReviewAssessmentStore.allQuestions(),
-      outcomes         : ReviewAssessmentStore.outcomes(),
-      settings         : SettingsStore.current(),
-      assessment       : ReviewAssessmentStore.current()
+      questions: ReviewAssessmentStore.allQuestions(),
+      outcomes: ReviewAssessmentStore.outcomes(),
+      settings: SettingsStore.current(),
+      assessment: ReviewAssessmentStore.current()
     }
   }
 
-  isSummative(){
-    return this.state.settings.assessmentKind.toUpperCase() == "SUMMATIVE";
+
+  render() {
+    let styles = this.getStyles(this.context.theme);
+    let itemResults = this.getItemResults();
+
+    return (
+      <div style={styles.assessment}>
+        <div style={styles.assessmentContainer}>
+          <div className="assessment-header" style={styles.titleBar}>
+            {this.state.settings ? this.state.settings.assessmentTitle : ""}
+          </div>
+          <TeacherOptions
+            assessmentId={this.props.params.assessmentId}
+            context={this.context}
+            externalContextId={this.state.settings.externalContextId}
+            />
+          <div className="start-header-wrapper" style={styles.headerWrapper}>
+            <h2 style={styles.quizTitle}>{this.state.settings ? this.state.settings.assessmentTitle : ""}</h2>
+          </div>
+          <div id="questionsStart" style={styles.resultsStyle}>
+            <p style={styles.answerKeyLabel}>Answer Key</p>
+            {itemResults}
+          </div>
+        </div>
+      </div>
+    );
   }
 
-  getStyles(theme){
+  getStyles(theme) {
     return ResultStyles.getStyles(theme)
   }
 
-  getItemResults(){
-    //return <p>hi</p>;
-
-    return ReviewAssessmentStore.allQuestions().map((question, index)=>{
-        return <ItemResult key={index}
-                           question={question}
-                           isCorrect={"teacher_preview"}
-                           index={index}
-                           confidence={"teacher_preview"}
-                           chosen={[]}
-                           correctAnswers={question.correct}/>;
-      });
-  }
-
-  render(){
-    var styles = this.getStyles(this.context.theme);
-    var itemResults = this.getItemResults();
-
-    return (<div style={styles.assessment}>
-      <div style={styles.assessmentContainer}>
-        <div style={styles.titleBar}>{this.state.assessment ? this.state.assessment.title : ""}</div>
-
-        <div id="questionsStart" style={styles.resultsStyle}>
-          {itemResults}
-        </div>
-
-      </div>
-    </div>)
-
-    //return <SummativeResult
-    //    styles={this.getStyles(this.context.theme)}
-    //    context={this.context}
-    //    isSummative={this.isSummative()}
-    //    assessmentResult={this.state.assessmentResult}
-    //    assessment={this.state.assessment}
-    //    outcomes={this.state.outcomes}
-    //    questionResponses={this.state.assessmentResult.question_responses}
-    //    user={this.state.assessmentResult.user}
-    //    />
+  getItemResults() {
+    return ReviewAssessmentStore.allQuestions().map((question, index) => {
+      return (
+        <ItemResult
+          key={index}
+          question={question}
+          isCorrect={"teacher_preview"}
+          index={index}
+          confidence={"teacher_preview"}
+          chosen={[]}
+          correctAnswers={question.correct}
+          />
+      );
+    });
   }
 }
 
