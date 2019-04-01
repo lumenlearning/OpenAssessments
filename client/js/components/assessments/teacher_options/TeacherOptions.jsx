@@ -12,18 +12,18 @@ export default class TeacherOptions extends React.Component {
     return (
       <div className="teacher-options-wrapper">
         <button
-          onClick={() => { this.changeContext("start") }}
+          onClick={() => { this.changeContext("start"); }}
           style={styles.teacherOption}>
           Student Experience
         </button>
         <button
-          onClick={() => { this.changeContext("teacher-preview") }}
+          onClick={() => { this.changeContext("teacher-preview"); }}
           style={styles.teacherOption}
           >
             Answer Key
         </button>
         <button
-          onClick={() => { this.changeContext("attempts") }}
+          onClick={() => { this.changeContext("attempts"); }}
           style={styles.teacherOption}
           >
             Manage Quiz Attempts
@@ -53,7 +53,7 @@ export default class TeacherOptions extends React.Component {
         textTransform: "uppercase",
         fontSize: "12px",
         fontWeight: "bold"
-      },
-    }
+      }
+    };
   }
 }

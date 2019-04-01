@@ -58,7 +58,7 @@ export default class FormativeResult extends React.Component{
         <div key={"result-" + index}>
           <div style={styles.resultList}>
             <div>
-              <div style={{color: color, ...styles.resultListInner}}>
+              <div style={{color, ...styles.resultListInner}}>
                 Question {index + 1} &mdash; {message}
               </div>
               <div style={{color: confidenceColor, float: "right", marginTop: "20px"}}>

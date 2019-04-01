@@ -135,12 +135,18 @@ export default class CheckUnderstanding extends React.Component{
   shouldNotRenderStartButton() {
     // If this is a summative assessment, max attempts have been reached, and
     // user has LTI Role of 'Admin', OR if this is a formative assessment, bail.
-    if ((this.props.userAttempts >= this.props.maxAttempts &&
-         this.props.assessmentKind.toUpperCase() === "SUMMATIVE" &&
-         this.props.ltiRole !== "admin") ||
-         this.props.assessmentKind.toUpperCase() === "FORMATIVE") {
+    if ((this.isSummative() && this.maxAttemptsReached()) ||
+         this.isFormative()) {
       return true;
     }
+  }
+
+  isSummative() {
+    return this.props.assessmentKind.toUpperCase() === "SUMMATIVE" ? true : false;
+  }
+
+  isFormative() {
+    return this.props.assessmentKind.toUpperCase() === "FORMATIVE" ? true : false;
   }
 
   waitOrStart() {

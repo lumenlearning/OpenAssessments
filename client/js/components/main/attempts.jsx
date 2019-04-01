@@ -147,7 +147,7 @@ export default class Attempts extends BaseComponent {
       <div>
         {ua.attempts.map((attempt) => {
           let m = moment(attempt.created_at);
-          let dateSent = m.format('ddd, MMM Do, h:mm a [GMT] ZZ');
+          let dateSent = m.format("ddd, MMM Do, h:mm a [GMT] ZZ");
           let relativeTime = m.fromNow();
 
           return (
@@ -223,7 +223,7 @@ export default class Attempts extends BaseComponent {
         color: "#212b36",
         lineHeight: "1.4"
       }
-    }
+    };
   }
 }
 

@@ -264,7 +264,7 @@ export default class Item extends BaseComponent {
       return;
     }
 
-    if (this.notFormative()) {
+    if (this.notFormative(assessmentKind)) {
       return (
         <div className="navigationBtnWrapper" style={styles.navigationWrapper}>
           {this.getPreviousButton(styles)}
@@ -275,13 +275,10 @@ export default class Item extends BaseComponent {
   }
 
   oneQuestionAssessment() {
-    // there's only one question in the assessment
-    if (this.props.questionCount === 1) {
-      return true;
-    }
+    return this.props.questionCount === 1 ? true : false;
   }
 
-  notFormative() {
+  notFormative(assessmentKind) {
     if (assessmentKind === "summative" ||
         assessmentKind === "practice" ||
         assessmentKind === "show_what_you_know") {

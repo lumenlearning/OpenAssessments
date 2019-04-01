@@ -90,7 +90,7 @@ export default class QuizTip extends React.Component {
         color: "#212b36",
         fontSize: "20px"
       }
-    }
+    };
   }
 
   getPostItStyles() {
