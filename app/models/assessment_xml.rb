@@ -123,27 +123,31 @@ class AssessmentXml < ActiveRecord::Base
     doc.css('assessment > section').first
   end
 
-  def self.move_questions_for_guid(source_xml_string, destination_xml_string, guid)
+  def self.move_questions_to_different_section_for_guid(source_xml_string, destination_xml_string, guid, after_guid = nil)
     source_doc = Nokogiri::XML(source_xml_string)
     destination_doc = Nokogiri::XML(destination_xml_string)
 
     if root_section_contains_child_sections?(source_doc)
       source_doc.css('section section').each do |source_section|
-        move_questions_from_source_section!(source_doc, source_section, destination_doc, guid)
+        move_questions_from_source_section!(source_doc, source_section, destination_doc, guid, after_guid)
       end
       clear_empty_child_sections!(source_doc)
     else
       source_section = root_section(source_doc)
-      move_questions_from_source_section!(source_doc, source_section, destination_doc, guid)
+      move_questions_from_source_section!(source_doc, source_section, destination_doc, guid, after_guid)
     end
     return source_doc.to_xml, destination_doc.to_xml
   end
 
-  def self.move_questions_from_source_section!(source_doc, source_section, destination_doc, guid)
-    if source_section.to_s =~ /#{guid}/ # is the guid present in this section's xml?
+  def self.is_section_for?(section, guid)
+    section.to_s =~ /#{guid}/
+  end
+
+  def self.move_questions_from_source_section!(source_doc, source_section, destination_doc, guid, after_guid)
+    if is_section_for?(source_section, guid) # is the guid present in this section's xml?
       dest_root_section = root_section(destination_doc)
       if root_section_contains_child_sections?(destination_doc)
-        destination_section = create_mirror_section!(source_doc, source_section, dest_root_section, guid)
+        destination_section = create_mirror_section!(source_doc, source_section, dest_root_section, guid, after_guid)
       else
         destination_section = dest_root_section
       end
@@ -155,7 +159,26 @@ class AssessmentXml < ActiveRecord::Base
     doc.css('section section').any?
   end
 
-  def self.create_mirror_section!(source_document, source_section, destination_root_section, guid)
+  def self.find_last_section_for_guid(parent, guid, default = nil)
+    if !guid.nil? && guid.size > 0
+      guid_sections = parent.children.select { |section| is_section_for?(section, guid) }
+      if !guid_sections.nil? && !guid_sections.empty?
+        return guid_sections.last
+      end
+    end
+    return default
+  end
+
+  def self.find_mirror_section_position(root_section, guid, after_guid)
+    # look for last section with guid first (so order is preserved); then choose last section
+    # with after guid; if neither of those could be found, simply return the very first child
+
+    return find_last_section_for_guid(root_section, guid,
+            find_last_section_for_guid(root_section, after_guid,
+              root_section.children.first))
+  end
+
+  def self.create_mirror_section!(source_document, source_section, destination_root_section, guid, after_guid)
     mirror_section = Nokogiri::XML::Node.new "section", source_document
     if source_section['ident']
       if source_section['ident'] == "root_section"
@@ -167,7 +190,8 @@ class AssessmentXml < ActiveRecord::Base
     if source_section['title']
       mirror_section['title'] = source_section['title']
     end
-    destination_root_section.children.last.next = mirror_section
+    insertion_point = find_mirror_section_position(destination_root_section, guid, after_guid)
+    insertion_point.next = mirror_section
     mirror_section
   end
 
@@ -201,5 +225,32 @@ class AssessmentXml < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def self.move_questions_within_same_section_for_guid(xml_string, guid, after_guid = nil)
+    doc = Nokogiri::XML(xml_string)
+    root = root_section(doc)
+
+    destination_section = find_last_section_for_guid(root, after_guid)
+
+    # find section for guid
+    moving_sections = root.children.select { |section| is_section_for?(section, guid) }
+    if moving_sections && !moving_sections.empty?
+      moving_sections.each do |moving_section|
+        moving_section.unlink
+        moving_section.default_namespace = "http://www.imsglobal.org/xsd/ims_qtiasiv1p2"
+
+        if !destination_section.nil?
+          destination_section.next = moving_section
+        else
+          root.children.before(moving_section)
+        end
+
+        # now make our moving_section to destination_section so that order of moving sections is preserved
+        destination_section = moving_section
+      end
+    end
+
+    return doc.to_xml
   end
 end
