@@ -58,7 +58,7 @@ export default class FormativeResult extends React.Component{
         <div key={"result-" + index}>
           <div style={styles.resultList}>
             <div>
-              <div style={{color: color, float: "left", marginTop: "20px", fontWeight: "bold"}}>
+              <div style={{color: color, ...styles.resultListInner}}>
                 Question {index + 1} &mdash; {message}
               </div>
               <div style={{color: confidenceColor, float: "right", marginTop: "20px"}}>
@@ -89,7 +89,7 @@ export default class FormativeResult extends React.Component{
                     <button
                       className="btn btn-check-answer"
                       style={styles.retakeButton}
-                      onClick={(e) => {this.retake()}}
+                      onClick={(e) => { this.retake(); }}
                       >
                         Retake Quiz
                     </button>

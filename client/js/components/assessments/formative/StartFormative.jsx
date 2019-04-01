@@ -5,7 +5,6 @@ import React from "react";
 
 // Formative Assessment Start Page
 export default class StartFormative extends React.Component {
-
   render() {
     let styles = this.getStyles();
 
@@ -37,6 +36,6 @@ export default class StartFormative extends React.Component {
       h4: {
         color: "white"
       }
-    }
+    };
   }
 }

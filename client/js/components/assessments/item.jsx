@@ -252,7 +252,7 @@ export default class Item extends BaseComponent {
         style={{...styles.margin, ...styles.definitelyButton}}
         className="btn btn-check-answer"
         value="Show Results"
-        onClick={(e) => { this.submitAssessment() }}
+        onClick={(e) => { this.submitAssessment(); }}
         />
     );
   }
@@ -260,18 +260,32 @@ export default class Item extends BaseComponent {
   getNavigationButtons(styles) {
     let assessmentKind = this.props.settings.assessmentKind ? this.props.settings.assessmentKind : null;
 
-    // if there's only one question in the assessment, don't render the nav buttons
-    if (this.props.questionCount === 1) {
+    if (this.oneQuestionAssessment()) {
       return;
     }
 
-    if (assessmentKind === "summative" || assessmentKind === "practice" || assessmentKind === "show_what_you_know") {
+    if (this.notFormative()) {
       return (
         <div className="navigationBtnWrapper" style={styles.navigationWrapper}>
           {this.getPreviousButton(styles)}
           {this.getNextButton(styles)}
         </div>
       );
+    }
+  }
+
+  oneQuestionAssessment() {
+    // there's only one question in the assessment
+    if (this.props.questionCount === 1) {
+      return true;
+    }
+  }
+
+  notFormative() {
+    if (assessmentKind === "summative" ||
+        assessmentKind === "practice" ||
+        assessmentKind === "show_what_you_know") {
+      return true;
     }
   }
 

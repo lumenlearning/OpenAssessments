@@ -105,6 +105,11 @@ export default{
         margin: "auto",
         overflowY: "hidden",
       },
+      resultListInner: {
+        float: "left",
+        marginTop: "20px",
+        fontWeight: "bold"
+      },
       resultOutcome: {
         textAlign: "left"
       },

@@ -1,6 +1,6 @@
 "use strict";
 
-import React from 'react';
+import React from "react";
 
 export default class WaitModal extends React.Component {
 
@@ -26,7 +26,7 @@ export default class WaitModal extends React.Component {
               style={styles.close}
               src="/assets/x_to_close_light.png"
               data-expandable-status={"disabled"}
-              onClick={() => {this.props.hideModal()}}
+              onClick={() => { this.props.hideModal(); }}
               />
           </div>
           <div style={styles.body}>
@@ -133,6 +133,6 @@ export default class WaitModal extends React.Component {
       returnUrl: {
         marginLeft: "8px"
       }
-    }
+    };
   }
 }

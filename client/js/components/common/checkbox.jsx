@@ -18,7 +18,13 @@ export default class CheckBox extends React.Component {
         <div className="btn btn-block btn-question" style={btnQuestionStyles}>
           <label style={btnLabelStyles}>
             <span style={{display: "table-cell"}}>
-              <input style={{margin: 0}} type="checkbox" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={() => { this.answerSelected()}} />
+              <input
+                style={{margin: 0}}
+                type="checkbox"
+                defaultChecked={this.checkedStatus()}
+                disabled={this.props.isDisabled}
+                name={this.props.name}
+                onClick={() => { this.answerSelected(); }} />
             </span>
             <span style={{display: "table-cell", paddingLeft: "11px", fontWeight: "normal"}} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>
           </label>

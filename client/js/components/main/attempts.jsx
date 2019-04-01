@@ -62,9 +62,9 @@ export default class Attempts extends BaseComponent {
           role="grid"
           style={{tableLayout:"fixed", width: "100%"}}
           filterPlaceholder="Filter by student name..."
-          sortable={['Student Name']}
+          sortable={["Student Name"]}
           defaultSort="Student Name"
-          filterable={['Student Name']}
+          filterable={["Student Name"]}
           >
             {this.state.userAssessments.map((ua) => {
               return (
@@ -110,30 +110,30 @@ export default class Attempts extends BaseComponent {
     return (
       <div>
         {ua.attempts.slice().reverse().map((attempt) => {
-          let score = 'Un-submitted';
+          let score = "Un-submitted";
           let m = moment(attempt.created_at);
-          let date_sent = m.format('ddd, MMM Do, h:mm a [GMT] ZZ') + " (" + m.fromNow() + ")";
-          let attempt_count = attempt.attempt + 1;
+          let dateSent = m.format("ddd, MMM Do, h:mm a [GMT] ZZ") + " (" + m.fromNow() + ")";
+          let attemptCount = attempt.attempt + 1;
 
           if (attempt.score) {
             score = Math.floor(attempt.score) + "%";
 
             return (
               <p
-                title={date_sent}
-                onClick={() => { that.reviewAttempt(attempt.id) }}
+                title={dateSent}
+                onClick={() => { that.reviewAttempt(attempt.id); }}
                 style={{textDecoration:"underline", cursor: "pointer"}}
                 >
-                  {attempt_count}) Score: {score}
+                  {attemptCount}) Score: {score}
               </p>
             );
           } else {
             return (
               <p
-                title={date_sent}
+                title={dateSent}
                 style={{cursor: "help"}}
                 >
-                  {attempt_count}) {score}
+                  {attemptCount}) {score}
               </p>
             );
           }
@@ -147,11 +147,11 @@ export default class Attempts extends BaseComponent {
       <div>
         {ua.attempts.map((attempt) => {
           let m = moment(attempt.created_at);
-          let date_sent = m.format('ddd, MMM Do, h:mm a [GMT] ZZ');
-          let relative_time = m.fromNow();
+          let dateSent = m.format('ddd, MMM Do, h:mm a [GMT] ZZ');
+          let relativeTime = m.fromNow();
 
           return (
-            <p title={relative_time}>{date_sent}</p>
+            <p title={relativeTime}>{dateSent}</p>
           );
         })}
       </div>
@@ -161,21 +161,30 @@ export default class Attempts extends BaseComponent {
   actions(ua) {
     if (ua.attempts_left == 1) {
       return (
-        <button className="btn btn-info" onClick={()=>{this.setAttempts(ua.id, 0)}}>
-          Grant 1 attempt
+        <button
+          className="btn btn-info"
+          onClick={() => { this.setAttempts(ua.id, 0); }}
+          >
+            Grant 1 attempt
         </button>
       );
     } else if (ua.attempts_left == 0) {
       return (
         <div>
           <p>
-            <button className="btn btn-info" onClick={()=>{this.setAttempts(ua.id, 1)}}>
-              Grant 1 attempt
+            <button
+              className="btn btn-info"
+              onClick={() => { this.setAttempts(ua.id, 1); }}
+              >
+                Grant 1 attempt
             </button>
           </p>
           <p>
-            <button className="btn btn-info" onClick={()=>{this.setAttempts(ua.id, 0)}}>
-              Grant 2 attempts
+            <button
+              className="btn btn-info"
+              onClick={() => { this.setAttempts(ua.id, 0); }}
+              >
+                Grant 2 attempts
             </button>
           </p>
         </div>

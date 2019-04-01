@@ -1,8 +1,9 @@
 "use strict";
 
 // Dependencies
-import React from 'react';
+import React from "react";
 import $ from "jquery";
+import _ from "lodash";
 // Actions
 import AssessmentActions from "../../actions/assessment";
 import ReviewAssessmentActions from "../../actions/review_assessment";
@@ -17,6 +18,8 @@ import FullPostNav from "../post_nav/full_post_nav.jsx";
 import Item from "../assessments/item";
 import Loading from "../assessments/loading";
 import ProgressDropdown from "../common/progress_dropdown";
+// Utilities
+import CommHandler from "../../utils/communication_handler";
 
 // Start Component
 export default class Start extends BaseComponent {
@@ -127,16 +130,16 @@ export default class Start extends BaseComponent {
         if (lastAttempt) {
           lastAttempt.assessment_result_items.forEach((chosenAnswer, index) => {
             if (chosenAnswer.correct !== true) {
-              negativeList = negativeList.concat(_.filter(positiveList, 'outcomeGuid', chosenAnswer.outcome_guid));
-              positiveList = _.reject(positiveList, 'outcomeGuid', chosenAnswer.outcome_guid);
+              negativeList = negativeList.concat(_.filter(positiveList, "outcomeGuid", chosenAnswer.outcome_guid));
+              positiveList = _.reject(positiveList, "outcomeGuid", chosenAnswer.outcome_guid);
             }
           });
         }
       }
 
       return ({
-        positiveList: positiveList,
-        negativeList: negativeList
+        positiveList,
+        negativeList
       });
     }
   }
@@ -144,13 +147,13 @@ export default class Start extends BaseComponent {
   orderBySequence(list) {
     if (list) {
       return [...list].sort((a, b) => {
-        return a.assessment_result_attempt - b.assessment_result_attempt
+        return a.assessment_result_attempt - b.assessment_result_attempt;
       });
     }
   }
 
   getStyles(theme) {
-    let minWidth = this.state.settings.assessmentKind.toUpperCase()  == "FORMATIVE" ? "480px" : "635px";
+    let minWidth = this.state.settings.assessmentKind.toUpperCase()  === "FORMATIVE" ? "480px" : "635px";
 
     return {
       progressBar: {

@@ -45,8 +45,8 @@ export default class StartSummative extends React.Component {
               mostRecentAttempt={attempt.assessment_result_attempt === this.props.assessmentAttempts.length - 1 ? true : false}
               studyAndMasteryFeedback={this.props.studyAndMasteryFeedback}
               />
-          )}
-        )
+          );
+        })
       );
     // otherwise, this is the first attempt, show the quiz tip.
     } else {
@@ -147,6 +147,6 @@ export default class StartSummative extends React.Component {
       noAttemptsAvailable: {
         color: "#ad4646"
       }
-    }
+    };
   }
 }

@@ -1,5 +1,6 @@
 "use strict";
 // Dependencies
+import _ from "lodash";
 import React from "react";
 // Subcomponents
 import QuizTip from "./QuizTip";
@@ -80,7 +81,7 @@ export default class AttemptOverview extends React.Component {
   }
 
   getFeedback(feedbackType, styles) {
-    if ("negative" === feedbackType && this.props.studyAndMasteryFeedback.negativeList.length > 0) {
+    if (this.isPositiveFeedbackList(feedbackType)) {
       return (
         <div className="recommended-studying" style={styles.feedbackBox1}>
           <div style={styles.feedbackBoxHeadingWrapper}>
@@ -92,7 +93,7 @@ export default class AttemptOverview extends React.Component {
           </ul>
         </div>
       );
-    } else if ("positive" === feedbackType && this.props.studyAndMasteryFeedback.positiveList.length > 0) {
+    } else if (this.isPositiveFeedbackList(feedbackType)) {
       return (
         <div className="mastered-concepts" style={styles.feedbackBox2}>
           <div style={styles.feedbackBoxHeadingWrapper}>
@@ -104,6 +105,16 @@ export default class AttemptOverview extends React.Component {
           </ul>
         </div>
       );
+    }
+  }
+
+  isPositiveFeedbackList(feedbackType) {
+    if (this.props.studyAndMasteryFeedback.negativeList.length > 0) {
+      if (feedbackType === "positive") {
+        return true;
+      } else if (feedbacktype === "negative") {
+        return false;
+      }
     }
   }
 
@@ -311,6 +322,6 @@ export default class AttemptOverview extends React.Component {
         marginRight: "4px",
         width: "12px"
       }
-    }
+    };
   }
 }

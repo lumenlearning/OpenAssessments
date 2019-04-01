@@ -37,6 +37,6 @@ export default class StartSwyk extends React.Component {
       swykInfoGroup: {
         marginBottom: "30px"
       }
-    }
+    };
   }
 }

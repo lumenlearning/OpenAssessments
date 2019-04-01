@@ -1,9 +1,8 @@
 "use strict";
 
-import React from 'react';
+import React from "react";
 
 export default class QuizTip extends React.Component {
-
   render() {
     let styles = this.props.postIt ? this.getPostItStyles() : this.getVanillaStyles();
 
@@ -26,7 +25,7 @@ export default class QuizTip extends React.Component {
    * Casing off of last digit of the User Id
    */
   getQuizTip(styles) {
-    let userIdLastDigit = this.props.userId ? this.props.userId.toString().split('').pop() : "";
+    let userIdLastDigit = this.props.userId ? this.props.userId.toString().split("").pop() : "";
 
     switch (userIdLastDigit) {
       case "0":
@@ -124,6 +123,6 @@ export default class QuizTip extends React.Component {
         color: "#212b36",
         fontSize: "20px"
       }
-    }
+    };
   }
 }
