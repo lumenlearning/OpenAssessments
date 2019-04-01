@@ -231,7 +231,7 @@ class Api::AssessmentsController < Api::ApiController
     destination_assessment = Assessment.where(id: params[:destination_assessment_id]).first
     raise ActiveRecord::RecordNotFound.new("Destination assessment was not found") unless destination_assessment
 
-    Assessment.move_questions_for_guid!(source_assessment, destination_assessment, params[:guid])
+    Assessment.move_questions_for_guid!(source_assessment, destination_assessment, params[:guid], params[:after])
     source_assessment.save!
     destination_assessment.save!
 

@@ -125,17 +125,20 @@ export default class Item extends BaseComponent{
   }
 
   getNextButton(styles) {
-    var disabled = (this.props.currentIndex == this.props.questionCount - 1) ? "disabled" : "";
+    var disabledValue = (this.props.currentIndex === this.props.questionCount - 1) ? "disabled" : "";
+    var nextButtonClasses = "btn btn-next-item " + disabledValue;
+
     return (
-        <button className={"btn btn-next-item " + disabled} style={styles.nextButton} onClick={(e) => { this.nextButtonClicked(e) }}>
+        <button className={nextButtonClasses} style={styles.nextButton} disabled={disabledValue ? true : false} onClick={(e) => { this.nextButtonClicked(e) }}>
           <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
         </button>);
   }
 
   getPreviousButton(styles) {
-    var prevButtonClassName = "btn btn-prev-item " + ((this.props.currentIndex > 0) ? "" : "disabled");
+    var disabledValue = (this.props.currentIndex <= 0) ? "disabled" : "";
+    var prevButtonClasses = "btn btn-prev-item " + disabledValue;
     return (
-        <button className={prevButtonClassName} style={styles.previousButton} onClick={(e) => { this.previousButtonClicked(e) }}>
+        <button className={prevButtonClasses} style={styles.previousButton} disabled={disabledValue ? true : false} onClick={(e) => { this.previousButtonClicked(e) }}>
           <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span>
         </button>);
   }

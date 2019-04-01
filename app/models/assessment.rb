@@ -187,15 +187,32 @@ class Assessment < ActiveRecord::Base
     end
   end
 
-  def self.move_questions_for_guid!(source_assessment, destination_assessment, guid)
-    if (source_assessment.current_assessment_xml && destination_assessment.current_assessment_xml)
-      updated_source_xml, updated_destination_xml =
-        AssessmentXml.move_questions_for_guid(
-          source_assessment.current_assessment_xml.xml,
-          destination_assessment.current_assessment_xml.xml,
-          guid)
-      source_assessment.xml_file = updated_source_xml
-      destination_assessment.xml_file = updated_destination_xml
+  def self.move_questions_for_guid!(source_assessment, destination_assessment, guid, after_guid)
+    if (source_assessment.id != destination_assessment.id &&
+        source_assessment.current_assessment_xml &&
+        destination_assessment.current_assessment_xml)
+      move_questions_different_sections!(source_assessment, destination_assessment, guid, after_guid)
+    elsif (source_assessment.id == destination_assessment.id && source_assessment.current_assessment_xml)
+      move_questions_same_section!(source_assessment, guid, after_guid)
     end
+  end
+
+  def self.move_questions_different_sections!(source_assessment, destination_assessment, guid, after_guid)
+    updated_source_xml, updated_destination_xml =
+      AssessmentXml.move_questions_to_different_section_for_guid(
+        source_assessment.current_assessment_xml.xml,
+        destination_assessment.current_assessment_xml.xml,
+        guid,
+        after_guid)
+    source_assessment.xml_file = updated_source_xml
+    destination_assessment.xml_file = updated_destination_xml
+  end
+
+  def self.move_questions_same_section!(source_assessment, guid, after_guid)
+    updated_source_xml = AssessmentXml.move_questions_within_same_section_for_guid(
+      source_assessment.current_assessment_xml.xml,
+      guid,
+      after_guid)
+    source_assessment.xml_file = updated_source_xml
   end
 end
