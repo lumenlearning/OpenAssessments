@@ -1,8 +1,7 @@
-import React from 'react';
-import BaseComponent from '../base_component.jsx';
-import AssessmentActions from '../../actions/assessment.js';
+import React from "react";
+import BaseComponent from "../base_component.jsx";
+import AssessmentActions from "../../actions/assessment.js";
 import Styles from "../../themes/selection.js";
-//import any other dependencies here.
 
 const styles = Styles;
 
@@ -11,12 +10,9 @@ export default class MultiDropDown extends BaseComponent {
     super(props, context);
 
     this.state = {
-      ariaAnswersLabels:{
-
-      }
+      ariaAnswersLabels: {}
     };
 
-    //rebindings for custom methods go here.
     this.findAndReplace = this.findAndReplace.bind(this);
     this.handleShortcodeChange = this.handleShortcodeChange.bind(this);
     this.answerCheckMarks = this.answerCheckMarks.bind(this);
@@ -25,76 +21,64 @@ export default class MultiDropDown extends BaseComponent {
     this.correctAnswers = this.correctAnswers.bind(this);
   }
 
-  componentWillUpdate(){
-    this.removeListeners(); //new DOM injection on update, remove old listeners.
+  componentWillUpdate() {
+    this.removeListeners();
   }
-  render() {
-    let question = this.findAndReplace();
-    let questionResult = this.findAndReplace(true);
-    let theme = this.context.theme;
-    let questionText = {
-      fontSize: theme.questionTextFontSize,
-      fontWeight: theme.questionTextFontWeight,
-      padding: theme.questionTextNoLPadding,
-    };
 
+  render() {
     return (
       <div>
-        <div tabIndex="0" dangerouslySetInnerHTML={{__html: question}} style={questionText} />
-        <div style={{position: 'absolute', left: '-10000px', top: 'auto', height: '1px', width: '1px', overflow: 'hidden'}} tabIndex="0" role="group" aria-label="Review your answer" >
-          <div id="question_result_container" dangerouslySetInnerHTML={{__html: questionResult}} />
+        <div
+          tabIndex="0"
+          dangerouslySetInnerHTML={{__html: this.findAndReplace()}}
+          />
+        <div
+          style={this.getReviewAnswerStyle()}
+          tabIndex="0"
+          role="group"
+          aria-label="Review your answer"
+          >
+            <div
+              id="question_result_container"
+              dangerouslySetInnerHTML={{__html: this.findAndReplace(true)}}
+              />
         </div>
         {this.props.isResult ? this.answerFeedback() : ""}
       </div>
     );
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     this.addListeners();
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.addListeners();
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.removeListeners();
   }
 
-  //========================================================================
-  // PLACE CUSTOM METHODS AND HANDLERS BELOW HERE
-  //========================================================================
-  findAndReplace(noSelect = false){
-    var i = 0;
-    let item = this.props.item;
-    let string = item.material;
-    let shortcodes = Object.keys(this.props.item.dropdowns);
-    let answers = this.props.item.dropdowns;
-    let re = new RegExp(`\\[${shortcodes.join('\\]|\\[')}\\]`, 'gi'); //turn array of shortcodes into a regex
 
-    return string.replace(re, (match) => {
+  findAndReplace(noSelect = false) {
+    let i = 0;
+    let re = new RegExp(`\\[${Object.keys(this.props.item.dropdowns).join("\\]|\\[")}\\]`, "gi");
+
+    return this.props.item.material.replace(re, (match) => {
       let str = `"blank ${i}"`;
-      let re = new RegExp('\\[|\\]', 'g');
-      let nMatch = match.replace(re, ''); //from '[shortcode]' to 'shortcode'
-      let correctAnswer = item.correct.find((correctAns) => {
+      let nMatch = match.replace(new RegExp("\\[|\\]", "g"), ""); //from '[shortcode]' to 'shortcode'
+      let correctAnswer = this.props.item.correct.find((correctAns) => {
         return correctAns.name === nMatch;
       });
-      let options = this.answerOptions(correctAnswer, nMatch);
-
-      //Aria goodness
-      let ariaLabel = this.state.ariaAnswersLabels[nMatch] ? `"${this.state.ariaAnswersLabels[nMatch]}"` : str;
 
       i++;
-
-      if(noSelect){ //replace with values instead of <select /> boxes if true.
-        return ariaLabel;
-      }
 
       let disabled = "";
       let cursorNotAllowed = "";
 
       // Disable dropdowns if this is the results page or if confidence levels have been selected
-      if (this.props.isResult || this.props.item.confidenceLevel !== undefined) {
+      if (this.props.isResult || typeof this.props.item.confidenceLevel !== "undefined") {
         disabled = "disabled";
         cursorNotAllowed = "cursor: not-allowed";
       }
@@ -105,19 +89,34 @@ export default class MultiDropDown extends BaseComponent {
             <select
               name="${nMatch}"
               id="dropdown_${nMatch}"
-              aria-label=${ariaLabel}
+              aria-label=${this.getAriaAnswerLabel(nMatch, str)}
               ${disabled}
               style="${cursorNotAllowed}"
             >
               <option ${!this.state[nMatch] ? "selected" : ""} disabled aria-label="select ${nMatch} choice" value="null">[Select]</option>
-              ${options}
+              ${this.answerOptions(correctAnswer, nMatch)}
             </select>
             ${this.answerCheckMarks(correctAnswer, nMatch, i)}
           </span>
         </span>`
       );
     });
-  }//findAndReplace
+  }
+
+  getAriaAnswerLabel(nMatch, str) {
+    return this.state.ariaAnswersLabels[nMatch] ? this.state.ariaAnswersLabels[nMatch] : str;
+  }
+
+  getReviewAnswerStyle() {
+    return {
+      position: "absolute",
+      left: "-10000px",
+      top: "auto",
+      height: "1px",
+      width: "1px",
+      overflow: "hidden"
+    }
+  }
 
   answerOptions(correctAnswer, nMatch) {
     return this.props.item.dropdowns[nMatch].map((answer) => {
@@ -129,24 +128,23 @@ export default class MultiDropDown extends BaseComponent {
           return selAnswer.dropdown_id === nMatch;
         });
 
-        if(selectedAnswer && selectedAnswer.chosen_answer_id === answer.value){
+        if (selectedAnswer && selectedAnswer.chosen_answer_id === answer.value) {
           selected = 'selected';
         }
-      }
-      else if(this.state[nMatch] === answer.value){
+      } else if (this.state[nMatch] === answer.value) {
         selected = "selected";
       }
 
       // if this is the answer key, select/show the correct answers
-      if(this.props.selectCorrectAnswer && answer.isCorrect){
+      if (this.props.selectCorrectAnswer && answer.isCorrect) {
         selected = 'selected';
       }
 
-      if((this.props.isResult && !!correctAnswer) && correctAnswer.value !== answer.value) disabled = "disabled";
+      if ((this.props.isResult && !!correctAnswer) && correctAnswer.value !== answer.value) disabled = "disabled";
 
       return `<option ${selected} ${disabled} value=${answer.value} >${answer.name}</option>`;
     });
-  }//correctAnswers
+  }
 
   answerCheckMarks(correctAnswer, nMatch, i) {
     let item = this.props.item;
@@ -214,12 +212,12 @@ export default class MultiDropDown extends BaseComponent {
               </span>
             </span>`
         );
-      }//else
+      }
 
     }
 
     return answerCheck;
-  }//answerCheck
+  }
 
   correctAnswers() {
     let result = [];
@@ -249,7 +247,11 @@ export default class MultiDropDown extends BaseComponent {
         }
 
         return (
-          <div className="check_answer_result" style={feedbackStyles} dangerouslySetInnerHTML={ this.answerFeedbackMarkup(i, feedback[answerId]) }></div>
+          <div
+            className="check_answer_result"
+            style={feedbackStyles}
+            dangerouslySetInnerHTML={this.answerFeedbackMarkup(i, feedback[answerId])}
+            />
         );
       }
     });
@@ -263,19 +265,19 @@ export default class MultiDropDown extends BaseComponent {
     let shortcodes = Object.keys(this.props.item.dropdowns);
 
     shortcodes.forEach((shortcode, i) => {
-      document.getElementById(`dropdown_${shortcode}`).addEventListener('change', this.handleShortcodeChange);
+      document.getElementById(`dropdown_${shortcode}`).addEventListener("change", this.handleShortcodeChange);
     });
-  }//addListeners
+  }
 
-  removeListeners(){
+  removeListeners() {
     let shortcodes = Object.keys(this.props.item.dropdowns);
 
     shortcodes.forEach((shortcode, i) => {
-      document.getElementById(`dropdown_${shortcode}`).removeEventListener('change', this.handleShortcodeChange);
+      document.getElementById(`dropdown_${shortcode}`).removeEventListener("change", this.handleShortcodeChange);
     });
-  }//removeListeners
+  }
 
-  handleShortcodeChange(e){
+  handleShortcodeChange(e) {
     let stateClone = {...this.state};
 
     stateClone.ariaAnswersLabels[e.target.name] = e.target.options[e.target.options.selectedIndex].text;
@@ -287,12 +289,11 @@ export default class MultiDropDown extends BaseComponent {
       "dropdown_id": e.target.name,
       "chosen_answer_id": e.target.value
     });
-  }//handleShortcodeChange
-
-}//end MultiDropDown class
+  }
+}
 
 MultiDropDown.propTypes = {};
 
 MultiDropDown.contextTypes = {
   theme: React.PropTypes.object
-}
+};
