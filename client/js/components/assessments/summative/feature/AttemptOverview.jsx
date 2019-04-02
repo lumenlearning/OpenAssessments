@@ -70,7 +70,6 @@ export default class AttemptOverview extends React.Component {
             userId={this.props.attempt.user_id}
             postIt={true}
             />
-
           <div className="attempt-feedback" style={styles.attemptFeedback}>
             {this.getFeedback("negative", styles)}
             {this.getFeedback("positive", styles)}
@@ -81,7 +80,7 @@ export default class AttemptOverview extends React.Component {
   }
 
   getFeedback(feedbackType, styles) {
-    if (this.isPositiveFeedbackList(feedbackType)) {
+    if (this.hasPopulatedNegativeFeedbackList() && !this.isPositiveFeedback(feedbackType)) {
       return (
         <div className="recommended-studying" style={styles.feedbackBox1}>
           <div style={styles.feedbackBoxHeadingWrapper}>
@@ -93,7 +92,7 @@ export default class AttemptOverview extends React.Component {
           </ul>
         </div>
       );
-    } else if (this.isPositiveFeedbackList(feedbackType)) {
+    } else if (this.hasPopulatedPositiveFeedbackList() && this.isPositiveFeedback(feedbackType)) {
       return (
         <div className="mastered-concepts" style={styles.feedbackBox2}>
           <div style={styles.feedbackBoxHeadingWrapper}>
@@ -108,13 +107,19 @@ export default class AttemptOverview extends React.Component {
     }
   }
 
-  isPositiveFeedbackList(feedbackType) {
-    if (this.props.studyAndMasteryFeedback.negativeList.length > 0) {
-      if (feedbackType === "positive") {
-        return true;
-      } else if (feedbacktype === "negative") {
-        return false;
-      }
+  hasPopulatedNegativeFeedbackList() {
+    return this.props.studyAndMasteryFeedback.negativeList.length > 0 ? true : false;
+  }
+
+  hasPopulatedPositiveFeedbackList() {
+    return this.props.studyAndMasteryFeedback.positiveList.length > 0 ? true : false;
+  }
+
+  isPositiveFeedback(feedbackType) {
+    if (feedbackType === "negative") {
+      return false;
+    } else if (feedbackType === "positive") {
+      return true;
     }
   }
 
