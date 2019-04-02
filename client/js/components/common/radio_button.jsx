@@ -1,62 +1,39 @@
 "use strict";
 
-import React              from 'react';
-import AssessmentActions  from "../../actions/assessment";
-import AssessmentStore    from "../../stores/assessment";
-import Styles             from "../../themes/selection.js";
+import React from "react";
+import AssessmentActions from "../../actions/assessment";
+import AssessmentStore from "../../stores/assessment";
+import Styles from "../../themes/selection.js";
 
 const styles = Styles;
 
-export default class RadioButton extends React.Component{
-
+export default class RadioButton extends React.Component {
   render() {
     let btnQuestionStyles = this.getBtnQuestionStyles();
-    let btnLabelStyles = this.props.showAsCorrect !== null ? {...styles.btnLabel, ...{cursor: "default", padding: "11px 11px 6px"}} : {...styles.btnLabel, ...{cursor: "pointer", padding: "11px 11px 6px"}};
 
     return (
       <div>
         {this.renderAnswerIndicator()}
         <div className="btn btn-block btn-question" style={btnQuestionStyles}>
-          <label style={btnLabelStyles}>
+          <label style={this.getButtonLabelStyles()}>
             <span style={{display: "table-cell"}}>
-              <input type="radio" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={() => {this.answerSelected()}} />
+              <input type="radio" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={() => { this.answerSelected(); }} />
             </span>
             <span style={{display: "table-cell", paddingLeft: "11px", fontWeight: "normal"}} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>
           </label>
-          {this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice" ? this.answerFeedback() : ""}
+          {this.isQuizPage() ? this.answerFeedback() : ""}
         </div>
       </div>
     );
   }
 
-  renderAnswerIndicator() {
-    let indicator;
-
-    // this is an answer key page
-    if (!this.props.assessmentKind && this.props.isDisabled) {
-      if (this.props.showAsCorrect) {
-        indicator = <img src="/assets/correct.png" className="correctIndicator" aria-label="Correct Answer" alt="Icon indicating the correct answer" style={styles.checkStyleCorrect} />;
-      }
-    // else this is a quiz page
-    } else if (this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice") {
-      if (this.props.showAsCorrect === true && this.props.checked === true) {
-        indicator = <img src="/assets/correct.png" className="correctIndicator" aria-label="Correct Answer" alt="Icon indicating the correct answer was chosen" style={styles.checkStyleCorrect} />;
-      } else if (this.props.showAsCorrect === false && this.props.checked === true) {
-        indicator = <img src="/assets/incorrect.png" className="wrongIndicator" aria-label="Wrong answer that was chosen" alt="Icon indicating the wrong answer was chosen" style={styles.checkStyleWrong} />;
-      }
-    }
-
-    return indicator;
-  }
-
   getBtnQuestionStyles() {
     let qStyles = styles.btnQuestion;
 
-    // this is a quiz page
-    if (this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice") {
-      if (this.props.showAsCorrect === true && this.props.checked === true) {
+    if (this.isQuizPage()) {
+      if (this.showCorrectAndChecked()) {
         qStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect};
-      } else if (this.props.showAsCorrect === false && this.props.checked === true) {
+      } else if (this.showIncorrectAndChecked()) {
         qStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
       }
     }
@@ -64,50 +41,124 @@ export default class RadioButton extends React.Component{
     return qStyles;
   }
 
-  checkedStatus() {
-    let checked;
+  getButtonLabelStyles() {
+    if (this.props.showAsCorrect !== null) {
+      return (
+        {...styles.btnLabel, ...{cursor: "default", padding: "11px 11px 6px"}}
+      );
+    } else {
+      return (
+        {...styles.btnLabel, ...{cursor: "pointer", padding: "11px 11px 6px"}}
+      );
+    }
+  }
 
-    if (this.props.checked === true) {
-      checked = true;
-    } else if (this.props.checked === false) {
-      checked = false;
-    } else if (!this.props.isDisabled) {
-      checked = (AssessmentStore.studentAnswers() && AssessmentStore.studentAnswers().indexOf(this.props.item.id) > -1) ? true : null;
+  renderAnswerIndicator() {
+    if (this.isAnswerPage()) {
+      return this.getAnswerPageIndicator();
     }
 
-    return checked;
+    if (this.isQuizPage()) {
+      return this.getQuizPageIndicator();
+    }
+  }
+
+  isAnswerPage() {
+    return !this.props.assessmentKind && this.props.isDisabled && this.props.showAsCorrect ? true : false;
+  }
+
+  isQuizPage() {
+    return this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice" ? true : false;
+  }
+
+  showCorrectAndChecked() {
+    return this.props.showAsCorrect === true && this.props.checked === true ? true : false;
+  }
+
+  showIncorrectAndChecked() {
+    return this.props.showAsCorrect === false && this.props.checked === true ? true : false;
+  }
+
+  getQuizPageIndicator() {
+    if (this.showCorrectAndChecked()) {
+      return (
+        <img
+          src="/assets/correct.png"
+          className="correctIndicator"
+          aria-label="Correct Answer"
+          alt="Icon indicating the correct answer was chosen"
+          style={styles.checkStyleCorrect}
+          />
+      );
+    } else if (this.showIncorrectAndChecked()) {
+      return (
+        <img
+          src="/assets/incorrect.png"
+          className="wrongIndicator"
+          aria-label="Wrong answer that was chosen"
+          alt="Icon indicating the wrong answer was chosen"
+          style={styles.checkStyleWrong}
+          />
+      );
+    }
+  }
+
+  getAnswerPageIndicator() {
+    return (
+      <img
+        src="/assets/correct.png"
+        className="correctIndicator"
+        aria-label="Correct Answer"
+        alt="Icon indicating the correct answer"
+        style={styles.checkStyleCorrect}
+        />
+    );
+  }
+
+  checkedStatus() {
+    if (!this.props.isDisabled) {
+      return AssessmentStore.studentAnswers() && AssessmentStore.studentAnswers().indexOf(this.props.item.id) > -1 ? true : null;
+    } else {
+      return this.props.checked;
+    }
   }
 
   answerFeedback() {
-    var feedbackStyles = {};
-
-    if (this.props.showAsCorrect === true) {
-      feedbackStyles = styles.feedbackCorrect;
-    } else if (this.props.showAsCorrect === false) {
-      feedbackStyles = styles.feedbackIncorrect;
-    }
-
     if (this.props.answerFeedback) {
       return (
-        <div className="check_answer_result" style={feedbackStyles} dangerouslySetInnerHTML={ this.answerFeedbackMarkup() } />
+        <div
+          className="check_answer_result"
+          style={this.getFeedbackStyles()}
+          dangerouslySetInnerHTML={this.answerFeedbackMarkup()}
+          />
       );
-    } else {
-      if (this.props.showAsCorrect === false && this.props.checked === true) {
-        return (
-          <div className="check_answer_result" style={feedbackStyles}>Incorrect</div>
-        );
-      } else {
-        return;
-      }
+    }
+
+    if (this.showIncorrectAndChecked()) {
+      return (
+        <div className="check_answer_result" style={this.getFeedbackStyles()}>
+          Incorrect
+        </div>
+      );
     }
   }
 
-  answerFeedbackMarkup(){
+  getFeedbackStyles() {
+    if (this.props.showAsCorrect === true) {
+      return styles.feedbackCorrect;
+    }
+
+    if (this.props.showAsCorrect === false) {
+      return styles.feedbackIncorrect;
+    }
+  }
+
+  answerFeedbackMarkup() {
     return { __html: this.props.answerFeedback }
   }
 
 
-  answerSelected(){
+  answerSelected() {
     AssessmentActions.answerSelected(this.props.item);
   }
 }
