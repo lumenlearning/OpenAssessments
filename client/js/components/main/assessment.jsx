@@ -236,12 +236,11 @@ export default class Assessment extends BaseComponent{
 
 
   getStyles(theme){
-    var minWidth = "635px";
+    var minWidth = "320px";
     var padding = theme.assessmentPadding;
     if (AssessmentStore.isFormative() ||
         AssessmentStore.isPractice()) {
       padding = "";
-      minWidth = "480px";
     }
 
     return {

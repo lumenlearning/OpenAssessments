@@ -152,7 +152,7 @@ export default class Start extends BaseComponent {
   }
 
   getStyles(theme) {
-    let minWidth = this.state.settings.assessmentKind.toUpperCase()  === "FORMATIVE" ? "480px" : "635px";
+    let minWidth = "320px";
 
     return {
       progressBar: {
