@@ -13,6 +13,7 @@ import UserAssessmentsStore from "../../stores/user_assessment";
 // Subcomponents
 import BaseComponent from "../base_component";
 import TeacherOptions from "../assessments/teacher_options/TeacherOptions";
+import TitleBar from "../common/TitleBar";
 
 export default class Attempts extends BaseComponent {
   constructor(props, context) {
@@ -42,9 +43,9 @@ export default class Attempts extends BaseComponent {
 
     return (
       <div style={styles.componentWrapper}>
-        <div className="assessment-header" style={styles.titleBar}>
-          {this.state.settings ? this.state.settings.assessmentTitle : ""}
-        </div>
+        <TitleBar
+          title={this.state.settings ? this.state.settings.assessmentTitle : ""}
+          />
         <TeacherOptions
           assessmentId={this.props.params.assessmentId}
           context={this.context}

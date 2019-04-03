@@ -8,8 +8,9 @@ import ReviewAssessmentStore from "../../stores/review_assessment";
 import SettingsStore from "../../stores/settings";
 // Subcomponents
 import BaseComponent from "../base_component";
-import TeacherOptions from "../assessments/teacher_options/TeacherOptions";
 import ItemResult from "./item_result";
+import TeacherOptions from "../assessments/teacher_options/TeacherOptions";
+import TitleBar from "../common/TitleBar";
 // Styles/Scripts
 import ResultStyles from "./result_styles.js";
 import CommunicationHandler from "../../utils/communication_handler";
@@ -42,9 +43,9 @@ export default class TeacherPreview extends BaseComponent{
     return (
       <div style={styles.assessment}>
         <div style={styles.assessmentContainer}>
-          <div className="assessment-header" style={styles.titleBar}>
-            {this.state.settings ? this.state.settings.assessmentTitle : ""}
-          </div>
+          <TitleBar
+            title={this.state.settings ? this.state.settings.assessmentTitle : ""}
+            />
           <TeacherOptions
             assessmentId={this.props.params.assessmentId}
             context={this.context}

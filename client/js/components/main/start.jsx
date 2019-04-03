@@ -18,12 +18,12 @@ import FullPostNav from "../post_nav/full_post_nav.jsx";
 import Item from "../assessments/item";
 import Loading from "../assessments/loading";
 import ProgressDropdown from "../common/progress_dropdown";
+import TitleBar from "../common/TitleBar";
 // Utilities
 import CommHandler from "../../utils/communication_handler";
 
 // Start Component
 export default class Start extends BaseComponent {
-
   constructor(props, context) {
     super(props, context);
 
@@ -84,12 +84,11 @@ export default class Start extends BaseComponent {
   }
 
   renderTitleBar(styles) {
-    // If this is any assessment type *other* than formative, render title bar
     if (this.state.settings.assessmentKind.toUpperCase() !== "FORMATIVE") {
       return (
-        <div className="assessment-header" style={styles.titleBar}>
-          {this.state.settings ? this.state.settings.assessmentTitle : ""}
-        </div>
+        <TitleBar
+          title={this.state.settings ? this.state.settings.assessmentTitle : ""}
+          />
       );
     }
   }
@@ -176,15 +175,6 @@ export default class Start extends BaseComponent {
         width: "100%",
         minWidth: minWidth,
         backgroundColor: theme.titleBarBackgroundColor,
-      },
-      titleBar: {
-        borderBottom: "2px solid #003136",
-        padding: "22px 40px 22px 0",
-        fontFamily: "Arial",
-        fontSize: "28px",
-        fontWeight: "400",
-        color: "#212b36",
-        lineHeight: "1.4"
       }
     }
   }
