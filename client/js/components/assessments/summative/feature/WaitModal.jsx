@@ -7,7 +7,15 @@ export default class WaitModal extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      windowWidth: window.innerWidth
+    }
+
     this.escFunction = this.escFunction.bind(this);
+  }
+
+  componentWillMount() {
+    window.addEventListener('resize', this.handleWindowResize);
   }
 
   componentDidMount() {
@@ -57,7 +65,14 @@ export default class WaitModal extends React.Component {
   }
 
   componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowResize);
     document.removeEventListener("keydown", this.escFunction, false);
+  }
+
+  handleWindowResize() {
+    this.setState({
+      windowWidth: window.innerWidth
+    });
   }
 
   escFunction(event) {
@@ -82,9 +97,10 @@ export default class WaitModal extends React.Component {
         backgroundColor: "#fff",
         borderRadius: "6px",
         boxShadow: "0 2px 16px 0 rgba(33, 43, 54, 0.08), 0 31px 41px 0 rgba(33, 43, 54, 0.2)",
-        margin: "12% auto",
+        margin: this.state.windowWidth <= 500 ? 0 : "12% auto",
         maxWidth: "620px",
-        minHeight: "311px"
+        minHeight: "311px",
+        height: this.state.windowWidth <= 500 ? "100%" : "auto"
       },
       titleBar: {
         position: "relative",

@@ -7,6 +7,19 @@ import QuizTip from "./QuizTip";
 
 // Attempt Overview Subcomponent
 export default class AttemptOverview extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      windowWidth: window.innerWidth
+    }
+
+    this.handleWindowResize = this.handleWindowResize.bind(this);
+  }
+
+  componentWillMount() {
+    window.addEventListener('resize', this.handleWindowResize);
+  }
 
   render() {
     let styles = this.getStyles();
@@ -20,6 +33,16 @@ export default class AttemptOverview extends React.Component {
         </div>
       </div>
     );
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowResize);
+  }
+
+  handleWindowResize() {
+    this.setState({
+      windowWidth: window.innerWidth
+    });
   }
 
   getScore(styles) {
@@ -82,7 +105,7 @@ export default class AttemptOverview extends React.Component {
   getFeedback(feedbackType, styles) {
     if (this.hasPopulatedNegativeFeedbackList() && !this.isPositiveFeedback(feedbackType)) {
       return (
-        <div className="recommended-studying" style={styles.feedbackBox1}>
+        <div className="recommended-studying" style={styles.negativeFeedbackBox}>
           <div style={styles.feedbackBoxHeadingWrapper}>
             <img src="/assets/Recommended_Studying_Icon@2x.png" style={styles.feedbackIcons} />
             <p style={styles.feedbackTitle}>Recommended Studying</p>
@@ -94,7 +117,7 @@ export default class AttemptOverview extends React.Component {
       );
     } else if (this.hasPopulatedPositiveFeedbackList() && this.isPositiveFeedback(feedbackType)) {
       return (
-        <div className="mastered-concepts" style={styles.feedbackBox2}>
+        <div className="mastered-concepts" style={styles.positiveFeedbackBox}>
           <div style={styles.feedbackBoxHeadingWrapper}>
             <img src="/assets/Mastered_Concepts_Icon@2x.png" style={styles.feedbackIcons} />
             <p style={styles.feedbackTitle}>Mastered Concepts</p>
@@ -248,21 +271,22 @@ export default class AttemptOverview extends React.Component {
       },
       attemptFeedbackWrapper: {
         display: "flex",
-        flexDirection: "row"
+        flexDirection: this.state.windowWidth <= 1225 ? "column-reverse" : "row"
       },
       attemptFeedback: {
         borderRadius: "3px",
-        boxShadow: "0 1px 3px 0 rgba(63, 63, 68, 0.15), 0 0 0 1px rgba(63, 63, 68, 0.05)",
+        boxShadow: this.state.windowWidth <= 1225 ? "none" : "0 1px 3px 0 rgba(63, 63, 68, 0.15), 0 0 0 1px rgba(63, 63, 68, 0.05)",
         display: "flex",
-        flexDirection: "row",
+        flexDirection: this.state.windowWidth <= 1225 ? "column" : "row"
       },
-      feedbackBox1: {
-        borderRight: "1px solid #dfe3e8",
-        padding: "45px 40px",
+      negativeFeedbackBox: {
+        borderRight: this.state.windowWidth <= 1225 ? "none" : "1px solid #dfe3e8",
+        borderBottom: this.state.windowWidth <= 1225 ? "1px solid #dfe3e8" : "none",
+        padding: this.state.windowWidth <= 1225 ? "45px 0" : "45px 40px",
         width: "365px"
       },
-      feedbackBox2: {
-        padding: "45px 40px",
+      positiveFeedbackBox: {
+        padding: this.state.windowWidth <= 1225 ? "45px 0" : "45px 40px",
         width: "365px"
       },
       feedbackTitle: {
