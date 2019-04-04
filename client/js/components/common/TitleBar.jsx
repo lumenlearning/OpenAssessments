@@ -9,7 +9,7 @@ export default class TitleBar extends React.Component {
 
     return (
       <div className="assessment-header" style={styles.titleBar}>
-        {this.props.title}
+        <h1 style={styles.title} tabIndex="0">{this.props.title}</h1>
       </div>
     );
   }
@@ -18,11 +18,14 @@ export default class TitleBar extends React.Component {
     return {
       titleBar: {
         borderBottom: "2px solid #003136",
-        padding: "22px 40px 22px 0",
+        padding: "22px 40px 22px 0"
+      },
+      title: {
+        color: "#212b36",
+        display: "inline-block",
         fontFamily: "Arial",
         fontSize: "28px",
         fontWeight: "400",
-        color: "#212b36",
         lineHeight: "1.4"
       }
     }

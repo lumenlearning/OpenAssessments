@@ -26,7 +26,9 @@ export default class AttemptOverview extends React.Component {
 
     return (
       <div className="attempt-overview-wrapper" style={styles.outerWrapper}>
-        <p style={styles.attemptHeading}>Attempt {this.props.attempt.assessment_result_attempt + 1}</p>
+        <p style={styles.attemptHeading} tabIndex="0">
+          Attempt {this.props.attempt.assessment_result_attempt + 1}
+        </p>
         <div style={styles.innerWrapper}>
           {this.getScore(styles)}
           {this.getQuizTipAttemptFeedback(styles)}
@@ -49,7 +51,7 @@ export default class AttemptOverview extends React.Component {
     if (this.props.attempt.assessment_result_score !== null) {
       return (
         <div style={styles.scoreContainer}>
-          <p style={styles.score}>
+          <p style={styles.score} tabIndex="0">
             {`${this.props.attempt.assessment_result_score}%`}
           </p>
           {this.getRecordedGradeFlag(styles)}
@@ -58,13 +60,17 @@ export default class AttemptOverview extends React.Component {
     } else {
       return (
         <div className="no-score-available" style={styles.noScoreAvailable}>
-          <p style={styles.score}>NA</p>
-          <div style={styles.notSubmittedWrapper}>
-            <p style={styles.notSubmittedText}><b>Quiz started but not submitted</b></p>
-            <p style={styles.notSubmittedText}>
-              Once a quiz has been started it counts towards your total number
-              of quiz attempts available.
-            </p>
+          <p style={styles.score} tabIndex="0">NA</p>
+          <div style={styles.notSubmittedWrapper} tabIndex="0">
+            <div className="not-submitted-wrapper">
+              <p style={styles.notSubmittedText}><b>Quiz started but not submitted</b></p>
+            </div>
+            <div className="not-submitted-description-wrapper">
+              <p style={styles.notSubmittedText}>
+                Once a quiz has been started it counts towards your total number
+                of quiz attempts available.
+              </p>
+            </div>
           </div>
         </div>
       );
@@ -74,7 +80,7 @@ export default class AttemptOverview extends React.Component {
   getRecordedGradeFlag(styles) {
     if (this.props.highScoreAttempt) {
       return (
-        <span style={styles.recordedGradeFlag}>
+        <span style={styles.recordedGradeFlag} tabIndex="0">
           <img style={styles.recordedCheck} src="/assets/Check@2x.png" />
           Score recorded as grade
         </span>
@@ -108,7 +114,9 @@ export default class AttemptOverview extends React.Component {
         <div className="recommended-studying" style={styles.negativeFeedbackBox}>
           <div style={styles.feedbackBoxHeadingWrapper}>
             <img src="/assets/Recommended_Studying_Icon@2x.png" style={styles.feedbackIcons} />
-            <p style={styles.feedbackTitle}>Recommended Studying</p>
+            <p style={styles.feedbackTitle} tabIndex="0">
+              Recommended Studying
+            </p>
           </div>
           <ul style={styles.feedbackList}>
             {this.getReviewOutcomeList(feedbackType, styles)}
@@ -120,7 +128,9 @@ export default class AttemptOverview extends React.Component {
         <div className="mastered-concepts" style={styles.positiveFeedbackBox}>
           <div style={styles.feedbackBoxHeadingWrapper}>
             <img src="/assets/Mastered_Concepts_Icon@2x.png" style={styles.feedbackIcons} />
-            <p style={styles.feedbackTitle}>Mastered Concepts</p>
+            <p style={styles.feedbackTitle} tabIndex="0">
+              Mastered Concepts
+            </p>
           </div>
           <ul style={styles.feedbackList}>
             {this.getReviewOutcomeList(feedbackType, styles)}
@@ -152,8 +162,8 @@ export default class AttemptOverview extends React.Component {
         this.props.studyAndMasteryFeedback.negativeList.map((feedback, index) => {
           return (
             <li style={styles.outcomeItem} key={index}>
-              <p style={styles.outcomeTitle}>{feedback.shortOutcome}</p>
-              <div style={styles.outcomeDetails}>
+              <p style={styles.outcomeTitle} tabIndex="0">{feedback.shortOutcome}</p>
+              <div style={styles.outcomeDetails} tabIndex="0">
                 <div style={styles.dotsContainer}>{this.getIndicatorDots(feedback, styles)}</div>
                 <p style={styles.correctPerOutcome}>
                   {`${this.correctPerOutcome(feedback)} of ${this.totalPerOutcome(feedback)} answers correct`}
@@ -168,8 +178,8 @@ export default class AttemptOverview extends React.Component {
         this.props.studyAndMasteryFeedback.positiveList.map((feedback, index) => {
           return (
             <li style={styles.outcomeItem} key={index}>
-              <p style={styles.outcomeTitle}>{feedback.shortOutcome}</p>
-              <div style={styles.outcomeDetails}>
+              <p style={styles.outcomeTitle} tabIndex="0">{feedback.shortOutcome}</p>
+              <div style={styles.outcomeDetails} tabIndex="0">
                 <div style={styles.dotsContainer}>{this.getIndicatorDots(feedback, styles)}</div>
                 <p style={styles.correctPerOutcome}>
                   {`${this.correctPerOutcome(feedback)} of ${this.totalPerOutcome(feedback)} answers correct`}
@@ -235,6 +245,7 @@ export default class AttemptOverview extends React.Component {
       },
       attemptHeading: {
         color: "#212b36",
+        display: "inline-block",
         fontSize: "14px",
         marginBottom: "8px"
       },
@@ -244,6 +255,7 @@ export default class AttemptOverview extends React.Component {
       },
       score: {
         color: "#212b36",
+        display: "inline-block",
         fontSize: "28px",
         fontWeight: "bold",
         marginBottom: "8px"
@@ -267,6 +279,7 @@ export default class AttemptOverview extends React.Component {
         fontSize: "14px"
       },
       notSubmittedText: {
+        display: "inline-block",
         marginBottom: 0
       },
       attemptFeedbackWrapper: {

@@ -8,7 +8,7 @@ export default class QuizTip extends React.Component {
 
     return (
       <div style={styles.componentWrapper}>
-        <div style={styles.headingWrapper}>
+        <div style={styles.headingWrapper} tabIndex="0">
           <img style={styles.tipIcon} src="/assets/Icon@2x.png" alt="" />
           <h3 style={styles.heading}>Quiz Tip</h3>
         </div>
@@ -34,7 +34,7 @@ export default class QuizTip extends React.Component {
       case "3":
       case "4":
         return (
-          <p style={styles.bodyText}>
+          <p style={styles.bodyText} tabIndex="0">
             Test Group 1
           </p>
         );
@@ -44,13 +44,13 @@ export default class QuizTip extends React.Component {
       case "8":
       case "9":
         return (
-          <p style={styles.bodyText}>
+          <p style={styles.bodyText} tabIndex="0">
             Test Group 2
           </p>
         );
       default:
         return (
-          <p style={styles.bodyText}>
+          <p style={styles.bodyText} tabIndex="0">
             <b>Did you know,</b> if you take your first quiz attempt early you'll have
             plenty of time to study and improve your grade on your second
             attempt?

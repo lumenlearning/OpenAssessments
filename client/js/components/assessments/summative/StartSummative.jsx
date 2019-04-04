@@ -16,8 +16,14 @@ export default class StartSummative extends React.Component {
     return (
       <div className="start-wrapper">
         <div className="start-header-wrapper" style={styles.headerWrapper}>
-          <h2 style={styles.quizTitle}>{`${this.props.title} Quiz`}</h2>
-          {this.maxAttemptsReachedHeader(styles)}
+          <div className="quiz-title-wrapper">
+            <h2 style={styles.quizTitle} tabIndex="0">
+              {`${this.props.title} Quiz`}
+            </h2>
+          </div>
+          <div className="quiz-subtitle-wrapper">
+            {this.maxAttemptsReachedHeader(styles)}
+          </div>
         </div>
 
         <div className="start-body-wrapper">
@@ -63,11 +69,15 @@ export default class StartSummative extends React.Component {
   maxAttemptsReachedHeader(styles) {
     if (this.props.maxAttemptsReached) {
       return (
-        <p style={styles.noAttemptsAvailable}>No quiz attempts available</p>
+        <p style={styles.noAttemptsAvailable} tabIndex="0">
+          No quiz attempts available
+        </p>
       );
     } else {
       return (
-        <p style={styles.quizSubtitle}>{`Attempt ${this.props.userAttempts} of ${this.props.maxAttempts}`}</p>
+        <p style={styles.quizSubtitle} tabIndex="0">
+          {`Attempt ${this.props.userAttempts} of ${this.props.maxAttempts}`}
+        </p>
       );
     }
   }
@@ -76,15 +86,25 @@ export default class StartSummative extends React.Component {
     if (this.props.maxAttemptsReached) {
       return (
         <div className="start-footer-wrapper" style={styles.footerWrapper}>
-          <p style={styles.noAttemptsAvailable}>No quiz attempts available</p>
+          <p style={styles.noAttemptsAvailable} tabIndex="0">
+            No quiz attempts available
+          </p>
         </div>
       );
     } else {
       return (
         <div className="start-footer-wrapper" style={styles.footerWrapper}>
           <div className="start-footer-text">
-            <p style={styles.footerHeading}>{`Start attempt ${this.props.userAttempts} of ${this.props.maxAttempts}`}</p>
-            <p style={styles.footerSubheading}>The highest score of all completed attempts will be recorded as your grade</p>
+            <div className="footer-heading-wrapper">
+              <p style={styles.footerHeading} tabIndex="0">
+                {`Start attempt ${this.props.userAttempts} of ${this.props.maxAttempts}`}
+              </p>
+            </div>
+            <div className="footer-subheading-wrapper">
+              <p style={styles.footerSubheading} tabIndex="0">
+                The highest score of all completed attempts will be recorded as your grade
+              </p>
+            </div>
           </div>
           <div className="start-study-button-wrapper" style={styles.startStudyButtonsWrapper}>
             {this.props.startButton}
@@ -119,12 +139,14 @@ export default class StartSummative extends React.Component {
       },
       quizTitle: {
         color: "#212b36",
+        display: "inline-block",
         fontSize: "20px",
         lineHeight: "28px",
         margin: "0 0 4px 0"
       },
       quizSubtitle: {
         color: "#637381",
+        display: "inline-block",
         fontSize: "14px",
         margin: 0
       },
@@ -133,11 +155,13 @@ export default class StartSummative extends React.Component {
       },
       footerHeading: {
         color: "#212b36",
+        display: "inline-block",
         fontSize: "20px",
         marginBottom: "4px"
       },
       footerSubheading: {
         color: "#637381",
+        display: "inline-block",
         fontSize: "14px"
       },
       startStudyButtonsWrapper: {
@@ -145,7 +169,8 @@ export default class StartSummative extends React.Component {
         flexDirection: "row"
       },
       noAttemptsAvailable: {
-        color: "#ad4646"
+        color: "#ad4646",
+        display: "inline-block"
       }
     };
   }
