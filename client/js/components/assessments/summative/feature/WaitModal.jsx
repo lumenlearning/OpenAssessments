@@ -27,18 +27,19 @@ export default class WaitModal extends React.Component {
 
     return (
       <div style={styles.background}>
-        <div style={styles.container}>
+        <div style={styles.container} tabIndex="1">
           <div style={styles.titleBar}>
-            <h1 style={styles.titleHeader}>Wait!</h1>
+            <h1 style={styles.titleHeader} tabIndex="2">Wait!</h1>
             <img
               style={styles.close}
               src="/assets/x_to_close_light.png"
               data-expandable-status={"disabled"}
               onClick={() => { this.props.hideModal(); }}
+              tabIndex="3"
               />
           </div>
           <div style={styles.body}>
-            <p style={styles.bodyText}>
+            <p style={styles.bodyText} tabIndex="4">
               {this.props.bodyContent}
             </p>
           </div>
@@ -108,6 +109,7 @@ export default class WaitModal extends React.Component {
         borderBottom: "1px solid #ccc"
       },
       titleHeader: {
+        display: "inline-block",
         fontSize: "20px",
         fontWeight: 600,
         margin: 0
