@@ -8,9 +8,9 @@ export default class QuizTip extends React.Component {
 
     return (
       <div style={styles.componentWrapper}>
-        <div style={styles.headingWrapper} tabIndex="0">
+        <div style={styles.headingWrapper}>
           <img style={styles.tipIcon} src="/assets/Icon@2x.png" alt="" />
-          <h3 style={styles.heading}>Quiz Tip</h3>
+          <h3 style={styles.heading} tabIndex="0">Quiz Tip</h3>
         </div>
         <div style={styles.bodyTextWrapper}>
           {this.getQuizTip(styles)}
@@ -78,6 +78,7 @@ export default class QuizTip extends React.Component {
       },
       heading: {
         color: "#212b36",
+        display: "inline-block",
         fontSize: "16px",
         fontWeight: "bold",
         marginTop: 0,
@@ -114,6 +115,7 @@ export default class QuizTip extends React.Component {
       },
       heading: {
         color: "#212b36",
+        display: "inline-block",
         fontSize: "16px",
         fontWeight: "bold",
         marginTop: 0,
