@@ -12,13 +12,13 @@ export default class AttemptOverview extends React.Component {
 
     this.state = {
       windowWidth: window.innerWidth
-    }
+    };
 
     this.handleWindowResize = this.handleWindowResize.bind(this);
   }
 
   componentWillMount() {
-    window.addEventListener('resize', this.handleWindowResize);
+    window.addEventListener("resize", this.handleWindowResize);
   }
 
   render() {
@@ -38,7 +38,7 @@ export default class AttemptOverview extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener("resize", this.handleWindowResize);
   }
 
   handleWindowResize() {
@@ -109,7 +109,7 @@ export default class AttemptOverview extends React.Component {
   }
 
   getFeedback(feedbackType, styles) {
-    if (this.hasPopulatedNegativeFeedbackList() && !this.isPositiveFeedback(feedbackType)) {
+    if (!this.isPositiveFeedback(feedbackType)) {
       return (
         <div className="recommended-studying" style={styles.negativeFeedbackBox}>
           <div style={styles.feedbackBoxHeadingWrapper}>
@@ -123,7 +123,7 @@ export default class AttemptOverview extends React.Component {
           </ul>
         </div>
       );
-    } else if (this.hasPopulatedPositiveFeedbackList() && this.isPositiveFeedback(feedbackType)) {
+    } else if (this.isPositiveFeedback(feedbackType)) {
       return (
         <div className="mastered-concepts" style={styles.positiveFeedbackBox}>
           <div style={styles.feedbackBoxHeadingWrapper}>
@@ -140,20 +140,20 @@ export default class AttemptOverview extends React.Component {
     }
   }
 
+  isPositiveFeedback(feedbackType) {
+    if (feedbackType === "negative" && this.hasPopulatedNegativeFeedbackList()) {
+      return false;
+    } else if (feedbackType === "positive" && this.hasPopulatedPositiveFeedbackList()) {
+      return true;
+    }
+  }
+
   hasPopulatedNegativeFeedbackList() {
     return this.props.studyAndMasteryFeedback.negativeList.length > 0 ? true : false;
   }
 
   hasPopulatedPositiveFeedbackList() {
     return this.props.studyAndMasteryFeedback.positiveList.length > 0 ? true : false;
-  }
-
-  isPositiveFeedback(feedbackType) {
-    if (feedbackType === "negative") {
-      return false;
-    } else if (feedbackType === "positive") {
-      return true;
-    }
   }
 
   getReviewOutcomeList(feedbackType, styles) {
@@ -284,22 +284,22 @@ export default class AttemptOverview extends React.Component {
       },
       attemptFeedbackWrapper: {
         display: "flex",
-        flexDirection: this.state.windowWidth <= 1225 ? "column-reverse" : "row"
+        flexDirection: this.responsiveAttemptFeedbackWrapperFlexDirection(1225)
       },
       attemptFeedback: {
         borderRadius: "3px",
-        boxShadow: this.state.windowWidth <= 1225 ? "none" : "0 1px 3px 0 rgba(63, 63, 68, 0.15), 0 0 0 1px rgba(63, 63, 68, 0.05)",
+        boxShadow: this.responsiveAttemptFeedbackBoxShadow(1225),
         display: "flex",
-        flexDirection: this.state.windowWidth <= 1225 ? "column" : "row"
+        flexDirection: this.responsiveAttemptFeedbackFlexDirection(1225)
       },
       negativeFeedbackBox: {
-        borderRight: this.state.windowWidth <= 1225 ? "none" : "1px solid #dfe3e8",
-        borderBottom: this.state.windowWidth <= 1225 ? "1px solid #dfe3e8" : "none",
-        padding: this.state.windowWidth <= 1225 ? "45px 0" : "45px 40px",
+        borderRight: this.responsiveNegativeFeedbackBoxBorderRight(1225),
+        borderBottom: this.responsiveNegativeFeedbackBoxBorderBottom(1225),
+        padding: this.responsiveFeedbackBoxPadding(1225),
         width: "365px"
       },
       positiveFeedbackBox: {
-        padding: this.state.windowWidth <= 1225 ? "45px 0" : "45px 40px",
+        padding: this.responsiveFeedbackBoxPadding(1225),
         width: "365px"
       },
       feedbackTitle: {
@@ -365,5 +365,29 @@ export default class AttemptOverview extends React.Component {
         width: "12px"
       }
     };
+  }
+
+  responsiveAttemptFeedbackWrapperFlexDirection(breakPoint) {
+    return this.state.windowWidth <= breakPoint ? "column-reverse" : "row";
+  }
+
+  responsiveAttemptFeedbackBoxShadow(breakPoint) {
+    return this.state.windowWidth <= breakPoint ? "none" : "0 1px 3px 0 rgba(63, 63, 68, 0.15), 0 0 0 1px rgba(63, 63, 68, 0.05)";
+  }
+
+  responsiveAttemptFeedbackFlexDirection(breakPoint) {
+    return this.state.windowWidth <= breakPoint ? "column" : "row";
+  }
+
+  responsiveNegativeFeedbackBoxBorderRight(breakPoint) {
+    return this.state.windowWidth <= breakPoint ? "none" : "1px solid #dfe3e8";
+  }
+
+  responsiveNegativeFeedbackBoxBorderBottom(breakPoint) {
+    return this.state.windowWidth <= breakPoint ? "1px solid #dfe3e8" : "none";
+  }
+
+  responsiveFeedbackBoxPadding(breakPoint) {
+    return this.state.windowWidth <= breakPoint ? "45px 0" : "45px 40px";
   }
 }
