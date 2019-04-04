@@ -188,26 +188,19 @@ export default class CheckUnderstanding extends React.Component{
    */
   getWaitModalBodyText() {
     let userIdLastDigit = this.calculateUserIdLastDigitLastAttempt();
+    let testGroupOne = ["0", "1", "2", "3"];
+    let testGroupTwo = ["4", "5", "6"];
+    let testGroupThree = ["7" ,"8" ,"9"];
     let bodyText = "";
 
-    switch (userIdLastDigit) {
-      case "0":
-      case "1":
-      case "2":
-      case "3":
-        break;
-      case "4":
-      case "5":
-      case "6":
-        bodyText = "content set 1";
-        break;
-      case "7":
-      case "8":
-      case "9":
-        bodyText = "content set 2";
-        break;
-      default:
-        bodyText = "Are you sure you'd like to start the quiz now, or would you like to study for longer to try to improve your grade?";
+    if (testGroupOne.includes(userIdLastDigit)) {
+      return;
+    } else if (testGroupTwo.includes(userIdLastDigit)) {
+      bodyText = "content set 1";
+    } else if (testGroupThree.includes(userIdLastDigit)) {
+      bodyText = "content set 2";
+    } else {
+      bodyText = "Are you sure you'd like to start the quiz now, or would you like to study for longer to try to improve your grade?";
     }
 
     return bodyText;

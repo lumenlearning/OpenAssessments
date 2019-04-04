@@ -109,7 +109,7 @@ export default class AttemptOverview extends React.Component {
   }
 
   getFeedback(feedbackType, styles) {
-    if (!this.isPositiveFeedback(feedbackType)) {
+    if (this.isNegativeFeedback(feedbackType)) {
       return (
         <div className="recommended-studying" style={styles.negativeFeedbackBox}>
           <div style={styles.feedbackBoxHeadingWrapper}>
@@ -141,19 +141,27 @@ export default class AttemptOverview extends React.Component {
   }
 
   isPositiveFeedback(feedbackType) {
-    if (feedbackType === "negative" && this.hasPopulatedNegativeFeedbackList()) {
-      return false;
-    } else if (feedbackType === "positive" && this.hasPopulatedPositiveFeedbackList()) {
+    if (feedbackType === "positive" && this.hasPopulatedPositiveFeedbackList()) {
       return true;
+    } else {
+      return false;
     }
   }
 
-  hasPopulatedNegativeFeedbackList() {
-    return this.props.studyAndMasteryFeedback.negativeList.length > 0 ? true : false;
+  isNegativeFeedback(feedbackType) {
+    if (feedbackType === "negative" && this.hasPopulatedNegativeFeedbackList()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   hasPopulatedPositiveFeedbackList() {
     return this.props.studyAndMasteryFeedback.positiveList.length > 0 ? true : false;
+  }
+
+  hasPopulatedNegativeFeedbackList() {
+    return this.props.studyAndMasteryFeedback.negativeList.length > 0 ? true : false;
   }
 
   getReviewOutcomeList(feedbackType, styles) {
