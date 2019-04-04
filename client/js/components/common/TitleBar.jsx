@@ -28,6 +28,6 @@ export default class TitleBar extends React.Component {
         fontWeight: "400",
         lineHeight: "1.4"
       }
-    }
+    };
   }
 }

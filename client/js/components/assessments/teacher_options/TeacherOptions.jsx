@@ -10,13 +10,13 @@ export default class TeacherOptions extends React.Component {
 
     this.state = {
       windowWidth: window.innerWidth
-    }
+    };
 
     this.handleWindowResize = this.handleWindowResize.bind(this);
   }
 
   componentWillMount() {
-    window.addEventListener('resize', this.handleWindowResize);
+    window.addEventListener("resize", this.handleWindowResize);
   }
 
   render() {
@@ -46,7 +46,7 @@ export default class TeacherOptions extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener("resize", this.handleWindowResize);
   }
 
   handleWindowResize() {
@@ -69,20 +69,36 @@ export default class TeacherOptions extends React.Component {
     return {
       wrapper: {
         display: "flex",
-        flexDirection: this.state.windowWidth <= 500 ? "column" : "row",
-        marginTop: this.state.windowWidth <= 500 ? "6px" : 0
+        flexDirection: this.responsiveFlexDirection(500),
+        marginTop: this.responsiveMarginTop(500)
       },
       teacherOption: {
         border:"transparent",
         backgroundColor:"#fff",
         color:"#212b36",
-        margin: this.state.windowWidth <= 500 ? "6px 0" : "20px 17px 20px 0",
+        margin: this.responsiveTeacherOptionMargin(500),
         padding: 0,
-        textAlign: this.state.windowWidth <= 500 ? "left" : "center",
+        textAlign: this.responsiveTeacherOptionTextAlign(500),
         textTransform: "uppercase",
         fontSize: "12px",
         fontWeight: "bold"
       }
     };
+  }
+
+  responsiveFlexDirection(breakPoint) {
+    return this.state.windowWidth <= breakPoint ? "column" : "row";
+  }
+
+  responsiveMarginTop(breakPoint) {
+    return this.state.windowWidth <= breakPoint ? "6px" : 0;
+  }
+
+  responsiveTeacherOptionMargin(breakPoint) {
+    return this.state.windowWidth <= breakPoint ? "6px 0" : "20px 17px 20px 0";
+  }
+
+  responsiveTeacherOptionTextAlign(breakPoint) {
+    return this.state.windowWidth <= breakPoint ? "left" : "center";
   }
 }

@@ -9,13 +9,13 @@ export default class WaitModal extends React.Component {
 
     this.state = {
       windowWidth: window.innerWidth
-    }
+    };
 
     this.escFunction = this.escFunction.bind(this);
   }
 
   componentWillMount() {
-    window.addEventListener('resize', this.handleWindowResize);
+    window.addEventListener("resize", this.handleWindowResize);
   }
 
   componentDidMount() {
@@ -66,7 +66,7 @@ export default class WaitModal extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener("resize", this.handleWindowResize);
     document.removeEventListener("keydown", this.escFunction, false);
   }
 
