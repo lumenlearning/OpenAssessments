@@ -163,7 +163,7 @@ export default class Start extends BaseComponent {
         height: theme.progressBarHeight
       },
       assessment: {
-        padding: this.state.settings.assessmentKind.toUpperCase()  == "FORMATIVE" ? "" : theme.assessmentPadding,
+        padding: 0,
         backgroundColor: theme.assessmentBackground,
         minWidth: minWidth
       },
