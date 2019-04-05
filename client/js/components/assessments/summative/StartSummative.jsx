@@ -5,10 +5,14 @@ import React from "react";
 // Subcomponents
 import AttemptOverview from "./feature/AttemptOverview";
 import AttemptTime from "./feature/AttemptTime";
+import StudyMoreButton from "../../post_nav/StudyMoreButton";
 import QuizTip from "./feature/QuizTip";
 
 // Summative Assessment Start Page
 export default class StartSummative extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+  }
 
   render() {
     let styles = this.getStyles();
@@ -108,7 +112,7 @@ export default class StartSummative extends React.Component {
           </div>
           <div className="start-study-button-wrapper" style={styles.startStudyButtonsWrapper}>
             {this.props.startButton}
-            {this.props.studyButton}
+            <StudyMoreButton />
           </div>
         </div>
       );

@@ -87,7 +87,6 @@ export default class CheckUnderstanding extends React.Component{
           maxAttemptsReached={this.maxAttemptsReached()}
           title={this.props.title}
           startButton={this.renderStartButton(styles)}
-          studyButton={this.renderStudyButton(styles)}
           userAttempts={this.props.userAttempts + 1}
           />
       );
@@ -251,20 +250,20 @@ export default class CheckUnderstanding extends React.Component{
     context.router.transitionTo("assessment");
   }
 
-  renderStudyButton(styles) {
-    return (
-      <div className="study-more-button-wrapper" style={styles.studyButtonWrapper}>
-        <a href={this.props.returnUrl}>
-          <button
-            style={styles.startButton}
-            className="btn btn-info"
-            >
-              Study More
-          </button>
-        </a>
-      </div>
-    )
-  }
+  // renderStudyButton(styles) {
+  //   return (
+  //     <div className="study-more-button-wrapper" style={styles.studyButtonWrapper}>
+  //       <a href={this.props.returnUrl}>
+  //         <button
+  //           style={styles.startButton}
+  //           className="btn btn-info"
+  //           >
+  //             Study More
+  //         </button>
+  //       </a>
+  //     </div>
+  //   )
+  // }
 
   showWaitModal() {
     this.setState({showModal: true});
@@ -280,7 +279,7 @@ export default class CheckUnderstanding extends React.Component{
         marginTop: "0px"
       },
       startButton: {
-        margin: "5px 5px 5px -5px",
+        margin: "5px 5px 5px 0px",
         height: "36px",
         minWidth: "97px",
         backgroundColor: "#1e74d1 !important",
