@@ -18,7 +18,7 @@ export default class TitleBar extends React.Component {
     return {
       titleBar: {
         borderBottom: "2px solid #003136",
-        padding: "22px 40px 22px 0"
+        padding: "0 40px 22px 0"
       },
       title: {
         color: "#212b36",
@@ -26,7 +26,8 @@ export default class TitleBar extends React.Component {
         fontFamily: "Arial",
         fontSize: "28px",
         fontWeight: "400",
-        lineHeight: "1.4"
+        lineHeight: "1.4",
+        marginTop: 0
       }
     };
   }
