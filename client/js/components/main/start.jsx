@@ -112,7 +112,6 @@ export default class Start extends BaseComponent {
           title={this.state.settings.assessmentTitle}
           userAttempts={this.state.settings.userAttempts}
           userId={this.state.settings.userId}
-          returnUrl={this.state.settings.returnUrl}
           />
       );
     }

@@ -1,26 +1,16 @@
 "use strict";
-
+// Dependencies
 import React from "react";
+// Subcomponents
 import BaseComponent from "../base_component";
-import CommHandler from "../../utils/communication_handler";
+// Stores
 import SettingsStore from "../../stores/settings";
+// Utils
+import CommHandler from "../../utils/communication_handler";
 
+// Study More Button Class
 export default class StudyMoreButton extends BaseComponent {
-  constructor(props, context) {
-    super(props, context);
-
-    this.stores = [SettingsStore];
-
-    this.state = {
-      display: SettingsStore.current().showPostMessageNav
-    };
-  }
-
   render() {
-    // if (!this.state.display || self == top) {
-    //   return <div></div>;
-    // }
-
     let styles = this.getStyles();
 
     return (

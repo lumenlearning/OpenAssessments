@@ -79,8 +79,7 @@ function loadSettings(defaultSettings){
     questionCount      : defaultSettings.questionCount,
     userAssessmentId   : bestValue('user_assessment_id', 'UserAssessmentId'),
     iframe_resize_id   : defaultSettings.iframe_resize_id,
-    showAnswers        : defaultSettings.show_answers,
-    returnUrl          : defaultSettings.launch_presentation_return_url
+    showAnswers        : defaultSettings.show_answers
   };
 
   if(!_settings.srcUrl && !_settings.offline){

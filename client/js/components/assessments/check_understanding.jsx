@@ -238,7 +238,6 @@ export default class CheckUnderstanding extends React.Component{
             this.props.assessmentId,
             this.context
           )}
-          returnUrl={this.props.returnUrl}
           />
       );
     }
@@ -249,21 +248,6 @@ export default class CheckUnderstanding extends React.Component{
     AssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, $("#srcData").text());
     context.router.transitionTo("assessment");
   }
-
-  // renderStudyButton(styles) {
-  //   return (
-  //     <div className="study-more-button-wrapper" style={styles.studyButtonWrapper}>
-  //       <a href={this.props.returnUrl}>
-  //         <button
-  //           style={styles.startButton}
-  //           className="btn btn-info"
-  //           >
-  //             Study More
-  //         </button>
-  //       </a>
-  //     </div>
-  //   )
-  // }
 
   showWaitModal() {
     this.setState({showModal: true});

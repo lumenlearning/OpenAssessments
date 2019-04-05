@@ -51,13 +51,11 @@ export default class WaitModal extends React.Component {
                 >
                   Start Quiz
                 </button>
-              <a style={styles.returnUrl} href={this.props.returnUrl}>
                 <button
                   style={styles.button}
                   >
                     Study More
                 </button>
-              </a>
             </div>
           </div>
         </div>
@@ -147,9 +145,6 @@ export default class WaitModal extends React.Component {
         fontWeight: "400",
         height: "40px",
         minWidth: "97px"
-      },
-      returnUrl: {
-        marginLeft: "8px"
       }
     };
   }
