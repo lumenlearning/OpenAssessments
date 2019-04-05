@@ -41,7 +41,7 @@ export default class TeacherPreview extends BaseComponent{
     let itemResults = this.getItemResults();
 
     return (
-      <div style={styles.assessment}>
+      <div>
         <div style={styles.assessmentContainer}>
           <TitleBar
             title={this.state.settings ? this.state.settings.assessmentTitle : ""}

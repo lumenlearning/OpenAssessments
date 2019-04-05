@@ -209,9 +209,7 @@ export default class Attempts extends BaseComponent {
 
   getStyles() {
     return {
-      componentWrapper: {
-        padding: "20px"
-      },
+      componentWrapper: {},
       attemptsWrapper: {
         textAlign:"center"
       },
