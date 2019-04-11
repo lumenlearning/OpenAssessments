@@ -202,12 +202,12 @@ class Api::AssessmentsController < Api::ApiController
 
     if params[:assessment_result_id]
       ar = AssessmentResult.find(params[:assessment_result_id])
-      ua = ar.user_assessment
-
-      if !ua || ua.lti_context_id != @lti_launch.lti_context_id
-        render :json => {:error => "This Assessment Result is not from this context."}, status: :unauthorized
-        return
-      end
+      # ua = ar.user_assessment
+      #
+      # if !ua || ua.lti_context_id != @lti_launch.lti_context_id
+      #   render :json => {:error => "This Assessment Result is not from this context."}, status: :unauthorized
+      #   return
+      # end
 
       if ar.assessment_xml && (ar.assessment_xml.kind == 'summative' || ar.assessment_xml.kind == 'qti')
         xml = ar.assessment_xml.xml
