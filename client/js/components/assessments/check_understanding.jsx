@@ -88,6 +88,7 @@ export default class CheckUnderstanding extends React.Component{
           title={this.props.title}
           startButton={this.renderStartButton(styles)}
           userAttempts={this.props.userAttempts + 1}
+          navHome={this.props.navHome}
           />
       );
     }

@@ -3,10 +3,6 @@
 import React from "react";
 // Subcomponents
 import BaseComponent from "../base_component";
-// Stores
-import SettingsStore from "../../stores/settings";
-// Utils
-import CommHandler from "../../utils/communication_handler";
 
 // Study More Button Class
 export default class StudyMoreButton extends BaseComponent {
@@ -19,7 +15,7 @@ export default class StudyMoreButton extends BaseComponent {
           className="lti-nav-btn"
           id="study-more"
           style={styles.button}
-          onClick={() => { CommHandler.navigateHome(); }}
+          onClick={() => this.props.navHome()}
           >
             Study More
         </button>
@@ -45,5 +41,3 @@ export default class StudyMoreButton extends BaseComponent {
     };
   }
 };
-
-module.export = StudyMoreButton;

@@ -34,8 +34,10 @@ export default class Start extends BaseComponent {
     ReviewAssessmentActions.loadAssessmentForStudentReview(SettingsStore.current(), SettingsStore.current().assessmentId, SettingsStore.current().userAssessmentId);
     ReviewAssessmentActions.loadAssessmentXmlForStudentReview(SettingsStore.current(), SettingsStore.current().assessmentId, SettingsStore.current().userAssessmentId);
 
+    CommHandler.init();
+
     // Rebindings
-    this._bind["getStyles"];
+    this._bind["getStyles", "handleNavHomeCommEvent"];
   }
 
   getState(context) {
@@ -80,7 +82,8 @@ export default class Start extends BaseComponent {
       AssessmentActions.assessmentViewed(this.state.settings, this.state.assessment);
     }
 
-    CommHandler.sendSize();
+    CommHandler.sendSizeThrottled();
+    CommHandler.showLMSNavigation();
   }
 
   renderTitleBar(styles) {
@@ -112,9 +115,14 @@ export default class Start extends BaseComponent {
           title={this.state.settings.assessmentTitle}
           userAttempts={this.state.settings.userAttempts}
           userId={this.state.settings.userId}
+          navHome={this.handleNavHomeCommEvent}
           />
       );
     }
+  }
+
+  handleNavHomeCommEvent() {
+    CommHandler.navigateHome();
   }
 
   studyAndMasteryFeedback() {

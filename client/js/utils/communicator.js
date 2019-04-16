@@ -15,6 +15,6 @@ export default {
 
   broadcastMsg: function(payload){
     parent.postMessage(JSON.stringify(payload), "*");
-  }
+  },
 
 };

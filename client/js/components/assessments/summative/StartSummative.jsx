@@ -112,7 +112,7 @@ export default class StartSummative extends React.Component {
           </div>
           <div className="start-study-button-wrapper" style={styles.startStudyButtonsWrapper}>
             {this.props.startButton}
-            <StudyMoreButton />
+            <StudyMoreButton navHome={this.props.navHome} />
           </div>
         </div>
       );
