@@ -26,8 +26,8 @@
   </div>
 <% else -%>
   <%= render partial: "assessments/assessment_setup" %>
-  <div id="assessment-container" style="width: 95%;"></div>
-  <%= webpack_manifest_script %> 
+  <div id="assessment-container"></div>
+  <%= webpack_manifest_script %>
   <%= webpack_bundle_tag 'app' %>
 <% end -%>
 

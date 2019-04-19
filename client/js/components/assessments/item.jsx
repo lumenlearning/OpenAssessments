@@ -200,7 +200,7 @@ export default class Item extends BaseComponent {
     if (this.props.question.confidenceLevel) {
       return (
         <div className="confidence_feedback_wrapper" style={styles.confidenceFeedbackWrapper}>
-          <p>Your confidence level in answering this question was: {`${this.props.question.confidenceLevel}`}.</p>
+          <p>Your confidence level in answering this question was: <strong>{`${this.props.question.confidenceLevel}`}</strong>.</p>
           {this.getConfidenceNavButton(styles)}
         </div>
       );

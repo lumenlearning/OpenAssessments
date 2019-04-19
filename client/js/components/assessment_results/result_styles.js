@@ -5,7 +5,7 @@ export default{
   getStyles(theme, isFormative=false){
     return {
       assessment: {
-        padding: isFormative ? "" : theme.assessmentPadding,
+        padding: 0,
         backgroundColor: theme.assessmentBackground,
       },
       progressStyle: {
@@ -70,7 +70,7 @@ export default{
         marginTop: "80px"
       },
       header: {
-        position: "absolute",
+        // position: "absolute",
         borderTop: "2px solid #003136",
         borderBottom: "1px solid #c4cdd5",
         top: "0px",
