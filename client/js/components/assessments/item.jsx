@@ -155,7 +155,7 @@ export default class Item extends BaseComponent {
   submitAssessment() {
     let complete = Item.checkCompletion();
 
-    if (complete) {
+    if (complete === true) {
       window.onbeforeunload = null;
 
       AssessmentActions.submitAssessment(
@@ -177,9 +177,9 @@ export default class Item extends BaseComponent {
     // if there are any unanswered questions, return them
     if (questionsNotAnswered.length > 0) {
       return questionsNotAnswered;
+    } else {
+      return true;
     }
-
-    return true;
   }
 
   getWarning(state, questionCount, questionIndex, styles) {
@@ -391,7 +391,9 @@ export default class Item extends BaseComponent {
   }
 
   submitAssessmentButton(styles) {
-    if (this.props.settings.assessmentKind === "formative" || this.props.settings.assessmentKind === "practice") {
+    if (this.props.settings.assessmentKind === "formative" ||
+        this.props.settings.assessmentKind === "practice" ||
+        (this.props.currentIndex !== this.props.questionCount - 1)) {
       return;
     }
 
@@ -412,12 +414,6 @@ export default class Item extends BaseComponent {
         );
       }
     } else {
-      if ((AssessmentStore.isFormative() && this.props.confidenceLevels) ||
-          (AssessmentStore.isPractice()) ||
-          (this.props.currentIndex !== this.props.questionCount - 1)) {
-        return;
-      }
-
       return (
         <div style={styles.submitAssessmentButtonDiv}>
           <button
