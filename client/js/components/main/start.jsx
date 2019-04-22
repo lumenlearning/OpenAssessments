@@ -37,7 +37,7 @@ export default class Start extends BaseComponent {
     CommHandler.init();
 
     // Rebindings
-    this._bind["getStyles", "handleNavHomeCommEvent"];
+    this._bind["getStyles"];
   }
 
   getState(context) {
@@ -115,14 +115,9 @@ export default class Start extends BaseComponent {
           title={this.state.settings.assessmentTitle}
           userAttempts={this.state.settings.userAttempts}
           userId={this.state.settings.userId}
-          navHome={this.handleNavHomeCommEvent}
           />
       );
     }
-  }
-
-  handleNavHomeCommEvent() {
-    CommHandler.navigateHome();
   }
 
   studyAndMasteryFeedback() {

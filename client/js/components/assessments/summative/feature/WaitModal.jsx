@@ -53,8 +53,9 @@ export default class WaitModal extends React.Component {
                 </button>
                 <button
                   style={styles.button}
+                  onClick={() => this.props.hideModal()}
                   >
-                    Study More
+                    Cancel
                 </button>
             </div>
           </div>

@@ -5,7 +5,6 @@ import React from "react";
 // Subcomponents
 import AttemptOverview from "./feature/AttemptOverview";
 import AttemptTime from "./feature/AttemptTime";
-import StudyMoreButton from "../../post_nav/StudyMoreButton";
 import QuizTip from "./feature/QuizTip";
 
 // Summative Assessment Start Page
@@ -112,7 +111,6 @@ export default class StartSummative extends React.Component {
           </div>
           <div className="start-study-button-wrapper" style={styles.startStudyButtonsWrapper}>
             {this.props.startButton}
-            <StudyMoreButton navHome={this.props.navHome} />
           </div>
         </div>
       );
