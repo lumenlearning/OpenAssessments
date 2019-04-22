@@ -75,7 +75,7 @@ export default{
         borderBottom: "1px solid #c4cdd5",
         top: "0px",
         left: "0px",
-        padding: "22px 40px",
+        padding: "22px 40px 22px 0",
         fontSize: "20px",
         fontWeight: "400",
         color: "#212b36",
