@@ -9,6 +9,7 @@ export default class TeacherOptions extends React.Component {
     super();
 
     this.state = {
+      hover: null,
       windowWidth: window.innerWidth
     };
 
@@ -26,18 +27,24 @@ export default class TeacherOptions extends React.Component {
       <div className="teacher-options-wrapper" style={styles.wrapper}>
         <button
           onClick={() => { this.changeContext("start"); }}
-          style={styles.teacherOption}>
+          onMouseEnter={() => this.setState({ hover: "start" })}
+          onMouseLeave={() => this.setState({ hover: null })}
+          style={this.state.hover === "start" ? styles.teacherOptionHover : styles.teacherOption}>
           Student Experience
         </button>
         <button
           onClick={() => { this.changeContext("teacher-preview"); }}
-          style={styles.teacherOption}
+          onMouseEnter={() => this.setState({ hover: "teacher-preview" })}
+          onMouseLeave={() => this.setState({ hover: null })}
+          style={this.state.hover === "teacher-preview" ? styles.teacherOptionHover : styles.teacherOption}
           >
             Answer Key
         </button>
         <button
           onClick={() => { this.changeContext("attempts"); }}
-          style={styles.teacherOption}
+          onMouseEnter={() => this.setState({ hover: "attempts" })}
+          onMouseLeave={() => this.setState({ hover: null })}
+          style={this.state.hover === "attempts" ? styles.teacherOptionHover : styles.teacherOption}
           >
             Manage Quiz Attempts
         </button>
@@ -72,10 +79,23 @@ export default class TeacherOptions extends React.Component {
         flexDirection: this.responsiveFlexDirection(500),
         marginTop: this.responsiveMarginTop(500)
       },
+      teacherOptionHover: {
+        border:"transparent",
+        backgroundColor:"#fff",
+        color:"#1e74d1",
+        textDecoration: "underline",
+        margin: this.responsiveTeacherOptionMargin(500),
+        padding: 0,
+        textAlign: this.responsiveTeacherOptionTextAlign(500),
+        textTransform: "uppercase",
+        fontSize: "12px",
+        fontWeight: "bold"
+      },
       teacherOption: {
         border:"transparent",
         backgroundColor:"#fff",
         color:"#212b36",
+        textDecoration: "underline",
         margin: this.responsiveTeacherOptionMargin(500),
         padding: 0,
         textAlign: this.responsiveTeacherOptionTextAlign(500),
