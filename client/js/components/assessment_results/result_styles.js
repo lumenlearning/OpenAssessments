@@ -75,7 +75,7 @@ export default{
         borderBottom: "1px solid #c4cdd5",
         top: "0px",
         left: "0px",
-        padding: "22px 40px 22px 0",
+        padding: "22px 40px 22px 16px",
         fontSize: "20px",
         fontWeight: "400",
         color: "#212b36",
@@ -137,7 +137,7 @@ export default{
       },
       titleBar: {
         borderBottom: "2px solid #003136",
-        padding: "22px 40px 22px 0",
+        padding: "22px 40px 22px 16px",
         fontFamily: "Arial",
         fontSize: "28px",
         fontWeight: "400",

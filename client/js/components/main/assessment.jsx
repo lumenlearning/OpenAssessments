@@ -262,7 +262,7 @@ export default class Assessment extends BaseComponent{
       titleBar: {
         borderTop: "2px solid #003136",
         borderBottom: "1px solid #c4cdd5",
-        padding: "22px 40px 22px 0",
+        padding: "22px 40px 22px 16px",
         fontSize: "20px",
         fontWeight: "400",
         color: "#212b36",

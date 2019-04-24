@@ -76,25 +76,21 @@ export default class FormativeResult extends React.Component{
     return (
       <div style={styles.assessment}>
         <div style={styles.assessmentContainer}>
-          <div style={styles.formative}>
-            <div className="row" style={styles.row}>
-              <div className="col-md-12 col-lg-12" style={styles.outcomes}>
-                <div style={styles.header}>{this.props.assessment ? this.props.assessment.title : ""}</div>
-                <div style={styles.outcomeContainer}>
-                  {image}
-                  {head}
-                  <p style={{color: "#637381", fontSize: "14px", fontWeight: "normal"}}>{feedback}</p>
-                  <div>{results}</div>
-                  <div style={styles.buttonsDiv}>
-                    <button
-                      className="btn btn-check-answer"
-                      style={styles.retakeButton}
-                      onClick={(e) => { this.retake(); }}
-                      >
-                        Retake Quiz
-                    </button>
-                  </div>
-                </div>
+          <div style={styles.outcomes}>
+            <div style={styles.header}>{this.props.assessment ? this.props.assessment.title : ""}</div>
+            <div style={styles.outcomeContainer}>
+              {image}
+              {head}
+              <p style={{color: "#637381", fontSize: "14px", fontWeight: "normal"}}>{feedback}</p>
+              <div>{results}</div>
+              <div style={styles.buttonsDiv}>
+                <button
+                  className="btn btn-check-answer"
+                  style={styles.retakeButton}
+                  onClick={(e) => { this.retake(); }}
+                  >
+                    Retake Quiz
+                </button>
               </div>
             </div>
           </div>

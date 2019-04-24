@@ -215,7 +215,7 @@ export default class Attempts extends BaseComponent {
       },
       titleBar: {
         borderBottom: "2px solid #003136",
-        padding: "22px 40px 22px 0",
+        padding: "22px 40px 22px 16px",
         fontFamily: "Arial",
         fontSize: "28px",
         fontWeight: "400",

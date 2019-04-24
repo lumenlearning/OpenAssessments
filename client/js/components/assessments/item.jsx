@@ -484,7 +484,7 @@ export default class Item extends BaseComponent {
 
     return {
       formativePadding: {
-        padding: extraPadding
+        padding: 0
       },
       assessmentContainer: {
         marginTop: "0px",
