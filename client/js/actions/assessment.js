@@ -43,7 +43,7 @@ export default {
   },
 
   checkAnswer(){
-    Dispatcher.dispatch({ action: Constants.ASSESSMENT_CHECK_ANSWER });
+    Dispatcher.dispatch({action: Constants.ASSESSMENT_CHECK_ANSWER});
   },
 
   selectConfidenceLevel(level, index){

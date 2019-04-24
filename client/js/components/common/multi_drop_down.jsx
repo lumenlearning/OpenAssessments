@@ -129,29 +129,34 @@ export default class MultiDropDown extends BaseComponent {
         });
 
         if (selectedAnswer && selectedAnswer.chosen_answer_id === answer.value) {
-          selected = 'selected';
+          selected = "selected";
         }
       } else if (this.state[nMatch] === answer.value) {
         selected = "selected";
       }
 
-      // if this is the answer key, select/show the correct answers
-      if (this.props.selectCorrectAnswer && answer.isCorrect) {
-        selected = 'selected';
+      // if this is NOT a formative/practice assessment and this is the answer
+      // key page, select/show the correct answers
+      if (this.props.assessmentKind !== "formative" &&
+          this.props.assessmentKind !== "practice" &&
+          this.props.selectCorrectAnswer &&
+          answer.isCorrect) {
+        selected = "selected";
       }
 
       if ((this.props.isResult && !!correctAnswer) && correctAnswer.value !== answer.value) disabled = "disabled";
 
-      return `<option ${selected} ${disabled} value=${answer.value} >${answer.name}</option>`;
+      return `<option ${selected} ${disabled} value=${answer.value}>${answer.name}</option>`;
     });
   }
 
   answerCheckMarks(correctAnswer, nMatch, i) {
     let item = this.props.item;
     let answerCheck = '';
+    let selAnswer = null;
 
     if (this.props.isResult && !!correctAnswer && !!this.props.selectedAnswers && this.props.selectedAnswers.length > 0) {
-      let selAnswer = this.props.selectedAnswers.find((selectedAnswer) => {
+      selAnswer = this.props.selectedAnswers.find((selectedAnswer) => {
         return selectedAnswer.dropdown_id === nMatch;
       });
 
