@@ -6,7 +6,7 @@ class Api::AssessmentsController < Api::ApiController
   respond_to :xml, :json
 
   before_action :ensure_context_admin, only:[:json_update, :review_show]
-  load_and_authorize_resource except: [:show, :json_update, :copy, :student_review_show, :student_review_show_xml]
+  load_and_authorize_resource except: [:show, :json_update, :copy, :review_show, :student_review_show, :student_review_show_xml]
   skip_before_action :validate_token, only: [:show]
   skip_before_action :protect_account, only: [:show]
   before_action :ensure_copy_admin, only:[:copy]

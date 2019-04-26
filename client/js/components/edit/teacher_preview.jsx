@@ -13,19 +13,21 @@ export default class TeacherPreview extends BaseComponent{
 
   constructor(props, context){
     super(props, context);
-    this.stores = [ReviewAssessmentStore];
-    if(!ReviewAssessmentStore.isLoaded() && !ReviewAssessmentStore.isLoading()){
-      ReviewAssessmentActions.loadAssessment(window.DEFAULT_SETTINGS);
-    }
+
     this.state = this.getState();
+    this.stores = [ReviewAssessmentStore];
   }
 
   getState(){
+    if (!ReviewAssessmentStore.isLoaded() && !ReviewAssessmentStore.isLoading()) {
+      ReviewAssessmentActions.loadAssessment(window.DEFAULT_SETTINGS);
+    }
+
     return {
-      questions        : ReviewAssessmentStore.allQuestions(),
-      outcomes         : ReviewAssessmentStore.outcomes(),
-      settings         : SettingsStore.current(),
-      assessment       : ReviewAssessmentStore.current()
+      questions: ReviewAssessmentStore.allQuestions(),
+      outcomes: ReviewAssessmentStore.outcomes(),
+      settings: SettingsStore.current(),
+      assessment: ReviewAssessmentStore.current()
     }
   }
 

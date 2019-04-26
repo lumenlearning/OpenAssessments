@@ -5,8 +5,8 @@ import React from "react";
 
 // Teacher Options Subcomponent
 export default class TeacherOptions extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       hover: null,
