@@ -182,24 +182,28 @@ export default class CheckUnderstanding extends React.Component{
    * the body of the wait modal.
    *
    * 0-3: The modal shouldn't appear at all
-   * 4-6: Content set 1
-   * 7-9: Content set 2
+   * 4-5: Content set 1
+   * 6-7: Content set 2
+   * 8-9: Content set 3
    */
   getWaitModalBodyText() {
     let userIdLastDigit = this.calculateUserIdLastDigitLastAttempt();
     let testGroupOne = ["0", "1", "2", "3"];
-    let testGroupTwo = ["4", "5", "6"];
-    let testGroupThree = ["7" ,"8" ,"9"];
+    let testGroupTwo = ["4", "5"];
+    let testGroupThree = ["6", "7"];
+    let testGroupFour = ["8" ,"9"];
     let bodyText = "";
 
     if (testGroupOne.includes(userIdLastDigit)) {
       return;
     } else if (testGroupTwo.includes(userIdLastDigit)) {
-      bodyText = "content set 1";
+      bodyText = "Did you know? Students who review the material under Recommended Studying increase their second quiz score by about 10% per five pages reviewed.";
     } else if (testGroupThree.includes(userIdLastDigit)) {
-      bodyText = "content set 2";
+      bodyText = "Did you know? Students who review the material under Recommended Studying increase their second quiz score by about 10% per 20 minutes spent reviewing.";
+    } else if (testGroupFour.includes(userIdLastDigit)) {
+      bodyText = "Did you know? Many students review the material under Recommended Studying before taking their second quiz attempt. Their quiz scores improve by over 10%.";
     } else {
-      bodyText = "Are you sure you'd like to start the quiz now, or would you like to study for longer to try to improve your grade?";
+      return;
     }
 
     return bodyText;

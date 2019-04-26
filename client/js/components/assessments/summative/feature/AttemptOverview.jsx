@@ -94,16 +94,40 @@ export default class AttemptOverview extends React.Component {
     if (this.props.mostRecentAttempt && this.props.attempt.assessment_result_score !== null) {
       return (
         <div className="attempt-feedback-wrapper" style={styles.attemptFeedbackWrapper}>
-          <QuizTip
-            attempts={null}
-            userId={this.props.attempt.user_id}
-            postIt={true}
-            />
+          {this.getQuizTip()}
           <div className="attempt-feedback" style={styles.attemptFeedback}>
             {this.getFeedback("negative", styles)}
             {this.getFeedback("positive", styles)}
           </div>
         </div>
+      );
+    }
+  }
+
+  /**
+   * A/B Testing
+   *
+   * Casing off of last digit of the User Id to determine what verbage to use in
+   * the body of the wait modal.
+   *
+   * 0-3: The modal shouldn't appear at all
+   * 4-5: Content set 1
+   * 6-7: Content set 2
+   * 8-9: Content set 3
+   */
+  getQuizTip() {
+    let userIdLastDigit = this.props.attempt.user_id ? this.props.attempt.user_id.toString().split("").pop() : "";
+    let testGroupOne = ["0", "1", "2", "3"];
+
+    if (testGroupOne.includes(userIdLastDigit)) {
+      return;
+    } else {
+      return (
+        <QuizTip
+          attempts={null}
+          userId={this.props.attempt.user_id}
+          postIt={true}
+          />
       );
     }
   }

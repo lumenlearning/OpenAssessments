@@ -23,22 +23,41 @@ export default class QuizTip extends React.Component {
    * A/B Testing Quiz Tip Language
    *
    * Casing off of last digit of the User Id
+   *
+   * 0-3: The quiz tip shouldn't appear at all
+   * 4-5: Content set 1
+   * 6-7: Content set 2
+   * 8-9: Content set 3
    */
   getQuizTip(styles) {
     let userIdLastDigit = this.props.userId ? this.props.userId.toString().split("").pop() : "";
-    let testGroupOne = ["0", "1", "2", "3", "4"];
-    let testGroupTwo = ["5", "6", "7" ,"8" ,"9"];
+    let testGroupOne = ["0", "1", "2", "3"];
+    let testGroupTwo = ["4", "5"];
+    let testGroupThree = ["6", "7"];
+    let testGroupFour = ["8" ,"9"];
 
-    if (testGroupOne.includes(userIdLastDigit)) {
+    if (testGroupTwo.includes(userIdLastDigit)) {
       return (
         <p style={styles.bodyText} tabIndex="0">
-          Test Group 1
+          Did you know? Students who review the material under Recommended
+          Studying increase their second quiz score by about 10% per five pages
+          reviewed.
         </p>
       );
-    } else if (testGroupTwo.includes(userIdLastDigit)) {
+    } else if (testGroupThree.includes(userIdLastDigit)) {
       return (
         <p style={styles.bodyText} tabIndex="0">
-          Test Group 2
+          Did you know? Students who review the material under Recommended
+          Studying increase their second quiz score by about 10% per 20 minutes
+          spent reviewing.
+        </p>
+      );
+    } else if (testGroupFour.includes(userIdLastDigit)) {
+      return (
+        <p style={styles.bodyText} tabIndex="0">
+          Did you know? Many students review the material under Recommended
+          Studying before taking their second quiz attempt. Their quiz scores
+          improve by over 10%.
         </p>
       );
     } else {
