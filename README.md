@@ -56,6 +56,17 @@ install the ruby dependencies with `bundler`:
   $ bundle install
   ```
 
+If you get this error on MacOS:
+```An error occurred while installing nokogiri (1.6.6.2), and Bundler cannot continue.
+   Make sure that `gem install nokogiri -v '1.6.6.2' --source 'https://rubygems.org/'` succeeds before bundling.
+
+```
+
+try this to get nokogiri to install
+```
+gem install nokogiri -v 1.6.6.2  -- --use-system-libraries
+```
+
 If you get an error stating that the `eventmachine` gem did not install, try:
 
   ```
