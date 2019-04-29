@@ -61,8 +61,7 @@ export default{
 
       },
       outcomeContainer: {
-        textAlign: "center",
-        marginTop: "70px"
+        textAlign: "center"
       },
       outcomeIcon: {
         width: "100px",
