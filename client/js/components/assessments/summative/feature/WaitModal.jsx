@@ -29,7 +29,7 @@ export default class WaitModal extends React.Component {
       <div style={styles.background}>
         <div style={styles.container} tabIndex="1">
           <div style={styles.titleBar}>
-            <h1 style={styles.titleHeader} tabIndex="2">Wait!</h1>
+            <h1 style={styles.titleHeader} tabIndex="2">What’s the Rush?</h1>
             <img
               style={styles.close}
               src="/assets/x_to_close_light.png"
@@ -40,7 +40,8 @@ export default class WaitModal extends React.Component {
           </div>
           <div style={styles.body}>
             <p style={styles.bodyText} tabIndex="4">
-              {this.props.bodyContent}
+              <p>{this.props.bodyContent1}</p>
+              <p>{this.props.bodyContent2}</p>
             </p>
           </div>
           <div style={styles.footer}>
@@ -55,7 +56,7 @@ export default class WaitModal extends React.Component {
                   style={styles.button}
                   onClick={() => this.props.hideModal()}
                   >
-                    Cancel
+                    Study More
                 </button>
             </div>
           </div>
@@ -129,7 +130,7 @@ export default class WaitModal extends React.Component {
         color: "#212b36"
       },
       footer: {
-        padding: "10px 40px 40px"
+        padding: "0px 40px 40px"
       },
       buttonGroup: {
         display: "flex",
@@ -141,6 +142,7 @@ export default class WaitModal extends React.Component {
         border: "1px solid #004C9F",
         borderRadius: "3px",
         marginBottom: 0,
+        marginLeft: "8px",
         padding: "10px 0.75rem",
         fontSize: "14px",
         fontWeight: "400",

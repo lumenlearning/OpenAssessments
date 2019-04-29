@@ -185,19 +185,13 @@ export default class CheckUnderstanding extends React.Component{
     let userIdLastDigit = this.calculateUserIdLastDigitLastAttempt();
     let testGroupOne = ["0", "1", "2", "3"]; // Will not see the Quiz Tips or the modal
     let testGroupTwo = ["4", "6", "8"]; // Will see Quiz Tips but not the modal
-    let testGroupThree = ["5"]; // Will see Quiz Tip and the modal v1
-    let testGroupFour = ["7"]; // Will see Quiz Tip and the modal v2
-    let testGroupFive = ["9"]; // Will see Quiz Tip and the modal v3
+    let testGroupThree = ["5", "7", "9"]; // Will see Quiz Tip and the modal
     let bodyText = "";
 
     if (testGroupOne.includes(userIdLastDigit) || testGroupTwo.includes(userIdLastDigit)) {
       return;
     } else if (testGroupThree.includes(userIdLastDigit)) {
-      bodyText = "Did you know? Students who review the material under Recommended Studying increase their second quiz score by about 10% per five pages reviewed.";
-    } else if (testGroupFour.includes(userIdLastDigit)) {
-      bodyText = "Did you know? Students who review the material under Recommended Studying increase their second quiz score by about 10% per 20 minutes spent reviewing.";
-    } else if (testGroupFive.includes(userIdLastDigit)) {
-      bodyText = "Did you know? Many students review the material under Recommended Studying before taking their second quiz attempt. Their quiz scores improve by over 10%.";
+      bodyText = "Remember - students who take time to review the material under Recommended Studying do over 10% better on their second quiz attempt on average.";
     } else {
       return;
     }
@@ -225,12 +219,14 @@ export default class CheckUnderstanding extends React.Component{
   }
 
   renderWaitModal() {
-    let bodyContent = this.getWaitModalBodyText();
+    let bodyContent1 = "You finished your first quiz attempt less than five minutes ago!"
+    let bodyContent2 = this.getWaitModalBodyText();
 
-    if (this.state.showModal && bodyContent !== "") {
+    if (this.state.showModal && bodyContent2 !== "") {
       return (
         <WaitModal
-          bodyContent={bodyContent}
+          bodyContent1={bodyContent1}
+          bodyContent2={bodyContent2}
           hideModal={() => this.hideWaitModal()}
           showModal={() => this.showWaitModal()}
           startAssessment={() => this.startAssessment(
