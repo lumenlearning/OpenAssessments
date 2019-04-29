@@ -39,31 +39,31 @@ export default class QuizTip extends React.Component {
     if (testGroupTwo.includes(userIdLastDigit)) {
       return (
         <p style={styles.bodyText} tabIndex="0">
-          Did you know? Students who review the material under Recommended
-          Studying increase their second quiz score by about 10% per five pages
-          reviewed.
+          <b>Did you know?</b> Students who review the material under
+          Recommended Studying increase their second quiz score by about 10% per
+          five pages reviewed.
         </p>
       );
     } else if (testGroupThree.includes(userIdLastDigit)) {
       return (
         <p style={styles.bodyText} tabIndex="0">
-          Did you know? Students who review the material under Recommended
-          Studying increase their second quiz score by about 10% per 20 minutes
-          spent reviewing.
+          <b>Did you know?</b> Students who review the material under
+          Recommended Studying increase their second quiz score by about 10% per
+          20 minutes spent reviewing.
         </p>
       );
     } else if (testGroupFour.includes(userIdLastDigit)) {
       return (
         <p style={styles.bodyText} tabIndex="0">
-          Did you know? Many students review the material under Recommended
-          Studying before taking their second quiz attempt. Their quiz scores
-          improve by over 10%.
+          <b>Did you know?</b> Many students review the material under
+          Recommended Studying before taking their second quiz attempt. Their
+          quiz scores improve by over 10%.
         </p>
       );
     } else {
       return (
         <p style={styles.bodyText} tabIndex="0">
-          <b>Did you know,</b> if you take your first quiz attempt early you'll
+          <b>Did you know?</b> If you take your first quiz attempt early you'll
           have plenty of time to study and improve your grade on your second
           attempt?
         </p>

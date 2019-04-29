@@ -180,27 +180,23 @@ export default class CheckUnderstanding extends React.Component{
    *
    * Casing off of last digit of the User Id to determine what verbage to use in
    * the body of the wait modal.
-   *
-   * 0-3: The modal shouldn't appear at all
-   * 4-5: Content set 1
-   * 6-7: Content set 2
-   * 8-9: Content set 3
    */
   getWaitModalBodyText() {
     let userIdLastDigit = this.calculateUserIdLastDigitLastAttempt();
-    let testGroupOne = ["0", "1", "2", "3"];
-    let testGroupTwo = ["4", "5"];
-    let testGroupThree = ["6", "7"];
-    let testGroupFour = ["8" ,"9"];
+    let testGroupOne = ["0", "1", "2", "3"]; // Will not see the Quiz Tips or the modal
+    let testGroupTwo = ["4", "6", "8"]; // Will see Quiz Tips but not the modal
+    let testGroupThree = ["5"]; // Will see Quiz Tip and the modal v1
+    let testGroupFour = ["7"]; // Will see Quiz Tip and the modal v2
+    let testGroupFive = ["9"]; // Will see Quiz Tip and the modal v3
     let bodyText = "";
 
-    if (testGroupOne.includes(userIdLastDigit)) {
+    if (testGroupOne.includes(userIdLastDigit) || testGroupTwo.includes(userIdLastDigit)) {
       return;
-    } else if (testGroupTwo.includes(userIdLastDigit)) {
-      bodyText = "Did you know? Students who review the material under Recommended Studying increase their second quiz score by about 10% per five pages reviewed.";
     } else if (testGroupThree.includes(userIdLastDigit)) {
-      bodyText = "Did you know? Students who review the material under Recommended Studying increase their second quiz score by about 10% per 20 minutes spent reviewing.";
+      bodyText = "Did you know? Students who review the material under Recommended Studying increase their second quiz score by about 10% per five pages reviewed.";
     } else if (testGroupFour.includes(userIdLastDigit)) {
+      bodyText = "Did you know? Students who review the material under Recommended Studying increase their second quiz score by about 10% per 20 minutes spent reviewing.";
+    } else if (testGroupFive.includes(userIdLastDigit)) {
       bodyText = "Did you know? Many students review the material under Recommended Studying before taking their second quiz attempt. Their quiz scores improve by over 10%.";
     } else {
       return;
