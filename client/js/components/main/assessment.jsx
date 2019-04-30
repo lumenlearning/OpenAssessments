@@ -6,10 +6,10 @@ import SettingsStore      from "../../stores/settings";
 import BaseComponent      from "../base_component";
 import AssessmentActions  from "../../actions/assessment";
 import Loading            from "../assessments/loading";
-import CheckUnderstanding from "../assessments/check_understanding";
 import Item               from "../assessments/item";
 import ProgressDropdown   from "../common/progress_dropdown";
 import CommunicationHandler from "../../utils/communication_handler";
+import TitleBar from "../common/TitleBar";
 
 export default class Assessment extends BaseComponent{
 
@@ -200,31 +200,19 @@ export default class Assessment extends BaseComponent{
         resetAnswerMessages = {this.resetAnswerMessages}
         showAnswers = {this.state.settings.showAnswers}
       />;
-
-      progressBar = <div style={styles.progressContainer}>
-        {progressText}
-        <ProgressDropdown settings={this.state.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} selectQuestion={this.selectQuestion}/>
-      </div>;
     }
 
     var percentCompleted = this.checkProgress(this.state.currentIndex, this.state.questionCount);
     var progressStyle = {width:percentCompleted+"%"};
     var progressText = "";
     var quizType = AssessmentStore.isSummative() ? "Quiz" : "Show What You Know";
-    var titleBar = <div style={styles.titleBar}>{this.state.assessment ? this.state.assessment.title : ""}</div>;
     if(this.state.assessment){
       progressText = this.context.theme.shouldShowProgressText ? <div><b>{this.state.assessment.title + " Progress"}</b>{" - You are on question " + (this.state.currentIndex + 1) + " of " + this.state.questionCount}</div> : "";
     }
 
-    if (AssessmentStore.isFormative() ||
-        AssessmentStore.isPractice()) {
-      progressBar = "";
-      titleBar = "";
-    }
-
     return <div className="assessment" style={styles.assessment}>
-      {titleBar}
-      {progressBar}
+      {this.renderTitleBar()}
+      {this.renderProgressBar(styles)}
       <div className="section_list">
         <div className="section_container">
           {content}
@@ -233,7 +221,46 @@ export default class Assessment extends BaseComponent{
     </div>;
   }
 
+  renderTitleBar() {
+    if (AssessmentStore.isFormative() || AssessmentStore.isPractice()) {
+      return;
+    } else {
+      return (
+        <TitleBar
+          title={this.state.assessment ? this.state.assessment.title : ""}
+          />
+      );
+    }
+  }
 
+  renderProgressBar(styles) {
+    if (AssessmentStore.isFormative() || AssessmentStore.isPractice()) {
+      return;
+    } else {
+      return (
+        <div style={styles.progressContainer}>
+          {this.getProgressText()}
+          <ProgressDropdown
+            settings={this.state.settings}
+            questions={this.state.allQuestions}
+            currentQuestion={this.state.currentIndex + 1}
+            questionCount={this.state.questionCount}
+            selectQuestion={this.selectQuestion}
+            />
+        </div>
+      );
+    }
+  }
+
+  getProgressText() {
+    if (this.state.assessment && this.context.theme.shouldShowProgressText) {
+      return (
+        <div>
+          <b>{`${this.state.assessment.title} Progress`}</b>{` - You are on question ${this.state.currentIndex + 1} of ${this.state.questionCount}`}
+        </div>
+      );
+    }
+  }
 
   getStyles(theme){
     var minWidth = "320px";
@@ -258,15 +285,6 @@ export default class Assessment extends BaseComponent{
         width: "100%",
         minWidth: minWidth,
         backgroundColor: theme.titleBarBackgroundColor,
-      },
-      titleBar: {
-        borderTop: "2px solid #003136",
-        borderBottom: "1px solid #c4cdd5",
-        padding: "22px 40px 22px 16px",
-        fontSize: "20px",
-        fontWeight: "400",
-        color: "#212b36",
-        lineHeight: "1.4"
       }
     }
   }
