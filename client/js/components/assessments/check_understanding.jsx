@@ -176,24 +176,28 @@ export default class CheckUnderstanding extends React.Component{
   }
 
   /**
-   * A/B Testing
+   * A/B Testing (Modal)
    *
-   * Casing off of last digit of the User Id to determine what verbage to use in
+   * Casing off of last digit of the User Id to determine what verbiage to use in
    * the body of the wait modal.
+   *
+   * 0, 1 - No quiz tip, no modal
+   * 2, 3 - No quiz tip, yes modal
+   * 4    - v1 quiz tip, no modal
+   * 5    - v1 quiz tip, yes modal
+   * 6    - v2 quiz tip, no modal
+   * 7    - v2 quiz tip, yes modal
+   * 8    - v3 quiz tip, no modal
+   * 9    - v3 quiz tip, yes modal
    */
   getWaitModalBodyText() {
     let userIdLastDigit = this.calculateUserIdLastDigitLastAttempt();
-    let testGroupOne = ["0", "1", "2", "3"]; // Will not see the Quiz Tips or the modal
-    let testGroupTwo = ["4", "6", "8"]; // Will see Quiz Tips but not the modal
-    let testGroupThree = ["5", "7", "9"]; // Will see Quiz Tip and the modal
+    let noModalGroup = ["0", "1", "4", "6", "8"];
+    let modalGroup = ["2", "3", "5", "7", "9"];
     let bodyText = "";
 
-    if (testGroupOne.includes(userIdLastDigit) || testGroupTwo.includes(userIdLastDigit)) {
-      return;
-    } else if (testGroupThree.includes(userIdLastDigit)) {
+    if (modalGroup.includes(userIdLastDigit)) {
       bodyText = "Remember - students who take time to review the material under Recommended Studying do over 10% better on their second quiz attempt on average.";
-    } else {
-      return;
     }
 
     return bodyText;

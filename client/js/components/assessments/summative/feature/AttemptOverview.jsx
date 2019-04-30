@@ -94,7 +94,7 @@ export default class AttemptOverview extends React.Component {
     if (this.props.mostRecentAttempt && this.props.attempt.assessment_result_score !== null) {
       return (
         <div className="attempt-feedback-wrapper" style={styles.attemptFeedbackWrapper}>
-          {this.getQuizTip()}
+          {this.getQuizTipPostIt()}
           <div className="attempt-feedback" style={styles.attemptFeedback}>
             {this.getFeedback("negative", styles)}
             {this.getFeedback("positive", styles)}
@@ -105,21 +105,25 @@ export default class AttemptOverview extends React.Component {
   }
 
   /**
-   * A/B Testing
+   * A/B Testing (Quiz Tip "PostIt Note")
    *
-   * Casing off of last digit of the User Id to determine what verbage to use in
-   * the body of the wait modal.
+   * Casing off of last digit of the User Id to determine what verbiage to use in
+   * the quiz tip.
    *
-   * 0-3: The modal shouldn't appear at all
-   * 4-5: Content set 1
-   * 6-7: Content set 2
-   * 8-9: Content set 3
+   * 0, 1 - No quiz tip, no modal
+   * 2, 3 - No quiz tip, yes modal
+   * 4    - v1 quiz tip, no modal
+   * 5    - v1 quiz tip, yes modal
+   * 6    - v2 quiz tip, no modal
+   * 7    - v2 quiz tip, yes modal
+   * 8    - v3 quiz tip, no modal
+   * 9    - v3 quiz tip, yes modal
    */
-  getQuizTip() {
+  getQuizTipPostIt() {
     let userIdLastDigit = this.props.attempt.user_id ? this.props.attempt.user_id.toString().split("").pop() : "";
-    let testGroupOne = ["0", "1", "2", "3"];
+    let noQuizTip = ["0", "1", "2", "3"];
 
-    if (testGroupOne.includes(userIdLastDigit)) {
+    if (noQuizTip.includes(userIdLastDigit)) {
       return;
     } else {
       return (

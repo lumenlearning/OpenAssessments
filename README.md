@@ -305,3 +305,33 @@ for hosting and you have everything configured correctly,
 deployment is as simple as running `eb deploy` from the project root directory.
 
 For details on setting up deployment with AWS, follow [these instructions](docs/deployment_instructions.md).
+
+## Features in A/B Testing
+
+There are a couple of new features that are being A/B tested based on the user
+ID's last digit.
+The features are colloquially called "Practice Feedback" and "Wait/Wait".
+
+To find everywhere that A/B testing is occurring,
+search the project for "A/B Testing" and you'll find function-level comments
+like follows:
+
+```
+/**
+ * A/B Testing (Quiz Tip "Pre-Attempt")
+ *
+ * Casing off of last digit of the User Id to determine what verbiage to use in
+ * the body of the quiz tip.
+ *
+ * 0, 1 - No quiz tip, no modal
+ * 2, 3 - No quiz tip, yes modal
+ * 4    - v1 quiz tip, no modal
+ * 5    - v1 quiz tip, yes modal
+ * 6    - v2 quiz tip, no modal
+ * 7    - v2 quiz tip, yes modal
+ * 8    - v3 quiz tip, no modal
+ * 9    - v3 quiz tip, yes modal
+ */
+ ```
+
+This serves to illustrate when a user will see and not see these new features.

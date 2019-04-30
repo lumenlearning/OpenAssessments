@@ -5,7 +5,6 @@ import React from "react";
 export default class QuizTip extends React.Component {
   render() {
     let styles = this.props.postIt ? this.getPostItStyles() : this.getVanillaStyles();
-
     return (
       <div style={styles.componentWrapper}>
         <div style={styles.headingWrapper}>
@@ -13,30 +12,37 @@ export default class QuizTip extends React.Component {
           <h3 style={styles.heading} tabIndex="0">Quiz Tip</h3>
         </div>
         <div style={styles.bodyTextWrapper}>
-          {this.getQuizTip(styles)}
+          {this.props.userId ? this.getQuizTipPostIt(styles) : this.getQuizTip(styles)}
         </div>
       </div>
     );
   }
 
   /**
-   * A/B Testing Quiz Tip Language
+   * A/B Testing (Quiz Tip "Pre-Attempt")
    *
-   * Casing off of last digit of the User Id
+   * Casing off of last digit of the User Id to determine what verbiage to use in
+   * the body of the quiz tip.
    *
-   * 0-3: The quiz tip shouldn't appear at all
-   * 4-5: Content set 1
-   * 6-7: Content set 2
-   * 8-9: Content set 3
+   * 0, 1 - No quiz tip, no modal
+   * 2, 3 - No quiz tip, yes modal
+   * 4    - v1 quiz tip, no modal
+   * 5    - v1 quiz tip, yes modal
+   * 6    - v2 quiz tip, no modal
+   * 7    - v2 quiz tip, yes modal
+   * 8    - v3 quiz tip, no modal
+   * 9    - v3 quiz tip, yes modal
    */
-  getQuizTip(styles) {
-    let userIdLastDigit = this.props.userId ? this.props.userId.toString().split("").pop() : "";
-    let testGroupOne = ["0", "1", "2", "3"];
-    let testGroupTwo = ["4", "5"];
-    let testGroupThree = ["6", "7"];
-    let testGroupFour = ["8" ,"9"];
+  getQuizTipPostIt(styles) {
+    let userIdLastDigit = this.props.userId.toString().split("").pop();
+    let noQuizTip = ["0", "1", "2", "3"];
+    let quizTipV1 = ["4", "5"];
+    let quizTipV2 = ["6", "7"];
+    let quizTipV3 = ["8" ,"9"];
 
-    if (testGroupTwo.includes(userIdLastDigit)) {
+    if (noQuizTip.includes(userIdLastDigit)) {
+      return;
+    } else if (quizTipV1.includes(userIdLastDigit)) {
       return (
         <p style={styles.bodyText} tabIndex="0">
           <b>Did you know?</b> Students who review the material under
@@ -44,7 +50,7 @@ export default class QuizTip extends React.Component {
           five pages reviewed.
         </p>
       );
-    } else if (testGroupThree.includes(userIdLastDigit)) {
+    } else if (quizTipV2.includes(userIdLastDigit)) {
       return (
         <p style={styles.bodyText} tabIndex="0">
           <b>Did you know?</b> Students who review the material under
@@ -52,7 +58,7 @@ export default class QuizTip extends React.Component {
           20 minutes spent reviewing.
         </p>
       );
-    } else if (testGroupFour.includes(userIdLastDigit)) {
+    } else if (quizTipV3.includes(userIdLastDigit)) {
       return (
         <p style={styles.bodyText} tabIndex="0">
           <b>Did you know?</b> Many students review the material under
@@ -60,15 +66,23 @@ export default class QuizTip extends React.Component {
           quiz scores improve by over 10%.
         </p>
       );
-    } else {
-      return (
-        <p style={styles.bodyText} tabIndex="0">
-          <b>Did you know?</b> If you take your first quiz attempt early you'll
-          have plenty of time to study and improve your grade on your second
-          attempt?
-        </p>
-      );
     }
+  }
+
+  /**
+   * Quiz Tip "Pre-Attempt"
+   *
+   * Shows only when the user is about to start their first attempt for a given
+   * end-of-module assessment.
+   */
+  getQuizTip(styles) {
+    return (
+      <p style={styles.bodyText} tabIndex="0">
+        <b>Did you know?</b> If you take your first quiz attempt early you'll
+        have plenty of time to study and improve your grade on your second
+        attempt?
+      </p>
+    );
   }
 
   getVanillaStyles() {
