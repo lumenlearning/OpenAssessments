@@ -228,6 +228,7 @@ export default class Assessment extends BaseComponent{
         <TitleBar
           title={this.state.assessment ? this.state.assessment.title : ""}
           assessmentKind={this.state.settings.assessmentKind}
+          assessmentLoaded={this.state.isLoaded}
           />
       );
     }

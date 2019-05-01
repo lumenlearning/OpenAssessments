@@ -92,6 +92,7 @@ export default class Start extends BaseComponent {
         <TitleBar
           title={this.state.settings ? this.state.settings.assessmentTitle : ""}
           assessmentKind={this.state.settings.assessmentKind}
+          assessmentLoaded={this.state.isLoaded}
           />
       );
     }

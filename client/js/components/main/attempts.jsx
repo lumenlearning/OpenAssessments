@@ -46,6 +46,7 @@ export default class Attempts extends BaseComponent {
         <TitleBar
           title={this.state.settings ? this.state.settings.assessmentTitle : ""}
           assessmentKind={this.state.settings.assessmentKind}
+          assessmentLoaded={this.state.isLoaded}
           />
         <TeacherOptions
           assessmentId={this.props.params.assessmentId}

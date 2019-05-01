@@ -17,30 +17,37 @@ export default class TitleBar extends React.Component {
   }
 
   getTitle() {
-    if (this.isSwyk()) {
+    if (this.shouldRenderTitle()) {
       return this.props.title;
     }
+  }
+
+  shouldRenderTitle() {
+    return this.isSwyk() || (this.isSummative() && this.props.assessmentLoaded);
   }
 
   isSwyk() {
     return this.props.assessmentKind && this.props.assessmentKind.toUpperCase() === "SHOW_WHAT_YOU_KNOW";
   }
 
+  isSummative() {
+    return this.props.assessmentKind && this.props.assessmentKind.toUpperCase() === "SUMMATIVE";
+  }
+
   getStyles() {
     return {
       titleBar: {
         borderBottom: "2px solid #003136",
-        height: this.isSwyk() ? "auto" : 0, 
-        padding: this.isSwyk() ? "0 40px 22px 0" : 0
+        height: this.shouldRenderTitle() ? "auto" : 0,
+        padding: this.shouldRenderTitle() ? "0 40px 22px 16px" : 0
       },
       title: {
         color: "#212b36",
         display: "inline-block",
         fontFamily: "Arial",
-        fontSize: "28px",
+        fontSize: "20px",
         fontWeight: "400",
-        lineHeight: "1.4",
-        marginTop: 0
+        lineHeight: "1.4"
       }
     };
   }
