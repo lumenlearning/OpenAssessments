@@ -175,7 +175,6 @@ export default class Assessment extends BaseComponent{
     var styles = this.getStyles(this.context.theme)
     var content;
     var progressBar;
-    var titleBar;
     if(!this.state.isLoaded || (this.state.isSubmitted && !AssessmentStore.isPractice() )){
       content = <Loading />;
      }else {
@@ -228,6 +227,7 @@ export default class Assessment extends BaseComponent{
       return (
         <TitleBar
           title={this.state.assessment ? this.state.assessment.title : ""}
+          assessmentKind={this.state.settings.assessmentKind}
           />
       );
     }
