@@ -6,6 +6,7 @@ import $ from "jquery";
 // Actions
 import AssessmentActions from "../../actions/assessment";
 // Subcomponents
+import StartButton from "../common/StartButton.jsx";
 import StartFormative from "./formative/StartFormative";
 import StartSummative from "./summative/StartSummative";
 import StartSwyk from "./swyk/StartSwyk";
@@ -120,13 +121,10 @@ export default class CheckUnderstanding extends React.Component{
 
     return (
       <div className="start-assessment-button-wrapper" style={styles.buttonWrapper}>
-        <button
-          style={styles.startButton}
-          className="btn btn-info"
-          onClick={this.waitOrStart}
-          >
-            {this.props.assessmentKind.toUpperCase() === "SHOW_WHAT_YOU_KNOW" ? "Start Pre-test" : "Start Quiz"}
-        </button>
+        <StartButton
+          assessmentKind={this.props.assessmentKind}
+          waitOrStart={this.waitOrStart}
+          />
       </div>
     );
   }
@@ -259,21 +257,11 @@ export default class CheckUnderstanding extends React.Component{
 
   getStyles(props, theme) {
     return {
-      assessmentContainer:{
+      assessmentContainer: {
         marginTop: "0px"
-      },
-      startButton: {
-        margin: "5px 5px 5px 0px",
-        height: "36px",
-        minWidth: "97px",
-        backgroundColor: "#1e74d1 !important",
-        border: "#004c9f"
       },
       buttonWrapper: {
         textAlign: props.assessmentKind.toUpperCase() !== "SUMMATIVE" ? "left" : "right"
-      },
-      studyButtonWrapper: {
-        marginLeft: "8px"
       }
     }
   }
