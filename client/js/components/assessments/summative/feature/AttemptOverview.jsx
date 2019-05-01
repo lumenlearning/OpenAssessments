@@ -320,23 +320,23 @@ export default class AttemptOverview extends React.Component {
       },
       attemptFeedbackWrapper: {
         display: "flex",
-        flexDirection: this.responsiveAttemptFeedbackWrapperFlexDirection(1225)
+        flexDirection: this.responsiveAttemptFeedbackWrapperFlexDirection(1059)
       },
       attemptFeedback: {
         borderRadius: "3px",
-        boxShadow: this.responsiveAttemptFeedbackBoxShadow(1225),
+        boxShadow: this.responsiveAttemptFeedbackBoxShadow(1059),
         display: "flex",
-        flexDirection: this.responsiveAttemptFeedbackFlexDirection(1225)
+        flexDirection: this.responsiveAttemptFeedbackFlexDirection(1059)
       },
       negativeFeedbackBox: {
-        borderRight: this.responsiveNegativeFeedbackBoxBorderRight(1225),
-        borderBottom: this.responsiveNegativeFeedbackBoxBorderBottom(1225),
-        padding: this.responsiveFeedbackBoxPadding(1225),
-        width: "365px"
+        borderRight: this.responsiveNegativeFeedbackBoxBorderRight(1059),
+        borderBottom: this.responsiveNegativeFeedbackBoxBorderBottom(1059),
+        padding: this.responsiveFeedbackBoxPadding(1059),
+        width: "350px"
       },
       positiveFeedbackBox: {
-        padding: this.responsiveFeedbackBoxPadding(1225),
-        width: "365px"
+        padding: this.responsiveFeedbackBoxPadding(1059),
+        width: "350px"
       },
       feedbackTitle: {
         color: "#212b36",
@@ -375,11 +375,13 @@ export default class AttemptOverview extends React.Component {
       correctPerOutcome: {
         color: "#637381",
         fontSize: "12px",
-        margin: 0
+        margin: 0,
+        whiteSpace: "nowrap"
       },
       dotsContainer: {
-        display: "flex",
         alignItems: "center",
+        display: "flex",
+        flexWrap: "wrap",
         marginRight: "7px"
       },
       correctDot: {
@@ -388,7 +390,7 @@ export default class AttemptOverview extends React.Component {
         borderRadius: "6px",
         display: "block",
         height: "12px",
-        marginRight: "4px",
+        margin: "2px 4px 2px 0",
         width: "12px"
       },
       incorrectDot: {
@@ -397,7 +399,7 @@ export default class AttemptOverview extends React.Component {
         borderRadius: "6px",
         display: "block",
         height: "12px",
-        marginRight: "4px",
+        margin: "2px 4px 2px 0",
         width: "12px"
       }
     };
@@ -424,6 +426,6 @@ export default class AttemptOverview extends React.Component {
   }
 
   responsiveFeedbackBoxPadding(breakPoint) {
-    return this.state.windowWidth <= breakPoint ? "45px 0" : "45px 40px";
+    return this.state.windowWidth <= breakPoint ? "35px 0" : "35px 30px";
   }
 }

@@ -124,9 +124,9 @@ export default class QuizTip extends React.Component {
     return {
       componentWrapper: {
         backgroundColor: "#ffef99",
-        marginRight: "31px",
-        padding: "40px 43px",
-        width: "364px"
+        marginRight: "25px",
+        padding: "30px 33px",
+        width: "350px"
       },
       headingWrapper: {
         alignItems: "center",
@@ -149,7 +149,7 @@ export default class QuizTip extends React.Component {
       },
       bodyText: {
         color: "#212b36",
-        fontSize: "20px"
+        fontSize: "18px"
       }
     };
   }
