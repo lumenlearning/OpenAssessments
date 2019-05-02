@@ -4,7 +4,6 @@
 import React from "react";
 // Subcomponents
 import AttemptOverview from "./feature/AttemptOverview";
-import AttemptTime from "./feature/AttemptTime";
 import QuizTip from "./feature/QuizTip";
 
 // Summative Assessment Start Page
