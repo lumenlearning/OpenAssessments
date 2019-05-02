@@ -204,7 +204,7 @@ export default class CheckUnderstanding extends React.Component{
   calculateTimeSinceLastAttempt() {
     if (this.props.assessmentAttempts && this.props.assessmentAttempts.length > 0) {
       let now = new Date();
-      let attemptTimeStamp = (new Date(this.props.assessmentAttempts[this.props.assessmentAttempts.length - 1].assessment_result_created_at)).getTime();
+      let attemptTimeStamp = (new Date(this.props.assessmentAttempts[this.props.assessmentAttempts.length - 1].assessment_result_updated_at)).getTime();
       let nowTimeStamp = now.getTime();
 
       let differenceInMilliseconds = Math.abs(attemptTimeStamp - nowTimeStamp);

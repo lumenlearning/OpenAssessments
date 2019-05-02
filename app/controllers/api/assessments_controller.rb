@@ -178,6 +178,7 @@ class Api::AssessmentsController < Api::ApiController
           assessment_result_attempt: assessment_result.attempt,
           assessment_result_score: assessment_result.score,
           assessment_result_created_at: assessment_result.created_at,
+          assessment_result_updated_at: assessment_result.updated_at,
           assessment_result_items: assessment_result.item_results.order(:sequence_index).includes(:item).map do |ir|
             {
               ident: ir.identifier,
