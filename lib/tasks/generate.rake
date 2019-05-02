@@ -71,7 +71,7 @@ namespace :generate do
       enable_start: asmnt.kind != 'formative' && asmnt.kind != 'practice',
       mode: asmnt.kind,
       confidence_levels: %w{formative}.member?(asmnt.kind),
-      allowed_attempts: asmnt.kind == 'summative' ? 10 : nil,
+      allowed_attempts: asmnt.kind == 'summative' ? 2 : nil,
       show_answers: %w{formative practice}.member?(asmnt.kind)
     )
 
