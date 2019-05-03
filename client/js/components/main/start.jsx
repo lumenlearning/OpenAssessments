@@ -150,7 +150,7 @@ export default class Start extends BaseComponent {
   orderBySequence(list) {
     if (list) {
       return [...list].sort((a, b) => {
-        return a.assessment_result_attempt - b.assessment_result_attempt;
+        return a.assessment_result_id - b.assessment_result_id;
       });
     }
   }

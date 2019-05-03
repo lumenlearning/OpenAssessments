@@ -88,7 +88,8 @@ export default class CheckUnderstanding extends React.Component{
           maxAttemptsReached={this.maxAttemptsReached()}
           title={this.props.title}
           startButton={this.renderStartButton(styles)}
-          userAttempts={this.props.userAttempts + 1}
+          attemptsCount={this.props.assessmentAttempts ? this.props.assessmentAttempts.length + 1 : 0}
+          userAttempts={this.props.userAttempts}
           />
       );
     }

@@ -27,7 +27,7 @@ export default class AttemptOverview extends React.Component {
     return (
       <div className="attempt-overview-wrapper" style={styles.outerWrapper}>
         <p style={styles.attemptHeading} tabIndex="0">
-          Attempt {this.props.attempt.assessment_result_attempt + 1}
+          Attempt {this.props.index + 1}
         </p>
         <div style={styles.innerWrapper}>
           {this.getScore(styles)}

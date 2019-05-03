@@ -40,17 +40,17 @@ export default class StartSummative extends React.Component {
   renderAttemptsFeedback() {
     // if there are assessment attempts to map over ...
     if (this.props.assessmentAttempts && this.props.assessmentAttempts.length > 0) {
-
       // map over each attempt and render attempt overview.
       return (
-        this.props.assessmentAttempts.map((attempt, key) => {
+        this.props.assessmentAttempts.map((attempt, index) => {
           return (
             <AttemptOverview
               attempt={attempt}
               assessmentAttemptsOutcomes={this.props.assessmentAttemptsOutcomes}
               highScoreAttempt={this.highestScoreAttempt() === attempt.assessment_result_id ? true : false}
-              key={key}
-              mostRecentAttempt={attempt.assessment_result_attempt === this.props.assessmentAttempts.length - 1 ? true : false}
+              index={index}
+              key={index}
+              mostRecentAttempt={index === this.props.assessmentAttempts.length - 1 ? true : false}
               studyAndMasteryFeedback={this.props.studyAndMasteryFeedback}
               />
           );
@@ -78,7 +78,7 @@ export default class StartSummative extends React.Component {
     } else {
       return (
         <p style={styles.quizSubtitle} tabIndex="0">
-          {`Attempt ${this.props.userAttempts} of ${this.props.maxAttempts}`}
+          {`Attempt ${this.props.attemptsCount} of ${this.props.maxAttempts}`}
         </p>
       );
     }
@@ -99,7 +99,7 @@ export default class StartSummative extends React.Component {
           <div className="start-footer-text">
             <div className="footer-heading-wrapper">
               <p style={styles.footerHeading} tabIndex="0">
-                {`Start attempt ${this.props.userAttempts} of ${this.props.maxAttempts}`}
+                {`Start attempt ${this.props.attemptsCount} of ${this.props.maxAttempts}`}
               </p>
             </div>
             <div className="footer-subheading-wrapper">
