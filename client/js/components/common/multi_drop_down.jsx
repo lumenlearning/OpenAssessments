@@ -238,6 +238,7 @@ export default class MultiDropDown extends BaseComponent {
     let selectedAnswers = this.props.selectedAnswers;
     let feedback = this.props.item.feedback;
     let correctAnswers = this.correctAnswers();
+    let correctResponse;
 
     return selectedAnswers.map((answer, i) => {
       let answerId = answer.dropdown_id + answer.chosen_answer_id;
@@ -246,8 +247,10 @@ export default class MultiDropDown extends BaseComponent {
         let feedbackStyles = {};
 
         if (correctAnswers.includes(answerId)) {
+          correctResponse = true;
           feedbackStyles = {...styles.feedbackCorrect, ...styles.externalFeedbackCorrect};
         } else {
+          correctResponse = false;
           feedbackStyles = {...styles.feedbackIncorrect, ...styles.externalFeedbackIncorrect};
         }
 
@@ -255,14 +258,22 @@ export default class MultiDropDown extends BaseComponent {
           <div
             className="check_answer_result"
             style={feedbackStyles}
-            dangerouslySetInnerHTML={this.answerFeedbackMarkup(i, feedback[answerId])}
+            dangerouslySetInnerHTML={this.answerFeedbackMarkup(i, feedback[answerId], correctResponse)}
             />
         );
       }
     });
   }
 
-  answerFeedbackMarkup(i, feedback) {
+  answerFeedbackMarkup(i, feedback, correctResponse) {
+    if (typeof feedback === "undefined") {
+      if (correctResponse) {
+        return { __html: `(${i + 1}) Correct` }
+      } else {
+        return { __html: `(${i + 1}) Incorrect` }
+      }
+    }
+
     return { __html: `(${i + 1}) ` + feedback };
   }
 
