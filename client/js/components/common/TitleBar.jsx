@@ -39,7 +39,7 @@ export default class TitleBar extends React.Component {
       titleBar: {
         borderBottom: "2px solid #003136",
         height: this.shouldRenderTitle() ? "auto" : 0,
-        padding: this.shouldRenderTitle() ? "0 40px 22px 16px" : 0
+        padding: this.shouldRenderTitle() ? "0 40px 12px 16px" : 0
       },
       title: {
         color: "#212b36",
