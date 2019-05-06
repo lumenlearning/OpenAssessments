@@ -147,16 +147,34 @@ export default class CheckUnderstanding extends React.Component{
     return this.props.assessmentKind.toUpperCase() === "FORMATIVE" ? true : false;
   }
 
+  /**
+   * A/B Testing (Modal)
+   *
+   * Casing off of last digit of the User Id to determine if the user should see
+   * the wait modal or go straight to the quiz.
+   *
+   * 0, 1 - No quiz tip, no modal
+   * 2, 3 - No quiz tip, yes modal
+   * 4    - v1 quiz tip, no modal
+   * 5    - v1 quiz tip, yes modal
+   * 6    - v2 quiz tip, no modal
+   * 7    - v2 quiz tip, yes modal
+   * 8    - v3 quiz tip, no modal
+   * 9    - v3 quiz tip, yes modal
+   */
   waitOrStart() {
     // if this is a summative assessment...
     if (this.props.assessmentKind.toUpperCase() === "SUMMATIVE") {
-      // if the user id ends in a number greater than three and
-      // if it hasn't been at least 5 minutes since their last attempt
-      // then pester the user with wait modal.
-      if (this.calculateUserIdLastDigitLastAttempt() > 3 &&
+      let userIdLastDigit = this.calculateUserIdLastDigitLastAttempt();
+      let noModalGroup = ["0", "1", "4", "6", "8"];
+      let modalGroup = ["2", "3", "5", "7", "9"];
+
+      // if this user is in the modal group and it's been less than 5 minutes
+      // since their last attempt, pester them with wait modal.
+      if (modalGroup.includes(userIdLastDigit) &&
           this.calculateTimeSinceLastAttempt() <= 5) {
             this.showWaitModal();
-      // otherwise, start the assessment attempt
+      // otherwise, start the summative assessment.
       } else {
         this.startAssessment(
           this.props.eid,
@@ -164,7 +182,7 @@ export default class CheckUnderstanding extends React.Component{
           this.context
         );
       }
-    //  otherwise, start the assessment attempt
+    // this isn't a summative, so start the assessment.
     } else {
       this.startAssessment(
         this.props.eid,
