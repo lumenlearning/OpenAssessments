@@ -80,7 +80,7 @@ export default class QuizTip extends React.Component {
       <p style={styles.bodyText} tabIndex="0">
         <b>Did you know?</b> If you take your first quiz attempt early you'll
         have plenty of time to study and improve your grade on your second
-        attempt?
+        attempt.
       </p>
     );
   }
