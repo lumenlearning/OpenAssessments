@@ -88,7 +88,7 @@ export default {
   confidenceWrapperBorderRadius: "5px",
   confidenceWrapperWidth: "390px",
   confidenceWrapperHeight: "auto",
-  confidenceWrapperPadding: "20px",
+  confidenceWrapperPadding: "20px 38px",
   confidenceWrapperMargin: "20px",
   confidenceWrapperBackgroundColor: null,
 

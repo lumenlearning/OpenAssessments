@@ -54,15 +54,13 @@ export default class Item extends BaseComponent {
                   </div>
                   {this.inputOrReview(styles)}
                 </div>
-                <div className="row">
-                  <div className="col-md-12 col-sm-12 col-xs-10" >
-                    {this.getConfidenceLevels(this.props.confidenceLevels, styles)}
-                    {this.checkAnswerButton(styles)}
-                    {this.getNavigationButtons(styles)}
-                    {this.submitAssessmentButton(styles)}
-                    {this.getWarning(this.state, this.props.questionCount, this.props.currentIndex, styles)}
-                    {this.mustAnswerMessage(styles)}
-                  </div>
+                <div>
+                  {this.getConfidenceLevels(this.props.confidenceLevels, styles)}
+                  {this.checkAnswerButton(styles)}
+                  {this.getNavigationButtons(styles)}
+                  {this.submitAssessmentButton(styles)}
+                  {this.getWarning(this.state, this.props.questionCount, this.props.currentIndex, styles)}
+                  {this.mustAnswerMessage(styles)}
                 </div>
               </div>
             </form>
@@ -551,7 +549,6 @@ export default class Item extends BaseComponent {
         width: theme.confidenceWrapperWidth,
         height: theme.confidenceWrapperHeight,
         padding: theme.confidenceWrapperPadding,
-        margin: theme.confidenceWrapperMargin,
         backgroundColor: theme.confidenceWrapperBackgroundColor,
       },
       confidenceFeedbackWrapper: {
