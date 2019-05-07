@@ -116,7 +116,6 @@ export default{
         width: theme.definitelyWidth,
         backgroundColor: theme.probablyBackgroundColor,
         color: theme.definitelyColor,
-        marginBottom: "10px"
       },
       jumpButton: {
         marginTop: "10px",
@@ -131,8 +130,8 @@ export default{
         marginLeft: "15px"
       },
       buttonsDiv: {
-        marginTop: "20px",
-        marginBottom: "50px"
+        paddingTop: "20px",
+        paddingBottom: "50px"
       },
       titleBar: {
         borderBottom: "2px solid #003136",
