@@ -32,7 +32,7 @@ export default class StartSwyk extends React.Component {
         color: "#555555"
       },
       swyk: {
-        margin: "45px 0"
+        padding: "20px 16px"
       },
       swykInfoGroup: {
         marginBottom: "30px"
