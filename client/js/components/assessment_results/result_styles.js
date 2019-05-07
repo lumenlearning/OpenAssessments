@@ -32,6 +32,7 @@ export default{
       },
       assessmentContainer:{
         marginTop: "0px",
+        padding: "0 16px",
         boxShadow: isFormative ? "" : theme.assessmentContainerBoxShadow,
         borderRadius: theme.assessmentContainerBorderRadius
       },
