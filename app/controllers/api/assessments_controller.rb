@@ -174,7 +174,7 @@ class Api::AssessmentsController < Api::ApiController
 
         assessment_results = user_assessment.assessment_results
 
-        assessment_results.each_with_index do |assessment_result, index|
+        assessment_results.each do |assessment_result|
           results << {
             user_id: user_assessment.user_id,
             assessment_result_id: assessment_result.id,
