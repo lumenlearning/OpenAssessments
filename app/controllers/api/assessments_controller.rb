@@ -153,42 +153,46 @@ class Api::AssessmentsController < Api::ApiController
   end
 
   def student_review_show
+    assessment = Assessment.where(id: params[:assessment_id], account: current_account).first
+    user_assessment = nil
     results = []
 
-    if params[:uaid]
-      ua = UserAssessment.find(params[:uaid])
+    if user = current_user
+      if params[:uaid].present?
+        user_assessment = assessment.user_assessments.where(user_id: user.id, id: params[:uaid]).first
 
-      correct_map = lambda do |score|
-        case score
-          when 0
-            false
-          when 1
-            true
-          else
-            'partial'
-        end
-      end
-
-      assessment_results = ua.assessment_results
-
-      assessment_results.each_with_index do |assessment_result, index|
-        results << {
-          user_id: ua.user_id,
-          assessment_result_id: assessment_result.id,
-          assessment_result_attempt: assessment_result.attempt,
-          assessment_result_score: assessment_result.score,
-          assessment_result_created_at: assessment_result.created_at,
-          assessment_result_updated_at: assessment_result.updated_at,
-          assessment_result_items: assessment_result.item_results.order(:sequence_index).includes(:item).map do |ir|
-            {
-              ident: ir.identifier,
-              outcome_guid: ir.outcome_guid,
-              title: ir.item.title,
-              score: ir.score,
-              correct: correct_map.call(ir.score)
-            }
+        correct_map = lambda do |score|
+          case score
+            when 0
+              false
+            when 1
+              true
+            else
+              'partial'
           end
-        }
+        end
+
+        assessment_results = user_assessment.assessment_results
+
+        assessment_results.each_with_index do |assessment_result, index|
+          results << {
+            user_id: user_assessment.user_id,
+            assessment_result_id: assessment_result.id,
+            assessment_result_attempt: assessment_result.attempt,
+            assessment_result_score: assessment_result.score,
+            assessment_result_created_at: assessment_result.created_at,
+            assessment_result_updated_at: assessment_result.updated_at,
+            assessment_result_items: assessment_result.item_results.order(:sequence_index).includes(:item).map do |ir|
+              {
+                ident: ir.identifier,
+                outcome_guid: ir.outcome_guid,
+                title: ir.item.title,
+                score: ir.score,
+                correct: correct_map.call(ir.score)
+              }
+            end
+          }
+        end
       end
     end
 
