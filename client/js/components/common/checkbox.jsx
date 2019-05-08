@@ -14,7 +14,7 @@ export default class CheckBox extends React.Component {
     return (
       <div>
         {this.renderAnswerIndicator()}
-        <div className="btn btn-block btn-question" style={this.getBtnQuestionStyles()}>
+        <div className="btn btn-block btn-question" style={this.getButtonQuestionStyles()}>
           <label style={btnLabelStyles}>
             <span style={{display: "table-cell"}}>
               <input
@@ -87,20 +87,24 @@ export default class CheckBox extends React.Component {
     }
   }
 
-  getBtnQuestionStyles() {
-    let qStyles = styles.btnQuestion;
-
+  getButtonQuestionStyles() {
     if (this.shouldShowAnswerFeedback()) {
-      if(this.selectedCorrectAnswer()) {
-        qStyles = {...qStyles, ...styles.btnQuestionCorrect};
-      } else if (this.unselectedCorrectAnswer()) {
-        qStyles = {...qStyles, ...styles.btnQuestionIncorrect};
-      } else if (this.selectedIncorrectAnswer()) {
-        qStyles = {...qStyles, ...styles.btnQuestionIncorrect};
-      }
+      return this.getButtonStyles();
     }
 
-    return qStyles;
+    return styles.btnQuestion;
+  }
+
+  getButtonStyles() {
+    if (this.selectedCorrectAnswer()) {
+      return {...styles.btnQuestion, ...styles.btnQuestionCorrect};
+    } else if (this.unselectedCorrectAnswer()) {
+      return {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
+    } else if (this.selectedIncorrectAnswer()) {
+      return {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
+    } else {
+      return styles.btnQuestion;
+    }
   }
 
   checkedStatus() {
