@@ -34,27 +34,57 @@ export default class CheckBox extends React.Component {
   }
 
   renderAnswerIndicator() {
-    let indicator;
-
-    // this is an answer key page
-    if (!this.props.assessmentKind && this.props.isDisabled) {
-      if (this.props.showAsCorrect) {
-        indicator = <img src="/assets/correct.png" className="correctIndicator" aria-label="Correct Answer" alt="Icon indicating the correct answer" style={styles.checkStyleCorrect} />;
-      }
-    // else this is a quiz page
-  } else if ((this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice")) {
-      if (this.props.showAsCorrect === true && this.props.checked === true) {
-        indicator = <img src="/assets/correct.png" className="correctIndicator" aria-label="Correct Answer that was chosen" alt="Icon indicating that a correct answer was chosen" style={styles.checkStyleCorrect} />;
-      } else if (this.props.showAsCorrect === true && this.props.checked === false) {
-        indicator = <img src="/assets/correct.png" className="correctIndicator" aria-label="Correct Answer that was not chosen" alt="Icon indicating that a correct answer was not chosen" style={styles.checkStyleCorrect} />;
-      } else if (this.props.showAsCorrect === false && this.props.checked === true) {
-        indicator = <img src="/assets/incorrect.png" className="wrongIndicator" aria-label="Wrong answer that was chosen" alt="Icon indicating that a wrong answer was chosen" style={styles.checkStyleWrong} />;
-      } else if (this.props.showAsCorrect === false && this.props.checked === false) {
-        // do nothing
-      }
+    if (this.isAnswerKeyPage() && this.props.showAsCorrect) {
+      return (
+        <img
+          src="/assets/correct.png"
+          className="correctIndicator"
+          aria-label="Correct Answer"
+          alt="Icon indicating the correct answer"
+          style={styles.checkStyleCorrect}
+          />
+      );
+    } else if (this.shouldShowAnswerFeedback()) {
+      return this.getAnswerIndicator();
     }
+  }
 
-    return indicator;
+  isAnswerKeyPage() {
+    return !this.props.assessmentKind && this.props.isDisabled;
+  }
+
+  getAnswerIndicator() {
+    if (this.selectedCorrectAnswer()) {
+      return (
+        <img
+          src="/assets/correct.png"
+          className="correctIndicator"
+          aria-label="Correct Answer that was chosen"
+          alt="Icon indicating that a correct answer was chosen"
+          style={styles.checkStyleCorrect}
+          />
+      );
+    } else if (this.unselectedCorrectAnswer()) {
+      return (
+        <img
+          src="/assets/correct.png"
+          className="correctIndicator"
+          aria-label="Correct Answer that was not chosen"
+          alt="Icon indicating that a correct answer was not chosen"
+          style={styles.checkStyleCorrect}
+          />
+      );
+    } else if (this.selectedIncorrectAnswer()) {
+      return (
+        <img
+          src="/assets/incorrect.png"
+          className="wrongIndicator"
+          aria-label="Wrong answer that was chosen"
+          alt="Icon indicating that a wrong answer was chosen"
+          style={styles.checkStyleWrong}
+          />
+      );
+    }
   }
 
   getBtnQuestionStyles() {
