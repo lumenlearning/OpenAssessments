@@ -9,13 +9,12 @@ const styles = Styles;
 
 export default class CheckBox extends React.Component {
   render() {
-    let btnQuestionStyles = this.getBtnQuestionStyles();
     let btnLabelStyles = this.props.showAsCorrect !== null ? {...styles.btnLabel, ...{cursor: "default", padding: "11px 11px 6px"}} : {...styles.btnLabel, ...{cursor: "pointer", padding: "11px 11px 6px"}};
 
     return (
       <div>
         {this.renderAnswerIndicator()}
-        <div className="btn btn-block btn-question" style={btnQuestionStyles}>
+        <div className="btn btn-block btn-question" style={this.getBtnQuestionStyles()}>
           <label style={btnLabelStyles}>
             <span style={{display: "table-cell"}}>
               <input
@@ -61,16 +60,13 @@ export default class CheckBox extends React.Component {
   getBtnQuestionStyles() {
     let qStyles = styles.btnQuestion;
 
-    // this is a quiz page
-    if ((this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice")) {
-      if(this.props.showAsCorrect === true && this.props.checked === true) {
-        qStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect};
-      } else if (this.props.showAsCorrect === true && this.props.checked === false) {
-        qStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
-      } else if (this.props.showAsCorrect === false && this.props.checked === true) {
-        qStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
-      } else if (this.props.showAsCorrect === false && this.props.checked === false) {
-        // do nothing
+    if (this.shouldShowAnswerFeedback()) {
+      if(this.selectedCorrectAnswer()) {
+        qStyles = {...qStyles, ...styles.btnQuestionCorrect};
+      } else if (this.unselectedCorrectAnswer()) {
+        qStyles = {...qStyles, ...styles.btnQuestionIncorrect};
+      } else if (this.selectedIncorrectAnswer()) {
+        qStyles = {...qStyles, ...styles.btnQuestionIncorrect};
       }
     }
 
