@@ -158,7 +158,7 @@ class Api::AssessmentsController < Api::ApiController
     if params[:uaid]
       ua = UserAssessment.find(params[:uaid])
 
-      correct_map = ->(score) {
+      correct_map = lambda do |score|
         case score
           when 0
             false
@@ -167,7 +167,7 @@ class Api::AssessmentsController < Api::ApiController
           else
             'partial'
         end
-      }
+      end
 
       assessment_results = ua.assessment_results
 
