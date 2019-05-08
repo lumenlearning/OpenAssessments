@@ -28,7 +28,7 @@ export default class CheckBox extends React.Component {
             </span>
             <span style={{display: "table-cell", paddingLeft: "11px", fontWeight: "normal"}} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>
           </label>
-          {this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice" ? this.answerFeedback() : ""}
+          {this.answerFeedback()}
         </div>
       </div>
     );
@@ -92,27 +92,59 @@ export default class CheckBox extends React.Component {
   }
 
   answerFeedback() {
-    let feedback = "";
-    let feedbackStyles = {margin: 0};
+    if (this.shouldShowAnswerFeedback()) {
+      let feedback = this.getFeedback();
 
-    if (this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice") {
-      if (this.props.showAsCorrect === true && this.props.checked === true) {
-        feedback = "Answered Correctly";
-        feedbackStyles = styles.feedbackCorrect;
-      } else if (this.props.showAsCorrect === true && this.props.checked === false) {
-        feedback = "Not selected, but correct";
-        feedbackStyles = styles.feedbackIncorrect;
-      } else if (this.props.showAsCorrect === false && this.props.checked === true) {
-        feedback = "Selected, but incorrect";
-        feedbackStyles = styles.feedbackIncorrect;
-      } else if (this.props.showAsCorrect === false && this.props.checked === false) {
-        // do nothing
-      }
+      return (
+        <div className="check_answer_result" style={feedback.styles}>{feedback.text}</div>
+      );
+    }
+  }
+
+  shouldShowAnswerFeedback() {
+    return this.isFormative() || this.isPractice();
+  }
+
+  isFormative() {
+    return this.props.assessmentKind.toUpperCase() === "FORMATIVE";
+  }
+
+  isPractice() {
+    return this.props.assessmentKind.toUpperCase() === "PRACTICE";
+  }
+
+  getFeedback() {
+    let feedback = { text: "", styles: { margin: 0 } };
+
+    if (this.selectedCorrectAnswer()) {
+      feedback["text"] = "Answered Correctly";
+      feedback["styles"] = styles.feedbackCorrect;
+    } else if (this.unselectedCorrectAnswer()) {
+      feedback["text"] = "Not selected, but correct";
+      feedback["styles"] = styles.feedbackIncorrect;
+    } else if (this.selectedIncorrectAnswer()) {
+      feedback["text"] = "Selected, but incorrect";
+      feedback["styles"] = styles.feedbackIncorrect;
     }
 
-    return (
-      <div className="check_answer_result" style={feedbackStyles}>{feedback}</div>
-    );
+    return feedback;
+  }
+
+  selectedCorrectAnswer() {
+    return this.props.showAsCorrect === true && this.props.checked === true;
+  }
+
+  unselectedCorrectAnswer() {
+    return this.props.showAsCorrect === true && this.props.checked === false;
+  }
+
+  selectedIncorrectAnswer() {
+    return this.props.showAsCorrect === false && this.props.checked === true;
+  }
+
+  // unused, but here for completeness
+  unselectedIncorrectAnswer() {
+    return this.props.showAsCorrect === false && this.props.checked === false;
   }
 
   answerSelected() {
