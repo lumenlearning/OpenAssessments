@@ -35,14 +35,11 @@ export default class QuizTip extends React.Component {
    */
   getQuizTipPostIt(styles) {
     let userIdLastDigit = this.props.userId.toString().split("").pop();
-    let noQuizTip = ["0", "1", "2", "3"];
     let quizTipV1 = ["4", "5"];
     let quizTipV2 = ["6", "7"];
     let quizTipV3 = ["8" ,"9"];
 
-    if (noQuizTip.includes(userIdLastDigit)) {
-      return;
-    } else if (quizTipV1.includes(userIdLastDigit)) {
+    if (quizTipV1.includes(userIdLastDigit)) {
       return (
         <p style={styles.bodyText} tabIndex="0">
           <b>Did you know?</b> Students who review the material under
