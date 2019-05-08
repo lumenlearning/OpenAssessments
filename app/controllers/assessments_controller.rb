@@ -119,7 +119,7 @@ class AssessmentsController < LtiBaseController
         @style = assessment_settings[:style] || assessment.default_style || @style                  # Prefer settings
         @per_sec = assessment_settings[:per_sec]                                                    # Use settings
         @allowed_attempts = assessment_settings.allowed_attempts.to_s                               # Use settings
-        @show_answers = !!assessment_settings[:show_answers]
+        @show_answers = !assessment_settings[:show_answers].nil?
       end
     end
   end
