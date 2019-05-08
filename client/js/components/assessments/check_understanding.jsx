@@ -240,7 +240,7 @@ export default class CheckUnderstanding extends React.Component{
   }
 
   renderWaitModal() {
-    let bodyContent1 = "You finished your first quiz attempt less than five minutes ago!"
+    let bodyContent1 = "You finished your first quiz attempt less than five minutes ago!";
     let bodyContent2 = this.getWaitModalBodyText();
 
     if (this.state.showModal && bodyContent2 !== "") {

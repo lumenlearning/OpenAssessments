@@ -10,7 +10,7 @@ export default class StartButton extends React.Component {
 
     this.state = {
       hover: false
-    }
+    };
   }
 
   render() {

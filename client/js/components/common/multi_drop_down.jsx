@@ -268,9 +268,9 @@ export default class MultiDropDown extends BaseComponent {
   answerFeedbackMarkup(i, feedback, correctResponse) {
     if (typeof feedback === "undefined") {
       if (correctResponse) {
-        return { __html: `(${i + 1}) Correct` }
+        return { __html: `(${i + 1}) Correct` };
       } else {
-        return { __html: `(${i + 1}) Incorrect` }
+        return { __html: `(${i + 1}) Incorrect` };
       }
     }
 
