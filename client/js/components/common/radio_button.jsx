@@ -141,6 +141,14 @@ export default class RadioButton extends React.Component {
         </div>
       );
     }
+
+    if (this.showCorrectAndChecked()) {
+      return (
+        <div className="check_answer_result" style={this.getFeedbackStyles()}>
+          Correct
+        </div>
+      )
+    }
   }
 
   getFeedbackStyles() {
