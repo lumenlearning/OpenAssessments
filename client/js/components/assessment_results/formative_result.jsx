@@ -2,6 +2,8 @@
 
 import React from 'react';
 import AssessmentActions from "../../actions/assessment";
+// Utilities
+import CommHandler from "../../utils/communication_handler";
 
 //polyfill trunc
 Math.trunc = Math.trunc || function(x) {
@@ -9,6 +11,11 @@ Math.trunc = Math.trunc || function(x) {
 };
 
 export default class FormativeResult extends React.Component{
+  constructor(props, context) {
+    super(props, context);
+
+    CommHandler.init();
+  }
 
   retake(){
     AssessmentActions.retakeAssessment();
@@ -97,6 +104,11 @@ export default class FormativeResult extends React.Component{
         </div>
       </div>
     )
+  }
+
+  componentDidMount(){
+    CommHandler.sendSizeThrottled();
+    CommHandler.showLMSNavigation();
   }
 
   checkQuestionMaterial(index) {
