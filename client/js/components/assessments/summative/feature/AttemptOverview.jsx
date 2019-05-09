@@ -320,7 +320,8 @@ export default class AttemptOverview extends React.Component {
       },
       attemptFeedbackWrapper: {
         display: "flex",
-        flexDirection: this.responsiveAttemptFeedbackWrapperFlexDirection(1059)
+        flexDirection: this.responsiveAttemptFeedbackWrapperFlexDirection(1059),
+        marginLeft: "3px"
       },
       attemptFeedback: {
         borderRadius: "3px",
