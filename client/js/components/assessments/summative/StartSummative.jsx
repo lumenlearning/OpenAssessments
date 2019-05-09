@@ -5,11 +5,15 @@ import React from "react";
 // Subcomponents
 import AttemptOverview from "./feature/AttemptOverview";
 import QuizTip from "./feature/QuizTip";
+// Utilities
+import CommHandler from "../../../utils/communication_handler";
 
 // Summative Assessment Start Page
 export default class StartSummative extends React.Component {
   constructor(props, context) {
     super(props, context);
+
+    CommHandler.init();
   }
 
   render() {
@@ -35,6 +39,11 @@ export default class StartSummative extends React.Component {
         {this.maxAttemptsReachedFooter(styles)}
       </div>
     );
+  }
+
+  componentDidMount() {
+    CommHandler.sendSizeThrottled();
+    CommHandler.showLMSNavigation();
   }
 
   renderAttemptsFeedback() {
