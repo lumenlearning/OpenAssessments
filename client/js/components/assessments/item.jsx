@@ -110,7 +110,7 @@ export default class Item extends BaseComponent {
 
         // if this is the last question and it's a formative assessment
         if (that.props.currentIndex === that.props.questionCount - 1 &&
-            that.props.settings.assessmentKind.toUpperCase() === "FORMATIVE") {
+            AssessmentStore.isFormative()) {
           that.props.checkAnswer(that.props.currentIndex);
         // otherwise, this is not the last question and/or it's not formative
         } else {
@@ -205,7 +205,7 @@ export default class Item extends BaseComponent {
     }
 
     // if this is a formative assessment, show the confidence level buttons
-    if (this.props.settings.kind === "formative") {
+    if (AssessmentStore.isFormative()) {
       return (
         <div className="confidence_wrapper" style={styles.confidenceWrapper}>
           <div tabIndex="0" style={{marginBottom: "10px"}}>How sure are you of your answer?</div>
@@ -262,7 +262,7 @@ export default class Item extends BaseComponent {
       return;
     }
 
-    if (this.notFormative(assessmentKind)) {
+    if (!AssessmentStore.isFormative()) {
       return (
         <div className="navigationBtnWrapper" style={styles.navigationWrapper}>
           {this.getPreviousButton(styles)}
@@ -276,19 +276,11 @@ export default class Item extends BaseComponent {
     return this.props.questionCount === 1 ? true : false;
   }
 
-  notFormative(assessmentKind) {
-    if (assessmentKind === "summative" ||
-        assessmentKind === "practice" ||
-        assessmentKind === "show_what_you_know") {
-      return true;
-    }
-  }
-
   getNextButton(styles) {
     let disabled = (this.props.currentIndex === this.props.questionCount - 1) ? "disabled" : "";
 
     // if this is a formative assessment
-    if (this.props.settings.assessmentKind === "formative") {
+    if (AssessmentStore.isFormative()) {
       return (
         <button
           className={"btn btn-next-item " + disabled}
@@ -389,8 +381,8 @@ export default class Item extends BaseComponent {
   }
 
   submitAssessmentButton(styles) {
-    if (this.props.settings.assessmentKind === "formative" ||
-        this.props.settings.assessmentKind === "practice" ||
+    if (AssessmentStore.isFormative() ||
+        AssessmentStore.isPractice() ||
         (this.props.currentIndex !== this.props.questionCount - 1)) {
       return;
     }
@@ -623,7 +615,7 @@ export default class Item extends BaseComponent {
         fontSize: "140%"
       },
       h4: {
-        color: "white",
+        color: "#fff",
         fontWeight: "bold",
         fontStyle: "normal",
         fontStretch: "normal",

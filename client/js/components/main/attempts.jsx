@@ -38,13 +38,14 @@ export default class Attempts extends BaseComponent {
   }
 
   render() {
-    let that = this;
+    let assessmentTitle = this.state.settings ? this.state.settings.assessmentTitle : "";
     let styles = this.getStyles();
+    let that = this;
 
     return (
       <div style={styles.componentWrapper}>
         <TitleBar
-          title={this.state.settings ? this.state.settings.assessmentTitle : ""}
+          title={assessmentTitle}
           assessmentKind={this.state.settings.assessmentKind}
           assessmentLoaded={this.state.isLoaded}
           />

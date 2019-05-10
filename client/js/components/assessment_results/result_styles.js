@@ -148,7 +148,7 @@ export default{
         backgroundColor: theme.maybeBackgroundColor,
         borderRadius: "4px",
         marginTop: "30px",
-        color: "white",
+        color: "#fff",
         fontWeight: "bold",
         fontSize: "130%"
       },

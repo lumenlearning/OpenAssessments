@@ -130,7 +130,7 @@ export default class StartSummative extends React.Component {
     let highScoreAttemptId = null;
 
     if (this.props.assessmentAttempts && this.props.assessmentAttempts.length > 0) {
-      this.props.assessmentAttempts.forEach((attempt, key) => {
+      this.props.assessmentAttempts.forEach((attempt) => {
         if (attempt.assessment_result_score > highScore) {
           highScore = attempt.assessment_result_score;
           highScoreAttemptId = attempt.assessment_result_id;

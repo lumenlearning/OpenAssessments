@@ -132,15 +132,7 @@ export default class CheckBox extends React.Component {
   }
 
   shouldShowAnswerFeedback() {
-    return this.isFormative() || this.isPractice();
-  }
-
-  isFormative() {
-    return this.props.assessmentKind.toUpperCase() === "FORMATIVE";
-  }
-
-  isPractice() {
-    return this.props.assessmentKind.toUpperCase() === "PRACTICE";
+    return AssessmentStore.isFormative() || AssessmentStore.isPractice();
   }
 
   getFeedback() {

@@ -88,9 +88,11 @@ export default class Start extends BaseComponent {
 
   renderTitleBar(styles) {
     if (this.state.settings.assessmentKind.toUpperCase() !== "FORMATIVE") {
+      let assessmentTitle = this.state.settings ? this.state.settings.assessmentTitle : "";
+
       return (
         <TitleBar
-          title={this.state.settings ? this.state.settings.assessmentTitle : ""}
+          title={assessmentTitle}
           assessmentKind={this.state.settings.assessmentKind}
           assessmentLoaded={this.state.isLoaded}
           />

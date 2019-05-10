@@ -53,7 +53,7 @@ export default class ItemResult extends React.Component{
         backgroundColor: labelColor,
         textAlign: "center",
         padding: "10px",
-        color: "white",
+        color: "#fff",
         fontWeight: "bold",
         borderRadius: "4px"
       }
@@ -72,7 +72,7 @@ export default class ItemResult extends React.Component{
 
   render() {
     var styles = this.getStyles(this.props, this.context.theme);
-    var correctMessage = "You were incorrect."; 
+    var correctMessage = "You were incorrect.";
     if(this.props.isCorrect == "partial"){
       correctMessage = "You were partially correct."
     } else if(this.props.isCorrect === true){

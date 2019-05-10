@@ -37,14 +37,15 @@ export default class TeacherPreview extends BaseComponent{
 
 
   render() {
-    let styles = this.getStyles(this.context.theme);
+    let assessmentTitle = this.state.settings ? this.state.settings.assessmentTitle : "";
     let itemResults = this.getItemResults();
+    let styles = this.getStyles(this.context.theme);
 
     return (
       <div>
         <div style={styles.assessmentContainer}>
           <TitleBar
-            title={this.state.settings ? this.state.settings.assessmentTitle : ""}
+            title={assessmentTitle}
             assessmentKind={this.state.settings.assessmentKind}
             assessmentLoaded={this.state.isLoaded}
             />
@@ -54,7 +55,9 @@ export default class TeacherPreview extends BaseComponent{
             externalContextId={this.state.settings.externalContextId}
             />
           <div className="start-header-wrapper" style={styles.headerWrapper}>
-            <h2 style={styles.quizTitle}>{this.state.settings ? this.state.settings.assessmentTitle : ""}</h2>
+            <h2 style={styles.quizTitle}>
+              {assessmentTitle}
+            </h2>
           </div>
           <div id="questionsStart" style={styles.resultsStyle}>
             <p style={styles.answerKeyLabel}>Answer Key</p>
