@@ -162,7 +162,7 @@ export default class FormativeResult extends React.Component {
     return {
       color,
       message
-    }
+    };
   }
 
   checkQuestionMaterial(index) {
@@ -170,7 +170,7 @@ export default class FormativeResult extends React.Component {
     let chosenAnswers = this.props.assessmentResult.lti_params.itemToGrade.answers[index];
     let material = question.material;
 
-    if (question.question_type == "multiple_dropdowns_question") {
+    if (question.question_type === "multiple_dropdowns_question") {
       let shortcodes = Object.keys(question.dropdowns);
       let re = new RegExp(`\\[${shortcodes.join('\\]|\\[')}\\]`, 'gi');
 
