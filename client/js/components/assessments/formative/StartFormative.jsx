@@ -10,7 +10,6 @@ export default class StartFormative extends React.Component {
 
     return (
       <div style={styles.formative}>
-        <div className="row"></div>
         <div className="row" style={styles.checkDiv}>
           <div className="col-md-10 col-sm-9">
             <h4 style={styles.h4}>{this.props.title}</h4>

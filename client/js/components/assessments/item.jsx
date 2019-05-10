@@ -208,7 +208,9 @@ export default class Item extends BaseComponent {
     if (AssessmentStore.isFormative()) {
       return (
         <div className="confidence_wrapper" style={styles.confidenceWrapper}>
-          <div tabIndex="0" style={{marginBottom: "10px"}}>How sure are you of your answer?</div>
+          <div tabIndex="0" style={styles.confidenceTitle}>
+            How sure are you of your answer?
+          </div>
           <input
             type="button"
             style={styles.maybeButton}
@@ -542,6 +544,9 @@ export default class Item extends BaseComponent {
         height: theme.confidenceWrapperHeight,
         padding: theme.confidenceWrapperPadding,
         backgroundColor: theme.confidenceWrapperBackgroundColor,
+      },
+      confidenceTitle: {
+        marginBottom: "10px"
       },
       confidenceFeedbackWrapper: {
         border: theme.confidenceFeedbackWrapperBorder,

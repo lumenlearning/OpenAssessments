@@ -169,7 +169,7 @@ export default class CheckUnderstanding extends React.Component{
    */
   waitOrStart() {
     // if this is a summative assessment...
-    if (this.props.assessmentKind.toUpperCase() === "SUMMATIVE") {
+    if (this.isSummative()) {
       let userIdLastDigit = this.calculateUserIdLastDigitLastAttempt();
       let noModalGroup = ["0", "1", "4", "6", "8"];
       let modalGroup = ["2", "3", "5", "7", "9"];
@@ -240,6 +240,8 @@ export default class CheckUnderstanding extends React.Component{
 
   calculateUserIdLastDigitLastAttempt() {
     if (this.props.assessmentAttempts && this.props.assessmentAttempts.length > 0) {
+      // This converts the user id into a string, splits by character into an
+      // array, then pops the last "number" of the user id off and returns it.
       return this.props.assessmentAttempts[this.props.assessmentAttempts.length - 1].user_id.toString().split("").pop();
     }
   }

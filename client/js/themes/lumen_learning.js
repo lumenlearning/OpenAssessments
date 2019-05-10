@@ -6,8 +6,6 @@ export default {
   titleBarBackgroundColor: defines.lightgray,
   progressBarColor: defines.lumenSeafoam,
   progressBarHeight: "10px",
-  // assessmentContainerBoxShadow: "1px 4px 4px 4px rgba(0,0,0,0.2)",
-  // assessmentContainerBorderRadius: "4px",
   headerBackgroundColor: defines.white,
 
   fullQuestionBackgroundColor: "#f5f5f5",

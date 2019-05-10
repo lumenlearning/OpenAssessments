@@ -158,7 +158,7 @@ class Api::AssessmentsController < Api::ApiController
     user_assessment = nil
     results = []
 
-    if user == current_user
+    if user == current_user && assessment
       if params[:uaid].present?
         user_assessment = assessment.user_assessments.where(user_id: user.id, id: params[:uaid]).first
 
