@@ -31,9 +31,6 @@ export default class Start extends BaseComponent {
     this.stores = [AssessmentStore, SettingsStore, ReviewAssessmentStore];
     this.context = context;
 
-    ReviewAssessmentActions.loadAssessmentForStudentReview(SettingsStore.current(), SettingsStore.current().assessmentId, SettingsStore.current().userAssessmentId);
-    ReviewAssessmentActions.loadAssessmentXmlForStudentReview(SettingsStore.current(), SettingsStore.current().assessmentId, SettingsStore.current().userAssessmentId);
-
     CommHandler.init();
 
     // Rebindings
@@ -77,6 +74,21 @@ export default class Start extends BaseComponent {
   componentDidMount() {
     super.componentDidMount();
 
+    // we don't need to fire these actions for non-summative assessments
+    if (this.isSummative()) {
+      ReviewAssessmentActions.loadAssessmentForStudentReview(
+        SettingsStore.current(),
+        SettingsStore.current().assessmentId,
+        SettingsStore.current().userAssessmentId
+      );
+
+      ReviewAssessmentActions.loadAssessmentXmlForStudentReview(
+        SettingsStore.current(),
+        SettingsStore.current().assessmentId,
+        SettingsStore.current().userAssessmentId
+      );
+    }
+
     if (this.state.isLoaded) {
       // Trigger action to indicate the assessment was viewed
       AssessmentActions.assessmentViewed(this.state.settings, this.state.assessment);
@@ -84,6 +96,10 @@ export default class Start extends BaseComponent {
 
     CommHandler.sendSizeThrottled();
     CommHandler.showLMSNavigation();
+  }
+
+  isSummative() {
+    return this.state.settings.assessmentKind.toUpperCase() === "SUMMATIVE";
   }
 
   renderTitleBar(styles) {
