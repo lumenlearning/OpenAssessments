@@ -154,10 +154,11 @@ class Api::AssessmentsController < Api::ApiController
 
   def student_review_show
     assessment = Assessment.where(id: params[:assessment_id], account: current_account).first
+    user = current_user
     user_assessment = nil
     results = []
 
-    if user = current_user
+    if user == current_user
       if params[:uaid].present?
         user_assessment = assessment.user_assessments.where(user_id: user.id, id: params[:uaid]).first
 
@@ -207,12 +208,6 @@ class Api::AssessmentsController < Api::ApiController
 
     if params[:assessment_result_id]
       ar = AssessmentResult.find(params[:assessment_result_id])
-      # ua = ar.user_assessment
-      #
-      # if !ua || ua.lti_context_id != @lti_launch.lti_context_id
-      #   render :json => {:error => "This Assessment Result is not from this context."}, status: :unauthorized
-      #   return
-      # end
 
       if ar.assessment_xml && (ar.assessment_xml.kind == 'summative' || ar.assessment_xml.kind == 'qti')
         xml = ar.assessment_xml.xml

@@ -70,7 +70,6 @@ export default{
         marginTop: "80px"
       },
       header: {
-        // position: "absolute",
         borderTop: "2px solid #003136",
         borderBottom: "1px solid #c4cdd5",
         top: "0px",
@@ -152,6 +151,17 @@ export default{
         color: "white",
         fontWeight: "bold",
         fontSize: "130%"
+      },
+      formativeResultHeader: {
+        color: "#212b36",
+        fontSize: "18px",
+        fontWeight: 500,
+        marginTop: "32px"
+      },
+      formativeResultFeedback: {
+        color: "#637381",
+        fontSize: "14px",
+        fontWeight: "normal"
       }
     }
   }

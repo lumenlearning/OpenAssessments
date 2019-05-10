@@ -36,7 +36,7 @@ export default {
     var url = settings.apiUrl + "api/assessments/" + assessmentId + "/review";
 
     if(resultId){
-      url = url + "?assessment_result_id=" + resultId
+      url = url + "?assessment_result_id=" + resultId;
     }
 
     Api.get(Constants.REVIEW_ASSESSMENT_LOADED, url);
@@ -47,7 +47,7 @@ export default {
     var url = settings.apiUrl + "api/assessments/" + assessmentId + "/student_review_xml";
 
     if(resultId){
-      url = url + "?assessment_result_id=" + resultId
+      url = url + "?assessment_result_id=" + resultId;
     }
 
     Api.get(Constants.REVIEW_ASSESSMENT_LOADED, url);
