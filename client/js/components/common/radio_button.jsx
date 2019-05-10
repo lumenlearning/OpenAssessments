@@ -77,8 +77,12 @@ export default class RadioButton extends React.Component {
     return this.props.showAsCorrect === false && this.props.checked === true ? true : false;
   }
 
+  showCorrectAnswerIcon() {
+    return this.props.showAsCorrect === true ? true : false;
+  }
+
   getQuizPageIndicator() {
-    if (this.showCorrectAndChecked()) {
+    if (this.showCorrectAnswerIcon()) {
       return (
         <img
           src="/assets/correct.png"
