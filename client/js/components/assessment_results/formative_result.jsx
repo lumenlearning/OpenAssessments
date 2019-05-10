@@ -119,7 +119,7 @@ export default class FormativeResult extends React.Component {
       header,
       imageSrc,
       imageStyle
-    }
+    };
   }
 
   getScore() {
