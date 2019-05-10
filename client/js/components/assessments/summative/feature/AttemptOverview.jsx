@@ -167,19 +167,11 @@ export default class AttemptOverview extends React.Component {
   }
 
   isPositiveFeedback(feedbackType) {
-    if (feedbackType === "positive" && this.hasPopulatedPositiveFeedbackList()) {
-      return true;
-    } else {
-      return false;
-    }
+    return feedbackType === "positive" && this.hasPopulatedPositiveFeedbackList();
   }
 
   isNegativeFeedback(feedbackType) {
-    if (feedbackType === "negative" && this.hasPopulatedNegativeFeedbackList()) {
-      return true;
-    } else {
-      return false;
-    }
+    return feedbackType === "negative" && this.hasPopulatedNegativeFeedbackList();
   }
 
   hasPopulatedPositiveFeedbackList() {
@@ -191,7 +183,7 @@ export default class AttemptOverview extends React.Component {
   }
 
   getReviewOutcomeList(feedbackType, styles) {
-    if ("negative" === feedbackType) {
+    if (this.isNegativeFeedback(feedbackType)) {
       return (
         this.props.studyAndMasteryFeedback.negativeList.map((feedback, index) => {
           return (
@@ -207,7 +199,7 @@ export default class AttemptOverview extends React.Component {
           );
         })
       );
-    } else if ("positive" === feedbackType) {
+    } else if (this.isPositiveFeedback(feedbackType)) {
       return (
         this.props.studyAndMasteryFeedback.positiveList.map((feedback, index) => {
           return (

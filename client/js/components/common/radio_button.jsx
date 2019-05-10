@@ -56,9 +56,7 @@ export default class RadioButton extends React.Component {
   renderAnswerIndicator() {
     if (this.isAnswerPage()) {
       return this.getAnswerPageIndicator();
-    }
-
-    if (this.isQuizPage()) {
+    } else if (this.isQuizPage()) {
       return this.getQuizPageIndicator();
     }
   }
