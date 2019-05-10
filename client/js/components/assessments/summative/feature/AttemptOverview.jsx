@@ -121,11 +121,9 @@ export default class AttemptOverview extends React.Component {
    */
   getQuizTipPostIt() {
     let userIdLastDigit = this.props.attempt.user_id ? this.props.attempt.user_id.toString().split("").pop() : "";
-    let noQuizTip = ["0", "1", "2", "3"];
+    let quizTipGroup = ["4", "5", "6", "7", "8", "9"];
 
-    if (noQuizTip.includes(userIdLastDigit)) {
-      return;
-    } else {
+    if (quizTipGroup.includes(userIdLastDigit)) {
       return (
         <QuizTip
           attempts={null}

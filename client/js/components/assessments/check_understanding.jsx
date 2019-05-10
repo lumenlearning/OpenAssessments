@@ -5,8 +5,6 @@ import React from "react";
 import $ from "jquery";
 // Actions
 import AssessmentActions from "../../actions/assessment";
-// Stores
-import AssessmentStore from "../../stores/assessment";
 // Subcomponents
 import StartButton from "../common/StartButton.jsx";
 import StartFormative from "./formative/StartFormative";
@@ -22,6 +20,7 @@ import WaitModal from "./summative/feature/WaitModal.jsx";
  * The user starts an assessment from here, regardless of its type.
  */
 export default class CheckUnderstanding extends React.Component{
+
   constructor(props, context) {
     super(props, context);
 
@@ -45,7 +44,7 @@ export default class CheckUnderstanding extends React.Component{
   }
 
   renderTeacherOptions() {
-    if (AssessmentStore.isSummative() &&
+    if (this.props.assessmentKind.toUpperCase() === "SUMMATIVE" &&
         this.props.ltiRole === "admin" &&
         this.props.isLti) {
       return (
@@ -61,12 +60,16 @@ export default class CheckUnderstanding extends React.Component{
   renderContent(styles) {
     let content = "There was an error, contact your teacher.";
 
-    if (AssessmentStore.isSummative()) {
-      content = this.getStartSummative(this.context.theme, styles, this.props);
-    } else if (AssessmentStore.isSwyk()) {
-      content = this.getStartSwyk(styles);
-    } else if (AssessmentStore.isFormative()) {
-      content = this.getStartFormative(this.context.theme, styles);
+    switch (this.props.assessmentKind.toUpperCase()) {
+      case "SUMMATIVE":
+        content = this.getStartSummative(this.context.theme, styles, this.props);
+        break;
+      case "SHOW_WHAT_YOU_KNOW":
+        content = this.getStartSwyk(styles);
+        break;
+      case "FORMATIVE":
+        content = this.getStartFormative(this.context.theme, styles);
+        break;
     }
 
     return content;
@@ -135,7 +138,18 @@ export default class CheckUnderstanding extends React.Component{
   shouldNotRenderStartButton() {
     // If this is a summative assessment, max attempts have been reached, and
     // user has LTI Role of 'Admin', OR if this is a formative assessment, bail.
-    return (AssessmentStore.isSummative() && this.maxAttemptsReached()) || AssessmentStore.isFormative();
+    if ((this.isSummative() && this.maxAttemptsReached()) ||
+         this.isFormative()) {
+      return true;
+    }
+  }
+
+  isSummative() {
+    return this.props.assessmentKind.toUpperCase() === "SUMMATIVE" ? true : false;
+  }
+
+  isFormative() {
+    return this.props.assessmentKind.toUpperCase() === "FORMATIVE" ? true : false;
   }
 
   /**
