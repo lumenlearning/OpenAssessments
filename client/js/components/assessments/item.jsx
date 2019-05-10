@@ -331,13 +331,7 @@ export default class Item extends BaseComponent {
     // if this is a multiple answer question
     if (this.props.question.question_type === "multiple_answers_question") {
       return (
-        <div style={styles.chooseText}>Choose all that apply</div>
-      );
-    // if this is a multiple choice or true/false question
-    } else if (this.props.question.question_type === "multiple_choice_question" ||
-               this.props.question.question_type === "true_false_question") {
-      return (
-        <div style={styles.chooseText}>Choose the best answer</div>
+        <div style={styles.chooseText}>Select all correct answers</div>
       );
     }
   }
