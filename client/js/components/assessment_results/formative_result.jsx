@@ -76,7 +76,7 @@ export default class FormativeResult extends React.Component {
                 </div>
 
                 <div style={{color: confidenceFeedback, float: "right", marginTop: "20px"}}>
-                  {this.props.assessmentResult.confidence_level_list[index]}
+                  {this.props.assessmentResult.confidence_level_list[parseInt(index)]}
                 </div>
               </div>
             </div>
@@ -133,9 +133,9 @@ export default class FormativeResult extends React.Component {
   confidenceFeedback(index) {
     let confidenceColor;
 
-    if (this.props.assessmentResult.confidence_level_list[index] === "Just A Guess") {
+    if (this.props.assessmentResult.confidence_level_list[parseInt(index)] === "Just A Guess") {
       confidenceColor = this.props.context.theme.maybeBackgroundColor;
-    } else if (this.props.assessmentResult.confidence_level_list[index] === "Pretty Sure") {
+    } else if (this.props.assessmentResult.confidence_level_list[parseInt(index)] === "Pretty Sure") {
       confidenceColor = this.props.context.theme.probablyBackgroundColor;
     } else {
       confidenceColor = this.props.context.theme.definitelyBackgroundColor;
@@ -148,10 +148,10 @@ export default class FormativeResult extends React.Component {
     let color;
     let message;
 
-    if (this.props.assessmentResult.correct_list[index] === "partial") {
+    if (this.props.assessmentResult.correct_list[parseInt(index)] === "partial") {
       color = this.props.context.theme.partialColor;
       message = "Partially Correct";
-    } else if (this.props.assessmentResult.correct_list[index]) {
+    } else if (this.props.assessmentResult.correct_list[parseInt(index)]) {
       color = this.props.context.theme.definitelyBackgroundColor;
       message = "Correct";
     } else {
