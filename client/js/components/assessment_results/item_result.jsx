@@ -83,6 +83,17 @@ export default class ItemResult extends React.Component{
 
     let chosen = this.props.hideChosenAnswers ? [] : this.props.chosen;
 
+    /**
+     * Note on dangerouslySetInnerHTML Usage
+     *
+     * It is generally not a good idea to use dangerouslySetInnerHTML because it
+     * may expose applications to XSS attacks. We are opting to use it here and
+     * and in other places in the code base because the assessment content is
+     * is stored in (and returned from) the DB as XML, which limits our options
+     * in how we can handle assessment "material" on the frontend.
+     *
+     * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
+     */
     return (
       <div tabIndex="0" aria-label={"Question " + (this.props.index+1)} style={{marginTop: '10px'}} >
         <div className="row" tabIndex="0">

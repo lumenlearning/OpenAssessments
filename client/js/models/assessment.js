@@ -168,6 +168,18 @@ export default class Assessment{
       if(typeof item.feedback[`${selAnswer.dropdown_id}${selAnswer.chosen_answer_id}`] === 'undefined'){
         return null;
       }
+
+      /**
+       * Note on dangerouslySetInnerHTML Usage
+       *
+       * It is generally not a good idea to use dangerouslySetInnerHTML because it
+       * may expose applications to XSS attacks. We are opting to use it here and
+       * and in other places in the code base because the assessment content is
+       * is stored in (and returned from) the DB as XML, which limits our options
+       * in how we can handle assessment "material" on the frontend.
+       *
+       * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
+       */
       return <p style={{color: color}} tabIndex="0" dangerouslySetInnerHTML={ {__html: feedback} } />;
     });
 

@@ -26,6 +26,17 @@ export default class MultiDropDown extends BaseComponent {
   }
 
   render() {
+    /**
+     * Note on dangerouslySetInnerHTML Usage
+     *
+     * It is generally not a good idea to use dangerouslySetInnerHTML because it
+     * may expose applications to XSS attacks. We are opting to use it here and
+     * and in other places in the code base because the assessment content is
+     * is stored in (and returned from) the DB as XML, which limits our options
+     * in how we can handle assessment "material" on the frontend.
+     *
+     * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
+     */
     return (
       <div>
         <div
@@ -254,6 +265,17 @@ export default class MultiDropDown extends BaseComponent {
           feedbackStyles = {...styles.feedbackIncorrect, ...styles.externalFeedbackIncorrect};
         }
 
+        /**
+         * Note on dangerouslySetInnerHTML Usage
+         *
+         * It is generally not a good idea to use dangerouslySetInnerHTML because it
+         * may expose applications to XSS attacks. We are opting to use it here and
+         * and in other places in the code base because the assessment content is
+         * is stored in (and returned from) the DB as XML, which limits our options
+         * in how we can handle assessment "material" on the frontend.
+         *
+         * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
+         */
         return (
           <div
             className="check_answer_result"

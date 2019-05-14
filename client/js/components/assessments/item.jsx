@@ -337,6 +337,17 @@ export default class Item extends BaseComponent {
   }
 
   questionContent() {
+    /**
+    * Note on dangerouslySetInnerHTML Usage
+    *
+    * It is generally not a good idea to use dangerouslySetInnerHTML because it
+    * may expose applications to XSS attacks. We are opting to use it here and
+    * and in other places in the code base because the assessment content is
+    * is stored in (and returned from) the DB as XML, which limits our options
+    * in how we can handle assessment "material" on the frontend.
+    *
+    * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
+    */
     if (this.props.question.question_type !== 'multiple_dropdowns_question') {
       return (
         <div dangerouslySetInnerHTML={{ __html: this.props.question.material }}></div>

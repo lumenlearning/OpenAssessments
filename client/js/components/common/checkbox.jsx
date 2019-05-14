@@ -11,6 +11,17 @@ export default class CheckBox extends React.Component {
   render() {
     let btnLabelStyles = this.props.showAsCorrect !== null ? {...styles.btnLabel, ...{cursor: "default", padding: "11px 11px 6px"}} : {...styles.btnLabel, ...{cursor: "pointer", padding: "11px 11px 6px"}};
 
+    /**
+     * Note on dangerouslySetInnerHTML Usage
+     *
+     * It is generally not a good idea to use dangerouslySetInnerHTML because it
+     * may expose applications to XSS attacks. We are opting to use it here and
+     * and in other places in the code base because the assessment content is
+     * is stored in (and returned from) the DB as XML, which limits our options
+     * in how we can handle assessment "material" on the frontend.
+     *
+     * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
+     */
     return (
       <div>
         {this.renderAnswerIndicator()}
