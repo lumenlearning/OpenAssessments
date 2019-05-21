@@ -4,7 +4,7 @@ require 'lti/role_helper'
 class AssessmentsController < LtiBaseController
 
   skip_before_filter :verify_authenticity_token
-  
+
   before_filter :skip_trackable
   before_filter :authenticate_user!, only: [:new, :create, :destroy]
   before_filter :check_lti, only: [:show, :edit, :lti]
@@ -104,6 +104,7 @@ class AssessmentsController < LtiBaseController
     @eid = params[:eid]
     @iframe_resize_id = params[:iframe_resize_id]
     @show_post_message_navigation = params[:ext_post_message_navigation]
+    @show_answers = false
 
     @external_user_id = params[:external_user_id] || params[:user_id]
     @external_context_id = params[:external_context_id] || params[:context_id]
@@ -112,12 +113,13 @@ class AssessmentsController < LtiBaseController
     if assessment
       @assessment_title = assessment.title
       if assessment_settings = assessment.default_settings
-        @confidence_levels = !!assessment_settings[:confidence_levels] if @confidence_levels.nil?   # Prefer params
+        @confidence_levels = !!assessment_settings[:confidence_levels] if params[:confidence_levels].nil?   # Prefer params
         @assessment_kind = assessment.kind                                                          # Use settings
         @enable_start = !!assessment_settings[:enable_start] if params[:enable_start].nil?          # Prefer params
         @style = assessment_settings[:style] || assessment.default_style || @style                  # Prefer settings
         @per_sec = assessment_settings[:per_sec]                                                    # Use settings
         @allowed_attempts = assessment_settings.allowed_attempts.to_s                               # Use settings
+        @show_answers = !!assessment_settings[:show_answers]
       end
     end
   end

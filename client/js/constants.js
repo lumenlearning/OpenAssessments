@@ -1,8 +1,8 @@
 "use strict";
 
 export default {
-  
-  // User 
+
+  // User
   LOGIN: "login",
   LOGIN_PENDING: "login_pending",
   REGISTER: "register",
@@ -32,6 +32,7 @@ export default {
   REVIEW_ASSESSMENT_LOAD: "review_assessment_load",
   REVIEW_ASSESSMENT_LOAD_PENDING: "review_assessment_load_pending",
   REVIEW_ASSESSMENT_LOADED: "review_assessment_loaded",
+  REVIEW_ATTEMPTED_ASSESSMENTS_LOADED: "review_attempted_assessments_loaded",
   REVIEW_RESULT_LOAD: "review_result_load",
   REVIEW_RESULT_LOAD_PENDING: "review_result_load_pending",
   REVIEW_RESULT_LOADED: "review_result_loaded",
@@ -61,11 +62,11 @@ export default {
 
   // Admin
   CHANGE_MAIN_TAB_PENDING: "change_main_tab_pending",
-  
+
   // Accounts
   ACCOUNTS_LOADING: "accounts_loading",
   ACCOUNTS_LOADED: "accounts_loaded",
-  
+
   USERS_LOADING: "users_loading",
   USERS_LOADED: "users_loaded",
   LOADING_SELECTED_USER_DATA: "loading_selected_user_data",
@@ -83,7 +84,7 @@ export default {
   NAV_CHANGED: "nav_changed",
 
   CLEAR_STORE: "clear_store",
-  LEVEL_SELECTED: "level_selected", 
+  LEVEL_SELECTED: "level_selected",
   CREATED_USER: "created_user",
 
   // UserAssessments

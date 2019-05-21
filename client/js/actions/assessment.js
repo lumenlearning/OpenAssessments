@@ -8,11 +8,11 @@ import AssessmentStore    from "../stores/assessment";
 export default {
 
   loadAssessment(settings, srcData){
-    
+
     if(srcData){
       srcData = srcData.trim();
       if(srcData.length > 0){
-        Dispatcher.dispatch({ 
+        Dispatcher.dispatch({
           action: Constants.ASSESSMENT_LOADED,
           settings: settings,
           data: {
@@ -43,13 +43,13 @@ export default {
   },
 
   checkAnswer(){
-    Dispatcher.dispatch({ action: Constants.ASSESSMENT_CHECK_ANSWER });
+    Dispatcher.dispatch({action: Constants.ASSESSMENT_CHECK_ANSWER});
   },
 
   selectConfidenceLevel(level, index){
     Dispatcher.dispatch({action: Constants.LEVEL_SELECTED, level: level, index: index});
   },
-  
+
   submitAssessment(identifier, assessmentId, questions, studentAnswers, settings, outcomes){
     Dispatcher.dispatch({action: Constants.ASSESSMENT_SUBMITTED});
     this.submitProgress();
@@ -107,7 +107,7 @@ export default {
   retakeAssessment(){
     Dispatcher.dispatch({action: Constants.RETAKE_ASSESSMENT})
   },
-  
+
   assessmentViewed(settings, assessment){
     var body = {
       assessment_result : {
@@ -149,5 +149,5 @@ export default {
     };
     Api.post(Constants.ASSESSMENT_VIEWED, '/api/item_results', body);
   }
-  
+
 };

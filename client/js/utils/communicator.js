@@ -1,5 +1,5 @@
 export default {
-  
+
   enableListener: function(handler){
     // Create IE + others compatible event handler
     var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
@@ -15,6 +15,6 @@ export default {
 
   broadcastMsg: function(payload){
     parent.postMessage(JSON.stringify(payload), "*");
-  }
+  },
 
 };

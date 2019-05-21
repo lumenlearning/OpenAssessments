@@ -6,6 +6,7 @@ import AssessmentStore      from "../../stores/assessment";
 import Styles               from "../../themes/selection.js";
 import CommunicationHandler from "../../utils/communication_handler";
 import BaseComponent        from "../base_component";
+import SettingsStore      from "../../stores/settings";
 
 const styles = Styles;
 
@@ -18,6 +19,9 @@ export default class MomEmbed extends BaseComponent {
 
   render() {
     var embedUrl = this.props.item.momEmbed.embedUrl;
+    if(SettingsStore.current().showAnswers){
+      embedUrl = embedUrl.replace("showscoredonsubmit=0", "showscoredonsubmit=1");
+    }
     let redisplayJWT = Array.isArray(this.props.redisplayJWT) ? this.props.redisplayJWT[0] : this.props.redisplayJWT;
 
     if(redisplayJWT) {
@@ -53,6 +57,7 @@ export default class MomEmbed extends BaseComponent {
   }
 
   componentWillReceiveProps(nextProps){
+    // todo: only register if not displaying an answer already
     if(nextProps.registerGradingCallback){
       nextProps.registerGradingCallback(this.gradeQuestion)
     }
@@ -64,6 +69,7 @@ export default class MomEmbed extends BaseComponent {
       doneGradingCallback: null
     });
 
+    // todo: only register if not displaying an answer already
     if(this.props.registerGradingCallback){
       this.props.registerGradingCallback(this.gradeQuestion)
     }
@@ -84,8 +90,7 @@ export default class MomEmbed extends BaseComponent {
   }
 
   messageHandler(e) {
-    // if (!e.origin.match(/https?:\/\/www.myopenmath.com/)) {
-      if (!e.origin.match(/https?:\/\/www\.myopenmath\.com|https?:\/\/ohm\.lumenlearning\.com|https?:\/\/ohm\.ludev\.team/)) {
+    if (!e.origin.match(/https?:\/\/www\.myopenmath\.com|https?:\/\/ohm\.lumenlearning\.com|https?:\/\/ohm\.ludev\.team/)) {
       return;
     }
 

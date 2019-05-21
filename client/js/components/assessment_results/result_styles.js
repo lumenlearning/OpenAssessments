@@ -5,7 +5,7 @@ export default{
   getStyles(theme, isFormative=false){
     return {
       assessment: {
-        padding: isFormative ? "" : theme.assessmentPadding,
+        padding: 0,
         backgroundColor: theme.assessmentBackground,
       },
       progressStyle: {
@@ -25,19 +25,19 @@ export default{
         padding: "10px 20px 20px 20px"
       },
       improveScoreStyle:{
-        color: "#f00"
+        color: "#AD4646"
       },
       green: {
         color: "#458B00"
       },
       assessmentContainer:{
-        marginTop: isFormative ? "0px" : "70px",
+        marginTop: "0px",
+        padding: "0 16px",
         boxShadow: isFormative ? "" : theme.assessmentContainerBoxShadow,
-        borderRadius: theme.assessmentContainerBorderRadius,
-        padding: "20px"
+        borderRadius: theme.assessmentContainerBorderRadius
       },
       resultsStyle: {
-        padding: "20px"
+        padding: "20px 15px"
       },
       formative: {
         padding: "5",
@@ -56,15 +56,13 @@ export default{
       },
       outcomes: {
         backgroundColor: "rgba(204, 204, 204, .2)",
-
       },
       row: {
         padding: "15px",
 
       },
       outcomeContainer: {
-        textAlign: "center",
-        marginTop: "70px"
+        textAlign: "center"
       },
       outcomeIcon: {
         width: "100px",
@@ -72,28 +70,52 @@ export default{
         marginTop: "80px"
       },
       header: {
-        padding: "15px",
-        backgroundColor: theme.primaryBackgroundColor,
-        position: "absolute",
+        borderTop: "2px solid #003136",
+        borderBottom: "1px solid #c4cdd5",
         top: "0px",
         left: "0px",
-        fontSize: "140%",
-        color: "white",
+        padding: "22px 40px 22px 16px",
+        fontSize: "20px",
+        fontWeight: "400",
+        color: "#212b36",
+        lineHeight: "1.4",
         width: "100%"
+      },
+      headerWrapper: {
+        borderBottom: "1px solid #c4cdd5",
+        padding: "20px 0"
+      },
+      quizTitle: {
+        color: "#212b36",
+        fontSize: "20px",
+        lineHeight: "28px",
+        margin: "0 0 4px 0"
+      },
+      answerKeyLabel: {
+        color: "#212b36",
+        fontSize: "16px",
+        fontWeight: "600",
+        marginBottom: "30px",
+        marginLeft: "-15px",
+        marginTop: "-15px"
       },
       resultList: {
         width: "90%",
         margin: "auto",
         overflowY: "hidden",
       },
+      resultListInner: {
+        float: "left",
+        marginTop: "20px",
+        fontWeight: "bold"
+      },
       resultOutcome: {
         textAlign: "left"
       },
       retakeButton: {
         width: theme.definitelyWidth,
-        backgroundColor: theme.definitelyBackgroundColor,
+        backgroundColor: theme.probablyBackgroundColor,
         color: theme.definitelyColor,
-        marginBottom: "10px"
       },
       jumpButton: {
         marginTop: "10px",
@@ -108,19 +130,17 @@ export default{
         marginLeft: "15px"
       },
       buttonsDiv: {
-        marginTop: "20px",
-        marginBottom: "50px"
+        paddingTop: "20px",
+        paddingBottom: "50px"
       },
       titleBar: {
-        position: "absolute",
-        top: "0px",
-        left: "0px",
-        width: "100%",
-        padding: "10px 20px 10px 20px",
-        backgroundColor: theme.primaryBackgroundColor,
-        color: "white",
-        fontSize: "130%",
-        //fontWeight: "bold"
+        borderBottom: "2px solid #003136",
+        padding: "22px 40px 22px 16px",
+        fontFamily: "Arial",
+        fontSize: "28px",
+        fontWeight: "400",
+        color: "#212b36",
+        lineHeight: "1.4"
       },
       warningStyle: {
         width: "100%",
@@ -128,9 +148,20 @@ export default{
         backgroundColor: theme.maybeBackgroundColor,
         borderRadius: "4px",
         marginTop: "30px",
-        color: "white",
+        color: "#fff",
         fontWeight: "bold",
         fontSize: "130%"
+      },
+      formativeResultHeader: {
+        color: "#212b36",
+        fontSize: "18px",
+        fontWeight: 500,
+        marginTop: "32px"
+      },
+      formativeResultFeedback: {
+        color: "#637381",
+        fontSize: "14px",
+        fontWeight: "normal"
       }
     }
   }

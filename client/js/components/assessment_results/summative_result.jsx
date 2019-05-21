@@ -78,9 +78,9 @@ export default class SummativeResult extends React.Component{
     var quizType = this.props.isSummative ? "Quiz" : "Show What You Know";
 
     return (<div style={styles.assessment}>
+      <div style={styles.header}>{this.state.assessment ? this.state.assessment.title : ""}</div>
+      {errors}
       <div style={styles.assessmentContainer}>
-        <div style={styles.titleBar}>{quizType}: {this.state.assessment ? this.state.assessment.title : ""}</div>
-        {errors}
 
         <ResultSummary
             styles={styles}

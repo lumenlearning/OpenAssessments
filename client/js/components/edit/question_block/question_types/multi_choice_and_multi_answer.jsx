@@ -18,7 +18,7 @@ export default class MultiChoiceNAnswerFeedback extends Component {
     let windowWidth = this.props.windowWidth;
     let style       = Style.styles();
     let labels      = windowWidth < 1001 ? null : this.renderLabels();
-    
+
     //place JSX between the parens!
     return (
       <div style={style.qbAnswerTable}>
@@ -32,6 +32,18 @@ export default class MultiChoiceNAnswerFeedback extends Component {
               let answerLabelSmall    = windowWidth <= 1000 ? (<div style={_.merge({paddingBottom: "0.25em"}, style.label)}>Answer</div>) : null;
               let feedbackLabelSmall  = windowWidth <= 1000 ? (<div style={_.merge({paddingBottom: "0.25em"}, style.label)}>Feedback</div>) : null;
               let hr                  = windowWidth <= 1000 ? (<hr style={{margin: "10px 0 10px", borderTop: "1px dotted #868686"}}/>) : null;
+
+              /**
+               * Note on dangerouslySetInnerHTML Usage
+               *
+               * It is generally not a good idea to use dangerouslySetInnerHTML because it
+               * may expose applications to XSS attacks. We are opting to use it here and
+               * and in other places in the code base because the assessment content is
+               * is stored in (and returned from) the DB as XML, which limits our options
+               * in how we can handle assessment "material" on the frontend.
+               *
+               * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
+               */
               let answerMaterial      = answer.material ? (<div style={_.merge(answerFeedback, style.qbTblCell)} dangerouslySetInnerHTML={{__html:answer.material}} />) : (<div style={_.merge(answerFeedback, style.qbTblCell)} dangerouslySetInnerHTML={{__html:"&nbsp;"}} />);
               let feedbackMaterial    = answer.feedback ? (<div style={_.merge(answerFeedback, style.qbTblCell)} dangerouslySetInnerHTML={{__html:answer.feedback}} />) : (<div style={_.merge(answerFeedback, style.qbTblCell)} dangerouslySetInnerHTML={{__html:"&nbsp;"}} />);
 
@@ -88,4 +100,3 @@ MultiChoiceNAnswerFeedback.propTypes = {
   question: React.PropTypes.object.isRequired,
   windowWidth: React.PropTypes.object.isRequired
 };
-

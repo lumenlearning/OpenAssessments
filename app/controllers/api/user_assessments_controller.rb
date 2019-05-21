@@ -12,6 +12,12 @@ class Api::UserAssessmentsController < Api::ApiController
     respond_with(:json, custom_json(scope))
   end
 
+  def show
+    ua = UserAssessment.where(lti_context_id: params[:context_id]).find(params[:user_assessment_id])
+
+    render json: ua_json(ua, ua.assessment)
+  end
+
   def update_attempts
     ua = UserAssessment.where(lti_context_id: params[:context_id]).find(params[:user_assessment_id])
 

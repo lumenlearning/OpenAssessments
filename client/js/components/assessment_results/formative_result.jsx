@@ -1,99 +1,168 @@
 "use strict";
-
-import React            from 'react';
-import AssessmentActions    from "../../actions/assessment";
+// Dependencies
+import React from "react";
+// Actions
+import AssessmentActions from "../../actions/assessment";
+// Utilities
+import CommHandler from "../../utils/communication_handler";
 
 //polyfill trunc
 Math.trunc = Math.trunc || function(x) {
   return x < 0 ? Math.ceil(x) : Math.floor(x);
 };
 
-export default class FormativeResult extends React.Component{
+export default class FormativeResult extends React.Component {
+  constructor(props, context) {
+    super(props, context);
 
-  retake(){
-    AssessmentActions.retakeAssessment();
-    this.props.context.router.transitionTo("start");
+    CommHandler.init();
   }
 
   render() {
-    var score = Math.trunc(this.props.assessmentResult.score);
-    var image = "";
-    var feedback = "";
-    var head = "";
-    var styles = this.props.styles;
-
-    if(score == 100){
-      head = <h4 style={{color: this.props.context.theme.definitelyBackgroundColor}}>{"Looks like you're getting it!"}</h4>;
-      feedback = "You're ready to move on to the next section.";
-      image = <img style={styles.outcomeIcon} src={this.props.settings.images.CheckMark_svg} />;
-    } else if (score > 75){
-      head = <h4 >{"You're making progress!"}</h4>;
-      feedback = "You can learn more if you review before moving on.";
-      image = <img style={styles.outcomeIcon} src={this.props.settings.images.Books_svg} />;
-    } else {
-      head = <h4>{"Needs Work!"}</h4>;
-      feedback = "Make sure to review and learn the material before moving on.";
-      image = <img style={styles.outcomeIcon} src={this.props.settings.images.PersonWithBook_svg} />;
-    }
-
-    var results = this.props.questions.map((question, index)=>{
-      var color = this.props.assessmentResult.correct_list[index] ? this.props.context.theme.definitelyBackgroundColor : this.props.context.theme.maybeBackgroundColor;
-      var message = this.props.assessmentResult.correct_list[index] ? "Correct" : "Incorrect";
-      var confidenceColor;
-      if(this.props.assessmentResult.correct_list[index] == "partial"){
-        color = this.props.context.theme.partialColor;
-        message = "Partially Correct"
-      }
-      if (this.props.assessmentResult.confidence_level_list[index] == "Just A Guess"){
-        confidenceColor = this.props.context.theme.maybeBackgroundColor;
-      } else if (this.props.assessmentResult.confidence_level_list[index] == "Pretty Sure"){
-        confidenceColor = this.props.context.theme.probablyBackgroundColor;
-      } else {
-        confidenceColor = this.props.context.theme.definitelyBackgroundColor;
-      }
-      /*var material = "";
-      material = ( <div
-                    dangerouslySetInnerHTML={{
-                      __html: this.props.questions[index].material
-                    }}>
-                  </div> )*/
-
-      var material = this.checkQuestionMaterial(index);
-                  
-      return (
-        <div key={"result-"+index}>
-          <div style={styles.resultList}>
-            <div><div style={{color: color, float: "left"}}>Question {index+1} -- {message}</div><div style={{color: confidenceColor, float: "right"}}>{this.props.assessmentResult.confidence_level_list[index]}</div></div>
-          </div>
-          <div style={{...styles.resultList, ...styles.resultOutcome}}>
-            <div style={{width: "70%"}}>{material}</div>
-          </div>
-        </div>
-      )
-    });
+    let styles = this.props.styles;
+    let resultFeedback = this.getResultFeedback(styles);
 
     return (
       <div style={styles.assessment}>
         <div style={styles.assessmentContainer}>
-          <div style={styles.formative}>
-            <div className="row" style={styles.row}>
-              <div className="col-md-12 col-lg-12" style={styles.outcomes}>
-                <div style={styles.header}>{this.props.assessment ? this.props.assessment.title : ""}</div>
-                <div style={styles.outcomeContainer}>
-                  {image}
-                  {head}
-                  <div>{feedback}</div>
-                  <div>{results}</div>
-                  <div style={styles.buttonsDiv}>
-                    <button className="btn btn-check-answer" style={styles.retakeButton}  onClick={(e)=>{this.retake()}}>Retake</button>
-                  </div>
-                </div>
+          <div style={styles.outcomes}>
+            <div style={styles.header}>
+              {this.getTitle()}
+            </div>
+            <div style={styles.outcomeContainer}>
+              <img style={resultFeedback.imageStyle} src={resultFeedback.imageSrc} />
+              <p style={styles.formativeResultHeader}>
+                {resultFeedback.header}
+              </p>
+              <p style={styles.formativeResultFeedback}>
+                {resultFeedback.feedback}
+              </p>
+
+              {this.renderResultsTable(styles)}
+
+              <div style={styles.buttonsDiv}>
+                <button
+                  className="btn btn-check-answer"
+                  style={styles.retakeButton}
+                  onClick={(e) => { this.retake(); }}
+                  >
+                    Retake Quiz
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    )
+    );
+  }
+
+  componentDidMount() {
+    CommHandler.sendSizeThrottled();
+    CommHandler.showLMSNavigation();
+  }
+
+  renderResultsTable(styles) {
+    return (
+      this.props.questions.map((question, index) => {
+        let confidenceFeedback = this.confidenceFeedback(index);
+        let questionFeedback = this.questionFeedback(index);
+
+        return (
+          <div key={"result-" + index}>
+            <div style={styles.resultList}>
+              <div>
+                <div style={{color: questionFeedback.color, ...styles.resultListInner}}>
+                  Question {index + 1} &mdash; {questionFeedback.message}
+                </div>
+
+                <div style={{color: confidenceFeedback, float: "right", marginTop: "20px"}}>
+                  {this.props.assessmentResult.confidence_level_list[parseInt(index)]}
+                </div>
+              </div>
+            </div>
+
+            <div style={{...styles.resultList, ...styles.resultOutcome}}>
+              <div style={{width: "70%"}}>
+                {this.checkQuestionMaterial(index)}
+              </div>
+            </div>
+          </div>
+        );
+      })
+    );
+  }
+
+  getResultFeedback(styles) {
+    let score = this.getScore();
+    let feedback = "";
+    let header = "";
+    let imageSrc = "";
+    let imageStyle = styles.outcomeIcon;
+
+    if (score === 100) {
+      feedback = "You're ready to move on to the next section.";
+      header = "Looks like you're getting it";
+      imageSrc = "/assets/onTrack@2x.png";
+    } else if (score > 75) {
+      feedback = "You can learn more if you review before moving on.";
+      header = "You're making progress";
+      imageSrc = "/assets/goodWork@2x.png";
+    } else {
+      feedback = "Make sure to review and learn the material before moving on.";
+      header = "Needs Work";
+      imageSrc = "/assets/needsWork@2x.png";
+      imageStyle = { maxWidth: "247px", marginTop: "49px" };
+    }
+
+    return {
+      feedback,
+      header,
+      imageSrc,
+      imageStyle
+    };
+  }
+
+  getScore() {
+    return Math.trunc(this.props.assessmentResult.score);
+  }
+
+  getTitle() {
+    return this.props.assessment ? this.props.assessment.title : "";
+  }
+
+  confidenceFeedback(index) {
+    let confidenceColor;
+
+    if (this.props.assessmentResult.confidence_level_list[parseInt(index)] === "Just A Guess") {
+      confidenceColor = this.props.context.theme.maybeBackgroundColor;
+    } else if (this.props.assessmentResult.confidence_level_list[parseInt(index)] === "Pretty Sure") {
+      confidenceColor = this.props.context.theme.probablyBackgroundColor;
+    } else {
+      confidenceColor = this.props.context.theme.definitelyBackgroundColor;
+    }
+
+    return confidenceColor;
+  }
+
+  questionFeedback(index) {
+    let color;
+    let message;
+
+    if (this.props.assessmentResult.correct_list[parseInt(index)] === "partial") {
+      color = this.props.context.theme.partialColor;
+      message = "Partially Correct";
+    } else if (this.props.assessmentResult.correct_list[parseInt(index)]) {
+      color = this.props.context.theme.definitelyBackgroundColor;
+      message = "Correct";
+    } else {
+      color = this.props.context.theme.maybeBackgroundColor;
+      message = "Incorrect";
+    }
+
+    return {
+      color,
+      message
+    };
   }
 
   checkQuestionMaterial(index) {
@@ -101,7 +170,7 @@ export default class FormativeResult extends React.Component{
     let chosenAnswers = this.props.assessmentResult.lti_params.itemToGrade.answers[index];
     let material = question.material;
 
-    if(question.question_type == 'multiple_dropdowns_question') {
+    if (question.question_type === "multiple_dropdowns_question") {
       let shortcodes = Object.keys(question.dropdowns);
       let re = new RegExp(`\\[${shortcodes.join('\\]|\\[')}\\]`, 'gi');
 
@@ -115,16 +184,30 @@ export default class FormativeResult extends React.Component{
           return dropdown.value === answerId;
         }).name;
 
-
-        return `<strong>${chosenAnswerVal}</strong>`;
-
+        return (
+          <strong>{chosenAnswerVal}</strong>
+        );
       });
     }
 
+    /**
+     * Note on dangerouslySetInnerHTML Usage
+     *
+     * It is generally not a good idea to use dangerouslySetInnerHTML because it
+     * may expose applications to XSS attacks. We are opting to use it here and
+     * and in other places in the code base because the assessment content is
+     * is stored in (and returned from) the DB as XML, which limits our options
+     * in how we can handle assessment "material" on the frontend.
+     *
+     * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
+     */
     return (
       <div dangerouslySetInnerHTML={{__html: material}} />
     );
+  }
 
-  }//checkQuestionMaterial
-
+  retake() {
+    AssessmentActions.retakeAssessment();
+    this.props.context.router.transitionTo("start");
+  }
 }

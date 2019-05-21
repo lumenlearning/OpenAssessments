@@ -7,7 +7,7 @@ import BaseComponent      from "../base_component";
 import ProgressListItem   from "./progress_list_item";
 
 export default class ProgressDropdown extends BaseComponent{
-  
+
   constructor(props, context){
     super(props, context);
     this._bind("navButtonClicked", "getStyles", "handleKeyDown");
@@ -18,7 +18,7 @@ export default class ProgressDropdown extends BaseComponent{
       this.setState({expanded: !this.state.expanded})
     } else {
       this.setState({expanded: true});
-    } 
+    }
   }
 
   selectQuestion(e,index){
@@ -77,11 +77,11 @@ export default class ProgressDropdown extends BaseComponent{
       },
       container: {
         display: "inline-block",
-      },    
+      },
       icon: {
         height: "52px",
         width: "52px",
-        dislay: "inline-block"
+        display: "inline-block"
       },
       li: {
         borderBottom: "1px solid grey",
@@ -124,7 +124,7 @@ export default class ProgressDropdown extends BaseComponent{
   }
 }
 
-ProgressDropdown.propTypes = { 
+ProgressDropdown.propTypes = {
   selectQuestion   : React.PropTypes.func.isRequired
 };
 

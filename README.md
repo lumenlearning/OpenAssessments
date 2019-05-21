@@ -56,6 +56,17 @@ install the ruby dependencies with `bundler`:
   $ bundle install
   ```
 
+If you get this error on MacOS:
+```An error occurred while installing nokogiri (1.6.6.2), and Bundler cannot continue.
+   Make sure that `gem install nokogiri -v '1.6.6.2' --source 'https://rubygems.org/'` succeeds before bundling.
+
+```
+
+try this to get nokogiri to install
+```
+gem install nokogiri -v 1.6.6.2  -- --use-system-libraries
+```
+
 If you get an error stating that the `eventmachine` gem did not install, try:
 
   ```
@@ -92,6 +103,13 @@ We can populate the database by running the following commands:
   ```
   $ APP_SUBDOMAIN=localhost bundle exec rake db:migrate
   $ APP_SUBDOMAIN=localhost bundle exec rake db:seed
+  ```
+
+Additionally,
+we can run a separate rake task to populate the database with several assessments to test against:
+
+  ```
+  $ bundle exec rake generate:quizzes:all
   ```
 
 ### 4. Install JavaScript Dependencies
@@ -149,7 +167,90 @@ run the rails server in `openassessments/`:
 Navigate to `localhost:3001` in a browser window,
 and you should be good to go.
 
+### 6. Create a User
+
+Hop into a rails console and generate a user.
+
+  ```
+  $ bundle exec rails c
+  > u = User.new
+  > u.email = "admin@example.com"  # Add your own email address here
+  > u.password = "password"
+  > u.password_confirmation = u.password
+  > u.save!
+  ```
+
+Now,
+we need to confirm the user.
+
+  ```
+  > u.confirmed_at = Time.now
+  > u.save!
+  ```
+
+### 7. Associate User with Account
+
+Next,
+we want to associate that user with an account.
+
+  ```
+  > u.account_id = 1
+  > u.save!
+  ```
+
+### 8. Set LTI Key and Secret on the Account
+
+In order to do LTI launches,
+we need to set the LTI key and secret on the account.
+For local development,
+it can be something simple.
+
+  ```
+  > a = Account.first
+  > a.lti_key = "fake"
+  > a.lti_secret = "fake"
+  > a.save!
+  ```
+
+### 9. Remove public restriction on Account
+
+Things are almost working at this point,
+but in order to see the assessment results for some quiz types,
+you have to remove the public restriction setting on the Account to false:
+
+  ```
+  > a.restrict_public = false
+  > a.save!
+  ```
+
+### 10. Generate Assessments
+
+Finally,
+Lets generate some assessments.
+Hop out of the rails console and run the following command:
+
+  ```
+  $ bundle exec rake generate:quizzes:all
+  ```
+
+The output generated should be a list of assessments and their associated IDs.
+
+You should now be able to do an LTI launch to an assessment.
+
 ### Possible errors
+
+### node-pre-gyp ERR! This is a bug in node-pre-gyp
+
+If you get this error while installing frontend dependencies,
+you might be missing XCode.
+Try installing that from the App Store.
+
+If this doesn't solve the problem,
+try install `node-gyp` and `node-pre-gyp` globally:
+
+```bash
+npm install -g node-gyp node-pre-gyp
+```
 
 #### undefined method "restrict_signup' for nil:NilClass"
 
@@ -204,3 +305,33 @@ for hosting and you have everything configured correctly,
 deployment is as simple as running `eb deploy` from the project root directory.
 
 For details on setting up deployment with AWS, follow [these instructions](docs/deployment_instructions.md).
+
+## Features in A/B Testing
+
+There are a couple of new features that are being A/B tested based on the user
+ID's last digit.
+The features are colloquially called "Practice Feedback" and "Wait/Wait".
+
+To find everywhere that A/B testing is occurring,
+search the project for "A/B Testing" and you'll find function-level comments
+like follows:
+
+```
+/**
+ * A/B Testing (Quiz Tip "Pre-Attempt")
+ *
+ * Casing off of last digit of the User Id to determine what verbiage to use in
+ * the body of the quiz tip.
+ *
+ * 0, 1 - No quiz tip, no modal
+ * 2, 3 - No quiz tip, yes modal
+ * 4    - v1 quiz tip, no modal
+ * 5    - v1 quiz tip, yes modal
+ * 6    - v2 quiz tip, no modal
+ * 7    - v2 quiz tip, yes modal
+ * 8    - v3 quiz tip, no modal
+ * 9    - v3 quiz tip, yes modal
+ */
+ ```
+
+This serves to illustrate when a user will see and not see these new features.

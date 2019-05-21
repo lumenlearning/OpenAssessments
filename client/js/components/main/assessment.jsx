@@ -6,10 +6,10 @@ import SettingsStore      from "../../stores/settings";
 import BaseComponent      from "../base_component";
 import AssessmentActions  from "../../actions/assessment";
 import Loading            from "../assessments/loading";
-import CheckUnderstanding from "../assessments/check_understanding";
 import Item               from "../assessments/item";
 import ProgressDropdown   from "../common/progress_dropdown";
 import CommunicationHandler from "../../utils/communication_handler";
+import TitleBar from "../common/TitleBar";
 
 export default class Assessment extends BaseComponent{
 
@@ -100,6 +100,7 @@ export default class Assessment extends BaseComponent{
           finishedCallback();
         }
         Assessment.newQuestionMessages();
+        this.setState({questionSelected: true});
       });
     } else {
       AssessmentActions.selectQuestion(qid);
@@ -162,6 +163,10 @@ export default class Assessment extends BaseComponent{
         (nextState.gradingCallback && !this.state.gradingCallback));
   }
 
+  resetAnswerMessages() {
+    AssessmentStore.resetAnswerMessages();
+  }
+
   render(){
     window.onbeforeunload = this.popup;
     if(AssessmentStore.assessmentResult() != null || this.state.settings.assessmentKind.toUpperCase() != "SUMMATIVE"){
@@ -170,7 +175,6 @@ export default class Assessment extends BaseComponent{
     var styles = this.getStyles(this.context.theme)
     var content;
     var progressBar;
-    var titleBar;
     if(!this.state.isLoaded || (this.state.isSubmitted && !AssessmentStore.isPractice() )){
       content = <Loading />;
      }else {
@@ -192,32 +196,22 @@ export default class Assessment extends BaseComponent{
         checkAnswer      = {this.checkAnswer}
         registerGradingCallback = {this.registerGradingCallback}
         outcomes         = {this.state.outcomes}
+        resetAnswerMessages = {this.resetAnswerMessages}
+        showAnswers = {this.state.settings.showAnswers}
       />;
-
-      progressBar = <div style={styles.progressContainer}>
-        {progressText}
-        <ProgressDropdown settings={this.state.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} selectQuestion={this.selectQuestion}/>
-      </div>;
     }
 
     var percentCompleted = this.checkProgress(this.state.currentIndex, this.state.questionCount);
     var progressStyle = {width:percentCompleted+"%"};
     var progressText = "";
     var quizType = AssessmentStore.isSummative() ? "Quiz" : "Show What You Know";
-    var titleBar = <div style={styles.titleBar}>{this.state.assessment ? this.state.assessment.title : ""}</div>;
     if(this.state.assessment){
       progressText = this.context.theme.shouldShowProgressText ? <div><b>{this.state.assessment.title + " Progress"}</b>{" - You are on question " + (this.state.currentIndex + 1) + " of " + this.state.questionCount}</div> : "";
     }
 
-    if (AssessmentStore.isFormative() ||
-        AssessmentStore.isPractice()) {
-      progressBar = "";
-      titleBar = "";
-    }
-
     return <div className="assessment" style={styles.assessment}>
-      {titleBar}
-      {progressBar}
+      {this.renderTitleBar()}
+      {this.renderProgressBar(styles)}
       <div className="section_list">
         <div className="section_container">
           {content}
@@ -226,16 +220,51 @@ export default class Assessment extends BaseComponent{
     </div>;
   }
 
+  renderTitleBar() {
+    if (AssessmentStore.isFormative() || AssessmentStore.isPractice()) {
+      return;
+    } else {
+      return (
+        <TitleBar
+          title={this.state.assessment ? this.state.assessment.title : ""}
+          assessmentKind={this.state.settings.assessmentKind}
+          assessmentLoaded={this.state.isLoaded}
+          />
+      );
+    }
+  }
 
+  renderProgressBar(styles) {
+    if (AssessmentStore.isFormative() || AssessmentStore.isPractice()) {
+      return;
+    } else {
+      return (
+        <div style={styles.progressContainer}>
+          {this.getProgressText()}
+          <ProgressDropdown
+            settings={this.state.settings}
+            questions={this.state.allQuestions}
+            currentQuestion={this.state.currentIndex + 1}
+            questionCount={this.state.questionCount}
+            selectQuestion={this.selectQuestion}
+            />
+        </div>
+      );
+    }
+  }
+
+  getProgressText() {
+    if (this.state.assessment && this.context.theme.shouldShowProgressText) {
+      return (
+        <div>
+          <b>{`${this.state.assessment.title} Progress`}</b>{` - You are on question ${this.state.currentIndex + 1} of ${this.state.questionCount}`}
+        </div>
+      );
+    }
+  }
 
   getStyles(theme){
-    var minWidth = "635px";
-    var padding = theme.assessmentPadding;
-    if (AssessmentStore.isFormative() ||
-        AssessmentStore.isPractice()) {
-      padding = "";
-      minWidth = "480px";
-    }
+    var minWidth = "320px";
 
     return {
       progressBar: {
@@ -246,34 +275,20 @@ export default class Assessment extends BaseComponent{
         height: theme.progressBarHeight
       },
       assessment: {
-        padding: padding,
+        padding: 0,
         backgroundColor: theme.assessmentBackground,
         minWidth: minWidth
       },
       progressContainer: {
         padding: "10px 20px 10px 20px",
-        position: "absolute",
         left: "0px",
         top: "44px",
         width: "100%",
         minWidth: minWidth,
         backgroundColor: theme.titleBarBackgroundColor,
-      },
-      titleBar: {
-        position: "absolute",
-        top: "0px",
-        left: "0px",
-        width: "100%",
-        padding: "10px 20px 10px 20px",
-        backgroundColor: theme.primaryBackgroundColor,
-        color: "white",
-        fontSize: "130%",
-        minWidth: minWidth,
-        //fontWeight: "bold"
       }
     }
   }
-
 }
 
 Assessment.contextTypes = {

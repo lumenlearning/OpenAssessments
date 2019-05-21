@@ -116,7 +116,7 @@ export default class MDDAnswerFeedbackMaterial extends Component {
 
   checkForFeedback(dropdown, key){
     let question = this.props.question;
-    let feedback = '';
+    let feedback = "";
 
     if(!(!!dropdown.feedback)){
       if(!!question.feedback && !!question.feedback[key+dropdown.value]) feedback = question.feedback[key+dropdown.value];
@@ -138,4 +138,3 @@ MDDAnswerFeedbackMaterial.propTypes = {
   handleAddOption: React.PropTypes.func,
   handleAnswerRemoval: React.PropTypes.func
 };
-

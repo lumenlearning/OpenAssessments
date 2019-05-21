@@ -6,7 +6,7 @@ class Api::AssessmentsController < Api::ApiController
   respond_to :xml, :json
 
   before_action :ensure_context_admin, only:[:json_update, :review_show]
-  load_and_authorize_resource except: [:show, :json_update, :copy, :review_show]
+  load_and_authorize_resource except: [:show, :json_update, :copy, :review_show, :student_review_show, :student_review_show_xml]
   skip_before_action :validate_token, only: [:show]
   skip_before_action :protect_account, only: [:show]
   before_action :ensure_copy_admin, only:[:copy]
@@ -100,6 +100,14 @@ class Api::AssessmentsController < Api::ApiController
           render :text => assessment.xml_with_answers
         elsif assessment.practice?
           render :text => assessment.xml_with_answers
+        elsif assessment.formative?
+          if assessment_settings && assessment_settings.per_sec
+            xml = assessment.xml_with_answers(assessment_settings.per_sec.to_i)
+          else
+            xml = assessment.xml_with_answers(nil)
+          end
+
+          render :text => xml
         else
           selected_items = []
           if assessment_settings && assessment_settings.per_sec
@@ -144,6 +152,71 @@ class Api::AssessmentsController < Api::ApiController
     render :xml => xml || assessment.xml_with_answers
   end
 
+  def student_review_show
+    assessment = Assessment.where(id: params[:assessment_id], account: current_account).first
+    user = current_user
+    user_assessment = nil
+    results = []
+
+    if user == current_user && assessment
+      if params[:uaid].present?
+        user_assessment = assessment.user_assessments.where(user_id: user.id, id: params[:uaid]).first
+
+        correct_map = lambda do |score|
+          case score
+            when 0
+              false
+            when 1
+              true
+            else
+              'partial'
+          end
+        end
+
+        assessment_results = user_assessment.assessment_results
+
+        assessment_results.each do |assessment_result|
+          results << {
+            user_id: user_assessment.user_id,
+            assessment_result_id: assessment_result.id,
+            assessment_result_attempt: assessment_result.attempt,
+            assessment_result_score: assessment_result.score,
+            assessment_result_created_at: assessment_result.created_at,
+            assessment_result_updated_at: assessment_result.updated_at,
+            assessment_result_items: assessment_result.item_results.order(:sequence_index).includes(:item).map do |ir|
+              {
+                ident: ir.identifier,
+                outcome_guid: ir.outcome_guid,
+                title: ir.item.title,
+                score: ir.score,
+                correct: correct_map.call(ir.score)
+              }
+            end
+          }
+        end
+      end
+    end
+
+    render :json => results
+  end
+
+  # This is the same as 'review_show' endpoint, only this will never return a
+  # version of the xml that has answers in it.
+  def student_review_show_xml
+    assessment = Assessment.where(id: params[:assessment_id], account: current_account).first
+    xml = nil
+
+    if params[:assessment_result_id]
+      ar = AssessmentResult.find(params[:assessment_result_id])
+
+      if ar.assessment_xml && (ar.assessment_xml.kind == 'summative' || ar.assessment_xml.kind == 'qti')
+        xml = ar.assessment_xml.xml
+      end
+    end
+
+    render :xml => xml || assessment.xml_without_answers
+  end
+
   # *******************************************************************
   # URL PARAMS
   # allowed_attempts (int) How many attempts the learner gets
@@ -151,6 +224,7 @@ class Api::AssessmentsController < Api::ApiController
   # style (string) set to "lumen_learning" to use the lumen learning theme. Leave out for default style
   # per_sec (int) give it the number of random questions from each section you want.
   # confidence_levels (bool) display confidence controls
+  # show_answers (bool) display answers and feedback after each question is answered
   #
   # Example
   # https://assessments.lumenlearning.com/assessments/15?style=lumen_learning&asid=1&per_sec=2&confidence_levels=true&enable_start=true
@@ -260,10 +334,11 @@ class Api::AssessmentsController < Api::ApiController
     end
 
   def settings_params
-    settings = params.require(:assessment).permit(:allowed_attempts, :per_sec, :confidence_levels, :style, :enable_start)
+    settings = params.require(:assessment).permit(:allowed_attempts, :per_sec, :confidence_levels, :style, :enable_start, :show_answers)
     settings[:allowed_attempts] = settings[:allowed_attempts].to_i if settings[:allowed_attempts]
     settings[:per_sec] = settings[:per_sec].to_i if settings[:per_sec]
     settings[:confidence_levels] = settings[:confidence_levels] == 'true' if settings[:confidence_levels]
+    settings[:show_answers] = settings[:show_answers] == 'true' if settings[:show_answers]
     settings[:enable_start] = settings[:enable_start] == 'true' if settings[:enable_start]
     settings[:mode] = @assessment.kind
     settings

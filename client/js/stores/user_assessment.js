@@ -12,6 +12,7 @@ var _currentContextId = null;
 function loadUserAssessments(data){
   _user_assessments = JSON.parse(data);
 }
+
 function updateUserAssessment(data){
   var ua = JSON.parse(data);
   var index = _.findIndex(_user_assessments, 'id', ua.id);
@@ -35,7 +36,7 @@ var UserAssessmentStore = assign({}, StoreCommon, {
   },
 
 });
- 
+
 // Register callback with Dispatcher
 Dispatcher.register(function(payload) {
   var action = payload.action;
@@ -60,10 +61,9 @@ Dispatcher.register(function(payload) {
   }
   // If action was responded to, emit change event
   UserAssessmentStore.emitChange();
-  
+
   return true;
 
 });
 
 export default UserAssessmentStore;
-

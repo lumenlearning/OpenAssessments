@@ -1,10 +1,10 @@
 "use strict";
-import theme from "./base";
+import theme from "./lumen_learning.js";
 
 export default {
   btnQuestion:{
     whiteSpace: theme.btnQuestionWhiteSpace,
-    background: "transparent",
+    background: theme.btnBackground,
     color: theme.btnQuestionColor,
     textAlign: theme.btnQuestionTextAlign,
     padding: theme.btnQuestionPadding,
@@ -20,9 +20,58 @@ export default {
     lineHeight: theme.btnQuestionLineHeight,
     borderRadius: theme.btnQuestionBorderRadius
   },
+  btnQuestionCorrect: {
+    background: theme.btnCorrectBackground,
+    border: theme.btnCorrectBorder,
+    cursor: "default",
+  },
+  btnQuestionIncorrect: {
+    background: theme.btnIncorrectBackground,
+    border: theme.btnIncorrectBorder,
+    cursor: "default",
+  },
+  btnQuestionNeutral: {
+    background: theme.btnNeutralBackground,
+    border: theme.btnNeutralBorder,
+    cursor: "default",
+  },
+  btnLabel: {
+    height: "100%",
+    marginBottom: 0,
+    padding: "11px",
+    width: "100%",
+  },
   span: {
     fontWeight: "normal !important",
-    marginLeft: "5px"
+    marginLeft: "11px"
+  },
+  externalFeedbackCorrect: {
+    backgroundColor: "#f0faed",
+    border: "1px solid #108043",
+    borderRadius: "5px",
+    margin: "5px 0 0",
+    padding: "11px",
+  },
+  externalFeedbackIncorrect: {
+    backgroundColor: "#fbeae5",
+    border: "1px solid #bf0711",
+    borderRadius: "5px",
+    margin: "5px 0 0",
+    padding: "11px",
+  },
+  feedbackCorrect: {
+    color: "#108043",
+  },
+  feedbackIncorrect: {
+    color: "#bf0711",
+  },
+  feedbackNeutral: {
+    backgroundColor: "#f3f4fa",
+    border: "1px solid #5c6ac4",
+    borderRadius: "5px",
+    color: "#202e78",
+    margin: "5px 0 0",
+    padding: "11px",
   },
   radioText: {
     color: theme.radioTextColor,
@@ -31,30 +80,18 @@ export default {
   },
   checkStyleCorrect: {
     float: "left",
-    color: "white",
-    fontSize: ".9em",
-    backgroundColor: "#4EAA59",
-    width: "26px",
-    height: "22px",
-    paddingTop: "2px",
-    paddingLeft: "8px",
-    marginTop: "2px",
-    marginLeft: "-30px",
-    borderRadius: "4px",
+    width: "20px",
+    height: "20px",
+    marginTop: "12px",
+    marginLeft: "-28px",
     cursor: "default"
   },
   checkStyleWrong: {
     float: "left",
-    color: "white",
-    fontSize: ".8em",
-    backgroundColor: "#C3092B",
-    width: "26px",
-    height: "22px",
-    paddingTop: "3px",
-    paddingLeft: "9px",
-    marginTop: "2px",
-    marginLeft: "-30px",
-    borderRadius: "4px",
+    width: "20px",
+    height: "20px",
+    marginTop: "12px",
+    marginLeft: "-28px",
     cursor: "default"
   }
 }
