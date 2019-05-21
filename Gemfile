@@ -67,7 +67,7 @@ gem 'groupdate' # for grouping the chart data by date
 
 # Monitoring
 gem 'newrelic_rpm'
-gem 'health_check'
+gem 'health_check', '~> 2.8'
 gem 'rack-ssl-enforcer'
 
 group :development do
