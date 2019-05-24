@@ -121,9 +121,9 @@ export default class CheckUnderstanding extends React.Component{
   }
 
   renderStartButton(styles) {
-    if (this.shouldNotRenderStartButton()) {
-      return;
-    }
+    // if (this.shouldNotRenderStartButton()) {
+    //   return;
+    // }
 
     return (
       <div className="start-assessment-button-wrapper" style={styles.buttonWrapper}>
