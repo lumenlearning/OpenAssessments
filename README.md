@@ -64,7 +64,7 @@ If you get this error on MacOS:
 
 try this to get nokogiri to install
 ```
-gem install nokogiri -v 1.6.6.2  -- --use-system-libraries
+gem install nokogiri -v '1.6.6.2' -- --use-system-libraries=true --with-xml2-include="$(xcrun --show-sdk-path)"/usr/include/libxml2
 ```
 
 If you get an error stating that the `eventmachine` gem did not install, try:
