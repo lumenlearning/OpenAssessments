@@ -64,35 +64,27 @@ export default class RadioButton extends React.Component {
     }
   }
 
-  renderAnswerIndicator() {
-    if (this.isAnswerPage()) {
-      return this.getAnswerPageIndicator();
-    } else if (this.isQuizPage()) {
-      return this.getQuizPageIndicator();
-    }
-  }
-
-  isAnswerPage() {
-    return !this.props.assessmentKind && this.props.isDisabled && this.props.showAsCorrect ? true : false;
-  }
-
   isQuizPage() {
-    return this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice" ? true : false;
+    return this.props.assessmentKind === "formative" || this.props.assessmentKind === "practice";
   }
 
   showCorrectAndChecked() {
-    return this.props.showAsCorrect === true && this.props.checked === true ? true : false;
+    return this.props.showAsCorrect === true && this.props.checked === true;
   }
 
   showIncorrectAndChecked() {
-    return this.props.showAsCorrect === false && this.props.checked === true ? true : false;
+    return this.props.showAsCorrect === false && this.props.checked === true;
+  }
+
+  showIncorrectAndUnchecked() {
+    return this.props.showAsCorrect === false && this.props.checked === false;
   }
 
   showCorrectAnswerIcon() {
-    return this.props.showAsCorrect === true ? true : false;
+    return this.props.showAsCorrect === true;
   }
 
-  getQuizPageIndicator() {
+  renderAnswerIndicator() {
     if (this.showCorrectAnswerIcon()) {
       return (
         <img
@@ -114,18 +106,6 @@ export default class RadioButton extends React.Component {
           />
       );
     }
-  }
-
-  getAnswerPageIndicator() {
-    return (
-      <img
-        src="/assets/correct.png"
-        className="correctIndicator"
-        aria-label="Correct Answer"
-        alt="Icon indicating the correct answer"
-        style={styles.checkStyleCorrect}
-        />
-    );
   }
 
   checkedStatus() {

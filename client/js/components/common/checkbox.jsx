@@ -57,6 +57,8 @@ export default class CheckBox extends React.Component {
       );
     } else if (this.shouldShowAnswerFeedback()) {
       return this.getAnswerIndicator();
+    } else {
+      return this.getAnswerIndicator();
     }
   }
 
