@@ -55,8 +55,6 @@ export default class CheckBox extends React.Component {
           style={styles.checkStyleCorrect}
           />
       );
-    } else if (this.shouldShowAnswerFeedback()) {
-      return this.getAnswerIndicator();
     } else {
       return this.getAnswerIndicator();
     }
