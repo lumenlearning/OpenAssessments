@@ -144,6 +144,21 @@ $ npm install moment@2.10.6
 $ npm install react-tinymce@0.2.3
 ```
 
+#### ATTENTION: macOS Mojave Users
+
+If you run into errors regarding `libstdc++` and you are running macOS 10.14 (Mojave) or later,
+you may have to manually install this library (which is considered deprecated in favor of libc++).
+
+1.  Download both the latest version of XCode 10+ and install it
+2.  Get the deprecated lib files from [this repo](https://github.com/Kila2/libstdc-.6.0.9.tbd)
+3.  Follow their readme and put the files in the necessary XCode App folders
+4.  In addition, add the lib files to Command Line Tools: `/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk`
+5.  Finally, add these lines to your `.bash_profile` file.
+    
+    ```bash
+    export CXXFLAGS="-mmacosx-version-min=10.9"
+    export LDFLAGS="-mmacosx-version-min=10.9"
+    ```
 
 ### 5. Start the server and React "hot reloading"
 
