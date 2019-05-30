@@ -76,10 +76,6 @@ export default class RadioButton extends React.Component {
     return this.props.showAsCorrect === false && this.props.checked === true;
   }
 
-  showIncorrectAndUnchecked() {
-    return this.props.showAsCorrect === false && this.props.checked === false;
-  }
-
   showCorrectAnswerIcon() {
     return this.props.showAsCorrect === true;
   }
