@@ -2,15 +2,22 @@
   "name": "openassessments-client",
   "version": "1.0.0",
   "description": "The front end application for the Open Assessments engine.",
+  "main": "app.js",
+  "scripts": {
+    "build": "webpack -w",
+    "server": "node app.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/lumenlearning/OpenAssessments"
   },
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "atomicjolt and lumenlearning",
   "license": "MIT",
-  "homepage": "https://lumenlearning.com"
+  "homepage": "https://github.com/lumenlearning/OpenAssessments#readme",
+  "dependencies": {
+
+  },
+  "devDependencies": {
+
+  }
 }
