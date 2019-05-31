@@ -1,4 +1,4 @@
-const router = require("./router.jsx");
+const router = require("./routes.jsx");
 const Router = new router();
 
 Router.run();

@@ -31,22 +31,20 @@ export default class Router {
     let NotFoundRoute = Router.NotFoundRoute;
 
     this.routes = (
-      <Router>
-        <Route handler={Index}>
-          <DefaultRoute name="start" handler={Start}/>
-          <Route name="assessment" handler={Assessment}/>
-          <Route name="assessment-result" handler={AssessmentResult}/>
-          <Route name="teacher-review" handler={TeacherReview}  path="review/:assessmentId/:attemptId"/>
-          <Route name="teacher-preview" handler={TeacherPreview}  path="preview/:assessmentId"/>
-          <Route name="login" handler={Login}/>
-          <Route name="register" handler={Register}/>
-          <Route name="logout" handler={Logout}/>
-          <Route name="about" handler={About}/>
-          <Route name="attempts" handler={Attempts} path="attempts/:assessmentId/:contextId"/>
-          <Route name="edit" handler={Edit} path="edit/:assessmentId"/>
-          <NotFoundRoute handler={NotFound}/>
-        </Route>
-      </Router>
+      <Route handler={Index}>
+        <DefaultRoute name="start" handler={Start}/>
+        <Route name="assessment" handler={Assessment}/>
+        <Route name="assessment-result" handler={AssessmentResult}/>
+        <Route name="teacher-review" handler={TeacherReview} path="review/:assessmentId/:attemptId"/>
+        <Route name="teacher-preview" handler={TeacherPreview} path="preview/:assessmentId"/>
+        <Route name="login" handler={Login}/>
+        <Route name="register" handler={Register}/>
+        <Route name="logout" handler={Logout}/>
+        <Route name="about" handler={About}/>
+        <Route name="attempts" handler={Attempts} path="attempts/:assessmentId/:contextId"/>
+        <Route name="edit" handler={Edit} path="edit/:assessmentId"/>
+        <NotFoundRoute handler={NotFound}/>
+      </Route>
     );
   }
 
