@@ -6,7 +6,7 @@ import Validator    from "validator";
 import UserActions  from "../../actions/user";
 import _            from "lodash";
 import assign       from "object-assign";
-import { Paper, TextField, FlatButton, RaisedButton, FontIcon } from "material-ui";
+import { Paper, TextField, FlatButton, RaisedButton, FontIcon } from "@material-ui/core";
 
 class Register extends React.Component {
 

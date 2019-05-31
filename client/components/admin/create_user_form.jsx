@@ -2,7 +2,7 @@
 
 import React                                                                              from "react";
 import User                                                                               from "../../stores/user";
-import { Paper, FlatButton, RaisedButton, FontIcon, Dialog, DropDownMenu, TextField }     from "material-ui";
+import { Paper, FlatButton, RaisedButton, FontIcon, Dialog, DropDownMenu, TextField }     from "@material-ui/core";
 import AdminActions                                                                       from "../../actions/admin";
 
 class CreateUserForm extends React.Component {

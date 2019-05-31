@@ -3,7 +3,7 @@
 import React         from "react";
 import MessagesStore from "../../stores/messages";
 import Message       from "./message";
-import { Toolbar }   from "material-ui";
+import { Toolbar }   from "@material-ui/core";
 import BaseComponent from "../base_component";
 import _             from "lodash";
 

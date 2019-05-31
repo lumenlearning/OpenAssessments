@@ -3,10 +3,10 @@ const webpack = require('webpack');
 module.exports = {
   entry: "./app.js",
   output: {
-    filename: "../app/assets/javascripts/bundle.js"
+    filename: "../../app/assets/javascripts/bundle.js"
   },
   resolve: {
-    extensions: ['.js', '.json', '.jsx']
+    extensions: ['.js', '.json', '.jsx', '.css']
   },
   module: {
     rules: [
@@ -20,10 +20,18 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: "style-loader!css-loader",
-        options: {
-          presets: ['@babel/preset-env']
-        }
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              importLoaders: 2,
+              modules: true,
+              localIdentName: '[name]__[local]___[hash:base64:5]',
+            },
+          },
+        ]
       }
     ]
   },

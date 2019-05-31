@@ -4,7 +4,6 @@ import React            from "react";
 import AccountsStore    from "../../stores/accounts";
 import BaseComponent    from "../base_component";
 import AdminActions     from "../../actions/admin";
-import { DropDownMenu } from "material-ui";
 import Defines          from "../defines";
 
 class Expandable extends BaseComponent {

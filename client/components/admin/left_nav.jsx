@@ -7,7 +7,7 @@ import BaseComponent        from "../base_component";
 import Router               from "react-router";
 import Defines              from "../defines";
 import AccountSelection     from './account_selection';
-import { LeftNav, IconButton, FontIcon, FlatButton }          from "material-ui";
+import { LeftNav, IconButton, FontIcon, FlatButton }          from "@material-ui/core";
 
 class LeftNavigation extends BaseComponent {
 

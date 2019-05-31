@@ -8,7 +8,6 @@ import Validator                                                                
 import UserActions                                                                      from "../../actions/user";
 import _                                                                                from "lodash";
 import assign                                                                           from "object-assign";
-import { Paper, TextField, FlatButton, RaisedButton, FontIcon}                          from "material-ui";
 import AdminToolBar                                                                     from "./tool_bar";
 import AdminActions                                                                     from "../../actions/admin";
 import ApplicationStore                                                                 from "../../stores/application";

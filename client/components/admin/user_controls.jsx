@@ -2,7 +2,7 @@
 
 import React            from "react";
 import AdminActions     from "../../actions/admin";
-import { RaisedButton, IconButton, Checkbox } from "material-ui";
+import { RaisedButton, IconButton, Checkbox } from "@material-ui/core";
 
 export default class UserControls extends React.Component {
 

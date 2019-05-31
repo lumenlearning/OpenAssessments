@@ -18,7 +18,7 @@ import Container        from "./container";
 import Griddle          from "griddle-react";
 import UserControls     from "./user_controls";
 import CustomGriddleRow from "./custom_griddle_row";
-import { Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, RaisedButton, Paper, IconButton, Checkbox} from "material-ui";
+import { Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, RaisedButton, Paper, IconButton, Checkbox} from "@material-ui/core";
 
 class Users extends BaseComponent {
 

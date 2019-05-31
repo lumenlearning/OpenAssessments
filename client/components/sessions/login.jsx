@@ -8,7 +8,7 @@ import assign        from "object-assign";
 import UserStore     from "../../stores/user";
 import BaseComponent from "../base_component";
 import { Link }      from "react-router";
-import { Paper, TextField, FlatButton, RaisedButton, FontIcon } from "material-ui";
+import { Paper, TextField, FlatButton, RaisedButton, FontIcon } from "@material-ui/core";
 
 class Login extends BaseComponent {
 

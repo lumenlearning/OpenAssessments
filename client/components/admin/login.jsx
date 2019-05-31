@@ -8,7 +8,7 @@ import BaseComponent from "../base_component";
 import _             from "lodash";
 import assign        from "object-assign";
 import Defines       from "../defines";
-import { Paper, TextField, FlatButton, RaisedButton, FontIcon } from "material-ui";
+import { Paper, TextField, FlatButton, RaisedButton, FontIcon } from "@material-ui/core";
 
 class Login extends BaseComponent {
 

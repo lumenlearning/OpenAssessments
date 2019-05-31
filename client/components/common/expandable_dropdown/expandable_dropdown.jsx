@@ -2,7 +2,6 @@
 
 import React from "react";
 import Style from "./css/style.js";
-import cb from 'material-ui/lib/checkbox.js';
 
 export default class ExpandableDropDown extends React.Component{
 

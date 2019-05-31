@@ -7,7 +7,7 @@ import AdminActions     from "../../actions/admin";
 import UsersStore       from "../../stores/user";
 import Defines          from "../defines";
 import { Link }         from "react-router";
-import { FloatingActionButton } from "material-ui";
+import { FloatingActionButton } from "@material-ui/core";
 import ToolBar          from "./tool_bar";
 
 class AccountsList extends BaseComponent {

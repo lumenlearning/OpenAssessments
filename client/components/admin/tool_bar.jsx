@@ -4,7 +4,7 @@ import React                                                                  fr
 import User                                                                   from "../../stores/user";
 import StoreKeeper                                                            from "../mixins/store_keeper";
 import Router                                                                 from "react-router";
-import { Toolbar, ToolbarGroup, DropDownMenu, RaisedButton, TextField, Paper, IconButton} from "material-ui";
+import { Toolbar, ToolbarGroup, DropDownMenu, RaisedButton, TextField, Paper, IconButton} from "@material-ui/core";
 import AdminActions                                                           from "../../actions/admin";
 import Defines          from "../defines";
 
