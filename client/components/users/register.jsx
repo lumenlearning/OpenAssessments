@@ -1,14 +1,17 @@
 "use strict";
 
-import React        from 'react';
-import { Link }     from 'react-router';
+import React, { Component }        from 'react';
+import { Link }     from 'react-router-dom';
 import Validator    from "validator";
 import UserActions  from "../../actions/user";
 import _            from "lodash";
 import assign       from "object-assign";
-import { Paper, TextField, FlatButton, RaisedButton, FontIcon } from "@material-ui/core";
+import Paper from "@material-ui/core/Paper";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
-class Register extends React.Component {
+
+export default class Register extends Component {
 
   constructor(){
     super()
@@ -89,7 +92,7 @@ class Register extends React.Component {
           <TextField hintText="johndoe@example.com" floatingLabelText="Email" errorText={this.state.validations.email} ref="email" onBlur={(e) => this.validateEmail(e)} />
           <TextField type="password" hintText="******" floatingLabelText="Password" errorText={this.state.validations.password} ref="password" onBlur={(e)=>this.validatePassword(e)} />
           <TextField type="password" hintText="******" floatingLabelText="Confirm Password" errorText={this.state.validations.confirmPassword} ref="confirmPassword" onBlur={(e)=>this.validateConfirmPassword(e)} />
-          <RaisedButton style={styles.signUpButton} label="Signup" primary={true} />
+          <Button style={styles.signUpButton} label="Signup" primary={true} />
         </form>
         <p>
           Already have an account? <Link to="login">Login</Link>
@@ -98,5 +101,3 @@ class Register extends React.Component {
     </div>);
   }
 }
-
-module.exports = Register;

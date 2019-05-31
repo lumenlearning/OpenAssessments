@@ -1,6 +1,6 @@
 // Dependencies
 import React from "react";
-import router from "react-router";
+import { Route } from "react-router";
 // Views
 import About from "./components/main/about";
 import Assessment from "./components/main/assessment";
@@ -25,14 +25,9 @@ require('es6-promise').polyfill();
  */
 export default class Router {
   constructor() {
-    let Route = router.Route;
-    let Router = router.Router;
-    let DefaultRoute = Router.DefaultRoute;
-    let NotFoundRoute = Router.NotFoundRoute;
-
     this.routes = (
       <Route handler={Index}>
-        <DefaultRoute name="start" handler={Start}/>
+        <Route name="start" handler={Start}/>
         <Route name="assessment" handler={Assessment}/>
         <Route name="assessment-result" handler={AssessmentResult}/>
         <Route name="teacher-review" handler={TeacherReview} path="review/:assessmentId/:attemptId"/>
@@ -43,7 +38,7 @@ export default class Router {
         <Route name="about" handler={About}/>
         <Route name="attempts" handler={Attempts} path="attempts/:assessmentId/:contextId"/>
         <Route name="edit" handler={Edit} path="edit/:assessmentId"/>
-        <NotFoundRoute handler={NotFound}/>
+        <Route path='*' exact={true} component={NotFound} />
       </Route>
     );
   }

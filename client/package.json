@@ -4,7 +4,8 @@
   "description": "The front end application for the Open Assessments engine.",
   "main": "app.js",
   "scripts": {
-    "build": "webpack -w",
+    "dev": "webpack -w --mode development",
+    "build": "webpack",
     "start": "node app.js"
   },
   "repository": {
@@ -24,6 +25,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.0",
+    "react-router-dom": "^5.0.0",
     "react-tinymce": "^0.7.0",
     "reactable": "^1.1.0",
     "superagent": "^5.0.5",

@@ -2,7 +2,6 @@
 
 import React                from "react";
 import Messages             from "./common/messages";
-import {RouteHandler}       from "react-router";
 import BaseComponent        from "./base_component";
 import SettingsStore        from "../stores/settings";
 import ThemeManager         from "../utils/theme_manager";
@@ -11,7 +10,7 @@ import LumenTheme           from "../themes/lumen_learning";
 
 var StyleManager = new ThemeManager();
 
-class Index extends BaseComponent {
+export default class Index extends BaseComponent {
 
   constructor(){
     super();
@@ -67,12 +66,12 @@ class Index extends BaseComponent {
   }
 
   render(){
-
     return (
-      <RouteHandler {...this.props} />
+      <div>
+        {this.props.children}
+      </div>
     );
   }
-
 }
 
 Index.contextTypes = {
@@ -82,5 +81,3 @@ Index.contextTypes = {
 Index.childContextTypes = {
   theme: React.PropTypes.object
 };
-
-module.exports = Index;

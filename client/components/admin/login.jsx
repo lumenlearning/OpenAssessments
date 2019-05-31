@@ -8,9 +8,11 @@ import BaseComponent from "../base_component";
 import _             from "lodash";
 import assign        from "object-assign";
 import Defines       from "../defines";
-import { Paper, TextField, FlatButton, RaisedButton, FontIcon } from "@material-ui/core";
+import Paper from "@material-ui/core/Paper";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
-class Login extends BaseComponent {
+export default class Login extends BaseComponent {
 
   constructor(props, context){
     super(props, context);
@@ -109,7 +111,7 @@ class Login extends BaseComponent {
               <TextField type="password" hintText="******" floatingLabelText="Password" ref="password" />
             </div>
             <div>
-              <FlatButton style={styles.button} label="Login" primary={true} ref="submit-button" />
+              <Button style={styles.button} label="Login" primary={true} ref="submit-button" />
             </div>
           </form>
         </Paper>
@@ -120,5 +122,3 @@ class Login extends BaseComponent {
 Login.contextTypes = {
   router: React.PropTypes.func
 };
-
-module.exports = Login;

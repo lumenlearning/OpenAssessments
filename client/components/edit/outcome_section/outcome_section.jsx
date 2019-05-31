@@ -2,7 +2,7 @@
 
 import React                         from 'react';
 import Style                         from '../css/style.js';
-import {Accordion, AccordionSection} from '../accordion/accordion.js';
+import AccordionSection from "../accordion/accordionSection.jsx";
 import QuizType                      from '../quiz_type/quiz_type.jsx';
 
 export default class OutcomeSection extends React.Component{

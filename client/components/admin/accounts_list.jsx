@@ -6,7 +6,7 @@ import BaseComponent    from "../base_component";
 import AdminActions     from "../../actions/admin";
 import UsersStore       from "../../stores/user";
 import Defines          from "../defines";
-import { Link }         from "react-router";
+import { Link }         from "react-router-dom";
 import { FloatingActionButton } from "@material-ui/core";
 import ToolBar          from "./tool_bar";
 

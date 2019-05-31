@@ -7,10 +7,14 @@ import _             from "lodash";
 import assign        from "object-assign";
 import UserStore     from "../../stores/user";
 import BaseComponent from "../base_component";
-import { Link }      from "react-router";
-import { Paper, TextField, FlatButton, RaisedButton, FontIcon } from "@material-ui/core";
+import { Link }      from "react-router-dom";
+import Paper from "@material-ui/core/Paper";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Icon from "@material-ui/core/Icon";
 
-class Login extends BaseComponent {
+
+export default class Login extends BaseComponent {
 
   constructor(props, context){
     super(props, context);
@@ -91,29 +95,29 @@ class Login extends BaseComponent {
           <TextField type="password" hintText="******" floatingLabelText="Password" ref="password" />
           <Link to="register">Create Account</Link>
 
-          <FlatButton className="login-button" label="Login" primary={true} />
+          <Button className="login-button" label="Login" primary={true} />
         </form>
       </Paper>
 
       <div className="button-example-container">
-        <RaisedButton className="auth-button" linkButton={true} href="/auth/facebook" secondary={true}>
-          <FontIcon className="icon-facebook example-button-icon"/>
+        <Button className="auth-button" linkButton={true} href="/auth/facebook" secondary={true}>
+          <Icon className="icon-facebook example-button-icon"/>
           <span className="mui-raised-button-label example-icon-button-label">Facebook</span>
-        </RaisedButton>
+        </Button>
       </div>
 
       <div className="button-example-container">
-        <RaisedButton className="auth-button" linkButton={true} href="/auth/twitter" secondary={true}>
-          <FontIcon className="icon-twitter example-button-icon"/>
+        <Button className="auth-button" linkButton={true} href="/auth/twitter" secondary={true}>
+          <Icon className="icon-twitter example-button-icon"/>
           <span className="mui-raised-button-label example-icon-button-label">Twitter</span>
-        </RaisedButton>
+        </Button>
       </div>
 
       <div className="button-example-container">
-        <RaisedButton className="auth-button" linkButton={true} href="/auth/google" secondary={true}>
-          <FontIcon className="icon-google example-button-icon"/>
+        <Button className="auth-button" linkButton={true} href="/auth/google" secondary={true}>
+          <Icon className="icon-google example-button-icon"/>
           <span className="mui-raised-button-label example-icon-button-label">Google+</span>
-        </RaisedButton>
+        </Button>
       </div>
 
     </div>);
@@ -124,5 +128,3 @@ class Login extends BaseComponent {
 Login.contextTypes = {
   router: React.PropTypes.func
 };
-
-module.exports = Login;

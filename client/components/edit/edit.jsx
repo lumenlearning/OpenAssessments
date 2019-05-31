@@ -3,7 +3,7 @@
 import React                          from 'react';
 import BaseComponent                  from '../base_component.jsx';
 import Style                          from './css/style';
-import {Accordion, AccordionSection}  from './accordion/accordion.js';
+import { Accordion, AccordionSection } from './accordion/accordion';
 import ReviewAssessmentActions        from "../../actions/review_assessment";
 import ReviewAssessmentStore          from "../../stores/review_assessment";
 import SettingsStore                  from '../../stores/settings.js';
