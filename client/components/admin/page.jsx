@@ -12,7 +12,7 @@ import AdminActions         from "../../actions/admin";
 import _                    from "lodash";
 
 
-var mui = require('@material-ui/core');
+var mui = require("@material-ui/core");
 var Typography = mui.Styles.Typography;
 var ThemeManager = new mui.Styles.ThemeManager();
 var { AppCanvas, AppBar, IconButton, FullWidthSection } = mui;

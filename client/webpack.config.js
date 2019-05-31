@@ -1,4 +1,4 @@
-const webpack = require('webpack');
+const webpack = require("webpack");
 
 module.exports = {
   entry: "./app.js",
@@ -6,29 +6,29 @@ module.exports = {
     filename: "../../app/assets/javascripts/bundle.js"
   },
   resolve: {
-    extensions: ['.js', '.json', '.jsx', '.css']
+    extensions: [".js", ".json", ".jsx", ".css"]
   },
   module: {
     rules: [
       {
         test: /(\.jsx$|\.js$)/,
         exclude: /(node_modules|bower_components|_tests_)/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
         options: {
-          presets: ['@babel/preset-env']
+          presets: ["@babel/preset-env"]
         }
       },
       {
         test: /\.css$/,
         use: [
-          'style-loader',
+          "style-loader",
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               sourceMap: true,
               importLoaders: 2,
               modules: true,
-              localIdentName: '[name]__[local]___[hash:base64:5]',
+              localIdentName: "[name]__[local]___[hash:base64:5]",
             },
           },
         ]

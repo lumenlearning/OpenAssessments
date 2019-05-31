@@ -16,7 +16,7 @@ import Start from "./components/main/start";
 import TeacherPreview from "./components/assessment_results/teacher_preview";
 import TeacherReview from "./components/assessment_results/teacher_review";
 // For IE Promise support
-require('es6-promise').polyfill();
+require("es6-promise").polyfill();
 
 /**
  * React Router v1.0

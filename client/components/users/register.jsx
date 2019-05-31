@@ -1,11 +1,9 @@
-"use strict";
-
-import React, { Component }        from 'react';
-import { Link }     from 'react-router-dom';
-import Validator    from "validator";
-import UserActions  from "../../actions/user";
-import _            from "lodash";
-import assign       from "object-assign";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import Validator from "validator";
+import UserActions from "../../actions/user";
+import _ from "lodash";
+import assign from "object-assign";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
