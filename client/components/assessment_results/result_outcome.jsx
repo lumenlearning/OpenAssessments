@@ -63,10 +63,10 @@ export default class ResultOutcome extends React.Component{
 
 }
 
-ResultOutcome.contextTypes = {
-  theme: React.PropTypes.object
-}
-
-ResultOutcome.propTypes = {
-  level: React.PropTypes.string.isRequired
-}
+// ResultOutcome.contextTypes = {
+//   theme: React.PropTypes.object
+// }
+//
+// ResultOutcome.propTypes = {
+//   level: React.PropTypes.string.isRequired
+// }

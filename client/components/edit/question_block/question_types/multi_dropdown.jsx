@@ -89,7 +89,7 @@ export default class MultiDropdownFeedback extends Component {
   //========================================================================
 }//end MultiDropdownFeedback class
 
-MultiDropdownFeedback.propTypes = {
-  question: React.PropTypes.object.isRequired,
-  windowWidth: React.PropTypes.object.isRequired
-};
+// MultiDropdownFeedback.propTypes = {
+//   question: React.PropTypes.object.isRequired,
+//   windowWidth: React.PropTypes.object.isRequired
+// };

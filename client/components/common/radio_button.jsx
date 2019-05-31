@@ -171,12 +171,12 @@ export default class RadioButton extends React.Component {
   }
 }
 
-RadioButton.propTypes = {
-  item: React.PropTypes.object.isRequired,
-  name: React.PropTypes.string.isRequired,
-  isDisabled: React.PropTypes.bool
-};
-
-RadioButton.contextTypes = {
-  theme: React.PropTypes.object
-}
+// RadioButton.propTypes = {
+//   item: React.PropTypes.object.isRequired,
+//   name: React.PropTypes.string.isRequired,
+//   isDisabled: React.PropTypes.bool
+// };
+//
+// RadioButton.contextTypes = {
+//   theme: React.PropTypes.object
+// };

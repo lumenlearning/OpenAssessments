@@ -31,7 +31,8 @@ export default class Option extends React.Component{
     );
   }
 }
-Option.propTypes = {
-  item: React.PropTypes.object.isRequired,
-  name: React.PropTypes.string.isRequired
-};
+
+// Option.propTypes = {
+//   item: React.PropTypes.object.isRequired,
+//   name: React.PropTypes.string.isRequired
+// };

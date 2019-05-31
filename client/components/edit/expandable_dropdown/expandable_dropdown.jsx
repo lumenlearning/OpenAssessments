@@ -77,7 +77,7 @@ export default class ExpandableDropDown extends React.Component{
 
 }
 
-ExpandableDropDown.propTypes = {
-  isExpanded: React.PropTypes.bool,
-  startExpanded: React.PropTypes.bool
-};
+// ExpandableDropDown.propTypes = {
+//   isExpanded: React.PropTypes.bool,
+//   startExpanded: React.PropTypes.bool
+// };

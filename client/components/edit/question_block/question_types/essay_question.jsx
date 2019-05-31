@@ -53,7 +53,7 @@ export default class EssayQuestionFeedback extends Component {
   //========================================================================
 }//end EssayQuestionFeedback class
 
-EssayQuestionFeedback.propTypes = {
-  question: React.PropTypes.object.isRequired,
-  windowWidth: React.PropTypes.object.isRequired
-};
+// EssayQuestionFeedback.propTypes = {
+//   question: React.PropTypes.object.isRequired,
+//   windowWidth: React.PropTypes.object.isRequired
+// };

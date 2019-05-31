@@ -161,12 +161,13 @@ export default class UniversalInput extends React.Component{
            );
   }
 }
-UniversalInput.propTypes = {
-  item: React.PropTypes.object.isRequired,
-  isResult: React.PropTypes.bool,
-  registerGradingCallback: React.PropTypes.func.optional
-};
 
-UniversalInput.contextTypes = {
-  theme: React.PropTypes.object
-};
+// UniversalInput.propTypes = {
+//   item: React.PropTypes.object.isRequired,
+//   isResult: React.PropTypes.bool,
+//   registerGradingCallback: React.PropTypes.func.optional
+// };
+//
+// UniversalInput.contextTypes = {
+//   theme: React.PropTypes.object
+// };

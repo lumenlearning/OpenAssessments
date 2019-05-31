@@ -229,9 +229,9 @@ export default class Attempts extends BaseComponent {
   }
 }
 
-Attempts.contextTypes = {
-  theme: React.PropTypes.object,
-  router: React.PropTypes.func,
-};
+// Attempts.contextTypes = {
+//   theme: React.PropTypes.object,
+//   router: React.PropTypes.func,
+// };
 
 module.export = Attempts;

@@ -171,11 +171,11 @@ export default class CheckBox extends React.Component {
   }
 }
 
-CheckBox.propTypes = {
-  item: React.PropTypes.object.isRequired,
-  name: React.PropTypes.string.isRequired
-};
-
-CheckBox.contextTypes = {
-  theme: React.PropTypes.object
-};
+// CheckBox.propTypes = {
+//   item: React.PropTypes.object.isRequired,
+//   name: React.PropTypes.string.isRequired
+// };
+//
+// CheckBox.contextTypes = {
+//   theme: React.PropTypes.object
+// };

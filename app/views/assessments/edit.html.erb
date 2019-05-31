@@ -16,7 +16,6 @@
   window.location.href = "#/edit/<%= @assessment.id %>";
 </script>
 
-<%= webpack_manifest_script %>
-<%= webpack_bundle_tag 'app' %>
+<script src='/assets/bundle.js' type='text/javascript'></script>
 
 <%= javascript_include_tag "open_comm.js" %>

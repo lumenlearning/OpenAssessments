@@ -645,19 +645,19 @@ export default class Item extends BaseComponent {
   }
 } // end item class
 
-Item.propTypes = {
-  question : React.PropTypes.object.isRequired,
-  currentIndex : React.PropTypes.number.isRequired,
-  questionCount : React.PropTypes.number.isRequired,
-  answerMessage : React.PropTypes.object,
-  confidenceLevels : React.PropTypes.bool.isRequired,
-  outcomes : React.PropTypes.object,
-  previousQuestion : React.PropTypes.func.isRequired,
-  nextQuestion : React.PropTypes.func.isRequired,
-  selectQuestion : React.PropTypes.func.isRequired,
-  registerGradingCallback : React.PropTypes.func.isRequired
-};
-
-Item.contextTypes = {
-  theme: React.PropTypes.object
-};
+// Item.propTypes = {
+//   question : React.PropTypes.object.isRequired,
+//   currentIndex : React.PropTypes.number.isRequired,
+//   questionCount : React.PropTypes.number.isRequired,
+//   answerMessage : React.PropTypes.object,
+//   confidenceLevels : React.PropTypes.bool.isRequired,
+//   outcomes : React.PropTypes.object,
+//   previousQuestion : React.PropTypes.func.isRequired,
+//   nextQuestion : React.PropTypes.func.isRequired,
+//   selectQuestion : React.PropTypes.func.isRequired,
+//   registerGradingCallback : React.PropTypes.func.isRequired
+// };
+//
+// Item.contextTypes = {
+//   theme: React.PropTypes.object
+// };

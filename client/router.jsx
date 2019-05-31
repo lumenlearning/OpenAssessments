@@ -1,5 +1,6 @@
 // Dependencies
 import React from "react";
+import ReactDOM from "react-dom";
 import { Route } from "react-router";
 // Views
 import About from "./components/main/about";
@@ -19,13 +20,13 @@ import TeacherReview from "./components/assessment_results/teacher_review";
 require("es6-promise").polyfill();
 
 /**
- * React Router v1.0
+ * React Router v4
  *
  * All of Open Assessments' frontend routes can be found here.
  */
 export default class Router {
-  constructor() {
-    this.routes = (
+  static routes() {
+    return (
       <Route handler={Index}>
         <Route name="start" handler={Start}/>
         <Route name="assessment" handler={Assessment}/>
@@ -43,12 +44,7 @@ export default class Router {
     );
   }
 
-  run() {
-    const routes = this.routes;
-    React.render(routes, document.getElementById("App"));
-  }
-
-  getRoutes() {
-    return this.routes;
+  static run() {
+    ReactDOM.render(this.routes, document.getElementById("App"));
   }
 }

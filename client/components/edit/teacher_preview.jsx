@@ -81,9 +81,9 @@ export default class TeacherPreview extends BaseComponent{
   }
 }
 
-TeacherPreview.contextTypes = {
-  theme: React.PropTypes.object,
-  router: React.PropTypes.func
-};
+// TeacherPreview.contextTypes = {
+//   theme: React.PropTypes.object,
+//   router: React.PropTypes.func
+// };
 
 module.export = TeacherPreview;

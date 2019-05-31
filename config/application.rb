@@ -40,12 +40,6 @@ module CanvasStarterApp
       end
     end
 
-    config.webpack = {
-     use_manifest: false,
-     asset_manifest: {},
-     common_manifest: {}
-    }
-
     # have logger write to STDOUT
     config.logger = Logger.new(STDOUT)
     config.log_level = :warn

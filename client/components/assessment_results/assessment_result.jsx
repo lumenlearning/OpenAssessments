@@ -90,8 +90,8 @@ export default class AssessmentResult extends BaseComponent{
   }
 }
 
-AssessmentResult.contextTypes = {
-  theme: React.PropTypes.object,
-  router: React.PropTypes.func
-};
+// AssessmentResult.contextTypes = {
+//   theme: React.PropTypes.object,
+//   router: React.PropTypes.func
+// };
 

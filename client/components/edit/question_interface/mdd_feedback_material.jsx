@@ -130,11 +130,11 @@ export default class MDDAnswerFeedbackMaterial extends Component {
   }//checkForFeedback
 }//end MDDAnswerFeedbackMaterial class
 
-MDDAnswerFeedbackMaterial.propTypes = {
-  answers: React.PropTypes.object,
-  handleAnswerChange: React.PropTypes.func,
-  handleFeedbackChange: React.PropTypes.func,
-  handleCorrectChange: React.PropTypes.func,
-  handleAddOption: React.PropTypes.func,
-  handleAnswerRemoval: React.PropTypes.func
-};
+// MDDAnswerFeedbackMaterial.propTypes = {
+//   answers: React.PropTypes.object,
+//   handleAnswerChange: React.PropTypes.func,
+//   handleFeedbackChange: React.PropTypes.func,
+//   handleCorrectChange: React.PropTypes.func,
+//   handleAddOption: React.PropTypes.func,
+//   handleAnswerRemoval: React.PropTypes.func
+// };

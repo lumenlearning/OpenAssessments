@@ -41,12 +41,12 @@ export default class EssayAnswerFeedbackMaterial extends Component {
   //========================================================================
 }//end EssayAnswerFeedbackMaterial class
 
-EssayAnswerFeedbackMaterial.propTypes = {
-  answers: React.PropTypes.object,
-  handleAnswerChange: React.PropTypes.func,
-  handleFeedbackChange: React.PropTypes.func,
-  handleCorrectChange: React.PropTypes.func,
-  handleAddOption: React.PropTypes.func,
-  handleAnswerRemoval: React.PropTypes.func
-};
+// EssayAnswerFeedbackMaterial.propTypes = {
+//   answers: React.PropTypes.object,
+//   handleAnswerChange: React.PropTypes.func,
+//   handleFeedbackChange: React.PropTypes.func,
+//   handleCorrectChange: React.PropTypes.func,
+//   handleAddOption: React.PropTypes.func,
+//   handleAnswerRemoval: React.PropTypes.func
+// };
 

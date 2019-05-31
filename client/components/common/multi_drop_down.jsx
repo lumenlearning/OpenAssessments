@@ -330,8 +330,8 @@ export default class MultiDropDown extends BaseComponent {
   }
 }
 
-MultiDropDown.propTypes = {};
-
-MultiDropDown.contextTypes = {
-  theme: React.PropTypes.object
-};
+// MultiDropDown.propTypes = {};
+//
+// MultiDropDown.contextTypes = {
+//   theme: React.PropTypes.object
+// };

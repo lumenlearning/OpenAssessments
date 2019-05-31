@@ -121,11 +121,11 @@ export default class MomEmbed extends BaseComponent {
   }
 }
 
-MomEmbed.propTypes = {
-  item: React.PropTypes.object.isRequired,
-  registerGradingCallback: React.PropTypes.func.optional
-};
-
-MomEmbed.contextTypes = {
-  theme: React.PropTypes.object
-};
+// MomEmbed.propTypes = {
+//   item: React.PropTypes.object.isRequired,
+//   registerGradingCallback: React.PropTypes.func.optional
+// };
+//
+// MomEmbed.contextTypes = {
+//   theme: React.PropTypes.object
+// };

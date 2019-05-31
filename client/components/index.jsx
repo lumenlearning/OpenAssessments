@@ -74,10 +74,10 @@ export default class Index extends BaseComponent {
   }
 }
 
-Index.contextTypes = {
-  router: React.PropTypes.func
-};
-
-Index.childContextTypes = {
-  theme: React.PropTypes.object
-};
+// Index.contextTypes = {
+//   router: React.PropTypes.func
+// };
+//
+// Index.childContextTypes = {
+//   theme: React.PropTypes.object
+// };

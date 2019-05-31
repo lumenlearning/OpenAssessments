@@ -57,10 +57,10 @@ export default class ResultConfidence extends React.Component{
 
 }
 
-ResultConfidence.contextTypes = {
-  theme: React.PropTypes.object
-}
-
-ResultConfidence.propTypes = {
-  level: React.PropTypes.string.isRequired
-}
+// ResultConfidence.contextTypes = {
+//   theme: React.PropTypes.object
+// }
+//
+// ResultConfidence.propTypes = {
+//   level: React.PropTypes.string.isRequired
+// }

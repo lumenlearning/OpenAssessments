@@ -124,10 +124,10 @@ export default class ProgressDropdown extends BaseComponent{
   }
 }
 
-ProgressDropdown.propTypes = {
-  selectQuestion   : React.PropTypes.func.isRequired
-};
-
-ProgressDropdown.contextTypes = {
-  theme: React.PropTypes.object
-}
+// ProgressDropdown.propTypes = {
+//   selectQuestion   : React.PropTypes.func.isRequired
+// };
+//
+// ProgressDropdown.contextTypes = {
+//   theme: React.PropTypes.object
+// }

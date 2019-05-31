@@ -202,7 +202,7 @@ export default class Start extends BaseComponent {
   }
 }
 
-Start.contextTypes = {
-  router: React.PropTypes.func,
-  theme: React.PropTypes.object,
-};
+// Start.contextTypes = {
+//   router: React.PropTypes.func,
+//   theme: React.PropTypes.object,
+// };

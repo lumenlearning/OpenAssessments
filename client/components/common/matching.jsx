@@ -85,6 +85,7 @@ export default class Matching extends React.Component{
     );
   }
 }
-Matching.propTypes = {
-  item: React.PropTypes.object.isRequired
-};
+
+// Matching.propTypes = {
+//   item: React.PropTypes.object.isRequired
+// };

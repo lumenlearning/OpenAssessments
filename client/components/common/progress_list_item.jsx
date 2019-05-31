@@ -71,10 +71,10 @@ export default class ProgressListItem extends BaseComponent{
   }
 }
 
-ProgressListItem.propTypes = {
- selectQuestion   : React.PropTypes.func.isRequired,
-};
-
-ProgressListItem.contextTypes = {
-  theme: React.PropTypes.object
-}
+// ProgressListItem.propTypes = {
+//  selectQuestion   : React.PropTypes.func.isRequired,
+// };
+//
+// ProgressListItem.contextTypes = {
+//   theme: React.PropTypes.object
+// }

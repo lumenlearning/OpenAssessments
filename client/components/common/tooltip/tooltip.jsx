@@ -133,15 +133,15 @@ export default class Tooltip extends BaseComponent{
   }
 };
 
-Tooltip.propTypes = {
-  message: React.PropTypes.string,
-  position: React.PropTypes.string,
-  style: React.PropTypes.object
-};
-
-Tooltip.defaultProps = {
-  message: 'Your Tooltip Message Goes Here',
-  position: 'top',
-  style: {}
-};
+// Tooltip.propTypes = {
+//   message: React.PropTypes.string,
+//   position: React.PropTypes.string,
+//   style: React.PropTypes.object
+// };
+//
+// Tooltip.defaultProps = {
+//   message: 'Your Tooltip Message Goes Here',
+//   position: 'top',
+//   style: {}
+// };
 

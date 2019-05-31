@@ -71,8 +71,8 @@ export default class Message extends BaseComponent {
 
 }
 
-Message.propTypes = { children: React.PropTypes.string };
-Message.defaultProps = {
-  displayTime: 4000,
-  fadeTime: 1600
-};
+// Message.propTypes = { children: React.PropTypes.string };
+// Message.defaultProps = {
+//   displayTime: 4000,
+//   fadeTime: 1600
+// };

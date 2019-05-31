@@ -96,7 +96,7 @@ export default class MultiChoiceNAnswerFeedback extends Component {
 
 }//end MultiChoiceNAnswerFeedback class
 
-MultiChoiceNAnswerFeedback.propTypes = {
-  question: React.PropTypes.object.isRequired,
-  windowWidth: React.PropTypes.object.isRequired
-};
+// MultiChoiceNAnswerFeedback.propTypes = {
+//   question: React.PropTypes.object.isRequired,
+//   windowWidth: React.PropTypes.object.isRequired
+// };

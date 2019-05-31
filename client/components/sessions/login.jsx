@@ -125,6 +125,6 @@ export default class Login extends BaseComponent {
 
 }
 
-Login.contextTypes = {
-  router: React.PropTypes.func
-};
+// Login.contextTypes = {
+//   router: React.PropTypes.func
+// };

@@ -72,9 +72,9 @@ class Expandable extends BaseComponent {
   }
 }
 
-Expandable.propTypes = {
-  onClose: React.PropTypes.func,
-  onOpen: React.PropTypes.func,
-}
+// Expandable.propTypes = {
+//   onClose: React.PropTypes.func,
+//   onOpen: React.PropTypes.func,
+// }
 
 module.exports = Expandable;

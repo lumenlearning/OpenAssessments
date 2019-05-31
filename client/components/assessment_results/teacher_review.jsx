@@ -57,9 +57,9 @@ export default class TeacherReview extends BaseComponent{
   }
 }
 
-TeacherReview.contextTypes = {
-  theme: React.PropTypes.object,
-  router: React.PropTypes.func
-};
+// TeacherReview.contextTypes = {
+//   theme: React.PropTypes.object,
+//   router: React.PropTypes.func
+// };
 
 module.export = TeacherReview;
