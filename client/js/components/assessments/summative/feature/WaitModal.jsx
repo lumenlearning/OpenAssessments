@@ -12,6 +12,7 @@ export default class WaitModal extends React.Component {
     };
 
     this.escFunction = this.escFunction.bind(this);
+    this.handleWindowResize = this.handleWindowResize.bind(this);
   }
 
   componentWillMount() {
@@ -98,10 +99,13 @@ export default class WaitModal extends React.Component {
         backgroundColor: "#fff",
         borderRadius: "6px",
         boxShadow: "0 2px 16px 0 rgba(33, 43, 54, 0.08), 0 31px 41px 0 rgba(33, 43, 54, 0.2)",
-        margin: this.state.windowWidth <= 500 ? 0 : "12% auto",
         maxWidth: "620px",
         minHeight: "311px",
-        height: this.state.windowWidth <= 500 ? "100%" : "auto"
+        height: this.state.windowWidth <= 500 ? "100%" : "auto",
+        position: "relative",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%) !important"
       },
       titleBar: {
         position: "relative",
