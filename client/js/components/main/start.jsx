@@ -51,12 +51,22 @@ export default class Start extends BaseComponent {
       assessmentAttemptsOutcomes: ReviewAssessmentStore.outcomes(),
       assessmentAttempts: this.orderBySequence(ReviewAssessmentStore.getAttemptedAssessments()),
       questionCount: AssessmentStore.questionCount(),
-      settings: SettingsStore.current()
+      settings: SettingsStore.current(),
+      retrievedXmlAssessmentResult: ReviewAssessmentStore.retrievedXmlAssessmentResult()
     }
   }
 
   render() {
     let styles = this.getStyles(this.context.theme);
+
+    if (this.state.assessmentAttempts &&
+        (!this.state.retrievedXmlAssessmentResult || this.state.retrievedXmlAssessmentResult !== this.state.assessmentAttempts[this.state.assessmentAttempts.length - 1].id)) {
+      ReviewAssessmentActions.loadAssessmentXmlForStudentReview(
+          SettingsStore.current(),
+          SettingsStore.current().assessmentId,
+          this.state.assessmentAttempts[this.state.assessmentAttempts.length - 1]
+      );
+    }
 
     return (
       <div className="assessment" style={styles.assessment}>
@@ -74,20 +84,11 @@ export default class Start extends BaseComponent {
   componentDidMount() {
     super.componentDidMount();
 
-    // we don't need to fire these actions for non-summative assessments
-    if (this.isSummative()) {
-      ReviewAssessmentActions.loadAssessmentForStudentReview(
+    ReviewAssessmentActions.loadAssessmentForStudentReview(
         SettingsStore.current(),
         SettingsStore.current().assessmentId,
         SettingsStore.current().userAssessmentId
-      );
-
-      ReviewAssessmentActions.loadAssessmentXmlForStudentReview(
-        SettingsStore.current(),
-        SettingsStore.current().assessmentId,
-        SettingsStore.current().userAssessmentId
-      );
-    }
+    );
 
     if (this.state.isLoaded) {
       // Trigger action to indicate the assessment was viewed
@@ -149,7 +150,7 @@ export default class Start extends BaseComponent {
         let lastAttempt = this.state.assessmentAttempts[this.state.assessmentAttempts.length - 1];
 
         if (lastAttempt) {
-          lastAttempt.assessment_result_items.forEach((chosenAnswer, index) => {
+          lastAttempt.assessment_result_items.forEach((chosenAnswer) => {
             if (chosenAnswer.correct !== true) {
               negativeList = negativeList.concat(_.filter(positiveList, "outcomeGuid", chosenAnswer.outcome_guid));
               positiveList = _.reject(positiveList, "outcomeGuid", chosenAnswer.outcome_guid);

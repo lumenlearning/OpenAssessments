@@ -48,6 +48,7 @@ export default {
 
     if(resultId){
       url = url + "?assessment_result_id=" + resultId;
+      Dispatcher.dispatch({ action: Constants.CHECK_ASSESSMENT_XML, resultId });
     }
 
     Api.get(Constants.REVIEW_ASSESSMENT_LOADED, url);

@@ -30,6 +30,7 @@ var _inDraftOriginals = {};
 var _assessmentResult = null;
 var _attemptedAssessmentsResults = null;
 var _assessmentResultState = NOT_LOADED;
+var _retrievedXmlAssessmentResult = null;
 
 function parseAssessmentResult(result){
   _assessmentResult = JSON.parse(result);
@@ -421,6 +422,9 @@ var ReviewAssessmentStore = assign({}, StoreCommon, {
   },
   getAttemptedAssessments(){
     return _attemptedAssessmentsResults;
+  },
+  retrievedXmlAssessmentResult(){
+    return _retrievedXmlAssessmentResult;
   }
 });
 
@@ -556,6 +560,10 @@ Dispatcher.register(function(payload) {
     case Constants.SAVE_ASSESSMENT:
       loadAssessment(payload);
       window.onbeforeunload = null;
+      break;
+
+    case Constants.CHECK_ASSESSMENT_XML:
+      _retrievedXmlAssessmentResult = payload.resultId;
       break;
 
     default:

@@ -44,7 +44,7 @@ export default class StartSummative extends React.Component {
   componentDidMount() {
     CommHandler.sendSizeThrottled();
     CommHandler.showLMSNavigation();
-  }
+}
 
   renderAttemptsFeedback() {
     // if there are assessment attempts to map over ...
