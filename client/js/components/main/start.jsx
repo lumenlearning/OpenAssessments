@@ -84,8 +84,7 @@ export default class Start extends BaseComponent {
 
       ReviewAssessmentActions.loadAssessmentXmlForStudentReview(
         SettingsStore.current(),
-        SettingsStore.current().assessmentId,
-        SettingsStore.current().userAssessmentId
+        SettingsStore.current().assessmentId
       );
     }
 
