@@ -212,7 +212,9 @@ export default class Attempts extends BaseComponent {
 
   getStyles() {
     return {
-      componentWrapper: {},
+      componentWrapper: {
+        background: "#fff",
+      },
       attemptsWrapper: {
         textAlign:"center"
       },
