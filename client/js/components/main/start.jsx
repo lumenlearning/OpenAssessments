@@ -184,7 +184,7 @@ export default class Start extends BaseComponent {
         height: theme.progressBarHeight
       },
       assessment: {
-        padding: 0,
+        padding: "0 25px",
         backgroundColor: theme.assessmentBackground,
         minWidth: minWidth
       },
