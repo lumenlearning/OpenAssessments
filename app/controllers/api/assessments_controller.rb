@@ -204,17 +204,8 @@ class Api::AssessmentsController < Api::ApiController
   # version of the xml that has answers in it.
   def student_review_show_xml
     assessment = Assessment.where(id: params[:assessment_id], account: current_account).first
-    xml = nil
 
-    if params[:assessment_result_id]
-      ar = AssessmentResult.find(params[:assessment_result_id])
-
-      if ar.assessment_xml && (ar.assessment_xml.kind == 'summative' || ar.assessment_xml.kind == 'qti')
-        xml = ar.assessment_xml.xml
-      end
-    end
-
-    render :xml => xml || assessment.xml_without_answers
+    render :xml => assessment.xml_without_answers
   end
 
   # *******************************************************************

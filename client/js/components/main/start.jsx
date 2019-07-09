@@ -84,8 +84,7 @@ export default class Start extends BaseComponent {
 
       ReviewAssessmentActions.loadAssessmentXmlForStudentReview(
         SettingsStore.current(),
-        SettingsStore.current().assessmentId,
-        SettingsStore.current().userAssessmentId
+        SettingsStore.current().assessmentId
       );
     }
 
@@ -185,7 +184,7 @@ export default class Start extends BaseComponent {
         height: theme.progressBarHeight
       },
       assessment: {
-        padding: 0,
+        padding: "0 25px",
         backgroundColor: theme.assessmentBackground,
         minWidth: minWidth
       },

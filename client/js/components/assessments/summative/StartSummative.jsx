@@ -161,7 +161,7 @@ export default class StartSummative extends React.Component {
         margin: 0
       },
       footerWrapper: {
-        marginTop: "20px"
+        padding: "20px 0"
       },
       footerHeading: {
         color: "#212b36",
