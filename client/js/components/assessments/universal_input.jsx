@@ -50,6 +50,14 @@ export default class UniversalInput extends React.Component{
       panelBody: {
         padding: theme.panelBodyPadding,
         marginTop: "-20px",
+      },
+      legend: {
+        position: "absolute",
+        left: "-10000px",
+        top: "auto",
+        width: "1px",
+        height: "1px",
+        overflow: "hidden"
       }
     }
   }
@@ -78,13 +86,12 @@ export default class UniversalInput extends React.Component{
     }
   }
 
-  render(){
-    var styles = this.getStyles(this.props, this.context.theme)
-    var item = this.props.item;
-    var assessmentResult = AssessmentStore.assessmentResult();
-    var messages = '';
-    var solution = '';
-    var items = '';
+  render() {
+    let styles = this.getStyles(this.props, this.context.theme);
+    let item = this.props.item;
+    let messages = "";
+    let solution = "";
+    let items = "";
 
     if(item.messages){
       var renderedMessages = item.messages.map(function(message){
@@ -132,9 +139,7 @@ export default class UniversalInput extends React.Component{
         items = <TextArea assessmentKind={this.props.assessmentKind} completed={this.props.completed} isDisabled={this.props.isResult} key="textarea_essay_input" item={item} initialText={this.props.chosen} />;
         break;
       case "multiple_answers_question":
-        items = item.answers.map((answer) => {
-          return <CheckBox assessmentKind={this.props.assessmentKind} isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-check" checked={this.wasChosen(answer.id)} showAsCorrect={this.showAsCorrect(answer.id)} answerFeedback={this.answerFeedback(answer.id)} />;
-        });
+        items = this.renderMultipleAnswersQuestion(item, styles);
         break;
       case "mom_embed":
         items = <MomEmbed assessmentKind={this.props.assessmentKind} key={item.id} item={item} redisplayJWT={this.props.chosen ? this.props.chosen : null} registerGradingCallback={this.props.registerGradingCallback} />;
@@ -144,23 +149,46 @@ export default class UniversalInput extends React.Component{
       break;
     }
 
+    return (
+      <div className="panel-messages-container panel panel-default" style={styles.panel}>
+        <div className="panel-heading text-center" style={styles.panelHeading}>
+          { messages }
+        </div>
+        <div
+          className={item.question_type === "multiple_dropdowns_question" ? "" : "panel-body"}
+          style={styles.panelBody}
+          >
+          { items }
+        </div>
+        { solution }
+      </div>
+    );
+  }
 
-    return (<div className="panel-messages-container panel panel-default" style={styles.panel}>
-              <div className="panel-heading text-center" style={styles.panelHeading}>
-                {/*{item.title}*/}
-                {messages}
-              </div>
-              <div className={item.question_type === 'multiple_dropdowns_question' ? "" : "panel-body"}
-                   style={styles.panelBody}
-              >
-                {items}
-              </div>
-              {solution}
-            </div>
+  renderMultipleAnswersQuestion(item, styles) {
+    let answers = item.answers.map((answer) => {
+      return (
+        <CheckBox
+          assessmentKind={this.props.assessmentKind}
+          isDisabled={this.props.isResult}
+          key={item.id + "_" + answer.id}
+          item={answer} name="answer-check"
+          checked={this.wasChosen(answer.id)}
+          showAsCorrect={this.showAsCorrect(answer.id)}
+          answerFeedback={this.answerFeedback(answer.id)}
+          />
+      );
+    });
 
-           );
+    return (
+      <fieldset>
+        <legend style={styles.legend}>Select all correct answers</legend>
+        { answers }
+      </fieldset>
+    );
   }
 }
+
 UniversalInput.propTypes = {
   item: React.PropTypes.object.isRequired,
   isResult: React.PropTypes.bool,
