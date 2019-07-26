@@ -2,15 +2,12 @@
 
 import React                from "react";
 import RadioButton          from "../common/radio_button";
-import Option               from "../common/option";
-import TextField            from "../common/text_field";
 import TextArea             from "../common/text_area";
 import CheckBox             from "../common/checkbox";
 import Matching             from "../common/matching";
 import MomEmbed             from "../common/mom_embed";
 import MultiDropDown        from '../common/multi_drop_down'
 import CommunicationHandler from "../../utils/communication_handler";
-import AssessmentStore      from "../../stores/assessment";
 
 export default class UniversalInput extends React.Component{
 
