@@ -331,7 +331,7 @@ export default class Item extends BaseComponent {
     // if this is a multiple answer question
     if (this.props.question.question_type === "multiple_answers_question") {
       return (
-        <div style={styles.chooseText}>Select all correct answers</div>
+        <div style={styles.chooseText} tabIndex="0">Select all correct answers</div>
       );
     }
   }
@@ -350,7 +350,7 @@ export default class Item extends BaseComponent {
     */
     if (this.props.question.question_type !== 'multiple_dropdowns_question') {
       return (
-        <div dangerouslySetInnerHTML={{ __html: this.props.question.material }}></div>
+        <div dangerouslySetInnerHTML={{ __html: this.props.question.material }} tabIndex="0" />
       );
     }
   }
