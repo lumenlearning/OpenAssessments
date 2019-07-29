@@ -44,7 +44,7 @@ export default class Item extends BaseComponent {
               <div className="full_question" style={styles.fullQuestion}>
                 {this.formativeHeader()}
                 {this.simpleProgress(styles)}
-                <div className="inner_question" style={styles.innerQuestion}>
+                <main role="main" className="inner_question" style={styles.innerQuestion}>
                   <div
                     className="question_text"
                     style={this.props.question.question_type !== "multiple_dropdowns_question" ? styles.questionText : {}}
@@ -53,7 +53,7 @@ export default class Item extends BaseComponent {
                       {this.questionContent()}
                   </div>
                   {this.inputOrReview(styles)}
-                </div>
+                </main>
                 <div>
                   {this.getConfidenceLevels(this.props.confidenceLevels, styles)}
                   {this.checkAnswerButton(styles)}

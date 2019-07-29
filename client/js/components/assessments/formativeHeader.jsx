@@ -10,11 +10,11 @@ export default class FormativeHeader extends BaseComponent {
     let styles = this.getStyles();
 
     return(
-      <div style={styles.header}>
+      <header role="banner" style={styles.header}>
         <h1 style={styles.h1} tabIndex="0">
           {this.props.assessmentTitle}
         </h1>
-      </div>
+      </header>
     );
   }
 
