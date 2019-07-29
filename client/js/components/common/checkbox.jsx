@@ -26,7 +26,7 @@ export default class CheckBox extends React.Component {
       <div className="checkbox-wrapper">
         {this.renderAnswerIndicator()}
         <div className="btn btn-block btn-question" style={this.getButtonQuestionStyles()}>
-          <label style={btnLabelStyles} htmlFor={this.props.name}>
+          <label style={btnLabelStyles}>
             <span style={{display: "table-cell"}}>
               <input
                 style={{margin: 0}}
