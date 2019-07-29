@@ -124,7 +124,7 @@ export default class CheckBox extends React.Component {
       let feedback = this.getFeedback();
 
       return (
-        <div className="check_answer_result" style={feedback.styles}>{feedback.text}</div>
+        <div className="check_answer_result" style={feedback.styles} tabIndex="0">{feedback.text}</div>
       );
     }
   }
