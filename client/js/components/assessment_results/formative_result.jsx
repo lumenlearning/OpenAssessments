@@ -26,15 +26,15 @@ export default class FormativeResult extends React.Component {
       <div style={styles.assessment}>
         <div style={styles.assessmentContainer}>
           <div style={styles.outcomes}>
-            <div style={styles.header}>
+            <header role="banner" style={styles.header} tabIndex="0">
               {this.getTitle()}
-            </div>
-            <div style={styles.outcomeContainer}>
+            </header>
+            <main role="main" style={styles.outcomeContainer}>
               <img style={resultFeedback.imageStyle} src={resultFeedback.imageSrc} />
-              <p style={styles.formativeResultHeader}>
+              <p style={styles.formativeResultHeader} tabIndex="0">
                 {resultFeedback.header}
               </p>
-              <p style={styles.formativeResultFeedback}>
+              <p style={styles.formativeResultFeedback} tabIndex="0">
                 {resultFeedback.feedback}
               </p>
 
@@ -49,7 +49,7 @@ export default class FormativeResult extends React.Component {
                     Retake Quiz
                 </button>
               </div>
-            </div>
+            </main>
           </div>
         </div>
       </div>
@@ -71,11 +71,11 @@ export default class FormativeResult extends React.Component {
           <div key={"result-" + index}>
             <div style={styles.resultList}>
               <div>
-                <div style={{color: questionFeedback.color, ...styles.resultListInner}}>
+                <div style={{color: questionFeedback.color, ...styles.resultListInner}} tabIndex="0">
                   Question {index + 1} &mdash; {questionFeedback.message}
                 </div>
 
-                <div style={{color: confidenceFeedback, float: "right", marginTop: "20px"}}>
+                <div style={{color: confidenceFeedback, float: "right", marginTop: "20px"}} tabIndex="0">
                   {this.props.assessmentResult.confidence_level_list[parseInt(index)]}
                 </div>
               </div>
@@ -202,7 +202,7 @@ export default class FormativeResult extends React.Component {
      * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
      */
     return (
-      <div dangerouslySetInnerHTML={{__html: material}} />
+      <div dangerouslySetInnerHTML={{__html: material}} tabIndex="0" />
     );
   }
 
