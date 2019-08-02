@@ -71,6 +71,14 @@ export default class Item extends BaseComponent {
     );
   }
 
+  componentDidMount() {
+    this.focusQuestionContent();
+  }
+
+  componentWillUpdate() {
+    this.focusQuestionContent();
+  }
+
   mustAnswerMessage(styles) {
     if (this.state && this.state.showMessage) {
       return (
@@ -350,9 +358,18 @@ export default class Item extends BaseComponent {
     */
     if (this.props.question.question_type !== 'multiple_dropdowns_question') {
       return (
-        <div dangerouslySetInnerHTML={{ __html: this.props.question.material }} tabIndex="0" />
+        <div
+          id="question-content"
+          ref="questionContent"
+          dangerouslySetInnerHTML={{ __html: this.props.question.material }}
+          tabIndex="0"
+          />
       );
     }
+  }
+
+  focusQuestionContent() {
+    React.findDOMNode(this.refs.questionContent).focus();
   }
 
   inputOrReview(styles) {
