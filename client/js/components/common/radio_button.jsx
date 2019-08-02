@@ -28,7 +28,14 @@ export default class RadioButton extends React.Component {
         <div className="btn btn-block btn-question" style={btnQuestionStyles}>
           <label style={this.getButtonLabelStyles()}>
             <span style={{display: "table-cell"}}>
-              <input type="radio" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={() => { this.answerSelected(); }} />
+              <input
+                type="radio"
+                defaultChecked={this.checkedStatus()}
+                disabled={this.props.isDisabled}
+                name={this.props.name}
+                onClick={() => { this.answerSelected(); }}
+                tabIndex="0"
+                />
             </span>
             <span style={{display: "table-cell", paddingLeft: "11px", fontWeight: "normal"}} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>
           </label>
@@ -130,13 +137,14 @@ export default class RadioButton extends React.Component {
           className="check_answer_result"
           style={this.getFeedbackStyles()}
           dangerouslySetInnerHTML={this.answerFeedbackMarkup()}
+          tabIndex="0"
           />
       );
     }
 
     if (this.showIncorrectAndChecked()) {
       return (
-        <div className="check_answer_result" style={this.getFeedbackStyles()}>
+        <div className="check_answer_result" style={this.getFeedbackStyles()} tabIndex="0">
           Incorrect
         </div>
       );
@@ -144,7 +152,7 @@ export default class RadioButton extends React.Component {
 
     if (this.showCorrectAndChecked()) {
       return (
-        <div className="check_answer_result" style={this.getFeedbackStyles()}>
+        <div className="check_answer_result" style={this.getFeedbackStyles()} tabIndex="0">
           Correct
         </div>
       );
