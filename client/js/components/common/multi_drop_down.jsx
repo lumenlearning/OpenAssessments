@@ -281,6 +281,7 @@ export default class MultiDropDown extends BaseComponent {
             className="check_answer_result"
             style={feedbackStyles}
             dangerouslySetInnerHTML={this.answerFeedbackMarkup(i, feedback[answerId], correctResponse)}
+            tabIndex="0"
             />
         );
       }
