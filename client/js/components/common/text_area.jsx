@@ -42,8 +42,8 @@ export default class TextArea extends React.Component{
      */
     if ((this.isFormative()) || this.isPractice() && this.props.completed) {
       return (
-        <div className="check_answer_result" style={styles.feedbackNeutral}>
-          <span dangerouslySetInnerHTML={this.renderCustomFeedback(this.props.item.feedback.general_fb)}></span>
+        <div className="check_answer_result" style={styles.feedbackNeutral} tabIndex="0">
+          <span dangerouslySetInnerHTML={this.renderCustomFeedback(this.props.item.feedback.general_fb)} />
         </div>
       );
     }
