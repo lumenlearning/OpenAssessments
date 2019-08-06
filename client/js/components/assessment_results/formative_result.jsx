@@ -30,7 +30,7 @@ export default class FormativeResult extends React.Component {
               {this.getTitle()}
             </header>
             <main role="main" style={styles.outcomeContainer}>
-              <img style={resultFeedback.imageStyle} src={resultFeedback.imageSrc} />
+              <img style={resultFeedback.imageStyle} src={resultFeedback.imageSrc} role="presentation" />
               <p style={styles.formativeResultHeader} tabIndex="0">
                 {resultFeedback.header}
               </p>

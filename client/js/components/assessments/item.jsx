@@ -48,6 +48,8 @@ export default class Item extends BaseComponent {
                   <div
                     className="question_text"
                     style={this.props.question.question_type !== "multiple_dropdowns_question" ? styles.questionText : {}}
+                    tabIndex="0"
+                    ref="questionContent"
                     >
                       {this.questionDirections(styles)}
                       {this.questionContent()}
@@ -339,14 +341,14 @@ export default class Item extends BaseComponent {
     // if this is a multiple answer question
     if (this.props.question.question_type === "multiple_answers_question") {
       return (
-        <div style={styles.chooseText} tabIndex="0" ref="questionContent">Select all correct answers</div>
+        <div style={styles.chooseText}>Select all correct answers</div>
       );
     }
 
     // if this is a multiple dropdown question
     if (this.props.question.question_type === "multiple_dropdowns_question") {
       return (
-        <div style={styles.chooseText} tabIndex="0" ref="questionContent">Choose the best answer in each dropdown</div>
+        <div style={styles.chooseText}>Choose the best answer in each dropdown</div>
       );
     }
   }
@@ -367,9 +369,7 @@ export default class Item extends BaseComponent {
       return (
         <div
           id="question-content"
-          ref="questionContent"
           dangerouslySetInnerHTML={{ __html: this.props.question.material }}
-          tabIndex="0"
           />
       );
     }
