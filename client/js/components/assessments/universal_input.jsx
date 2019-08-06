@@ -178,8 +178,8 @@ export default class UniversalInput extends React.Component{
     });
 
     return (
-      <fieldset>
-        <legend style={styles.legend}>Select all correct answers</legend>
+      <fieldset tabIndex={-1}>
+        <legend style={styles.legend} tabIndex={-1}>Select all correct answers</legend>
         { answers }
       </fieldset>
     );

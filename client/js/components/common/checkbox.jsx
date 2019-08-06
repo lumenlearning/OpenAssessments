@@ -23,11 +23,11 @@ export default class CheckBox extends React.Component {
      * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
      */
     return (
-      <div className="checkbox-wrapper">
+      <div className="checkbox-wrapper" tabIndex={-1}>
         {this.renderAnswerIndicator()}
-        <div className="btn btn-block btn-question" style={this.getButtonQuestionStyles()}>
-          <label style={btnLabelStyles}>
-            <span style={{display: "table-cell"}}>
+        <div className="btn btn-block btn-question" style={this.getButtonQuestionStyles()} tabIndex={-1}>
+          <label style={btnLabelStyles} tabIndex={-1}>
+            <span style={{display: "table-cell"}} tabIndex={-1}>
               <input
                 style={{margin: 0}}
                 type="checkbox"
@@ -35,9 +35,15 @@ export default class CheckBox extends React.Component {
                 disabled={this.props.isDisabled}
                 name={this.props.name}
                 id={this.props.name}
-                onClick={() => { this.answerSelected(); }} />
+                onClick={() => { this.answerSelected(); }}
+                tabIndex="0"
+                />
             </span>
-            <span style={{display: "table-cell", paddingLeft: "11px", fontWeight: "normal"}} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>
+            <span
+              style={{display: "table-cell", paddingLeft: "11px", fontWeight: "normal"}}
+              dangerouslySetInnerHTML={{__html: this.props.item.material}}
+              tabIndex={this.getTabIndex()}
+              />
           </label>
           {this.answerFeedback()}
         </div>
@@ -124,8 +130,18 @@ export default class CheckBox extends React.Component {
       let feedback = this.getFeedback();
 
       return (
-        <div className="check_answer_result" style={feedback.styles} tabIndex="0">{feedback.text}</div>
+        <div className="check_answer_result" style={feedback.styles} tabIndex={this.getTabIndex()}>{feedback.text}</div>
       );
+    }
+  }
+
+  getTabIndex() {
+    // if question has been answered and this answer has not been interacted with and it's incorrect, add to tab order,
+    // otherwise ignore it.
+    if (this.props.showAsCorrect !== null && !this.unselectedIncorrectAnswer()) {
+      return "0";
+    } else {
+      return -1;
     }
   }
 
@@ -162,7 +178,6 @@ export default class CheckBox extends React.Component {
     return this.props.showAsCorrect === false && this.props.checked === true;
   }
 
-  // unused, but here for completeness
   unselectedIncorrectAnswer() {
     return this.props.showAsCorrect === false && this.props.checked === false;
   }
