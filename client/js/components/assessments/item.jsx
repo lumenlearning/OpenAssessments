@@ -50,6 +50,7 @@ export default class Item extends BaseComponent {
                     style={this.props.question.question_type !== "multiple_dropdowns_question" ? styles.questionText : {}}
                     tabIndex="0"
                     ref="questionContent"
+                    aria-label={this.getAriaLabel()}
                     >
                       {this.questionDirections(styles)}
                       {this.questionContent()}
@@ -79,6 +80,15 @@ export default class Item extends BaseComponent {
 
   componentWillUpdate() {
     this.focusQuestionContent();
+  }
+
+  getAriaLabel() {
+    // if answerMessage isn't undefined, the question has been answered.
+    if (typeof this.props.answerMessage !== "undefined") {
+      return "Confidence level selected. Feedback is presented below.";
+    } else {
+      return "";
+    }
   }
 
   mustAnswerMessage(styles) {
