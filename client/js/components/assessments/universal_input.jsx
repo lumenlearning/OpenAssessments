@@ -125,9 +125,7 @@ export default class UniversalInput extends React.Component{
     switch(item.question_type){
       case "multiple_choice_question":
       case "true_false_question":
-        items = item.answers.map((answer) => {
-          return <RadioButton assessmentKind={this.props.assessmentKind} isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-radio" checked={this.wasChosen(answer.id)}  showAsCorrect={this.showAsCorrect(answer.id)} answerFeedback={this.answerFeedback(answer.id)} />;
-        });
+        items = this.renderMultipleChoiceQuestion(item, styles);
         break;
       case "matching_question":
         items = <Matching assessmentKind={this.props.assessmentKind} isDisabled={this.props.isResult}  item={item} name="answer-option"/>;
@@ -159,6 +157,30 @@ export default class UniversalInput extends React.Component{
         </div>
         { solution }
       </div>
+    );
+  }
+
+  renderMultipleChoiceQuestion(item, styles) {
+    let answers = item.answers.map((answer) => {
+      return (
+        <RadioButton
+          assessmentKind={this.props.assessmentKind}
+          isDisabled={this.props.isResult}
+          key={item.id + "_" + answer.id}
+          item={answer}
+          name="answer-radio"
+          checked={this.wasChosen(answer.id)}
+          showAsCorrect={this.showAsCorrect(answer.id)}
+          answerFeedback={this.answerFeedback(answer.id)}
+          />
+      );
+    });
+
+    return (
+      <fieldset tabIndex={-1}>
+        <legend style={styles.legend} tabIndex={-1}>Multiple Choice Question</legend>
+        { answers }
+      </fieldset>
     );
   }
 
