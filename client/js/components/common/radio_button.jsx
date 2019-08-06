@@ -37,12 +37,25 @@ export default class RadioButton extends React.Component {
                 tabIndex="0"
                 />
             </span>
-            <span style={{display: "table-cell", paddingLeft: "11px", fontWeight: "normal"}} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>
+            <span
+              style={{display: "table-cell", paddingLeft: "11px", fontWeight: "normal"}}
+              dangerouslySetInnerHTML={{__html: this.props.item.material}}
+              tabIndex={this.getTabIndex()}
+              />
           </label>
           {this.isQuizPage() ? this.answerFeedback() : ""}
         </div>
       </div>
     );
+  }
+
+  getTabIndex() {
+    // if question has been answered, add to tab order, otherwise ignore it.
+    if (this.props.showAsCorrect !== null && this.props.checked === true) {
+      return "0";
+    } else {
+      return -1;
+    }
   }
 
   getBtnQuestionStyles() {
