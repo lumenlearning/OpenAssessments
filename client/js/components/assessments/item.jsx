@@ -78,8 +78,10 @@ export default class Item extends BaseComponent {
     this.focusQuestionContent();
   }
 
-  componentWillUpdate() {
-    this.focusQuestionContent();
+  componentWillUpdate(nProps) {
+    if (nProps.answerMessage !== this.props.answerMessage) {
+      this.focusQuestionContent();
+    }
   }
 
   getAriaLabel() {
@@ -218,7 +220,9 @@ export default class Item extends BaseComponent {
     if (this.props.question.confidenceLevel) {
       return (
         <div className="confidence_feedback_wrapper" style={styles.confidenceFeedbackWrapper}>
-          <p>Your confidence level in answering this question was: <strong>{`${this.props.question.confidenceLevel}`}</strong>.</p>
+          <p tabIndex="0">
+            Your confidence level in answering this question was: <strong>{`${this.props.question.confidenceLevel}`}</strong>.
+          </p>
           {this.getConfidenceNavButton(styles)}
         </div>
       );
