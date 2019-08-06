@@ -150,14 +150,13 @@ export default class RadioButton extends React.Component {
           className="check_answer_result"
           style={this.getFeedbackStyles()}
           dangerouslySetInnerHTML={this.answerFeedbackMarkup()}
-          tabIndex="0"
           />
       );
     }
 
     if (this.showIncorrectAndChecked()) {
       return (
-        <div className="check_answer_result" style={this.getFeedbackStyles()} tabIndex="0">
+        <div className="check_answer_result" style={this.getFeedbackStyles()}>
           Incorrect
         </div>
       );
@@ -165,7 +164,7 @@ export default class RadioButton extends React.Component {
 
     if (this.showCorrectAndChecked()) {
       return (
-        <div className="check_answer_result" style={this.getFeedbackStyles()} tabIndex="0">
+        <div className="check_answer_result" style={this.getFeedbackStyles()}>
           Correct
         </div>
       );

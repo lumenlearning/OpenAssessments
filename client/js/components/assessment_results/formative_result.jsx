@@ -31,7 +31,7 @@ export default class FormativeResult extends React.Component {
             </header>
             <main role="main" style={styles.outcomeContainer}>
               <img style={resultFeedback.imageStyle} src={resultFeedback.imageSrc} role="presentation" />
-              <p style={styles.formativeResultHeader} tabIndex="0">
+              <p style={styles.formativeResultHeader} tabIndex="0" ref="resultHeader">
                 {resultFeedback.header}
               </p>
               <p style={styles.formativeResultFeedback} tabIndex="0">
@@ -59,6 +59,10 @@ export default class FormativeResult extends React.Component {
   componentDidMount() {
     CommHandler.sendSizeThrottled();
     CommHandler.showLMSNavigation();
+
+    if (this.refs.resultHeader) {
+      React.findDOMNode(this.refs.resultHeader).focus();
+    }
   }
 
   renderResultsTable(styles) {
