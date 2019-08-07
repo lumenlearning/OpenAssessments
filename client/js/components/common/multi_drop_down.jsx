@@ -38,21 +38,17 @@ export default class MultiDropDown extends BaseComponent {
      * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
      */
     return (
-      <div>
+      <div tabIndex={-1}>
         <div
-          tabIndex="0"
+          tabIndex={-1}
           dangerouslySetInnerHTML={{__html: this.findAndReplace()}}
           />
         <div
           style={this.getReviewAnswerStyle()}
-          tabIndex="0"
+          tabIndex={-1}
           role="group"
           aria-label="Review your answer"
           >
-            <div
-              id="question_result_container"
-              dangerouslySetInnerHTML={{__html: this.findAndReplace(true)}}
-              />
         </div>
         {this.props.isResult ? this.answerFeedback() : ""}
       </div>
@@ -95,7 +91,7 @@ export default class MultiDropDown extends BaseComponent {
       }
 
       return (
-        `<span style="display:inline-block" >
+        `<span style="display:inline-block">
           <span style="display:flex">
             <select
               name="${nMatch}"
@@ -103,6 +99,7 @@ export default class MultiDropDown extends BaseComponent {
               aria-label=${this.getAriaAnswerLabel(nMatch, str)}
               ${disabled}
               style="${cursorNotAllowed}"
+              tabIndex="0"
             >
               <option ${!this.state[nMatch] ? "selected" : ""} disabled aria-label="select ${nMatch} choice" value="null">[Select]</option>
               ${this.answerOptions(correctAnswer, nMatch)}
