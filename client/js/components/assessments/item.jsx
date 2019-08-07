@@ -134,6 +134,7 @@ export default class Item extends BaseComponent {
         if (that.props.currentIndex === that.props.questionCount - 1 &&
             AssessmentStore.isFormative()) {
           that.props.checkAnswer(that.props.currentIndex);
+          this.focusQuestionContent();
         // otherwise, this is not the last question and/or it's not formative
         } else {
           that.clearShowMessage();
