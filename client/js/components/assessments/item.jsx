@@ -74,10 +74,6 @@ export default class Item extends BaseComponent {
     );
   }
 
-  componentDidMount() {
-    this.focusQuestionContent();
-  }
-
   componentWillUpdate(nProps) {
     if (nProps.answerMessage !== this.props.answerMessage) {
       this.focusQuestionContent();
