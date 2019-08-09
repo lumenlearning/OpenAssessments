@@ -40,7 +40,7 @@ export default class MultiDropDown extends BaseComponent {
     return (
       <div tabIndex={-1}>
         <div
-          tabIndex={-1}
+          tabIndex="0"
           dangerouslySetInnerHTML={{__html: this.findAndReplace()}}
           />
         <div
