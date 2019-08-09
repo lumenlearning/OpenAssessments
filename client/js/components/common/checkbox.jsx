@@ -79,6 +79,7 @@ export default class CheckBox extends React.Component {
           className="correctIndicator"
           aria-label="Correct Answer that was chosen"
           alt="Icon indicating that a correct answer was chosen"
+          tabIndex="0"
           style={styles.checkStyleCorrect}
           />
       );
@@ -89,6 +90,7 @@ export default class CheckBox extends React.Component {
           className="correctIndicator"
           aria-label="Correct Answer that was not chosen"
           alt="Icon indicating that a correct answer was not chosen"
+          tabIndex="0"
           style={styles.checkStyleCorrect}
           />
       );
@@ -99,6 +101,7 @@ export default class CheckBox extends React.Component {
           className="wrongIndicator"
           aria-label="Wrong answer that was chosen"
           alt="Icon indicating that a wrong answer was chosen"
+          tabIndex="0"
           style={styles.checkStyleWrong}
           />
       );

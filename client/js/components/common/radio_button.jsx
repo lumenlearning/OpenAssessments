@@ -117,6 +117,7 @@ export default class RadioButton extends React.Component {
           className="correctIndicator"
           aria-label="Correct Answer"
           alt="Icon indicating the correct answer was chosen"
+          tabIndex="0"
           style={styles.checkStyleCorrect}
           />
       );
@@ -127,6 +128,7 @@ export default class RadioButton extends React.Component {
           className="wrongIndicator"
           aria-label="Wrong answer that was chosen"
           alt="Icon indicating the wrong answer was chosen"
+          tabIndex="0"
           style={styles.checkStyleWrong}
           />
       );
