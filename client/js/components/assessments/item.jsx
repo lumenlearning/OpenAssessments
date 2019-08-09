@@ -83,7 +83,7 @@ export default class Item extends BaseComponent {
   getAriaLabel() {
     // if answerMessage isn't undefined, the question has been answered.
     if (typeof this.props.answerMessage !== "undefined") {
-      return "Confidence level selected. Feedback is presented below.";
+      return "Question feedback follows below.";
     } else {
       return "";
     }
