@@ -25,46 +25,26 @@ export default class RadioButton extends React.Component {
     return (
       <div>
         {this.renderAnswerIndicator()}
-        <div className="btn btn-block btn-question" style={btnQuestionStyles} tabIndex={-1}>
-          <label style={this.getButtonLabelStyles()} tabIndex={-1}>
-            <span style={{display: "table-cell"}} tabIndex={-1}>
+        <div className="btn btn-block btn-question" style={btnQuestionStyles}>
+          <label style={this.getButtonLabelStyles()}>
+            <span style={{display: "table-cell"}}>
               <input
                 type="radio"
                 defaultChecked={this.checkedStatus()}
                 disabled={this.props.isDisabled}
                 name={this.props.name}
                 onClick={() => { this.answerSelected(); }}
-                tabIndex={this.getReverseTabIndex()}
                 />
             </span>
             <span
               style={{display: "table-cell", paddingLeft: "11px", fontWeight: "normal"}}
               dangerouslySetInnerHTML={{__html: this.props.item.material}}
-              tabIndex={this.getTabIndex()}
               />
           </label>
           {this.isQuizPage() ? this.answerFeedback() : ""}
         </div>
       </div>
     );
-  }
-
-  getTabIndex() {
-    // if question has been answered, add to tab order, otherwise ignore it.
-    if (this.props.showAsCorrect !== null) {
-      return "0";
-    } else {
-      return -1;
-    }
-  }
-
-  getReverseTabIndex() {
-    // if question has been answered, remove from tab order, otherwise add it.
-    if (this.props.showAsCorrect !== null) {
-      return -1;
-    } else {
-      return "0";
-    }
   }
 
   getBtnQuestionStyles() {
@@ -117,7 +97,6 @@ export default class RadioButton extends React.Component {
           className="correctIndicator"
           aria-label="Correct Answer"
           alt="Icon indicating the correct answer was chosen"
-          tabIndex="0"
           style={styles.checkStyleCorrect}
           />
       );
@@ -128,7 +107,6 @@ export default class RadioButton extends React.Component {
           className="wrongIndicator"
           aria-label="Wrong answer that was chosen"
           alt="Icon indicating the wrong answer was chosen"
-          tabIndex="0"
           style={styles.checkStyleWrong}
           />
       );

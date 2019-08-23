@@ -23,11 +23,11 @@ export default class CheckBox extends React.Component {
      * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
      */
     return (
-      <div className="checkbox-wrapper" tabIndex={-1}>
+      <div className="checkbox-wrapper">
         {this.renderAnswerIndicator()}
-        <div className="btn btn-block btn-question" style={this.getButtonQuestionStyles()} tabIndex={-1}>
-          <label style={btnLabelStyles} tabIndex={-1}>
-            <span style={{display: "table-cell"}} tabIndex={-1}>
+        <div className="btn btn-block btn-question" style={this.getButtonQuestionStyles()}>
+          <label style={btnLabelStyles}>
+            <span style={{display: "table-cell"}}>
               <input
                 style={{margin: 0}}
                 type="checkbox"
@@ -36,13 +36,11 @@ export default class CheckBox extends React.Component {
                 name={this.props.name}
                 id={this.props.name}
                 onClick={() => { this.answerSelected(); }}
-                tabIndex="0"
-                />
+              />
             </span>
             <span
               style={{display: "table-cell", paddingLeft: "11px", fontWeight: "normal"}}
               dangerouslySetInnerHTML={{__html: this.props.item.material}}
-              tabIndex={this.getTabIndex()}
               />
           </label>
           {this.answerFeedback()}
@@ -79,7 +77,6 @@ export default class CheckBox extends React.Component {
           className="correctIndicator"
           aria-label="Correct Answer that was chosen"
           alt="Icon indicating that a correct answer was chosen"
-          tabIndex="0"
           style={styles.checkStyleCorrect}
           />
       );
@@ -90,7 +87,6 @@ export default class CheckBox extends React.Component {
           className="correctIndicator"
           aria-label="Correct Answer that was not chosen"
           alt="Icon indicating that a correct answer was not chosen"
-          tabIndex="0"
           style={styles.checkStyleCorrect}
           />
       );
@@ -101,7 +97,6 @@ export default class CheckBox extends React.Component {
           className="wrongIndicator"
           aria-label="Wrong answer that was chosen"
           alt="Icon indicating that a wrong answer was chosen"
-          tabIndex="0"
           style={styles.checkStyleWrong}
           />
       );
@@ -135,16 +130,6 @@ export default class CheckBox extends React.Component {
       return (
         <div className="check_answer_result" style={feedback.styles}>{feedback.text}</div>
       );
-    }
-  }
-
-  getTabIndex() {
-    // if question has been answered and this answer has not been interacted with and it's incorrect, add to tab order,
-    // otherwise ignore it.
-    if (this.props.showAsCorrect !== null && !this.unselectedIncorrectAnswer()) {
-      return "0";
-    } else {
-      return -1;
     }
   }
 

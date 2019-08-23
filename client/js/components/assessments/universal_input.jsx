@@ -49,12 +49,14 @@ export default class UniversalInput extends React.Component{
         marginTop: "-20px",
       },
       legend: {
-        position: "absolute",
-        left: "-10000px",
+        position: "absolute !important",
+        //left: "-10000px",
         top: "auto",
         width: "1px",
         height: "1px",
-        overflow: "hidden"
+        overflow: "hidden",
+        clip: "rect(1px, 1px, 1px, 1px)",
+        whiteSpace: "nowrap"
       }
     }
   }

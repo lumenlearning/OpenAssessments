@@ -38,18 +38,10 @@ export default class MultiDropDown extends BaseComponent {
      * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
      */
     return (
-      <div tabIndex={-1}>
+      <div>
         <div
-          tabIndex="0"
           dangerouslySetInnerHTML={{__html: this.findAndReplace()}}
           />
-        <div
-          style={this.getReviewAnswerStyle()}
-          tabIndex={-1}
-          role="group"
-          aria-label="Review your answer"
-          >
-        </div>
         {this.props.isResult ? this.answerFeedback() : ""}
       </div>
     );
@@ -99,7 +91,6 @@ export default class MultiDropDown extends BaseComponent {
               aria-label=${this.getAriaAnswerLabel(nMatch, str)}
               ${disabled}
               style="${cursorNotAllowed}"
-              tabIndex="0"
             >
               <option ${!this.state[nMatch] ? "selected" : ""} disabled aria-label="select ${nMatch} choice" value="null">[Select]</option>
               ${this.answerOptions(correctAnswer, nMatch)}
@@ -113,17 +104,6 @@ export default class MultiDropDown extends BaseComponent {
 
   getAriaAnswerLabel(nMatch, str) {
     return this.state.ariaAnswersLabels[nMatch] ? this.state.ariaAnswersLabels[nMatch] : str;
-  }
-
-  getReviewAnswerStyle() {
-    return {
-      position: "absolute",
-      left: "-10000px",
-      top: "auto",
-      height: "1px",
-      width: "1px",
-      overflow: "hidden"
-    }
   }
 
   answerOptions(correctAnswer, nMatch) {
@@ -192,7 +172,6 @@ export default class MultiDropDown extends BaseComponent {
         answerCheck = (
           `<span
                 style="display:inline-block;"
-                tabindex="0"
                 aria-label="Correct: ${item.feedback[correctAnswer.name+correctAnswer.value]}"
             >
               <span style=${`"${checkboxWrapper}"`} >
@@ -211,7 +190,6 @@ export default class MultiDropDown extends BaseComponent {
         answerCheck = (
           `<span
                 style="display:inline-block;"
-                tabindex="0"
                 aria-label="Wrong: ${item.feedback[correctAnswer.name+correctAnswer.value]}"
             >
               <span style=${`"${checkboxWrapper}"`} >
@@ -278,7 +256,6 @@ export default class MultiDropDown extends BaseComponent {
             className="check_answer_result"
             style={feedbackStyles}
             dangerouslySetInnerHTML={this.answerFeedbackMarkup(i, feedback[answerId], correctResponse)}
-            tabIndex="0"
             />
         );
       }

@@ -48,7 +48,6 @@ export default class Item extends BaseComponent {
                   <div
                     className="question_text"
                     style={this.props.question.question_type !== "multiple_dropdowns_question" ? styles.questionText : {}}
-                    tabIndex="0"
                     ref="questionContent"
                     aria-label={this.getAriaLabel()}
                     >
@@ -217,7 +216,7 @@ export default class Item extends BaseComponent {
     if (this.props.question.confidenceLevel) {
       return (
         <div className="confidence_feedback_wrapper" style={styles.confidenceFeedbackWrapper}>
-          <p tabIndex="0">
+          <p>
             Your confidence level in answering this question was: <strong>{`${this.props.question.confidenceLevel}`}</strong>.
           </p>
           {this.getConfidenceNavButton(styles)}
@@ -229,7 +228,7 @@ export default class Item extends BaseComponent {
     if (AssessmentStore.isFormative()) {
       return (
         <div className="confidence_wrapper" style={styles.confidenceWrapper}>
-          <div tabIndex="0" style={styles.confidenceTitle}>
+          <div style={styles.confidenceTitle}>
             How sure are you of your answer?
           </div>
           <input
