@@ -22,19 +22,27 @@ export default class RadioButton extends React.Component {
      *
      * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
      */
+    const inputProps = {
+      type: "radio",
+      defaultChecked: this.checkedStatus(),
+      disabled: this.props.isDisabled,
+      name: this.props.name,
+      onClick: () => { this.answerSelected(); }
+    };
+    if (this.showIncorrectAndChecked()) {
+      inputProps["aria-invalid"] = true;
+      inputProps["aria-describedby"] = this.feedbackId();
+    } else if (this.showCorrectAndChecked()) {
+      inputProps["aria-invalid"] = false;
+      inputProps["aria-describedby"] = this.feedbackId();
+    }
     return (
       <div>
         {this.renderAnswerIndicator()}
         <div className="btn btn-block btn-question" style={btnQuestionStyles}>
           <label style={this.getButtonLabelStyles()}>
             <span style={{display: "table-cell"}}>
-              <input
-                type="radio"
-                defaultChecked={this.checkedStatus()}
-                disabled={this.props.isDisabled}
-                name={this.props.name}
-                onClick={() => { this.answerSelected(); }}
-                />
+              <input {...inputProps} />
             </span>
             <span
               style={{display: "table-cell", paddingLeft: "11px", fontWeight: "normal"}}
@@ -121,6 +129,10 @@ export default class RadioButton extends React.Component {
     }
   }
 
+  feedbackId() {
+    return this.props.id + "Hint";
+  }
+
   answerFeedback() {
     /**
      * Note on dangerouslySetInnerHTML Usage
@@ -136,6 +148,7 @@ export default class RadioButton extends React.Component {
     if (this.props.answerFeedback) {
       return (
         <div
+          id={this.feedbackId()}
           className="check_answer_result"
           style={this.getFeedbackStyles()}
           dangerouslySetInnerHTML={this.answerFeedbackMarkup()}
@@ -145,7 +158,7 @@ export default class RadioButton extends React.Component {
 
     if (this.showIncorrectAndChecked()) {
       return (
-        <div className="check_answer_result" style={this.getFeedbackStyles()}>
+        <div id={this.feedbackId()}  className="check_answer_result" style={this.getFeedbackStyles()}>
           Incorrect
         </div>
       );
@@ -153,7 +166,7 @@ export default class RadioButton extends React.Component {
 
     if (this.showCorrectAndChecked()) {
       return (
-        <div className="check_answer_result" style={this.getFeedbackStyles()}>
+        <div id={this.feedbackId()}  className="check_answer_result" style={this.getFeedbackStyles()}>
           Correct
         </div>
       );

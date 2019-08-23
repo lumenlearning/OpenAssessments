@@ -48,7 +48,6 @@ export default class Item extends BaseComponent {
                   <div
                     className="question_text"
                     style={this.props.question.question_type !== "multiple_dropdowns_question" ? styles.questionText : {}}
-                    aria-label={this.getAriaLabel()}
                     >
                       {this.questionDirections(styles)}
                       {this.questionContent()}
@@ -70,15 +69,6 @@ export default class Item extends BaseComponent {
         </div>
       </div>
     );
-  }
-
-  getAriaLabel() {
-    // if answerMessage isn't undefined, the question has been answered.
-    if (typeof this.props.answerMessage !== "undefined") {
-      return "Question feedback follows below.";
-    } else {
-      return "";
-    }
   }
 
   mustAnswerMessage(styles) {

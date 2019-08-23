@@ -48,15 +48,15 @@ export default class UniversalInput extends React.Component{
         padding: theme.panelBodyPadding,
         marginTop: "-20px",
       },
-      legend: {
-        position: "absolute !important",
+      visuallyHidden: {
+        //position: "absolute !important",
         //left: "-10000px",
-        top: "auto",
-        width: "1px",
-        height: "1px",
-        overflow: "hidden",
-        clip: "rect(1px, 1px, 1px, 1px)",
-        whiteSpace: "nowrap"
+        //top: "auto",
+        //width: "1px",
+        //height: "1px",
+        //overflow: "hidden",
+        //clip: "rect(1px, 1px, 1px, 1px)",
+        //whiteSpace: "nowrap"
       }
     }
   }
@@ -114,14 +114,18 @@ export default class UniversalInput extends React.Component{
      *
      * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
      */
-    if(item.isGraded && item.solution){
+    if (item.isGraded && item.solution) {
       solution = (<div className="panel-footer text-center">
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: item.solution
-                    }}>
-                  </div>
-                 </div>);
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: item.solution
+                  }}>
+                </div>
+               </div>);
+    } else if (this.props.isResult) {
+      solution = (<div style={styles.visuallyHidden}>
+          Your selection has been graded.  Please navigate backwards to receive feedback.
+        </div>);
     }
 
     switch(item.question_type){
@@ -157,7 +161,9 @@ export default class UniversalInput extends React.Component{
           >
           { items }
         </div>
-        { solution }
+        <div aria-live="polite">
+          { solution }
+        </div>
       </div>
     );
   }
@@ -169,6 +175,7 @@ export default class UniversalInput extends React.Component{
           assessmentKind={this.props.assessmentKind}
           isDisabled={this.props.isResult}
           key={item.id + "_" + answer.id}
+          id={item.id + "_" + answer.id}
           item={answer}
           name="answer-radio"
           checked={this.wasChosen(answer.id)}
@@ -179,8 +186,8 @@ export default class UniversalInput extends React.Component{
     });
 
     return (
-      <fieldset tabIndex={-1}>
-        <legend style={styles.legend} tabIndex={-1}>Multiple Choice Question</legend>
+      <fieldset>
+        <legend style={styles.visuallyHidden}>Multiple Choice Question</legend>
         { answers }
       </fieldset>
     );
@@ -202,8 +209,8 @@ export default class UniversalInput extends React.Component{
     });
 
     return (
-      <fieldset tabIndex={-1}>
-        <legend style={styles.legend} tabIndex={-1}>Select all correct answers</legend>
+      <fieldset>
+        <legend style={styles.visuallyHidden}>Select all correct answers</legend>
         { answers }
       </fieldset>
     );
