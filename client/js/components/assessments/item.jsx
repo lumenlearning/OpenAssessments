@@ -48,7 +48,6 @@ export default class Item extends BaseComponent {
                   <div
                     className="question_text"
                     style={this.props.question.question_type !== "multiple_dropdowns_question" ? styles.questionText : {}}
-                    ref="questionContent"
                     aria-label={this.getAriaLabel()}
                     >
                       {this.questionDirections(styles)}
@@ -71,12 +70,6 @@ export default class Item extends BaseComponent {
         </div>
       </div>
     );
-  }
-
-  componentWillUpdate(nProps) {
-    if (nProps.answerMessage !== this.props.answerMessage) {
-      this.focusQuestionContent();
-    }
   }
 
   getAriaLabel() {
@@ -129,7 +122,6 @@ export default class Item extends BaseComponent {
         if (that.props.currentIndex === that.props.questionCount - 1 &&
             AssessmentStore.isFormative()) {
           that.props.checkAnswer(that.props.currentIndex);
-          this.focusQuestionContent();
         // otherwise, this is not the last question and/or it's not formative
         } else {
           that.clearShowMessage();
@@ -382,12 +374,6 @@ export default class Item extends BaseComponent {
           dangerouslySetInnerHTML={{ __html: this.props.question.material }}
           />
       );
-    }
-  }
-
-  focusQuestionContent() {
-    if (this.refs.questionContent) {
-      React.findDOMNode(this.refs.questionContent).focus();
     }
   }
 
