@@ -139,7 +139,7 @@ export default class MultiDropDown extends BaseComponent {
       }
 
       if ((this.props.isResult && !!correctAnswer) && correctAnswer.value !== answer.value) disabled = "disabled";
-      const describedby = (this.props.isResult) ? `aria-describedby=${answerDivId}` : ""
+      const describedby = (this.props.isResult) ? `aria-describedby=${answerDivId}` : "";
 
       return `<option ${selected} ${disabled} ${describedby} value=${answer.value}>${answer.name}</option>`;
     });
