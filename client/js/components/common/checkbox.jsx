@@ -22,21 +22,28 @@ export default class CheckBox extends React.Component {
      *
      * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
      */
+    const inputProps = {
+      style: { margin: 0 },
+      type: "checkbox",
+      defaultChecked: this.props.checked,
+      name: this.props.name,
+      id: this.props.name,
+      onClick: () => { this.answerSelected(); }
+    };
+    if (this.selectedCorrectAnswer()) {
+      inputProps["aria-invalid"] = false;
+      inputProps["aria-describedby"] = this.feedbackId();
+    } else if (this.unselectedCorrectAnswer() || this.selectedIncorrectAnswer()) {
+      inputProps["aria-invalid"] = true;
+      inputProps["aria-describedby"] = this.feedbackId();
+    }
     return (
       <div className="checkbox-wrapper">
         {this.renderAnswerIndicator()}
         <div className="btn btn-block btn-question" style={this.getButtonQuestionStyles()}>
           <label style={btnLabelStyles}>
             <span style={{display: "table-cell"}}>
-              <input
-                style={{margin: 0}}
-                type="checkbox"
-                defaultChecked={this.props.checked}
-                disabled={this.props.isDisabled}
-                name={this.props.name}
-                id={this.props.name}
-                onClick={() => { this.answerSelected(); }}
-              />
+              <input { ...inputProps }/>
             </span>
             <span
               style={{display: "table-cell", paddingLeft: "11px", fontWeight: "normal"}}
@@ -47,6 +54,10 @@ export default class CheckBox extends React.Component {
         </div>
       </div>
     );
+  }
+
+  feedbackId() {
+    return this.props.id + "Hint";
   }
 
   renderAnswerIndicator() {
@@ -128,7 +139,7 @@ export default class CheckBox extends React.Component {
       let feedback = this.getFeedback();
 
       return (
-        <div className="check_answer_result" style={feedback.styles}>{feedback.text}</div>
+        <div id={this.feedbackId()} className="check_answer_result" style={feedback.styles}>{feedback.text}</div>
       );
     }
   }

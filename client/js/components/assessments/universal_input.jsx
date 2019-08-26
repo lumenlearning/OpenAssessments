@@ -200,6 +200,7 @@ export default class UniversalInput extends React.Component{
           assessmentKind={this.props.assessmentKind}
           isDisabled={this.props.isResult}
           key={item.id + "_" + answer.id}
+          id={item.id + "_" + answer.id}
           item={answer} name="answer-check"
           checked={this.wasChosen(answer.id)}
           showAsCorrect={this.showAsCorrect(answer.id)}

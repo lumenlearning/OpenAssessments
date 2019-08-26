@@ -106,8 +106,14 @@ export default class MultiDropDown extends BaseComponent {
     return this.state.ariaAnswersLabels[nMatch] ? this.state.ariaAnswersLabels[nMatch] : str;
   }
 
+  getAnswerFeedbackDivId(answer) {
+    return answer.dropdown_id + "_" + answer.chosen_answer_id + "Hint";
+  }
+
   answerOptions(correctAnswer, nMatch) {
     return this.props.item.dropdowns[nMatch].map((answer) => {
+      const answerDivId = this.getAnswerFeedbackDivId(answer);
+
       let selected = "";
       let disabled = "";
 
@@ -133,8 +139,9 @@ export default class MultiDropDown extends BaseComponent {
       }
 
       if ((this.props.isResult && !!correctAnswer) && correctAnswer.value !== answer.value) disabled = "disabled";
+      const describedby = (this.props.isResult) ? `aria-describedby=${answerDivId}` : ""
 
-      return `<option ${selected} ${disabled} value=${answer.value}>${answer.name}</option>`;
+      return `<option ${selected} ${disabled} ${describedby} value=${answer.value}>${answer.name}</option>`;
     });
   }
 
@@ -227,7 +234,8 @@ export default class MultiDropDown extends BaseComponent {
     let correctResponse;
 
     return selectedAnswers.map((answer, i) => {
-      let answerId = answer.dropdown_id + answer.chosen_answer_id;
+      const answerId = answer.dropdown_id + answer.chosen_answer_id;
+      const answerDivId = this.getAnswerFeedbackDivId(answer);
 
       if (answerId.indexOf(feedback)) {
         let feedbackStyles = {};
@@ -253,6 +261,7 @@ export default class MultiDropDown extends BaseComponent {
          */
         return (
           <div
+            id={answerDivId}
             className="check_answer_result"
             style={feedbackStyles}
             dangerouslySetInnerHTML={this.answerFeedbackMarkup(i, feedback[answerId], correctResponse)}
