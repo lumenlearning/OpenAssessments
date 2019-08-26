@@ -92,7 +92,7 @@ export default class MultiDropDown extends BaseComponent {
               ${disabled}
               style="${cursorNotAllowed}"
             >
-              <option ${!this.state[nMatch] ? "selected" : ""} disabled aria-label="select ${nMatch} choice" value="null">[Select]</option>
+              <option ${!this.state[nMatch] ? "selected" : ""} disabled aria-label="select the choice which best fits the sentence" value="null">[Select]</option>
               ${this.answerOptions(correctAnswer, nMatch)}
             </select>
             ${this.answerCheckMarks(correctAnswer, nMatch, i)}
@@ -107,7 +107,8 @@ export default class MultiDropDown extends BaseComponent {
   }
 
   getAnswerFeedbackDivId(answer) {
-    return answer.dropdown_id + "_" + answer.chosen_answer_id + "Hint";
+    const dropDownId = answer.value || answer.chosen_answer_id;
+    return dropDownId + "Hint";
   }
 
   answerOptions(correctAnswer, nMatch) {

@@ -90,6 +90,7 @@ export default class UniversalInput extends React.Component{
     let item = this.props.item;
     let messages = "";
     let solution = "";
+    let visuallyHiddenReviewPrompt = "";
     let items = "";
 
     if(item.messages){
@@ -122,10 +123,11 @@ export default class UniversalInput extends React.Component{
                   }}>
                 </div>
                </div>);
-    } else if (this.props.isResult) {
-      solution = (<div style={styles.visuallyHidden}>
-          Your selection has been graded.  Please navigate backwards to receive feedback.
-        </div>);
+    }
+    if (this.props.isResult) {
+      visuallyHiddenReviewPrompt = (<div style={styles.visuallyHidden}>
+        Your selection has been graded.  Please navigate forward to review your answers and receive feedback.
+      </div>);
     }
 
     switch(item.question_type){
@@ -155,13 +157,16 @@ export default class UniversalInput extends React.Component{
         <div className="panel-heading text-center" style={styles.panelHeading}>
           { messages }
         </div>
+        <div aria-live="polite">
+          { visuallyHiddenReviewPrompt }
+        </div>
         <div
           className={item.question_type === "multiple_dropdowns_question" ? "" : "panel-body"}
           style={styles.panelBody}
           >
           { items }
         </div>
-        <div aria-live="polite">
+        <div>
           { solution }
         </div>
       </div>
