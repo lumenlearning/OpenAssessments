@@ -46,7 +46,8 @@ export default class Assessment extends BaseComponent{
       studentAnswer        : AssessmentStore.studentAnswers(),
       allQuestions         : AssessmentStore.allQuestions(),
       outcomes             : AssessmentStore.outcomes(),
-      gradingCallback      : null
+      gradingCallback      : null,
+      newQuestion          : false
     }
   }
 
@@ -57,6 +58,12 @@ export default class Assessment extends BaseComponent{
       //AssessmentActions.assessmentViewed(this.state.settings, this.state.assessment);
     }
     window.addEventListener('load', this.materialLoaded);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.newQuestion) { // if last render caught newQuestion, then we've focused, so reset
+      this.setState({newQuestion: false});
+    }
   }
 
   componentWillUnmount(){
@@ -100,7 +107,7 @@ export default class Assessment extends BaseComponent{
           finishedCallback();
         }
         Assessment.newQuestionMessages();
-        this.setState({questionSelected: true});
+        this.setState({questionSelected: true, newQuestion: true});
       });
     } else {
       AssessmentActions.selectQuestion(qid);
@@ -108,6 +115,7 @@ export default class Assessment extends BaseComponent{
         finishedCallback();
       }
       Assessment.newQuestionMessages();
+      this.setState({newQuestion: true});
     }
   }
 
@@ -125,6 +133,7 @@ export default class Assessment extends BaseComponent{
           finishedCallback();
         }
         Assessment.newQuestionMessages();
+        this.setState({newQuestion: true});
       });
     } else {
       AssessmentActions.previousQuestion();
@@ -132,6 +141,7 @@ export default class Assessment extends BaseComponent{
         finishedCallback();
       }
       Assessment.newQuestionMessages();
+      this.setState({newQuestion: true});
     }
   }
 
@@ -145,6 +155,7 @@ export default class Assessment extends BaseComponent{
           finishedCallback();
         }
         Assessment.newQuestionMessages();
+        this.setState({newQuestion: true});
       });
     } else {
       AssessmentActions.nextQuestion();
@@ -152,6 +163,7 @@ export default class Assessment extends BaseComponent{
         finishedCallback();
       }
       Assessment.newQuestionMessages();
+      this.setState({newQuestion: true});
     }
   }
 
@@ -198,6 +210,7 @@ export default class Assessment extends BaseComponent{
         outcomes         = {this.state.outcomes}
         resetAnswerMessages = {this.resetAnswerMessages}
         showAnswers = {this.state.settings.showAnswers}
+        newQuestion      = {this.state.newQuestion}
       />;
     }
 

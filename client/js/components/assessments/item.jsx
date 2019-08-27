@@ -47,7 +47,9 @@ export default class Item extends BaseComponent {
                 <main
                     role="main"
                     className="inner_question"
-                    style={styles.innerQuestion}>
+                    style={styles.innerQuestion}
+                    ref="questionMain"
+                    tabIndex="0">
                   <div
                     className="question_text"
                     style={this.props.question.question_type !== "multiple_dropdowns_question" ? styles.questionText : {}}
@@ -482,6 +484,16 @@ export default class Item extends BaseComponent {
             {this.props.currentIndex + 1} of {this.props.questionCount}
         </span>
       );
+    }
+  }
+
+  focusQuestion() {
+    React.findDOMNode(this.refs.questionText).focus();
+  }
+
+  componentHasUpdated(prevProps) {
+    if (prevProps.newQuestion) {
+      this.focusQuestion();
     }
   }
 
