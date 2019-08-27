@@ -157,7 +157,7 @@ export default class UniversalInput extends React.Component{
         <div className="panel-heading text-center" style={styles.panelHeading}>
           { messages }
         </div>
-        <div>
+        <div aria-live="polite">
           { visuallyHiddenReviewPrompt }
         </div>
         <div

@@ -41,15 +41,13 @@ export default class Item extends BaseComponent {
           <div style={styles.formativePadding}>
 
             <form className="edit_item">
-              <div className="full_question" style={styles.fullQuestion} aria-live="polite">
+              <div className="full_question" style={styles.fullQuestion}>
                 {this.formativeHeader()}
                 {this.simpleProgress(styles)}
                 <main
-                    role="main"
                     className="inner_question"
                     style={styles.innerQuestion}
-                    ref="questionMain"
-                    tabIndex="0">
+                    aria-atomic="true">
                   <div
                     className="question_text"
                     style={this.props.question.question_type !== "multiple_dropdowns_question" ? styles.questionText : {}}
@@ -484,16 +482,6 @@ export default class Item extends BaseComponent {
             {this.props.currentIndex + 1} of {this.props.questionCount}
         </span>
       );
-    }
-  }
-
-  focusQuestion() {
-    React.findDOMNode(this.refs.questionText).focus();
-  }
-
-  componentHasUpdated(prevProps) {
-    if (prevProps.newQuestion) {
-      this.focusQuestion();
     }
   }
 

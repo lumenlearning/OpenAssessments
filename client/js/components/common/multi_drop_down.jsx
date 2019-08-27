@@ -40,6 +40,7 @@ export default class MultiDropDown extends BaseComponent {
     return (
       <div>
         <div
+          aria-live="polite"
           dangerouslySetInnerHTML={{__html: this.findAndReplace()}}
           />
         {this.props.isResult ? this.answerFeedback() : ""}
