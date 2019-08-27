@@ -47,7 +47,8 @@ export default class Item extends BaseComponent {
                 <main
                     className="inner_question"
                     style={styles.innerQuestion}
-                    aria-atomic="true">
+                    aria-atomic="true"
+                    aria-relevant="additions text">
                   <div
                     className="question_text"
                     style={this.props.question.question_type !== "multiple_dropdowns_question" ? styles.questionText : {}}
