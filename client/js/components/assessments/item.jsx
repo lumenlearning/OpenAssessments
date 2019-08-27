@@ -41,10 +41,13 @@ export default class Item extends BaseComponent {
           <div style={styles.formativePadding}>
 
             <form className="edit_item">
-              <div className="full_question" style={styles.fullQuestion}>
+              <div className="full_question" style={styles.fullQuestion} aria-live="polite">
                 {this.formativeHeader()}
                 {this.simpleProgress(styles)}
-                <main role="main" className="inner_question" style={styles.innerQuestion}>
+                <main
+                    role="main"
+                    className="inner_question"
+                    style={styles.innerQuestion}>
                   <div
                     className="question_text"
                     style={this.props.question.question_type !== "multiple_dropdowns_question" ? styles.questionText : {}}

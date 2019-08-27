@@ -49,14 +49,14 @@ export default class UniversalInput extends React.Component{
         marginTop: "-20px",
       },
       visuallyHidden: {
-        //position: "absolute !important",
-        //left: "-10000px",
-        //top: "auto",
-        //width: "1px",
-        //height: "1px",
-        //overflow: "hidden",
-        //clip: "rect(1px, 1px, 1px, 1px)",
-        //whiteSpace: "nowrap"
+        position: "absolute !important",
+        left: "-10000px",
+        top: "auto",
+        width: "1px",
+        height: "1px",
+        overflow: "hidden",
+        clip: "rect(1px, 1px, 1px, 1px)",
+        whiteSpace: "nowrap"
       }
     }
   }
@@ -157,7 +157,7 @@ export default class UniversalInput extends React.Component{
         <div className="panel-heading text-center" style={styles.panelHeading}>
           { messages }
         </div>
-        <div aria-live="polite">
+        <div>
           { visuallyHiddenReviewPrompt }
         </div>
         <div
