@@ -178,6 +178,7 @@ export default class MultiDropDown extends BaseComponent {
 
 
       if(!!selAnswer && (!!correctAnswer && selAnswer.chosen_answer_id === correctAnswer.value)){
+        const altText = `Correct selection.  Feedback is listed under (${i}).`;
         answerCheck = (
           `<span
                 style="display:inline-block;"
@@ -189,13 +190,14 @@ export default class MultiDropDown extends BaseComponent {
                   height="20px"
                   src="/assets/correct.png"
                   style="${correctStyle}"
-                  alt="image to indicate the correct option was chosen"
+                  alt=${altText}
                   /> (${i})
               </span>
             </span>`
         );
       }
       else{
+        const altText = `Incorrect selection. Feeback is listed under (${i}).`
         answerCheck = (
           `<span
                 style="display:inline-block;"
@@ -207,7 +209,7 @@ export default class MultiDropDown extends BaseComponent {
                   height="20px"
                   src="/assets/incorrect.png"
                   style="${incorrectStyle}"
-                  alt="image to indicate the incorrect option was chosen"
+                  alt=${altText}
                 /> (${i})
               </span>
             </span>`

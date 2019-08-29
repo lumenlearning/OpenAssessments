@@ -107,7 +107,6 @@ export default class Assessment extends BaseComponent{
           finishedCallback();
         }
         Assessment.newQuestionMessages();
-        this.setState({questionSelected: true, newQuestion: true});
       });
     } else {
       AssessmentActions.selectQuestion(qid);
@@ -115,7 +114,6 @@ export default class Assessment extends BaseComponent{
         finishedCallback();
       }
       Assessment.newQuestionMessages();
-      this.setState({newQuestion: true});
     }
   }
 
@@ -133,6 +131,7 @@ export default class Assessment extends BaseComponent{
           finishedCallback();
         }
         Assessment.newQuestionMessages();
+        console.log("new graded question previous, updating state");
         this.setState({newQuestion: true});
       });
     } else {
@@ -141,6 +140,7 @@ export default class Assessment extends BaseComponent{
         finishedCallback();
       }
       Assessment.newQuestionMessages();
+      console.log("new ungraded question previous, updating state");
       this.setState({newQuestion: true});
     }
   }
@@ -155,6 +155,7 @@ export default class Assessment extends BaseComponent{
           finishedCallback();
         }
         Assessment.newQuestionMessages();
+        console.log("new graded question next, updating state");
         this.setState({newQuestion: true});
       });
     } else {
@@ -163,6 +164,7 @@ export default class Assessment extends BaseComponent{
         finishedCallback();
       }
       Assessment.newQuestionMessages();
+      console.log("new ungraded question next, updating state");
       this.setState({newQuestion: true});
     }
   }

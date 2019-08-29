@@ -126,7 +126,7 @@ export default class UniversalInput extends React.Component{
     }
     if (this.props.isResult) {
       visuallyHiddenReviewPrompt = (<div style={styles.visuallyHidden}>
-        Your selection has been graded.  Please navigate forward to review your answers and receive feedback.
+        Your selection has been evaluated.  Please navigate forward to receive feedback.
       </div>);
     }
 

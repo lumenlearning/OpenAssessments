@@ -49,10 +49,15 @@ export default class Item extends BaseComponent {
                     style={styles.innerQuestion}
                     aria-atomic="true"
                     aria-relevant="additions text">
+                  <div aria-live="polite">
+                    { this.newQuestionNotification(styles) }
+                  </div>
                   <div
                     className="question_text"
                     style={this.props.question.question_type !== "multiple_dropdowns_question" ? styles.questionText : {}}
-                    >
+                    role="region"
+                    aria-labelledby="questionTextHeader">
+                      <div id="questionTextHeader" style={styles.visuallyHidden}>Question Text</div>
                       {this.questionDirections(styles)}
                       {this.questionContent()}
                   </div>
@@ -486,6 +491,14 @@ export default class Item extends BaseComponent {
     }
   }
 
+  newQuestionNotification(styles) {
+    if (this.props.newQuestion) {
+      return (<div style={styles.visuallyHidden}>The question has been refreshed.</div>);
+    } else {
+      return "";
+    }
+  }
+
   getStyles(theme) {
     let navMargin = "-35px 650px 0 0";
 
@@ -656,6 +669,16 @@ export default class Item extends BaseComponent {
       counter: {
         color: 'black',
         float: "right"
+      },
+      visuallyHidden: {
+        position: "absolute !important",
+        left: "-10000px",
+        top: "auto",
+        width: "1px",
+        height: "1px",
+        overflow: "hidden",
+        clip: "rect(1px, 1px, 1px, 1px)",
+        whiteSpace: "nowrap"
       }
     }
   }
