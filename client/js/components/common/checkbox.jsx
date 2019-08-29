@@ -50,7 +50,10 @@ export default class CheckBox extends React.Component {
               dangerouslySetInnerHTML={{__html: this.props.item.material}}
               />
           </label>
-          {this.answerFeedback()}
+          <div aria-live="polite" role="region" aria-labelledby={"feedback"+this.props.index}>
+            <div style={this.props.visuallyHiddenStyle} id={"feedback"+this.props.index}>Feedback Region {this.props.index}</div>
+            {this.answerFeedback()}
+          </div>
         </div>
       </div>
     );
@@ -86,8 +89,7 @@ export default class CheckBox extends React.Component {
         <img
           src="/assets/correct.png"
           className="correctIndicator"
-          aria-label="Correct Answer that was chosen"
-          alt="Icon indicating that a correct answer was chosen"
+          alt="Correct"
           style={styles.checkStyleCorrect}
           />
       );
@@ -96,8 +98,7 @@ export default class CheckBox extends React.Component {
         <img
           src="/assets/correct.png"
           className="correctIndicator"
-          aria-label="Correct Answer that was not chosen"
-          alt="Icon indicating that a correct answer was not chosen"
+          alt="Correct but not Selected"
           style={styles.checkStyleCorrect}
           />
       );
@@ -106,8 +107,7 @@ export default class CheckBox extends React.Component {
         <img
           src="/assets/incorrect.png"
           className="wrongIndicator"
-          aria-label="Wrong answer that was chosen"
-          alt="Icon indicating that a wrong answer was chosen"
+          alt="Incorrect"
           style={styles.checkStyleWrong}
           />
       );

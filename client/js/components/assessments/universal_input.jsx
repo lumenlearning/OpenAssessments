@@ -148,7 +148,7 @@ export default class UniversalInput extends React.Component{
         items = <MomEmbed assessmentKind={this.props.assessmentKind} key={item.id} item={item} redisplayJWT={this.props.chosen ? this.props.chosen : null} registerGradingCallback={this.props.registerGradingCallback} />;
         break;
       case 'multiple_dropdowns_question':
-        items = <MultiDropDown assessmentKind={this.props.assessmentKind} isResult={this.props.isResult} key={item.id} item={item} selectedAnswers={this.props.chosen} selectCorrectAnswer={this.props.correctAnswers && this.props.correctAnswers.length > 0} />;
+        items = <MultiDropDown assessmentKind={this.props.assessmentKind} isResult={this.props.isResult} key={item.id} item={item} selectedAnswers={this.props.chosen} selectCorrectAnswer={this.props.correctAnswers && this.props.correctAnswers.length > 0} visuallyHiddenStyle={styles.visuallyHidden} />;
       break;
     }
 
@@ -174,7 +174,7 @@ export default class UniversalInput extends React.Component{
   }
 
   renderMultipleChoiceQuestion(item, styles) {
-    let answers = item.answers.map((answer) => {
+    let answers = item.answers.map((answer, index) => {
       return (
         <RadioButton
           assessmentKind={this.props.assessmentKind}
@@ -186,6 +186,8 @@ export default class UniversalInput extends React.Component{
           checked={this.wasChosen(answer.id)}
           showAsCorrect={this.showAsCorrect(answer.id)}
           answerFeedback={this.answerFeedback(answer.id)}
+          index={index}
+          visuallyHiddenStyle={styles.visuallyHidden}
           />
       );
     });
@@ -199,7 +201,7 @@ export default class UniversalInput extends React.Component{
   }
 
   renderMultipleAnswersQuestion(item, styles) {
-    let answers = item.answers.map((answer) => {
+    let answers = item.answers.map((answer, index) => {
       return (
         <CheckBox
           assessmentKind={this.props.assessmentKind}
@@ -210,6 +212,8 @@ export default class UniversalInput extends React.Component{
           checked={this.wasChosen(answer.id)}
           showAsCorrect={this.showAsCorrect(answer.id)}
           answerFeedback={this.answerFeedback(answer.id)}
+          index={index}
+          visuallyHiddenStyle={styles.visuallyHidden}
           />
       );
     });

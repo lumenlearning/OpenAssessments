@@ -46,9 +46,7 @@ export default class Item extends BaseComponent {
                 {this.simpleProgress(styles)}
                 <main
                     className="inner_question"
-                    style={styles.innerQuestion}
-                    aria-atomic="true"
-                    aria-relevant="additions text">
+                    style={styles.innerQuestion}>
                   <div aria-live="polite">
                     { this.newQuestionNotification(styles) }
                   </div>
@@ -493,7 +491,7 @@ export default class Item extends BaseComponent {
 
   newQuestionNotification(styles) {
     if (this.props.newQuestion) {
-      return (<div style={styles.visuallyHidden}>The question has been refreshed.</div>);
+      return (<div style={styles.visuallyHidden}>The question has been refreshed. Please navigate to the Question Text landmark.</div>);
     } else {
       return "";
     }

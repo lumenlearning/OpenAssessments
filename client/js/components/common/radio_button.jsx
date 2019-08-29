@@ -49,7 +49,10 @@ export default class RadioButton extends React.Component {
               dangerouslySetInnerHTML={{__html: this.props.item.material}}
               />
           </label>
-          {this.isQuizPage() ? this.answerFeedback() : ""}
+          <div aria-live="polite" role="region" aria-labelledby={"feedback"+this.props.index}>
+            <div style={this.props.visuallyHiddenStyle} id={"feedback"+this.props.index}>Feedback Region {this.props.index}</div>
+            {this.isQuizPage() ? this.answerFeedback() : ""}
+          </div>
         </div>
       </div>
     );
@@ -103,8 +106,7 @@ export default class RadioButton extends React.Component {
         <img
           src="/assets/correct.png"
           className="correctIndicator"
-          aria-label="Correct Answer"
-          alt="Icon indicating the correct answer was chosen"
+          alt="Correct"
           style={styles.checkStyleCorrect}
           />
       );
@@ -113,8 +115,7 @@ export default class RadioButton extends React.Component {
         <img
           src="/assets/incorrect.png"
           className="wrongIndicator"
-          aria-label="Wrong answer that was chosen"
-          alt="Icon indicating the wrong answer was chosen"
+          alt="Incorrect"
           style={styles.checkStyleWrong}
           />
       );

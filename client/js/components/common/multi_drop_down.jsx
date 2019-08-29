@@ -40,10 +40,12 @@ export default class MultiDropDown extends BaseComponent {
     return (
       <div>
         <div
-          aria-live="polite"
           dangerouslySetInnerHTML={{__html: this.findAndReplace()}}
           />
-        {this.props.isResult ? this.answerFeedback() : ""}
+        <div aria-live="polite" role="region" aria-labelledby="">
+          <div style={this.props.visuallyHiddenStyle} id="select_feedback">Feedback</div>
+          {this.props.isResult ? this.answerFeedback() : ""}
+        </div>
       </div>
     );
   }
@@ -178,7 +180,6 @@ export default class MultiDropDown extends BaseComponent {
 
 
       if(!!selAnswer && (!!correctAnswer && selAnswer.chosen_answer_id === correctAnswer.value)){
-        const altText = `Correct selection.  Feedback is listed under (${i}).`;
         answerCheck = (
           `<span
                 style="display:inline-block;"
@@ -190,14 +191,13 @@ export default class MultiDropDown extends BaseComponent {
                   height="20px"
                   src="/assets/correct.png"
                   style="${correctStyle}"
-                  alt=${altText}
+                  alt="Correct"
                   /> (${i})
               </span>
             </span>`
         );
       }
       else{
-        const altText = `Incorrect selection. Feeback is listed under (${i}).`
         answerCheck = (
           `<span
                 style="display:inline-block;"
@@ -209,7 +209,7 @@ export default class MultiDropDown extends BaseComponent {
                   height="20px"
                   src="/assets/incorrect.png"
                   style="${incorrectStyle}"
-                  alt=${altText}
+                  alt="Incorrect"
                 /> (${i})
               </span>
             </span>`
