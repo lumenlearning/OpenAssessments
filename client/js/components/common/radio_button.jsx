@@ -49,8 +49,7 @@ export default class RadioButton extends React.Component {
               dangerouslySetInnerHTML={{__html: this.props.item.material}}
               />
           </label>
-          <div aria-live="polite" role="region" aria-labelledby={"feedback"+this.props.index}>
-            <div style={this.props.visuallyHiddenStyle} id={"feedback"+this.props.index}>Feedback Region {this.props.index}</div>
+          <div>
             {this.isQuizPage() ? this.answerFeedback() : ""}
           </div>
         </div>

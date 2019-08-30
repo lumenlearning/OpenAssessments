@@ -42,8 +42,7 @@ export default class MultiDropDown extends BaseComponent {
         <div
           dangerouslySetInnerHTML={{__html: this.findAndReplace()}}
           />
-        <div aria-live="polite" role="region" aria-labelledby="">
-          <div style={this.props.visuallyHiddenStyle} id="select_feedback">Feedback</div>
+        <div>
           {this.props.isResult ? this.answerFeedback() : ""}
         </div>
       </div>
@@ -67,31 +66,40 @@ export default class MultiDropDown extends BaseComponent {
     let i = 0;
     let re = new RegExp(`\\[${Object.keys(this.props.item.dropdowns).join("\\]|\\[")}\\]`, "gi");
 
+    const that = this;
+
     return this.props.item.material.replace(re, (match) => {
       let str = `"blank ${i}"`;
       let nMatch = match.replace(new RegExp("\\[|\\]", "g"), ""); //from '[shortcode]' to 'shortcode'
       let correctAnswer = this.props.item.correct.find((correctAns) => {
         return correctAns.name === nMatch;
       });
+      const describedBy = that.getAnswerFeedbackDiv(i);
 
       i++;
 
-      let disabled = "";
-      let cursorNotAllowed = "";
+      const selectProps = {
+        name: nMatch,
+        id: `dropdown_${nMatch}`
+      };
+      selectProps["aria-label"] = this.getAriaAnswerLabel(nMatch, str);
 
       // Disable dropdowns if this is the results page or if confidence levels have been selected
       if (this.props.isResult || typeof this.props.item.confidenceLevel !== "undefined") {
-        disabled = "disabled";
-        cursorNotAllowed = "cursor: not-allowed";
+        selectProps["disabled"] = "disabled";
+        selectProps["style"] = { cursor: "not-allowed" };
+      }
+
+      if (this.props.isResult) {
+        selectProps["aria-invalid"] = !!correctAnswer;
+        selectProps["aria-describedby"] = describedBy;
       }
 
       return (
         `<span style="display:inline-block">
           <span style="display:flex">
             <select
-              name="${nMatch}"
-              id="dropdown_${nMatch}"
-              aria-label=${this.getAriaAnswerLabel(nMatch, str)}
+              {...selectProps}
               ${disabled}
               style="${cursorNotAllowed}"
             >
@@ -109,14 +117,12 @@ export default class MultiDropDown extends BaseComponent {
     return this.state.ariaAnswersLabels[nMatch] ? this.state.ariaAnswersLabels[nMatch] : str;
   }
 
-  getAnswerFeedbackDivId(answer) {
-    const dropDownId = answer.value || answer.chosen_answer_id;
-    return dropDownId + "Hint";
+  getAnswerFeedbackDivId(index) {
+    return `answerFeedback_${index}`;
   }
 
   answerOptions(correctAnswer, nMatch) {
     return this.props.item.dropdowns[nMatch].map((answer) => {
-      const answerDivId = this.getAnswerFeedbackDivId(answer);
 
       let selected = "";
       let disabled = "";
@@ -143,9 +149,8 @@ export default class MultiDropDown extends BaseComponent {
       }
 
       if ((this.props.isResult && !!correctAnswer) && correctAnswer.value !== answer.value) disabled = "disabled";
-      const describedby = (this.props.isResult) ? `aria-describedby=${answerDivId}` : "";
 
-      return `<option ${selected} ${disabled} ${describedby} value=${answer.value}>${answer.name}</option>`;
+      return `<option ${selected} ${disabled} value=${answer.value}>${answer.name}</option>`;
     });
   }
 
@@ -237,9 +242,11 @@ export default class MultiDropDown extends BaseComponent {
     let correctAnswers = this.correctAnswers();
     let correctResponse;
 
+    const that = this;
+
     return selectedAnswers.map((answer, i) => {
       const answerId = answer.dropdown_id + answer.chosen_answer_id;
-      const answerDivId = this.getAnswerFeedbackDivId(answer);
+      const answerDivId = that.getAnswerFeedbackDivId(answer);
 
       if (answerId.indexOf(feedback)) {
         let feedbackStyles = {};

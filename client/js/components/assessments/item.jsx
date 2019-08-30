@@ -54,8 +54,8 @@ export default class Item extends BaseComponent {
                     className="question_text"
                     style={this.props.question.question_type !== "multiple_dropdowns_question" ? styles.questionText : {}}
                     role="region"
-                    aria-labelledby="questionTextHeader">
-                      <div id="questionTextHeader" style={styles.visuallyHidden}>Question Text</div>
+                    aria-labelledby="assessmentTextHeader">
+                      <div id="assessmentTextHeader" style={styles.visuallyHidden}>Assessment Text</div>
                       {this.questionDirections(styles)}
                       {this.questionContent()}
                   </div>
@@ -68,6 +68,9 @@ export default class Item extends BaseComponent {
                   {this.submitAssessmentButton(styles)}
                   {this.getWarning(this.state, this.props.questionCount, this.props.currentIndex, styles)}
                   {this.mustAnswerMessage(styles)}
+                </div>
+                <div role="region" aria-labelledby="assessmentBottomBoundary" style={styles.visuallyHidden}>
+                  <div id="assessmentBottomBoundary">This is the bottom of the assessment area.</div>
                 </div>
               </div>
             </form>
@@ -491,7 +494,7 @@ export default class Item extends BaseComponent {
 
   newQuestionNotification(styles) {
     if (this.props.newQuestion) {
-      return (<div style={styles.visuallyHidden}>The question has been refreshed. Please navigate to the Question Text landmark.</div>);
+      return (<div style={styles.visuallyHidden}>The question has been refreshed. Please navigate to the Assessment Text landmark.</div>);
     } else {
       return "";
     }
