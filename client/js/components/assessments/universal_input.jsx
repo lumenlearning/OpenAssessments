@@ -187,8 +187,6 @@ export default class UniversalInput extends React.Component{
           checked={this.wasChosen(answer.id)}
           showAsCorrect={this.showAsCorrect(answer.id)}
           answerFeedback={this.answerFeedback(answer.id)}
-          index={index}
-          visuallyHiddenStyle={styles.visuallyHidden}
           />
       );
     });
@@ -209,10 +207,11 @@ export default class UniversalInput extends React.Component{
       if (chosenAnswers.length > 0) {
         const chosenAnswer = chosenAnswers[0];
         const isCorrectMessage = (this.showAsCorrect(chosenAnswer.id))
-          ? "Your choice is correct."
-          : "Your choice is incorrect.";
+          ? "correct"
+          : "incorrect";
         return (<div>
-          { isCorrectMessage }
+          The question has been evaluated.  Your choice is { isCorrectMessage }.  You selected:
+          <div dangerouslySetInnerHTML={ { __html: chosenAnswer.material } }/> .
           <div dangerouslySetInnerHTML={ { __html: this.answerFeedback(chosenAnswer.id) } }/>
         </div>);
         return null;
