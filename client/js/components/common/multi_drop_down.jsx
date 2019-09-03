@@ -61,12 +61,18 @@ export default class MultiDropDown extends BaseComponent {
     this.removeListeners();
   }
 
+  quoteAttributes(v) {
+    if (typeof(v) === "object") {
+      const asCss = Object.keys(v).map((k) => `${k}: ${v[k]}`).join("; ");
+      return `"${asCss}"`;
+    } else {
+      return (v && v.match && v.match(/^\".+\"$/)) ? v : `"${v}"`;
+    }
+  }
 
   findAndReplace(noSelect = false) {
     let i = 0;
     let re = new RegExp(`\\[${Object.keys(this.props.item.dropdowns).join("\\]|\\[")}\\]`, "gi");
-
-    const that = this;
 
     return this.props.item.material.replace(re, (match) => {
       let str = `"blank ${i}"`;
@@ -74,7 +80,7 @@ export default class MultiDropDown extends BaseComponent {
       let correctAnswer = this.props.item.correct.find((correctAns) => {
         return correctAns.name === nMatch;
       });
-      const describedBy = that.getAnswerFeedbackDiv(i);
+      const describedBy = this.getAnswerFeedbackDivId(i);
 
       i++;
 
@@ -95,14 +101,18 @@ export default class MultiDropDown extends BaseComponent {
         selectProps["aria-describedby"] = describedBy;
       }
 
+      const selectPropsStr =
+        Object.keys(selectProps).map(
+          (k) => {
+            const v = selectProps[k];
+            const quotedV = this.quoteAttributes(v);
+            return `${k}=${quotedV}`;
+          }).join(" ");
+
       return (
         `<span style="display:inline-block">
           <span style="display:flex">
-            <select
-              {...selectProps}
-              ${disabled}
-              style="${cursorNotAllowed}"
-            >
+            <select ${selectPropsStr}>
               <option ${!this.state[nMatch] ? "selected" : ""} disabled aria-label="select the choice which best fits the sentence" value="null">[Select]</option>
               ${this.answerOptions(correctAnswer, nMatch)}
             </select>
@@ -242,13 +252,12 @@ export default class MultiDropDown extends BaseComponent {
     let correctAnswers = this.correctAnswers();
     let correctResponse;
 
-    const that = this;
-
     return selectedAnswers.map((answer, i) => {
       const answerId = answer.dropdown_id + answer.chosen_answer_id;
-      const answerDivId = that.getAnswerFeedbackDivId(answer);
 
       if (answerId.indexOf(feedback)) {
+        const answerDivId = this.getAnswerFeedbackDivId(i);
+
         let feedbackStyles = {};
 
         if (correctAnswers.includes(answerId)) {

@@ -90,7 +90,7 @@ export default class UniversalInput extends React.Component{
     let item = this.props.item;
     let messages = "";
     let solution = "";
-    let visuallyHiddenReviewPrompt = "";
+    let visuallyHiddenReviewPrompt = null;
     let items = "";
 
     if(item.messages){
@@ -134,6 +134,7 @@ export default class UniversalInput extends React.Component{
       case "multiple_choice_question":
       case "true_false_question":
         items = this.renderMultipleChoiceQuestion(item, styles);
+        visuallyHiddenReviewPrompt = this.renderReviewPromptForMultipleChoiceQuestion(item);
         break;
       case "matching_question":
         items = <Matching assessmentKind={this.props.assessmentKind} isDisabled={this.props.isResult}  item={item} name="answer-option"/>;
@@ -157,9 +158,6 @@ export default class UniversalInput extends React.Component{
         <div className="panel-heading text-center" style={styles.panelHeading}>
           { messages }
         </div>
-        <div aria-live="polite">
-          { visuallyHiddenReviewPrompt }
-        </div>
         <div
           className={item.question_type === "multiple_dropdowns_question" ? "" : "panel-body"}
           style={styles.panelBody}
@@ -168,6 +166,9 @@ export default class UniversalInput extends React.Component{
         </div>
         <div>
           { solution }
+        </div>
+        <div aria-live="polite" style={styles.visuallyHidden}>
+          { visuallyHiddenReviewPrompt }
         </div>
       </div>
     );
@@ -198,6 +199,29 @@ export default class UniversalInput extends React.Component{
         { answers }
       </fieldset>
     );
+  }
+
+  renderReviewPromptForMultipleChoiceQuestion(item) {
+    if (this.props.isResult) {
+      const chosenAnswers = item.answers.filter((answer) => {
+        return this.wasChosen(answer.id);
+      });
+      if (chosenAnswers.length > 0) {
+        const chosenAnswer = chosenAnswers[0];
+        const isCorrectMessage = (this.showAsCorrect(chosenAnswer.id))
+          ? "Your choice is correct."
+          : "Your choice is incorrect.";
+        return (<div>
+          { isCorrectMessage }
+          <div dangerouslySetInnerHTML={ { __html: this.answerFeedback(chosenAnswer.id) } }/>
+        </div>);
+        return null;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
   }
 
   renderMultipleAnswersQuestion(item, styles) {
