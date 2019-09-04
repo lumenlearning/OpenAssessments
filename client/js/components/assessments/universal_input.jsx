@@ -149,7 +149,8 @@ export default class UniversalInput extends React.Component{
         items = <MomEmbed assessmentKind={this.props.assessmentKind} key={item.id} item={item} redisplayJWT={this.props.chosen ? this.props.chosen : null} registerGradingCallback={this.props.registerGradingCallback} />;
         break;
       case 'multiple_dropdowns_question':
-        items = <MultiDropDown assessmentKind={this.props.assessmentKind} isResult={this.props.isResult} key={item.id} item={item} selectedAnswers={this.props.chosen} selectCorrectAnswer={this.props.correctAnswers && this.props.correctAnswers.length > 0} visuallyHiddenStyle={styles.visuallyHidden} />;
+        items = <MultiDropDown assessmentKind={this.props.assessmentKind} isResult={this.props.isResult} key={item.id} item={item} selectedAnswers={this.props.chosen} selectCorrectAnswer={this.props.correctAnswers && this.props.correctAnswers.length > 0} />;
+        visuallyHiddenReviewPrompt = this.renderReviewPromptForMultiDropDownQuestion(item, this.props.chosen);
       break;
     }
 
@@ -247,6 +248,36 @@ export default class UniversalInput extends React.Component{
         { answers }
       </fieldset>
     );
+  }
+
+  renderReviewPromptForMultiDropDownQuestion(item, chosenAnswers) {
+    if (this.props.isResult && chosenAnswers && chosenAnswers.length > 0) {
+        let correctCount = 0;
+        const dropdownFeedbacks = chosenAnswers.map((ca, i) => {
+          const dropDownChoices = item.dropdowns[ca.dropdown_id];
+          const answerInfo = dropDownChoices.find((choice) => choice.value === ca.chosen_answer_id);
+
+          if (!answerInfo) {
+            return null;
+          } else {
+            if (answerInfo.isCorrect) {
+              correctCount += 1;
+            }
+            const feedback = (answerInfo.feedback) ? ` Feedback: ${answerInfo.feedback}` : "";
+            return `Selection ${i + 1} - ${answerInfo.name} - ${answerInfo.isCorrect ? " correct" : " incorrect"}.${feedback}`;
+          }
+        });
+        let summaryMessage = "Question answer correct.";
+        if (correctCount === 0) {
+          summaryMessage = "Question answer incorrect.";
+        } else if (correctCount < Object.keys(item.dropdowns).length) {
+          summaryMessage = "Question answer partially correct.";
+        }
+        const feedback = `${summaryMessage} You selected: ${dropdownFeedbacks.filter((msg) => msg !==  null).join("\n")}`;
+        return (<div dangerouslySetInnerHTML={ { __html: feedback } }/>);
+  } else {
+      return null;
+    }
   }
 }
 
