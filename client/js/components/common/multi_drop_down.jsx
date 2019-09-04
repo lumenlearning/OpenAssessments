@@ -61,12 +61,20 @@ export default class MultiDropDown extends BaseComponent {
     this.removeListeners();
   }
 
+  quoteObjectAsCss(v) {
+    const asCss = Object.keys(v).map((k) => `${k}: ${v[k]}`).join("; ");
+    return `"${asCss}"`;
+  }
+
+  isAlreadyQuoted(v) {
+    return (v && v.match && v.match(/^\".+\"$/));
+  }
+
   quoteAttributes(v) {
     if (typeof(v) === "object") {
-      const asCss = Object.keys(v).map((k) => `${k}: ${v[k]}`).join("; ");
-      return `"${asCss}"`;
+      return this.quoteObjectAsCss(v);
     } else {
-      return (v && v.match && v.match(/^\".+\"$/)) ? v : `"${v}"`;
+      return (this.isAlreadyQuoted(v)) ? v : `"${v}"`;
     }
   }
 

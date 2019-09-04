@@ -215,7 +215,6 @@ export default class UniversalInput extends React.Component{
           <div dangerouslySetInnerHTML={ { __html: chosenAnswer.material } }/> .
           <div dangerouslySetInnerHTML={ { __html: this.answerFeedback(chosenAnswer.id) } }/>
         </div>);
-        return null;
       } else {
         return null;
       }
@@ -250,30 +249,43 @@ export default class UniversalInput extends React.Component{
     );
   }
 
+  renderReviewForSingleDropdown(item, chosenAnswer, index) {
+    const dropDownChoices = item.dropdowns[chosenAnswer.dropdown_id];
+    const answerInfo = dropDownChoices.find((choice) => choice.value === chosenAnswer.chosen_answer_id);
+
+    if (!answerInfo) {
+      return null;
+    } else {
+      const feedback = (answerInfo.feedback) ? ` Feedback: ${answerInfo.feedback}` : "";
+      return `Selection ${index + 1} - ${answerInfo.name} - ${answerInfo.isCorrect ? " correct" : " incorrect"}.${feedback}`;
+    }
+  }
+
+  determineDropdownCorrectMessage(item, chosenAnswers) {
+    const correctCount = chosenAnswers.reduce((sum, currChosenAnswer) => {
+      if (currChosenAnswer.isCorrect) {
+        return sum + 1;
+      } else {
+        return sum;
+      }
+    }, 0);
+    if (correctCount === 0) {
+      return "Question answer incorrect.";
+    } else if (correctCount < Object.keys(item.dropdowns).length) {
+      return "Question answer partially correct.";
+    } else {
+      return "Question answer correct.";
+    }
+  }
+
   renderReviewPromptForMultiDropDownQuestion(item, chosenAnswers) {
     if (this.props.isResult && chosenAnswers && chosenAnswers.length > 0) {
-        let correctCount = 0;
-        const dropdownFeedbacks = chosenAnswers.map((ca, i) => {
-          const dropDownChoices = item.dropdowns[ca.dropdown_id];
-          const answerInfo = dropDownChoices.find((choice) => choice.value === ca.chosen_answer_id);
-
-          if (!answerInfo) {
-            return null;
-          } else {
-            if (answerInfo.isCorrect) {
-              correctCount += 1;
-            }
-            const feedback = (answerInfo.feedback) ? ` Feedback: ${answerInfo.feedback}` : "";
-            return `Selection ${i + 1} - ${answerInfo.name} - ${answerInfo.isCorrect ? " correct" : " incorrect"}.${feedback}`;
-          }
-        });
-        let summaryMessage = "Question answer correct.";
-        if (correctCount === 0) {
-          summaryMessage = "Question answer incorrect.";
-        } else if (correctCount < Object.keys(item.dropdowns).length) {
-          summaryMessage = "Question answer partially correct.";
-        }
-        const feedback = `${summaryMessage} You selected: ${dropdownFeedbacks.filter((msg) => msg !==  null).join("\n")}`;
+        const dropdownFeedbacks = chosenAnswers.
+          map((ca, i) => this.renderReviewForSingleDropdown(item, ca, i)).
+          filter((msg) => msg !==  null).
+          join("\n");
+        const summaryMessage = this.determineDropdownCorrectMessage(item, chosenAnswers);
+        const feedback = `${summaryMessage} You selected: ${dropdownFeedbacks}`;
         return (<div dangerouslySetInnerHTML={ { __html: feedback } }/>);
   } else {
       return null;
