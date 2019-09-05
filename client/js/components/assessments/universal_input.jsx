@@ -163,11 +163,11 @@ export default class UniversalInput extends React.Component{
         break;
       case "essay_question":
         items = <TextArea assessmentKind={this.props.assessmentKind} completed={this.props.completed} isDisabled={this.props.isResult} key="textarea_essay_input" item={item} initialText={this.props.chosen} />;
-        visuallyHiddenReviewPrompt = this.renderDefaultReviewPrompt(styles);
+        visuallyHiddenReviewPrompt = "";
         break;
       case "multiple_answers_question":
         items = this.renderMultipleAnswersQuestion(item, styles);
-        visuallyHiddenReviewPrompt = this.renderDefaultReviewPrompt(styles);
+        visuallyHiddenReviewPrompt = this.renderReviewPromptForMultipleAnswersQuestion(item);
         break;
       case "mom_embed":
         items = <MomEmbed assessmentKind={this.props.assessmentKind} key={item.id} item={item} redisplayJWT={this.props.chosen ? this.props.chosen : null} registerGradingCallback={this.props.registerGradingCallback} />;
@@ -255,7 +255,8 @@ export default class UniversalInput extends React.Component{
           isDisabled={this.props.isResult}
           key={item.id + "_" + answer.id}
           id={item.id + "_" + answer.id}
-          item={answer} name="answer-check"
+          item={answer}
+          name="answer-check"
           checked={this.wasChosen(answer.id)}
           showAsCorrect={this.showAsCorrect(answer.id)}
           answerFeedback={this.answerFeedback(answer.id)}
@@ -271,6 +272,77 @@ export default class UniversalInput extends React.Component{
         { answers }
       </fieldset>
     );
+  }
+
+  renderMultiAnswerCorrectSummary(item) {
+    const totalToCheck = (this.props.correctAnswers && this.props.correctAnswers[0])
+      ? this.props.correctAnswers[0].id.length
+      : -1;
+    const correctCount = item.answers.reduce((sum, answer) => {
+      if (this.showAsCorrect(answer.id) && this.wasChosen(answer.id)) {
+        return sum + 1;
+      } else {
+        return sum;
+      }
+    }, 0);
+    if (correctCount === 0 ) {
+      return "Question answer incorrect. ";
+    } else if (correctCount < totalToCheck) {
+      return "Question answer partially correct. "
+    } else {
+      return "Question answer correct. ";
+    }
+  }
+
+  renderMultiAnswerCorrectFeedback(answer) {
+    const chosen = this.wasChosen(answer.id);
+    const isCorrect = this.showAsCorrect(answer.id);
+
+    if (chosen) {
+      if (isCorrect) {
+        return " Correctly chosen. ";
+      } else {
+        return " Incorrectly chosen. ";
+      }
+    } else if (isCorrect) {
+      return " Incorrectly not chosen. "
+    }
+  }
+
+  renderReviewPromptForMultipleAnswersQuestion(item) {
+    if (this.props.isResult) {
+      const summary = this.renderMultiAnswerCorrectSummary(item);
+      const prompts = item.answers.
+        map((answer, index) => {
+          if (this.wasChosen(answer.id) || this.showAsCorrect(answer.id)) {
+            const feedback = this.answerFeedback(answer.id);
+
+            const prefix = `Item ${index + 1} `;
+            const correctFeedback = this.renderMultiAnswerCorrectFeedback(answer);
+            const renderableFeedback = (feedback && feedback.length > 0)
+              ? (<div>Feedback: <span dangerouslySetInnerHTML={ { __html: feedback } }/></div>)
+              : "";
+            const material = answer.material;
+
+            return (<div>
+              { prefix }
+              <span dangerouslySetInnerHTML={ { __html: material } } />
+              { correctFeedback }
+              { renderableFeedback }
+              </div>);
+          } else {
+            // can't filter, because that messes up the index of the array,
+            // so instead, just return null if we don't have any feedback to show
+            return null;
+          }
+        });
+      return (<div>
+        { summary }
+        { prompts }
+      </div>);
+    } else {
+      return null;
+    }
   }
 
   renderReviewForSingleDropdown(item, chosenAnswer, index) {
@@ -311,7 +383,7 @@ export default class UniversalInput extends React.Component{
         const summaryMessage = this.determineDropdownCorrectMessage(item, chosenAnswers);
         const feedback = `${summaryMessage} You selected: ${dropdownFeedbacks}`;
         return (<div dangerouslySetInnerHTML={ { __html: feedback } }/>);
-  } else {
+    } else {
       return null;
     }
   }

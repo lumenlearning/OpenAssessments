@@ -23,7 +23,9 @@ export default class TextArea extends React.Component{
           defaultValue={this.props.initialText}
           disabled={this.props.isDisabled}
           />
-          {this.answerFeedback()}
+          <div aria-live="polite">
+            {this.answerFeedback()}
+          </div>
       </div>
     );
   }
