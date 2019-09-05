@@ -90,7 +90,7 @@ export default class UniversalInput extends React.Component{
       var renderedMessages = item.messages.map(function(message){
         return (<li>{message}</li>);
       });
-      render (<div className="panel-messages alert alert-danger" role="alert">
+      return (<div className="panel-messages alert alert-danger" role="alert">
         <ul>
           {renderedMessages}
         </ul>
@@ -113,7 +113,7 @@ export default class UniversalInput extends React.Component{
     * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
     */
     if (item.isGraded && item.solution) {
-      render (<div className="panel-footer text-center">
+      return (<div className="panel-footer text-center">
         <div
                 dangerouslySetInnerHTML={{
                 __html: item.solution
@@ -125,7 +125,7 @@ export default class UniversalInput extends React.Component{
     }
   }
 
-  renderDefaultReviewPrompt() {
+  renderDefaultReviewPrompt(styles) {
     if (this.props.isResult) {
       return (<div style={styles.visuallyHidden}>
         Your selection has been evaluated.  Please navigate forward to receive feedback.
@@ -159,19 +159,19 @@ export default class UniversalInput extends React.Component{
         break;
       case "matching_question":
         items = <Matching assessmentKind={this.props.assessmentKind} isDisabled={this.props.isResult}  item={item} name="answer-option"/>;
-        visuallyHiddenReviewPrompt = this.renderDefaultReviewPrompt();
+        visuallyHiddenReviewPrompt = this.renderDefaultReviewPrompt(styles);
         break;
       case "essay_question":
         items = <TextArea assessmentKind={this.props.assessmentKind} completed={this.props.completed} isDisabled={this.props.isResult} key="textarea_essay_input" item={item} initialText={this.props.chosen} />;
-        visuallyHiddenReviewPrompt = this.renderDefaultReviewPrompt();
+        visuallyHiddenReviewPrompt = this.renderDefaultReviewPrompt(styles);
         break;
       case "multiple_answers_question":
         items = this.renderMultipleAnswersQuestion(item, styles);
-        visuallyHiddenReviewPrompt = this.renderDefaultReviewPrompt();
+        visuallyHiddenReviewPrompt = this.renderDefaultReviewPrompt(styles);
         break;
       case "mom_embed":
         items = <MomEmbed assessmentKind={this.props.assessmentKind} key={item.id} item={item} redisplayJWT={this.props.chosen ? this.props.chosen : null} registerGradingCallback={this.props.registerGradingCallback} />;
-        visuallyHiddenReviewPrompt = this.renderDefaultReviewPrompt();
+        visuallyHiddenReviewPrompt = this.renderDefaultReviewPrompt(styles);
         break;
       case 'multiple_dropdowns_question':
         items = <MultiDropDown assessmentKind={this.props.assessmentKind} isResult={this.props.isResult} key={item.id} item={item} selectedAnswers={this.props.chosen} selectCorrectAnswer={this.props.correctAnswers && this.props.correctAnswers.length > 0} />;
