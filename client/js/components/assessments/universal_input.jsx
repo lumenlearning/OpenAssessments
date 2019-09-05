@@ -85,50 +85,71 @@ export default class UniversalInput extends React.Component{
     }
   }
 
+  renderMessages(item) {
+    if(item.messages){
+      var renderedMessages = item.messages.map(function(message){
+        return (<li>{message}</li>);
+      });
+      render (<div className="panel-messages alert alert-danger" role="alert">
+        <ul>
+          {renderedMessages}
+        </ul>
+      </div>);
+    } else {
+      return null;
+    }
+  }
+
+  renderSolution(item) {
+    /**
+    * Note on dangerouslySetInnerHTML Usage
+    *
+    * It is generally not a good idea to use dangerouslySetInnerHTML because it
+    * may expose applications to XSS attacks. We are opting to use it here and
+    * and in other places in the code base because the assessment content is
+    * is stored in (and returned from) the DB as XML, which limits our options
+    * in how we can handle assessment "material" on the frontend.
+    *
+    * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
+    */
+    if (item.isGraded && item.solution) {
+      render (<div className="panel-footer text-center">
+        <div
+                dangerouslySetInnerHTML={{
+                __html: item.solution
+                }}>
+        </div>
+      </div>);
+    } else {
+      return "";
+    }
+  }
+
+  renderDefaultReviewPrompt() {
+    if (this.props.isResult) {
+      return (<div style={styles.visuallyHidden}>
+        Your selection has been evaluated.  Please navigate forward to receive feedback.
+      </div>);
+    } else {
+      return "";
+    }
+  }
+
+  determineItemsClassName(item, styles) {
+    if (item.question_type === "multiple_dropdowns_question") {
+      return { style: styles.panelBody };
+    } else {
+      return { className: "panel-body", style: styles.panelBody };
+    }
+  }
+
   render() {
     let styles = this.getStyles(this.props, this.context.theme);
     let item = this.props.item;
-    let messages = "";
-    let solution = "";
+    const messages = this.renderMessages(item);
+    const solution = this.renderSolution(item);
     let visuallyHiddenReviewPrompt = null;
     let items = "";
-
-    if(item.messages){
-      var renderedMessages = item.messages.map(function(message){
-       return (<li>{message}</li>);
-      });
-      messages = (<div className="panel-messages alert alert-danger" role="alert">
-                   <ul>
-                     {renderedMessages}
-                   </ul>
-                 </div>);
-    }
-
-    /**
-     * Note on dangerouslySetInnerHTML Usage
-     *
-     * It is generally not a good idea to use dangerouslySetInnerHTML because it
-     * may expose applications to XSS attacks. We are opting to use it here and
-     * and in other places in the code base because the assessment content is
-     * is stored in (and returned from) the DB as XML, which limits our options
-     * in how we can handle assessment "material" on the frontend.
-     *
-     * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
-     */
-    if (item.isGraded && item.solution) {
-      solution = (<div className="panel-footer text-center">
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: item.solution
-                  }}>
-                </div>
-               </div>);
-    }
-    if (this.props.isResult) {
-      visuallyHiddenReviewPrompt = (<div style={styles.visuallyHidden}>
-        Your selection has been evaluated.  Please navigate forward to receive feedback.
-      </div>);
-    }
 
     switch(item.question_type){
       case "multiple_choice_question":
@@ -138,15 +159,19 @@ export default class UniversalInput extends React.Component{
         break;
       case "matching_question":
         items = <Matching assessmentKind={this.props.assessmentKind} isDisabled={this.props.isResult}  item={item} name="answer-option"/>;
+        visuallyHiddenReviewPrompt = this.renderDefaultReviewPrompt();
         break;
       case "essay_question":
         items = <TextArea assessmentKind={this.props.assessmentKind} completed={this.props.completed} isDisabled={this.props.isResult} key="textarea_essay_input" item={item} initialText={this.props.chosen} />;
+        visuallyHiddenReviewPrompt = this.renderDefaultReviewPrompt();
         break;
       case "multiple_answers_question":
         items = this.renderMultipleAnswersQuestion(item, styles);
+        visuallyHiddenReviewPrompt = this.renderDefaultReviewPrompt();
         break;
       case "mom_embed":
         items = <MomEmbed assessmentKind={this.props.assessmentKind} key={item.id} item={item} redisplayJWT={this.props.chosen ? this.props.chosen : null} registerGradingCallback={this.props.registerGradingCallback} />;
+        visuallyHiddenReviewPrompt = this.renderDefaultReviewPrompt();
         break;
       case 'multiple_dropdowns_question':
         items = <MultiDropDown assessmentKind={this.props.assessmentKind} isResult={this.props.isResult} key={item.id} item={item} selectedAnswers={this.props.chosen} selectCorrectAnswer={this.props.correctAnswers && this.props.correctAnswers.length > 0} />;
@@ -154,15 +179,14 @@ export default class UniversalInput extends React.Component{
       break;
     }
 
+    const itemsStyles = this.determineItemsClassName(item, styles);
+
     return (
       <div className="panel-messages-container panel panel-default" style={styles.panel}>
         <div className="panel-heading text-center" style={styles.panelHeading}>
           { messages }
         </div>
-        <div
-          className={item.question_type === "multiple_dropdowns_question" ? "" : "panel-body"}
-          style={styles.panelBody}
-          >
+        <div {...itemsStyles}>
           { items }
         </div>
         <div>
