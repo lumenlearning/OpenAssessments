@@ -274,21 +274,29 @@ export default class UniversalInput extends React.Component{
     );
   }
 
-  renderMultiAnswerCorrectSummary(item) {
-    const totalToCheck = (this.props.correctAnswers && this.props.correctAnswers[0])
+  determineMultiAnswerTotals(item) {
+    return (this.props.correctAnswers && this.props.correctAnswers[0])
       ? this.props.correctAnswers[0].id.length
       : -1;
-    const correctCount = item.answers.reduce((sum, answer) => {
+  }
+
+  determineMultiAnswerCorrectCount(item) {
+    return item.answers.reduce((sum, answer) => {
       if (this.showAsCorrect(answer.id) && this.wasChosen(answer.id)) {
         return sum + 1;
       } else {
         return sum;
       }
     }, 0);
+  }
+
+  renderMultiAnswerCorrectSummary(item) {
+    const totalToCheck = this.determineMultiAnswerTotals(item);
+    const correctCount = this.determineMultiAnswerCorrectCount(item);
     if (correctCount === 0 ) {
       return "Question answer incorrect. ";
     } else if (correctCount < totalToCheck) {
-      return "Question answer partially correct. "
+      return "Question answer partially correct. ";
     } else {
       return "Question answer correct. ";
     }
@@ -305,8 +313,15 @@ export default class UniversalInput extends React.Component{
         return " Incorrectly chosen. ";
       }
     } else if (isCorrect) {
-      return " Incorrectly not chosen. "
+      return " Incorrectly not chosen. ";
     }
+  }
+
+  buildMultiAnswerRenderableFeedback(answer) {
+    const feedback = this.answerFeedback(answer.id);
+    return (feedback && feedback.length > 0)
+      ? (<div>Feedback: <span dangerouslySetInnerHTML={ { __html: feedback } }/></div>)
+      : "";
   }
 
   renderReviewPromptForMultipleAnswersQuestion(item) {
@@ -315,13 +330,9 @@ export default class UniversalInput extends React.Component{
       const prompts = item.answers.
         map((answer, index) => {
           if (this.wasChosen(answer.id) || this.showAsCorrect(answer.id)) {
-            const feedback = this.answerFeedback(answer.id);
-
             const prefix = `Item ${index + 1} `;
             const correctFeedback = this.renderMultiAnswerCorrectFeedback(answer);
-            const renderableFeedback = (feedback && feedback.length > 0)
-              ? (<div>Feedback: <span dangerouslySetInnerHTML={ { __html: feedback } }/></div>)
-              : "";
+            const renderableFeedback = this.buildMultiAnswerRenderableFeedback(answer);
             const material = answer.material;
 
             return (<div>
