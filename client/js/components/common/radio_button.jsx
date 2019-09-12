@@ -36,6 +36,11 @@ export default class RadioButton extends React.Component {
       inputProps["aria-invalid"] = false;
       inputProps["aria-describedby"] = this.feedbackId();
     }
+    if (this.props.addRef) {
+      inputProps["ref"] = (node) => {
+        this.props.setRef(node);
+      };
+    }
     return (
       <div>
         {this.renderAnswerIndicator()}

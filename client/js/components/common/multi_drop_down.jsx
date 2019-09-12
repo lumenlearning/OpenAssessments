@@ -51,6 +51,13 @@ export default class MultiDropDown extends BaseComponent {
 
   componentDidUpdate() {
     this.addListeners();
+    if (this.props.isResult && this.props.shouldFocusForFeedback && this.focusDropdown) {
+      const focusDropdownEle = document.getElementById(this.focusDropdown);
+      if (focusDropdownEle) {
+        focusDropdownEle.focus();
+        this.focusDropdown = null;
+      }
+    }
   }
 
   componentDidMount() {
@@ -82,6 +89,8 @@ export default class MultiDropDown extends BaseComponent {
     let i = 0;
     let re = new RegExp(`\\[${Object.keys(this.props.item.dropdowns).join("\\]|\\[")}\\]`, "gi");
 
+    const that = this;
+
     return this.props.item.material.replace(re, (match) => {
       let str = `"blank ${i}"`;
       let nMatch = match.replace(new RegExp("\\[|\\]", "g"), ""); //from '[shortcode]' to 'shortcode'
@@ -90,11 +99,16 @@ export default class MultiDropDown extends BaseComponent {
       });
       const describedBy = this.getAnswerFeedbackDivId(i);
 
+      const dropdownId = `dropdown_${nMatch}`;
+      if (i === 0 && this.props.isResult) {
+        that.focusDropdown = dropdownId;
+      }
+
       i++;
 
       const selectProps = {
         name: nMatch,
-        id: `dropdown_${nMatch}`
+        id: dropdownId
       };
       selectProps["aria-label"] = this.getAriaAnswerLabel(nMatch, str);
 

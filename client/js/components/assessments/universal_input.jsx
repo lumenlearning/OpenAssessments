@@ -114,11 +114,7 @@ export default class UniversalInput extends React.Component{
     */
     if (item.isGraded && item.solution) {
       return (<div className="panel-footer text-center">
-        <div
-                dangerouslySetInnerHTML={{
-                __html: item.solution
-                }}>
-        </div>
+        <div dangerouslySetInnerHTML={{ __html: item.solution }}></div>
       </div>);
     } else {
       return "";
@@ -127,9 +123,7 @@ export default class UniversalInput extends React.Component{
 
   renderDefaultReviewPrompt(styles) {
     if (this.props.isResult) {
-      return (<div style={styles.visuallyHidden}>
-        Your selection has been evaluated.  Please navigate forward to receive feedback.
-      </div>);
+      return (<div style={styles.visuallyHidden}>Your selection has been evaluated.</div>);
     } else {
       return "";
     }
@@ -174,7 +168,7 @@ export default class UniversalInput extends React.Component{
         visuallyHiddenReviewPrompt = this.renderDefaultReviewPrompt(styles);
         break;
       case 'multiple_dropdowns_question':
-        items = <MultiDropDown assessmentKind={this.props.assessmentKind} isResult={this.props.isResult} key={item.id} item={item} selectedAnswers={this.props.chosen} selectCorrectAnswer={this.props.correctAnswers && this.props.correctAnswers.length > 0} />;
+        items = <MultiDropDown assessmentKind={this.props.assessmentKind} isResult={this.props.isResult} key={item.id} item={item} selectedAnswers={this.props.chosen} selectCorrectAnswer={this.props.correctAnswers && this.props.correctAnswers.length > 0} shouldFocusForFeedback={this.props.shouldFocusForFeedback} />;
         visuallyHiddenReviewPrompt = this.renderReviewPromptForMultiDropDownQuestion(item, this.props.chosen);
       break;
     }
@@ -183,6 +177,9 @@ export default class UniversalInput extends React.Component{
 
     return (
       <div className="panel-messages-container panel panel-default" style={styles.panel}>
+        <div aria-live="polite" style={styles.visuallyHidden}>
+          { visuallyHiddenReviewPrompt }
+        </div>
         <div className="panel-heading text-center" style={styles.panelHeading}>
           { messages }
         </div>
@@ -192,15 +189,17 @@ export default class UniversalInput extends React.Component{
         <div>
           { solution }
         </div>
-        <div aria-live="polite" style={styles.visuallyHidden}>
-          { visuallyHiddenReviewPrompt }
-        </div>
       </div>
     );
   }
 
   renderMultipleChoiceQuestion(item, styles) {
+    let refAdded = false;
     let answers = item.answers.map((answer, index) => {
+      const showsFeedback = (!refAdded && this.props.isResult && (this.wasChosen(answer.id) || this.answerFeedback(answer.id)));
+      if (showsFeedback) {
+        refAdded = true;
+      }
       return (
         <RadioButton
           assessmentKind={this.props.assessmentKind}
@@ -212,6 +211,8 @@ export default class UniversalInput extends React.Component{
           checked={this.wasChosen(answer.id)}
           showAsCorrect={this.showAsCorrect(answer.id)}
           answerFeedback={this.answerFeedback(answer.id)}
+          addRef={showsFeedback}
+          setRef={this.props.setFeedbackRef}
           />
       );
     });
@@ -224,6 +225,18 @@ export default class UniversalInput extends React.Component{
     );
   }
 
+  renderCorrectResponsePrompt() {
+    return (<div>The question has been evaluated. Your choice is correct.</div>);
+  }
+
+  renderIncorrectResponsePrompt() {
+    return (<div>The question has been evaluated. Your choice is incorrect.</div>);
+  }
+
+  renderPartiallyCorrectResponsePrompt() {
+    return (<div>The question has been evaluated. Your choice is partially correct.</div>);
+  }
+
   renderReviewPromptForMultipleChoiceQuestion(item) {
     if (this.props.isResult) {
       const chosenAnswers = item.answers.filter((answer) => {
@@ -231,14 +244,11 @@ export default class UniversalInput extends React.Component{
       });
       if (chosenAnswers.length > 0) {
         const chosenAnswer = chosenAnswers[0];
-        const isCorrectMessage = (this.showAsCorrect(chosenAnswer.id))
-          ? "correct"
-          : "incorrect";
-        return (<div>
-          The question has been evaluated.  Your choice is { isCorrectMessage }.  You selected:
-          <div dangerouslySetInnerHTML={ { __html: chosenAnswer.material } }/> .
-          <div dangerouslySetInnerHTML={ { __html: this.answerFeedback(chosenAnswer.id) } }/>
-        </div>);
+        if (this.showAsCorrect(chosenAnswer.id)) {
+          return this.renderCorrectResponsePrompt();
+        } else {
+          return this.renderIncorrectResponsePrompt();
+        }
       } else {
         return null;
       }
@@ -248,7 +258,12 @@ export default class UniversalInput extends React.Component{
   }
 
   renderMultipleAnswersQuestion(item, styles) {
+    let refAdded = false;
     let answers = item.answers.map((answer, index) => {
+      const showsFeedback = (!refAdded && this.props.isResult && (this.wasChosen(answer.id) || this.answerFeedback(answer.id)));
+      if (showsFeedback) {
+        refAdded = true;
+      }
       return (
         <CheckBox
           assessmentKind={this.props.assessmentKind}
@@ -262,6 +277,8 @@ export default class UniversalInput extends React.Component{
           answerFeedback={this.answerFeedback(answer.id)}
           index={index}
           visuallyHiddenStyle={styles.visuallyHidden}
+          addRef={showsFeedback}
+          setRef={this.props.setFeedbackRef}
           />
       );
     });
@@ -290,110 +307,41 @@ export default class UniversalInput extends React.Component{
     }, 0);
   }
 
-  renderMultiAnswerCorrectSummary(item) {
+  renderReviewPromptForMultipleAnswersQuestion(item) {
     const totalToCheck = this.determineMultiAnswerTotals(item);
     const correctCount = this.determineMultiAnswerCorrectCount(item);
     if (correctCount === 0 ) {
-      return "Question answer incorrect. ";
+      return this.renderIncorrectResponsePrompt();
     } else if (correctCount < totalToCheck) {
-      return "Question answer partially correct. ";
+      return this.renderPartiallyCorrectResponsePrompt();
     } else {
-      return "Question answer correct. ";
-    }
-  }
-
-  renderMultiAnswerCorrectFeedback(answer) {
-    const chosen = this.wasChosen(answer.id);
-    const isCorrect = this.showAsCorrect(answer.id);
-
-    if (chosen) {
-      if (isCorrect) {
-        return " Correctly chosen. ";
-      } else {
-        return " Incorrectly chosen. ";
-      }
-    } else if (isCorrect) {
-      return " Incorrectly not chosen. ";
-    }
-  }
-
-  buildMultiAnswerRenderableFeedback(answer) {
-    const feedback = this.answerFeedback(answer.id);
-    return (feedback && feedback.length > 0)
-      ? (<div>Feedback: <span dangerouslySetInnerHTML={ { __html: feedback } }/></div>)
-      : "";
-  }
-
-  renderReviewPromptForMultipleAnswersQuestion(item) {
-    if (this.props.isResult) {
-      const summary = this.renderMultiAnswerCorrectSummary(item);
-      const prompts = item.answers.
-        map((answer, index) => {
-          if (this.wasChosen(answer.id) || this.showAsCorrect(answer.id)) {
-            const prefix = `Item ${index + 1} `;
-            const correctFeedback = this.renderMultiAnswerCorrectFeedback(answer);
-            const renderableFeedback = this.buildMultiAnswerRenderableFeedback(answer);
-            const material = answer.material;
-
-            return (<div>
-              { prefix }
-              <span dangerouslySetInnerHTML={ { __html: material } } />
-              { correctFeedback }
-              { renderableFeedback }
-              </div>);
-          } else {
-            // can't filter, because that messes up the index of the array,
-            // so instead, just return null if we don't have any feedback to show
-            return null;
-          }
-        });
-      return (<div>
-        { summary }
-        { prompts }
-      </div>);
-    } else {
-      return null;
-    }
-  }
-
-  renderReviewForSingleDropdown(item, chosenAnswer, index) {
-    const dropDownChoices = item.dropdowns[chosenAnswer.dropdown_id];
-    const answerInfo = dropDownChoices.find((choice) => choice.value === chosenAnswer.chosen_answer_id);
-
-    if (!answerInfo) {
-      return null;
-    } else {
-      const feedback = (answerInfo.feedback) ? ` Feedback: ${answerInfo.feedback}` : "";
-      return `Selection ${index + 1} - ${answerInfo.name} - ${answerInfo.isCorrect ? " correct" : " incorrect"}.${feedback}`;
+      return this.renderCorrectResponsePrompt();
     }
   }
 
   determineDropdownCorrectMessage(item, chosenAnswers) {
-    const correctCount = chosenAnswers.reduce((sum, currChosenAnswer) => {
-      if (currChosenAnswer.isCorrect) {
+    const correctCount = chosenAnswers.reduce((sum, currChosenAnswer, i) => {
+      if (currChosenAnswer.chosen_answer_id &&
+        this.props.correctAnswers[i] &&
+        this.props.correctAnswers[i].value &&
+        currChosenAnswer.chosen_answer_id === this.props.correctAnswers[i].value) {
         return sum + 1;
       } else {
         return sum;
       }
     }, 0);
     if (correctCount === 0) {
-      return "Question answer incorrect.";
+      return this.renderIncorrectResponsePrompt();
     } else if (correctCount < Object.keys(item.dropdowns).length) {
-      return "Question answer partially correct.";
+      return this.renderPartiallyCorrectResponsePrompt();
     } else {
-      return "Question answer correct.";
+      return this.renderCorrectResponsePrompt();
     }
   }
 
   renderReviewPromptForMultiDropDownQuestion(item, chosenAnswers) {
     if (this.props.isResult && chosenAnswers && chosenAnswers.length > 0) {
-        const dropdownFeedbacks = chosenAnswers.
-          map((ca, i) => this.renderReviewForSingleDropdown(item, ca, i)).
-          filter((msg) => msg !==  null).
-          join("\n");
-        const summaryMessage = this.determineDropdownCorrectMessage(item, chosenAnswers);
-        const feedback = `${summaryMessage} You selected: ${dropdownFeedbacks}`;
-        return (<div dangerouslySetInnerHTML={ { __html: feedback } }/>);
+      return this.determineDropdownCorrectMessage(item, chosenAnswers);
     } else {
       return null;
     }

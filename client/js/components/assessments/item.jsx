@@ -50,28 +50,23 @@ export default class Item extends BaseComponent {
                   <div aria-live="polite">
                     { this.newQuestionNotification(styles) }
                   </div>
+                  <h2 style={styles.visuallyHidden} ref="assessmenttext" tabIndex="-1">Assessment Text</h2>
                   <div
                     className="question_text"
-                    style={this.props.question.question_type !== "multiple_dropdowns_question" ? styles.questionText : {}}
-                    role="region"
-                    aria-labelledby="assessmentTextHeader">
-                      <div id="assessmentTextHeader" style={styles.visuallyHidden}>Assessment Text</div>
+                    style={this.props.question.question_type !== "multiple_dropdowns_question" ? styles.questionText : {}} >
                       {this.questionDirections(styles)}
                       {this.questionContent()}
                   </div>
                   {this.inputOrReview(styles)}
+                  <div>
+                    {this.getConfidenceLevels(this.props.confidenceLevels, styles)}
+                    {this.checkAnswerButton(styles)}
+                    {this.getNavigationButtons(styles)}
+                    {this.submitAssessmentButton(styles)}
+                    {this.getWarning(this.state, this.props.questionCount, this.props.currentIndex, styles)}
+                    {this.mustAnswerMessage(styles)}
+                  </div>
                 </main>
-                <div>
-                  {this.getConfidenceLevels(this.props.confidenceLevels, styles)}
-                  {this.checkAnswerButton(styles)}
-                  {this.getNavigationButtons(styles)}
-                  {this.submitAssessmentButton(styles)}
-                  {this.getWarning(this.state, this.props.questionCount, this.props.currentIndex, styles)}
-                  {this.mustAnswerMessage(styles)}
-                </div>
-                <div role="region" aria-labelledby="assessmentBottomBoundary" style={styles.visuallyHidden}>
-                  <div id="assessmentBottomBoundary">This is the bottom of the assessment area.</div>
-                </div>
               </div>
             </form>
 
@@ -79,6 +74,19 @@ export default class Item extends BaseComponent {
         </div>
       </div>
     );
+  }
+
+  componentDidUpdate() {
+    if (this.props.newQuestion && this.refs.assessmenttext && this.refs.assessmenttext.getDOMNode()) {
+      this.refs.assessmenttext.getDOMNode().focus();
+    }
+    if (this.state && this.state.forceFeedbackFocus) {
+      if (this.feedbackRef && this.feedbackRef.getDOMNode()) {
+        // focus on the top component
+        this.feedbackRef.getDOMNode().focus();
+      }
+      this.setState({ forceFeedbackFocus: false });
+    }
   }
 
   mustAnswerMessage(styles) {
@@ -127,6 +135,7 @@ export default class Item extends BaseComponent {
           that.clearShowMessage();
           that.props.checkAnswer(that.props.currentIndex);
         }
+        that.setState({ forceFeedbackFocus: true });
       // if an answer hasn't been selected
       } else {
         that.setState({ showMessage: true });
@@ -386,13 +395,14 @@ export default class Item extends BaseComponent {
           chosen={this.props.studentAnswer}
           assessmentKind={this.props.settings.assessmentKind}
           registerGradingCallback={this.props.registerGradingCallback}
+          shouldFocusForFeedback={false}
           />
       );
     } else {
       let answerFeedback = {};
 
       if (this.props.answerMessage && this.props.answerMessage.answerFeedback) {
-        answerFeedback = this.props.answerMessage.answerFeedback
+        answerFeedback = this.props.answerMessage.answerFeedback;
       }
 
       return (
@@ -404,6 +414,8 @@ export default class Item extends BaseComponent {
           correctAnswers={this.props.question.correct}
           answerFeedback={answerFeedback}
           completed={Item.checkCompletion()}
+          setFeedbackRef={this.setFeedbackRef.bind(this)}
+          shouldFocusForFeedback={this.state.forceFeedbackFocus}
         />
       );
     }
@@ -492,9 +504,13 @@ export default class Item extends BaseComponent {
     }
   }
 
+  setFeedbackRef(ref) {
+    this.feedbackRef = ref;
+  }
+
   newQuestionNotification(styles) {
     if (this.props.newQuestion) {
-      return (<div style={styles.visuallyHidden}>The question has been refreshed. Please navigate to the Assessment Text landmark.</div>);
+      return (<div style={styles.visuallyHidden}>The question has been refreshed. The refreshed material is just after the Assessment Text header.</div>);
     } else {
       return "";
     }
@@ -528,7 +544,10 @@ export default class Item extends BaseComponent {
         color: theme.questionTextColor,
         fontSize: theme.questionTextFontSize,
         fontWeight: theme.questionTextFontWeight,
-        padding: theme.questionTextPadding,
+        padding: theme.questionTextPadding
+      },
+      "questionText:focus": {
+        outline: "none"
       },
       nextButton: {
         backgroundColor: theme.nextButtonBackgroundColor,

@@ -37,6 +37,11 @@ export default class CheckBox extends React.Component {
       inputProps["aria-invalid"] = true;
       inputProps["aria-describedby"] = this.feedbackId();
     }
+    if (this.props.addRef) {
+      inputProps["ref"] = (node) => {
+        this.props.setRef(node);
+      };
+    }
     return (
       <div className="checkbox-wrapper">
         {this.renderAnswerIndicator()}
