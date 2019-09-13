@@ -257,10 +257,14 @@ export default class UniversalInput extends React.Component{
     }
   }
 
+  doesCheckboxHaveFeedback(answerId) {
+    return this.props.isResult && (this.wasChosen(answerId) || this.answerFeedback(answerId));
+  }
+
   renderMultipleAnswersQuestion(item, styles) {
     let refAdded = false;
     let answers = item.answers.map((answer, index) => {
-      const showsFeedback = (!refAdded && this.props.isResult && (this.wasChosen(answer.id) || this.answerFeedback(answer.id)));
+      const showsFeedback = !refAdded && this.doesCheckboxHaveFeedback(answer.id);
       if (showsFeedback) {
         refAdded = true;
       }
@@ -319,12 +323,16 @@ export default class UniversalInput extends React.Component{
     }
   }
 
+  isDropdownAnswerCorrect(currChosenAnswer, i) {
+    return (currChosenAnswer.chosen_answer_id &&
+      this.props.correctAnswers[i] &&
+      this.props.correctAnswers[i].value &&
+      currChosenAnswer.chosen_answer_id === this.props.correctAnswers[i].value);
+  }
+
   determineDropdownCorrectMessage(item, chosenAnswers) {
     const correctCount = chosenAnswers.reduce((sum, currChosenAnswer, i) => {
-      if (currChosenAnswer.chosen_answer_id &&
-        this.props.correctAnswers[i] &&
-        this.props.correctAnswers[i].value &&
-        currChosenAnswer.chosen_answer_id === this.props.correctAnswers[i].value) {
+      if (this.isDropdownAnswerCorrect(currChosenAnswer, i)) {
         return sum + 1;
       } else {
         return sum;

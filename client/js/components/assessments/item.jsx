@@ -76,12 +76,23 @@ export default class Item extends BaseComponent {
     );
   }
 
+  shouldFocusOnNewQuestion() {
+    return this.props.newQuestion && this.refs.assessmenttext && this.refs.assessmenttext.getDOMNode();
+  }
+
+  shouldForceFeedbackFocus() {
+    return this.state && this.state.forceFeedbackFocus;
+  }
+
+  hasFeedbackRef() {
+    return this.feedbackRef && this.feedbackRef.getDOMNode();
+  }
+
   componentDidUpdate() {
-    if (this.props.newQuestion && this.refs.assessmenttext && this.refs.assessmenttext.getDOMNode()) {
+    if (this.shouldFocusOnNewQuestion()) {
       this.refs.assessmenttext.getDOMNode().focus();
-    }
-    if (this.state && this.state.forceFeedbackFocus) {
-      if (this.feedbackRef && this.feedbackRef.getDOMNode()) {
+    } else if (this.shouldForceFeedbackFocus()) {
+      if (this.hasFeedbackRef()) {
         // focus on the top component
         this.feedbackRef.getDOMNode().focus();
       }
