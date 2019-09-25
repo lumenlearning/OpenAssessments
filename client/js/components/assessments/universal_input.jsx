@@ -196,7 +196,7 @@ export default class UniversalInput extends React.Component{
   renderMultipleChoiceQuestion(item, styles) {
     let refAdded = false;
     let answers = item.answers.map((answer, index) => {
-      const showsFeedback = (!refAdded && this.props.isResult && (this.wasChosen(answer.id) || this.answerFeedback(answer.id)));
+      const showsFeedback = !refAdded && this.doesCheckboxHaveFeedback(answer.id);
       if (showsFeedback) {
         refAdded = true;
       }

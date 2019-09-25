@@ -92,7 +92,7 @@ export default class MultiDropDown extends BaseComponent {
     const that = this;
 
     return this.props.item.material.replace(re, (match) => {
-      let str = `"Multiple dropdowns, read surrounding text"`;
+      let str = "\"Multiple dropdowns, read surrounding text\"";
       let nMatch = match.replace(new RegExp("\\[|\\]", "g"), ""); //from '[shortcode]' to 'shortcode'
       let correctAnswer = this.props.item.correct.find((correctAns) => {
         return correctAns.name === nMatch;
