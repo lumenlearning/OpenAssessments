@@ -76,12 +76,17 @@ export default class Item extends BaseComponent {
     );
   }
 
+  isSelfCheckResult() {
+    return this.props.answerMessage && !AssessmentStore.isSummative() && !AssessmentStore.isSwyk();
+  }
+
   shouldFocusOnNewQuestion() {
-    return this.props.newQuestion && this.refs.assessmenttext && this.refs.assessmenttext.getDOMNode();
+    // only focus if the assessment progress control is not available
+    return this.props.newQuestion && this.refs.assessmenttext && this.refs.assessmenttext.getDOMNode() && !document.getElementById("focus");
   }
 
   shouldForceFeedbackFocus() {
-    return this.state && this.state.forceFeedbackFocus;
+    return this.state && this.state.forceFeedbackFocus && this.isSelfCheckResult();
   }
 
   hasFeedbackRef() {
@@ -398,7 +403,7 @@ export default class Item extends BaseComponent {
   }
 
   inputOrReview(styles) {
-    if (!this.props.answerMessage || (AssessmentStore.isSummative() || AssessmentStore.isSwyk())) {
+    if (!this.isSelfCheckResult()) {
       return (
         <UniversalInput
           item={this.props.question}
@@ -520,7 +525,7 @@ export default class Item extends BaseComponent {
   }
 
   newQuestionNotification(styles) {
-    if (this.props.newQuestion) {
+    if (this.props.newQuestion && !AssessmentStore.isSummative() && !AssessmentStore.isSwyk() && AssessmentStore.kind() !== "show_what_you_know") {
       return (<div style={styles.visuallyHidden}>The question has been refreshed. The refreshed material is just after the Assessment Text header.</div>);
     } else {
       return "";
