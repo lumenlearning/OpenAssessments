@@ -77,7 +77,7 @@ export default class Item extends BaseComponent {
   }
 
   isSelfCheckResult() {
-    return this.props.answerMessage && !AssessmentStore.isSummative() && !AssessmentStore.isSwyk();
+    return this.props.answerMessage && AssessmentStore.isFormative();
   }
 
   shouldFocusOnNewQuestion() {
@@ -526,7 +526,7 @@ export default class Item extends BaseComponent {
 
   newQuestionNotification(styles) {
     if (this.props.newQuestion && AssessmentStore.isFormative()) {
-      return (<div style={styles.visuallyHidden}>The question has been refreshed. The refreshed material is just after the Assessment Text header.</div>);
+      return (<div style={styles.visuallyHidden}>The question has been refreshed. The refreshed material is just after the Assessment Text heading.</div>);
     } else {
       return "";
     }
