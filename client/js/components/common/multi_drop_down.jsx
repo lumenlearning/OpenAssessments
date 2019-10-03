@@ -124,7 +124,6 @@ export default class MultiDropDown extends BaseComponent {
         id: dropdownId
       };
       selectProps["aria-label"] = ariaLabel;
-      selectProps["tabindex"] = "0";
 
       // Disable dropdowns if this is the results page or if confidence levels have been selected
       if (isResult || typeof item.confidenceLevel !== "undefined") {
