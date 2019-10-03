@@ -26,6 +26,7 @@ export default class MultiDropDown extends BaseComponent {
   }
 
   render() {
+    const ariaLabelSelects = this.findAndReplace(true);
     /**
      * Note on dangerouslySetInnerHTML Usage
      *
@@ -40,8 +41,12 @@ export default class MultiDropDown extends BaseComponent {
     return (
       <div>
         <div
+          tabIndex="0"
           dangerouslySetInnerHTML={{__html: this.findAndReplace()}}
           />
+        <div style={{position:"absolute",left:"-10000px",top:"auto",height:"1px",width:"1px",overflow:"hidden"}} tabIndex="0" role="group" aria-label="Review your answer" >
+          <div id="question_result_container" dangerouslySetInnerHTML={{__html: ariaLabelSelects}} />
+        </div>
         <div>
           {this.props.isResult ? this.answerFeedback() : ""}
         </div>
@@ -88,37 +93,46 @@ export default class MultiDropDown extends BaseComponent {
   findAndReplace(noSelect = false) {
     let i = 0;
     let re = new RegExp(`\\[${Object.keys(this.props.item.dropdowns).join("\\]|\\[")}\\]`, "gi");
+    const shortCodeRegExp = new RegExp("\\[|\\]", "g");
 
-    const that = this;
+    const isResult = this.props.isResult;
+    const item = this.props.item;
 
     return this.props.item.material.replace(re, (match) => {
       let str = "\"Multiple dropdowns, read surrounding text\"";
-      let nMatch = match.replace(new RegExp("\\[|\\]", "g"), ""); //from '[shortcode]' to 'shortcode'
-      let correctAnswer = this.props.item.correct.find((correctAns) => {
+      let nMatch = match.replace(shortCodeRegExp, ""); //from '[shortcode]' to 'shortcode'
+      let correctAnswer = item.correct.find((correctAns) => {
         return correctAns.name === nMatch;
       });
       const describedBy = this.getAnswerFeedbackDivId(i);
 
       const dropdownId = `dropdown_${nMatch}`;
-      if (i === 0 && this.props.isResult) {
-        that.focusDropdown = dropdownId;
+      if (i === 0 && isResult) {
+        this.focusDropdown = dropdownId;
       }
 
       i++;
+
+      const ariaLabel = this.getAriaAnswerLabel(nMatch, str);
+
+      if (noSelect) { //replace with values instead of <select /> boxes if true.
+        return ariaLabel;
+      }
 
       const selectProps = {
         name: nMatch,
         id: dropdownId
       };
-      selectProps["aria-label"] = this.getAriaAnswerLabel(nMatch, str);
+      selectProps["aria-label"] = ariaLabel;
+      selectProps["tabindex"] = "0";
 
       // Disable dropdowns if this is the results page or if confidence levels have been selected
-      if (this.props.isResult || typeof this.props.item.confidenceLevel !== "undefined") {
+      if (isResult || typeof item.confidenceLevel !== "undefined") {
         selectProps["disabled"] = "disabled";
         selectProps["style"] = { cursor: "not-allowed" };
       }
 
-      if (this.props.isResult) {
+      if (isResult) {
         selectProps["aria-invalid"] = !!correctAnswer;
         selectProps["aria-describedby"] = describedBy;
       }
@@ -135,7 +149,7 @@ export default class MultiDropDown extends BaseComponent {
         `<span style="display:inline-block">
           <span style="display:flex">
             <select ${selectPropsStr}>
-              <option ${!this.state[nMatch] ? "selected" : ""} disabled value="null">[Select]</option>
+              <option ${!this.state[nMatch] ? "selected" : ""} disabled aria-label="select ${nMatch} choice" value="null">[Select]</option>
               ${this.answerOptions(correctAnswer, nMatch)}
             </select>
             ${this.answerCheckMarks(correctAnswer, nMatch, i)}
@@ -183,7 +197,7 @@ export default class MultiDropDown extends BaseComponent {
       if ((this.props.isResult && !!correctAnswer) && correctAnswer.value !== answer.value) disabled = "disabled";
 
       return `<option ${selected} ${disabled} value=${answer.value}>${answer.name}</option>`;
-    });
+    }).join("\n");
   }
 
   answerCheckMarks(correctAnswer, nMatch, i) {
@@ -329,6 +343,7 @@ export default class MultiDropDown extends BaseComponent {
     let shortcodes = Object.keys(this.props.item.dropdowns);
 
     shortcodes.forEach((shortcode, i) => {
+      console.log(`generating event listener for dropdown_${shortcode}`);
       document.getElementById(`dropdown_${shortcode}`).addEventListener("change", this.handleShortcodeChange);
     });
   }

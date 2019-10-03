@@ -27,6 +27,7 @@ export default class RadioButton extends React.Component {
       defaultChecked: this.checkedStatus(),
       disabled: this.props.isDisabled,
       name: this.props.name,
+      id: this.props.id,
       onClick: () => { this.answerSelected(); }
     };
     if (this.showIncorrectAndChecked()) {
@@ -45,15 +46,14 @@ export default class RadioButton extends React.Component {
       <div>
         {this.renderAnswerIndicator()}
         <div className="btn btn-block btn-question" style={btnQuestionStyles}>
-          <label style={this.getButtonLabelStyles()}>
-            <span style={{display: "table-cell"}}>
-              <input {...inputProps} />
-            </span>
-            <span
-              style={{display: "table-cell", paddingLeft: "11px", fontWeight: "normal"}}
-              dangerouslySetInnerHTML={{__html: this.props.item.material}}
-              />
-          </label>
+          <span style={{display:"table-cell",verticalAlign:"top"}}>
+            <input {...inputProps} />
+          </span>
+          <span style={{display:"table-cell",paddingLeft:"11px",fontWeight:"normal"}}>
+            <label htmlFor={this.props.id}
+                   style={{paddingLeft:"11px",fontWeight:"normal"}}
+                   dangerouslySetInnerHTML={{__html: this.props.item.material}} />
+          </span>
           <div>
             {this.isQuizPage() ? this.answerFeedback() : ""}
           </div>
@@ -63,13 +63,13 @@ export default class RadioButton extends React.Component {
   }
 
   getBtnQuestionStyles() {
-    let qStyles = styles.btnQuestion;
+    let qStyles = { ...styles.btnQuestion, padding: "11px 11px 6px" };
 
     if (this.isQuizPage()) {
       if (this.showCorrectAndChecked()) {
-        qStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect};
+        qStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect, padding: "11px 11px 6px"};
       } else if (this.showIncorrectAndChecked()) {
-        qStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
+        qStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect, padding: "11px 11px 6px"};
       }
     }
 
