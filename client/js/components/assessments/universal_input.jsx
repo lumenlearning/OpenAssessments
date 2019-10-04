@@ -19,10 +19,12 @@ export default class UniversalInput extends React.Component{
   componentDidMount(){
     CommunicationHandler.sendSizeThrottled();
     CommunicationHandler.hideLMSNavigation();
+    console.log("universal_input component did mount, state = ", this.state, " activeElement = ", document.activeElement);
   }
 
   componentDidUpdate(){
     CommunicationHandler.sendSizeThrottled();
+    console.log("universal_input component did update, state = ", this.state, " activeElement = ", document.activeElement);
   }
 
   getStyles(props, theme){

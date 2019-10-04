@@ -94,6 +94,7 @@ export default class Item extends BaseComponent {
   }
 
   componentDidUpdate() {
+    console.log("item component did update, state = ", this.state, " activeElement = ", document.activeElement);
     if (this.shouldFocusOnNewQuestion()) {
       this.refs.assessmenttext.getDOMNode().focus();
     } else if (this.shouldForceFeedbackFocus()) {
