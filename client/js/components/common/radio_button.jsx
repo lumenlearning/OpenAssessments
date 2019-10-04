@@ -28,6 +28,7 @@ export default class RadioButton extends React.Component {
       disabled: this.props.isDisabled,
       name: this.props.name,
       id: this.props.id,
+      style: { float:"left",position:"absolute" },
       onClick: () => { this.answerSelected(); }
     };
     if (this.showIncorrectAndChecked()) {
@@ -46,14 +47,12 @@ export default class RadioButton extends React.Component {
       <div>
         {this.renderAnswerIndicator()}
         <div className="btn btn-block btn-question" style={btnQuestionStyles}>
-          <span style={{display:"table-cell",verticalAlign:"top"}}>
+          <label>
             <input {...inputProps} />
-          </span>
-          <span style={{display:"table-cell",paddingLeft:"11px",fontWeight:"normal"}}>
-            <label htmlFor={this.props.id}
-                   style={{paddingLeft:"11px",fontWeight:"normal"}}
-                   dangerouslySetInnerHTML={{__html: this.props.item.material}} />
-          </span>
+            <span style={{display:"inline-block",paddingLeft:"25px",fontWeight:"normal"}}
+                dangerouslySetInnerHTML={{__html: this.props.item.material}}>
+            </span>
+          </label>
           <div>
             {this.isQuizPage() ? this.answerFeedback() : ""}
           </div>

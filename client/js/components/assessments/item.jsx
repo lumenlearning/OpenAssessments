@@ -50,7 +50,7 @@ export default class Item extends BaseComponent {
                   <div aria-live="polite">
                     { this.newQuestionNotification(styles) }
                   </div>
-                  <h2 style={styles.visuallyHidden} ref="assessmenttext" tabIndex="-1">Assessment Text</h2>
+                  <h2 style={styles.visuallyHidden} tabIndex="-1">Assessment Text</h2>
                   <div
                     className="question_text"
                     style={this.props.question.question_type !== "multiple_dropdowns_question" ? styles.questionText : {}} >
@@ -80,11 +80,6 @@ export default class Item extends BaseComponent {
     return this.props.answerMessage && AssessmentStore.isFormative();
   }
 
-  shouldFocusOnNewQuestion() {
-    // only focus if the assessment progress control is not available
-    return this.props.newQuestion && this.refs.assessmenttext && this.refs.assessmenttext.getDOMNode() && !document.getElementById("focus");
-  }
-
   shouldForceFeedbackFocus() {
     return this.state && this.state.forceFeedbackFocus && this.isSelfCheckResult();
   }
@@ -94,10 +89,7 @@ export default class Item extends BaseComponent {
   }
 
   componentDidUpdate() {
-    console.log("item component did update, state = ", this.state, " activeElement = ", document.activeElement);
-    if (this.shouldFocusOnNewQuestion()) {
-      this.refs.assessmenttext.getDOMNode().focus();
-    } else if (this.shouldForceFeedbackFocus()) {
+   if (this.shouldForceFeedbackFocus()) {
       if (this.hasFeedbackRef()) {
         // focus on the top component
         this.feedbackRef.getDOMNode().focus();
@@ -526,7 +518,7 @@ export default class Item extends BaseComponent {
   }
 
   newQuestionNotification(styles) {
-    if (this.props.newQuestion && AssessmentStore.isFormative()) {
+    if (this.props.newQuestion) {
       return (<div style={styles.visuallyHidden}>The question has been refreshed. The refreshed material is just after the Assessment Text heading.</div>);
     } else {
       return "";

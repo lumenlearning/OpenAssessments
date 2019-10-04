@@ -10,7 +10,8 @@ export default class MultiDropDown extends BaseComponent {
     super(props, context);
 
     this.state = {
-      ariaAnswersLabels: {}
+      ariaAnswersLabels: {},
+      focusedDropdownId: null
     };
 
     this.findAndReplace = this.findAndReplace.bind(this);
@@ -22,7 +23,6 @@ export default class MultiDropDown extends BaseComponent {
   }
 
   componentWillUpdate() {
-    console.log("component will update, state = ", this.state, " activeElement = ", document.activeElement);
     this.removeListeners();
   }
 
@@ -56,7 +56,6 @@ export default class MultiDropDown extends BaseComponent {
   }
 
   componentDidUpdate() {
-    console.log("component did update, state = ", this.state, " activeElement = ", document.activeElement);
     this.addListeners();
     if (this.props.isResult && this.props.shouldFocusForFeedback && this.focusDropdown) {
       const focusDropdownEle = document.getElementById(this.focusDropdown);
@@ -64,16 +63,19 @@ export default class MultiDropDown extends BaseComponent {
         focusDropdownEle.focus();
         this.focusDropdown = null;
       }
+    } else if (this.state.focusedDropdownId) {
+      const dropdownEle = document.getElementById(this.state.focusedDropdownId);
+      if (dropdownEle) {
+        dropdownEle.focus();
+      }
     }
   }
 
   componentDidMount() {
-  console.log("component did mount, state = ", this.state, " activeElement = ", document.activeElement);
     this.addListeners();
   }
 
   componentWillUnmount() {
-    console.log("component will unmount, state = ", this.state, " activeElement = ", document.activeElement);
     this.removeListeners();
   }
 
@@ -346,8 +348,9 @@ export default class MultiDropDown extends BaseComponent {
     let shortcodes = Object.keys(this.props.item.dropdowns);
 
     shortcodes.forEach((shortcode, i) => {
-      console.log(`generating event listener for dropdown_${shortcode}`);
       document.getElementById(`dropdown_${shortcode}`).addEventListener("change", this.handleShortcodeChange);
+      document.getElementById(`dropdown_${shortcode}`).addEventListener("focus", this.keepFocus.bind(this, `dropdown_${shortcode}`));
+      document.getElementById(`dropdown_${shortcode}`).addEventListener("focus", this.loseFocus);
     });
   }
 
@@ -356,6 +359,8 @@ export default class MultiDropDown extends BaseComponent {
 
     shortcodes.forEach((shortcode, i) => {
       document.getElementById(`dropdown_${shortcode}`).removeEventListener("change", this.handleShortcodeChange);
+      document.getElementById(`dropdown_${shortcode}`).removeEventListener("focus", this.keepFocus.bind(this, `dropdown_${shortcode}`));
+      document.getElementById(`dropdown_${shortcode}`).removeEventListener("focus", this.loseFocus);
     });
   }
 
@@ -371,6 +376,14 @@ export default class MultiDropDown extends BaseComponent {
       "dropdown_id": e.target.name,
       "chosen_answer_id": e.target.value
     });
+  }
+
+  keepFocus(elementId) {
+    this.setState({ focusedDropdownId: elementId });
+  }
+
+  loseFocus() {
+    this.setState({ focusedDropdownId: null });
   }
 }
 
