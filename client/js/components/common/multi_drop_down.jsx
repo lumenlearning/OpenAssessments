@@ -22,6 +22,7 @@ export default class MultiDropDown extends BaseComponent {
   }
 
   componentWillUpdate() {
+    console.log("component will update, state = ", this.state, " activeElement = ", document.activeElement);
     this.removeListeners();
   }
 
@@ -55,6 +56,7 @@ export default class MultiDropDown extends BaseComponent {
   }
 
   componentDidUpdate() {
+    console.log("component did update, state = ", this.state, " activeElement = ", document.activeElement);
     this.addListeners();
     if (this.props.isResult && this.props.shouldFocusForFeedback && this.focusDropdown) {
       const focusDropdownEle = document.getElementById(this.focusDropdown);
@@ -66,10 +68,12 @@ export default class MultiDropDown extends BaseComponent {
   }
 
   componentDidMount() {
+  console.log("component did mount, state = ", this.state, " activeElement = ", document.activeElement);
     this.addListeners();
   }
 
   componentWillUnmount() {
+    console.log("component will unmount, state = ", this.state, " activeElement = ", document.activeElement);
     this.removeListeners();
   }
 
