@@ -519,7 +519,9 @@ export default class Item extends BaseComponent {
 
   newQuestionNotification(styles) {
     if (this.props.newQuestion) {
-      return (<div style={styles.visuallyHidden}>The question has been refreshed. The refreshed material is just after the Assessment Text heading.</div>);
+      const currQuestion = this.props.currentIndex + 1;
+      const message = `New question is available. You are on question ${currQuestion} of ${this.props.questionCount}. Navigate to the assement text heading to read the question.`;
+      return (<div style={styles.visuallyHidden}>{message}</div>);
     } else {
       return "";
     }
