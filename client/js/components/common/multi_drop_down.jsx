@@ -27,7 +27,7 @@ export default class MultiDropDown extends BaseComponent {
   }
 
   render() {
-    const ariaLabelSelects = this.findAndReplace(true);
+    const ariaLabelSelects = "Review of the question and the selected answers: " + this.findAndReplace(true);
     /**
      * Note on dangerouslySetInnerHTML Usage
      *
@@ -42,7 +42,6 @@ export default class MultiDropDown extends BaseComponent {
     return (
       <div>
         <div
-          tabIndex="0"
           dangerouslySetInnerHTML={{__html: this.findAndReplace()}}
           />
         <div style={{position:"absolute",left:"-10000px",top:"auto",height:"1px",width:"1px",overflow:"hidden"}} tabIndex="0" role="group" aria-label="Review your answer" >
@@ -154,7 +153,7 @@ export default class MultiDropDown extends BaseComponent {
         `<span style="display:inline-block">
           <span style="display:flex">
             <select ${selectPropsStr}>
-              <option ${!this.state[nMatch] ? "selected" : ""} disabled aria-label="select ${nMatch} choice" value="null">[Select]</option>
+              <option ${!this.state[nMatch] ? "selected" : ""} disabled aria-label="select an answer for ${nMatch}" value="null">[Select]</option>
               ${this.answerOptions(correctAnswer, nMatch)}
             </select>
             ${this.answerCheckMarks(correctAnswer, nMatch, i)}
