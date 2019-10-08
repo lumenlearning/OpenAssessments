@@ -350,7 +350,7 @@ export default class MultiDropDown extends BaseComponent {
     shortcodes.forEach((shortcode, i) => {
       document.getElementById(`dropdown_${shortcode}`).addEventListener("change", this.handleShortcodeChange);
       document.getElementById(`dropdown_${shortcode}`).addEventListener("focus", this.keepFocus.bind(this, `dropdown_${shortcode}`));
-      document.getElementById(`dropdown_${shortcode}`).addEventListener("focus", this.loseFocus);
+      document.getElementById(`dropdown_${shortcode}`).addEventListener("blur", this.loseFocus.bind(this));
     });
   }
 
@@ -360,7 +360,7 @@ export default class MultiDropDown extends BaseComponent {
     shortcodes.forEach((shortcode, i) => {
       document.getElementById(`dropdown_${shortcode}`).removeEventListener("change", this.handleShortcodeChange);
       document.getElementById(`dropdown_${shortcode}`).removeEventListener("focus", this.keepFocus.bind(this, `dropdown_${shortcode}`));
-      document.getElementById(`dropdown_${shortcode}`).removeEventListener("focus", this.loseFocus);
+      document.getElementById(`dropdown_${shortcode}`).removeEventListener("blur", this.loseFocus.bind(this));
     });
   }
 

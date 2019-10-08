@@ -13,6 +13,10 @@ export default class ProgressDropdown extends BaseComponent{
     this._bind("navButtonClicked", "getStyles", "handleKeyDown");
   }
 
+  componentDidMount() {
+    if(document.getElementById("focus")){document.getElementById("focus").focus();}
+  }
+
   navButtonClicked(e){
     if(this.state && this.state.expanded){
       this.setState({expanded: !this.state.expanded})

@@ -23,7 +23,7 @@ export default class CheckBox extends React.Component {
      * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
      */
     const inputProps = {
-      style: { margin: 0 },
+      style: { margin: 0, float: "left", position: "absolute" },
       type: "checkbox",
       defaultChecked: this.props.checked,
       name: this.props.name,
@@ -47,11 +47,9 @@ export default class CheckBox extends React.Component {
         {this.renderAnswerIndicator()}
         <div className="btn btn-block btn-question" style={this.getButtonQuestionStyles()}>
           <label style={btnLabelStyles}>
-            <span style={{display: "table-cell"}}>
-              <input { ...inputProps }/>
-            </span>
+            <input { ...inputProps }/>
             <span
-              style={{display: "table-cell", paddingLeft: "11px", fontWeight: "normal"}}
+              style={{display: "inline-block", paddingLeft: "25px", fontWeight: "normal"}}
               dangerouslySetInnerHTML={{__html: this.props.item.material}}
               />
           </label>

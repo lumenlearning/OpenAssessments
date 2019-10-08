@@ -311,12 +311,23 @@ export default class UniversalInput extends React.Component{
     }, 0);
   }
 
+  determineMultiAnswerIncorrectCount(item) {
+    return item.answers.reduce((sum, answer) => {
+      if (!this.showAsCorrect(answer.id) && this.wasChosen(answer.id)) {
+        return sum + 1;
+      } else {
+        return sum;
+      }
+    }, 0);
+  }
+
   renderReviewPromptForMultipleAnswersQuestion(item) {
     const totalToCheck = this.determineMultiAnswerTotals(item);
     const correctCount = this.determineMultiAnswerCorrectCount(item);
+    const incorrectCount = this.determineMultiAnswerIncorrectCount(item);
     if (correctCount === 0 ) {
       return this.renderIncorrectResponsePrompt();
-    } else if (correctCount < totalToCheck) {
+    } else if (correctCount < totalToCheck || incorrectCount > 0) {
       return this.renderPartiallyCorrectResponsePrompt();
     } else {
       return this.renderCorrectResponsePrompt();
