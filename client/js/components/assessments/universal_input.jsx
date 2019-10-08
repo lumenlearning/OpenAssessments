@@ -121,9 +121,9 @@ export default class UniversalInput extends React.Component{
     }
   }
 
-  renderDefaultReviewPrompt(styles) {
+  renderDefaultReviewPrompt() {
     if (this.props.isResult) {
-      return (<div style={styles.visuallyHidden}>Your selection has been evaluated.</div>);
+      return (<div>Your selection has been evaluated.</div>);
     } else {
       return "";
     }
@@ -149,11 +149,11 @@ export default class UniversalInput extends React.Component{
       case "multiple_choice_question":
       case "true_false_question":
         items = this.renderMultipleChoiceQuestion(item, styles);
-        visuallyHiddenReviewPrompt = this.renderReviewPromptForMultipleChoiceQuestion(item, styles);
+        visuallyHiddenReviewPrompt = this.renderReviewPromptForMultipleChoiceQuestion(item);
         break;
       case "matching_question":
         items = <Matching assessmentKind={this.props.assessmentKind} isDisabled={this.props.isResult}  item={item} name="answer-option"/>;
-        visuallyHiddenReviewPrompt = this.renderDefaultReviewPrompt(styles);
+        visuallyHiddenReviewPrompt = this.renderDefaultReviewPrompt();
         break;
       case "essay_question":
         items = <TextArea assessmentKind={this.props.assessmentKind} completed={this.props.completed} isDisabled={this.props.isResult} key="textarea_essay_input" item={item} initialText={this.props.chosen} />;
@@ -161,15 +161,15 @@ export default class UniversalInput extends React.Component{
         break;
       case "multiple_answers_question":
         items = this.renderMultipleAnswersQuestion(item, styles);
-        visuallyHiddenReviewPrompt = this.renderReviewPromptForMultipleAnswersQuestion(item, styles);
+        visuallyHiddenReviewPrompt = this.renderReviewPromptForMultipleAnswersQuestion(item);
         break;
       case "mom_embed":
         items = <MomEmbed assessmentKind={this.props.assessmentKind} key={item.id} item={item} redisplayJWT={this.props.chosen ? this.props.chosen : null} registerGradingCallback={this.props.registerGradingCallback} />;
-        visuallyHiddenReviewPrompt = this.renderDefaultReviewPrompt(styles);
+        visuallyHiddenReviewPrompt = this.renderDefaultReviewPrompt();
         break;
       case 'multiple_dropdowns_question':
         items = <MultiDropDown assessmentKind={this.props.assessmentKind} isResult={this.props.isResult} key={item.id} item={item} selectedAnswers={this.props.chosen} selectCorrectAnswer={this.props.correctAnswers && this.props.correctAnswers.length > 0} shouldFocusForFeedback={this.props.shouldFocusForFeedback} />;
-        visuallyHiddenReviewPrompt = this.renderReviewPromptForMultiDropDownQuestion(item, this.props.chosen, styles);
+        visuallyHiddenReviewPrompt = this.renderReviewPromptForMultiDropDownQuestion(item, this.props.chosen);
       break;
     }
 
@@ -237,7 +237,7 @@ export default class UniversalInput extends React.Component{
     return (<div>The question has been evaluated. Your choice is partially correct.</div>);
   }
 
-  renderReviewPromptForMultipleChoiceQuestion(item, styles) {
+  renderReviewPromptForMultipleChoiceQuestion(item) {
     if (this.props.isResult) {
       const chosenAnswers = item.answers.filter((answer) => {
         return this.wasChosen(answer.id);
@@ -318,20 +318,25 @@ export default class UniversalInput extends React.Component{
     }, 0);
   }
 
-  renderReviewPromptForMultipleAnswersQuestion(item, styles) {
-    if (this.props.isResult) {
-      const totalToCheck = this.determineMultiAnswerTotals(item);
-      const correctCount = this.determineMultiAnswerCorrectCount(item);
-      const incorrectCount = this.determineMultiAnswerIncorrectCount(item);
-      if (correctCount === 0 ) {
-        return this.renderIncorrectResponsePrompt();
-      } else if (correctCount < totalToCheck || incorrectCount > 0) {
-        return this.renderPartiallyCorrectResponsePrompt();
-      } else {
-        return this.renderCorrectResponsePrompt();
-      }
+  choosePromptForMultipleAnswerQuestion(item) {
+    const totalToCheck = this.determineMultiAnswerTotals(item);
+    const correctCount = this.determineMultiAnswerCorrectCount(item);
+    const incorrectCount = this.determineMultiAnswerIncorrectCount(item);
+    if (correctCount === 0 ) {
+      return this.renderIncorrectResponsePrompt();
+    } else if (correctCount < totalToCheck || incorrectCount > 0) {
+      return this.renderPartiallyCorrectResponsePrompt();
+    } else {
+      return this.renderCorrectResponsePrompt();
     }
-    return null;
+  }
+
+  renderReviewPromptForMultipleAnswersQuestion(item) {
+    if (this.props.isResult) {
+      return this.choosePromptForMultipleAnswerQuestion(item);
+    } else {
+      return null;
+    }
   }
 
   isDropdownAnswerCorrect(currChosenAnswer, i) {
@@ -358,7 +363,7 @@ export default class UniversalInput extends React.Component{
     }
   }
 
-  renderReviewPromptForMultiDropDownQuestion(item, chosenAnswers, styles) {
+  renderReviewPromptForMultiDropDownQuestion(item, chosenAnswers) {
     if (this.props.isResult && chosenAnswers && chosenAnswers.length > 0) {
       return this.determineDropdownCorrectMessage(item, chosenAnswers);
     }
