@@ -149,7 +149,7 @@ export default class UniversalInput extends React.Component{
       case "multiple_choice_question":
       case "true_false_question":
         items = this.renderMultipleChoiceQuestion(item, styles);
-        visuallyHiddenReviewPrompt = this.renderReviewPromptForMultipleChoiceQuestion(item);
+        visuallyHiddenReviewPrompt = this.renderReviewPromptForMultipleChoiceQuestion(item, styles);
         break;
       case "matching_question":
         items = <Matching assessmentKind={this.props.assessmentKind} isDisabled={this.props.isResult}  item={item} name="answer-option"/>;
@@ -161,7 +161,7 @@ export default class UniversalInput extends React.Component{
         break;
       case "multiple_answers_question":
         items = this.renderMultipleAnswersQuestion(item, styles);
-        visuallyHiddenReviewPrompt = this.renderReviewPromptForMultipleAnswersQuestion(item);
+        visuallyHiddenReviewPrompt = this.renderReviewPromptForMultipleAnswersQuestion(item, styles);
         break;
       case "mom_embed":
         items = <MomEmbed assessmentKind={this.props.assessmentKind} key={item.id} item={item} redisplayJWT={this.props.chosen ? this.props.chosen : null} registerGradingCallback={this.props.registerGradingCallback} />;
@@ -169,7 +169,7 @@ export default class UniversalInput extends React.Component{
         break;
       case 'multiple_dropdowns_question':
         items = <MultiDropDown assessmentKind={this.props.assessmentKind} isResult={this.props.isResult} key={item.id} item={item} selectedAnswers={this.props.chosen} selectCorrectAnswer={this.props.correctAnswers && this.props.correctAnswers.length > 0} shouldFocusForFeedback={this.props.shouldFocusForFeedback} />;
-        visuallyHiddenReviewPrompt = this.renderReviewPromptForMultiDropDownQuestion(item, this.props.chosen);
+        visuallyHiddenReviewPrompt = this.renderReviewPromptForMultiDropDownQuestion(item, this.props.chosen, styles);
       break;
     }
 
@@ -237,7 +237,7 @@ export default class UniversalInput extends React.Component{
     return (<div>The question has been evaluated. Your choice is partially correct.</div>);
   }
 
-  renderReviewPromptForMultipleChoiceQuestion(item) {
+  renderReviewPromptForMultipleChoiceQuestion(item, styles) {
     if (this.props.isResult) {
       const chosenAnswers = item.answers.filter((answer) => {
         return this.wasChosen(answer.id);
@@ -249,12 +249,9 @@ export default class UniversalInput extends React.Component{
         } else {
           return this.renderIncorrectResponsePrompt();
         }
-      } else {
-        return null;
       }
-    } else {
-      return null;
     }
+    return null;
   }
 
   doesCheckboxHaveFeedback(answerId) {
@@ -321,17 +318,20 @@ export default class UniversalInput extends React.Component{
     }, 0);
   }
 
-  renderReviewPromptForMultipleAnswersQuestion(item) {
-    const totalToCheck = this.determineMultiAnswerTotals(item);
-    const correctCount = this.determineMultiAnswerCorrectCount(item);
-    const incorrectCount = this.determineMultiAnswerIncorrectCount(item);
-    if (correctCount === 0 ) {
-      return this.renderIncorrectResponsePrompt();
-    } else if (correctCount < totalToCheck || incorrectCount > 0) {
-      return this.renderPartiallyCorrectResponsePrompt();
-    } else {
-      return this.renderCorrectResponsePrompt();
+  renderReviewPromptForMultipleAnswersQuestion(item, styles) {
+    if (this.props.isResult) {
+      const totalToCheck = this.determineMultiAnswerTotals(item);
+      const correctCount = this.determineMultiAnswerCorrectCount(item);
+      const incorrectCount = this.determineMultiAnswerIncorrectCount(item);
+      if (correctCount === 0 ) {
+        return this.renderIncorrectResponsePrompt();
+      } else if (correctCount < totalToCheck || incorrectCount > 0) {
+        return this.renderPartiallyCorrectResponsePrompt();
+      } else {
+        return this.renderCorrectResponsePrompt();
+      }
     }
+    return null;
   }
 
   isDropdownAnswerCorrect(currChosenAnswer, i) {
@@ -358,12 +358,11 @@ export default class UniversalInput extends React.Component{
     }
   }
 
-  renderReviewPromptForMultiDropDownQuestion(item, chosenAnswers) {
+  renderReviewPromptForMultiDropDownQuestion(item, chosenAnswers, styles) {
     if (this.props.isResult && chosenAnswers && chosenAnswers.length > 0) {
       return this.determineDropdownCorrectMessage(item, chosenAnswers);
-    } else {
-      return null;
     }
+    return null;
   }
 }
 
