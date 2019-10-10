@@ -188,9 +188,7 @@ export default class FormativeResult extends React.Component {
           return dropdown.value === answerId;
         }).name;
 
-        return (
-          <strong>{chosenAnswerVal}</strong>
-        );
+        return `<strong>${chosenAnswerVal}</strong>`;
       });
     }
 
