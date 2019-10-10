@@ -22,26 +22,47 @@ export default class CheckBox extends React.Component {
      *
      * READ: https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
      */
+    const inputProps = {
+      style: { margin: 0, float: "left", position: "absolute" },
+      type: "checkbox",
+      defaultChecked: this.props.checked,
+      name: this.props.name,
+      id: this.props.name,
+      onClick: () => { this.answerSelected(); }
+    };
+    if (this.selectedCorrectAnswer()) {
+      inputProps["aria-invalid"] = false;
+      inputProps["aria-describedby"] = this.feedbackId();
+    } else if (this.unselectedCorrectAnswer() || this.selectedIncorrectAnswer()) {
+      inputProps["aria-invalid"] = true;
+      inputProps["aria-describedby"] = this.feedbackId();
+    }
+    if (this.props.addRef) {
+      inputProps["ref"] = (node) => {
+        this.props.setRef(node);
+      };
+    }
     return (
-      <div>
+      <div className="checkbox-wrapper">
         {this.renderAnswerIndicator()}
         <div className="btn btn-block btn-question" style={this.getButtonQuestionStyles()}>
           <label style={btnLabelStyles}>
-            <span style={{display: "table-cell"}}>
-              <input
-                style={{margin: 0}}
-                type="checkbox"
-                defaultChecked={this.props.checked}
-                disabled={this.props.isDisabled}
-                name={this.props.name}
-                onClick={() => { this.answerSelected(); }} />
-            </span>
-            <span style={{display: "table-cell", paddingLeft: "11px", fontWeight: "normal"}} dangerouslySetInnerHTML={{__html: this.props.item.material}}/>
+            <input { ...inputProps }/>
+            <span
+              style={{display: "inline-block", paddingLeft: "25px", fontWeight: "normal"}}
+              dangerouslySetInnerHTML={{__html: this.props.item.material}}
+              />
           </label>
-          {this.answerFeedback()}
+          <div>
+            {this.answerFeedback()}
+          </div>
         </div>
       </div>
     );
+  }
+
+  feedbackId() {
+    return this.props.id + "Hint";
   }
 
   renderAnswerIndicator() {
@@ -70,8 +91,7 @@ export default class CheckBox extends React.Component {
         <img
           src="/assets/correct.png"
           className="correctIndicator"
-          aria-label="Correct Answer that was chosen"
-          alt="Icon indicating that a correct answer was chosen"
+          alt="Correct"
           style={styles.checkStyleCorrect}
           />
       );
@@ -80,8 +100,7 @@ export default class CheckBox extends React.Component {
         <img
           src="/assets/correct.png"
           className="correctIndicator"
-          aria-label="Correct Answer that was not chosen"
-          alt="Icon indicating that a correct answer was not chosen"
+          alt="Correct but not Selected"
           style={styles.checkStyleCorrect}
           />
       );
@@ -90,8 +109,7 @@ export default class CheckBox extends React.Component {
         <img
           src="/assets/incorrect.png"
           className="wrongIndicator"
-          aria-label="Wrong answer that was chosen"
-          alt="Icon indicating that a wrong answer was chosen"
+          alt="Incorrect"
           style={styles.checkStyleWrong}
           />
       );
@@ -123,7 +141,7 @@ export default class CheckBox extends React.Component {
       let feedback = this.getFeedback();
 
       return (
-        <div className="check_answer_result" style={feedback.styles}>{feedback.text}</div>
+        <div id={this.feedbackId()} className="check_answer_result" style={feedback.styles}>{feedback.text}</div>
       );
     }
   }
@@ -161,7 +179,6 @@ export default class CheckBox extends React.Component {
     return this.props.showAsCorrect === false && this.props.checked === true;
   }
 
-  // unused, but here for completeness
   unselectedIncorrectAnswer() {
     return this.props.showAsCorrect === false && this.props.checked === false;
   }

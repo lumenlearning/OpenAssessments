@@ -13,6 +13,10 @@ export default class ProgressDropdown extends BaseComponent{
     this._bind("navButtonClicked", "getStyles", "handleKeyDown");
   }
 
+  componentDidMount() {
+    if(document.getElementById("focus")){document.getElementById("focus").focus();}
+  }
+
   navButtonClicked(e){
     if(this.state && this.state.expanded){
       this.setState({expanded: !this.state.expanded})
@@ -110,7 +114,7 @@ export default class ProgressDropdown extends BaseComponent{
     var text = this.generateProgressText();
     return (
       <span onKeyDown={(e) => { this.handleKeyDown(e); }}>
-        <img style={styles.icon}src={this.props.settings.images.ProgressIcon_svg} />
+        <img style={styles.icon}src={this.props.settings.images.ProgressIcon_svg} alt="" />
         <button id="focus" style={styles.dropdownButton} className="btn" type="button" aria-haspopup="true" aria-controls="questionsMenu" aria-expanded={expanded ? true : false} onClick={(e) => { if(!this.props.disabled) { this.navButtonClicked(e); }}}>
           <div>Progress</div>
           <span>{text}</span>
