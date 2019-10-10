@@ -44,24 +44,29 @@ export default class Item extends BaseComponent {
               <div className="full_question" style={styles.fullQuestion}>
                 {this.formativeHeader()}
                 {this.simpleProgress(styles)}
-                <div className="inner_question" style={styles.innerQuestion}>
+                <main
+                    className="inner_question"
+                    style={styles.innerQuestion}>
+                  <div aria-live="polite">
+                    { this.newQuestionNotification(styles) }
+                  </div>
+                  <h2 style={styles.visuallyHidden} tabIndex="-1">Assessment Text</h2>
                   <div
                     className="question_text"
-                    style={this.props.question.question_type !== "multiple_dropdowns_question" ? styles.questionText : {}}
-                    >
+                    style={this.props.question.question_type !== "multiple_dropdowns_question" ? styles.questionText : {}} >
                       {this.questionDirections(styles)}
                       {this.questionContent()}
                   </div>
                   {this.inputOrReview(styles)}
-                </div>
-                <div>
-                  {this.getConfidenceLevels(this.props.confidenceLevels, styles)}
-                  {this.checkAnswerButton(styles)}
-                  {this.getNavigationButtons(styles)}
-                  {this.submitAssessmentButton(styles)}
-                  {this.getWarning(this.state, this.props.questionCount, this.props.currentIndex, styles)}
-                  {this.mustAnswerMessage(styles)}
-                </div>
+                  <div>
+                    {this.getConfidenceLevels(this.props.confidenceLevels, styles)}
+                    {this.checkAnswerButton(styles)}
+                    {this.getNavigationButtons(styles)}
+                    {this.submitAssessmentButton(styles)}
+                    {this.getWarning(this.state, this.props.questionCount, this.props.currentIndex, styles)}
+                    {this.mustAnswerMessage(styles)}
+                  </div>
+                </main>
               </div>
             </form>
 
@@ -69,6 +74,28 @@ export default class Item extends BaseComponent {
         </div>
       </div>
     );
+  }
+
+  isSelfCheckResult() {
+    return this.props.answerMessage && AssessmentStore.isFormative();
+  }
+
+  shouldForceFeedbackFocus() {
+    return this.state && this.state.forceFeedbackFocus && this.isSelfCheckResult();
+  }
+
+  hasFeedbackRef() {
+    return this.feedbackRef && this.feedbackRef.getDOMNode();
+  }
+
+  componentDidUpdate() {
+   if (this.shouldForceFeedbackFocus()) {
+      if (this.hasFeedbackRef()) {
+        // focus on the top component
+        this.feedbackRef.getDOMNode().focus();
+      }
+      this.setState({ forceFeedbackFocus: false });
+    }
   }
 
   mustAnswerMessage(styles) {
@@ -117,6 +144,7 @@ export default class Item extends BaseComponent {
           that.clearShowMessage();
           that.props.checkAnswer(that.props.currentIndex);
         }
+        that.setState({ forceFeedbackFocus: true });
       // if an answer hasn't been selected
       } else {
         that.setState({ showMessage: true });
@@ -198,7 +226,9 @@ export default class Item extends BaseComponent {
     if (this.props.question.confidenceLevel) {
       return (
         <div className="confidence_feedback_wrapper" style={styles.confidenceFeedbackWrapper}>
-          <p>Your confidence level in answering this question was: <strong>{`${this.props.question.confidenceLevel}`}</strong>.</p>
+          <p>
+            Your confidence level in answering this question was: <strong>{`${this.props.question.confidenceLevel}`}</strong>.
+          </p>
           {this.getConfidenceNavButton(styles)}
         </div>
       );
@@ -208,7 +238,7 @@ export default class Item extends BaseComponent {
     if (AssessmentStore.isFormative()) {
       return (
         <div className="confidence_wrapper" style={styles.confidenceWrapper}>
-          <div tabIndex="0" style={styles.confidenceTitle}>
+          <div style={styles.confidenceTitle}>
             How sure are you of your answer?
           </div>
           <input
@@ -334,6 +364,13 @@ export default class Item extends BaseComponent {
         <div style={styles.chooseText}>Select all correct answers</div>
       );
     }
+
+    // if this is a multiple dropdown question
+    if (this.props.question.question_type === "multiple_dropdowns_question") {
+      return (
+        <div style={styles.chooseText}>Choose the best answer in each dropdown</div>
+      );
+    }
   }
 
   questionContent() {
@@ -350,13 +387,16 @@ export default class Item extends BaseComponent {
     */
     if (this.props.question.question_type !== 'multiple_dropdowns_question') {
       return (
-        <div dangerouslySetInnerHTML={{ __html: this.props.question.material }}></div>
+        <div
+          id="question-content"
+          dangerouslySetInnerHTML={{ __html: this.props.question.material }}
+          />
       );
     }
   }
 
   inputOrReview(styles) {
-    if (!this.props.answerMessage || (AssessmentStore.isSummative() || AssessmentStore.isSwyk())) {
+    if (!this.isSelfCheckResult()) {
       return (
         <UniversalInput
           item={this.props.question}
@@ -364,13 +404,14 @@ export default class Item extends BaseComponent {
           chosen={this.props.studentAnswer}
           assessmentKind={this.props.settings.assessmentKind}
           registerGradingCallback={this.props.registerGradingCallback}
+          shouldFocusForFeedback={false}
           />
       );
     } else {
       let answerFeedback = {};
 
       if (this.props.answerMessage && this.props.answerMessage.answerFeedback) {
-        answerFeedback = this.props.answerMessage.answerFeedback
+        answerFeedback = this.props.answerMessage.answerFeedback;
       }
 
       return (
@@ -382,6 +423,8 @@ export default class Item extends BaseComponent {
           correctAnswers={this.props.question.correct}
           answerFeedback={answerFeedback}
           completed={Item.checkCompletion()}
+          setFeedbackRef={this.setFeedbackRef.bind(this)}
+          shouldFocusForFeedback={this.state.forceFeedbackFocus}
         />
       );
     }
@@ -470,6 +513,20 @@ export default class Item extends BaseComponent {
     }
   }
 
+  setFeedbackRef(ref) {
+    this.feedbackRef = ref;
+  }
+
+  newQuestionNotification(styles) {
+    if (this.props.newQuestion) {
+      const currQuestion = this.props.currentIndex + 1;
+      const message = `New question is available. You are on question ${currQuestion} of ${this.props.questionCount}. Navigate to the assement text heading to read the question.`;
+      return (<div style={styles.visuallyHidden}>{message}</div>);
+    } else {
+      return "";
+    }
+  }
+
   getStyles(theme) {
     let navMargin = "-35px 650px 0 0";
 
@@ -498,7 +555,10 @@ export default class Item extends BaseComponent {
         color: theme.questionTextColor,
         fontSize: theme.questionTextFontSize,
         fontWeight: theme.questionTextFontWeight,
-        padding: theme.questionTextPadding,
+        padding: theme.questionTextPadding
+      },
+      "questionText:focus": {
+        outline: "none"
       },
       nextButton: {
         backgroundColor: theme.nextButtonBackgroundColor,
@@ -640,6 +700,16 @@ export default class Item extends BaseComponent {
       counter: {
         color: 'black',
         float: "right"
+      },
+      visuallyHidden: {
+        position: "absolute !important",
+        left: "-10000px",
+        top: "auto",
+        width: "1px",
+        height: "1px",
+        overflow: "hidden",
+        clip: "rect(1px, 1px, 1px, 1px)",
+        whiteSpace: "nowrap"
       }
     }
   }
