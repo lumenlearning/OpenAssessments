@@ -378,9 +378,7 @@ export default class MultiDropDown extends BaseComponent {
   }
 
   keepFocus(elementId) {
-    if (!this.state || !this.state.focusedDropdownId || this.state.focusedDropdownId !== elementId) {
-      this.setState({ focusedDropdownId: elementId });
-    }
+    this.setState({ focusedDropdownId: elementId });
   }
 
   loseFocus() {
