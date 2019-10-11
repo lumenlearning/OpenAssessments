@@ -80,6 +80,10 @@ export default class Item extends BaseComponent {
     return this.props.answerMessage && AssessmentStore.isFormative();
   }
 
+  isPracticeResult() {
+    return this.props.answerMessage && AssessmentStore.isPractice();
+  }
+
   shouldForceFeedbackFocus() {
     return this.state && this.state.forceFeedbackFocus && this.isSelfCheckResult();
   }
@@ -156,7 +160,9 @@ export default class Item extends BaseComponent {
     e && e.preventDefault();
     let that = this;
 
+    console.log("check answer button clicked");
     this.props.selectQuestion(this.props.currentIndex, () => {
+      console.log("in the callback!");
       // if an answer has been selected
       if (AssessmentStore.hasSelectedAnswerForCurrent()) {
         that.setState({ showMessage: false });
@@ -164,7 +170,9 @@ export default class Item extends BaseComponent {
 
         // If it's a practice quiz submit the full quiz when they've checked all
         // the answers
+        console.log("checking practice");
         if (AssessmentStore.isPractice() && Item.checkCompletion() === true) {
+          console.log("submitting practice assessment");
           that.submitAssessment();
         }
       } else {
@@ -396,7 +404,7 @@ export default class Item extends BaseComponent {
   }
 
   inputOrReview(styles) {
-    if (!this.isSelfCheckResult()) {
+    if (!this.isSelfCheckResult() && !this.isPracticeResult()) {
       return (
         <UniversalInput
           item={this.props.question}
