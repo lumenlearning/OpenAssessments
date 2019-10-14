@@ -98,9 +98,7 @@ export default class Assessment extends BaseComponent{
   }
 
   selectQuestion(qid, finishedCallback=null) {
-    console.log("select question")
     if (this.state.gradingCallback) {
-      console.log("grading callback");
       let callback = this.state.gradingCallback;
       this.setState({gradingCallback: null});
       callback(()=>{
@@ -112,7 +110,6 @@ export default class Assessment extends BaseComponent{
         this.setState({questionSelected: true});
       });
     } else {
-      console.log("non-grading callback");
       AssessmentActions.selectQuestion(qid);
       if (finishedCallback) {
         finishedCallback();

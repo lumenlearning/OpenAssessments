@@ -85,7 +85,9 @@ export default class Item extends BaseComponent {
   }
 
   shouldForceFeedbackFocus() {
-    return this.state && this.state.forceFeedbackFocus && this.isSelfCheckResult();
+    return this.state &&
+      this.state.forceFeedbackFocus &&
+      (this.isSelfCheckResult() || this.isPracticeResult());
   }
 
   hasFeedbackRef() {
@@ -160,9 +162,7 @@ export default class Item extends BaseComponent {
     e && e.preventDefault();
     let that = this;
 
-    console.log("check answer button clicked");
     this.props.selectQuestion(this.props.currentIndex, () => {
-      console.log("in the callback!");
       // if an answer has been selected
       if (AssessmentStore.hasSelectedAnswerForCurrent()) {
         that.setState({ showMessage: false });
@@ -170,9 +170,7 @@ export default class Item extends BaseComponent {
 
         // If it's a practice quiz submit the full quiz when they've checked all
         // the answers
-        console.log("checking practice");
         if (AssessmentStore.isPractice() && Item.checkCompletion() === true) {
-          console.log("submitting practice assessment");
           that.submitAssessment();
         }
       } else {
