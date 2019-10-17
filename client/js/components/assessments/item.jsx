@@ -80,8 +80,14 @@ export default class Item extends BaseComponent {
     return this.props.answerMessage && AssessmentStore.isFormative();
   }
 
+  isPracticeResult() {
+    return this.props.answerMessage && AssessmentStore.isPractice();
+  }
+
   shouldForceFeedbackFocus() {
-    return this.state && this.state.forceFeedbackFocus && this.isSelfCheckResult();
+    return this.state &&
+      this.state.forceFeedbackFocus &&
+      (this.isSelfCheckResult() || this.isPracticeResult());
   }
 
   hasFeedbackRef() {
@@ -396,7 +402,7 @@ export default class Item extends BaseComponent {
   }
 
   inputOrReview(styles) {
-    if (!this.isSelfCheckResult()) {
+    if (!this.isSelfCheckResult() && !this.isPracticeResult()) {
       return (
         <UniversalInput
           item={this.props.question}
