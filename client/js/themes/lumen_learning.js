@@ -27,8 +27,8 @@ export default {
   confidenceWrapperBackgroundColor: defines.lightergray,
   confidenceWrapperWidth: "650px",
   confidenceWrapperMargin: "10px 35px",
-  navigationWrapperMargin: "0 0 0 36px",
-  confidenceFeedbackWrapperMargin: "1.5em 0 2em 38px",
+  navigationWrapperMargin: "0 0 0 17px",
+  confidenceFeedbackWrapperMargin: "1.5em 0 2em 17px",
   nextButtonBackgroundColor: defines.lumenBlue + " !important",
   previousButtonBackgroundColor: defines.lumenBlue + " !important",
 
