@@ -285,7 +285,7 @@ export default class Item extends BaseComponent {
     return (
       <input
         type="button"
-        style={{...styles.margin, ...styles.definitelyButton}}
+        style={{...styles.definitelyButton}}
         className="btn btn-check-answer"
         value="Show Results"
         onClick={(e) => { this.submitAssessment(); }}
@@ -648,7 +648,7 @@ export default class Item extends BaseComponent {
         borderLeft: "1px solid #c4cdd5"
       },
       checkAnswerButtonDiv: {
-        margin: "1em 0 1em 36px",
+        margin: "25px 0 1em 17px",
       },
       warning: {
         margin: theme.confidenceWrapperMargin,
