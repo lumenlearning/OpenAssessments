@@ -4,188 +4,113 @@ These instructions will help you setup local deployment to staging and productio
 
 ## Getting Started
 
-The following instructions will create "project" directories for the AWS CLI commands to work in.
-You will need two -- one for prod and one for staging.
+If you have previously deployed to staging or production and just need a refresher, you can skip down to [the deploy instructions](#deploying). If this is your first go, there's a bit of set up and permissions to get sorted.
 
-### Prerequisites
+### Credentials
 
-* wget
-* AWS CLI tools
-* AWS account credentials
-* AWS API access keys
-* Member of the `dept-development` AWS IAM group
+Deployment is done via the command line, so you must have the AWS CLI tools and [envchain](https://github.com/sorah/envchain) installed. If not, you can install both via Homebrew:
 
-### 1. Install wget
+`brew install aws-elasticbeanstalk`
 
-`wget` is a file download tool.
+`brew install envchain`
 
-Using Homebrew, install `wget`:
+Log into the AWS Console in your browser and, under "My Account" or the menu under your username, choose "My security credentials" then choose "Create access key." You will need both the access key ID and the secret to deploy.
 
-    $ brew install wget
+**NOTE:** If you do not have access to AWS, get in touch with Isaac.
 
-### 2. Install PIP
-`pip` is a package manager for Python.
-It is equivalent of npm for Node.
+Back on the command line, you'll want to commit the AWS access key ID and and secret to your keychain. To do this, run the following command:
 
-First, download the pip installer:
+`envchain -s aws-stage AWS_ACCESS_KEY_ID`
 
-    $ mkdir -p ~/aws ; cd ~/aws
-    $ wget https://bootstrap.pypa.io/get-pip.py
+and then enter the access key ID. Then run
 
-Next, install pip system-wide:
+`envchain -s aws-stage AWS_SECRET_ACCESS_KEY`
 
-    $ sudo python get-pip.py 
+and enter your secret.
 
-### 3. Install Virtualenv
+You will need to repeat this process for production (including creating a new access key), replacing `aws-stage` with `aws-prod`:
 
-`virtualenv` is a virtual environment manager for Python.
-It is very similar to nvm for Node and rbenv for Ruby.
+Now your AWS credentials have been saved to your macOS Keychain. 🙌🏻
 
-    $ sudo pip install virtualenv
+You will need to prefix any AWS `eb` commands with `envchain aws-stage` to use these credentials.
 
-### 4. Modify `.bash_profile`
+### AWS Settings
+You now want to set some default values for this application via `eb init`.
 
-The following aliases will make activating virtual Python environments easier.
-Please add the following two lines to your `.bash_profile` file:
+#### Staging
 
-    alias venv='source venv/bin/activate'
-    alias vaws='source ~/aws/venv/bin/activate'
+On the command line, run
 
-The first alias will activate a Python virtual environment in the current directory.
-The second alias will activate the Python virtual environment created in the next step.
+`envchain aws-stage eb init`
 
-### 5. Create a virtual Python environment
-       
-This will create a Python virtual environment to contain the AWS command line tools.
+This will result in a series of questions; the proper config settings are as follows:
 
-In a new terminal window:
+1. Default region = 3 (us-west-2/US West Oregon)
+2. Application = openassessments-stg2
+3. CodeCommit = n (default)
 
-    $ mkdir -p ~/aws; cd ~/aws
-    $ virtualenv venv
-    $ vaws
+After you've finished the config, you can verify it by running `envchain aws-stage eb status`.
 
-### 6. Install the AWS command line tools
-       
-These will be used to interact with the staging Beanstalk environment to do things like checking the environment status and deploying projects to staging environments.
+#### Production
 
-    $ pip install awscli
-    $ pip install awsebcli
+As above, but replace `aws-stage` with `aws-prod` and set the application to be `openassessments-prod`. Detailed instructions follow.
 
-Add your AWS API credentials with the following command. 
-Your credentials will be provided to you by an AWS admin at Lumen Learning.
+On the command line, run
 
-    $ aws configure
+`envchain aws-prod eb init`
 
-### 7. Setup AWS Credential files
+This will result in a series of questions; the proper config settings are as follows:
 
-You will need to place your production and staging API credentials into two separate files.
+1. Default region = 3 (us-west-2/US West Oregon)
+2. Application = openassessments-prod
+3. CodeCommit = n (default)
 
-Place the following contents into `~/.aws/prod_credentials`:
+After you've finished the config, you can verify it by running `envchain aws-prod eb status`.
 
-	[default]
-	aws_access_key_id = (your PROD access key ID goes here)
-	aws_secret_access_key = (your PROD access key secret goes here)
+## Deploying
 
-Place the following contents into `~/.aws/staging_credentials`:
+1. If deploying to production, make an announcement in the `#product-announcements` Slack channel.
+1. On the command line, navigate to the `openassessments` directory and verify that you have checked out the branch you intend to deploy (e.g., `develop` for staging).
+1. Make sure you have the latest code from GitHub by running `git fetch` and `git pull`.
+1. Compile the application assets via `nvm use 0.10.37 && bundle exec rake assets:clobber && bundle exec rake assets:precompile && bundle exec rake assets:webpack`
+1. Run the command for deploying to the
+	- staging server: `envchain aws-stage eb deploy`
+	- production: `envchain aws-prod eb deploy`
+1. Watch the terminal and AWS Console as the archive is created and the deploy runs.
+1. If you deployed to production, announce the successful deployment in the `#product-announcements` Slach channel.
 
-	[default]
-	aws_access_key_id = (your staging access key ID goes here)
-	aws_secret_access_key = (your staging access key secret goes here)
-	
-### 8. Create AWS Credential swap scripts
-       
-These scripts will allow you to easily switch between staging and production AWS credentials.
+## Logging into the AWS servers
+The following instructions assume you've performed all of the steps under [Getting Started](#getting-started).
 
-`aws-prod.sh`:
-
-    #!/bin/bash
-    
-    ln -sf "${HOME}/.aws/prod_credentials" "${HOME}/.aws/credentials"
-    ls -l "${HOME}/.aws/credentials"
-    
-    echo -e "\033[1;31m--> Using PRODUCTION credentials for AWS!\033[0m"
-
-`aws-staging.sh`:
-    
-    #!/bin/bash
-    
-    ln -sf "${HOME}/.aws/staging_credentials" "${HOME}/.aws/credentials"
-    ls -l "${HOME}/.aws/credentials"
-    
-    echo -e "\033[1;36m--> Using staging credentials for AWS.\033[0m"
-
-### 9. Setup the staging "project" directory
-
-In your terminal window:
-
-	$ mkdir -p ~/staging/openassessments
-	$ cd ~/staging/openassessments
-	$ aws-staging.sh
-	$ eb init
-
-After running `eb init`, 
-make sure to select the correct region and application:
-
-	Default region = us-west-2
-	Application = openassessments-stg2
-
-To confirm your setup,
-type `eb status`.
-The will display the staging environment details.
-
-### 10. Setup the production "project" directory
-
-In your terminal window:
-
-	$ mkdir -p ~/production/openassessments
-	$ cd ~/production/openassessments
-	$ aws-prod.sh
-	$ eb init
-
-After running `eb init`, 
-make sure to select the correct region and application:
-
-	Default region = us-west-2
-	Application = openassessments-prod
-
-To confirm your setup, type `eb status`. The will display the production
-environment details.
-
-## Post-setup reference
-
-The following instructions assume you've performed all of the steps above.
-
-### Log into staging OpenAssessments
-
-	$ aws-staging.sh
-	$ cd ~/staging/openassessments
-	$ eb status
+### Staging
+```
+	$ envchain aws-stage eb status
 		(confirm the output displays the staging environment)
-	$ eb ssh
+	$ envchain aws-stage eb ssh
+```
 
-### Log into production OpenAssessments
+### Production
 
 ***NOTE**: When logged into production OpenAssessments,
 you will have **FULL** administrative privileges.
 It will be possible to **DESTROY** the production site! Please be **CAUTIOUS**!*
-
-	$ aws-prod.sh
-	$ cd ~/production/openassessments
-	$ eb status
+```
+	$ envchain aws-prod eb status
 		(confirm the output displays the production environment)
-	$ eb ssh
+	$ envchain aws-prod eb ssh
+```
 
-### Access the rails console:
+### Access the rails console
 
-Log into prod or staging, then:
-
+Using the instructions above, log into prod or staging, then:
+```
 	$ cd /var/app/current
 	$ rails c
-
+```
 ### View application logs:
 
-Log into prod or staging, then:
-
+Using the instructions above, log into prod or staging, then:
+```
 	$ cd /var/app/current/log
 	$ ls -l
-
+```
