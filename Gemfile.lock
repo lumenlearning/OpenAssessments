@@ -297,7 +297,7 @@ GEM
     ruby-saml-mod (0.2.4)
       ffi
       libxml-ruby (>= 2.3.0)
-    rubyzip (1.1.7)
+    rubyzip (1.3.0)
     safe_yaml (1.0.4)
     sass (3.2.19)
     sass-rails (4.0.5)
