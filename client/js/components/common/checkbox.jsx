@@ -27,7 +27,7 @@ export default class CheckBox extends React.Component {
       type: "checkbox",
       defaultChecked: this.props.checked,
       name: this.props.name,
-      id: this.props.name,
+      id: this.props.id,
       onClick: () => { this.answerSelected(); }
     };
     if (this.selectedCorrectAnswer()) {
