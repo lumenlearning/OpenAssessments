@@ -47,7 +47,7 @@ export default class RadioButton extends React.Component {
       <div>
         {this.renderAnswerIndicator()}
         <div>
-          <label className="btn btn-block btn-question" style={btnQuestionStyles}>
+          <label htmlFor={inputProps["id"]} className="btn btn-block btn-question" style={btnQuestionStyles}>
             <input {...inputProps} />
             <span style={{display:"inline-block",paddingLeft:"25px",fontWeight:"normal"}}
                 dangerouslySetInnerHTML={{__html: this.props.item.material}}>
