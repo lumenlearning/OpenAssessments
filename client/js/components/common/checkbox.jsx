@@ -45,8 +45,8 @@ export default class CheckBox extends React.Component {
     return (
       <div className="checkbox-wrapper">
         {this.renderAnswerIndicator()}
-        <div className="btn btn-block btn-question" style={this.getButtonQuestionStyles()}>
-          <label style={btnLabelStyles}>
+        <div style={this.getButtonQuestionStyles()}>
+          <label className="btn btn-block btn-question" style={btnLabelStyles}>
             <input { ...inputProps }/>
             <span
               style={{display: "inline-block", paddingLeft: "25px", fontWeight: "normal"}}
