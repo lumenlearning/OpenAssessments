@@ -96,7 +96,7 @@ export default class Item extends BaseComponent {
 
   componentDidUpdate() {
    if (this.shouldForceFeedbackFocus()) {
-      if (this.hasFeedbackRef()) {
+      if (this.hasFeedbackRef() && !AssessmentStore.isPractice()) {
         // focus on the top component
         this.feedbackRef.getDOMNode().focus();
       }
