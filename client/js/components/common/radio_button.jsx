@@ -28,7 +28,7 @@ export default class RadioButton extends React.Component {
       disabled: this.props.isDisabled,
       name: this.props.name,
       id: this.props.id,
-      style: { float:"left",position:"absolute" },
+      style: { position:"absolute" },
       onClick: () => { this.answerSelected(); }
     };
     if (this.showIncorrectAndChecked()) {
@@ -46,10 +46,10 @@ export default class RadioButton extends React.Component {
     return (
       <div>
         {this.renderAnswerIndicator()}
-        <div className="btn btn-block btn-question" style={btnQuestionStyles}>
-          <label>
+        <div>
+          <label htmlFor={inputProps["id"]} className="btn btn-block btn-question" style={btnQuestionStyles}>
             <input {...inputProps} />
-            <span style={{display:"inline-block",paddingLeft:"25px",fontWeight:"normal"}}
+            <span style={{paddingLeft:"25px"}}
                 dangerouslySetInnerHTML={{__html: this.props.item.material}}>
             </span>
           </label>
