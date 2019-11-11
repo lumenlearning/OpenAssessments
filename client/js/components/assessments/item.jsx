@@ -402,7 +402,7 @@ export default class Item extends BaseComponent {
   }
 
   inputOrReview(styles) {
-    if (!this.isSelfCheckResult() && !this.isPracticeResult()) {
+    if (!this.props.answerMessage || (AssessmentStore.isSummative() || AssessmentStore.isSwyk())) {
       return (
         <UniversalInput
           item={this.props.question}
