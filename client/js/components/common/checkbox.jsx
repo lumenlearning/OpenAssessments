@@ -139,9 +139,9 @@ export default class CheckBox extends React.Component {
     let lStyles = {...styles.btnLabel, ...{display: "block", padding: "11px 11px 6px"} };
 
     if (this.props.showAsCorrect !== null) {
-      lStyles = {...styles.btnLabel, ...{cursor: "default", display: "block", padding: "11px 11px 6px"}}
+      lStyles = {...styles.btnLabel, ...{cursor: "default", display: "block", padding: "11px 11px 6px"}};
     } else {
-      lStyles = {...styles.btnLabel, ...{cursor: "pointer", display: "block", padding: "11px 11px 6px"}}
+      lStyles = {...styles.btnLabel, ...{cursor: "pointer", display: "block", padding: "11px 11px 6px"}};
     }
 
     return lStyles;
