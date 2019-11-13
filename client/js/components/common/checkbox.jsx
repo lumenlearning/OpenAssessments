@@ -9,7 +9,8 @@ const styles = Styles;
 
 export default class CheckBox extends React.Component {
   render() {
-    let btnLabelStyles = this.props.showAsCorrect !== null ? {...styles.btnLabel, ...{cursor: "default", padding: "11px 11px 6px"}} : {...styles.btnLabel, ...{cursor: "pointer", padding: "11px 11px 6px"}};
+    let btnQuestionStyles = this.getBtnQuestionStyles();
+    let btnLabelStyles = this.getBtnLabelStyles();
 
     /**
      * Note on dangerouslySetInnerHTML Usage
@@ -45,8 +46,8 @@ export default class CheckBox extends React.Component {
     return (
       <div className="checkbox-wrapper">
         {this.renderAnswerIndicator()}
-        <div style={this.getButtonQuestionStyles()}>
-          <label htmlFor={inputProps["id"]} className="btn btn-block btn-question" style={btnLabelStyles}>
+        <div className="btn btn-block btn-question" style={btnQuestionStyles}>
+          <label htmlFor={inputProps["id"]} style={btnLabelStyles}>
             <input { ...inputProps }/>
             <span
               style={{paddingLeft: "25px"}}
@@ -116,26 +117,36 @@ export default class CheckBox extends React.Component {
     }
   }
 
-  getButtonQuestionStyles() {
+  getBtnQuestionStyles() {
+    let qStyles = { ...styles.btnQuestion };
+
     if (this.shouldShowAnswerFeedback()) {
-      return this.getButtonStyles();
+      if (this.selectedCorrectAnswer()) {
+        qStyles =  {...styles.btnQuestion, ...styles.btnQuestionCorrect};
+      } else if (this.unselectedCorrectAnswer()) {
+        qStyles =  {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
+      } else if (this.selectedIncorrectAnswer()) {
+        qStyles =  {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
+      } else {
+        qStyles =  {...styles.btnQuestion};
+      }
     }
 
-    return styles.btnQuestion;
+    return qStyles;
   }
 
-  getButtonStyles() {
-    if (this.selectedCorrectAnswer()) {
-      return {...styles.btnQuestion, ...styles.btnQuestionCorrect};
-    } else if (this.unselectedCorrectAnswer()) {
-      return {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
-    } else if (this.selectedIncorrectAnswer()) {
-      return {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
+  getBtnLabelStyles() {
+    let lStyles = {...styles.btnLabel, ...{display: "block", padding: "11px 11px 6px"} };
+
+    if (this.props.showAsCorrect !== null) {
+      lStyles = {...styles.btnLabel, ...{cursor: "default", display: "block", padding: "11px 11px 6px"}}
     } else {
-      return styles.btnQuestion;
+      lStyles = {...styles.btnLabel, ...{cursor: "pointer", display: "block", padding: "11px 11px 6px"}}
     }
-  }
 
+    return lStyles;
+  }
+  
   answerFeedback() {
     if (this.shouldShowAnswerFeedback()) {
       let feedback = this.getFeedback();
