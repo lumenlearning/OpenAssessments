@@ -10,6 +10,7 @@ const styles = Styles;
 export default class RadioButton extends React.Component {
   render() {
     let btnQuestionStyles = this.getBtnQuestionStyles();
+    let btnLabelStyles = this.getBtnLabelStyles();
 
     /**
      * Note on dangerouslySetInnerHTML Usage
@@ -46,8 +47,8 @@ export default class RadioButton extends React.Component {
     return (
       <div>
         {this.renderAnswerIndicator()}
-        <div>
-          <label htmlFor={inputProps["id"]} className="btn btn-block btn-question" style={btnQuestionStyles}>
+        <div className="btn btn-block btn-question" style={btnQuestionStyles}>
+          <label htmlFor={inputProps["id"]} style={btnLabelStyles}>
             <input {...inputProps} />
             <span style={{paddingLeft:"25px"}}
                 dangerouslySetInnerHTML={{__html: this.props.item.material}}>
@@ -62,29 +63,29 @@ export default class RadioButton extends React.Component {
   }
 
   getBtnQuestionStyles() {
-    let qStyles = { ...styles.btnQuestion, padding: "11px 11px 6px" };
+    let qStyles = { ...styles.btnQuestion };
 
     if (this.isQuizPage()) {
       if (this.showCorrectAndChecked()) {
-        qStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect, padding: "11px 11px 6px"};
+        qStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect};
       } else if (this.showIncorrectAndChecked()) {
-        qStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect, padding: "11px 11px 6px"};
+        qStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
       }
     }
 
     return qStyles;
   }
 
-  getButtonLabelStyles() {
+  getBtnLabelStyles() {
+    let lStyles = {...styles.btnLabel, padding: "11px 11px 6px" };
+
     if (this.props.showAsCorrect !== null) {
-      return (
-        {...styles.btnLabel, ...{cursor: "default", padding: "11px 11px 6px"}}
-      );
+      lStyles = {...styles.btnLabel, ...{cursor: "default", padding: "11px 11px 6px"}}
     } else {
-      return (
-        {...styles.btnLabel, ...{cursor: "pointer", padding: "11px 11px 6px"}}
-      );
+      lStyles = {...styles.btnLabel, ...{cursor: "pointer", padding: "11px 11px 6px"}}
     }
+
+    return lStyles;
   }
 
   isQuizPage() {
