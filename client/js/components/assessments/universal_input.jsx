@@ -255,7 +255,7 @@ export default class UniversalInput extends React.Component{
   }
 
   doesCheckboxHaveFeedback(answerId) {
-    return this.props.isResult && (this.wasChosen(answerId) || this.answerFeedback(answerId));
+    return this.props.isResult && (this.wasChosen(answerId) || this.answerFeedback(answerId)) && !this.props.suppressFocus;
   }
 
   renderMultipleAnswersQuestion(item, styles) {

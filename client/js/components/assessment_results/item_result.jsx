@@ -107,7 +107,7 @@ export default class ItemResult extends React.Component{
               </div>
             </div>
             <div>
-              <UniversalInput item={this.props.question} isResult={true} chosen={chosen} correctAnswers={this.props.correctAnswers}/>
+              <UniversalInput item={this.props.question} isResult={true} chosen={chosen} correctAnswers={this.props.correctAnswers} suppressFocus={true}/>
             </div>
             {this.confidenceResult(styles)}
           </div>
