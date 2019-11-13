@@ -4,6 +4,8 @@ import React            from 'react';
 import UniversalInput   from '../assessments/universal_input';
 import ResultConfidence from './result_confidence';
 import ResultOutcome    from "./result_outcome";
+// Stores
+import AssessmentStore from "../../stores/assessment";
 
 export default class ItemResult extends React.Component{
 
@@ -107,7 +109,7 @@ export default class ItemResult extends React.Component{
               </div>
             </div>
             <div>
-              <UniversalInput item={this.props.question} isResult={true} chosen={chosen} correctAnswers={this.props.correctAnswers}/>
+              <UniversalInput item={this.props.question} isResult={true} chosen={chosen} correctAnswers={this.props.correctAnswers} suppressFocus={true}/>
             </div>
             {this.confidenceResult(styles)}
           </div>
