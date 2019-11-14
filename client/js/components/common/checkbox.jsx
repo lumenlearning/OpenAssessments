@@ -50,7 +50,7 @@ export default class CheckBox extends React.Component {
           <label htmlFor={inputProps["id"]} style={btnLabelStyles}>
             <input { ...inputProps }/>
             <span
-              style={{paddingLeft: "25px"}}
+              style={{display:"inline-block", paddingLeft:"25px"}}
               dangerouslySetInnerHTML={{__html: this.props.item.material}}
               />
           </label>
@@ -139,9 +139,9 @@ export default class CheckBox extends React.Component {
     let lStyles = {...styles.btnLabel, ...{display: "block", padding: "11px 11px 6px"} };
 
     if (this.props.showAsCorrect !== null) {
-      lStyles = {...styles.btnLabel, ...{cursor: "default", display: "block", padding: "11px 11px 6px"}};
+      lStyles = {...styles.btnLabel, ...{cursor: "default", display: "block", fontWeight: "normal", padding: "11px 11px 6px"}};
     } else {
-      lStyles = {...styles.btnLabel, ...{cursor: "pointer", display: "block", padding: "11px 11px 6px"}};
+      lStyles = {...styles.btnLabel, ...{cursor: "pointer", display: "block", fontWeight: "normal", padding: "11px 11px 6px"}};
     }
 
     return lStyles;
