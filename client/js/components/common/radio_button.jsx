@@ -10,6 +10,7 @@ const styles = Styles;
 export default class RadioButton extends React.Component {
   render() {
     let btnQuestionStyles = this.getBtnQuestionStyles();
+    let btnLabelStyles = this.getBtnLabelStyles();
 
     /**
      * Note on dangerouslySetInnerHTML Usage
@@ -28,7 +29,7 @@ export default class RadioButton extends React.Component {
       disabled: this.props.isDisabled,
       name: this.props.name,
       id: this.props.id,
-      style: { float:"left",position:"absolute" },
+      style: { position:"absolute" },
       onClick: () => { this.answerSelected(); }
     };
     if (this.showIncorrectAndChecked()) {
@@ -47,9 +48,9 @@ export default class RadioButton extends React.Component {
       <div>
         {this.renderAnswerIndicator()}
         <div className="btn btn-block btn-question" style={btnQuestionStyles}>
-          <label>
+          <label htmlFor={inputProps["id"]} style={btnLabelStyles}>
             <input {...inputProps} />
-            <span style={{display:"inline-block",paddingLeft:"25px",fontWeight:"normal"}}
+            <span style={{display:"inline-block", paddingLeft:"25px"}}
                 dangerouslySetInnerHTML={{__html: this.props.item.material}}>
             </span>
           </label>
@@ -62,29 +63,29 @@ export default class RadioButton extends React.Component {
   }
 
   getBtnQuestionStyles() {
-    let qStyles = { ...styles.btnQuestion, padding: "11px 11px 6px" };
+    let qStyles = { ...styles.btnQuestion };
 
     if (this.isQuizPage()) {
       if (this.showCorrectAndChecked()) {
-        qStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect, padding: "11px 11px 6px"};
+        qStyles = {...styles.btnQuestion, ...styles.btnQuestionCorrect};
       } else if (this.showIncorrectAndChecked()) {
-        qStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect, padding: "11px 11px 6px"};
+        qStyles = {...styles.btnQuestion, ...styles.btnQuestionIncorrect};
       }
     }
 
     return qStyles;
   }
 
-  getButtonLabelStyles() {
+  getBtnLabelStyles() {
+    let lStyles = {...styles.btnLabel, ...{display: "block", fontWeight: "normal", padding: "11px 11px 6px"} };
+
     if (this.props.showAsCorrect !== null) {
-      return (
-        {...styles.btnLabel, ...{cursor: "default", padding: "11px 11px 6px"}}
-      );
+      lStyles = {...styles.btnLabel, ...{cursor: "default", display: "block", fontWeight: "normal", padding: "11px 11px 6px"}};
     } else {
-      return (
-        {...styles.btnLabel, ...{cursor: "pointer", padding: "11px 11px 6px"}}
-      );
+      lStyles = {...styles.btnLabel, ...{cursor: "pointer", display: "block", fontWeight: "normal", padding: "11px 11px 6px"}};
     }
+
+    return lStyles;
   }
 
   isQuizPage() {

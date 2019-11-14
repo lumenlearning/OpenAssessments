@@ -246,7 +246,7 @@ export default class Assessment extends BaseComponent{
   }
 
   renderProgressBar(styles) {
-    if (AssessmentStore.isFormative() || AssessmentStore.isPractice()) {
+    if (this.state.isSubmitted || AssessmentStore.isFormative() || AssessmentStore.isPractice()) {
       return;
     } else {
       return (
