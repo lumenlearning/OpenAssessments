@@ -246,9 +246,13 @@ export default class Assessment extends BaseComponent{
   }
 
   renderProgressBar(styles) {
-    if (this.state.isSubmitted || AssessmentStore.isFormative() || AssessmentStore.isPractice()) {
+    console.log("assessmentkind: " + this.state.settings.assessmentKind);
+    console.log("ispractice?: " + AssessmentStore.isPractice());
+    if (this.state.isSubmitted || AssessmentStore.isPractice()|| AssessmentStore.isFormative() ) {
+      console.log("no progress bar");
       return;
     } else {
+      console.log("show progress bar");
       return (
         <div style={styles.progressContainer}>
           {this.getProgressText()}
