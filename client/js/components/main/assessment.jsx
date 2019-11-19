@@ -185,6 +185,7 @@ export default class Assessment extends BaseComponent{
     var styles = this.getStyles(this.context.theme)
     var content;
     var progressBar;
+
     if(!this.state.isLoaded || (this.state.isSubmitted && !AssessmentStore.isPractice() )){
       content = <Loading />;
      }else {
@@ -246,13 +247,9 @@ export default class Assessment extends BaseComponent{
   }
 
   renderProgressBar(styles) {
-    console.log("assessmentkind: " + this.state.settings.assessmentKind);
-    console.log("ispractice?: " + AssessmentStore.isPractice());
-    if (this.state.isSubmitted || AssessmentStore.isPractice()|| AssessmentStore.isFormative() ) {
-      console.log("no progress bar");
+    if (this.state.isSubmitted || AssessmentStore.kind() === null || AssessmentStore.isPractice() || AssessmentStore.isFormative() ) {
       return;
     } else {
-      console.log("show progress bar");
       return (
         <div style={styles.progressContainer}>
           {this.getProgressText()}
