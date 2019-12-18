@@ -315,13 +315,14 @@ export default class Item extends BaseComponent {
   }
 
   getNextButton(styles) {
-    let disabled = (this.props.currentIndex === this.props.questionCount - 1) ? "disabled" : "";
+    let disabled = (this.props.currentIndex === this.props.questionCount - 1) 
 
     // if this is a formative assessment
     if (AssessmentStore.isFormative()) {
       return (
         <button
-          className={"btn btn-next-item " + disabled}
+          disabled={disabled}
+          className={"btn btn-next-item"}
           style={styles.nextButton}
           onClick={(e) => { this.nextButtonClicked(e); }}
           >
@@ -331,7 +332,8 @@ export default class Item extends BaseComponent {
     } else {
       return (
         <button
-          className={"btn btn-next-item " + disabled}
+          disabled={disabled}
+          className={"btn btn-next-item"}
           style={styles.nextButton}
           onClick={(e) => { this.nextButtonClicked(e); }}
           >
@@ -342,11 +344,12 @@ export default class Item extends BaseComponent {
   }
 
   getPreviousButton(styles) {
-    let disabled = this.props.currentIndex > 0 ? "" : "disabled";
+    let disabled = this.props.currentIndex > 0 ? false : true;
 
     return (
       <button
-        className={"btn btn-previous-item " + disabled}
+        disabled={disabled}
+        className={"btn btn-previous-item "}
         style={styles.previousButton}
         onClick={(e) => { this.previousButtonClicked(e); }}
         >
