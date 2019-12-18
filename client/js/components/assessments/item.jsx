@@ -315,7 +315,7 @@ export default class Item extends BaseComponent {
   }
 
   getNextButton(styles) {
-    let disabled = (this.props.currentIndex === this.props.questionCount - 1) 
+    let disabled = (this.props.currentIndex === this.props.questionCount - 1); 
 
     // if this is a formative assessment
     if (AssessmentStore.isFormative()) {
