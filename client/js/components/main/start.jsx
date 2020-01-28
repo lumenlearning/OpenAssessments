@@ -12,6 +12,7 @@ import AssessmentStore from "../../stores/assessment";
 import SettingsStore from "../../stores/settings";
 import ReviewAssessmentStore from "../../stores/review_assessment";
 //Subcomponents
+import Banner from "../banner/banner";
 import BaseComponent from "../base_component";
 import CheckUnderstanding from "../assessments/check_understanding";
 import FullPostNav from "../post_nav/full_post_nav.jsx";
@@ -60,6 +61,7 @@ export default class Start extends BaseComponent {
 
     return (
       <div className="assessment" style={styles.assessment}>
+        {this.renderBanner()}
         {this.renderTitleBar(styles)}
         <div className="section_list">
           <div className="section_container">
@@ -99,6 +101,14 @@ export default class Start extends BaseComponent {
 
   isSummative() {
     return this.state.settings.assessmentKind.toUpperCase() === "SUMMATIVE";
+  }
+
+  renderBanner() {
+    if (this.isSummative()) {
+      return (
+        <Banner />
+      )
+    }
   }
 
   renderTitleBar(styles) {
