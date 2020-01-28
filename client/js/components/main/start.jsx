@@ -107,7 +107,7 @@ export default class Start extends BaseComponent {
     if (this.isSummative()) {
       return (
         <Banner />
-      )
+      );
     }
   }
 

@@ -1,9 +1,9 @@
 // Dependencies
 import React, {Component}   from "react";
-import moment from 'moment';
+import moment from "moment";
 import SettingsStore           from "../../stores/settings";
 // Sub-Components
-import WarningSvg           from '../common/svg/warning.svg.jsx';
+import WarningSvg           from "../common/svg/warning.svg.jsx";
 
 
 export default class Banner extends Component {
@@ -23,11 +23,11 @@ export default class Banner extends Component {
             let now = Date.now();
             const formatter = new Intl.DateTimeFormat(
                 undefined,
-                {timeZoneName: 'short'}
+                {timeZoneName: "short"}
             );
             let localTzObject = formatter.formatToParts(now).find(
                 function(item) {
-                    return item.type === "timeZoneName"
+                    return item.type === "timeZoneName";
                 }
             );
             let localTZ = localTzObject["value"];
@@ -56,7 +56,7 @@ export default class Banner extends Component {
         } else {
             return (
                 <div></div>
-            )
+            );
         }
     }
 }

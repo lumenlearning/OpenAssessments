@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 
 export default class WarningSvg extends Component{
   constructor(props){
@@ -23,6 +23,6 @@ export default class WarningSvg extends Component{
             d="M12 17a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-9c.6 0 1 .4 1 1v6a1 1 0 0 1-2 0V9c0-.6.4-1 1-1z"/>
         </g>
       </svg>
-    )
+    );
   }
 }
