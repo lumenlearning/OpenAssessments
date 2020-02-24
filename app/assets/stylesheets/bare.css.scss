@@ -16,3 +16,14 @@ body{
 .wrongAns option{
   background-color: #e0542b;
 }
+
+.u-sr-only {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  position: absolute !important;
+  width: 1px;  
+}
