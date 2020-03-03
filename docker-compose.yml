@@ -1,0 +1,38 @@
+version: '3'
+services:
+  db:
+    image: postgres:9.5
+    ports:
+      - "5432"
+    environment: 
+      - POSTGRES_USER=oea
+      - POSTGRES_PASSWORD=oea
+    networks:
+      testing_net:
+        ipv4_address: 10.200.200.5
+  app:
+    build:
+      context: ./
+      dockerfile: deploy/Dockerfile
+    ports:
+      - 3000:3000
+    # command:  bundle exec rails s -p 3000
+    environment:
+      - RAILS_ENV=production
+      - RACK_ENV=production
+      - RDS_DB_NAME=oea
+      - RDS_USERNAME=oea
+      - RDS_PASSWORD=oea
+      - RDS_HOSTNAME=10.200.200.5
+    depends_on:
+      - db
+    networks:
+      testing_net:
+
+
+networks:
+  testing_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.200.200.0/24

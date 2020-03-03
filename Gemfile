@@ -50,8 +50,9 @@ gem 'nokogiri-happymapper', :require => 'happymapper'
 gem 'ruby-saml-mod'
 
 # deployment
-gem 'unicorn'
-gem 'unicorn-rails'
+gem 'nio4r', '~> 2.3.1'
+gem 'puma'
+
 
 # API Related
 gem 'httparty'
