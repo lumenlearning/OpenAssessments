@@ -24,6 +24,32 @@ services:
       - RDS_USERNAME=oea
       - RDS_PASSWORD=oea
       - RDS_HOSTNAME=10.200.200.5
+      - ANALYTICS_AUTH_TOKEN=<GET_FROM_BEANSTALK>
+      - ANALYTICS_SERVER=https://goldilocks.ludev.team/service_api/quiz_attempts
+      - APP_DEFAULT_CANVAS_URL=https://canvas.instructure.com
+      - APP_NAME=Open Assessments
+      - APP_SUBDOMAIN=assessments
+      - APP_URL=ludev.team
+      - ASSETS_HOST=assessments.ludev.team
+      - AUTH0_CLIENT_ID=openassessments
+      - AUTH0_CLIENT_SECRET=<GET_FROM_BEANSTALK>
+      - CANVAS_ID=FIXME
+      - CANVAS_SECRET=FIXME
+      - CANVAS_URL=https://canvas.instructure.com
+      - DOMAIN_NAME=assessments.ludev.team
+      - ENCRYPTION_KEY=<GET_FROM_BEANSTALK>
+      - LTI_TOOL_DESCRIPTION=Open Assessments
+      - LTI_TOOL_NAME=Open Assessments
+      - MOM_BASE_URL=https://ohm.ludev.team/OEAembedq.php
+      - MOM_KEY=lumenoea
+      - MOM_SECRET=<GET_FROM_BEANSTALK>
+      - NR_APP_NAME=OEA (local)
+      - NR_INSTALL_KEY=
+      - RAILS_SKIP_ASSET_COMPILATION=true
+      - RAILS_SKIP_MIGRATIONS=false
+      - SECRET_KEY_BASE=<GET_FROM_BEANSTALK>
+      - SECRET_TOKEN=<GET_FROM_BEANSTALK>
+
     depends_on:
       - db
     networks:
